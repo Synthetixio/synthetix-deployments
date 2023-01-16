@@ -1,0 +1,37 @@
+include = [
+  "../core.toml"
+]
+
+[setting.snx_address]
+
+[setting.snx_aggregator_address]
+
+[invoke.registerSnxOracleManager]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.snx_aggregator_address, 0, 8]) %>",
+    [],
+]
+
+extra.snx_oracle_id.event = "NodeRegistered"
+extra.snx_oracle_id.arg = 0
+
+depends = [
+  "provision.system"
+]
+
+[invoke.configureSnxCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+  { tokenAddress = "<%= settings.snx_address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('3') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = true }
+]
+
+depends = [
+  "invoke.registerSnxOracleManager"
+]

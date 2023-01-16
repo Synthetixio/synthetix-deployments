@@ -1,0 +1,6 @@
+[setting.legacy_market_package]
+defaultValue = "synthetix-legacy-market:0.1.0"
+
+[import.legacy_market]
+source = "<%= settings.legacy_market_package %>"
+
