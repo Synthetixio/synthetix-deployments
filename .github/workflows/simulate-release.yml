@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CANNON_SETTINGS: ${{ secrets.CANNON_SETTINGS }}
+      INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
     strategy:
       matrix:
         network: [goerli, optimism-goerli]
@@ -34,7 +35,7 @@ jobs:
         run_daemon: true
     - run: |
         npx @usecannon/cli build ${{ matrix.manifest }} --upgrade-from ${{ matrix.cannonPackage }} \
-          --network https://${{ matrix.network }}.infura.io/v3/${{ secrets.INFURA_API_KEY }} --dry-run
+          --network https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run
     
 
         
