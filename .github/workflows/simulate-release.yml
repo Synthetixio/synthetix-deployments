@@ -29,7 +29,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: "16.16.0"
-        cache: "npm"
     - uses: ibnesayeed/setup-ipfs@92d412e0dad36c06ffab50733e9c624896a0964f
       with:
         run_daemon: true
