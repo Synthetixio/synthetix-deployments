@@ -2,7 +2,7 @@
 
 This is a GitOps repo for the official deployment of the [Synthetix](https://www.github.com/synthetixio/synthetix-v3) protocol.
 
-This system relies on [Cannon](https://usecannon.com) which can installed with `npm i -g @usecannon/cli`. Run `cannon setup` to configure IPFS and a reliable RPC endpoint to communicate with the Cannon package registry.
+This system relies on [Cannon](https://usecannon.com) which be can installed with `npm i -g @usecannon/cli`. Run `cannon setup` to configure IPFS and a reliable RPC endpoint to communicate with the Cannon package registry.
 
 ## Deployment Guide
 
