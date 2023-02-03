@@ -1,0 +1,11 @@
+name = "synthetix-omnibus"
+version = "3.0.0-alpha.8"
+description = "Includes the full synthetix system with configurations applied"
+
+include = [
+    "configuration/goerli.toml",
+    "contracts/core.toml",
+    "contracts/collaterals/snx.toml",
+    "contracts/collaterals/weth.toml",
+    "contracts/pools/spartan-council.toml",
+]
