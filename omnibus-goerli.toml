@@ -23,6 +23,9 @@ defaultValue = "0x51f44ca59b867E005e48FA573Cb8df83FC7f7597"
 [setting.snx_aggregator_address]
 defaultValue = "0x48731cF7e84dc94C5f84577882c14Be11a5B7456"
 
+[setting.minimum_liquidity_ratio]
+defaultValue = "200000000000000000000"
+
 # Move to a draft PR with ccip.draft.toml ?
 # [setting.ccip_send_address]
 # defaultValue = "0xA189971a2c5AcA0DFC5Ee7a2C44a2Ae27b3CF389"
@@ -32,6 +35,3 @@ defaultValue = "0x48731cF7e84dc94C5f84577882c14Be11a5B7456"
 # 
 # [setting.ccip_token_pool_address]
 # defaultValue = "0x1fce171011B16F3b0D16198e3F59FD72c091f43B"
-
-[setting.minimum_liquidity_ratio]
-defaultValue = "<%= parseEther('200') %>"
