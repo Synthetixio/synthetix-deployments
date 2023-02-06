@@ -30,5 +30,4 @@ jobs:
         with:
           run_daemon: true
       - run: |
-          npx @usecannon/cli build omnibus-${{ matrix.network }}.toml --upgrade-from synthetix-omnibus:latest \
-            --network https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run
+          npx @usecannon/cli build omnibus-${{ matrix.network }}.toml --upgrade-from synthetix-omnibus:latest --network https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run
