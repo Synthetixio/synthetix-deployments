@@ -1,5 +1,5 @@
 [setting.snx_package]
-defaultValue = "synthetix:latest"
+defaultValue = "synthetix:latest" # Switch to numbered version on next change. (This a hotfix because testnet deployments are missing on the alpha.9 tag.)
 
 [setting.owner]
 
