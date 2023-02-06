@@ -17,7 +17,6 @@ Conduct the following process for each network:
 
 - Perform a dry-run and confirm that the actions that would be executed by Cannon are expected: `cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:latest --network <RPC_URL_FOR_NETWORK_NAME> --dry-run`
 - Remove the dry-run option and add a private key to execute the upgrade: `cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:latest --network <RPC_URL_FOR_NETWORK_NAME> --private-key <DEPLOYER_PRIVATE_KEY>`
-- Verify contracts on Etherscan: `cannon verify synthetix-omnibus --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`
 
 ### Finalize Upgrade
 

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.0.0-alpha.8"
+version = "3.0.0-alpha.11"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -29,8 +29,10 @@ defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
 defaultValue = "200000000000000000000"
 
 [setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.sc_pool_id]
 defaultValue = "1"
 
 [setting.sc_pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
