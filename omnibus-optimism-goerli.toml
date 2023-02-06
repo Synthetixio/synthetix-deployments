@@ -2,10 +2,37 @@ name = "synthetix-omnibus"
 version = "3.0.0-alpha.8"
 description = "Includes the full synthetix system with configurations applied"
 
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.weth_address]
+defaultValue = "0x4200000000000000000000000000000000000006"
+
+[setting.weth_aggregator_address]
+defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
+
+[setting.snx_address]
+defaultValue = "0x2E5ED97596a8368EB9E44B1f3F25B2E813845303"
+
+[setting.snx_aggregator_address]
+defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
+
+# Move to a draft PR with ccip.draft.toml ?
+# [setting.ccip_send_address]
+# defaultValue = "0xE591bf0A0CF924A0674d7792db046B23CEbF5f34"
+# 
+# [setting.ccip_recv_address]
+# defaultValue = "0x2b7aB40413DA5077E168546eA376920591Aee8E7"
+# 
+# [setting.ccip_token_pool_address]
+# defaultValue = "0xc5CCb84C3d8eAD52C081dDB24e7Add615c0c9Daf"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEthers('200') %>"
+
 include = [
-    "configuration/optimism-goerli.toml",
-    "contracts/core.toml",
-    "contracts/collaterals/snx.toml",
-    "contracts/collaterals/weth.toml",
-    "contracts/pools/spartan-council.toml",
+    "tomls/core.toml",
+    "tomls/collaterals/snx.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/pools/spartan-council.toml",
 ]

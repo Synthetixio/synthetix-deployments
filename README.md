@@ -8,9 +8,9 @@ This system relies on [Cannon](https://usecannon.com) which be can installed wit
 
 ### Specify Upgrade
 
-- Update the default values in the configuration directory as desired.
+- Update the default values in the network-specific omnibus cannonfiles as desired.
 
-- Bump the provisioned package versions throughout the contracts directory to the latest. Add new settings and invoke actions as necessary.
+- After publishing any new versions of the provisioned packages (`oracle-manager`, `synthetix` and `spot-market`), bump the versions throughout the cannonfiles to match. Add new settings and invoke actions as necessary.
 
 ### Execute Upgrade
 
