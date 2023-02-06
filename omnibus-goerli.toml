@@ -3,6 +3,7 @@ version = "3.0.0-alpha.8"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/core.toml",
+    "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
@@ -25,6 +26,13 @@ defaultValue = "0x48731cF7e84dc94C5f84577882c14Be11a5B7456"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "200000000000000000000"
+
+[setting.deployer]
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.sc_pool_owner]
 
 # Move to a draft PR with ccip.draft.toml ?
 # [setting.ccip_send_address]

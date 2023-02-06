@@ -1,11 +1,3 @@
-include = [
-  "../core.toml"
-]
-
-[setting.weth_address]
-
-[setting.weth_aggregator_address]
-
 [invoke.registerWethOracleManager]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
