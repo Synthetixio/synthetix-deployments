@@ -1,3 +1,7 @@
+[setting.snx_address]
+
+[setting.snx_aggregator_address]
+
 [invoke.registerSnxOracleManager]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"

@@ -1,3 +1,5 @@
+[setting.deployer]
+
 [invoke.permitCreatePool]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"

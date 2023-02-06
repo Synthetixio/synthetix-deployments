@@ -2,6 +2,7 @@ name = "synthetix-omnibus"
 version = "3.0.0-alpha.8"
 description = "Includes the full synthetix system with configurations applied"
 include = [
+    "tomls/settings.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
@@ -33,13 +34,3 @@ defaultValue = "200000000000000000000"
 defaultValue = "1"
 
 [setting.sc_pool_owner]
-
-# Move to a draft PR with ccip.draft.toml ?
-# [setting.ccip_send_address]
-# defaultValue = "0xA189971a2c5AcA0DFC5Ee7a2C44a2Ae27b3CF389"
-# 
-# [setting.ccip_recv_address]
-# defaultValue = "0xb78d314d32EB4B01C459EDE0774cc3b6AF244Dd7"
-# 
-# [setting.ccip_token_pool_address]
-# defaultValue = "0x1fce171011B16F3b0D16198e3F59FD72c091f43B"

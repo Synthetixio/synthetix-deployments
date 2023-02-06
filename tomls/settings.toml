@@ -1,0 +1,8 @@
+[setting.minimum_liquidity_ratio]
+
+[invoke.setMinimumLiquidityRatio]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setMinLiquidityRatio"
+args = ["<%= settings.minimum_liquidity_ratio %>"]
+depends = ["provision.system"]
