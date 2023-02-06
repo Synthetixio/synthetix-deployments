@@ -1,0 +1,18 @@
+[setting.ccip_send_address]
+
+[setting.ccip_recv_address]
+
+[setting.ccip_token_pool_address]
+
+[invoke.register_ccip]
+target = ["system.CoreProxy"]
+from = "<%= settings.owner %>"
+func = "registerCcip"
+args = [
+  "<%= settings.ccip_send_address %>",
+  "<%= settings.ccip_recv_address %>",
+  "<%= settings.ccip_token_pool_address %>"
+]
+depends = [
+  "import.system"
+]

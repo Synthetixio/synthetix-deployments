@@ -34,3 +34,12 @@ defaultValue = "200000000000000000000"
 defaultValue = "1"
 
 [setting.sc_pool_owner]
+
+[setting.ccip_send_address]
+defaultValue = "0xE591bf0A0CF924A0674d7792db046B23CEbF5f34"
+
+[setting.ccip_recv_address]
+defaultValue = "0x2b7aB40413DA5077E168546eA376920591Aee8E7"
+
+[setting.ccip_token_pool_address]
+defaultValue = "0xc5CCb84C3d8eAD52C081dDB24e7Add615c0c9Daf"
