@@ -1,5 +1,5 @@
 [setting.snx_package]
-defaultValue = "synthetix:3.0.0-alpha.7"
+defaultValue = "synthetix:latest" # Switch to numbered version on next change. (This a hotfix because testnet deployments are missing on the alpha.9 tag.)
 
 [setting.owner]
 
@@ -10,3 +10,10 @@ defaultValue = "snx"
 source = "<%= settings.snx_package %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
+
+[invoke.setMinimumLiquidityRatio]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setMinLiquidityRatio"
+args = ["<%= settings.minimum_liquidity_ratio %>"]
+depends = ["provision.system"]

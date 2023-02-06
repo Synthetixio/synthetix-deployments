@@ -1,13 +1,3 @@
-include = [
-  "../core.toml",
-  "../permissions.toml"
-]
-
-[setting.sc_pool_id]
-defaultValue = "1"
-
-[setting.sc_pool_owner]
-
 [invoke.createScPool]
 target = ["system.CoreProxy"]
 from = "<%= settings.deployer %>"
