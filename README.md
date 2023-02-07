@@ -1,10 +1,11 @@
 # Synthetix Deployments
 
-This is a GitOps repo for the official deployment of the [Synthetix](https://www.github.com/synthetixio/synthetix-v3) protocol.
-
-This system relies on [Cannon](https://usecannon.com) which be can installed with `npm i -g @usecannon/cli`. Run `cannon setup` to configure IPFS and a reliable RPC endpoint to communicate with the Cannon package registry.
+This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/synthetixio/synthetix-v3) protocol.
 
 ## Deployment Guide
+
+- Ensure you have the latest version of [Cannon](https://usecannon.com) installed: `npm i -g @usecannon/cli`.
+- After installing for the first time, run `cannon setup` to configure IPFS and a reliable RPC endpoint to communicate with the Cannon package registry.
 
 ### Specify Upgrade
 
@@ -16,8 +17,8 @@ This system relies on [Cannon](https://usecannon.com) which be can installed wit
 
 Conduct the following process for each network:
 
-- Perform a dry-run and confirm that the actions that would be executed by Cannon are expected: `cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:latest --network <RPC_URL_FOR_NETWORK_NAME> --dry-run`
-- Remove the dry-run option and add a private key to execute the upgrade: `cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:latest --network <RPC_URL_FOR_NETWORK_NAME> --private-key <DEPLOYER_PRIVATE_KEY>`
+- Perform a dry-run and confirm that the actions that would be executed by Cannon are expected: `cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRENT_VERSION> --network <RPC_URL_FOR_NETWORK_NAME>  --private-key <DEPLOYER_PRIVATE_KEY> --dry-run`
+- Remove the dry-run option to execute the upgrade: `cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRENT_VERSION> --network <RPC_URL_FOR_NETWORK_NAME> --private-key <DEPLOYER_PRIVATE_KEY>`
 
 ### Finalize Release
 
