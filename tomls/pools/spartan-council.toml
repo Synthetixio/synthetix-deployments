@@ -4,21 +4,21 @@
 
 [setting.sc_pool_owner]
 
-# [invoke.createScPool]
-# target = ["system.CoreProxy"]
-# from = "<%= settings.deployer %>"
-# func = "createPool"
-# args = [
-#     "<%= settings.sc_pool_id %>",
-#     "<%= settings.sc_pool_owner %>",
-# ]
-# depends=["invoke.permitCreatePool"]
-# 
-# [invoke.setPreferredPool]
-# target = ["system.CoreProxy"]
-# fromCall.func = "owner"
-# func = "setPreferredPool"
-# args = [
-#     "<%= settings.sc_pool_id %>",
-# ]
-# depends=["invoke.createScPool"]
+[invoke.createScPool]
+target = ["system.CoreProxy"]
+from = "<%= settings.deployer %>"
+func = "createPool"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.sc_pool_owner %>",
+]
+depends=["invoke.permitCreatePool"]
+
+[invoke.setPreferredPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPreferredPool"
+args = [
+    "<%= settings.sc_pool_id %>",
+]
+depends=["invoke.createScPool"]
