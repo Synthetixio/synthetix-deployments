@@ -26,7 +26,7 @@ defaultValue = "0x2E5ED97596a8368EB9E44B1f3F25B2E813845303"
 defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "200000000000000000000"
+defaultValue = "2000000000000000000"
 
 [setting.deployer]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
