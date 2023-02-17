@@ -5,7 +5,9 @@ This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/s
 ## Deployment Guide
 
 - Ensure you have the latest version of [Cannon](https://usecannon.com) installed: `npm i -g @usecannon/cli`.
-- After installing for the first time, run `cannon setup` to configure IPFS and a reliable RPC endpoint to communicate with the Cannon package registry.
+- After installing for the first time:
+  - Run `cannon setup` to configure IPFS and a reliable RPC endpoint to communicate with the Cannon package registry.
+  - Run `npx cannon plugin add @synthetixio/router` to install the router generator plug-in.
 
 ### Specify Upgrade
 
@@ -32,10 +34,9 @@ cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:latest
 ### Finalize Release
 
 - Publish your new packages on the Cannon registry:
-  - `cannon publish oracle-manager:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET>`
-  - `cannon publish synthetix:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
+  - If you upgraded the oracle manager, `cannon publish oracle-manager:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET>`
+  - If you upgraded synthetix, `cannon publish synthetix:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
   - `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
 - Increment the version number in each of the omnibus toml files in the root of the repository. (The version in the repository should always be the next version.)
 - Commit and merge the change to this repository.
-
-Then, follow the instructions in the [synthetix-v3 repository](https://github.com/synthetixio/synthetix-v3#finalizing-a-release).
+- Follow the instructions in the [synthetix-v3 repository](https://github.com/synthetixio/synthetix-v3#finalizing-a-release).
