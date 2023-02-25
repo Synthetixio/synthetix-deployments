@@ -6,24 +6,18 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
-    "tomls/collaterals/weth.toml",
+    # "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
 ]
 
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.weth_address]
-defaultValue = "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"
-
-[setting.weth_aggregator_address]
-defaultValue = "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e"
+defaultValue = "0x0f9019dD6821f74FC8Ade3Cd32246859BA20a135"
 
 [setting.snx_address]
-defaultValue = "0x51f44ca59b867E005e48FA573Cb8df83FC7f7597"
+defaultValue = "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
 
 [setting.snx_aggregator_address]
-defaultValue = "0x48731cF7e84dc94C5f84577882c14Be11a5B7456"
+defaultValue = "0x2FCF37343e916eAEd1f1DdaaF84458a359b53877"
 
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"
@@ -32,10 +26,10 @@ defaultValue = "10000000000000000000"
 defaultValue = "2000000000000000000"
 
 [setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
 [setting.sc_pool_id]
 defaultValue = "1"
 
 [setting.sc_pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"

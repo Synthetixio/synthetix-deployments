@@ -14,7 +14,7 @@ jobs:
       INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
     strategy:
       matrix:
-        network: [goerli, optimism-goerli]
+        network: [mainnet, optimism-mainnet, goerli, optimism-goerli]
         manifest: [omnibus.toml]
     steps:
       - name: Install Foundry (Cannon)
@@ -25,9 +25,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.16.0"
-      - uses: ibnesayeed/setup-ipfs@92d412e0dad36c06ffab50733e9c624896a0964f
-        with:
-          run_daemon: true
+          node-version: "18"
+      - run: |
+          npm i -g @usecannon/cli
+      - run: |
+          npx @usecannon/cli plugin add @synthetixio/router
       - run: |
           npx @usecannon/cli build omnibus-${{ matrix.network }}.toml --upgrade-from synthetix-omnibus:latest --network https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run

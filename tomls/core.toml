@@ -1,10 +1,10 @@
 [setting.snx_package]
-defaultValue = "synthetix:3.0.0-alpha.15"
+defaultValue = "synthetix:3.0.0"
 
 [setting.owner]
 
 [setting.salt]
-defaultValue = "alpha"
+defaultValue = "snax"
 
 [provision.system]
 source = "<%= settings.snx_package %>"
