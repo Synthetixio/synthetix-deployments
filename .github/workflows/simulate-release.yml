@@ -27,7 +27,8 @@ jobs:
         with:
           node-version: "18"
       - run: |
-          npx @usecannon/cli plugin add @synthetixio/router
+          npm i -g @synthetixio/cli
+      - run: |
           npx @usecannon/cli plugin add @synthetixio/router
       - run: |
           npx @usecannon/cli build omnibus-${{ matrix.network }}.toml --upgrade-from synthetix-omnibus:latest --network https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run
