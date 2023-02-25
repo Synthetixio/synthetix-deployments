@@ -14,7 +14,7 @@ jobs:
       INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
     strategy:
       matrix:
-        network: [mainnet, optimism, goerli, optimism-goerli]
+        network: [mainnet, optimism-mainnet, goerli, optimism-goerli]
         manifest: [omnibus.toml]
     steps:
       - name: Install Foundry (Cannon)
