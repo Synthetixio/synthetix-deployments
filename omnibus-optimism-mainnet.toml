@@ -11,7 +11,7 @@ include = [
 ]
 
 [setting.owner]
-defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+defaultValue = "0x0f9019dD6821f74FC8Ade3Cd32246859BA20a135"
 
 [setting.snx_address]
 defaultValue = "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
