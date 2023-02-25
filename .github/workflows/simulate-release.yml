@@ -26,8 +26,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.16.0"
-      - uses: ibnesayeed/setup-ipfs@92d412e0dad36c06ffab50733e9c624896a0964f
-        with:
-          run_daemon: true
       - run: |
+          npx @usecannon/cli plugin add @synthetixio/router
           npx @usecannon/cli build omnibus-${{ matrix.network }}.toml --upgrade-from synthetix-omnibus:latest --network https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run
