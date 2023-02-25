@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: "18"
       - run: |
-          npm i -g @synthetixio/cli
+          npm i -g @usecannon/cli
       - run: |
           npx @usecannon/cli plugin add @synthetixio/router
       - run: |
