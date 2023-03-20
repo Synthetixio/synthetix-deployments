@@ -13,5 +13,5 @@ depends = ["provision.system"]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setConfig"
-args = ["accountTimeoutWithdraw", "<%= settings.account_timeout_withdraw %>"]
+args = ["<%= formatBytes32String('accountTimeoutWithdraw') %>", "<%= settings.account_timeout_withdraw %>"]
 depends = ["provision.system"]
