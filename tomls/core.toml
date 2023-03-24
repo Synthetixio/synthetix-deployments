@@ -1,5 +1,5 @@
 [setting.snx_package]
-defaultValue = "synthetix:3.0.0"
+defaultValue = "synthetix:3.0.4-alpha.0"
 
 [setting.owner]
 
