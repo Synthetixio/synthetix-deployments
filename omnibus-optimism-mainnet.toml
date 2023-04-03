@@ -25,6 +25,9 @@ defaultValue = "10000000000000000000"
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
 
+[setting.account_timeout_withdraw]
+defaultValue = "86400"
+
 [setting.deployer]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 

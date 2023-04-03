@@ -1,8 +1,17 @@
 [setting.minimum_liquidity_ratio]
 
+[setting.account_timeout_withdraw]
+
 [invoke.setMinimumLiquidityRatio]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setMinLiquidityRatio"
 args = ["<%= settings.minimum_liquidity_ratio %>"]
+depends = ["provision.system"]
+
+[invoke.setAccountTimeoutWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = ["<%= formatBytes32String('accountTimeoutWithdraw') %>", "<%= formatBytes32String(settings.account_timeout_withdraw) %>"]
 depends = ["provision.system"]
