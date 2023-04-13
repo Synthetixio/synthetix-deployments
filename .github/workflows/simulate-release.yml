@@ -29,6 +29,6 @@ jobs:
       - run: |
           npm i -g @usecannon/cli
       - run: |
-          npx @usecannon/cli plugin add @synthetixio/router
+          npx @usecannon/cli plugin add cannon-plugin-router
       - run: |
           npx @usecannon/cli build omnibus-${{ matrix.network }}.toml --upgrade-from synthetix-omnibus:latest --provider-url https://${{ matrix.network }}.infura.io/v3/$INFURA_API_KEY --dry-run
