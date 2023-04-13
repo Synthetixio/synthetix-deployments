@@ -34,8 +34,8 @@ cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:latest
 ### Finalize Release
 
 - Publish your new packages on the Cannon registry:
-  - If you upgraded the oracle manager, `cannon publish oracle-manager:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET>`
-  - If you upgraded synthetix, `cannon publish synthetix:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
+  - If you upgraded the oracle manager, `cannon publish oracle-manager:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --preset with-synthetix`
+  - If you upgraded synthetix, `cannon publish synthetix:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3 --preset with-synthetix-omnibus`
   - `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
 - Increment the version number in each of the omnibus toml files in the root of the repository. (The version in the repository should always be the next version.)
 - Commit and merge the change to this repository.
