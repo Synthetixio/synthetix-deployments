@@ -1,12 +1,16 @@
 [setting.snx_package]
-defaultValue = "synthetix:3.0.4-dev.7f1ec775"
+defaultValue = "synthetix:3.0.4-dev.f96ba182"
 
 [setting.owner]
 
 [setting.salt]
 defaultValue = "snax"
 
+[setting.bundleSalt]
+defaultValue = "snax"
+
 [provision.system]
 source = "<%= settings.snx_package %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
+options.bundleSalt = "<%= settings.bundleSalt %>"
