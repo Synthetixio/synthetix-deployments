@@ -6,7 +6,7 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
-    # "tomls/collaterals/weth.toml",
+    "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
 ]
 
@@ -27,6 +27,12 @@ defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
 
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"
+
+[setting.weth_address]
+defaultValue = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+
+[setting.weth_aggregator_address]
+defaultValue = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
