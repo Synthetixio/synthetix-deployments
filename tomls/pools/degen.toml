@@ -1,0 +1,27 @@
+[setting.deployer]
+
+[setting.sc_pool_id]
+
+[setting.sc_pool_owner]
+
+[invoke.createDegenPool]
+target = ["system.CoreProxy"]
+from = "<%= settings.deployer %>"
+func = "createPool"
+args = [
+    "<%= settings.degen_pool_id %>",
+    "<%= settings.sc_pool_owner %>",
+]
+depends=["invoke.permitCreatePool"]
+
+[invoke.setDegenPoolName]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.degen_pool_id %>"]
+
+func = "setPoolName"
+args = [
+    "<%= settings.degen_pool_id %>",
+    "Degen Pool",
+]
+depends=["invoke.createDegenPool"]
