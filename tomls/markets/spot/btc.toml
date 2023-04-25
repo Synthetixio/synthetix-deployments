@@ -1,0 +1,48 @@
+include = [
+  "../spot-factory.toml",
+]
+
+[setting.btc_aggregator_address]
+
+[invoke.registerSynthBtcOracleManager]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+   # 3 = chainlink aggregator type
+   3,
+   # 3 parameters are: address of the chainlink oracle
+   "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.btc_aggregator_address, 0, 8]) %>",
+   []
+]
+
+extra.synth_btc_oracle_id.event = "NodeRegistered"
+extra.synth_btc_oracle_id.arg = 0
+
+depends = [
+ "provision.system"
+]
+
+[invoke.createBtcSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic Bitcoin", "snxBTC", "<%= settings.owner %>"]
+
+extra.synth_btc_market_id.event = "SynthRegistered"
+extra.synth_btc_market_id.arg = 0
+
+depends = ["provision.spotFactory"]
+
+[invoke.setSynthPriceBtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
+
+func = "updatePriceData"
+args = [
+  "<%= extras.synth_btc_market_id %>", 
+  "<%= extras.synth_btc_oracle_id %>", 
+  "<%= extras.synth_btc_oracle_id %>"
+]
+
+depends = ["invoke.createBtcSynth", "invoke.registerSynthBtcOracleManager"]
