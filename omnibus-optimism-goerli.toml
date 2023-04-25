@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.0.4-dev.7f1ec775"
+version = "3.1.0-alpha.1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -8,6 +8,9 @@ include = [
     "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/markets/spot/eth.toml",
+    "tomls/markets/spot/btc.toml",
+    "tomls/markets/spot/link.toml"
 ]
 
 [setting.owner]
@@ -42,3 +45,11 @@ defaultValue = "1"
 
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+# Aggregators for markets
+
+[setting.link_aggregator_address]
+defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
+
+[setting.btc_aggregator_address]
+defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"

@@ -1,0 +1,15 @@
+include = [
+  "../core.toml"
+]
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.0.4-alpha.0"
+
+[provision.spotFactory]
+source = "<%= settings.spot_market_package %>"
+options.coreProxyOwner = "<%= settings.owner %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>"
+
+depends = ["provision.system"]
