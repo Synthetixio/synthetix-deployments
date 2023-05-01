@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.0.0"
+version = "3.1.0"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -8,16 +8,24 @@ include = [
     "tomls/collaterals/snx.toml",
     # "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+
+    "tomls/markets/spot/eth.toml",
 ]
 
 [setting.owner]
-defaultValue = "0x0f9019dD6821f74FC8Ade3Cd32246859BA20a135"
+defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
+
+[setting.salt]
+defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
 
 [setting.snx_address]
 defaultValue = "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
 
 [setting.snx_aggregator_address]
 defaultValue = "0x2FCF37343e916eAEd1f1DdaaF84458a359b53877"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
 
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"

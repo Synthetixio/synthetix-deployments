@@ -1,31 +1,15 @@
+include = [
+  "../oracles/eth.toml"
+]
+
 [setting.weth_address]
-
-[setting.weth_aggregator_address]
-
-[invoke.registerWethOracleManager]
-target = ["system.oracle_manager.Proxy"]
-func = "registerNode"
-args = [
-    # 3 = chainlink aggregator type
-    3,
-    # 3 parameters are: address of the chainlink oracle
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.weth_aggregator_address, 0, 8]) %>",
-    []
-]
-
-extra.weth_oracle_id.event = "NodeRegistered"
-extra.weth_oracle_id.arg = 0
-
-depends = [
-  "provision.system"
-]
 
 [invoke.configureWethCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= settings.weth_address %>", oracleNodeId = "<%= extras.weth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('3') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('0.01') %>", depositingEnabled = false }
+  { tokenAddress = "<%= settings.weth_address %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('3') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('0.01') %>", depositingEnabled = false }
 ]
 
 depends = [

@@ -3,26 +3,8 @@ include = [
 
   # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
   # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
-  "../../collaterals/weth.toml"
+  "../../oracles/eth.toml"
 ]
-
-#[invoke.registerSynthEthOracleManager]
-#target = ["system.oracle_manager.Proxy"]
-#func = "registerNode"
-#args = [
-#    # 3 = chainlink aggregator type
-#    3,
-#    # 3 parameters are: address of the chainlink oracle
-#    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.weth_aggregator_address, 0, 8]) %>",
-#    []
-#]
-
-#extra.synth_eth_oracle_id.event = "NodeRegistered"
-#extra.synth_eth_oracle_id.arg = 0
-
-#depends = [
-#  "provision.system"
-#]
 
 [invoke.createEthSynth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -43,8 +25,8 @@ fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "updatePriceData"
 args = [
   "<%= extras.synth_eth_market_id %>", 
-  "<%= extras.weth_oracle_id %>", 
-  "<%= extras.weth_oracle_id %>"
+  "<%= extras.eth_oracle_id %>", 
+  "<%= extras.eth_oracle_id %>"
 ]
 
-depends = ["invoke.createEthSynth", "invoke.registerWethOracleManager"]
+depends = ["invoke.createEthSynth", "invoke.registerEthOracleManager"]
