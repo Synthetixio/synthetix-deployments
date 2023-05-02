@@ -16,7 +16,8 @@ depends=["invoke.permitCreatePool"]
 
 [invoke.setScPoolName]
 target = ["system.CoreProxy"]
-fromCall.func = "owner"
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "setPoolName"
 args = [
     "<%= settings.sc_pool_id %>",

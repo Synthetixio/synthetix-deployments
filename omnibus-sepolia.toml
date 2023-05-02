@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.0.4-dev.f96ba182"
+version = "3.1.0"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -8,6 +8,8 @@ include = [
     #"tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
 ]
 
 [setting.owner]
@@ -22,7 +24,7 @@ defaultValue = "snax"
 [setting.weth_address]
 defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
 
-[setting.weth_aggregator_address]
+[setting.eth_aggregator_address]
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 
 [setting.weth_liquidation_reward]
