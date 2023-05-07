@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.1.0-alpha.1"
+version = "3.1.0-alpha.2"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -55,3 +55,41 @@ defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
 
 [setting.btc_aggregator_address]
 defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
+
+# ETH Synth Configuration
+
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "100"
+
+[setting.synthEthSkewScale]
+defaultValue = "100000"
+
+[setting.synthEthWrapFee]
+defaultValue = "0.0001"
+
+[setting.synthEthUnwrapFee]
+defaultValue = "0.0001"
+
+[setting.pythEthFeedId]
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+
+depends=["invoke.createScPool", "invoke.createEthSynth"]
