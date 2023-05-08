@@ -21,6 +21,9 @@ defaultValue = "0.000001"
 [setting.synthEthDeviationTolerance]
 defaultValue = "0.05"
 
+[setting.synthEthSettlementWindowDuration]
+defaultValue = "60"
+
 [setting.weth_address]
 
 [setting.synthEthAsyncFixedFee]
@@ -81,7 +84,7 @@ fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "addSettlementStrategy"
 args = [
   "<%= extras.synth_eth_market_id %>", 
-  { strategyType = 1, settlementDelay = 15, settlementWindowDuration = 60, priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.synthEthDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.spotMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.spotMaxRoundingLoss) %>", disabled = false }
+  { strategyType = 1, settlementDelay = 15, settlementWindowDuration = "<%= settings.synthEthSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.synthEthDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.spotMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.spotMaxRoundingLoss) %>", disabled = false }
 ]
 
 depends = ["invoke.createEthSynth"]

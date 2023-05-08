@@ -45,6 +45,12 @@ defaultValue = "1"
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.snx_package]
+defaultValue = "synthetix:3.1.1-dev.f51dd42e"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.1.1-dev.f51dd42e"
+
 # Aggregators for markets
 
 [setting.link_aggregator_address]
@@ -75,6 +81,9 @@ defaultValue = "0.0001"
 
 [setting.pythEthFeedId]
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+
+[setting.synthEthSettlementWindowDuration]
+defaultValue = "600"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
