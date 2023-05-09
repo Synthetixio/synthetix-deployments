@@ -31,7 +31,7 @@ cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRE
 cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRENT_VERSION> --provider-url <RPC_URL> --chain-id <CHAIN_ID> --private-key <DEPLOYER_PRIVATE_KEY>
 ```
 
-_The --provider-url --chain-id are unnecessary if using [Frame](https://frame.sh/)_
+_The --provider-url and --chain-id parameters are unnecessary if using [Frame](https://frame.sh/)_
 
 ### Finalize Release
 
