@@ -67,3 +67,10 @@ defaultValue = "0.0001"
 
 [setting.synthEthSettlementWindowDuration]
 defaultValue = "600"
+
+# Pyth settlement strategy config
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythEthFeedId]
+defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
