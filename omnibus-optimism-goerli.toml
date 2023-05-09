@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.1.0-alpha.1"
+version = "3.1.0-alpha.2"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -20,9 +20,6 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.weth_address]
 defaultValue = "0x4200000000000000000000000000000000000006"
-
-[setting.eth_aggregator_address]
-defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
 [setting.snx_address]
 defaultValue = "0x2E5ED97596a8368EB9E44B1f3F25B2E813845303"
@@ -48,6 +45,12 @@ defaultValue = "1"
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.snx_package]
+defaultValue = "synthetix:3.1.1-dev.f51dd42e"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.1.1-dev.f51dd42e"
+
 # Aggregators for markets
 
 [setting.link_aggregator_address]
@@ -55,6 +58,9 @@ defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
 
 [setting.btc_aggregator_address]
 defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
 # ETH Synth Configuration
 
@@ -75,6 +81,9 @@ defaultValue = "0.0001"
 
 [setting.pythEthFeedId]
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+
+[setting.synthEthSettlementWindowDuration]
+defaultValue = "600"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
