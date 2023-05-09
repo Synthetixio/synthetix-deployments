@@ -38,4 +38,3 @@ _The --provider-url and --chain-id parameters are unnecessary if using [Frame](h
 - Verify your new contracts on Etherscan: `cannon verify synthetix-omnibus:<VERSION_NUMBER> --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`
 - Publish your new packages on the Cannon registry: `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
 - Commit and merge the change to this repository.
-- Follow the instructions in the [synthetix-v3 repository](https://github.com/synthetixio/synthetix-v3#finalizing-a-release).
