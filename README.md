@@ -31,10 +31,10 @@ cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRE
 cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRENT_VERSION> --provider-url <RPC_URL> --chain-id <CHAIN_ID> --private-key <DEPLOYER_PRIVATE_KEY>
 ```
 
-_The --provider-url and --chain-id parameters are unnecessary if using [Frame](https://frame.sh/)_
+_The --provider-url and --private-key parameters are unnecessary if using [Frame](https://frame.sh/)_
 
 ### Finalize Release
 
-- Verify your new contracts on Etherscan: `cannon verify synthetix-omnibus:<VERSION_NUMBER> --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`
-- Publish your new packages on the Cannon registry: `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3`
+- If you've updated the provisioned packages, verify your new contracts on Etherscan: `cannon verify synthetix-omnibus:<VERSION_NUMBER> --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`
+- Publish your new packages on the Cannon registry: `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3` (_The --private-key parameter is unnecessary if using [Frame](https://frame.sh/)_)
 - Commit and merge the change to this repository.
