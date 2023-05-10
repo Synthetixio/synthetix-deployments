@@ -11,7 +11,7 @@ args = [
     # 3 = chainlink aggregator type
     3,
     # 3 parameters are: address of the chainlink oracle
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 1, 8]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
     []
 ]
 
