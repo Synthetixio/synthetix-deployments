@@ -64,10 +64,10 @@ defaultValue = "0.0001"
 [setting.synthEthUnwrapFee]
 defaultValue = "0.0001"
 
-[setting.synthEthSettlementWindowDuration]
+[setting.ethSettlementWindowDuration]
 defaultValue = "60"
 
-[setting.synthEthSettlementDelay]
+[setting.ethSettlementDelay]
 defaultValue = "15"
 
 # Pyth settlement strategy config
