@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.1.0-alpha.4"
+version = "3.1.1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -48,13 +48,13 @@ defaultValue = "1"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.1.1-dev.6ad35880"
+defaultValue = "synthetix:3.1.1"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.1.1-dev.6ad35880"
+defaultValue = "synthetix-spot-market:3.1.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.1.1-dev.6ad35880"
+defaultValue = "synthetix-perps-market:3.1.1"
 
 # Aggregators for markets
 
