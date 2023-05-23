@@ -27,7 +27,7 @@ args = [
   "<%= extras.perps_eth_market_id %>", 
   "<%= extras.eth_oracle_id %>"
 ]
-depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleManager"]
+depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
 
 [invoke.setSettlementStrategyEth]
 target = ["spotFactory.SpotMarketProxy"]

@@ -42,7 +42,7 @@ args = [
   "<%= extras.eth_oracle_id %>"
 ]
 
-depends = ["invoke.createEthSynth", "invoke.registerEthOracleManager"]
+depends = ["invoke.createEthSynth", "invoke.registerEthOracleNode"]
 
 [invoke.setSynthAtomicFixedFeeEth]
 target = ["spotFactory.SpotMarketProxy"]
