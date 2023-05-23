@@ -1,9 +1,9 @@
 include = [
-  "../core.toml"
+  "./spot-factory.toml"
 ]
 
 [setting.perps_market_package]
-defaultValue = "synthetix-spot-market:3.1.1"
+defaultValue = "synthetix-perps-market:3.1.1"
 
 [provision.perpsFactory]
 source = "<%= settings.perps_market_package %>"
@@ -14,4 +14,4 @@ options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
 
-depends = ["provision.system"]
+depends = ["provision.spotFactory"]

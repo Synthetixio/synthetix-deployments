@@ -16,7 +16,7 @@ func = "createMarket"
 args = ["Ethereum", "ETH", "<%= settings.owner %>"]
 extra.perps_eth_market_id.event = "MarketRegistered"
 extra.perps_eth_market_id.arg = 0
-depends = ["provision.spotFactory"]
+depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsPriceEth]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -29,8 +29,8 @@ args = [
 ]
 depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
 
-[invoke.setSettlementStrategyEth]
-target = ["spotFactory.SpotMarketProxy"]
+[invoke.setPerpsEthSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.perps_eth_market_id %>"]
 func = "addSettlementStrategy"
@@ -40,15 +40,15 @@ args = [
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
-[invoke.setSynthSkewScaleEth]
-target = ["spotFactory.SpotMarketProxy"]
+[invoke.setPerpsSkewScaleEth]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
 
-func = "setMarketSkewScale"
+func = "setSkewScale"
 args = [
-  "<%= extras.synth_eth_market_id %>", 
-  "<%= parseEther(settings.synthEthSkewScale) %>"
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= parseEther(settings.perpsEthSkewScale) %>"
 ]
 
-depends = ["invoke.createEthSynth"]
+depends = ["invoke.createEthPerpsMarket"]

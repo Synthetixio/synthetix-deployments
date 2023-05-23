@@ -67,6 +67,11 @@ defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
 [setting.eth_aggregator_address]
 defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
+# ETH Perps Configuration
+
+[setting.perpsEthSkewScale]
+defaultValue = "100000"
+
 # ETH Synth Configuration
 
 [setting.synthEthAsyncFixedFee]
