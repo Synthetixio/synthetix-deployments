@@ -14,6 +14,7 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-createAccount.toml", # used for perps market
 ]
 
 [setting.owner]
