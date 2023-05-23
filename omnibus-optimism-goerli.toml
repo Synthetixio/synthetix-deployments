@@ -11,6 +11,7 @@ include = [
     "tomls/markets/spot/eth.toml",
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/link.toml",
+    "tomls/markets/perps/eth.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
 ]
