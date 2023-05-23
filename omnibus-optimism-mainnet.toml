@@ -6,9 +6,8 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
-    # "tomls/collaterals/weth.toml",
+    "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-
     "tomls/markets/spot/eth.toml",
 ]
 
@@ -66,11 +65,27 @@ defaultValue = "0.0001"
 defaultValue = "0.0001"
 
 [setting.synthEthSettlementWindowDuration]
-defaultValue = "600"
+defaultValue = "60"
+
+[setting.synthEthSettlementDelay]
+defaultValue = "15"
 
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
 
 [setting.pythEthFeedId]
-defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends=["invoke.createScPool", "invoke.createEthSynth"]
