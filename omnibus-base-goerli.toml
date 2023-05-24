@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.0.4-dev.7f1ec775"
+version = "3.1.1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -29,6 +29,9 @@ defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
 #[setting.snx_liquidation_reward]
 #defaultValue = "10000000000000000000"
+
+[setting.eth_aggregator_address]
+defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
