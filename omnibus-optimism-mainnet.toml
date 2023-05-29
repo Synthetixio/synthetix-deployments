@@ -70,6 +70,9 @@ defaultValue = "60"
 [setting.ethSettlementDelay]
 defaultValue = "15"
 
+[setting.wethIsEnabled]
+defaultValue = false
+
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
