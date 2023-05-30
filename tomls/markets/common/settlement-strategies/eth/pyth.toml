@@ -1,0 +1,27 @@
+[setting.strategyType]
+defaultValue = "1"
+
+[setting.ethSettlementDelay]
+defaultValue = "15"
+
+[setting.ethSettlementWindowDuration]
+defaultValue = "60"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
+
+[setting.pythEthFeedId]
+
+[setting.pythFeedUrl]
+
+[setting.settlementReward]
+defaultValue = "0"
+
+[setting.ethSettlementDeviationTolerance]
+defaultValue = "0.05"
+
+[setting.settlementMinimumUsdExchangeAmount]
+defaultValue = "0.000001"
+
+[setting.settlementMaxRoundingLoss]
+defaultValue = "0.000001"

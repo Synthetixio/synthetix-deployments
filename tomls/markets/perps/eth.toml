@@ -1,0 +1,54 @@
+include = [
+  "../perps-factory.toml",
+
+  # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+  # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+  "../../oracles/eth.toml",
+  "../common/settlement-strategies/eth/pyth.toml"
+]
+
+[setting.perpsEthSkewScale]
+
+[invoke.createEthPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["Ethereum", "ETH", "<%= settings.owner %>"]
+extra.perps_eth_market_id.event = "MarketRegistered"
+extra.perps_eth_market_id.arg = 0
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsPriceEth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+func = "updatePriceData"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= extras.eth_oracle_id %>"
+]
+depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
+
+[invoke.setPerpsEthSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.ethSettlementDelay %>", settlementWindowDuration = "<%= settings.ethSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.ethSettlementDeviationTolerance) %>", disabled = false }
+]
+depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsSkewScaleEth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+
+func = "setSkewScale"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= parseEther(settings.perpsEthSkewScale) %>"
+]
+
+depends = ["invoke.createEthPerpsMarket"]

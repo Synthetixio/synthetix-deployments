@@ -13,5 +13,5 @@ args = [
 ]
 
 depends = [
-  "invoke.registerEthOracleManager"
+  "invoke.registerEthOracleNode"
 ]

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.1.0-alpha.4"
+version = "3.1.1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -11,8 +11,10 @@ include = [
     "tomls/markets/spot/eth.toml",
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/link.toml",
+    "tomls/markets/perps/eth.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-createAccount.toml", # used for perps market
 ]
 
 [setting.owner]
@@ -46,10 +48,13 @@ defaultValue = "1"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.1.1-dev.6ad35880"
+defaultValue = "synthetix:3.1.1"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.1.1-dev.6ad35880"
+defaultValue = "synthetix-spot-market:3.1.1"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.1.1"
 
 # Aggregators for markets
 
@@ -61,6 +66,11 @@ defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
 
 [setting.eth_aggregator_address]
 defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
+
+# ETH Perps Configuration
+
+[setting.perpsEthSkewScale]
+defaultValue = "100000"
 
 # ETH Synth Configuration
 
@@ -79,7 +89,7 @@ defaultValue = "0.0001"
 [setting.synthEthUnwrapFee]
 defaultValue = "0.0001"
 
-[setting.synthEthSettlementWindowDuration]
+[setting.ethSettlementWindowDuration]
 defaultValue = "600"
 
 # Pyth settlement strategy config
@@ -99,8 +109,9 @@ args = [
     [
         { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.perps_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
 
-depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth"]
+depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "invoke.createEthPerpsMarket"]
