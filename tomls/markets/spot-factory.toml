@@ -7,7 +7,7 @@ defaultValue = "synthetix-spot-market:3.1.0"
 
 [provision.spotFactory]
 source = "<%= settings.spot_market_package %>"
-targetPreset = "main"
+targetPreset = "<%= settings.targetPreset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
