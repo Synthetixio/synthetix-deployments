@@ -1,0 +1,24 @@
+[setting.chainlinkCcipRouter]
+
+[setting.chainlinkCcipTokenPool]
+
+[setting.chainlinkFunctions]
+
+[invoke.setSupportedCrossChainNetworks]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setSupportedCrossChainNetworks"
+args = [
+    [
+        80001,    # mumbai
+        11155111, # sepolia
+    ],
+    # completely random numbers that we *actually* need to use to send cross chain
+    # courtesy of chainlink
+    [
+        "12532609583862916517",
+        "16015286601757825753"
+    ]
+]
+
+depends=["provision.system"]

@@ -1,0 +1,114 @@
+name = "synthetix-omnibus"
+version = "3.2.0-xchain.0"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    #"tomls/collaterals/snx.toml",
+    "tomls/collaterals/wmatic.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
+
+    "tomls/markets/spot/eth.toml",
+
+    "tomls/xchain/chainlink.toml",
+    "tomls/xchain/supported-networks-testnet.toml",
+]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.2.0-xchain.0"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.2.0-xchain.0"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.salt]
+defaultValue = "xchain"
+
+[setting.targetPreset]
+defaultValue = "xchain"
+
+[setting.bundleSalt]
+defaultValue = "snax"
+
+[setting.wmatic_address]
+defaultValue = "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889"
+
+[setting.matic_aggregator_address]
+defaultValue = "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada"
+
+[setting.wmatic_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "60"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.sc_pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+# Cross Chain Config
+[setting.chainlinkCcipRouter]
+defaultValue = "0x8a710bbd77661d168d5a6725bd2e514ba1bff59d"
+
+[setting.chainlinkCcipTokenPool]
+defaultValue = "0x0000000000000000000000000000000000000000"
+
+[setting.chainlinkFunctions]
+defaultValue = "0x649a2C205BE7A3d5e99206CEEFF30c794f0E31EC"
+
+# ETH Synth Configuration
+
+[setting.eth_aggregator_address]
+defaultValue = "0x0715A7794a1dc8e42615F059dD6e406A6594651A"
+
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "100"
+
+[setting.synthEthSkewScale]
+defaultValue = "100000"
+
+[setting.synthEthWrapFee]
+defaultValue = "0.0001"
+
+[setting.synthEthUnwrapFee]
+defaultValue = "0.0001"
+
+[setting.ethSettlementWindowDuration]
+defaultValue = "600"
+
+# Pyth settlement strategy config
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythEthFeedId]
+defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+
+depends=["invoke.createScPool", "invoke.setSynthPriceEth"]

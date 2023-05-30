@@ -1,0 +1,9 @@
+[invoke.allowAllCreateCrossChainPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = [
+    "<%= formatBytes32String('createCrossChainPool') %>",
+    true,
+]
+depends=["provision.system"]
