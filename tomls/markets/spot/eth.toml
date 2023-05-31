@@ -90,7 +90,7 @@ fromCall.args = []
 
 func = "configureMaximumMarketCollateral"
 args = [
-  "<%= extras.synth_eth_market_id %>", 
+  "<%= extras.synth_eth_market_id %>",
   "<%= settings.weth_address %>",
   "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
 ]
@@ -104,7 +104,7 @@ fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 
 func = "setWrapper"
 args = [
-  "<%= extras.synth_eth_market_id %>", 
+  "<%= extras.synth_eth_market_id %>",
   "<%= settings.weth_address %>",
   "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
 ]

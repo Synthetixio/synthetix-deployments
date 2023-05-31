@@ -9,9 +9,12 @@ defaultValue = "snax"
 [setting.bundleSalt]
 defaultValue = "snax"
 
+[setting.targetPreset]
+defaultValue = "main"
+
 [provision.system]
 source = "<%= settings.snx_package %>"
-targetPreset = "main"
+targetPreset = "<%= settings.targetPreset %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.bundleSalt = "<%= settings.bundleSalt %>"
