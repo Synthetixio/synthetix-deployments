@@ -4,6 +4,8 @@ include = [
 
 [setting.snx_address]
 
+[setting.snx_liquidation_reward]
+
 [invoke.configureSnxCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
