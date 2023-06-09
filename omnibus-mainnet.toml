@@ -10,6 +10,9 @@ include = [
     "tomls/pools/spartan-council.toml",
 ]
 
+[setting.eth_aggregator_address]
+defaultValue = "0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46"
+
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
