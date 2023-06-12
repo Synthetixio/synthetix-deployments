@@ -92,7 +92,7 @@ defaultValue = "0.0001"
 [setting.ethSettlementWindowDuration]
 defaultValue = "600"
 
-[setting.wethIsEnabled]
+[setting.wethDepositingEnabled]
 defaultValue = false
 
 # Pyth settlement strategy config
