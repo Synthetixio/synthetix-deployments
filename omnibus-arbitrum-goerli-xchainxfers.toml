@@ -1,0 +1,69 @@
+name = "synthetix-omnibus"
+version = "3.2.0-xchain.0"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    "tomls/collaterals/snx.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
+]
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.salt]
+defaultValue = "0x78636861696e7866657273000000000000000000000000000000000000000000"
+
+[setting.bundleSalt]
+defaultValue = "xchainxfers"
+
+[setting.target_preset]
+defaultValue = "xchainxfers"
+
+[setting.weth_address]
+defaultValue = "0x7F5bc2250ea57d8ca932898297b1FF9aE1a04999"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08"
+
+[setting.snx_address]
+defaultValue = "0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28"
+
+[setting.snx_aggregator_address]
+defaultValue = "0xd28Ba6CA3bB72bF371b80a2a0a33cBcf9073C954"
+
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[setting.weth_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "0"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.sc_pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+# Chainlink Configuration
+
+[setting.ccip_router]
+defaultValue = "0xf9b7595d64a380ffa605a1d11bff5cd629fb7189"
+
+[setting.ccip_token_pool]
+defaultValue = "0xf9b7595d64a380ffa605a1d11bff5cd629fb7189"
+
+[setting.chainlink_funcs]
+defaultValue = "0xf9b7595d64a380ffa605a1d11bff5cd629fb7189"
