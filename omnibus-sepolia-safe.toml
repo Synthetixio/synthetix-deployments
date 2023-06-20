@@ -1,0 +1,46 @@
+name = "synthetix-omnibus"
+version = "3.1.1"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    #"tomls/collaterals/snx.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
+]
+
+[setting.owner]
+defaultValue = "0x8E8A37Af8e9e5c00d72D1dE7423954737368ADE2"
+
+[setting.salt]
+defaultValue = "safesnax"
+
+[setting.bundleSalt]
+defaultValue = "safesnax"
+
+[setting.weth_address]
+defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+
+[setting.weth_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.sc_pool_owner]
+defaultValue = "0x8E8A37Af8e9e5c00d72D1dE7423954737368ADE2"
