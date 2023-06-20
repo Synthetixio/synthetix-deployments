@@ -15,6 +15,9 @@ include = [
 [setting.owner]
 defaultValue = "0x8E8A37Af8e9e5c00d72D1dE7423954737368ADE2"
 
+[setting.targetPreset]
+defaultValue = "safe"
+
 [setting.salt]
 defaultValue = "safesnax"
 
