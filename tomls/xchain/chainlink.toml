@@ -4,6 +4,8 @@
 
 [setting.chainlinkFunctions]
 
+[setting.syncPoolCode]
+
 [invoke.configureChainlinkCrossChain]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
@@ -12,6 +14,18 @@ args = [
     "<%= settings.chainlinkCcipRouter %>",
     "<%= settings.chainlinkCcipTokenPool %>",
     "<%= settings.chainlinkFunctions %>",
+]
+
+depends=["provision.system"]
+
+[invoke.setSyncPoolChainlinkFunctionCode]
+
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= formatBytes32String('performUpkeep_syncPool') %>",
+    "<%= defaultAbiCoder.encode(['address'], [settings.syncPoolCode]) %>",
 ]
 
 depends=["provision.system"]

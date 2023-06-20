@@ -27,7 +27,7 @@ defaultValue = "synthetix-spot-market:3.2.0-xchain.0"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.salt]
-defaultValue = "xchain"
+defaultValue = "xchain-4"
 
 [setting.targetPreset]
 defaultValue = "xchain"
@@ -67,7 +67,10 @@ defaultValue = "0x8a710bbd77661d168d5a6725bd2e514ba1bff59d"
 defaultValue = "0x0000000000000000000000000000000000000000"
 
 [setting.chainlinkFunctions]
-defaultValue = "0x649a2C205BE7A3d5e99206CEEFF30c794f0E31EC"
+defaultValue = "0xeA6721aC65BCeD841B8ec3fc5fEdeA6141a0aDE4"
+
+[setting.syncPoolCode]
+defaultValue = "0xB28E22e615B06EAd0272136C2C6dD6adB2aaD34D"
 
 # ETH Synth Configuration
 
