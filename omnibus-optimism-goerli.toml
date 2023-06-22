@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.1.1"
+version = "3.1.2-dev.b055cbc5"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -48,13 +48,13 @@ defaultValue = "1"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.1.1"
+defaultValue = "synthetix:3.1.2-dev.b055cbc5"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.1.1"
+defaultValue = "synthetix-spot-market:3.1.2-dev.b055cbc5"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.1.1"
+defaultValue = "synthetix-perps-market:3.1.2-dev.b055cbc5"
 
 # Aggregators for markets
 
@@ -67,10 +67,50 @@ defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
 [setting.eth_aggregator_address]
 defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
+# Perps Global Configuration
+# TODO: move these into perps-factory once settings support max uint
+[invoke.setPerpsMaxCollateralForSnxUsd]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralForSynthMarketId"
+args = [
+  "0", 
+  "<%= MaxUint256 %>"
+]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsMaxCollateralForSynthMarketId]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralForSynthMarketId"
+args = [
+  "<%= extras.synth_eth_market_id %>", 
+  "<%= MaxUint256 %>"
+]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+
+[invoke.setPerpsSynthDeductionPriorityPerps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralForSynthMarketId"
+args = [
+  ["0", "<%= extras.synth_eth_market_id %>"]
+]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+
+[setting.perpsMinLiquidationReward]
+defaultValue = "100"
+
+[setting.perpsMaxLiquidationReward]
+defaultValue = "500"
+
 # ETH Perps Configuration
 
 [setting.perpsEthSkewScale]
 defaultValue = "100000"
+
+[setting.perpsEthMaxFundingVelocity]
+defaultValue = "9"
 
 # ETH Synth Configuration
 

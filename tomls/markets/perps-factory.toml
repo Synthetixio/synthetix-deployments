@@ -15,3 +15,22 @@ options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
 
 depends = ["provision.spotFactory"]
+
+[invoke.setPerpsSynthDeductionPriorityPerps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralForSynthMarketId"
+args = [
+  "<%= settings.perpsSynthDeductionPriority %>"
+]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsLiquidationRewardLimits]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationRewardGuards"
+args = [
+  "<%= parseEther(settings.perpsMinLiquidationReward) %>",
+  "<%= parseEther(settings.perpsMaxLiquidationReward) %>"
+]
+depends = ["provision.perpsFactory"]

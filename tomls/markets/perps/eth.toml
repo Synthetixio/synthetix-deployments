@@ -9,6 +9,8 @@ include = [
 
 [setting.perpsEthSkewScale]
 
+[setting.perpsEthMaxFundingVelocity]
+
 [invoke.createEthPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -40,15 +42,16 @@ args = [
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
-[invoke.setPerpsSkewScaleEth]
+[invoke.setPerpsFundingParametersEth]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.perps_eth_market_id %>"]
 
-func = "setSkewScale"
+func = "setFundingParameters"
 args = [
   "<%= extras.perps_eth_market_id %>", 
-  "<%= parseEther(settings.perpsEthSkewScale) %>"
+  "<%= parseEther(settings.perpsEthSkewScale) %>",
+  "<%= parseEther(settings.perpsEthMaxFundingVelocity) %>"
 ]
 
 depends = ["invoke.createEthPerpsMarket"]
