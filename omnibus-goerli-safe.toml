@@ -19,10 +19,10 @@ defaultValue = "0x40BFB5479A0E2529865c65ffEb392E6EE032fa2D"
 defaultValue = "safe"
 
 [setting.salt]
-defaultValue = "safesnax"
+defaultValue = "safesnax2"
 
 [setting.bundleSalt]
-defaultValue = "safesnax"
+defaultValue = "safesnax2"
 
 [setting.weth_address]
 defaultValue = "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"
