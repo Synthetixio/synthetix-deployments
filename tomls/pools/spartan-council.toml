@@ -21,7 +21,7 @@ fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "setPoolName"
 args = [
     "<%= settings.sc_pool_id %>",
-    "Spartan Council Pool",
+    "Spartan Council Pool for safes",
 ]
 depends=["invoke.createScPool"]
 
