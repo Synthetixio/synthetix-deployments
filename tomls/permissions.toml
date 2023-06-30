@@ -6,6 +6,6 @@ fromCall.func = "owner"
 func = "addToFeatureFlagAllowlist"
 args = [
     "<%= formatBytes32String('createPool') %>",
-    "<%= settings.deployer %>",
+    "<%= settings.sc_pool_owner %>",
 ]
 depends=["provision.system"]
