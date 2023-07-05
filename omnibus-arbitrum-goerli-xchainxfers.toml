@@ -60,10 +60,10 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 # Chainlink Configuration
 
 [setting.ccip_router]
-defaultValue = "0x651ef69f635f5017e281c2ee09cdd4436560c89e"
+defaultValue = "0x88e492127709447a5abefdab8788a15b4567589e"
 
 [setting.ccip_token_pool]
-defaultValue = "0x691e9949df34268d338082a01e790688d64d837e"
+defaultValue = "0x7990f84bbe3e6638907d5fcc217555146304a8d9"
 
 [setting.chainlink_funcs]
 defaultValue = "0x651ef69f635f5017e281c2ee09cdd4436560c89e"
