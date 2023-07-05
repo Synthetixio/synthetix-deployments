@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.1.1"
+version = "3.1.2-dev.b58535f2"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -54,7 +54,7 @@ defaultValue = "synthetix:3.1.1"
 defaultValue = "synthetix-spot-market:3.1.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.1.1"
+defaultValue = "synthetix-perps-market:3.1.2-dev.b58535f2"
 
 # Aggregators for markets
 
@@ -67,10 +67,75 @@ defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
 [setting.eth_aggregator_address]
 defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
+# Perps Global Configuration
+# TODO: move these into perps-factory once settings support max uint
+[invoke.setPerpsMaxCollateralForSnxUsd]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralAmount"
+args = [
+  "0", 
+  "<%= MaxUint256 %>"
+]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsMaxCollateralForSynthMarketId]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralAmount"
+args = [
+  "<%= extras.synth_eth_market_id %>", 
+  "<%= MaxUint256 %>"
+]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+
+[invoke.setPerpsSynthDeductionPriorityPerps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSynthDeductionPriority"
+args = [["0", "<%= extras.synth_eth_market_id %>"]]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+
+[setting.perpsMinLiquidationReward]
+defaultValue = "100"
+
+[setting.perpsMaxLiquidationReward]
+defaultValue = "500"
+
 # ETH Perps Configuration
 
 [setting.perpsEthSkewScale]
 defaultValue = "100000"
+
+[setting.perpsEthMaxFundingVelocity]
+defaultValue = "9"
+
+[setting.perpsEthMakerFeeRatio]
+defaultValue = "0.0007"
+
+[setting.perpsEthTakerFeeRatio]
+defaultValue = "0.0003"
+
+[setting.perpsEthMaxMarketValue]
+defaultValue = "10000"
+
+[setting.perpsEthInitialMarginRatio]
+defaultValue = "2"
+
+[setting.perpsEthMaintenanceMarginFraction]
+defaultValue = "1"
+
+[setting.perpsEthLiquidationRewardRatioD18]
+defaultValue = "0.01"
+
+[setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "1"
+
+[setting.perpsEthMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsEthLockedOiPercent]
+defaultValue = "0.1"
 
 # ETH Synth Configuration
 
@@ -98,6 +163,9 @@ defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={dat
 
 [setting.pythEthFeedId]
 defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+
+[setting.priceWindowDuration]
+defaultValue = "180"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]

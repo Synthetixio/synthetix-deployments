@@ -9,6 +9,30 @@ include = [
 
 [setting.perpsEthSkewScale]
 
+[setting.perpsEthMaxFundingVelocity]
+
+[setting.perpsEthMakerFeeRatio]
+
+[setting.perpsEthTakerFeeRatio]
+
+[setting.perpsEthMaxMarketValue]
+
+[setting.perpsEthInitialMarginRatio]
+
+[setting.perpsEthMaintenanceMarginFraction]
+
+[setting.perpsEthLiquidationRewardRatioD18]
+
+[setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsEthMaxSecondsInLiquidationWindow]
+
+[setting.perpsEthLockedOiPercent]
+
+# strategy type for Perps markets is 0, for spot markets is 1
+[setting.strategyType]
+defaultValue = "0"
+
 [invoke.createEthPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -36,19 +60,67 @@ fromCall.args = ["<%= extras.perps_eth_market_id %>"]
 func = "addSettlementStrategy"
 args = [
   "<%= extras.perps_eth_market_id %>", 
-  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.ethSettlementDelay %>", settlementWindowDuration = "<%= settings.ethSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.ethSettlementDeviationTolerance) %>", disabled = false }
+  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.ethSettlementDelay %>", settlementWindowDuration = "<%= settings.ethSettlementWindowDuration %>", priceWindowDuration = "<%= settings.priceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.ethSettlementDeviationTolerance) %>", disabled = false }
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
-[invoke.setPerpsSkewScaleEth]
+[invoke.setPerpsEthFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.perps_eth_market_id %>"]
-
-func = "setSkewScale"
+func = "setFundingParameters"
 args = [
   "<%= extras.perps_eth_market_id %>", 
-  "<%= parseEther(settings.perpsEthSkewScale) %>"
+  "<%= parseEther(settings.perpsEthSkewScale) %>",
+  "<%= parseEther(settings.perpsEthMaxFundingVelocity) %>"
 ]
+depends = ["invoke.createEthPerpsMarket"]
 
+[invoke.setPerpsEthOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+func = "setOrderFees"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= parseEther(settings.perpsEthMakerFeeRatio) %>",
+  "<%= parseEther(settings.perpsEthTakerFeeRatio) %>"
+]
+depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsEthMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+func = "setMaxMarketValue"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= parseEther(settings.perpsEthMaxMarketValue) %>"
+]
+depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsEthLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+func = "setLiquidationParameters"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= parseEther(settings.perpsEthInitialMarginRatio) %>",
+  "<%= parseEther(settings.perpsEthMaintenanceMarginFraction) %>",
+  "<%= parseEther(settings.perpsEthLiquidationRewardRatioD18) %>",
+  "<%= parseEther(settings.perpsEthMaxLiquidationLimitAccumulationMultiplier) %>",
+  "<%= parseEther(settings.perpsEthMaxSecondsInLiquidationWindow) %>"
+]
+depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsEthLockedOiPercent]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+func = "setLockedOiPercent"
+args = [
+  "<%= extras.perps_eth_market_id %>", 
+  "<%= parseEther(settings.perpsEthLockedOiPercent) %>"
+]
 depends = ["invoke.createEthPerpsMarket"]

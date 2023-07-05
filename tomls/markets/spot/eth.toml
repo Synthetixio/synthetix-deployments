@@ -19,6 +19,10 @@ include = [
 
 [setting.synthEthUnwrapFee]
 
+# strategy type for Perps markets is 0, for spot markets is 1
+[setting.strategyType]
+defaultValue = "1"
+
 [invoke.createEthSynth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"

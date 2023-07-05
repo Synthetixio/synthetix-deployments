@@ -1,6 +1,3 @@
-[setting.strategyType]
-defaultValue = "1"
-
 [setting.ethSettlementDelay]
 defaultValue = "15"
 
