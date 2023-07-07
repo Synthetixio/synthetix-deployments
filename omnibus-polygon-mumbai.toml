@@ -15,10 +15,13 @@ include = [
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.weth_address]
-defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
+defaultValue = "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa"
 
 [setting.eth_aggregator_address]
-defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+defaultValue = "0x0715A7794a1dc8e42615F059dD6e406A6594651A"
+
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
 
 [setting.weth_liquidation_reward]
 defaultValue = "10000000000000000000"
@@ -27,7 +30,7 @@ defaultValue = "10000000000000000000"
 defaultValue = "2000000000000000000"
 
 [setting.account_timeout_withdraw]
-defaultValue = "86400"
+defaultValue = "0"
 
 [setting.deployer]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
@@ -38,8 +41,10 @@ defaultValue = "1"
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+# Chainlink Configuration
+
 [setting.ccip_router]
-defaultValue = "0xd0daae2231e9cb96b94c8512223533293c3693bf"
+defaultValue = "0x70499c328e1e2a3c41108bd3730f6670a44595d1"
 
 [setting.ccip_token_pool]
-defaultValue = "0x2291909e328dd00e6b3284730d478f39dbde4c88"
+defaultValue = "0x56ffa3ae8bb98b120067b1be50136f681aa3addf"

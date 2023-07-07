@@ -6,8 +6,6 @@
 
 [setting.ccip_token_pool]
 
-[setting.chainlink_funcs]
-
 [invoke.setMinimumLiquidityRatio]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
@@ -31,7 +29,16 @@ fromCall.func = "owner"
 func = "configureChainlinkCrossChain"
 args = [
   "<%= settings.ccip_router %>", 
-  "<%= settings.ccip_token_pool %>", 
-  "<%= settings.chainlink_funcs %>"
+  "<%= settings.ccip_token_pool %>"
+]
+depends = ["provision.system"]
+
+[invoke.setSupportedCrossChainNetworks]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setSupportedCrossChainNetworks"
+args = [
+  ["11155111", "420", "421613", "80001"], 
+  ["16015286601757825753", "2664363617261496610", "6101244977088475029", "12532609583862916517"]
 ]
 depends = ["provision.system"]

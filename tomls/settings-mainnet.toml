@@ -1,0 +1,13 @@
+include = [
+    "tomls/settings.toml",
+]
+
+[invoke.setSupportedCrossChainNetworks]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setSupportedCrossChainNetworks"
+args = [
+  ["1", "10"], 
+  ["", ""]
+]
+depends = ["provision.system"]

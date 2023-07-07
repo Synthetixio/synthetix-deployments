@@ -15,10 +15,13 @@ include = [
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.weth_address]
-defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
+defaultValue = "0x7F5bc2250ea57d8ca932898297b1FF9aE1a04999"
 
 [setting.eth_aggregator_address]
-defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+defaultValue = "0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08"
+
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
 
 [setting.weth_liquidation_reward]
 defaultValue = "10000000000000000000"
@@ -38,8 +41,10 @@ defaultValue = "1"
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+# Chainlink Configuration
+
 [setting.ccip_router]
-defaultValue = "0xd0daae2231e9cb96b94c8512223533293c3693bf"
+defaultValue = "0x88e492127709447a5abefdab8788a15b4567589e"
 
 [setting.ccip_token_pool]
-defaultValue = "0x2291909e328dd00e6b3284730d478f39dbde4c88"
+defaultValue = "0x7990f84bbe3e6638907d5fcc217555146304a8d9"

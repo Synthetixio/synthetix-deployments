@@ -1,8 +1,8 @@
 name = "synthetix-omnibus"
-version = "3.1.1"
+version = "3.2.0"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings.toml",
+    "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
@@ -47,14 +47,11 @@ defaultValue = "1"
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[setting.snx_package]
-defaultValue = "synthetix:3.1.1"
+[setting.ccip_router]
+defaultValue = "0xeb52e9ae4a9fb37172978642d4c141ef53876f26"
 
-[setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.1.1"
-
-[setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.1.1"
+[setting.ccip_token_pool]
+defaultValue = "0x7a81e36b40b0a778afb2ae3c8384b6195233d093"
 
 # Aggregators for markets
 
@@ -71,6 +68,9 @@ defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
 [setting.perpsEthSkewScale]
 defaultValue = "100000"
+
+[setting.perpsEthMaxFundingVelocity]
+defaultValue = "1"
 
 # ETH Synth Configuration
 

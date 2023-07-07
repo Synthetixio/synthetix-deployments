@@ -1,9 +1,10 @@
 [setting.snx_package]
-defaultValue = "synthetix:3.2.0-xchain.0"
+defaultValue = "synthetix:3.2.0"
 
 [setting.owner]
 
 [setting.target_preset]
+defaultValue = "main"
 
 [setting.salt]
 defaultValue = "snax"

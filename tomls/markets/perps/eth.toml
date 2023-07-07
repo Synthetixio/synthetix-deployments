@@ -9,6 +9,8 @@ include = [
 
 [setting.perpsEthSkewScale]
 
+[setting.perpsEthMaxFundingVelocity]
+
 [invoke.createEthPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -29,26 +31,27 @@ args = [
 ]
 depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
 
-[invoke.setPerpsEthSettlementStrategy]
+#[invoke.setPerpsEthSettlementStrategy]
+#target = ["perpsFactory.PerpsMarketProxy"]
+#fromCall.func = "getMarketOwner"
+#fromCall.args = ["<%= extras.perps_eth_market_id %>"]
+#func = "addSettlementStrategy"
+#args = [
+#  "<%= extras.perps_eth_market_id %>", 
+#  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.ethSettlementDelay %>", settlementWindowDuration = "<%= settings.ethSettlementWindowDuration %>",  priceWindowDuration = "<%= settings.ethPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.ethSettlementDeviationTolerance) %>", disabled = false }
+#]
+#depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsEthFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.perps_eth_market_id %>"]
-func = "addSettlementStrategy"
+
+func = "setFundingParameters"
 args = [
   "<%= extras.perps_eth_market_id %>", 
-  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.ethSettlementDelay %>", settlementWindowDuration = "<%= settings.ethSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.ethSettlementDeviationTolerance) %>", disabled = false }
-]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsSkewScaleEth]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_eth_market_id %>"]
-
-func = "setSkewScale"
-args = [
-  "<%= extras.perps_eth_market_id %>", 
-  "<%= parseEther(settings.perpsEthSkewScale) %>"
+  "<%= parseEther(settings.perpsEthSkewScale) %>",
+  "<%= settings.perpsEthSkewScale %>"
 ]
 
 depends = ["invoke.createEthPerpsMarket"]
