@@ -1,8 +1,8 @@
 name = "synthetix-omnibus"
-version = "3.1.1"
+version = "3.2.0"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings.toml",
+    "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     #"tomls/collaterals/snx.toml",
@@ -20,12 +20,6 @@ defaultValue = "0x4200000000000000000000000000000000000006"
 
 [setting.weth_aggregator_address]
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
-
-#[setting.snx_address]
-#defaultValue = ""
-
-#[setting.snx_aggregator_address]
-#defaultValue = ""
 
 #[setting.snx_liquidation_reward]
 #defaultValue = "10000000000000000000"
@@ -46,4 +40,10 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 defaultValue = "1"
 
 [setting.sc_pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.ccip_router]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
