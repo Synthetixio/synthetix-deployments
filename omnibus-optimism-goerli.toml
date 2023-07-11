@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.2.0"
+version = "3.2.1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -15,6 +15,7 @@ include = [
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-createAccount.toml", # used for perps market
+    "tomls/permit-all-transferCrossChain.toml",
 ]
 
 [setting.owner]
@@ -113,7 +114,7 @@ defaultValue = "0.0007"
 [setting.perpsEthTakerFeeRatio]
 defaultValue = "0.0003"
 
-[setting.perpsEthMaxMarketValue]
+[setting.perpsEthMaxMarketSize]
 defaultValue = "10000"
 
 [setting.perpsEthInitialMarginRatio]
@@ -131,7 +132,10 @@ defaultValue = "1"
 [setting.perpsEthMaxSecondsInLiquidationWindow]
 defaultValue = "30"
 
-[setting.perpsEthLockedOiPercent]
+[setting.perpsEthMinimumPositionMargin]
+defaultValue = "1"
+
+[setting.perpsEthLockedOiRatio]
 defaultValue = "0.1"
 
 # ETH Synth Configuration

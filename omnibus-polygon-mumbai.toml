@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.2.0"
+version = "3.2.1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -9,6 +9,7 @@ include = [
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-transferCrossChain.toml",
 ]
 
 [setting.owner]

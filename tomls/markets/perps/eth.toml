@@ -15,7 +15,7 @@ include = [
 
 [setting.perpsEthTakerFeeRatio]
 
-[setting.perpsEthMaxMarketValue]
+[setting.perpsEthMaxMarketSize]
 
 [setting.perpsEthInitialMarginRatio]
 
@@ -27,7 +27,9 @@ include = [
 
 [setting.perpsEthMaxSecondsInLiquidationWindow]
 
-[setting.perpsEthLockedOiPercent]
+[setting.perpsEthMinimumPositionMargin]
+
+[setting.perpsEthLockedOiRatio]
 
 # strategy type for Perps markets is 0, for spot markets is 1
 [setting.strategyType]
@@ -88,14 +90,14 @@ args = [
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
-[invoke.setPerpsEthMaxMarketValue]
+[invoke.setPerpsEthMaxMarketSize]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.perps_eth_market_id %>"]
-func = "setMaxMarketValue"
+func = "setMaxMarketSize"
 args = [
   "<%= extras.perps_eth_market_id %>", 
-  "<%= parseEther(settings.perpsEthMaxMarketValue) %>"
+  "<%= parseEther(settings.perpsEthMaxMarketSize) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
@@ -110,17 +112,18 @@ args = [
   "<%= parseEther(settings.perpsEthMaintenanceMarginFraction) %>",
   "<%= parseEther(settings.perpsEthLiquidationRewardRatioD18) %>",
   "<%= parseEther(settings.perpsEthMaxLiquidationLimitAccumulationMultiplier) %>",
-  "<%= parseEther(settings.perpsEthMaxSecondsInLiquidationWindow) %>"
+  "<%= parseEther(settings.perpsEthMaxSecondsInLiquidationWindow) %>",
+  "<%= parseEther(settings.perpsEthMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
-[invoke.setPerpsEthLockedOiPercent]
+[invoke.setPerpsEthLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.perps_eth_market_id %>"]
-func = "setLockedOiPercent"
+func = "setLockedOiRatio"
 args = [
   "<%= extras.perps_eth_market_id %>", 
-  "<%= parseEther(settings.perpsEthLockedOiPercent) %>"
+  "<%= parseEther(settings.perpsEthLockedOiRatio) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
