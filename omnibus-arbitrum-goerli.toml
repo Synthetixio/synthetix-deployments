@@ -5,7 +5,6 @@ include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",
@@ -16,18 +15,15 @@ include = [
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.weth_address]
-defaultValue = "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"
+defaultValue = "0x7F5bc2250ea57d8ca932898297b1FF9aE1a04999"
 
 [setting.eth_aggregator_address]
-defaultValue = "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e"
-
-[setting.snx_address]
-defaultValue = "0x51f44ca59b867E005e48FA573Cb8df83FC7f7597"
-
-[setting.snx_aggregator_address]
-defaultValue = "0x48731cF7e84dc94C5f84577882c14Be11a5B7456"
+defaultValue = "0x62CAe0FA2da220f43a51F86Db2EDb36DcA9A5A08"
 
 [setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[setting.weth_liquidation_reward]
 defaultValue = "10000000000000000000"
 
 [setting.minimum_liquidity_ratio]
@@ -45,8 +41,10 @@ defaultValue = "1"
 [setting.sc_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+# Chainlink Configuration
+
 [setting.ccip_router]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x88e492127709447a5abefdab8788a15b4567589e"
 
 [setting.ccip_token_pool]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x7990f84bbe3e6638907d5fcc217555146304a8d9"

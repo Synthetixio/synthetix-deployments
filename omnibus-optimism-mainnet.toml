@@ -1,8 +1,8 @@
 name = "synthetix-omnibus"
-version = "3.1.1"
+version = "3.2.0"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings.toml",
+    "tomls/settings-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
@@ -46,6 +46,12 @@ defaultValue = "1"
 
 [setting.sc_pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+
+[setting.ccip_router]
+defaultValue = "0x261c05167db67B2b619f9d312e0753f3721ad6E8"
+
+[setting.ccip_token_pool]
+defaultValue = "0xe470A3068302CF045Eec3B800dDBFf42B42e18D8"
 
 # ETH Synth Configuration
 
