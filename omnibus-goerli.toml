@@ -10,6 +10,7 @@ include = [
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-transferCrossChain.toml",
 ]
 
 [setting.owner]
