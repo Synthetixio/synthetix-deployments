@@ -8,6 +8,7 @@ include = [
     "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/pools/passive-snx.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/link.toml",
@@ -46,6 +47,12 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 defaultValue = "1"
 
 [setting.sc_pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.snx_pool_id]
+defaultValue = "2"
+
+[setting.snx_pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_router]
