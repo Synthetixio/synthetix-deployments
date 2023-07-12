@@ -28,7 +28,7 @@ defaultValue = "0x51f44ca59b867E005e48FA573Cb8df83FC7f7597"
 defaultValue = "0x48731cF7e84dc94C5f84577882c14Be11a5B7456"
 
 [setting.snx_liquidation_reward]
-defaultValue = "10000000000000000000"
+defaultValue = "20000000000000000000"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
