@@ -59,7 +59,7 @@ defaultValue = "<%= settings.sc_pool_owner %>"
 defaultValue = "0xeb52e9ae4a9fb37172978642d4c141ef53876f26"
 
 [setting.ccip_token_pool]
-defaultValue = "0x7a81e36b40b0a778afb2ae3c8384b6195233d093"
+defaultValue = "0xd23c2ef3a533040b57cadaf33ccb111edbaca018"
 
 # Aggregators for markets
 
