@@ -15,7 +15,7 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
-    "tomls/permit-all-createAccount.toml", # used for perps market
+    "tomls/permit-all-perps-createAccount.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
 
@@ -74,6 +74,7 @@ defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
 # Perps Global Configuration
 # TODO: move these into perps-factory once settings support max uint
+
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -108,6 +109,9 @@ defaultValue = "100"
 defaultValue = "500"
 
 # ETH Perps Configuration
+
+[setting.ethPerpsMarketId]
+defaultValue = "100"
 
 [setting.perpsEthSkewScale]
 defaultValue = "100000"
