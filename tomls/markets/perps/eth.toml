@@ -49,7 +49,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
 args = [
-  "<%= settings.ethMarketId %>", 
+  "<%= settings.ethPerpsMarketId %>", 
   "<%= extras.eth_oracle_id %>"
 ]
 depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
@@ -59,7 +59,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
-  "<%= settings.ethMarketId %>", 
+  "<%= settings.ethPerpsMarketId %>", 
   { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.ethSettlementDelay %>", settlementWindowDuration = "<%= settings.ethSettlementWindowDuration %>", priceWindowDuration = "<%= settings.priceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.ethSettlementDeviationTolerance) %>", disabled = false }
 ]
 depends = ["invoke.createEthPerpsMarket"]
@@ -69,7 +69,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
-  "<%= settings.ethMarketId %>", 
+  "<%= settings.ethPerpsMarketId %>", 
   "<%= parseEther(settings.perpsEthSkewScale) %>",
   "<%= parseEther(settings.perpsEthMaxFundingVelocity) %>"
 ]
@@ -80,7 +80,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
 args = [
-  "<%= settings.ethMarketId %>", 
+  "<%= settings.ethPerpsMarketId %>", 
   "<%= parseEther(settings.perpsEthMakerFeeRatio) %>",
   "<%= parseEther(settings.perpsEthTakerFeeRatio) %>"
 ]
@@ -91,7 +91,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = [
-  "<%= settings.ethMarketId %>", 
+  "<%= settings.ethPerpsMarketId %>", 
   "<%= parseEther(settings.perpsEthMaxMarketSize) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
@@ -101,7 +101,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
-  "<%= settings.ethMarketId %>", 
+  "<%= settings.ethPerpsMarketId %>", 
   "<%= parseEther(settings.perpsEthInitialMarginRatio) %>",
   "<%= parseEther(settings.perpsEthMaintenanceMarginFraction) %>",
   "<%= parseEther(settings.perpsEthLiquidationRewardRatioD18) %>",
@@ -116,7 +116,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = [
-  "<%= settings.ethMarketId %>",
+  "<%= settings.ethPerpsMarketId %>",
   "<%= parseEther(settings.perpsEthLockedOiRatio) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
