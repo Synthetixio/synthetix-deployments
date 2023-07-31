@@ -165,6 +165,18 @@ defaultValue = "0.0001"
 [setting.ethSettlementWindowDuration]
 defaultValue = "600"
 
+[invoke.setPerpsProxyCustomTransactorOnEthSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+  "<%= extras.synth_eth_market_id %>", 
+  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>", 
+  "<%= parseEther('0.0001') %>"
+]
+depends=["provision.perpsFactory", "invoke.createEthSynth"]
+
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
