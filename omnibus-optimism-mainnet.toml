@@ -30,6 +30,9 @@ defaultValue = "0x4200000000000000000000000000000000000006"
 [setting.eth_aggregator_address]
 defaultValue = "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
 
+[setting.btc_aggregator_address]
+defaultValue = "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593"
+
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"
 
