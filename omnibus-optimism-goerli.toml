@@ -132,8 +132,11 @@ defaultValue = "10000"
 [setting.perpsEthInitialMarginRatio]
 defaultValue = "2"
 
-[setting.perpsEthMaintenanceMarginFraction]
-defaultValue = "1"
+[setting.perpsEthMinimumInitialMarginRatio]
+defaultValue = "0.01"
+
+[setting.perpsEthMaintenanceMarginScalar]
+defaultValue = "0.5"
 
 [setting.perpsEthLiquidationRewardRatioD18]
 defaultValue = "0.01"
@@ -151,6 +154,9 @@ defaultValue = "1"
 defaultValue = "0.1"
 
 # BTC Perps Configuration
+
+[setting.btcPerpsMarketId]
+defaultValue = "200"
 
 [setting.perpsBtcSkewScale]
 defaultValue = "100000"
@@ -170,8 +176,11 @@ defaultValue = "10000"
 [setting.perpsBtcInitialMarginRatio]
 defaultValue = "2"
 
-[setting.perpsBtcMaintenanceMarginFraction]
+[setting.perpsBtcMaintenanceMarginScalar]
 defaultValue = "1"
+
+[setting.perpsBtcMinimumInitialMarginRatio]
+defaultValue = "0.01"
 
 [setting.perpsBtcLiquidationRewardRatioD18]
 defaultValue = "0.01"
@@ -260,4 +269,4 @@ args = [
     ],
 ]
 
-depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "invoke.createEthPerpsMarket"]
+depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "provision.perpsFactory"]
