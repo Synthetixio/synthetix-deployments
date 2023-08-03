@@ -3,7 +3,7 @@ include = [
 ]
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.2.0"
+defaultValue = "synthetix-spot-market:3.2.1-dev.b257e30b"
 
 [provision.spotFactory]
 source = "<%= settings.spot_market_package %>"
