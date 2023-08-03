@@ -7,6 +7,8 @@ include = [
   "../common/settlement-strategies/btc/pyth.toml"
 ]
 
+[setting.btcPerpsMarketId]
+
 [setting.perpsBtcSkewScale]
 
 [setting.perpsBtcMaxFundingVelocity]
@@ -39,40 +41,35 @@ defaultValue = "0"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["Bitcoin", "BTC", "<%= settings.owner %>"]
-extra.perps_btc_market_id.event = "MarketRegistered"
-extra.perps_btc_market_id.arg = 0
+args = ["<%= settings.btcPerpsMarketId %>", "Bitcoin", "BTC"]
 depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsPriceBtc]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "updatePriceData"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   "<%= extras.btc_oracle_id %>"
 ]
 depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
 
 [invoke.setPerpsBtcSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.btcSettlementDelay %>", settlementWindowDuration = "<%= settings.btcSettlementWindowDuration %>", priceWindowDuration = "<%= settings.priceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.btcSettlementDeviationTolerance) %>", disabled = false }
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   "<%= parseEther(settings.perpsBtcSkewScale) %>",
   "<%= parseEther(settings.perpsBtcMaxFundingVelocity) %>"
 ]
@@ -80,11 +77,10 @@ depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcOrderFees]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "setOrderFees"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   "<%= parseEther(settings.perpsBtcMakerFeeRatio) %>",
   "<%= parseEther(settings.perpsBtcTakerFeeRatio) %>"
 ]
@@ -92,22 +88,20 @@ depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcMaxMarketSize]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   "<%= parseEther(settings.perpsBtcInitialMarginRatio) %>",
   "<%= parseEther(settings.perpsBtcMaintenanceMarginFraction) %>",
   "<%= parseEther(settings.perpsBtcLiquidationRewardRatioD18) %>",
@@ -119,11 +113,10 @@ depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.perps_btc_market_id %>"]
+fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = [
-  "<%= extras.perps_btc_market_id %>", 
+  "<%= settings.btcPerpsMarketId %>", 
   "<%= parseEther(settings.perpsBtcLockedOiRatio) %>"
 ]
 depends = ["invoke.createBtcPerpsMarket"]
