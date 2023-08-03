@@ -3,14 +3,14 @@ include = [
 ]
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.2.0"
+defaultValue = "synthetix-perps-market:3.2.1-dev.b257e30b"
 
 [provision.perpsFactory]
 source = "<%= settings.perps_market_package %>"
 targetPreset = "main"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = ""
+options.salt = "alpha"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
 
