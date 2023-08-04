@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.2.1-dev.b257e30b"
+version = "3.2.1-dev.3c89ca90"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -13,6 +13,7 @@ include = [
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/link.toml",
     "tomls/markets/perps/eth.toml",
+    "tomls/markets/perps/btc.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-perps-createAccount.toml",
@@ -131,8 +132,11 @@ defaultValue = "10000"
 [setting.perpsEthInitialMarginRatio]
 defaultValue = "2"
 
-[setting.perpsEthMaintenanceMarginFraction]
-defaultValue = "1"
+[setting.perpsEthMinimumInitialMarginRatio]
+defaultValue = "0.01"
+
+[setting.perpsEthMaintenanceMarginScalar]
+defaultValue = "0.5"
 
 [setting.perpsEthLiquidationRewardRatioD18]
 defaultValue = "0.01"
@@ -147,6 +151,50 @@ defaultValue = "30"
 defaultValue = "1"
 
 [setting.perpsEthLockedOiRatio]
+defaultValue = "0.1"
+
+# BTC Perps Configuration
+
+[setting.btcPerpsMarketId]
+defaultValue = "200"
+
+[setting.perpsBtcSkewScale]
+defaultValue = "100000"
+
+[setting.perpsBtcMaxFundingVelocity]
+defaultValue = "9"
+
+[setting.perpsBtcMakerFeeRatio]
+defaultValue = "0.0007"
+
+[setting.perpsBtcTakerFeeRatio]
+defaultValue = "0.0003"
+
+[setting.perpsBtcMaxMarketSize]
+defaultValue = "10000"
+
+[setting.perpsBtcInitialMarginRatio]
+defaultValue = "2"
+
+[setting.perpsBtcMaintenanceMarginScalar]
+defaultValue = "1"
+
+[setting.perpsBtcMinimumInitialMarginRatio]
+defaultValue = "0.01"
+
+[setting.perpsBtcLiquidationRewardRatioD18]
+defaultValue = "0.01"
+
+[setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "1"
+
+[setting.perpsBtcMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsBtcMinimumPositionMargin]
+defaultValue = "1"
+
+[setting.perpsBtcLockedOiRatio]
 defaultValue = "0.1"
 
 # ETH Synth Configuration
@@ -181,12 +229,27 @@ args = [
 ]
 depends=["provision.perpsFactory", "invoke.createEthSynth"]
 
+[invoke.setPerpsProxyCustomTransactorOnBtcSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+  "<%= extras.synth_btc_market_id %>", 
+  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>", 
+  "<%= parseEther('0.0001') %>"
+]
+depends=["provision.perpsFactory", "invoke.createBtcSynth"]
+
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
 
 [setting.pythEthFeedId]
 defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+
+[setting.pythBtcFeedId]
+defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
 
 [setting.priceWindowDuration]
 defaultValue = "180"
@@ -206,4 +269,4 @@ args = [
     ],
 ]
 
-depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "invoke.createEthPerpsMarket"]
+depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "provision.perpsFactory"]
