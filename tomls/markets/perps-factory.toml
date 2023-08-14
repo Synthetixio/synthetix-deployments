@@ -3,7 +3,7 @@ include = [
 ]
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.2.1-dev.3c89ca90"
+defaultValue = "synthetix-perps-market:3.2.1-dev.5e6e7365"
 
 [provision.perpsFactory]
 source = "<%= settings.perps_market_package %>"
