@@ -1,0 +1,11 @@
+# Synth Configuration
+
+# Pyth settlement strategy config
+
+# Aggregators for markets
+
+[setting.link_aggregator_address]
+defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
+
+# Perps Configuration
+
