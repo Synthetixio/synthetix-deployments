@@ -1,5 +1,6 @@
 include = ["settings.toml"]
 
+# TODO: Add Base Mainnet when CCIP supports it
 [invoke.setSupportedCrossChainNetworks]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
