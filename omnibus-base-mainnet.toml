@@ -1,0 +1,92 @@
+name = "synthetix-omnibus"
+version = "3.2.1"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings-mainnet.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    # "tomls/collaterals/snx.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/markets/spot/eth.toml",
+    "tomls/permit-all-transferCrossChain.toml",
+]
+
+[setting.owner]
+defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
+
+[setting.salt]
+defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
+
+[setting.weth_address]
+defaultValue = "0x4200000000000000000000000000000000000006"
+
+[setting.eth_aggregator_address]
+defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400"
+
+[setting.deployer]
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.sc_pool_owner]
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+
+[setting.ccip_router]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.ccip_token_pool]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+# ETH Synth Configuration
+
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "100"
+
+[setting.synthEthSkewScale]
+defaultValue = "100000"
+
+[setting.synthEthWrapFee]
+defaultValue = "0.0001"
+
+[setting.synthEthUnwrapFee]
+defaultValue = "0.0001"
+
+[setting.ethSettlementWindowDuration]
+defaultValue = "60"
+
+[setting.ethSettlementDelay]
+defaultValue = "15"
+
+# Pyth settlement strategy config
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythEthFeedId]
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends=["invoke.createScPool", "invoke.createEthSynth"]
