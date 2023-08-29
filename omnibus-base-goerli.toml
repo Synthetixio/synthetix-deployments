@@ -54,7 +54,8 @@ defaultValue = "1"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_router]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0xa8c0c11bf64af62cdca6f93d3769b88bdd7cb93d"
 
+# TODO: There is no CCIP token pool available yet, using temporary address
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
