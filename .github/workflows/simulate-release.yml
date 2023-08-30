@@ -15,8 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: [mainnet, optimism-mainnet, goerli, optimism-goerli]
-        manifest: [omnibus.toml]
+        network: [mainnet, optimism-mainnet, goerli, optimism-goerli, base-goerli]
         include:
         - network: mainnet
           chainId: 1
