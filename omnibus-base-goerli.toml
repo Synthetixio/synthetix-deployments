@@ -49,10 +49,11 @@ defaultValue = "1"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_router]
+# https://docs.chain.link/ccip/supported-networks#base-goerli
 defaultValue = "0xa8c0c11bf64af62cdca6f93d3769b88bdd7cb93d"
 
-# TODO: There is no CCIP token pool available yet, using temporary address
 [setting.ccip_token_pool]
+# TODO: There is no CCIP token pool available yet, using temporary address
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 # ETH Synth Configuration
@@ -82,9 +83,11 @@ defaultValue = "15"
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
 
 [setting.pythEthFeedId]
+# https://pyth.network/developers/price-feed-ids#pyth-evm-testnet
 defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
 
 [setting.pythPriceVerificationAddress]
+# https://docs.pyth.network/documentation/pythnet-price-feeds/evm
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
 
 [invoke.setScPoolConfig]
