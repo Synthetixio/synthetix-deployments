@@ -9,6 +9,7 @@ include = [
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
+    "tomls/markets/spot/eth.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
@@ -28,12 +29,6 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.weth_address]
 defaultValue = "0x4200000000000000000000000000000000000006"
-
-[setting.weth_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
-
-#[setting.snx_liquidation_reward]
-#defaultValue = "10000000000000000000"
 
 [setting.eth_aggregator_address]
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
@@ -59,3 +54,48 @@ defaultValue = "0xa8c0c11bf64af62cdca6f93d3769b88bdd7cb93d"
 # TODO: There is no CCIP token pool available yet, using temporary address
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+# ETH Synth Configuration
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "100"
+
+[setting.synthEthSkewScale]
+defaultValue = "100000"
+
+[setting.synthEthWrapFee]
+defaultValue = "0.0001"
+
+[setting.synthEthUnwrapFee]
+defaultValue = "0.0001"
+
+[setting.ethSettlementWindowDuration]
+defaultValue = "60"
+
+[setting.ethSettlementDelay]
+defaultValue = "15"
+
+# Pyth settlement strategy config
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythEthFeedId]
+defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends=["invoke.createScPool", "invoke.createEthSynth"]
