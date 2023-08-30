@@ -260,7 +260,7 @@ args = [
   { tokenAddress = "<%= settings.ethSynthAddress %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
 ]
 depends = [
-  "invoke.createEthSynth", "invoke.registerEthOracleNode"
+  "invoke.setSynthPriceEth"
 ]
 
 [invoke.configuresETHMaxMarketCollateral]
@@ -273,7 +273,7 @@ args = [
   "<%= MaxUint256 %>"
 ]
 depends = [
-  "invoke.configuresETHCollateral"
+  "provision.perpsFactory", "invoke.configuresETHCollateral"
 ]
 
 # BTC Synth Configuration
@@ -282,10 +282,10 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= settings.btcSynthAddress %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+  { tokenAddress = "<%= settings.btcSynthAddress %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
 depends = [
-  "invoke.createBtcSynth", "invoke.registerSynthBtcOracleManager"
+  "invoke.setSynthPriceBtc"
 ]
 
 [invoke.configuresBTCMaxMarketCollateral]
@@ -298,7 +298,7 @@ args = [
   "<%= MaxUint256 %>"
 ]
 depends = [
-  "invoke.configuresETHCollateral"
+  "provision.perpsFactory", "invoke.configuresETHCollateral"
 ]
 
 # Pyth settlement strategy config
