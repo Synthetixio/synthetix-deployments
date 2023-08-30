@@ -27,7 +27,7 @@ defaultValue = "1"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Ethereum", "sETH", "<%= settings.owner %>"]
+args = ["Synthetic Ethereum", "snxETH", "<%= settings.owner %>"]
 
 extra.synth_eth_market_id.event = "SynthRegistered"
 extra.synth_eth_market_id.arg = 0

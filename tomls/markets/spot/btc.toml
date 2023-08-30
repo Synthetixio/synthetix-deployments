@@ -26,7 +26,7 @@ depends = [
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Bitcoin", "sBTC", "<%= settings.owner %>"]
+args = ["Synthetic Bitcoin", "snxBTC", "<%= settings.owner %>"]
 
 extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
