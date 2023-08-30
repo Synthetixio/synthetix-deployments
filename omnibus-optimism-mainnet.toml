@@ -87,6 +87,9 @@ defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={dat
 [setting.pythEthFeedId]
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
 
+[setting.pythPriceVerificationAddress]
+defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
+
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
