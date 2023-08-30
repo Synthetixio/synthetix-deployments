@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.2.1-dev.5e6e7365"
+version = "3.2.1-dev.0a0bee1a"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -197,7 +197,17 @@ defaultValue = "1"
 [setting.perpsBtcLockedOiRatio]
 defaultValue = "0.1"
 
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+[setting.btcSynthAddress]
+defaultValue = "0x4bC137c51c21bFf2A78073809605C2CEA80A06A1"
+
 # ETH Synth Configuration
+
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+[setting.ethSynthAddress]
+defaultValue = "0xDc6cad7F32cE7249f6f77a06bdcF143684Af61D4"
 
 [setting.synthEthAsyncFixedFee]
 defaultValue = "0.001"
@@ -240,6 +250,56 @@ args = [
   "<%= parseEther('0.0001') %>"
 ]
 depends=["provision.perpsFactory", "invoke.createBtcSynth"]
+
+# ETH Synth configuration on Core system
+[invoke.configuresETHCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+  { tokenAddress = "<%= settings.ethSynthAddress %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
+]
+depends = [
+  "invoke.setSynthPriceEth"
+]
+
+[invoke.configuresETHMaxMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+  "<%= imports.perpsFactory.extras.superMarketId %>",
+  "<%= settings.ethSynthAddress %>",
+  "<%= MaxUint256 %>"
+]
+depends = [
+  "provision.perpsFactory", "invoke.configuresETHCollateral"
+]
+
+# BTC Synth Configuration
+[invoke.configuresBTCCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+  { tokenAddress = "<%= settings.btcSynthAddress %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+]
+depends = [
+  "invoke.setSynthPriceBtc"
+]
+
+[invoke.configuresBTCMaxMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+  "<%= imports.perpsFactory.extras.superMarketId %>",
+  "<%= settings.btcSynthAddress %>",
+  "<%= MaxUint256 %>"
+]
+depends = [
+  "provision.perpsFactory", "invoke.configuresETHCollateral"
+]
 
 # Pyth settlement strategy config
 [setting.pythFeedUrl]

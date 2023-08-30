@@ -32,6 +32,9 @@ args = ["Synthetic Ethereum", "snxETH", "<%= settings.owner %>"]
 extra.synth_eth_market_id.event = "SynthRegistered"
 extra.synth_eth_market_id.arg = 0
 
+extra.synth_eth_token_address.event = "SynthRegistered"
+extra.synth_eth_token_address.arg = 1
+
 depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceEth]
