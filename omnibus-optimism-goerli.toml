@@ -81,7 +81,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = [
-  "0", 
+  "0",
   "<%= MaxUint256 %>"
 ]
 depends = ["provision.perpsFactory"]
@@ -91,7 +91,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = [
-  "<%= extras.synth_eth_market_id %>", 
+  "<%= extras.synth_eth_market_id %>",
   "<%= MaxUint256 %>"
 ]
 depends = ["invoke.createEthSynth", "provision.perpsFactory"]
@@ -223,8 +223,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "setCustomTransactorFees"
 args = [
-  "<%= extras.synth_eth_market_id %>", 
-  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>", 
+  "<%= extras.synth_eth_market_id %>",
+  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
   "<%= parseEther('0.0001') %>"
 ]
 depends=["provision.perpsFactory", "invoke.createEthSynth"]
@@ -235,8 +235,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setCustomTransactorFees"
 args = [
-  "<%= extras.synth_btc_market_id %>", 
-  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>", 
+  "<%= extras.synth_btc_market_id %>",
+  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
   "<%= parseEther('0.0001') %>"
 ]
 depends=["provision.perpsFactory", "invoke.createBtcSynth"]
