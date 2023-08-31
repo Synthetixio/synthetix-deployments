@@ -1,0 +1,51 @@
+include = [
+  "../spot-factory.toml",
+]
+
+[setting.snx_aggregator_address]
+
+[invoke.registerSynthSnxOracleManager]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+   # 3 = chainsnx aggregator type
+   3,
+   # 3 parameters are: address of the chainsnx oracle
+   "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.snx_aggregator_address, 0, 8]) %>",
+   []
+]
+
+extra.synth_snx_oracle_id.event = "NodeRegistered"
+extra.synth_snx_oracle_id.arg = 0
+
+depends = [
+ "provision.system"
+]
+
+[invoke.createSnxSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic Synthetix Network Token", "snxSNX", "<%= settings.owner %>"]
+
+extra.synth_snx_market_id.event = "SynthRegistered"
+extra.synth_snx_market_id.arg = 0
+
+extra.synth_snx_token_address.event = "SynthRegistered"
+extra.synth_snx_token_address.arg = 1
+
+depends = ["provision.spotFactory"]
+
+[invoke.setSynthPriceSnx]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_snx_market_id %>"]
+
+func = "updatePriceData"
+args = [
+  "<%= extras.synth_snx_market_id %>", 
+  "<%= extras.synth_snx_oracle_id %>", 
+  "<%= extras.synth_snx_oracle_id %>"
+]
+
+depends = ["invoke.createSnxSynth", "invoke.registerSynthSnxOracleManager"]

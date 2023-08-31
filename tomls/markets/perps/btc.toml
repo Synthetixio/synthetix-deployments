@@ -1,11 +1,10 @@
 include = [
   "../perps-factory.toml",
-
-  # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
-  # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
   "../../oracles/btc.toml",
-  "../common/settlement-strategies/btc/pyth.toml"
+  "../common/bigcap-settings.toml",
 ]
+
+[setting.pythBtcFeedId]
 
 [setting.btcPerpsMarketId]
 
@@ -60,7 +59,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
   "<%= settings.btcPerpsMarketId %>", 
-  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.btcSettlementDelay %>", settlementWindowDuration = "<%= settings.btcSettlementWindowDuration %>", priceWindowDuration = "<%= settings.priceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.btcSettlementDeviationTolerance) %>", disabled = false }
+  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 

@@ -1,0 +1,125 @@
+include = [
+  "../perps-factory.toml",
+
+  # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+  # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+  "../../oracles/snx.toml",
+  "../common/bigcap-settings.toml",
+]
+
+[setting.snxPerpsMarketId]
+
+[setting.perpsSnxSkewScale]
+
+[setting.perpsSnxMaxFundingVelocity]
+
+[setting.perpsSnxMakerFeeRatio]
+
+[setting.perpsSnxTakerFeeRatio]
+
+[setting.perpsSnxMaxMarketSize]
+
+[setting.perpsSnxInitialMarginRatio]
+
+[setting.perpsSnxMaintenanceMarginFraction]
+
+[setting.perpsSnxLiquidationRewardRatioD18]
+
+[setting.perpsSnxMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsSnxMaxSecondsInLiquidationWindow]
+
+[setting.perpsSnxMinimumPositionMargin]
+
+[setting.perpsSnxLockedOiRatio]
+
+[setting.pythSnxFeedId]
+
+# strategy type for Perps markets is 0, for spot markets is 1
+[setting.strategyType]
+defaultValue = "0"
+
+[invoke.createSnxPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.snxPerpsMarketId %>", "Synthetix Network Token", "SNX"]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsPriceSnx]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  "<%= extras.snx_oracle_id %>"
+]
+depends = ["invoke.createSnxPerpsMarket", "invoke.registerSnxOracleNode"]
+
+[invoke.setPerpsSnxSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythSnxFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
+]
+depends = ["invoke.createSnxPerpsMarket"]
+
+[invoke.setPerpsSnxFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsSnxSkewScale) %>",
+  "<%= parseEther(settings.perpsSnxMaxFundingVelocity) %>"
+]
+depends = ["invoke.createSnxPerpsMarket"]
+
+[invoke.setPerpsSnxOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsSnxMakerFeeRatio) %>",
+  "<%= parseEther(settings.perpsSnxTakerFeeRatio) %>"
+]
+depends = ["invoke.createSnxPerpsMarket"]
+
+[invoke.setPerpsSnxMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsSnxMaxMarketSize) %>"
+]
+depends = ["invoke.createSnxPerpsMarket"]
+
+[invoke.setPerpsSnxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsSnxInitialMarginRatio) %>",
+  "<%= parseEther(settings.perpsSnxMinimumInitialMarginRatio) %>",
+  "<%= parseEther(settings.perpsSnxMaintenanceMarginScalar) %>",
+  "<%= parseEther(settings.perpsSnxLiquidationRewardRatioD18) %>",
+  "<%= parseEther(settings.perpsSnxMaxLiquidationLimitAccumulationMultiplier) %>",
+  "<%= parseEther(settings.perpsSnxMaxSecondsInLiquidationWindow) %>",
+  "<%= parseEther(settings.perpsSnxMinimumPositionMargin) %>"
+]
+depends = ["invoke.createSnxPerpsMarket"]
+
+[invoke.setPerpsSnxLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = [
+  "<%= settings.snxPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsSnxLockedOiRatio) %>"
+]
+depends = ["invoke.createSnxPerpsMarket"]
