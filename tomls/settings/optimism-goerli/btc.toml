@@ -1,0 +1,56 @@
+# Synth Configuration
+
+# Pyth settlement strategy config
+
+[setting.pythBtcFeedId]
+defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
+
+# Aggregators for markets
+
+[setting.btc_aggregator_address]
+defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
+
+# Perps Configuration
+
+[setting.btcPerpsMarketId]
+defaultValue = "200"
+
+[setting.perpsBtcSkewScale]
+defaultValue = "100000"
+
+[setting.perpsBtcMaxFundingVelocity]
+defaultValue = "9"
+
+[setting.perpsBtcMakerFeeRatio]
+defaultValue = "0.0007"
+
+[setting.perpsBtcTakerFeeRatio]
+defaultValue = "0.0003"
+
+[setting.perpsBtcMaxMarketSize]
+defaultValue = "10000"
+
+[setting.perpsBtcInitialMarginRatio]
+defaultValue = "2"
+
+[setting.perpsBtcMaintenanceMarginScalar]
+defaultValue = "1"
+
+[setting.perpsBtcMinimumInitialMarginRatio]
+defaultValue = "0.01"
+
+[setting.perpsBtcLiquidationRewardRatioD18]
+defaultValue = "0.01"
+
+[setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "1"
+
+[setting.perpsBtcMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsBtcMinimumPositionMargin]
+defaultValue = "1"
+
+[setting.perpsBtcLockedOiRatio]
+defaultValue = "0.1"
+

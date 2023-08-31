@@ -18,6 +18,9 @@ include = [
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-perps-createAccount.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/settings/optimism-goerli/eth.toml",
+    "tomls/settings/optimism-goerli/btc.toml",
+    "tomls/settings/optimism-goerli/link.toml",
 ]
 
 [setting.owner]
@@ -62,17 +65,6 @@ defaultValue = "0xeb52e9ae4a9fb37172978642d4c141ef53876f26"
 [setting.ccip_token_pool]
 defaultValue = "0xd23c2ef3a533040b57cadaf33ccb111edbaca018"
 
-# Aggregators for markets
-
-[setting.link_aggregator_address]
-defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
-
-[setting.btc_aggregator_address]
-defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
-
-[setting.eth_aggregator_address]
-defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
-
 # Perps Global Configuration
 # TODO: move these into perps-factory once settings support max uint
 
@@ -109,124 +101,6 @@ defaultValue = "1"
 [setting.perpsMaxLiquidationReward]
 defaultValue = "500"
 
-# ETH Perps Configuration
-
-[setting.ethPerpsMarketId]
-defaultValue = "100"
-
-[setting.perpsEthSkewScale]
-defaultValue = "100000"
-
-[setting.perpsEthMaxFundingVelocity]
-defaultValue = "9"
-
-[setting.perpsEthMakerFeeRatio]
-defaultValue = "0.0007"
-
-[setting.perpsEthTakerFeeRatio]
-defaultValue = "0.0003"
-
-[setting.perpsEthMaxMarketSize]
-defaultValue = "10000"
-
-[setting.perpsEthInitialMarginRatio]
-defaultValue = "2"
-
-[setting.perpsEthMinimumInitialMarginRatio]
-defaultValue = "0.01"
-
-[setting.perpsEthMaintenanceMarginScalar]
-defaultValue = "0.5"
-
-[setting.perpsEthLiquidationRewardRatioD18]
-defaultValue = "0.01"
-
-[setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "1"
-
-[setting.perpsEthMaxSecondsInLiquidationWindow]
-defaultValue = "30"
-
-[setting.perpsEthMinimumPositionMargin]
-defaultValue = "1"
-
-[setting.perpsEthLockedOiRatio]
-defaultValue = "0.1"
-
-# BTC Perps Configuration
-
-[setting.btcPerpsMarketId]
-defaultValue = "200"
-
-[setting.perpsBtcSkewScale]
-defaultValue = "100000"
-
-[setting.perpsBtcMaxFundingVelocity]
-defaultValue = "9"
-
-[setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0007"
-
-[setting.perpsBtcTakerFeeRatio]
-defaultValue = "0.0003"
-
-[setting.perpsBtcMaxMarketSize]
-defaultValue = "10000"
-
-[setting.perpsBtcInitialMarginRatio]
-defaultValue = "2"
-
-[setting.perpsBtcMaintenanceMarginScalar]
-defaultValue = "1"
-
-[setting.perpsBtcMinimumInitialMarginRatio]
-defaultValue = "0.01"
-
-[setting.perpsBtcLiquidationRewardRatioD18]
-defaultValue = "0.01"
-
-[setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "1"
-
-[setting.perpsBtcMaxSecondsInLiquidationWindow]
-defaultValue = "30"
-
-[setting.perpsBtcMinimumPositionMargin]
-defaultValue = "1"
-
-[setting.perpsBtcLockedOiRatio]
-defaultValue = "0.1"
-
-# Note: this is now added to the event but because the synth is already created
-# we need to manually set it here
-[setting.btcSynthAddress]
-defaultValue = "0x4bC137c51c21bFf2A78073809605C2CEA80A06A1"
-
-# ETH Synth Configuration
-
-# Note: this is now added to the event but because the synth is already created
-# we need to manually set it here
-[setting.ethSynthAddress]
-defaultValue = "0xDc6cad7F32cE7249f6f77a06bdcF143684Af61D4"
-
-[setting.synthEthAsyncFixedFee]
-defaultValue = "0.001"
-
-[setting.synthEthMaxMarketCollateral]
-defaultValue = "100"
-
-[setting.synthEthSkewScale]
-defaultValue = "100000"
-
-[setting.synthEthWrapFee]
-defaultValue = "0.0001"
-
-[setting.synthEthUnwrapFee]
-defaultValue = "0.0001"
-
-[setting.ethSettlementWindowDuration]
-defaultValue = "600"
-
 [invoke.setPerpsProxyCustomTransactorOnEthSynthMarket]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -262,6 +136,18 @@ args = [
 depends = [
   "invoke.setSynthPriceEth"
 ]
+
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+[setting.btcSynthAddress]
+defaultValue = "0x4bC137c51c21bFf2A78073809605C2CEA80A06A1"
+
+# ETH Synth Configuration
+
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+[setting.ethSynthAddress]
+defaultValue = "0xDc6cad7F32cE7249f6f77a06bdcF143684Af61D4"
 
 [invoke.configuresETHMaxMarketCollateral]
 target = ["system.CoreProxy"]
@@ -304,12 +190,6 @@ depends = [
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
-
-[setting.pythEthFeedId]
-defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
-
-[setting.pythBtcFeedId]
-defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
 
 [setting.pythPriceVerificationAddress]
 defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
