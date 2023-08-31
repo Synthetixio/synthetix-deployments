@@ -68,6 +68,12 @@ defaultValue = "0xd23c2ef3a533040b57cadaf33ccb111edbaca018"
 # Perps Global Configuration
 # TODO: move these into perps-factory once settings support max uint
 
+[setting.perpsBtcSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.perpsEthSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -78,17 +84,7 @@ args = [
 ]
 depends = ["provision.perpsFactory"]
 
-[invoke.setPerpsMaxCollateralForSynthMarketId]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxCollateralAmount"
-args = [
-  "<%= extras.synth_eth_market_id %>",
-  "<%= MaxUint256 %>"
-]
-depends = ["invoke.createEthSynth", "provision.perpsFactory"]
-
-[invoke.setPerpsSynthDeductionPriorityPerps]
+[invoke.setPerpsSynthDeductionPriority]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"

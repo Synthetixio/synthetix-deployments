@@ -29,6 +29,20 @@ include = [
 		"tomls/oracles/pyth-snx.toml",
 		"tomls/oracles/pyth-link.toml",
 		"tomls/oracles/pyth-op.toml",
+
+    # overrides for perps
+    "tomls/omnibus-base-goerli-competition/perps/btc.toml",
+    "tomls/omnibus-base-goerli-competition/perps/eth.toml",
+    "tomls/omnibus-base-goerli-competition/perps/op.toml",
+    "tomls/omnibus-base-goerli-competition/perps/link.toml",
+    "tomls/omnibus-base-goerli-competition/perps/snx.toml",
+
+    # overrides for synths
+    "tomls/omnibus-base-goerli-competition/synths/btc.toml",
+    "tomls/omnibus-base-goerli-competition/synths/eth.toml",
+    "tomls/omnibus-base-goerli-competition/synths/op.toml",
+    "tomls/omnibus-base-goerli-competition/synths/link.toml",
+    "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
 
 [setting.owner]
@@ -99,6 +113,16 @@ defaultValue = "<%= MaxUint256 %>"
 [setting.perpsEthSynthMaxCollateralAmount]
 defaultValue = "<%= MaxUint256 %>"
 
+# GLOBAL PERPS SETTINGS
+
+[setting.perpsMinLiquidationReward]
+defaultValue = "1"
+
+[setting.perpsMaxLiquidationReward]
+defaultValue = "500"
+
+# ------------------------------
+
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -115,6 +139,18 @@ fromCall.func = "owner"
 func = "setSynthDeductionPriority"
 args = [["0", "<%= extras.synth_eth_market_id %>"]]
 depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+
+[invoke.setPerpsProxyCustomTransactorOnEthSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+  "<%= extras.synth_eth_market_id %>",
+  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
+  "<%= parseEther('0.0001') %>"
+]
+depends=["provision.perpsFactory", "invoke.createEthSynth"]
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]

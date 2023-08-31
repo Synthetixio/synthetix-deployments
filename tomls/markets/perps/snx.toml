@@ -123,3 +123,13 @@ args = [
   "<%= parseEther(settings.perpsSnxLockedOiRatio) %>"
 ]
 depends = ["invoke.createSnxPerpsMarket"]
+
+[invoke.setMaxCollateralAmountSnx]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralAmount"
+args = [
+	"<%= extras.synth_snx_market_id %>",
+	"<%= settings.perpsSnxSynthMaxCollateralAmount %>",
+]
+depends = ["invoke.createSnxSynth", "provision.perpsFactory"]

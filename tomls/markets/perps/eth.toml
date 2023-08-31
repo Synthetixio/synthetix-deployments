@@ -121,3 +121,13 @@ args = [
   "<%= parseEther(settings.perpsEthLockedOiRatio) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setMaxCollateralAmountEth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralAmount"
+args = [
+	"<%= extras.synth_eth_market_id %>",
+	"<%= settings.perpsEthSynthMaxCollateralAmount %>",
+]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]
