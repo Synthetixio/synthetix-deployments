@@ -31,6 +31,9 @@ args = ["Synthetic Chainlink Token", "snxLINK", "<%= settings.owner %>"]
 extra.synth_link_market_id.event = "SynthRegistered"
 extra.synth_link_market_id.arg = 0
 
+extra.synth_link_token_address.event = "SynthRegistered"
+extra.synth_link_token_address.arg = 1
+
 depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceLink]
