@@ -137,6 +137,18 @@ depends = [
   "invoke.setSynthPriceEth"
 ]
 
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+[setting.btcSynthAddress]
+defaultValue = "0x4bC137c51c21bFf2A78073809605C2CEA80A06A1"
+
+# ETH Synth Configuration
+
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+[setting.ethSynthAddress]
+defaultValue = "0xDc6cad7F32cE7249f6f77a06bdcF143684Af61D4"
+
 [invoke.configuresETHMaxMarketCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
