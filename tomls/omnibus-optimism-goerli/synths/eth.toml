@@ -33,7 +33,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= extras.synth_eth_token_address %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
+  { tokenAddress = "<%= settings.ethSynthAddress %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
 ]
 depends = [
   "invoke.setSynthPriceEth"

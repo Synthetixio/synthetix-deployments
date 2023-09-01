@@ -6,6 +6,9 @@ defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea3
 [setting.btcPerpsMarketId]
 defaultValue = "200"
 
+[setting.btcSynthAddress]
+defaultValue = "0x4bC137c51c21bFf2A78073809605C2CEA80A06A1"
+
 [setting.perpsBtcSkewScale]
 defaultValue = "1000000"
 

@@ -8,6 +8,9 @@ defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57
 [setting.ethPerpsMarketId]
 defaultValue = "100"
 
+[setting.ethSynthAddress]
+defaultValue = "0xDc6cad7F32cE7249f6f77a06bdcF143684Af61D4"
+
 [setting.perpsEthSkewScale]
 defaultValue = "1000000"
 

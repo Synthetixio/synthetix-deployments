@@ -1,6 +1,6 @@
 include = [
   "../spot-factory.toml",
-  "../../oracles/pyth-link.toml",
+  "../../oracles/link.toml",
   "../common/bigcap-settings.toml",
   "../common/settlement-settings.toml"
 ]
@@ -26,7 +26,7 @@ fromCall.args = ["<%= extras.synth_link_market_id %>"]
 
 func = "updatePriceData"
 args = [
-  "<%= extras.synth_link_market_id %>", 
+  "<%= extras.synth_link_market_id %>",
   "<%= extras.link_oracle_id %>", 
   "<%= extras.link_oracle_id %>"
 ]

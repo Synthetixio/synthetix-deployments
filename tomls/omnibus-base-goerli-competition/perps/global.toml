@@ -28,13 +28,12 @@ args = [
 ]
 depends = ["provision.perpsFactory"]
 
-# TODO: add the rest of the synths
 [invoke.setPerpsSynthDeductionPriority]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
-args = [["0", "<%= extras.synth_eth_market_id %>"]]
-depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+args = [["<%= extras.synth_snx_market_id %>", "<%= extras.synth_op_market_id %>", "<%= extras.synth_link_market_id %>", "<%= extras.synth_eth_market_id %>", "<%= extras.synth_btc_market_id %>", "0"]]
+depends = ["invoke.createOpSynth", "invoke.createLinkSynth", "invoke.createEthSynth", "invoke.createSnxSynth", "invoke.createBtcSynth",  "provision.perpsFactory"]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]
