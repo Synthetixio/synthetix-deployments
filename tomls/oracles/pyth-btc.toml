@@ -10,7 +10,7 @@ func = "registerNode"
 args = [
     # 2 = external aggregator type (later this will be PYTH)
     2,
-    "<%= defaultAbiCoder.encode(['address'], [settings.btc_aggregator_address]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.btc_aggregator_address, settings.pythBtcFeedId, 30]) %>",
     []
 ]
 

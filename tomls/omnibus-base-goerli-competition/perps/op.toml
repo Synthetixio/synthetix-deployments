@@ -1,12 +1,6 @@
 [setting.pythOpFeedId]
 defaultValue = "0x71334dcd37620ce3c33e3bafef04cc80dec083042e49b734315b36d1aad7991f"
 
-# Aggregators for markets
-
-# TODO: what to set this?
-[setting.op_aggregator_address]
-defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
-
 # Perps Configuration
 
 [setting.opPerpsMarketId]

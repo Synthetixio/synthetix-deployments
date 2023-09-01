@@ -40,5 +40,5 @@ depends = ["invoke.createEthSynth", "provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
-args = [["5", "3"]]
+args = ["5", "3"]
 depends = ["provision.perpsFactory"]

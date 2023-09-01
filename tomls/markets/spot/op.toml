@@ -27,11 +27,11 @@ fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "updatePriceData"
 args = [
   "<%= extras.synth_op_market_id %>", 
-  "<%= extras.synth_op_oracle_id %>", 
-  "<%= extras.synth_op_oracle_id %>"
+  "<%= extras.op_oracle_id %>", 
+  "<%= extras.op_oracle_id %>"
 ]
 
-depends = ["invoke.createOpSynth", "invoke.registerSynthOpOracleManager"]
+depends = ["invoke.createOpSynth", "invoke.registerOpOracleNode"]
 
 [invoke.setSynthSettlementStrategyOp]
 target = ["spotFactory.SpotMarketProxy"]

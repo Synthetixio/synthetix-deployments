@@ -46,6 +46,9 @@ include = [
     "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
 
+[setting.pythPriceVerificationAddress]
+defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
+
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
@@ -62,19 +65,19 @@ defaultValue = "0x4200000000000000000000000000000000000042"
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
 [setting.eth_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
 
 [setting.btc_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
 
 [setting.snx_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
 
 [setting.link_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
 
 [setting.op_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"

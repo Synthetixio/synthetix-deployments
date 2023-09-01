@@ -1,12 +1,6 @@
 [setting.pythLinkFeedId]
 defaultValue = "0x83be4ed61dd8a3518d198098ce37240c494710a7b9d85e35d9fceac21df08994"
 
-# Aggregators for markets
-
-# TODO: what to set this?
-[setting.link_aggregator_address]
-defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
-
 # Perps Configuration
 
 [setting.linkPerpsMarketId]

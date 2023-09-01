@@ -101,7 +101,7 @@ args = [
   "<%= parseEther(settings.perpsLinkMaxLiquidationLimitAccumulationMultiplier) %>",
   "<%= parseEther(settings.perpsLinkMaxSecondsInLiquidationWindow) %>",
   "<%= parseEther(settings.perpsLinkMaxLiquidationPd) %>",
-  "<%= parseEther(settings.perpsLinkEndorsedLiquidator) %>"
+  "<%= settings.perpsBtcEndorsedLiquidator %>"
 ]
 depends = ["invoke.createLinkPerpsMarket"]
 

@@ -31,7 +31,7 @@ args = [
   "<%= extras.btc_oracle_id %>"
 ]
 
-depends = ["invoke.createBtcSynth", "invoke.registerSynthBtcOracleManager"]
+depends = ["invoke.createBtcSynth", "invoke.registerBtcOracleNode"]
 
 [invoke.setSynthSettlementStrategyBtc]
 target = ["spotFactory.SpotMarketProxy"]

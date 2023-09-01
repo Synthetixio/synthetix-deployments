@@ -3,7 +3,7 @@ include = [
 
   # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
   # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
-  "../../oracles/snx.toml",
+  "../../oracles/pyth-snx.toml",
   "../common/bigcap-settings.toml",
 ]
 
@@ -107,7 +107,7 @@ args = [
   "<%= parseEther(settings.perpsSnxMaxLiquidationLimitAccumulationMultiplier) %>",
   "<%= parseEther(settings.perpsSnxMaxSecondsInLiquidationWindow) %>",
   "<%= parseEther(settings.perpsSnxMaxLiquidationPd) %>",
-  "<%= parseEther(settings.perpsSnxEndorsedLiquidator) %>"
+  "<%= settings.perpsBtcEndorsedLiquidator %>"
 ]
 depends = ["invoke.createSnxPerpsMarket"]
 
@@ -121,8 +121,6 @@ args = [
   "<%= parseEther(settings.perpsSnxMinimumInitialMarginRatio) %>",
   "<%= parseEther(settings.perpsSnxMaintenanceMarginScalar) %>",
   "<%= parseEther(settings.perpsSnxLiquidationRewardRatioD18) %>",
-  "<%= parseEther(settings.perpsSnxMaxLiquidationLimitAccumulationMultiplier) %>",
-  "<%= parseEther(settings.perpsSnxMaxSecondsInLiquidationWindow) %>",
   "<%= parseEther(settings.perpsSnxMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createSnxPerpsMarket"]

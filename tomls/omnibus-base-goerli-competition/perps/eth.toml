@@ -3,12 +3,6 @@
 [setting.pythEthFeedId]
 defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
 
-# Aggregators for markets
-
-# TODO: do we need this??
-[setting.eth_aggregator_address]
-defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
-
 # Perps Configuration
 
 [setting.ethPerpsMarketId]

@@ -27,11 +27,11 @@ fromCall.args = ["<%= extras.synth_link_market_id %>"]
 func = "updatePriceData"
 args = [
   "<%= extras.synth_link_market_id %>", 
-  "<%= extras.synth_link_oracle_id %>", 
-  "<%= extras.synth_link_oracle_id %>"
+  "<%= extras.link_oracle_id %>", 
+  "<%= extras.link_oracle_id %>"
 ]
 
-depends = ["invoke.createLinkSynth", "invoke.registerSynthLinkOracleManager"]
+depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
 
 [invoke.setSynthSettlementStrategyLink]
 target = ["spotFactory.SpotMarketProxy"]
