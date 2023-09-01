@@ -82,8 +82,6 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-# TODO: can we turn this into one invoke by having `setMaxCollateralAmount` function take an array of markets?
-
 [setting.perpsBtcSynthMaxCollateralAmount]
 defaultValue = "<%= MaxUint256 %>"
 
@@ -99,44 +97,6 @@ defaultValue = "<%= MaxUint256 %>"
 [setting.perpsEthSynthMaxCollateralAmount]
 defaultValue = "<%= MaxUint256 %>"
 
-# GLOBAL PERPS SETTINGS
-
-[setting.perpsMinLiquidationReward]
-defaultValue = "1"
-
-[setting.perpsMaxLiquidationReward]
-defaultValue = "500"
-
-# ------------------------------
-
-[invoke.setPerpsMaxCollateralForSnxUsd]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxCollateralAmount"
-args = [
-  "0",
-  "<%= MaxUint256 %>"
-]
-depends = ["provision.perpsFactory"]
-
-[invoke.setPerpsSynthDeductionPriority]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setSynthDeductionPriority"
-args = [["0", "<%= extras.synth_eth_market_id %>"]]
-depends = ["invoke.createEthSynth", "provision.perpsFactory"]
-
-[invoke.setPerpsProxyCustomTransactorOnEthSynthMarket]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_eth_market_id %>"]
-func = "setCustomTransactorFees"
-args = [
-  "<%= extras.synth_eth_market_id %>",
-  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
-  "<%= parseEther('0.0001') %>"
-]
-depends=["provision.perpsFactory", "invoke.createEthSynth"]
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]

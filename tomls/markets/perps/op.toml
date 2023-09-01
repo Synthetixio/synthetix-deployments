@@ -98,6 +98,19 @@ args = [
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
+[invoke.setPerpsOpMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+  "<%= settings.opPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsOpMaxLiquidationLimitAccumulationMultiplier) %>",
+  "<%= parseEther(settings.perpsOpMaxSecondsInLiquidationWindow) %>",
+  "<%= parseEther(settings.perpsOpMaxLiquidationPd) %>",
+  "<%= parseEther(settings.perpsOpEndorsedLiquidator) %>"
+]
+depends = ["invoke.createOpPerpsMarket"]
+
 [invoke.setPerpsOpLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -108,8 +121,6 @@ args = [
   "<%= parseEther(settings.perpsOpMinimumInitialMarginRatio) %>",
   "<%= parseEther(settings.perpsOpMaintenanceMarginScalar) %>",
   "<%= parseEther(settings.perpsOpLiquidationRewardRatioD18) %>",
-  "<%= parseEther(settings.perpsOpMaxLiquidationLimitAccumulationMultiplier) %>",
-  "<%= parseEther(settings.perpsOpMaxSecondsInLiquidationWindow) %>",
   "<%= parseEther(settings.perpsOpMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]

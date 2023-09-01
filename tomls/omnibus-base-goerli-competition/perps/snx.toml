@@ -1,0 +1,61 @@
+[setting.pythSnxFeedId]
+defaultValue = "0xe956a4199936e913b402474cb29576066f15108121d434606a19b34036e6d5cc"
+
+# Aggregators for markets
+
+# TODO: what to set this?
+[setting.snx_aggregator_address]
+defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
+
+# Perps Configuration
+
+[setting.snxPerpsMarketId]
+defaultValue = "500"
+
+[setting.perpsSnxSkewScale]
+defaultValue = "4000000"
+
+[setting.perpsSnxMaxFundingVelocity]
+defaultValue = "36"
+
+[setting.perpsSnxMakerFeeRatio]
+defaultValue = "0.0002"
+
+[setting.perpsSnxTakerFeeRatio]
+defaultValue = "0.001"
+
+[setting.perpsSnxMaxMarketSize]
+defaultValue = "5000000"
+
+[setting.perpsSnxInitialMarginRatio]
+defaultValue = "2"
+
+[setting.perpsSnxMaintenanceMarginScalar]
+defaultValue = "0.5"
+
+[setting.perpsSnxMinimumInitialMarginRatio]
+defaultValue = "0.05"
+
+[setting.perpsSnxLiquidationRewardRatioD18]
+defaultValue = "0.01"
+
+[setting.perpsSnxMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "0.5"
+
+[setting.perpsSnxMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsSnxMinimumPositionMargin]
+defaultValue = "0"
+
+[setting.perpsSnxLockedOiRatio]
+defaultValue = "1"
+
+[setting.perpsSnxSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.perpsSnxMaxLiquidationPd]
+defaultValue = "0.0024"
+
+[setting.perpsSnxEndorsedLiquidator]
+defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"

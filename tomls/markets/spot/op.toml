@@ -1,25 +1,8 @@
 include = [
   "../spot-factory.toml",
-]
-
-[setting.op_aggregator_address]
-
-[invoke.registerSynthOpOracleManager]
-target = ["system.oracle_manager.Proxy"]
-func = "registerNode"
-args = [
-   # 3 = chainop aggregator type
-   3,
-   # 3 parameters are: address of the chainop oracle
-   "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.op_aggregator_address, 0, 8]) %>",
-   []
-]
-
-extra.synth_op_oracle_id.event = "NodeRegistered"
-extra.synth_op_oracle_id.arg = 0
-
-depends = [
- "provision.system"
+  "../../oracles/pyth-op.toml",
+  "../common/bigcap-settings.toml",
+  "../common/settlement-settings.toml"
 ]
 
 [invoke.createOpSynth]
@@ -49,3 +32,37 @@ args = [
 ]
 
 depends = ["invoke.createOpSynth", "invoke.registerSynthOpOracleManager"]
+
+[invoke.setSynthSettlementStrategyOp]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_op_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+  "<%= extras.synth_op_market_id %>", 
+  { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
+]
+depends = ["invoke.createOpSynth"]
+
+[invoke.setSynthAsyncFixedFeeOp]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_op_market_id %>"]
+func = "setAsyncFixedFee"
+args = [
+  "<%= extras.synth_op_market_id %>", 
+  "<%= parseEther(settings.synthOpAsyncFixedFee) %>"
+]
+depends = ["invoke.createOpSynth"]
+
+[invoke.setSynthSkewScaleOp]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_op_market_id %>"]
+func = "setMarketSkewScale"
+args = [
+  "<%= extras.synth_op_market_id %>", 
+  "<%= parseEther(settings.synthOpSkewScale) %>"
+]
+depends = ["invoke.createOpSynth"]
+

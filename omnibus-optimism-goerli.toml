@@ -164,7 +164,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= settings.btcSynthAddress %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+  { tokenAddress = "<%= settings.btcSynthAddress %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
 depends = [
   "invoke.setSynthPriceBtc"
@@ -189,9 +189,6 @@ defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={dat
 
 [setting.pythPriceVerificationAddress]
 defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
-
-[setting.priceWindowDuration]
-defaultValue = "180"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]

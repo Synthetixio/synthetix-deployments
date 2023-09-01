@@ -32,10 +32,6 @@ include = [
 
 [setting.perpsBtcLockedOiRatio]
 
-# strategy type for Perps markets is 0, for spot markets is 1
-[setting.strategyType]
-defaultValue = "0"
-
 [invoke.createBtcPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -59,7 +55,8 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
   "<%= settings.btcPerpsMarketId %>", 
-  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
+  # strategyType = 0 (pyth)
+  { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 
@@ -95,6 +92,19 @@ args = [
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 
+[invoke.setPerpsBtcMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+  "<%= settings.btcPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsBtcMaxLiquidationLimitAccumulationMultiplier) %>",
+  "<%= parseEther(settings.perpsBtcMaxSecondsInLiquidationWindow) %>",
+  "<%= parseEther(settings.perpsBtcMaxLiquidationPd) %>",
+  "<%= parseEther(settings.perpsBtcEndorsedLiquidator) %>"
+]
+depends = ["invoke.createBtcPerpsMarket"]
+
 [invoke.setPerpsBtcLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -105,8 +115,6 @@ args = [
   "<%= parseEther(settings.perpsBtcMinimumInitialMarginRatio) %>",
   "<%= parseEther(settings.perpsBtcMaintenanceMarginScalar) %>",
   "<%= parseEther(settings.perpsBtcLiquidationRewardRatioD18) %>",
-  "<%= parseEther(settings.perpsBtcMaxLiquidationLimitAccumulationMultiplier) %>",
-  "<%= parseEther(settings.perpsBtcMaxSecondsInLiquidationWindow) %>",
   "<%= parseEther(settings.perpsBtcMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createBtcPerpsMarket"]
