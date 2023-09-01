@@ -29,6 +29,21 @@ include = [
 		"tomls/oracles/pyth-snx.toml",
 		"tomls/oracles/pyth-link.toml",
 		"tomls/oracles/pyth-op.toml",
+
+    # overrides for perp markets
+    "tomls/omnibus-base-goerli-competition/perps/global.toml",
+    "tomls/omnibus-base-goerli-competition/perps/btc.toml",
+    "tomls/omnibus-base-goerli-competition/perps/eth.toml",
+    "tomls/omnibus-base-goerli-competition/perps/op.toml",
+    "tomls/omnibus-base-goerli-competition/perps/link.toml",
+    "tomls/omnibus-base-goerli-competition/perps/snx.toml",
+
+    # overrides for synth markets
+    "tomls/omnibus-base-goerli-competition/synths/btc.toml",
+    "tomls/omnibus-base-goerli-competition/synths/eth.toml",
+    "tomls/omnibus-base-goerli-competition/synths/op.toml",
+    "tomls/omnibus-base-goerli-competition/synths/link.toml",
+    "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
 
 [setting.owner]
@@ -81,22 +96,6 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.perpsBtcSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
-[setting.perpsSnxSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
-[setting.perpsOpSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
-[setting.perpsLinkSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
-[setting.perpsEthSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
