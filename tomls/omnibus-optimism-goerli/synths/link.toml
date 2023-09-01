@@ -1,0 +1,30 @@
+# Synth Configuration
+
+[setting.synthLinkAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthLinkSkewScale]
+defaultValue = "20000000"
+
+[invoke.setPerpsProxyCustomTransactorOnLinkSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_link_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+  "<%= extras.synth_link_market_id %>",
+  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
+  "<%= parseEther('0.0001') %>"
+]
+depends=["provision.perpsFactory", "invoke.createLinkSynth"]
+
+[invoke.configuresLINKCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+  { tokenAddress = "<%= extras.synth_link_token_address %>", oracleNodeId = "<%= extras.link_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+]
+depends = [
+  "invoke.setSynthPriceLink"
+]
