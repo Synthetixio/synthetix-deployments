@@ -46,6 +46,15 @@ include = [
     "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
 
+[setting.snx_package]
+defaultValue = "synthetix:3.3.2"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-perps-market:3.3.2"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.2"
+
 [setting.pythPriceVerificationAddress]
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
 
