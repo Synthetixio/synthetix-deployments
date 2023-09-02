@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.2.1"
+version = "3.3.2"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -46,11 +46,14 @@ include = [
     "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
 
+[setting.salt]
+defaultValue = "competition"
+
 [setting.snx_package]
 defaultValue = "synthetix:3.3.2"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-perps-market:3.3.2"
+defaultValue = "synthetix-spot-market:3.3.2"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.2"
@@ -77,19 +80,19 @@ defaultValue = "0x4200000000000000000000000000000000000042"
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
 [setting.eth_aggregator_address]
-defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
+defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
 
 [setting.btc_aggregator_address]
-defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
+defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
 
 [setting.snx_aggregator_address]
-defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
+defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
 
 [setting.link_aggregator_address]
-defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
+defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
 
 [setting.op_aggregator_address]
-defaultValue = "0x2A19D346e940174E1b97199adAB9D07F13508A3A"
+defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
