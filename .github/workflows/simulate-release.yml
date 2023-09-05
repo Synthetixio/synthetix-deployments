@@ -13,6 +13,7 @@ jobs:
       CANNON_SETTINGS: ${{ secrets.CANNON_SETTINGS }}
       INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
     strategy:
+      fail-fast: false
       matrix:
         network: [mainnet, optimism-mainnet, goerli, optimism-goerli]
         manifest: [omnibus.toml]
