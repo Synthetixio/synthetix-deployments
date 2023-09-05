@@ -1,0 +1,22 @@
+include = [
+  "../core.toml"
+]
+
+[setting.link_aggregator_address]
+
+[invoke.registerLinkOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 2 = external aggregator type (later this will be PYTH)
+    2,
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.link_aggregator_address, settings.pythLinkFeedId, 30]) %>",
+    []
+]
+
+extra.link_oracle_id.event = "NodeRegistered"
+extra.link_oracle_id.arg = 0
+
+depends = [
+  "provision.system"
+]

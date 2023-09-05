@@ -1,25 +1,8 @@
 include = [
   "../spot-factory.toml",
-]
-
-[setting.link_aggregator_address]
-
-[invoke.registerSynthLinkOracleManager]
-target = ["system.oracle_manager.Proxy"]
-func = "registerNode"
-args = [
-   # 3 = chainlink aggregator type
-   3,
-   # 3 parameters are: address of the chainlink oracle
-   "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.link_aggregator_address, 0, 8]) %>",
-   []
-]
-
-extra.synth_link_oracle_id.event = "NodeRegistered"
-extra.synth_link_oracle_id.arg = 0
-
-depends = [
- "provision.system"
+  "../../oracles/link.toml",
+  "../common/bigcap-settings.toml",
+  "../common/settlement-settings.toml"
 ]
 
 [invoke.createLinkSynth]
@@ -43,9 +26,42 @@ fromCall.args = ["<%= extras.synth_link_market_id %>"]
 
 func = "updatePriceData"
 args = [
-  "<%= extras.synth_link_market_id %>", 
-  "<%= extras.synth_link_oracle_id %>", 
-  "<%= extras.synth_link_oracle_id %>"
+  "<%= extras.synth_link_market_id %>",
+  "<%= extras.link_oracle_id %>", 
+  "<%= extras.link_oracle_id %>"
 ]
 
-depends = ["invoke.createLinkSynth", "invoke.registerSynthLinkOracleManager"]
+depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
+
+[invoke.setSynthSettlementStrategyLink]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_link_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+  "<%= extras.synth_link_market_id %>", 
+  { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
+]
+depends = ["invoke.createLinkSynth"]
+
+[invoke.setSynthAsyncFixedFeeLink]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_link_market_id %>"]
+func = "setAsyncFixedFee"
+args = [
+  "<%= extras.synth_link_market_id %>", 
+  "<%= parseEther(settings.synthLinkAsyncFixedFee) %>"
+]
+depends = ["invoke.createLinkSynth"]
+
+[invoke.setSynthSkewScaleLink]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_link_market_id %>"]
+func = "setMarketSkewScale"
+args = [
+  "<%= extras.synth_link_market_id %>", 
+  "<%= parseEther(settings.synthLinkSkewScale) %>"
+]
+depends = ["invoke.createLinkSynth"]

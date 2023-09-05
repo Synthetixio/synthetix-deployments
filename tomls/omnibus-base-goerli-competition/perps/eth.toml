@@ -1,32 +1,7 @@
-# Synth Configuration
-
-[setting.synthEthAsyncFixedFee]
-defaultValue = "0.001"
-
-[setting.synthEthMaxMarketCollateral]
-defaultValue = "100"
-
-[setting.synthEthSkewScale]
-defaultValue = "100000"
-
-[setting.synthEthWrapFee]
-defaultValue = "0.0001"
-
-[setting.synthEthUnwrapFee]
-defaultValue = "0.0001"
-
 # Pyth settlement strategy config
-
-[setting.ethSettlementWindowDuration]
-defaultValue = "600"
 
 [setting.pythEthFeedId]
 defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
-
-# Aggregators for markets
-
-[setting.eth_aggregator_address]
-defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
 # Perps Configuration
 
@@ -34,25 +9,25 @@ defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 defaultValue = "100"
 
 [setting.perpsEthSkewScale]
-defaultValue = "100000"
+defaultValue = "1000000"
 
 [setting.perpsEthMaxFundingVelocity]
 defaultValue = "9"
 
 [setting.perpsEthMakerFeeRatio]
-defaultValue = "0.0007"
+defaultValue = "0.0002"
 
 [setting.perpsEthTakerFeeRatio]
-defaultValue = "0.0003"
+defaultValue = "0.0005"
 
 [setting.perpsEthMaxMarketSize]
-defaultValue = "10000"
+defaultValue = "100000"
 
 [setting.perpsEthInitialMarginRatio]
-defaultValue = "2"
+defaultValue = "1"
 
 [setting.perpsEthMinimumInitialMarginRatio]
-defaultValue = "0.01"
+defaultValue = "0.02"
 
 [setting.perpsEthMaintenanceMarginScalar]
 defaultValue = "0.5"
@@ -67,8 +42,16 @@ defaultValue = "1"
 defaultValue = "30"
 
 [setting.perpsEthMinimumPositionMargin]
-defaultValue = "1"
+defaultValue = "0"
 
 [setting.perpsEthLockedOiRatio]
-defaultValue = "0.1"
+defaultValue = "0.5"
 
+[setting.perpsEthSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.perpsEthMaxLiquidationPd]
+defaultValue = "0.0016"
+
+[setting.perpsEthEndorsedLiquidator]
+defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"

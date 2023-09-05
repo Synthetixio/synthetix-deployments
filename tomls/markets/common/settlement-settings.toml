@@ -1,0 +1,12 @@
+[setting.pythPriceVerificationAddress]
+
+[setting.pythFeedUrl]
+
+[setting.settlementReward]
+defaultValue = "0"
+
+[setting.settlementMinimumUsdExchangeAmount]
+defaultValue = "0.000001"
+
+[setting.settlementMaxRoundingLoss]
+defaultValue = "0.000001"

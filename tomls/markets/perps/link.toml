@@ -1,0 +1,140 @@
+include = [
+  "../perps-factory.toml",
+  "../../oracles/pyth-link.toml",
+  "../common/bigcap-settings.toml",
+]
+
+[setting.linkPerpsMarketId]
+
+[setting.perpsLinkSkewScale]
+
+[setting.perpsLinkMaxFundingVelocity]
+
+[setting.perpsLinkMakerFeeRatio]
+
+[setting.perpsLinkTakerFeeRatio]
+
+[setting.perpsLinkMaxMarketSize]
+
+[setting.perpsLinkInitialMarginRatio]
+
+[setting.perpsLinkMaintenanceMarginFraction]
+
+[setting.perpsLinkLiquidationRewardRatioD18]
+
+[setting.perpsLinkMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsLinkMaxSecondsInLiquidationWindow]
+
+[setting.perpsLinkMinimumPositionMargin]
+
+[setting.perpsLinkLockedOiRatio]
+
+[setting.pythLinkFeedId]
+
+[invoke.createLinkPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.linkPerpsMarketId %>", "Chainlink Token", "LINK"]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsPriceLink]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= extras.link_oracle_id %>"
+]
+depends = ["invoke.createLinkPerpsMarket", "invoke.registerLinkOracleNode"]
+
+[invoke.setPerpsLinkSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  # strategyType = 0 (pyth)
+  { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setPerpsLinkFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsLinkSkewScale) %>",
+  "<%= parseEther(settings.perpsLinkMaxFundingVelocity) %>"
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setPerpsLinkOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsLinkMakerFeeRatio) %>",
+  "<%= parseEther(settings.perpsLinkTakerFeeRatio) %>"
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setPerpsLinkMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsLinkMaxMarketSize) %>"
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setPerpsLinkMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsLinkMaxLiquidationLimitAccumulationMultiplier) %>",
+  "<%= parseEther(settings.perpsLinkMaxSecondsInLiquidationWindow) %>",
+  "<%= parseEther(settings.perpsLinkMaxLiquidationPd) %>",
+  "<%= settings.perpsBtcEndorsedLiquidator %>"
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setPerpsLinkLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsLinkInitialMarginRatio) %>",
+  "<%= parseEther(settings.perpsLinkMinimumInitialMarginRatio) %>",
+  "<%= parseEther(settings.perpsLinkMaintenanceMarginScalar) %>",
+  "<%= parseEther(settings.perpsLinkLiquidationRewardRatioD18) %>",
+  "<%= parseEther(settings.perpsLinkMinimumPositionMargin) %>"
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setPerpsLinkLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = [
+  "<%= settings.linkPerpsMarketId %>", 
+  "<%= parseEther(settings.perpsLinkLockedOiRatio) %>"
+]
+depends = ["invoke.createLinkPerpsMarket"]
+
+[invoke.setMaxCollateralAmountLink]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxCollateralAmount"
+args = [
+	"<%= extras.synth_link_market_id %>",
+	"<%= settings.perpsLinkSynthMaxCollateralAmount %>",
+]
+depends = ["invoke.createLinkSynth", "provision.perpsFactory"]
