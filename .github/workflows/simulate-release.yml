@@ -51,3 +51,13 @@ jobs:
             --dry-run | tee deployment.log
 
           grep 'Successfully built package synthetix-omnibus' deployment.log
+
+          if [ $(grep -c 'exec: contract.InitialCoreProxy' deployment.log) -gt 0 ]; then
+            echo "Proxy InitialCoreProxy was modified"
+            exit 1
+          fi
+
+          if [ $(grep -c 'exec: contract.InitialProxy' deployment.log) -gt 0 ]; then
+            echo "Proxy InitialProxy was modified"
+            exit 1
+          fi
