@@ -9,6 +9,7 @@ include = [
 		"tomls/collaterals/wbtc.toml",
 		"tomls/collaterals/op.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
@@ -45,6 +46,12 @@ include = [
     "tomls/omnibus-base-goerli-competition/synths/link.toml",
     "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.2"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.2"
 
 [setting.salt]
 defaultValue = "competition"

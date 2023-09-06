@@ -8,10 +8,20 @@ include = [
     #"tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.2"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.2"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.2"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
