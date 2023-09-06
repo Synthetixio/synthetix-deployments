@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.2"
+version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-mainnet.toml",
@@ -13,13 +13,13 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.2"
+defaultValue = "synthetix:3.3.4"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.2"
+defaultValue = "synthetix-spot-market:3.3.4"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.2"
+defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
