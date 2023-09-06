@@ -2,7 +2,7 @@
 
 [setting.sc_pool_id]
 
-[setting.sc_pool_owner]
+[setting.pool_owner]
 
 [invoke.createScPool]
 target = ["system.CoreProxy"]
@@ -10,7 +10,7 @@ from = "<%= settings.deployer %>"
 func = "createPool"
 args = [
     "<%= settings.sc_pool_id %>",
-    "<%= settings.sc_pool_owner %>",
+    "<%= settings.pool_owner %>",
 ]
 depends=["invoke.permitCreatePool"]
 

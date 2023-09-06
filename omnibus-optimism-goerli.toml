@@ -90,14 +90,14 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.sc_pool_id]
 defaultValue = "1"
 
-[setting.sc_pool_owner]
+[setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.snx_pool_id]
 defaultValue = "69"
 
 [setting.snx_pool_owner]
-defaultValue = "<%= settings.sc_pool_owner %>"
+defaultValue = "<%= settings.pool_owner %>"
 
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"
