@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.2"
+version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -43,13 +43,13 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.2"
+defaultValue = "synthetix:3.3.4"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.2"
+defaultValue = "synthetix-spot-market:3.3.4"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.2"
+defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
@@ -90,14 +90,14 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.sc_pool_id]
 defaultValue = "1"
 
-[setting.sc_pool_owner]
+[setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.snx_pool_id]
 defaultValue = "69"
 
 [setting.snx_pool_owner]
-defaultValue = "<%= settings.sc_pool_owner %>"
+defaultValue = "<%= settings.pool_owner %>"
 
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"

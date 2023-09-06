@@ -1,8 +1,9 @@
 [setting.deployer]
 
 [setting.snx_pool_id]
+defaultValue = "2"
 
-[setting.snx_pool_owner]
+[setting.pool_owner]
 
 [invoke.create_snx_pool]
 target = ["system.CoreProxy"]
@@ -10,7 +11,7 @@ from = "<%= settings.deployer %>"
 func = "createPool"
 args = [
     "<%= settings.snx_pool_id %>",
-    "<%= settings.snx_pool_owner %>",
+    "<%= settings.pool_owner %>",
 ]
 depends=["invoke.permitCreatePool"]
 

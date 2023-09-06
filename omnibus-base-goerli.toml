@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.2.1"
+version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -8,10 +8,20 @@ include = [
     #"tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.4"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.4"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
@@ -40,7 +50,7 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.sc_pool_id]
 defaultValue = "1"
 
-[setting.sc_pool_owner]
+[setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_router]
