@@ -122,7 +122,7 @@ fromCall.func = "owner"
 
 func = "setAllowlistedMulticallTarget"
 
-args = ["<%= settings.weth_aggregator_address %>", true]
+args = ["<%= settings.eth_aggregator_address %>", true]
 
 depends = ["provision.perpsFactory"]
 
