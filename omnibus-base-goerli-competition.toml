@@ -47,23 +47,17 @@ include = [
     "tomls/omnibus-base-goerli-competition/synths/snx.toml",
 ]
 
+[setting.snx_package]
+defaultValue = "synthetix:3.3.3-dev.05f72e70"
+
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.4"
+defaultValue = "synthetix-spot-market:3.3.3-dev.05f72e70"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.4"
+defaultValue = "synthetix-perps-market:3.3.3-dev.05f72e70"
 
 [setting.salt]
 defaultValue = "competition"
-
-[setting.snx_package]
-defaultValue = "synthetix:3.3.4"
-
-[setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.4"
-
-[setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.pythPriceVerificationAddress]
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
@@ -121,6 +115,16 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[invoke.addMulticallThroughToPyth]
+target = ["system.CoreProxy", "perpsFactory.PerpsMarketProxy", "spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+
+func = "setAllowlistedMulticallTarget"
+
+args = ["<%= settings.weth_aggregator_address %>", true]
+
+depends = ["provision.perpsFactory"]
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
