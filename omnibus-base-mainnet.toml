@@ -8,15 +8,31 @@ include = [
     # "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    # "tomls/pools/passive-snx.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.4"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.4"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
 [setting.salt]
 defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
+
+#[setting.snx_address]
+#defaultValue = "0x"
+
+#[setting.snx_aggregator_address]
+#defaultValue = "0x"
 
 [setting.weth_address]
 # https://docs.base.org/base-contracts/#base-mainnet
@@ -25,6 +41,9 @@ defaultValue = "0x4200000000000000000000000000000000000006"
 [setting.eth_aggregator_address]
 # https://docs.chain.link/data-feeds/price-feeds/addresses/?network=base
 defaultValue = "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+
+#[setting.snx_liquidation_reward]
+#defaultValue = "10000000000000000000"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
@@ -38,7 +57,7 @@ defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 [setting.sc_pool_id]
 defaultValue = "1"
 
-[setting.sc_pool_owner]
+[setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
 [setting.ccip_router]
