@@ -2,7 +2,6 @@
 defaultValue = "0x83be4ed61dd8a3518d198098ce37240c494710a7b9d85e35d9fceac21df08994"
 
 # Perps Configuration
-
 [setting.linkPerpsMarketId]
 defaultValue = "300"
 

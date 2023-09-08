@@ -43,10 +43,7 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = [
-    "<%= settings.linkPerpsMarketId %>",
-    "<%= extras.link_oracle_id %>"
-]
+args = ["<%= settings.linkPerpsMarketId %>", "<%= extras.link_oracle_id %>"]
 depends = ["invoke.createLinkPerpsMarket", "invoke.registerLinkOracleNode"]
 
 [invoke.setPerpsLinkSettlementStrategy]
@@ -86,10 +83,7 @@ depends = ["invoke.createLinkPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = [
-    "<%= settings.linkPerpsMarketId %>",
-    "<%= parseEther(settings.perpsLinkMaxMarketSize) %>"
-]
+args = ["<%= settings.linkPerpsMarketId %>", "<%= parseEther(settings.perpsLinkMaxMarketSize) %>"]
 depends = ["invoke.createLinkPerpsMarket"]
 
 [invoke.setPerpsLinkMaxLiquidationParameters]
@@ -123,18 +117,12 @@ depends = ["invoke.createLinkPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = [
-    "<%= settings.linkPerpsMarketId %>",
-    "<%= parseEther(settings.perpsLinkLockedOiRatio) %>"
-]
+args = ["<%= settings.linkPerpsMarketId %>", "<%= parseEther(settings.perpsLinkLockedOiRatio) %>"]
 depends = ["invoke.createLinkPerpsMarket"]
 
 [invoke.setMaxCollateralAmountLink]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
-args = [
-    "<%= extras.synth_link_market_id %>",
-    "<%= settings.perpsLinkSynthMaxCollateralAmount %>",
-]
+args = ["<%= extras.synth_link_market_id %>", "<%= settings.perpsLinkSynthMaxCollateralAmount %>"]
 depends = ["invoke.createLinkSynth", "provision.perpsFactory"]

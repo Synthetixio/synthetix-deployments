@@ -1,6 +1,4 @@
-include = [
-    "./settlement-settings.toml",
-]
+include = ["./settlement-settings.toml"]
 
 [setting.bigCapSettlementDelay]
 defaultValue = "15"

@@ -2,7 +2,6 @@
 defaultValue = "0xe956a4199936e913b402474cb29576066f15108121d434606a19b34036e6d5cc"
 
 # Perps Configuration
-
 [setting.snxPerpsMarketId]
 defaultValue = "500"
 

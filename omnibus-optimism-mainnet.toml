@@ -69,7 +69,6 @@ defaultValue = "0x261c05167db67B2b619f9d312e0753f3721ad6E8"
 defaultValue = "0xe470A3068302CF045Eec3B800dDBFf42B42e18D8"
 
 # ETH Synth Configuration
-
 [setting.synthEthAsyncFixedFee]
 defaultValue = "0.001"
 

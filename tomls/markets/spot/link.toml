@@ -10,27 +10,22 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
 args = ["Synthetic Chainlink Token", "snxLINK", "<%= settings.owner %>"]
-
 extra.synth_link_market_id.event = "SynthRegistered"
 extra.synth_link_market_id.arg = 0
-
 extra.synth_link_token_address.event = "SynthRegistered"
 extra.synth_link_token_address.arg = 1
-
 depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceLink]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_link_market_id %>"]
-
 func = "updatePriceData"
 args = [
     "<%= extras.synth_link_market_id %>",
     "<%= extras.link_oracle_id %>",
     "<%= extras.link_oracle_id %>"
 ]
-
 depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
 
 [invoke.setSynthSettlementStrategyLink]
@@ -49,10 +44,7 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_link_market_id %>"]
 func = "setAsyncFixedFee"
-args = [
-    "<%= extras.synth_link_market_id %>",
-    "<%= parseEther(settings.synthLinkAsyncFixedFee) %>"
-]
+args = ["<%= extras.synth_link_market_id %>", "<%= parseEther(settings.synthLinkAsyncFixedFee) %>"]
 depends = ["invoke.createLinkSynth"]
 
 [invoke.setSynthSkewScaleLink]
@@ -60,8 +52,5 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_link_market_id %>"]
 func = "setMarketSkewScale"
-args = [
-    "<%= extras.synth_link_market_id %>",
-    "<%= parseEther(settings.synthLinkSkewScale) %>"
-]
+args = ["<%= extras.synth_link_market_id %>", "<%= parseEther(settings.synthLinkSkewScale) %>"]
 depends = ["invoke.createLinkSynth"]

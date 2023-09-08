@@ -116,11 +116,8 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [invoke.addMulticallThroughToPyth]
 target = ["system.CoreProxy", "perpsFactory.PerpsMarketProxy", "spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
-
 func = "setAllowlistedMulticallTarget"
-
 args = ["<%= settings.eth_aggregator_address %>", true]
-
 depends = ["provision.perpsFactory"]
 
 [invoke.setScPoolConfig]
@@ -139,5 +136,12 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-
-depends = ["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createSnxSynth", "invoke.createLinkSynth", "invoke.createOpSynth", "provision.perpsFactory"]
+depends = [
+    "invoke.createScPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "invoke.createSnxSynth",
+    "invoke.createLinkSynth",
+    "invoke.createOpSynth",
+    "provision.perpsFactory"
+]

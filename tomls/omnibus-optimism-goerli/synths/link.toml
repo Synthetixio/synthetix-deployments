@@ -27,6 +27,4 @@ func = "configureCollateral"
 args = [
     { tokenAddress = "<%= settings.linkTokenAddress %>", oracleNodeId = "<%= extras.link_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = [
-    "invoke.setSynthPriceLink"
-]
+depends = ["invoke.setSynthPriceLink"]

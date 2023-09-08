@@ -9,10 +9,7 @@ defaultValue = "2"
 target = ["system.CoreProxy"]
 from = "<%= settings.deployer %>"
 func = "createPool"
-args = [
-    "<%= settings.snx_pool_id %>",
-    "<%= settings.pool_owner %>",
-]
+args = ["<%= settings.snx_pool_id %>", "<%= settings.pool_owner %>"]
 depends = ["invoke.permitCreatePool"]
 
 [invoke.set_snx_pool_name]
@@ -20,17 +17,12 @@ target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.snx_pool_id %>"]
 func = "setPoolName"
-args = [
-    "<%= settings.snx_pool_id %>",
-    "Passive SNX Pool",
-]
+args = ["<%= settings.snx_pool_id %>", "Passive SNX Pool"]
 depends = ["invoke.create_snx_pool"]
 
 [invoke.approve_snx_pool]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "addApprovedPool"
-args = [
-    "<%= settings.snx_pool_id %>",
-]
+args = ["<%= settings.snx_pool_id %>"]
 depends = ["invoke.create_snx_pool"]

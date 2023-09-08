@@ -1,6 +1,4 @@
-include = [
-    "../core.toml"
-]
+include = ["../core.toml"]
 
 [setting.snx_aggregator_address]
 
@@ -13,10 +11,6 @@ args = [
     "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.snx_aggregator_address, settings.pythSnxFeedId, 30]) %>",
     []
 ]
-
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
-
-depends = [
-    "provision.system"
-]
+depends = ["provision.system"]

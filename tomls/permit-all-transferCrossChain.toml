@@ -2,8 +2,5 @@
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = [
-    "<%= formatBytes32String('transferCrossChain') %>",
-    true,
-]
+args = ["<%= formatBytes32String('transferCrossChain') %>", true]
 depends = ["provision.system"]

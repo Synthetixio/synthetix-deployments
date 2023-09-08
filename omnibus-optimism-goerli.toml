@@ -24,7 +24,6 @@ include = [
     # "tomls/oracles/pyth-snx.toml",
     # "tomls/oracles/pyth-link.toml",
     # "tomls/oracles/pyth-op.toml",
-
     # overrides for perp markets
     "tomls/omnibus-optimism-goerli/perps/global.toml",
     "tomls/omnibus-optimism-goerli/perps/btc.toml",
@@ -103,13 +102,9 @@ defaultValue = "0xd23c2ef3a533040b57cadaf33ccb111edbaca018"
 
 # Note: this is now added to the event but because the synth is already created
 # we need to manually set it here
-
-
 # ETH Synth Configuration
-
 # Note: this is now added to the event but because the synth is already created
 # we need to manually set it here
-
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
@@ -131,5 +126,10 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-
-depends = ["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "provision.perpsFactory"]
+depends = [
+    "invoke.createScPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "invoke.createLinkSynth",
+    "provision.perpsFactory"
+]

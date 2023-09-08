@@ -1,6 +1,4 @@
-include = [
-    "../core.toml"
-]
+include = ["../core.toml"]
 
 [setting.link_aggregator_address]
 
@@ -13,10 +11,6 @@ args = [
     "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.link_aggregator_address, settings.pythLinkFeedId, 30]) %>",
     []
 ]
-
 extra.link_oracle_id.event = "NodeRegistered"
 extra.link_oracle_id.arg = 0
-
-depends = [
-    "provision.system"
-]
+depends = ["provision.system"]

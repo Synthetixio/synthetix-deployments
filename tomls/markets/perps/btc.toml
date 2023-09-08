@@ -1,8 +1,4 @@
-include = [
-    "../perps-factory.toml",
-    "../../oracles/btc.toml",
-    "../common/bigcap-settings.toml",
-]
+include = ["../perps-factory.toml", "../../oracles/btc.toml", "../common/bigcap-settings.toml"]
 
 [setting.pythBtcFeedId]
 
@@ -43,10 +39,7 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= extras.btc_oracle_id %>"
-]
+args = ["<%= settings.btcPerpsMarketId %>", "<%= extras.btc_oracle_id %>"]
 depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
 
 [invoke.setPerpsBtcSettlementStrategy]
@@ -86,10 +79,7 @@ depends = ["invoke.createBtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"
-]
+args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"]
 depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcMaxLiquidationParameters]
@@ -123,18 +113,12 @@ depends = ["invoke.createBtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcLockedOiRatio) %>"
-]
+args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcLockedOiRatio) %>"]
 depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setMaxCollateralAmountBtc]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
-args = [
-    "<%= extras.synth_btc_market_id %>",
-    "<%= settings.perpsBtcSynthMaxCollateralAmount %>",
-]
+args = ["<%= extras.synth_btc_market_id %>", "<%= settings.perpsBtcSynthMaxCollateralAmount %>"]
 depends = ["invoke.createBtcSynth", "provision.perpsFactory"]

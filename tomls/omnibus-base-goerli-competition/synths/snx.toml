@@ -1,5 +1,4 @@
 # Synth Configuration
-
 [setting.synthSnxAsyncFixedFee]
 defaultValue = "0.001"
 
@@ -25,6 +24,4 @@ func = "configureCollateral"
 args = [
     { tokenAddress = "<%= extras.synth_snx_token_address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = [
-    "invoke.setSynthPriceSnx"
-]
+depends = ["invoke.setSynthPriceSnx"]

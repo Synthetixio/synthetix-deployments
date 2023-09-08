@@ -1,5 +1,4 @@
 # Synth Configuration
-
 [setting.synthBtcAsyncFixedFee]
 defaultValue = "0.0005"
 
@@ -25,6 +24,4 @@ func = "configureCollateral"
 args = [
     { tokenAddress = "<%= settings.btcSynthAddress %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = [
-    "invoke.setSynthPriceBtc"
-]
+depends = ["invoke.setSynthPriceBtc"]
