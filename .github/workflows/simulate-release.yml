@@ -88,7 +88,7 @@ jobs:
           npx @usecannon/cli build \
             ${{ matrix.toml }} \
             --upgrade-from synthetix-omnibus:latest \
-            --preset ${{ matrix.preset }}
+            --preset ${{ matrix.preset }} \
             --provider-url ${{ matrix.providerUrl }} \
             --chain-id ${{ matrix.chainId }} \
             --dry-run | tee deployment.log
