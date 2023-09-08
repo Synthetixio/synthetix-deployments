@@ -28,38 +28,47 @@ jobs:
 
         include:
           - toml: "omnibus-mainnet.toml"
+            preset: "main"
             chainId: 1
             providerUrl: "https://mainnet.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-optimism-mainnet.toml"
+            preset: "main"
             chainId: 10
             providerUrl: "https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-goerli.toml"
+            preset: "main"
             chainId: 5
             providerUrl: "https://goerli.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-optimism-goerli.toml"
+            preset: "main"
             chainId: 420
             providerUrl: "https://optimism-goerli.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-base-goerli.toml"
+            preset: "main"
             chainId: 84531
             providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-base-goerli-competition.toml"
+            preset: "competition"
             chainId: 84531
             providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-sepolia.toml"
+            preset: "main"
             chainId: 11155111
             providerUrl: "https://sepolia.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-polygon-mumbai.toml"
+            preset: "main"
             chainId: 80001
             providerUrl: "https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-arbitrum-goerli.toml"
+            preset: "main"
             chainId: 421613
             providerUrl: "https://arbitrum-goerli.infura.io/v3/$INFURA_API_KEY"
 
@@ -79,6 +88,7 @@ jobs:
           npx @usecannon/cli build \
             ${{ matrix.toml }} \
             --upgrade-from synthetix-omnibus:latest \
+            --preset ${{ matrix.preset }}
             --provider-url ${{ matrix.providerUrl }} \
             --chain-id ${{ matrix.chainId }} \
             --dry-run | tee deployment.log
