@@ -13,7 +13,7 @@ args = [
     "<%= settings.snx_pool_id %>",
     "<%= settings.pool_owner %>",
 ]
-depends=["invoke.permitCreatePool"]
+depends = ["invoke.permitCreatePool"]
 
 [invoke.set_snx_pool_name]
 target = ["system.CoreProxy"]
@@ -24,7 +24,7 @@ args = [
     "<%= settings.snx_pool_id %>",
     "Passive SNX Pool",
 ]
-depends=["invoke.create_snx_pool"]
+depends = ["invoke.create_snx_pool"]
 
 [invoke.approve_snx_pool]
 target = ["system.CoreProxy"]
@@ -33,4 +33,4 @@ func = "addApprovedPool"
 args = [
     "<%= settings.snx_pool_id %>",
 ]
-depends=["invoke.create_snx_pool"]
+depends = ["invoke.create_snx_pool"]

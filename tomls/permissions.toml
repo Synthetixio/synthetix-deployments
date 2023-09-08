@@ -8,4 +8,4 @@ args = [
     "<%= formatBytes32String('createPool') %>",
     "<%= settings.deployer %>",
 ]
-depends=["provision.system"]
+depends = ["provision.system"]

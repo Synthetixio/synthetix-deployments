@@ -6,4 +6,4 @@ args = [
     "<%= formatBytes32String('transferCrossChain') %>",
     true,
 ]
-depends=["provision.system"]
+depends = ["provision.system"]

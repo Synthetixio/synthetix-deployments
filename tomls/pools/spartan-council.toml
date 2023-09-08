@@ -12,7 +12,7 @@ args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.pool_owner %>",
 ]
-depends=["invoke.permitCreatePool"]
+depends = ["invoke.permitCreatePool"]
 
 [invoke.setScPoolName]
 target = ["system.CoreProxy"]
@@ -23,7 +23,7 @@ args = [
     "<%= settings.sc_pool_id %>",
     "Spartan Council Pool",
 ]
-depends=["invoke.createScPool"]
+depends = ["invoke.createScPool"]
 
 [invoke.setPreferredPool]
 target = ["system.CoreProxy"]
@@ -32,4 +32,4 @@ func = "setPreferredPool"
 args = [
     "<%= settings.sc_pool_id %>",
 ]
-depends=["invoke.createScPool"]
+depends = ["invoke.createScPool"]

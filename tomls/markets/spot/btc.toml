@@ -1,8 +1,8 @@
 include = [
-  "../spot-factory.toml",
-  "../../oracles/btc.toml", # TODO: use pyth-btc?
-  "../common/bigcap-settings.toml",
-  "../common/settlement-settings.toml"
+    "../spot-factory.toml",
+    "../../oracles/btc.toml", # TODO: use pyth-btc?
+    "../common/bigcap-settings.toml",
+    "../common/settlement-settings.toml"
 ]
 
 [invoke.createBtcSynth]
@@ -26,9 +26,9 @@ fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 
 func = "updatePriceData"
 args = [
-  "<%= extras.synth_btc_market_id %>", 
-  "<%= extras.btc_oracle_id %>", 
-  "<%= extras.btc_oracle_id %>"
+    "<%= extras.synth_btc_market_id %>",
+    "<%= extras.btc_oracle_id %>",
+    "<%= extras.btc_oracle_id %>"
 ]
 
 depends = ["invoke.createBtcSynth", "invoke.registerBtcOracleNode"]
@@ -39,8 +39,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "addSettlementStrategy"
 args = [
-  "<%= extras.synth_btc_market_id %>", 
-  { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
+    "<%= extras.synth_btc_market_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
 ]
 depends = ["invoke.createBtcSynth"]
 
@@ -50,8 +50,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setAsyncFixedFee"
 args = [
-  "<%= extras.synth_btc_market_id %>", 
-  "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
+    "<%= extras.synth_btc_market_id %>",
+    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
 ]
 depends = ["invoke.createBtcSynth"]
 
@@ -61,7 +61,7 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setMarketSkewScale"
 args = [
-  "<%= extras.synth_btc_market_id %>", 
-  "<%= parseEther(settings.synthBtcSkewScale) %>"
+    "<%= extras.synth_btc_market_id %>",
+    "<%= parseEther(settings.synthBtcSkewScale) %>"
 ]
 depends = ["invoke.createBtcSynth"]

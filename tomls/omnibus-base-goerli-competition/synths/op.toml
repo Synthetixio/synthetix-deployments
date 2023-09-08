@@ -12,19 +12,19 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "setCustomTransactorFees"
 args = [
-  "<%= extras.synth_op_market_id %>",
-  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
-  "<%= parseEther('0.0001') %>"
+    "<%= extras.synth_op_market_id %>",
+    "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
+    "<%= parseEther('0.0001') %>"
 ]
-depends=["provision.perpsFactory", "invoke.createOpSynth"]
+depends = ["provision.perpsFactory", "invoke.createOpSynth"]
 
 [invoke.configuresOPCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= extras.synth_op_token_address %>", oracleNodeId = "<%= extras.op_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+    { tokenAddress = "<%= extras.synth_op_token_address %>", oracleNodeId = "<%= extras.op_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
 depends = [
-  "invoke.setSynthPriceOp"
+    "invoke.setSynthPriceOp"
 ]

@@ -13,8 +13,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationRewardGuards"
 args = [
-  "<%= parseEther('1') %>",
-  "<%= parseEther('500') %>"
+    "<%= parseEther('1') %>",
+    "<%= parseEther('500') %>"
 ]
 depends = ["provision.perpsFactory"]
 
@@ -23,8 +23,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = [
-  "0",
-  "<%= MaxUint256 %>"
+    "0",
+    "<%= MaxUint256 %>"
 ]
 depends = ["provision.perpsFactory"]
 
@@ -33,7 +33,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
 args = [["<%= extras.synth_snx_market_id %>", "<%= extras.synth_op_market_id %>", "<%= extras.synth_link_market_id %>", "<%= extras.synth_eth_market_id %>", "<%= extras.synth_btc_market_id %>", "0"]]
-depends = ["invoke.createOpSynth", "invoke.createLinkSynth", "invoke.createEthSynth", "invoke.createSnxSynth", "invoke.createBtcSynth",  "provision.perpsFactory"]
+depends = ["invoke.createOpSynth", "invoke.createLinkSynth", "invoke.createEthSynth", "invoke.createSnxSynth", "invoke.createBtcSynth", "provision.perpsFactory"]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]

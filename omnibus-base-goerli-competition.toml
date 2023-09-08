@@ -6,31 +6,29 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/weth.toml",
-		"tomls/collaterals/wbtc.toml",
-		"tomls/collaterals/op.toml",
+    "tomls/collaterals/wbtc.toml",
+    "tomls/collaterals/op.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
-		"tomls/markets/spot/eth.toml",
-		"tomls/markets/spot/btc.toml",
-		"tomls/markets/spot/snx.toml",
-		"tomls/markets/spot/link.toml",
-		"tomls/markets/spot/op.toml",
-		"tomls/markets/perps/eth.toml",
-		"tomls/markets/perps/btc.toml",
-		"tomls/markets/perps/snx.toml",
-		"tomls/markets/perps/link.toml",
-		"tomls/markets/perps/op.toml",
-
-		# overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
-		"tomls/oracles/pyth-eth.toml",
-		"tomls/oracles/pyth-btc.toml",
-		"tomls/oracles/pyth-snx.toml",
-		"tomls/oracles/pyth-link.toml",
-		"tomls/oracles/pyth-op.toml",
-
+    "tomls/markets/spot/eth.toml",
+    "tomls/markets/spot/btc.toml",
+    "tomls/markets/spot/snx.toml",
+    "tomls/markets/spot/link.toml",
+    "tomls/markets/spot/op.toml",
+    "tomls/markets/perps/eth.toml",
+    "tomls/markets/perps/btc.toml",
+    "tomls/markets/perps/snx.toml",
+    "tomls/markets/perps/link.toml",
+    "tomls/markets/perps/op.toml",
+    # overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/oracles/pyth-link.toml",
+    "tomls/oracles/pyth-op.toml",
     # overrides for perp markets
     "tomls/omnibus-base-goerli-competition/perps/global.toml",
     "tomls/omnibus-base-goerli-competition/perps/btc.toml",
@@ -38,7 +36,6 @@ include = [
     "tomls/omnibus-base-goerli-competition/perps/op.toml",
     "tomls/omnibus-base-goerli-competition/perps/link.toml",
     "tomls/omnibus-base-goerli-competition/perps/snx.toml",
-
     # overrides for synth markets
     "tomls/omnibus-base-goerli-competition/synths/btc.toml",
     "tomls/omnibus-base-goerli-competition/synths/eth.toml",
@@ -143,4 +140,4 @@ args = [
     ],
 ]
 
-depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createSnxSynth", "invoke.createLinkSynth", "invoke.createOpSynth", "provision.perpsFactory"]
+depends = ["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createSnxSynth", "invoke.createLinkSynth", "invoke.createOpSynth", "provision.perpsFactory"]

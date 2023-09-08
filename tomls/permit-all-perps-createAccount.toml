@@ -6,4 +6,4 @@ args = [
     "<%= formatBytes32String('createAccount') %>",
     true,
 ]
-depends=["provision.perpsFactory"]
+depends = ["provision.perpsFactory"]

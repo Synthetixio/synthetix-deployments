@@ -1,5 +1,5 @@
 include = [
-  "../core.toml"
+    "../core.toml"
 ]
 
 [setting.link_aggregator_address]
@@ -18,5 +18,5 @@ extra.link_oracle_id.event = "NodeRegistered"
 extra.link_oracle_id.arg = 0
 
 depends = [
-  "provision.system"
+    "provision.system"
 ]

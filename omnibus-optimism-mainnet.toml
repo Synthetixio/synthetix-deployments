@@ -6,7 +6,7 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
-		# eth collateral is not enabled/set up on v3
+    # eth collateral is not enabled/set up on v3
     #"tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
@@ -112,4 +112,4 @@ args = [
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends=["invoke.createScPool", "invoke.createEthSynth"]
+depends = ["invoke.createScPool", "invoke.createEthSynth"]

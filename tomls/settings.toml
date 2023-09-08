@@ -18,8 +18,8 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setConfig"
 args = [
-  "<%= formatBytes32String('accountTimeoutWithdraw') %>", 
-  "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>"
+    "<%= formatBytes32String('accountTimeoutWithdraw') %>",
+    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>"
 ]
 depends = ["provision.system"]
 
@@ -28,7 +28,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureChainlinkCrossChain"
 args = [
-  "<%= settings.ccip_router %>", 
-  "<%= settings.ccip_token_pool %>"
+    "<%= settings.ccip_router %>",
+    "<%= settings.ccip_token_pool %>"
 ]
 depends = ["provision.system"]

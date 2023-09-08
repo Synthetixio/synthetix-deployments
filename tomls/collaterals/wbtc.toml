@@ -1,5 +1,5 @@
 include = [
-  "../oracles/btc.toml"
+    "../oracles/btc.toml"
 ]
 
 [setting.wbtc_address]
@@ -9,9 +9,9 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= settings.wbtc_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('3') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('0.01') %>", depositingEnabled = true }
+    { tokenAddress = "<%= settings.wbtc_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('3') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('0.01') %>", depositingEnabled = true }
 ]
 
 depends = [
-  "invoke.registerBtcOracleNode"
+    "invoke.registerBtcOracleNode"
 ]

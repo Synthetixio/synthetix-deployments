@@ -1,8 +1,8 @@
 include = [
-  "../spot-factory.toml",
-  "../../oracles/pyth-op.toml",
-  "../common/bigcap-settings.toml",
-  "../common/settlement-settings.toml"
+    "../spot-factory.toml",
+    "../../oracles/pyth-op.toml",
+    "../common/bigcap-settings.toml",
+    "../common/settlement-settings.toml"
 ]
 
 [invoke.createOpSynth]
@@ -26,9 +26,9 @@ fromCall.args = ["<%= extras.synth_op_market_id %>"]
 
 func = "updatePriceData"
 args = [
-  "<%= extras.synth_op_market_id %>", 
-  "<%= extras.op_oracle_id %>", 
-  "<%= extras.op_oracle_id %>"
+    "<%= extras.synth_op_market_id %>",
+    "<%= extras.op_oracle_id %>",
+    "<%= extras.op_oracle_id %>"
 ]
 
 depends = ["invoke.createOpSynth", "invoke.registerOpOracleNode"]
@@ -39,8 +39,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "addSettlementStrategy"
 args = [
-  "<%= extras.synth_op_market_id %>", 
-  { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
+    "<%= extras.synth_op_market_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
 ]
 depends = ["invoke.createOpSynth"]
 
@@ -50,8 +50,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "setAsyncFixedFee"
 args = [
-  "<%= extras.synth_op_market_id %>", 
-  "<%= parseEther(settings.synthOpAsyncFixedFee) %>"
+    "<%= extras.synth_op_market_id %>",
+    "<%= parseEther(settings.synthOpAsyncFixedFee) %>"
 ]
 depends = ["invoke.createOpSynth"]
 
@@ -61,8 +61,7 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "setMarketSkewScale"
 args = [
-  "<%= extras.synth_op_market_id %>", 
-  "<%= parseEther(settings.synthOpSkewScale) %>"
+    "<%= extras.synth_op_market_id %>",
+    "<%= parseEther(settings.synthOpSkewScale) %>"
 ]
 depends = ["invoke.createOpSynth"]
-

@@ -1,5 +1,5 @@
 include = [
-  "../core.toml"
+    "../core.toml"
 ]
 
 [setting.eth_aggregator_address]
@@ -18,5 +18,5 @@ extra.eth_oracle_id.event = "NodeRegistered"
 extra.eth_oracle_id.arg = 0
 
 depends = [
-  "provision.system"
+    "provision.system"
 ]

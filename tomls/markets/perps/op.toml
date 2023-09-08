@@ -1,10 +1,9 @@
 include = [
-  "../perps-factory.toml",
-
-  # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
-  # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
-  "../../oracles/pyth-op.toml",
-  "../common/bigcap-settings.toml",
+    "../perps-factory.toml",
+    # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+    # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+    "../../oracles/pyth-op.toml",
+    "../common/bigcap-settings.toml",
 ]
 
 [setting.opPerpsMarketId]
@@ -51,8 +50,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= extras.op_oracle_id %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= extras.op_oracle_id %>"
 ]
 depends = ["invoke.createOpPerpsMarket", "invoke.registerOpOracleNode"]
 
@@ -61,8 +60,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
+    "<%= settings.opPerpsMarketId %>",
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", disabled = false }
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -71,9 +70,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= parseEther(settings.perpsOpSkewScale) %>",
-  "<%= parseEther(settings.perpsOpMaxFundingVelocity) %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= parseEther(settings.perpsOpSkewScale) %>",
+    "<%= parseEther(settings.perpsOpMaxFundingVelocity) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -82,9 +81,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= parseEther(settings.perpsOpMakerFeeRatio) %>",
-  "<%= parseEther(settings.perpsOpTakerFeeRatio) %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= parseEther(settings.perpsOpMakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsOpTakerFeeRatio) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -93,8 +92,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= parseEther(settings.perpsOpMaxMarketSize) %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= parseEther(settings.perpsOpMaxMarketSize) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -103,11 +102,11 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= parseEther(settings.perpsOpMaxLiquidationLimitAccumulationMultiplier) %>",
-  "<%= parseEther(settings.perpsOpMaxSecondsInLiquidationWindow) %>",
-  "<%= parseEther(settings.perpsOpMaxLiquidationPd) %>",
-  "<%= settings.perpsBtcEndorsedLiquidator %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= parseEther(settings.perpsOpMaxLiquidationLimitAccumulationMultiplier) %>",
+    "<%= parseEther(settings.perpsOpMaxSecondsInLiquidationWindow) %>",
+    "<%= parseEther(settings.perpsOpMaxLiquidationPd) %>",
+    "<%= settings.perpsBtcEndorsedLiquidator %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -116,12 +115,12 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= parseEther(settings.perpsOpInitialMarginRatio) %>",
-  "<%= parseEther(settings.perpsOpMinimumInitialMarginRatio) %>",
-  "<%= parseEther(settings.perpsOpMaintenanceMarginScalar) %>",
-  "<%= parseEther(settings.perpsOpLiquidationRewardRatioD18) %>",
-  "<%= parseEther(settings.perpsOpMinimumPositionMargin) %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= parseEther(settings.perpsOpInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsOpMinimumInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsOpMaintenanceMarginScalar) %>",
+    "<%= parseEther(settings.perpsOpLiquidationRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsOpMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -130,8 +129,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = [
-  "<%= settings.opPerpsMarketId %>", 
-  "<%= parseEther(settings.perpsOpLockedOiRatio) %>"
+    "<%= settings.opPerpsMarketId %>",
+    "<%= parseEther(settings.perpsOpLockedOiRatio) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -140,7 +139,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = [
-	"<%= extras.synth_op_market_id %>",
-	"<%= settings.perpsOpSynthMaxCollateralAmount %>",
+    "<%= extras.synth_op_market_id %>",
+    "<%= settings.perpsOpSynthMaxCollateralAmount %>",
 ]
 depends = ["invoke.createOpSynth", "provision.perpsFactory"]

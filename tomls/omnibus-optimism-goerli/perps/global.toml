@@ -13,8 +13,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationRewardGuards"
 args = [
-  "<%= parseEther('1') %>",
-  "<%= parseEther('500') %>"
+    "<%= parseEther('1') %>",
+    "<%= parseEther('500') %>"
 ]
 depends = ["provision.perpsFactory"]
 
@@ -23,8 +23,8 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = [
-  "0",
-  "<%= MaxUint256 %>"
+    "0",
+    "<%= MaxUint256 %>"
 ]
 depends = ["provision.perpsFactory"]
 

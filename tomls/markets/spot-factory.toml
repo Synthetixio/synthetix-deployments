@@ -1,5 +1,5 @@
 include = [
-  "../core.toml"
+    "../core.toml"
 ]
 
 [setting.spot_market_package]

@@ -1,5 +1,5 @@
 include = [
-  "../core.toml"
+    "../core.toml"
 ]
 
 [setting.snx_aggregator_address]
@@ -19,5 +19,5 @@ extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
 
 depends = [
-  "provision.system"
+    "provision.system"
 ]

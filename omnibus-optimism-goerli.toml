@@ -5,37 +5,30 @@ include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-
     "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
-
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
-
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-perps-createAccount.toml",
     "tomls/permit-all-transferCrossChain.toml",
-
     "tomls/markets/spot/eth.toml",
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/link.toml",
-
     "tomls/markets/perps/eth.toml",
     "tomls/markets/perps/btc.toml",
-
-		# overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
-		# "tomls/oracles/pyth-eth.toml",
-		# "tomls/oracles/pyth-btc.toml",
-		# "tomls/oracles/pyth-snx.toml",
-		# "tomls/oracles/pyth-link.toml",
-		# "tomls/oracles/pyth-op.toml",
+    # overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
+    # "tomls/oracles/pyth-eth.toml",
+    # "tomls/oracles/pyth-btc.toml",
+    # "tomls/oracles/pyth-snx.toml",
+    # "tomls/oracles/pyth-link.toml",
+    # "tomls/oracles/pyth-op.toml",
 
     # overrides for perp markets
     "tomls/omnibus-optimism-goerli/perps/global.toml",
     "tomls/omnibus-optimism-goerli/perps/btc.toml",
     "tomls/omnibus-optimism-goerli/perps/eth.toml",
-
     # overrides for synth markets
     "tomls/omnibus-optimism-goerli/synths/btc.toml",
     "tomls/omnibus-optimism-goerli/synths/eth.toml",
@@ -139,4 +132,4 @@ args = [
     ],
 ]
 
-depends=["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "provision.perpsFactory"]
+depends = ["invoke.createScPool", "invoke.createEthSynth", "invoke.createBtcSynth", "invoke.createLinkSynth", "provision.perpsFactory"]
