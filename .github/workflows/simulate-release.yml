@@ -24,7 +24,7 @@ jobs:
           - "omnibus-base-goerli-competition.toml"
           - "omnibus-sepolia.toml"
           - "omnibus-polygon-mumbai.toml"
-          - "omnibus-arbitrum-goerli.toml"
+          # - "omnibus-arbitrum-goerli.toml" # Arbitrum Goerli always fails on dry run
 
         include:
           - toml: "omnibus-mainnet.toml"
@@ -67,10 +67,10 @@ jobs:
             chainId: 80001
             providerUrl: "https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY"
 
-          - toml: "omnibus-arbitrum-goerli.toml"
-            preset: "main"
-            chainId: 421613
-            providerUrl: "https://arbitrum-goerli.infura.io/v3/$INFURA_API_KEY"
+          # - toml: "omnibus-arbitrum-goerli.toml"
+          #   preset: "main"
+          #   chainId: 421613
+          #   providerUrl: "https://arbitrum-goerli.infura.io/v3/$INFURA_API_KEY"
 
     steps:
       - name: Install Foundry (Cannon)
