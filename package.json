@@ -1,0 +1,19 @@
+{
+  "name": "synthetix-deployments",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "synthetixio/synthetix-deployments",
+  "author": "Synthetix",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "pretty": "prettier . '**/*.toml' --write",
+    "pretty:check": "prettier . '**/*.toml' --check"
+  },
+  "devDependencies": {
+    "@usecannon/cli": "^2.5.4",
+    "prettier": "^3.0.3",
+    "prettier-plugin-toml": "^1.0.0"
+  },
+  "packageManager": "yarn@3.6.3"
+}
