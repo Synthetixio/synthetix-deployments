@@ -1,8 +1,8 @@
 include = [
-  "../spot-factory.toml",
-  "../../oracles/pyth-snx.toml",
-  "../common/bigcap-settings.toml",
-  "../common/settlement-settings.toml"
+    "../spot-factory.toml",
+    "../../oracles/pyth-snx.toml",
+    "../common/bigcap-settings.toml",
+    "../common/settlement-settings.toml"
 ]
 
 [invoke.createSnxSynth]
@@ -10,27 +10,22 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
 args = ["Synthetic Synthetix Network Token", "snxSNX", "<%= settings.owner %>"]
-
 extra.synth_snx_market_id.event = "SynthRegistered"
 extra.synth_snx_market_id.arg = 0
-
 extra.synth_snx_token_address.event = "SynthRegistered"
 extra.synth_snx_token_address.arg = 1
-
 depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceSnx]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_snx_market_id %>"]
-
 func = "updatePriceData"
 args = [
-  "<%= extras.synth_snx_market_id %>", 
-  "<%= extras.snx_oracle_id %>", 
-  "<%= extras.snx_oracle_id %>"
+    "<%= extras.synth_snx_market_id %>",
+    "<%= extras.snx_oracle_id %>",
+    "<%= extras.snx_oracle_id %>"
 ]
-
 depends = ["invoke.createSnxSynth", "invoke.registerSnxOracleNode"]
 
 [invoke.setSynthSettlementStrategySnx]
@@ -39,8 +34,8 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_snx_market_id %>"]
 func = "addSettlementStrategy"
 args = [
-  "<%= extras.synth_snx_market_id %>", 
-  { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythSnxFeedId %>",  url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
+    "<%= extras.synth_snx_market_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythSnxFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, priceDeviationTolerance = "<%= parseEther(settings.bigCapSettlementDeviationTolerance) %>", minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
 ]
 depends = ["invoke.createSnxSynth"]
 
@@ -49,10 +44,7 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_snx_market_id %>"]
 func = "setAsyncFixedFee"
-args = [
-  "<%= extras.synth_snx_market_id %>", 
-  "<%= parseEther(settings.synthSnxAsyncFixedFee) %>"
-]
+args = ["<%= extras.synth_snx_market_id %>", "<%= parseEther(settings.synthSnxAsyncFixedFee) %>"]
 depends = ["invoke.createSnxSynth"]
 
 [invoke.setSynthSkewScaleSnx]
@@ -60,9 +52,5 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_snx_market_id %>"]
 func = "setMarketSkewScale"
-args = [
-  "<%= extras.synth_snx_market_id %>", 
-  "<%= parseEther(settings.synthSnxSkewScale) %>"
-]
+args = ["<%= extras.synth_snx_market_id %>", "<%= parseEther(settings.synthSnxSkewScale) %>"]
 depends = ["invoke.createSnxSynth"]
-

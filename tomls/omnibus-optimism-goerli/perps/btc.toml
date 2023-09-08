@@ -2,7 +2,6 @@
 defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
 
 # Perps Configuration
-
 [setting.btcPerpsMarketId]
 defaultValue = "200"
 

@@ -1,5 +1,4 @@
 # Synth Configuration
-
 [setting.synthBtcAsyncFixedFee]
 defaultValue = "0.0005"
 
@@ -12,19 +11,17 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setCustomTransactorFees"
 args = [
-  "<%= extras.synth_btc_market_id %>",
-  "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
-  "<%= parseEther('0.0001') %>"
+    "<%= extras.synth_btc_market_id %>",
+    "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
+    "<%= parseEther('0.0001') %>"
 ]
-depends=["provision.perpsFactory", "invoke.createBtcSynth"]
+depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
 
 [invoke.configuresBTCCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-  { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+    { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = [
-  "invoke.setSynthPriceBtc"
-]
+depends = ["invoke.setSynthPriceBtc"]

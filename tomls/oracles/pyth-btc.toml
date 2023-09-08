@@ -1,6 +1,4 @@
-include = [
-  "../core.toml"
-]
+include = ["../core.toml"]
 
 [setting.btc_aggregator_address]
 
@@ -13,10 +11,6 @@ args = [
     "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.btc_aggregator_address, settings.pythBtcFeedId, 30]) %>",
     []
 ]
-
 extra.btc_oracle_id.event = "NodeRegistered"
 extra.btc_oracle_id.arg = 0
-
-depends = [
-  "provision.system"
-]
+depends = ["provision.system"]

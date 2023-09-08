@@ -1,6 +1,4 @@
-include = [
-  "../core.toml"
-]
+include = ["../core.toml"]
 
 [setting.spot_market_package]
 
@@ -11,5 +9,4 @@ options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = ""
 options.synthetixPackage = "<%= settings.snx_package %>"
-
 depends = ["provision.system"]

@@ -1,6 +1,4 @@
-include = [
-  "./spot-factory.toml"
-]
+include = ["./spot-factory.toml"]
 
 [setting.perps_market_package]
 
@@ -12,5 +10,4 @@ options.owner = "<%= settings.owner %>"
 options.salt = "alpha"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
-
 depends = ["provision.spotFactory"]

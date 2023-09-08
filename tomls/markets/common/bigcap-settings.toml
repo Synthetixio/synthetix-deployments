@@ -1,6 +1,4 @@
-include = [
-	"./settlement-settings.toml",
-]
+include = ["./settlement-settings.toml"]
 
 [setting.bigCapSettlementDelay]
 defaultValue = "15"
@@ -13,4 +11,3 @@ defaultValue = "600"
 
 [setting.bigCapSettlementDeviationTolerance]
 defaultValue = "0.05"
-

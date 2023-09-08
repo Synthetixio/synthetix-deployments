@@ -1,6 +1,4 @@
-include = [
-  "../core.toml"
-]
+include = ["../core.toml"]
 
 [setting.eth_aggregator_address]
 
@@ -14,10 +12,6 @@ args = [
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
     []
 ]
-
 extra.eth_oracle_id.event = "NodeRegistered"
 extra.eth_oracle_id.arg = 0
-
-depends = [
-  "provision.system"
-]
+depends = ["provision.system"]

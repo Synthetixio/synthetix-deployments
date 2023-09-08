@@ -2,7 +2,6 @@
 defaultValue = "0x71334dcd37620ce3c33e3bafef04cc80dec083042e49b734315b36d1aad7991f"
 
 # Perps Configuration
-
 [setting.opPerpsMarketId]
 defaultValue = "400"
 
