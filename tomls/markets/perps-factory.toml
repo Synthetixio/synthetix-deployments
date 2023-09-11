@@ -4,7 +4,7 @@ include = ["./spot-factory.toml"]
 
 [provision.perpsFactory]
 source = "<%= settings.perps_market_package %>"
-targetPreset = "main"
+targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "alpha"

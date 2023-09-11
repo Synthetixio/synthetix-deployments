@@ -4,7 +4,7 @@ include = ["../core.toml"]
 
 [provision.spotFactory]
 source = "<%= settings.spot_market_package %>"
-targetPreset = "main"
+targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = ""
