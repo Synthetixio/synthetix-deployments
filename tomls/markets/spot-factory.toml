@@ -2,6 +2,9 @@ include = ["../core.toml"]
 
 [setting.spot_market_package]
 
+[setting.synthetixPreset]
+defaultValue = "competition"
+
 [provision.spotFactory]
 source = "<%= settings.spot_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
@@ -9,4 +12,5 @@ options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = ""
 options.synthetixPackage = "<%= settings.snx_package %>"
+options.synthetixPreset = "<%= settings.target_preset %>"
 depends = ["provision.system"]

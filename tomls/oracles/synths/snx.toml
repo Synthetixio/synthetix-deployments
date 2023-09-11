@@ -7,9 +7,9 @@ args = [
     # 2 = external node
     2,
     # 2 parameters: 1 is the external node contract address, and the other is the market id
-    "<%= defaultAbiCoder.encode(['address', 'uint128'], [settings.spotMarketExternalNodeAddress, settings.synth_snx_market_id]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'uint128'], [settings.spotMarketExternalNodeAddress, extras.synth_snx_market_id]) %>",
     []
 ]
 extra.synth_snx_oracle_id.event = "NodeRegistered"
 extra.synth_snx_oracle_id.arg = 0
-depends = ["provision.system", "invoke.createSnxSynth"]
+depends = ["invoke.createSnxSynth"]
