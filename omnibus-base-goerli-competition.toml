@@ -59,6 +59,9 @@ defaultValue = "synthetix-perps-market:3.3.3-dev.c36cf112"
 [setting.salt]
 defaultValue = "competition"
 
+[setting.spotMarketExternalNodeAddress]
+defaultValue = "0x26c9B83fA781e93Ec4cA5fBAC07AC82135872512"
+
 [setting.pythPriceVerificationAddress]
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
 

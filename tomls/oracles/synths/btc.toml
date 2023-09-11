@@ -1,0 +1,15 @@
+[setting.spotMarketExternalNodeAddress]
+
+[invoke.registerSynthBtcOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 2 = external node
+    2,
+    # 2 parameters: 1 is the external node contract address, and the other is the market id
+    "<%= defaultAbiCoder.encode(['address', 'uint128'], [settings.spotMarketExternalNodeAddress, settings.synth_btc_market_id]) %>",
+    []
+]
+extra.synth_btc_oracle_id.event = "NodeRegistered"
+extra.synth_btc_oracle_id.arg = 0
+depends = ["provision.system", "invoke.createBtcSynth"]
