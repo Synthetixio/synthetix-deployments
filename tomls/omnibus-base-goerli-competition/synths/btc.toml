@@ -1,6 +1,4 @@
-include = [
-    "../../oracles/synths/btc.toml"
-]
+include = ["../../oracles/synths/btc.toml"]
 
 # Synth Configuration
 [setting.synthBtcAsyncFixedFee]

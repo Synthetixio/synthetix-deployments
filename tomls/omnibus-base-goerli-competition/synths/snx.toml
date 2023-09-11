@@ -1,6 +1,4 @@
-include = [
-    "../../oracles/synths/snx.toml"
-]
+include = ["../../oracles/synths/snx.toml"]
 
 # Synth Configuration
 [setting.synthSnxAsyncFixedFee]

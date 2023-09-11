@@ -1,6 +1,4 @@
-include = [
-    "../../oracles/synths/eth.toml"
-]
+include = ["../../oracles/synths/eth.toml"]
 
 # Synth Configuration
 [setting.synthEthAsyncFixedFee]
