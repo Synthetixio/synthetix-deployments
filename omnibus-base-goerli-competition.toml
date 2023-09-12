@@ -23,7 +23,7 @@ include = [
     "tomls/markets/perps/snx.toml",
     "tomls/markets/perps/link.toml",
     "tomls/markets/perps/op.toml",
-    # overrides for the oracles 
+    # overrides for the oracles
     "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/pyth-btc.toml",
     "tomls/oracles/pyth-snx.toml",

@@ -29,7 +29,6 @@ args = [
 depends = ["invoke.setSynthPriceBtc", "invoke.registerSynthBtcOracleNode"]
 
 # override synth config to use chainlink oracle id
-
 [setting.chainlink_btc_aggregator_address]
 defaultValue = "0xAC15714c08986DACC0379193e22382736796496f"
 
