@@ -35,7 +35,7 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 
 ### Finalize Release
 
-- If you've updated the provisioned packages, verify your new contracts on Etherscan: `cannon verify synthetix-omnibus:<VERSION_NUMBER> --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`
+- If you've updated the provisioned packages, verify your new contracts on Etherscan: `cannon verify synthetix-omnibus:<VERSION_NUMBER> --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`. Make sure you set your preset if it's set in the toml files.
 - Publish your new packages on the Cannon registry: `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3` (_The --private-key parameter is unnecessary if using [Frame](https://frame.sh/)_)
 - Commit and merge the change to this repository.
 - Run the [**Export ABIs** action](https://github.com/Synthetixio/v3-abi-exporter/actions/workflows/main.yml) in the `v3-abi-exporter` repository.

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.4"
+version = "3.3.3-dev.d03942c7"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -23,7 +23,7 @@ include = [
     "tomls/markets/perps/snx.toml",
     "tomls/markets/perps/link.toml",
     "tomls/markets/perps/op.toml",
-    # overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
+    # overrides for the oracles
     "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/pyth-btc.toml",
     "tomls/oracles/pyth-snx.toml",
@@ -45,16 +45,22 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.05f72e70"
+defaultValue = "synthetix:3.3.3-dev.d03942c7"
+
+[setting.target_preset]
+defaultValue = "competition"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.05f72e70"
+defaultValue = "synthetix-spot-market:3.3.3-dev.d03942c7"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.05f72e70"
+defaultValue = "synthetix-perps-market:3.3.3-dev.d03942c7"
 
 [setting.salt]
 defaultValue = "competition"
+
+[setting.spotMarketExternalNodeAddress]
+defaultValue = "0x26c9B83fA781e93Ec4cA5fBAC07AC82135872512"
 
 [setting.pythPriceVerificationAddress]
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
@@ -96,7 +102,7 @@ defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
 defaultValue = "2000000000000000000"
 
 [setting.account_timeout_withdraw]
-defaultValue = "86400"
+defaultValue = "60"
 
 [setting.deployer]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"

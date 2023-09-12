@@ -1,6 +1,5 @@
 include = [
     "../spot-factory.toml",
-    "../../oracles/btc.toml", # TODO: use pyth-btc?
     "../common/bigcap-settings.toml",
     "../common/settlement-settings.toml"
 ]
