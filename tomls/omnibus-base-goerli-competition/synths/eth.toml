@@ -38,6 +38,18 @@ args = [
 ]
 depends = ["invoke.setSynthPriceEth", "invoke.registerSynthEthOracleNode"]
 
+[invoke.setSynthEthMaxMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_eth_token_address %>",
+    "<%= parseEther(settings.perpsEthMaxMarketSize) %>"
+]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]
+
 [setting.chainlink_eth_aggregator_address]
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 

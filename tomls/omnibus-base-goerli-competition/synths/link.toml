@@ -28,6 +28,18 @@ args = [
 ]
 depends = ["invoke.setSynthPriceLink", "invoke.registerSynthLinkOracleNode"]
 
+[invoke.setSynthLinkMaxMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_link_token_address %>",
+    "<%= parseEther(settings.perpsLinkMaxMarketSize) %>"
+]
+depends = ["invoke.createLinkSynth", "provision.perpsFactory"]
+
 [setting.chainlink_link_aggregator_address]
 defaultValue = "0x907A947C5F34eC68F8D4eD87d4bac3FA6431a4D1"
 
