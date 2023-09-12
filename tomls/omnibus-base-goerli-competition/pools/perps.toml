@@ -18,10 +18,3 @@ fromCall.args = ["<%= settings.perps_pool_id %>"]
 func = "setPoolName"
 args = ["<%= settings.perps_pool_id %>", "Perps Pool"]
 depends = ["invoke.createPerpsPool"]
-
-[invoke.setPerpsPreferredPool]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setPreferredPool"
-args = ["<%= settings.perps_pool_id %>"]
-depends = ["invoke.createPerpsPool"]
