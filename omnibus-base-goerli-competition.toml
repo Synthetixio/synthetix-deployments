@@ -10,6 +10,8 @@ include = [
     "tomls/collaterals/op.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
+    "tomls/omnibus-base-goerli-competition/pools/spots.toml",
+    "tomls/omnibus-base-goerli-competition/pools/perps.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
@@ -110,6 +112,12 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.sc_pool_id]
 defaultValue = "1"
 
+[setting.spots_pool_id]
+defaultValue = "10"
+
+[setting.perps_pool_id]
+defaultValue = "11"
+
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
@@ -150,4 +158,44 @@ depends = [
     "invoke.createLinkSynth",
     "invoke.createOpSynth",
     "provision.perpsFactory"
+]
+
+[invoke.setPerpsPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.perps_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.perps_pool_id %>",
+    [
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends = [
+    "invoke.createPerpsPool",
+    "provision.perpsFactory"
+]
+
+[invoke.setSpotsPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.perps_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.perps_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_op_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_snx_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+depends = [
+    "invoke.createSpotsPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "invoke.createSnxSynth",
+    "invoke.createLinkSynth",
+    "invoke.createOpSynth"
 ]
