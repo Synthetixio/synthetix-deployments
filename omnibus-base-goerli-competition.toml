@@ -179,10 +179,10 @@ depends = [
 [invoke.setSpotsPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.perps_pool_id %>"]
+fromCall.args = ["<%= settings.spots_pool_id %>"]
 func = "setPoolConfiguration"
 args = [
-    "<%= settings.perps_pool_id %>",
+    "<%= settings.spots_pool_id %>",
     [
         { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
