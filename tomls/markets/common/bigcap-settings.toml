@@ -8,6 +8,3 @@ defaultValue = "60"
 
 [setting.bigCapPriceWindowDuration]
 defaultValue = "600"
-
-[setting.bigCapSettlementDeviationTolerance]
-defaultValue = "0.05"
