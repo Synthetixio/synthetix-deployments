@@ -62,7 +62,7 @@ defaultValue = "synthetix-perps-market:3.3.3-dev.1131ca69"
 defaultValue = "competition"
 
 [setting.spotMarketExternalNodeAddress]
-defaultValue = "0x26c9B83fA781e93Ec4cA5fBAC07AC82135872512"
+defaultValue = "0xF6D1e72c3608344F831606078e3d7eb8c51aa99A"
 
 [setting.pythPriceVerificationAddress]
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
@@ -86,19 +86,19 @@ defaultValue = "0x4200000000000000000000000000000000000042"
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
 [setting.eth_aggregator_address]
-defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.btc_aggregator_address]
-defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.snx_aggregator_address]
-defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.link_aggregator_address]
-defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.op_aggregator_address]
-defaultValue = "0x50aAa4c2E19bA4602a0D0C6374B49e47c6790D47"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
