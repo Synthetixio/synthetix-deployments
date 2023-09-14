@@ -171,10 +171,7 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = [
-    "invoke.createPerpsPool",
-    "provision.perpsFactory"
-]
+depends = ["invoke.createPerpsPool", "provision.perpsFactory"]
 
 [invoke.setSpotsPoolConfig]
 target = ["system.CoreProxy"]
