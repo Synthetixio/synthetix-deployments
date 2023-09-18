@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.f1990c05"
+version = "3.3.3-dev.e141cd8c"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -47,16 +47,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.f1990c05"
+defaultValue = "synthetix:3.3.3-dev.e141cd8c"
 
 [setting.target_preset]
 defaultValue = "competition"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.f1990c05"
+defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.f1990c05"
+defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
 
 [setting.salt]
 defaultValue = "competition"
@@ -126,13 +126,6 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[invoke.addMulticallThroughToPyth]
-target = ["system.CoreProxy", "perpsFactory.PerpsMarketProxy", "spotFactory.SpotMarketProxy"]
-fromCall.func = "owner"
-func = "setAllowlistedMulticallTarget"
-args = ["<%= settings.eth_aggregator_address %>", true]
-depends = ["provision.perpsFactory"]
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
