@@ -15,7 +15,19 @@ func = "setCustomTransactorFees"
 args = [
     "<%= extras.synth_link_market_id %>",
     "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
-    "<%= parseEther('0.0001') %>"
+    "<%= parseEther(settings.synthLinkAsyncFixedFee) %>"
+]
+depends = ["provision.perpsFactory", "invoke.createLinkSynth"]
+
+[invoke.setExternalNodeCustomTransactorOnLinkSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_link_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+    "<%= extras.synth_link_market_id %>",
+    "<%= settings.spotMarketExternalNodeAddress %>",
+    "<%= parseEther(settings.synthLinkAsyncFixedFee) %>"
 ]
 depends = ["provision.perpsFactory", "invoke.createLinkSynth"]
 
