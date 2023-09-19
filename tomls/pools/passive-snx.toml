@@ -26,3 +26,30 @@ fromCall.func = "owner"
 func = "addApprovedPool"
 args = ["<%= settings.snx_pool_id %>"]
 depends = ["invoke.create_snx_pool"]
+
+[invoke.disable_all_new_collaterals_for_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.snx_pool_id %>"]
+func = "setPoolCollateralDisabledByDefault"
+args = ["<%= settings.snx_pool_id %>", false]
+depends = ["invoke.create_snx_pool"]
+
+[invoke.configure_snx_collateral_for_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.snx_pool_id %>",
+    "<%= settings.snx_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+]
+depends = ["invoke.create_snx_pool"]
+
+[invoke.configure_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.snx_pool_id %>"]
+func = "setPoolConfiguration"
+args = ["<%= settings.snx_pool_id %>", []]
+depends = ["invoke.create_snx_pool"]
