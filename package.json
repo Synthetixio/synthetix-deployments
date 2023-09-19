@@ -11,12 +11,9 @@
     "pretty:check": "prettier . '**/*.toml' --check"
   },
   "devDependencies": {
-    "@usecannon/cli": "^2.7.1",
+    "@usecannon/cli": "^2.5.4",
     "prettier": "^3.0.3",
     "prettier-plugin-toml": "^1.0.0"
   },
-  "packageManager": "yarn@3.6.3",
-  "dependencies": {
-    "solc": "^0.8.21"
-  }
+  "packageManager": "yarn@3.6.3"
 }

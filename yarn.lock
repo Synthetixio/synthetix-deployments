@@ -456,22 +456,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/router@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "@synthetixio/router@npm:3.3.0"
-  dependencies:
-    "@ethersproject/keccak256": ^5.7.0
-    debug: ^4.3.4
-    mustache: ^4.2.0
-  peerDependencies:
-    "@usecannon/builder": ^2.0.0
-    ethers: ^5.0.0
-    hardhat: ^2.0.0
-    solc: ^0.8.17
-  checksum: 923709d5b5a0955f4cdfa7271b0fa83ac10dc1d5dbb169be91c8c4c1c4929402681170a66a16f05879d9b012d665c44dad37307297cdf7dac8c8358d0f21f087
-  languageName: node
-  linkType: hard
-
 "@synthetixio/wei@npm:^2.74.1":
   version: 2.74.4
   resolution: "@synthetixio/wei@npm:2.74.4"
@@ -502,11 +486,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.7.1":
-  version: 2.7.1
-  resolution: "@usecannon/builder@npm:2.7.1"
+"@usecannon/builder@npm:^2.5.4":
+  version: 2.5.4
+  resolution: "@usecannon/builder@npm:2.5.4"
   dependencies:
-    "@synthetixio/router": ^3.3.0
     axios: ^1.2.2
     buffer: ^6.0.3
     debug: ^4.3.4
@@ -518,17 +501,17 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     ethers: ">=5.6.0"
-  checksum: 547e76098e7ef1098c02fefb3e3771f8966799b709489779890d2ce1301d716cb65f14dc35ff82486cda2e638e6966560e14ab718859a74145d3f59cd2aef178
+  checksum: 01d41456222c77359b91b630fe41765bf1824eb5de4a31f375b1ab53dd2ac364ab258dfc3a88ae28e8428cab9ae3244b605eb1f4f2fd5ec751a2ebdf67174467
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.7.1":
-  version: 2.7.1
-  resolution: "@usecannon/cli@npm:2.7.1"
+"@usecannon/cli@npm:^2.5.4":
+  version: 2.5.4
+  resolution: "@usecannon/cli@npm:2.5.4"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.7.1
+    "@usecannon/builder": ^2.5.4
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -544,7 +527,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: dist/bin/cannon.js
-  checksum: c506e76581f6f96475c3f11b429d09085d37a1d8582874f1141e29d1d4d49398e031d6974a58fe03cfea343ae4cbbb457b491b1e005ee20ed0cd160717bdf4b1
+  checksum: bc20b04b3848bc8501f71de8f9e64a09076f7a4df0e8e8c4aebe244bb9812f35ce4746af9541b209e2d46a4cfadcd52b8912af49d0a574f1d1f65b768d2c7048
   languageName: node
   linkType: hard
 
@@ -709,20 +692,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"command-exists@npm:^1.2.8":
-  version: 1.2.9
-  resolution: "command-exists@npm:1.2.9"
-  checksum: 729ae3d88a2058c93c58840f30341b7f82688a573019535d198b57a4d8cb0135ced0ad7f52b591e5b28a90feb2c675080ce916e56254a0f7c15cb2395277cac3
-  languageName: node
-  linkType: hard
-
-"commander@npm:^8.1.0":
-  version: 8.3.0
-  resolution: "commander@npm:8.3.0"
-  checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
-  languageName: node
-  linkType: hard
-
 "commander@npm:^9.5.0":
   version: 9.5.0
   resolution: "commander@npm:9.5.0"
@@ -859,16 +828,6 @@ __metadata:
   dependencies:
     reusify: ^1.0.4
   checksum: 0170e6bfcd5d57a70412440b8ef600da6de3b2a6c5966aeaf0a852d542daff506a0ee92d6de7679d1de82e644bce69d7a574a6c93f0b03964b5337eed75ada1a
-  languageName: node
-  linkType: hard
-
-"follow-redirects@npm:^1.12.1":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
   languageName: node
   linkType: hard
 
@@ -1049,13 +1008,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memorystream@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "memorystream@npm:0.3.1"
-  checksum: f18b42440d24d09516d01466c06adf797df7873f0d40aa7db02e5fb9ed83074e5e65412d0720901d7069363465f82dc4f8bcb44f0cde271567a61426ce6ca2e9
-  languageName: node
-  linkType: hard
-
 "mime-db@npm:1.52.0":
   version: 1.52.0
   resolution: "mime-db@npm:1.52.0"
@@ -1100,15 +1052,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mustache@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "mustache@npm:4.2.0"
-  bin:
-    mustache: bin/mustache
-  checksum: 928fcb63e3aa44a562bfe9b59ba202cccbe40a46da50be6f0dd831b495be1dd7e38ca4657f0ecab2c1a89dc7bccba0885eab7ee7c1b215830da765758c7e0506
-  languageName: node
-  linkType: hard
-
 "neo-async@npm:^2.6.2":
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
@@ -1122,13 +1065,6 @@ __metadata:
   dependencies:
     http-https: ^1.0.0
   checksum: e6171b33645ffc3559688a824a461952380d0b8f6a203b2daf6767647f277554a73fd7ad795629d88cd8eab68c0460aabb1e1b8b52ef80e3ff7621ac39f832ed
-  languageName: node
-  linkType: hard
-
-"os-tmpdir@npm:~1.0.2":
-  version: 1.0.2
-  resolution: "os-tmpdir@npm:1.0.2"
-  checksum: 5666560f7b9f10182548bf7013883265be33620b1c1b4a4d405c25be2636f970c5488ff3e6c48de75b55d02bde037249fe5dbfbb4c0fb7714953d56aed062e6d
   languageName: node
   linkType: hard
 
@@ -1212,15 +1148,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^5.5.0":
-  version: 5.7.2
-  resolution: "semver@npm:5.7.2"
-  bin:
-    semver: bin/semver
-  checksum: fb4ab5e0dd1c22ce0c937ea390b4a822147a9c53dbd2a9a0132f12fe382902beef4fbf12cf51bb955248d8d15874ce8cd89532569756384f994309825f10b686
-  languageName: node
-  linkType: hard
-
 "semver@npm:^7.3.7":
   version: 7.5.4
   resolution: "semver@npm:7.5.4"
@@ -1247,23 +1174,6 @@ __metadata:
     astral-regex: ^2.0.0
     is-fullwidth-code-point: ^3.0.0
   checksum: 4a82d7f085b0e1b070e004941ada3c40d3818563ac44766cca4ceadd2080427d337554f9f99a13aaeb3b4a94d9964d9466c807b3d7b7541d1ec37ee32d308756
-  languageName: node
-  linkType: hard
-
-"solc@npm:^0.8.21":
-  version: 0.8.21
-  resolution: "solc@npm:0.8.21"
-  dependencies:
-    command-exists: ^1.2.8
-    commander: ^8.1.0
-    follow-redirects: ^1.12.1
-    js-sha3: 0.8.0
-    memorystream: ^0.3.1
-    semver: ^5.5.0
-    tmp: 0.0.33
-  bin:
-    solcjs: solc.js
-  checksum: 0145d0e1f4ba7b1ec574a2ad7c4782357c4a27949c3bcc7bb4411a7b325a3ad186c18f93b1802a438ea9a527711dd56d2d7190bc8dd431dc194fb6098ab6ed01
   languageName: node
   linkType: hard
 
@@ -1307,10 +1217,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@usecannon/cli": ^2.7.1
+    "@usecannon/cli": ^2.5.4
     prettier: ^3.0.3
     prettier-plugin-toml: ^1.0.0
-    solc: ^0.8.21
   languageName: unknown
   linkType: soft
 
@@ -1331,15 +1240,6 @@ __metadata:
   version: 2.0.0
   resolution: "tildify@npm:2.0.0"
   checksum: 0f5fee93624c4afdf75ee224c3b65aece4817ba5317fd70f49eaf084ea720d73556a6ef3f50079425a773ba3b93805b4524d14057841d4e4336516fdbe80635b
-  languageName: node
-  linkType: hard
-
-"tmp@npm:0.0.33":
-  version: 0.0.33
-  resolution: "tmp@npm:0.0.33"
-  dependencies:
-    os-tmpdir: ~1.0.2
-  checksum: 902d7aceb74453ea02abbf58c203f4a8fc1cead89b60b31e354f74ed5b3fb09ea817f94fb310f884a5d16987dd9fa5a735412a7c2dd088dd3d415aa819ae3a28
   languageName: node
   linkType: hard
 
