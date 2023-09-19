@@ -93,7 +93,7 @@ func = "setMaxLiquidationParameters"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= parseEther(settings.perpsLinkMaxLiquidationLimitAccumulationMultiplier) %>",
-    "<%= parseEther(settings.perpsLinkMaxSecondsInLiquidationWindow) %>",
+    "<%= settings.perpsLinkMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsLinkMaxLiquidationPd) %>",
     "<%= settings.perpsBtcEndorsedLiquidator %>"
 ]
