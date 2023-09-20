@@ -11,14 +11,12 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationRewardGuards"
 args = ["<%= parseEther('1') %>", "<%= parseEther('500') %>"]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = ["0", "<%= MaxUint256 %>"]
-depends = ["provision.perpsFactory"]
 
 # TODO: add the rest of the synths
 [invoke.setPerpsSynthDeductionPriority]
@@ -26,11 +24,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
 args = [["0", "<%= extras.synth_eth_market_id %>"]]
-depends = ["invoke.createEthSynth", "provision.perpsFactory"]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
 args = ["5", "3"]
-depends = ["provision.perpsFactory"]

@@ -126,10 +126,3 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = [
-    "invoke.createScPool",
-    "invoke.createEthSynth",
-    "invoke.createBtcSynth",
-    "invoke.createLinkSynth",
-    "provision.perpsFactory"
-]

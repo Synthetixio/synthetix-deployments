@@ -17,7 +17,6 @@ args = [
     "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
     "<%= parseEther(settings.synthOpAsyncFixedFee) %>"
 ]
-depends = ["provision.perpsFactory", "invoke.createOpSynth"]
 
 [invoke.setExternalNodeCustomTransactorOnOpSynthMarket]
 target = ["spotFactory.SpotMarketProxy"]
@@ -29,7 +28,6 @@ args = [
     "<%= settings.spotMarketExternalNodeAddress %>",
     "<%= parseEther(settings.synthOpAsyncFixedFee) %>"
 ]
-depends = ["provision.perpsFactory", "invoke.createOpSynth"]
 
 [invoke.configuresOPCollateral]
 target = ["system.CoreProxy"]
@@ -38,7 +36,6 @@ func = "configureCollateral"
 args = [
     { tokenAddress = "<%= extras.synth_op_token_address %>", oracleNodeId = "<%= extras.synth_op_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = ["invoke.setSynthPriceOp", "invoke.registerSynthOpOracleNode"]
 
 [invoke.setSynthOpMaxMarketCollateral]
 target = ["system.CoreProxy"]
@@ -50,4 +47,3 @@ args = [
     "<%= extras.synth_op_token_address %>",
     "<%= parseEther(settings.perpsOpMaxMarketSize) %>"
 ]
-depends = ["invoke.createOpSynth", "provision.perpsFactory"]

@@ -12,4 +12,3 @@ args = [
 ]
 extra.synth_link_oracle_id.event = "NodeRegistered"
 extra.synth_link_oracle_id.arg = 0
-depends = ["invoke.createLinkSynth"]

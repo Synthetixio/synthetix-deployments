@@ -17,7 +17,6 @@ args = [
     "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
     "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
 ]
-depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
 
 [invoke.setExternalNodeCustomTransactorOnBtcSynthMarket]
 target = ["spotFactory.SpotMarketProxy"]
@@ -29,7 +28,6 @@ args = [
     "<%= settings.spotMarketExternalNodeAddress %>",
     "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
 ]
-depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
 
 [invoke.configuresBTCCollateral]
 target = ["system.CoreProxy"]
@@ -38,7 +36,6 @@ func = "configureCollateral"
 args = [
     { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = ["invoke.setSynthPriceBtc", "invoke.registerSynthBtcOracleNode"]
 
 [invoke.setSynthBtcMaxMarketCollateral]
 target = ["system.CoreProxy"]
@@ -50,7 +47,6 @@ args = [
     "<%= extras.synth_btc_token_address %>",
     "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"
 ]
-depends = ["invoke.createBtcSynth", "provision.perpsFactory"]
 
 # override synth config to use chainlink oracle id
 [setting.chainlink_btc_aggregator_address]
@@ -68,7 +64,6 @@ args = [
 ]
 extra.chainlink_btc_oracle_id.event = "NodeRegistered"
 extra.chainlink_btc_oracle_id.arg = 0
-depends = ["provision.system"]
 
 [invoke.setSynthPriceBtcToChainlink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -80,4 +75,3 @@ args = [
     "<%= extras.chainlink_btc_oracle_id %>",
     "<%= extras.chainlink_btc_oracle_id %>"
 ]
-depends = ["invoke.createBtcSynth", "invoke.registerBtcChainlinkOracleNode"]

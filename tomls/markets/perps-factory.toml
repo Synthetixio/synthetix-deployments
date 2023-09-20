@@ -12,4 +12,3 @@ options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
 options.spotMarketPreset = "<%= settings.target_preset %>"
-depends = ["provision.spotFactory"]

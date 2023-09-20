@@ -26,7 +26,6 @@ args = [
     "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
     "<%= parseEther(settings.synthEthAsyncFixedFee) %>"
 ]
-depends = ["provision.perpsFactory", "invoke.createEthSynth"]
 
 [invoke.setExternalNodeCustomTransactorOnEthSynthMarket]
 target = ["spotFactory.SpotMarketProxy"]
@@ -38,7 +37,6 @@ args = [
     "<%= settings.spotMarketExternalNodeAddress %>",
     "<%= parseEther(settings.synthEthAsyncFixedFee) %>"
 ]
-depends = ["provision.perpsFactory", "invoke.createEthSynth"]
 
 # ETH Synth configuration on Core system
 [invoke.configuresETHCollateral]
@@ -48,7 +46,6 @@ func = "configureCollateral"
 args = [
     { tokenAddress = "<%= extras.synth_eth_token_address %>", oracleNodeId = "<%= extras.synth_eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
 ]
-depends = ["invoke.setSynthPriceEth", "invoke.registerSynthEthOracleNode"]
 
 [invoke.setSynthEthMaxMarketCollateral]
 target = ["system.CoreProxy"]
@@ -60,7 +57,6 @@ args = [
     "<%= extras.synth_eth_token_address %>",
     "<%= parseEther(settings.perpsEthMaxMarketSize) %>"
 ]
-depends = ["invoke.createEthSynth", "provision.perpsFactory"]
 
 [setting.chainlink_eth_aggregator_address]
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
@@ -77,7 +73,6 @@ args = [
 ]
 extra.chainlink_eth_oracle_id.event = "NodeRegistered"
 extra.chainlink_eth_oracle_id.arg = 0
-depends = ["provision.system"]
 
 [invoke.setSynthPriceEthToChainlink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -89,4 +84,3 @@ args = [
     "<%= extras.chainlink_eth_oracle_id %>",
     "<%= extras.chainlink_eth_oracle_id %>"
 ]
-depends = ["invoke.createEthSynth", "invoke.registerEthChainlinkOracleNode"]

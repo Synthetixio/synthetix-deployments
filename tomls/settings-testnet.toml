@@ -15,4 +15,3 @@ args = [
         "5790810961207155433"
     ]
 ]
-depends = ["provision.system"]

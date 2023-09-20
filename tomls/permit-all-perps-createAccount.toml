@@ -3,4 +3,3 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('createAccount') %>", true]
-depends = ["provision.perpsFactory"]

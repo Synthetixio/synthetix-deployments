@@ -14,7 +14,6 @@ extra.synth_op_market_id.event = "SynthRegistered"
 extra.synth_op_market_id.arg = 0
 extra.synth_op_token_address.event = "SynthRegistered"
 extra.synth_op_token_address.arg = 1
-depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceOp]
 target = ["spotFactory.SpotMarketProxy"]
@@ -26,7 +25,6 @@ args = [
     "<%= extras.op_oracle_id %>",
     "<%= extras.op_oracle_id %>"
 ]
-depends = ["invoke.createOpSynth", "invoke.registerOpOracleNode"]
 
 [invoke.setSynthSettlementStrategyOp]
 target = ["spotFactory.SpotMarketProxy"]
@@ -37,7 +35,6 @@ args = [
     "<%= extras.synth_op_market_id %>",
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
-depends = ["invoke.createOpSynth"]
 
 [invoke.setSynthAsyncFixedFeeOp]
 target = ["spotFactory.SpotMarketProxy"]
@@ -45,7 +42,6 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "setAsyncFixedFee"
 args = ["<%= extras.synth_op_market_id %>", "<%= parseEther(settings.synthOpAsyncFixedFee) %>"]
-depends = ["invoke.createOpSynth"]
 
 [invoke.setSynthSkewScaleOp]
 target = ["spotFactory.SpotMarketProxy"]
@@ -53,4 +49,3 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "setMarketSkewScale"
 args = ["<%= extras.synth_op_market_id %>", "<%= parseEther(settings.synthOpSkewScale) %>"]
-depends = ["invoke.createOpSynth"]

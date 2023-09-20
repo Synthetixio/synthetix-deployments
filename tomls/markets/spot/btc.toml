@@ -13,7 +13,6 @@ extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
 extra.synth_btc_token_address.arg = 1
-depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceBtc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -25,7 +24,6 @@ args = [
     "<%= extras.btc_oracle_id %>",
     "<%= extras.btc_oracle_id %>"
 ]
-depends = ["invoke.createBtcSynth", "invoke.registerBtcOracleNode"]
 
 [invoke.setSynthSettlementStrategyBtc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -36,7 +34,6 @@ args = [
     "<%= extras.synth_btc_market_id %>",
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
-depends = ["invoke.createBtcSynth"]
 
 [invoke.setSynthAsyncFixedFeeBtc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -44,7 +41,6 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setAsyncFixedFee"
 args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"]
-depends = ["invoke.createBtcSynth"]
 
 [invoke.setSynthSkewScaleBtc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -52,4 +48,3 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setMarketSkewScale"
 args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synthBtcSkewScale) %>"]
-depends = ["invoke.createBtcSynth"]

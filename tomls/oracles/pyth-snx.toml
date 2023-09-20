@@ -13,4 +13,3 @@ args = [
 ]
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
-depends = ["provision.system"]
