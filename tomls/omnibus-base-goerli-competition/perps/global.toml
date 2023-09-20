@@ -12,13 +12,11 @@ fromCall.func = "owner"
 func = "setLiquidationRewardGuards"
 args = ["<%= parseEther('1') %>", "<%= parseEther('500') %>"]
 
-
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxCollateralAmount"
 args = ["0", "<%= MaxUint256 %>"]
-
 
 [invoke.setPerpsSynthDeductionPriority]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -35,17 +33,8 @@ args = [
     ]
 ]
 
-    "invoke.createOpSynth",
-    "invoke.createLinkSynth",
-    "invoke.createEthSynth",
-    "invoke.createSnxSynth",
-    "invoke.createBtcSynth",
-    "provision.perpsFactory"
-]
-
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
 args = ["5", "3"]
-
