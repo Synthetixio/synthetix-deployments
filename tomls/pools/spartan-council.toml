@@ -16,9 +16,11 @@ fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "setPoolName"
 args = ["<%= settings.sc_pool_id %>", "Spartan Council Pool"]
+depends = ["invoke.createScPool"]
 
 [invoke.setPreferredPool]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setPreferredPool"
 args = ["<%= settings.sc_pool_id %>"]
+depends = ["invoke.createScPool"]
