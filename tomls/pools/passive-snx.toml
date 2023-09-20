@@ -32,7 +32,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.snx_pool_id %>"]
 func = "setPoolCollateralDisabledByDefault"
-args = ["<%= settings.snx_pool_id %>", false]
+args = ["<%= settings.snx_pool_id %>", true]
 depends = ["invoke.create_snx_pool"]
 
 [invoke.configure_snx_collateral_for_snx_pool]
