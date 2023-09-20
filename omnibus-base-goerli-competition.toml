@@ -144,15 +144,6 @@ args = [
     ],
 ]
 
-    "invoke.createScPool",
-    "invoke.createEthSynth",
-    "invoke.createBtcSynth",
-    "invoke.createSnxSynth",
-    "invoke.createLinkSynth",
-    "invoke.createOpSynth",
-    "provision.perpsFactory"
-]
-
 [invoke.setPerpsPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
@@ -164,7 +155,6 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-
 
 [invoke.setSpotsPoolConfig]
 target = ["system.CoreProxy"]
@@ -181,4 +171,3 @@ args = [
         { marketId = "<%= extras.synth_snx_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
-
