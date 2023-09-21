@@ -4074,6 +4074,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
+    "@ethersproject/bytes": ^5.7.0
     "@iarna/toml": ^3.0.0
     "@usecannon/builder": ^2.7.1
     "@usecannon/cli": ^2.8.1

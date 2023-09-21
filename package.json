@@ -7,10 +7,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "node e2e/fetch-deployments.js",
+    "test": "DEBUG='tasks:*' mocha",
     "pretty": "prettier . '**/*.toml' --write",
     "pretty:check": "prettier . '**/*.toml' --check"
   },
   "devDependencies": {
+    "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
     "@usecannon/builder": "^2.7.1",
     "@usecannon/cli": "^2.8.1",
@@ -21,6 +24,16 @@
     "prettier": "^3.0.3",
     "prettier-plugin-toml": "^1.0.0",
     "solc": "^0.8.21"
+  },
+  "mocha": {
+    "spec": [
+      "e2e/tests/**/*.e2e.js"
+    ],
+    "timeout": "2m",
+    "recursive": true,
+    "bail": true,
+    "async-only": true,
+    "exit": true
   },
   "packageManager": "yarn@3.6.3"
 }

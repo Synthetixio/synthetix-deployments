@@ -1,8 +1,6 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
-
 async function getCollateralBalance({ address, symbol }) {
   const config = await getCollateralConfig(symbol);
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
@@ -13,7 +11,6 @@ async function getCollateralBalance({ address, symbol }) {
     provider
   );
   const balance = parseFloat(ethers.utils.formatUnits(await erc20.balanceOf(address)));
-  log({ wallet: address, symbol, balance });
 
   return balance;
 }
