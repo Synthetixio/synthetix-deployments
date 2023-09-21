@@ -57,7 +57,7 @@ async function fetchDeployment({ chainId, deploymentFile, registry, loader }) {
 
 async function run() {
   const registry = new OnChainRegistry({
-    signerOrProvider: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
+    signerOrProvider: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
     address: DEFAULT_REGISTRY_ADDRESS,
   });
   const loader = new IPFSLoader('http://127.0.0.1:5001');
