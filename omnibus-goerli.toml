@@ -61,3 +61,14 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_token_pool]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[invoke.configure_snx_collateral_for_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.snx_pool_id %>",
+    "<%= settings.snx_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+]
+depends = ["invoke.create_snx_pool"]

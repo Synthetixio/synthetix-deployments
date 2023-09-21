@@ -112,3 +112,14 @@ args = [
     ],
 ]
 depends = ["invoke.createScPool", "invoke.createEthSynth"]
+
+[invoke.configure_snx_collateral_for_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.snx_pool_id %>",
+    "<%= settings.snx_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+]
+depends = ["invoke.create_snx_pool"]
