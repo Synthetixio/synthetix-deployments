@@ -1049,7 +1049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.8.1":
+"@usecannon/builder@npm:^2.7.1, @usecannon/builder@npm:^2.8.1":
   version: 2.8.1
   resolution: "@usecannon/builder@npm:2.8.1"
   dependencies:
@@ -2016,7 +2016,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.7.1":
+"ethers@npm:^5.7.1, ethers@npm:^5.7.2":
   version: 5.7.2
   resolution: "ethers@npm:5.7.2"
   dependencies:
@@ -3172,7 +3172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mocha@npm:^10.0.0":
+"mocha@npm:^10.0.0, mocha@npm:^10.2.0":
   version: 10.2.0
   resolution: "mocha@npm:10.2.0"
   dependencies:
@@ -4074,8 +4074,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
+    "@iarna/toml": ^3.0.0
+    "@usecannon/builder": ^2.7.1
     "@usecannon/cli": ^2.8.1
+    debug: ^4.3.4
+    ethers: ^5.7.2
     hardhat: ^2.17.4
+    mocha: ^10.2.0
     prettier: ^3.0.3
     prettier-plugin-toml: ^1.0.0
     solc: ^0.8.21

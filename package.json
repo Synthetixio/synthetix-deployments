@@ -11,8 +11,13 @@
     "pretty:check": "prettier . '**/*.toml' --check"
   },
   "devDependencies": {
+    "@iarna/toml": "^3.0.0",
+    "@usecannon/builder": "^2.7.1",
     "@usecannon/cli": "^2.8.1",
+    "debug": "^4.3.4",
+    "ethers": "^5.7.2",
     "hardhat": "^2.17.4",
+    "mocha": "^10.2.0",
     "prettier": "^3.0.3",
     "prettier-plugin-toml": "^1.0.0",
     "solc": "^0.8.21"
