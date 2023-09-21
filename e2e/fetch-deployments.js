@@ -60,7 +60,7 @@ async function run() {
     signerOrProvider: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
     address: DEFAULT_REGISTRY_ADDRESS,
   });
-  const loader = new IPFSLoader('http://127.0.0.1:5001');
+  const loader = new IPFSLoader('https://ipfs.synthetix.io');
 
   const [chainId, deploymentFile] = process.argv.slice(2);
   if (chainId && deploymentFile) {
