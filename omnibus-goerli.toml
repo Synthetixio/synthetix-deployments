@@ -64,7 +64,8 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [invoke.configure_snx_collateral_for_snx_pool]
 target = ["system.CoreProxy"]
-fromCall.func = "owner"
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.snx_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.snx_pool_id %>",
