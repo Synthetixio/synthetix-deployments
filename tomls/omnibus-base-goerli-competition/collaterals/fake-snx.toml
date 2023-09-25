@@ -1,5 +1,4 @@
 # NOTE: This is a permissioned mintable erc 20, DO NOT USE on mainnet
-
 include = ["../../oracles/pyth-snx.toml"]
 
 [setting.mintableTokenPackage]
