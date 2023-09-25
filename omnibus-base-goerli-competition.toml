@@ -1,13 +1,14 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.e141cd8c"
+version = "3.3.3-dev.00b7de8d"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/collaterals/weth.toml",
-    "tomls/collaterals/wbtc.toml",
-    "tomls/collaterals/op.toml",
+    # "tomls/collaterals/weth.toml",
+    # "tomls/collaterals/wbtc.toml",
+    # "tomls/collaterals/op.toml",
+    "tomls/omnibus-base-goerli-competition/collaterals/fake-snx.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
     "tomls/omnibus-base-goerli-competition/pools/spots.toml",
@@ -47,16 +48,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.e141cd8c"
+defaultValue = "synthetix:3.3.3-dev.00b7de8d"
 
 [setting.target_preset]
 defaultValue = "competition"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
+defaultValue = "synthetix-spot-market:3.3.3-dev.00b7de8d"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
+defaultValue = "synthetix-perps-market:3.3.3-dev.00b7de8d"
 
 [setting.salt]
 defaultValue = "competition"
