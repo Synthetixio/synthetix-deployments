@@ -1,7 +1,6 @@
 [setting.deployer]
 
 [setting.snx_pool_id]
-defaultValue = "2"
 
 [setting.pool_owner]
 
