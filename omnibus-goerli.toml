@@ -53,6 +53,9 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.sc_pool_id]
 defaultValue = "1"
 
+[setting.snx_pool_id]
+defaultValue = "69"
+
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 

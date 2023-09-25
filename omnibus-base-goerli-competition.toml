@@ -9,7 +9,6 @@ include = [
     "tomls/collaterals/wbtc.toml",
     "tomls/collaterals/op.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/omnibus-base-goerli-competition/pools/spots.toml",
     "tomls/omnibus-base-goerli-competition/pools/perps.toml",
     "tomls/permit-all-createPool.toml",

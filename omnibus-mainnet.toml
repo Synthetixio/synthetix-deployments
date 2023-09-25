@@ -8,7 +8,6 @@ include = [
     "tomls/collaterals/snx.toml",
     # "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
 
@@ -59,15 +58,3 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 
 [setting.ccip_token_pool]
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
-
-[invoke.configure_snx_collateral_for_snx_pool]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.snx_pool_id %>"]
-func = "setPoolCollateralConfiguration"
-args = [
-    "<%= settings.snx_pool_id %>",
-    "<%= settings.snx_address %>",
-    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
-]
-depends = ["invoke.create_snx_pool"]
