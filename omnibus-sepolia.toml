@@ -53,3 +53,10 @@ defaultValue = "0xd0daae2231e9cb96b94c8512223533293c3693bf"
 
 [setting.ccip_token_pool]
 defaultValue = "0x9b65749b38278060c5787cce0391ac7f1094c8e8"
+
+# TODO clean this block after deployment
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["2"]

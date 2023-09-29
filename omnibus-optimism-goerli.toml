@@ -84,6 +84,9 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.snx_pool_id]
+defaultValue = "69"
+
 [setting.snx_pool_owner]
 defaultValue = "<%= settings.pool_owner %>"
 
@@ -129,3 +132,9 @@ depends = [
     "invoke.createLinkSynth",
     "provision.perpsFactory"
 ]
+
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["<%= settings.snx_pool_id %>"]

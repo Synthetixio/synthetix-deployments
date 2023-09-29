@@ -188,3 +188,10 @@ depends = [
     "invoke.createLinkSynth",
     "invoke.createOpSynth"
 ]
+
+# TODO clean this block after deployment
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["2"]
