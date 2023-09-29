@@ -1,4 +1,4 @@
-name: Lint
+name: lint
 
 on:
   pull_request: {}
@@ -10,11 +10,6 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Foundry (Cannon)
-        uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: nightly
-      - run: anvil -V
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
