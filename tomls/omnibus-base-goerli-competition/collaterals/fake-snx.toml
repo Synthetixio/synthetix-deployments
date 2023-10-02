@@ -1,0 +1,24 @@
+# NOTE: This is a permissioned mintable erc 20, DO NOT USE on mainnet
+include = ["../../oracles/pyth-snx.toml"]
+
+[setting.mintableTokenPackage]
+defaultValue = "mintable-token:1.3"
+
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[provision.mintableToken]
+source = "<%= settings.mintableTokenPackage %>"
+targetPreset = "<%= settings.target_preset %>"
+options.owner = "<%= settings.owner %>"
+options.name = "Fake SNX"
+options.symbol = "fSNX"
+
+[invoke.configureFakeSnxCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= imports.mintableToken.contracts.MintableToken.address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('4') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "10000000000000000000", minDelegationD18 = "10000000000000000000", depositingEnabled = true }
+]
+depends = ["invoke.registerSnxOracleNode", "provision.mintableToken"]
