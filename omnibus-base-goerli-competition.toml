@@ -1,14 +1,13 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.ff24fd0b"
+version = "3.3.3-dev.e141cd8c"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    # "tomls/collaterals/weth.toml",
-    # "tomls/collaterals/wbtc.toml",
-    # "tomls/collaterals/op.toml",
-    "tomls/omnibus-base-goerli-competition/collaterals/fake-snx.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/collaterals/wbtc.toml",
+    "tomls/collaterals/op.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/pools/passive-snx.toml",
     "tomls/omnibus-base-goerli-competition/pools/spots.toml",
@@ -48,22 +47,22 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.ff24fd0b"
+defaultValue = "synthetix:3.3.3-dev.e141cd8c"
 
 [setting.target_preset]
 defaultValue = "competition"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.ff24fd0b"
+defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.ff24fd0b"
+defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
 
 [setting.salt]
 defaultValue = "competition"
 
 [setting.spotMarketExternalNodeAddress]
-defaultValue = "0xF342E904702b1D021F03f519D6D9614916b03f37"
+defaultValue = "0xF6D1e72c3608344F831606078e3d7eb8c51aa99A"
 
 [setting.pythPriceVerificationAddress]
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
@@ -87,19 +86,19 @@ defaultValue = "0x4200000000000000000000000000000000000042"
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
 [setting.eth_aggregator_address]
-defaultValue = "0x9849832a1d8274aaeDb1112ad9686413461e7101"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.btc_aggregator_address]
-defaultValue = "0x9849832a1d8274aaeDb1112ad9686413461e7101"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.snx_aggregator_address]
-defaultValue = "0x9849832a1d8274aaeDb1112ad9686413461e7101"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.link_aggregator_address]
-defaultValue = "0x9849832a1d8274aaeDb1112ad9686413461e7101"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.op_aggregator_address]
-defaultValue = "0x9849832a1d8274aaeDb1112ad9686413461e7101"
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
