@@ -9,7 +9,6 @@ include = [
     "tomls/collaterals/wbtc.toml",
     "tomls/collaterals/op.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/omnibus-base-goerli-competition/pools/spots.toml",
     "tomls/omnibus-base-goerli-competition/pools/perps.toml",
     "tomls/permit-all-createPool.toml",
@@ -189,3 +188,10 @@ depends = [
     "invoke.createLinkSynth",
     "invoke.createOpSynth"
 ]
+
+# TODO clean this block after deployment
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["2"]

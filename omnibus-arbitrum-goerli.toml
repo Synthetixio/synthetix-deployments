@@ -7,7 +7,6 @@ include = [
     "tomls/permissions.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
@@ -58,3 +57,10 @@ defaultValue = "0x88e492127709447a5abefdab8788a15b4567589e"
 
 [setting.ccip_token_pool]
 defaultValue = "0xd7d47c0e62029a1a3eb8c08691c8c9863fe766c2"
+
+# TODO clean this block after deployment
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["2"]
