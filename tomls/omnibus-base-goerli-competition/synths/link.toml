@@ -1,5 +1,3 @@
-include = ["../../oracles/synths/link.toml"]
-
 # Synth Configuration
 [setting.synthLinkAsyncFixedFee]
 defaultValue = "0.001"
@@ -36,9 +34,9 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-    { tokenAddress = "<%= extras.synth_link_token_address %>", oracleNodeId = "<%= extras.synth_link_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+    { tokenAddress = "<%= extras.synth_link_token_address %>", oracleNodeId = "<%= extras.link_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
 ]
-depends = ["invoke.setSynthPriceLink", "invoke.registerSynthLinkOracleNode"]
+depends = ["invoke.setSynthPriceLink", "invoke.registerLinkOracleNode"]
 
 [invoke.setSynthLinkMaxMarketCollateral]
 target = ["system.CoreProxy"]
