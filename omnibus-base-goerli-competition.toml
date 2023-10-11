@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.ff24fd0b"
+version = "3.3.3-dev.a31b56e8"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
@@ -48,16 +48,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.ff24fd0b"
+defaultValue = "synthetix:3.3.3-dev.a31b56e8"
 
 [setting.target_preset]
 defaultValue = "competition"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.ff24fd0b"
+defaultValue = "synthetix-spot-market:3.3.3-dev.a31b56e8"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.ff24fd0b"
+defaultValue = "synthetix-perps-market:3.3.3-dev.a31b56e8"
 
 [setting.salt]
 defaultValue = "competition"

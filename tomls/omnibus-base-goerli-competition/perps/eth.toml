@@ -25,16 +25,16 @@ defaultValue = "100000"
 defaultValue = "1"
 
 [setting.perpsEthMinimumInitialMarginRatio]
-defaultValue = "0.02"
+defaultValue = "0.01"
 
 [setting.perpsEthMaintenanceMarginScalar]
 defaultValue = "0.5"
 
 [setting.perpsEthLiquidationRewardRatioD18]
-defaultValue = "0.01"
+defaultValue = "0.0001"
 
 [setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "1"
+defaultValue = "0.033333"
 
 [setting.perpsEthMaxSecondsInLiquidationWindow]
 defaultValue = "30"
@@ -49,7 +49,7 @@ defaultValue = "0.5"
 defaultValue = "<%= MaxUint256 %>"
 
 [setting.perpsEthMaxLiquidationPd]
-defaultValue = "0.0016"
+defaultValue = "0.001"
 
 [setting.perpsEthEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
+defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
