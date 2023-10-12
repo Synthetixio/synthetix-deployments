@@ -8,7 +8,6 @@ include = [
     #"tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
@@ -102,3 +101,10 @@ args = [
     ],
 ]
 depends = ["invoke.createScPool", "invoke.createEthSynth"]
+
+# TODO clean this block after deployment
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["2"]

@@ -8,7 +8,6 @@ include = [
     "tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-perps-createAccount.toml",
@@ -133,3 +132,9 @@ depends = [
     "invoke.createLinkSynth",
     "provision.perpsFactory"
 ]
+
+[invoke.unapprove_wrongfully_deployed_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "removeApprovedPool"
+args = ["<%= settings.snx_pool_id %>"]
