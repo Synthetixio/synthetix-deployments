@@ -5,14 +5,17 @@ include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    #"tomls/collaterals/snx.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/markets/spot/eth.toml",
-    "tomls/permit-all-createPool.toml",
-    "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
+
+[setting.target_preset]
+defaultValue = "main"
+
+[setting.salt]
+defaultValue = "staging"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.4"
@@ -89,7 +92,7 @@ defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57
 # https://docs.pyth.network/documentation/pythnet-price-feeds/evm
 defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
 
-[invoke.setScPoolConfig]
+[invoke.configure_spartan_council_pool]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
