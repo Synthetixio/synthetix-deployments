@@ -105,9 +105,14 @@ args = [
 ]
 depends = ["invoke.createScPool", "invoke.createEthSynth"]
 
-# TODO clean this block after deployment
-[invoke.unapprove_wrongfully_deployed_snx_pool]
+[invoke.configure_weth_collateral_for_spartan_council_pool]
 target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "removeApprovedPool"
-args = ["2"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.weth_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+]
+depends = ["invoke.createScPool"]
