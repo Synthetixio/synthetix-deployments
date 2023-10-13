@@ -59,11 +59,12 @@ defaultValue = "1"
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
 [setting.ccip_router]
-# TODO: Update when CCIP is available for Base Mainnet yet, wrong address for now
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+# https://docs.chain.link/ccip/supported-networks#base-mainnet
+defaultValue = "0x673aa85efd75080031d44fca061575d1da427a28"
 
 [setting.ccip_token_pool]
-# TODO: Update when CCIP is available for Base Mainnet yet, wrong address for now
+# https://docs.chain.link/ccip/supported-networks#base-mainnet
+# TODO: Update when snxUSD pool availabe Base Mainnet, wrong address for now
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 # ETH Synth Configuration
