@@ -31,10 +31,8 @@ defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
 #[setting.snx_address]
 #defaultValue = "0x"
-
 #[setting.snx_aggregator_address]
 #defaultValue = "0x"
-
 [setting.weth_address]
 # https://docs.base.org/base-contracts/#base-mainnet
 defaultValue = "0x4200000000000000000000000000000000000006"
@@ -45,7 +43,6 @@ defaultValue = "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
 
 #[setting.snx_liquidation_reward]
 #defaultValue = "10000000000000000000"
-
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
 
