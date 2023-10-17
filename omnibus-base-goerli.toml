@@ -64,8 +64,8 @@ defaultValue = "0xa8c0c11bf64af62cdca6f93d3769b88bdd7cb93d"
 
 [setting.ccip_token_pool]
 # https://docs.chain.link/ccip/supported-networks#base-mainnet
-# TODO: Update when snxUSD pool availabe Base Goerli, wrong address for now
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+# TODO: Update when snxUSD pool availabe Base Goerli
+defaultValue = "0x0000000000000000000000000000000000000000"
 
 # ETH Synth Configuration
 [setting.synthEthAsyncFixedFee]
