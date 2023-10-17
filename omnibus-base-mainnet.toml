@@ -2,7 +2,7 @@ name = "synthetix-omnibus"
 version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings-testnet.toml",
+    "tomls/settings-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/weth.toml",
@@ -15,7 +15,7 @@ include = [
 defaultValue = "main"
 
 [setting.salt]
-defaultValue = "staging"
+defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.4"
@@ -27,7 +27,7 @@ defaultValue = "synthetix-spot-market:3.3.4"
 defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
 #[setting.snx_address]
 #defaultValue = "0x"
@@ -39,7 +39,7 @@ defaultValue = "0x4200000000000000000000000000000000000006"
 
 [setting.eth_aggregator_address]
 # https://docs.chain.link/data-feeds/price-feeds/addresses/?network=base
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+defaultValue = "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
 
 #[setting.snx_liquidation_reward]
 #defaultValue = "10000000000000000000"
@@ -50,21 +50,21 @@ defaultValue = "2000000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.sc_pool_id]
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
 [setting.ccip_router]
-# https://docs.chain.link/ccip/supported-networks#base-goerli
-defaultValue = "0xa8c0c11bf64af62cdca6f93d3769b88bdd7cb93d"
+# https://docs.chain.link/ccip/supported-networks#base-mainnet
+defaultValue = "0x673aa85efd75080031d44fca061575d1da427a28"
 
 [setting.ccip_token_pool]
 # https://docs.chain.link/ccip/supported-networks#base-mainnet
-# TODO: Update when snxUSD pool availabe Base Goerli
+# TODO: Update when snxUSD pool availabe Base Mainnet
 defaultValue = "0x0000000000000000000000000000000000000000"
 
 # ETH Synth Configuration
@@ -94,12 +94,12 @@ defaultValue = "15"
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
 
 [setting.pythEthFeedId]
-# https://pyth.network/developers/price-feed-ids#pyth-evm-testnet
-defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+# https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
 
 [setting.pythPriceVerificationAddress]
 # https://docs.pyth.network/documentation/pythnet-price-feeds/evm
-defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
+defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
 
 [invoke.configure_spartan_council_pool]
 target = ["system.CoreProxy"]

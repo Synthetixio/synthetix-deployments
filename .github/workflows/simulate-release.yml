@@ -20,7 +20,8 @@ jobs:
           - "omnibus-optimism-mainnet.toml"
           - "omnibus-goerli.toml"
           - "omnibus-optimism-goerli.toml"
-          - "omnibus-base-goerli.toml"
+          # - "omnibus-base-goerli.toml" # TODO: enable when deployed
+          # - "omnibus-base-mainnet.toml" # TODO: enable when deployed
           - "omnibus-base-goerli-competition.toml"
           - "omnibus-sepolia.toml"
           - "omnibus-polygon-mumbai.toml"
@@ -47,10 +48,15 @@ jobs:
             chainId: 420
             providerUrl: "https://optimism-goerli.infura.io/v3/$INFURA_API_KEY"
 
-          - toml: "omnibus-base-goerli.toml"
-            preset: "main"
-            chainId: 84531
-            providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
+          #- toml: "omnibus-base-mainnet.toml"
+          #  preset: "main"
+          #  chainId: 8453
+          #  providerUrl: "https://base-mainnet.infura.io/v3/$INFURA_API_KEY"
+
+          #- toml: "omnibus-base-goerli.toml"
+          #  preset: "main"
+          #  chainId: 84531
+          #  providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
 
           - toml: "omnibus-base-goerli-competition.toml"
             preset: "competition"
