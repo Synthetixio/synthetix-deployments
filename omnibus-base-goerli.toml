@@ -6,6 +6,7 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/weth.toml",
+    "tomls/collaterals/usdc.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/permit-all-transferCrossChain.toml",
@@ -122,6 +123,18 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.weth_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+]
+depends = ["invoke.createScPool"]
+
+[invoke.configure_usdc_collateral_for_spartan_council_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.usdc_address %>",
     { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
 ]
 depends = ["invoke.createScPool"]
