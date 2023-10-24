@@ -42,6 +42,16 @@ defaultValue = "0x4200000000000000000000000000000000000006"
 # https://docs.chain.link/data-feeds/price-feeds/addresses/?network=base
 defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
 
+[settings.usdc_address]
+# https://www.circle.com/en/usdc/developers
+# https://goerli.basescan.org/token/0xf175520c52418dfe19c8098071a252da48cd1c19
+# using native USDC not bridged USDbC
+defaultValue = "0xf175520c52418dfe19c8098071a252da48cd1c19"
+
+[settings.usdc_aggregator_address]
+# https://docs.chain.link/data-feeds/price-feeds/addresses/?network=base&page=1
+defaultValue = "0xb85765935B4d9Ab6f841c9a00690Da5F34368bc0"
+
 #[setting.snx_liquidation_reward]
 #defaultValue = "10000000000000000000"
 [setting.minimum_liquidity_ratio]
