@@ -2,7 +2,7 @@ include = ["../oracles/usdc.toml"]
 
 [setting.usdc_address]
 
-[invoke.configureUsdcCollateral]
+[invoke.configure_usdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
