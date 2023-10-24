@@ -1,73 +1,52 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.9b6781de"
+version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
-    "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/permit-all-createPool.toml",
-    "tomls/permit-all-registerMarket.toml",
-    "tomls/permit-all-perps-createAccount.toml",
-    "tomls/permit-all-transferCrossChain.toml",
     "tomls/markets/spot/eth.toml",
-    "tomls/markets/spot/btc.toml",
-    "tomls/markets/spot/link.toml",
-    "tomls/markets/perps/eth.toml",
-    "tomls/markets/perps/btc.toml",
-    # overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
-    # "tomls/oracles/pyth-eth.toml",
-    # "tomls/oracles/pyth-btc.toml",
-    # "tomls/oracles/pyth-snx.toml",
-    # "tomls/oracles/pyth-link.toml",
-    # "tomls/oracles/pyth-op.toml",
-    # overrides for perp markets
-    "tomls/omnibus-optimism-goerli/perps/global.toml",
-    "tomls/omnibus-optimism-goerli/perps/btc.toml",
-    "tomls/omnibus-optimism-goerli/perps/eth.toml",
-    # overrides for synth markets
-    "tomls/omnibus-optimism-goerli/synths/btc.toml",
-    "tomls/omnibus-optimism-goerli/synths/eth.toml",
-    "tomls/omnibus-optimism-goerli/synths/link.toml",
+    "tomls/permit-all-transferCrossChain.toml",
 ]
 
+[setting.target_preset]
+defaultValue = "main"
+
+[setting.salt]
+defaultValue = "staging"
+
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.9b6781de"
+defaultValue = "synthetix:3.3.4"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.9b6781de"
+defaultValue = "synthetix-spot-market:3.3.4"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.9b6781de"
+defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[setting.weth_address]
-defaultValue = "0x4200000000000000000000000000000000000006"
-
 [setting.snx_address]
+# https://goerli-optimism.etherscan.io/token/0x2E5ED97596a8368EB9E44B1f3F25B2E813845303
 defaultValue = "0x2E5ED97596a8368EB9E44B1f3F25B2E813845303"
 
-[setting.weth_aggregator_address]
-defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+[setting.snx_aggregator_address]
+# https://docs.chain.link/data-feeds/price-feeds/addresses/?network=optimism&page=1#optimism-goerli
+defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
+
+[setting.weth_address]
+# https://goerli-optimism.etherscan.io/token/0x4200000000000000000000000000000000000006
+defaultValue = "0x4200000000000000000000000000000000000006"
 
 [setting.eth_aggregator_address]
+# https://docs.chain.link/data-feeds/price-feeds/addresses/?network=optimism&page=1#optimism-goerli
 defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
 
-[setting.btc_aggregator_address]
-defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
-
-[setting.link_aggregator_address]
-defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
-
-[setting.pythLinkFeedId]
-defaultValue = "0x83be4ed61dd8a3518d198098ce37240c494710a7b9d85e35d9fceac21df08994"
-
-[setting.snx_aggregator_address]
-defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "2000000000000000000"
@@ -84,34 +63,50 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[setting.snx_pool_id]
-defaultValue = "69"
-
-[setting.snx_pool_owner]
-defaultValue = "<%= settings.pool_owner %>"
-
-[setting.snx_liquidation_reward]
-defaultValue = "10000000000000000000"
-
 [setting.ccip_router]
-defaultValue = "0xeb52e9ae4a9fb37172978642d4c141ef53876f26"
+# https://docs.chain.link/ccip/supported-networks#optimism-goerli
+defaultValue = "0xEB52E9Ae4A9Fb37172978642d4C141ef53876f26"
 
 [setting.ccip_token_pool]
+# https://docs.chain.link/ccip/supported-networks#optimism-goerli
+# NOTE: this address is not in the official docs
 defaultValue = "0xd23c2ef3a533040b57cadaf33ccb111edbaca018"
 
-# Note: this is now added to the event but because the synth is already created
-# we need to manually set it here
 # ETH Synth Configuration
-# Note: this is now added to the event but because the synth is already created
-# we need to manually set it here
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "100"
+
+[setting.synthEthSkewScale]
+defaultValue = "100000"
+
+[setting.synthEthWrapFee]
+defaultValue = "0.0001"
+
+[setting.synthEthUnwrapFee]
+defaultValue = "0.0001"
+
+[setting.ethSettlementWindowDuration]
+defaultValue = "60"
+
+[setting.ethSettlementDelay]
+defaultValue = "15"
+
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
 
-[setting.pythPriceVerificationAddress]
-defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
+[setting.pythEthFeedId]
+# https://pyth.network/developers/price-feed-ids#pyth-evm-testnet
+defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
 
-[invoke.setScPoolConfig]
+[setting.pythPriceVerificationAddress]
+# https://docs.pyth.network/documentation/pythnet-price-feeds/evm
+defaultValue = "0xff1a0f4744e8582df1ae09d5611b887b6a12925c"
+
+[invoke.configure_spartan_council_pool]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
@@ -119,22 +114,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = [
-    "invoke.createScPool",
-    "invoke.createEthSynth",
-    "invoke.createBtcSynth",
-    "invoke.createLinkSynth",
-    "provision.perpsFactory"
-]
-
-[invoke.unapprove_wrongfully_deployed_snx_pool]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "removeApprovedPool"
-args = ["<%= settings.snx_pool_id %>"]
+depends = ["invoke.createScPool", "invoke.createEthSynth"]
