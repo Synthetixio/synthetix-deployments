@@ -1049,9 +1049,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.7.1, @usecannon/builder@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "@usecannon/builder@npm:2.8.1"
+"@usecannon/builder@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "@usecannon/builder@npm:2.9.0"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.2.2
@@ -1065,17 +1065,17 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 226ccb3d53396e68d3d562b46d35e0af00e2a4c6cbbf3d34f6c941924bb37ec590aad0faf1ba2c7e8b687503e531753b380b26760e1b9aadc3f8693accf80bec
+  checksum: 0b929aa7d90b1a74d551f1a8e9f8a54139f37cb315ca67d0064c8a32058f6e68ad76582b65ff27b32211974133d4cbad0274739d4adbdbdcacf9b7974638e5c5
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "@usecannon/cli@npm:2.8.1"
+"@usecannon/cli@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "@usecannon/cli@npm:2.9.1"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.8.1
+    "@usecannon/builder": ^2.9.0
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1090,8 +1090,8 @@ __metadata:
     tildify: 2.0.0
     untildify: ^4.0.0
   bin:
-    cannon: dist/bin/cannon.js
-  checksum: 6c727b57d8547bc45a627a41cfb3e7aa3a6ff1d42afee7494774d9db2f8eea98ebd0b14391efc70b4d21260c6b00b4b743d541de2a1b13f7013afcf5e533f668
+    cannon: bin/cannon.js
+  checksum: 852e7a5bb7501678550251664832d7bda0fbb38eda15698f6688905fd9bae0448d8f8f71baa0d72b76db7ffe3fc6a34d8f902f237012480ac2147437dc21b67b
   languageName: node
   linkType: hard
 
@@ -2373,9 +2373,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.17.4":
-  version: 2.17.4
-  resolution: "hardhat@npm:2.17.4"
+"hardhat@npm:^2.18.3":
+  version: 2.18.3
+  resolution: "hardhat@npm:2.18.3"
   dependencies:
     "@ethersproject/abi": ^5.1.2
     "@metamask/eth-sig-util": ^4.0.0
@@ -2435,7 +2435,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/bootstrap.js
-  checksum: da8762f29ac08b6178edaedf1bf4641e8bcf44759c944906af644519fa9d0d3fb6c30e87add3904d8899f9cebfbde47a8422e219ad0bb24226c6636f2d3ef7c2
+  checksum: 7dc2bacee287238b026dec07f9f80f3f2f7d33c7572117635297609c960fa84feff36905fc81c95ddc6d1b51ea9345d03243a1bba9de76b1be97419df84cc1bf
   languageName: node
   linkType: hard
 
@@ -3912,9 +3912,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:^0.8.21":
-  version: 0.8.21
-  resolution: "solc@npm:0.8.21"
+"solc@npm:^0.8.22":
+  version: 0.8.22
+  resolution: "solc@npm:0.8.22"
   dependencies:
     command-exists: ^1.2.8
     commander: ^8.1.0
@@ -3925,7 +3925,7 @@ __metadata:
     tmp: 0.0.33
   bin:
     solcjs: solc.js
-  checksum: 0145d0e1f4ba7b1ec574a2ad7c4782357c4a27949c3bcc7bb4411a7b325a3ad186c18f93b1802a438ea9a527711dd56d2d7190bc8dd431dc194fb6098ab6ed01
+  checksum: 5713d8599c58b912327e9423e3afe90008b2053b79f232666ba212d52050f9d00e1fe0611a1f8f86c03bdaf74b2548c17be71a84a4c5f761899ab5f4bad00360
   languageName: node
   linkType: hard
 
@@ -4076,15 +4076,15 @@ __metadata:
   dependencies:
     "@ethersproject/bytes": ^5.7.0
     "@iarna/toml": ^3.0.0
-    "@usecannon/builder": ^2.7.1
-    "@usecannon/cli": ^2.8.1
+    "@usecannon/builder": ^2.9.0
+    "@usecannon/cli": ^2.9.1
     debug: ^4.3.4
     ethers: ^5.7.2
-    hardhat: ^2.17.4
+    hardhat: ^2.18.3
     mocha: ^10.2.0
     prettier: ^3.0.3
     prettier-plugin-toml: ^1.0.0
-    solc: ^0.8.21
+    solc: ^0.8.22
   languageName: unknown
   linkType: soft
 
