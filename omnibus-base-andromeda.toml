@@ -32,10 +32,10 @@ options.bundleSalt = "<%= settings.bundleSalt %>"
 ## SKIPPING CCIP CONFIG
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "1250000000000000000" # 125%
+defaultValue = "1250000000000000000" # 125% min market collateralization
 
 [setting.account_timeout_withdraw]
-defaultValue = "86400" # 1 day
+defaultValue = "86400" # 1 day withdrawal lock
 
 [invoke.setMinimumLiquidityRatio]
 target = ["system.CoreProxy"]
@@ -78,7 +78,8 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-    { tokenAddress = "<%= settings.usdc_address %>", oracleNodeId = "<%= extras.usdc_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.01') %>", liquidationRewardD18 = "<%= parseEther('2') %>", minDelegationD18 = "<%= parseEther('2') %>", depositingEnabled = true }
+    { tokenAddress = "<%= settings.usdc_address %>", oracleNodeId = "<%= extras.usdc_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.01') %>", liquidationRewardD18 = "<%= parseEther('2') %>", minDelegationD18 = "<%= parseEther('2') %>", depositingEnabled = true } 
+    #TODO why is liquidationRatio 1.01 instead of 1.00
 ]
 depends = ["invoke.registerUsdcOracleNode"]
 
@@ -154,6 +155,7 @@ depends = ["invoke.createUsdcSynth"]
 
 
 # SKIPPING ETH COLLATERAL IN FIRST RELEASE
+# TODO add ETH in later releases as per governance
 
 # PERPS
 [setting.perps_market_package]
