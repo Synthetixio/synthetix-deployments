@@ -2,7 +2,7 @@ include = ["../core.toml"]
 
 [setting.usdc_aggregator_address]
 
-[invoke.registerUsdcOracleNode]
+[invoke.register_usdc_oracle_node]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
