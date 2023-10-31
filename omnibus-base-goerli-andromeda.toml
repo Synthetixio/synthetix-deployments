@@ -118,7 +118,7 @@ args = [
 ]
 depends = ["invoke.createUsdcSynth", "invoke.registerUsdcOracleNode"]
 
-[invoke.configureSynthWrapperEth]
+[invoke.configureSynthWrapperUsdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
