@@ -1,20 +1,14 @@
 name = "synthetix-omnibus"
 version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
-include = [
-    "tomls/settings-testnet.toml",
-    "tomls/core.toml",
-    "tomls/permissions.toml",
-    "tomls/collaterals/snx.toml",
-    "tomls/pools/spartan-council.toml",
-    "tomls/markets/spot/eth.toml",
-    "tomls/permit-all-transferCrossChain.toml",
-]
 
 [setting.target_preset]
 defaultValue = "main"
 
 [setting.salt]
+defaultValue = "staging"
+
+[setting.bundleSalt]
 defaultValue = "staging"
 
 [setting.snx_package]
@@ -106,6 +100,303 @@ defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57
 # https://docs.pyth.network/documentation/pythnet-price-feeds/evm
 defaultValue = "0xff1a0f4744e8582df1ae09d5611b887b6a12925c"
 
+#
+#
+# Settlement settings
+#
+#
+[setting.settlementReward]
+defaultValue = "0"
+
+[setting.settlementMinimumUsdExchangeAmount]
+defaultValue = "0.000001"
+
+[setting.settlementMaxRoundingLoss]
+defaultValue = "0.000001"
+
+#
+#
+# BigCap settings
+#
+#
+[setting.bigCapSettlementDelay]
+defaultValue = "15"
+
+[setting.bigCapSettlementWindowDuration]
+defaultValue = "60"
+
+[setting.bigCapPriceWindowDuration]
+defaultValue = "600"
+
+#
+#
+# Provision Synthetix Core
+#
+#
+[provision.system]
+source = "<%= settings.snx_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.bundleSalt = "<%= settings.bundleSalt %>"
+
+#
+#
+# Core settings
+#
+#
+[invoke.setMinimumLiquidityRatio]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setMinLiquidityRatio(uint256)"
+args = ["<%= settings.minimum_liquidity_ratio %>"]
+depends = ["provision.system"]
+
+[invoke.setAccountTimeoutWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= formatBytes32String('accountTimeoutWithdraw') %>",
+    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>"
+]
+depends = ["provision.system"]
+
+#
+#
+# Cross-chain transfers
+#
+#
+[invoke.allowAllTransferCrossChain]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('transferCrossChain') %>", true]
+depends = ["provision.system"]
+
+[invoke.configureChainlinkCrossChain]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureChainlinkCrossChain"
+args = ["<%= settings.ccip_router %>", "<%= settings.ccip_token_pool %>"]
+depends = ["provision.system"]
+
+[invoke.setSupportedCrossChainNetworks]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setSupportedCrossChainNetworks"
+# https://docs.chain.link/ccip/supported-networks
+args = [
+    ["11155111", "420", "421613", "80001", "84531"],
+    [
+        "16015286601757825753",
+        "2664363617261496610",
+        "6101244977088475029",
+        "12532609583862916517",
+        "5790810961207155433"
+    ]
+]
+depends = ["provision.system"]
+
+#
+#
+# SNX Oracle
+#
+#
+[invoke.registerSnxOracleManager]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.snx_aggregator_address, 0, 8]) %>",
+    [],
+]
+extra.snx_oracle_id.event = "NodeRegistered"
+extra.snx_oracle_id.arg = 0
+depends = ["provision.system"]
+
+#
+#
+# SNX Collateral
+#
+#
+[invoke.configureSnxCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= settings.snx_address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('4') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>", minDelegationD18 = "<%= settings.snx_liquidation_reward %>", depositingEnabled = true }
+]
+depends = ["invoke.registerSnxOracleManager"]
+
+#
+#
+# Spot factory
+#
+#
+[provision.spotFactory]
+source = "<%= settings.spot_market_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.coreProxyOwner = "<%= settings.owner %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>"
+options.synthetixPreset = "<%= settings.target_preset %>"
+depends = ["provision.system"]
+
+#
+#
+# ETH oracle (chainlink)
+#
+#
+[invoke.registerEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
+    []
+]
+extra.eth_oracle_id.event = "NodeRegistered"
+extra.eth_oracle_id.arg = 0
+depends = ["provision.system"]
+
+#
+#
+# sETH
+#
+#
+[invoke.createEthSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic Ethereum", "sETH", "<%= settings.owner %>"]
+extra.synth_eth_market_id.event = "SynthRegistered"
+extra.synth_eth_market_id.arg = 0
+extra.synth_eth_token_address.event = "SynthRegistered"
+extra.synth_eth_token_address.arg = 1
+depends = ["provision.spotFactory"]
+
+[invoke.setSynthPriceEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= extras.eth_oracle_id %>",
+    "<%= extras.eth_oracle_id %>"
+]
+depends = ["invoke.createEthSynth", "invoke.registerEthOracleNode"]
+
+[invoke.setSynthAtomicFixedFeeEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setAtomicFixedFee"
+args = ["<%= extras.synth_eth_market_id %>", "<%= MaxUint256 %>"]
+depends = ["invoke.createEthSynth"]
+
+[invoke.setSynthSettlementStrategyEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    # strategyType = 1 (pyth)
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+]
+depends = ["invoke.createEthSynth"]
+
+[invoke.setSynthAsyncFixedFeeEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setAsyncFixedFee"
+args = ["<%= extras.synth_eth_market_id %>", "<%= parseEther(settings.synthEthAsyncFixedFee) %>"]
+depends = ["invoke.createEthSynth"]
+
+[invoke.setSynthMaxMarketCollateralEth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= settings.weth_address %>",
+    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
+]
+depends = ["invoke.createEthSynth"]
+
+[invoke.configureSynthWrapperEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= settings.weth_address %>",
+    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
+]
+depends = ["invoke.createEthSynth"]
+
+[invoke.setSynthSkewScaleEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setMarketSkewScale"
+args = ["<%= extras.synth_eth_market_id %>", "<%= parseEther(settings.synthEthSkewScale) %>"]
+depends = ["invoke.createEthSynth"]
+
+[invoke.setSynthWrapperFeesEth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setWrapperFees"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= parseEther(settings.synthEthWrapFee) %>",
+    "<%= parseEther(settings.synthEthUnwrapFee) %>"
+]
+depends = ["invoke.createEthSynth"]
+
+#
+#
+# Permit deployer to create pools
+#
+#
+[invoke.permitCreatePool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createPool') %>", "<%= settings.deployer %>"]
+depends = ["provision.system"]
+
+#
+#
+# Spartan Council pool
+#
+#
+[invoke.create_spartan_council_pool]
+target = ["system.CoreProxy"]
+from = "<%= settings.deployer %>"
+func = "createPool"
+args = ["<%= settings.sc_pool_id %>", "<%= settings.pool_owner %>"]
+depends = ["invoke.permitCreatePool"]
+
+[invoke.set_spartan_council_pool_name]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolName"
+args = ["<%= settings.sc_pool_id %>", "Spartan Council Pool"]
+depends = ["invoke.create_spartan_council_pool"]
+
 [invoke.configure_spartan_council_pool]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
@@ -117,4 +408,16 @@ args = [
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = ["invoke.createScPool", "invoke.createEthSynth"]
+depends = ["invoke.create_spartan_council_pool", "invoke.createEthSynth"]
+
+#
+#
+# Set preferred pool to Spartan Council pool
+#
+#
+[invoke.make_spartan_council_pool_a_preferred_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPreferredPool"
+args = ["<%= settings.sc_pool_id %>"]
+depends = ["invoke.create_spartan_council_pool"]
