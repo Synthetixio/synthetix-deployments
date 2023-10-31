@@ -1,8 +1,8 @@
 name = "synthetix-omnibus"
 version = "3.3.3-dev.e141cd8c"
 description = "Andromeda"
-# TODO: Remove unneccesary "depends"
 
+# TODO: Remove unneccesary "depends"
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" ## TBD
 
@@ -11,13 +11,7 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" ## TBD
 defaultValue = "synthetix:3.3.3-dev.e141cd8c"
 
 [setting.target_preset]
-defaultValue = "Andromeda"
-
-[setting.salt]
-defaultValue = "Andromeda"
-
-[setting.bundleSalt]
-defaultValue = "Andromeda"
+defaultValue = "andromeda"
 
 [provision.system]
 source = "<%= settings.snx_package %>"
@@ -25,12 +19,11 @@ targetPreset = "<%= settings.target_preset %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.bundleSalt = "<%= settings.bundleSalt %>"
+
 ## MAKE TOKEN NAME AND SYMBOL CONFIGURATION IN SYNTHETIX PACKAGE
 ## options.stablecoinName = "KAINSUSD"
 ## options.stablecoinSymbol = "USDK"
-
 ## SKIPPING CCIP CONFIG
-
 [setting.minimum_liquidity_ratio]
 defaultValue = "1250000000000000000" # 125% min market collateralization
 
@@ -62,7 +55,7 @@ defaultValue = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    # 8 = CONSTANT NODE 
+    # 8 = CONSTANT NODE
     8,
     "<%= defaultAbiCoder.encode(['int256'], [One]) %>",
     []
@@ -78,11 +71,10 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-    { tokenAddress = "<%= settings.usdc_address %>", oracleNodeId = "<%= extras.usdc_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.01') %>", liquidationRewardD18 = "<%= parseEther('2') %>", minDelegationD18 = "<%= parseEther('2') %>", depositingEnabled = true } 
+    { tokenAddress = "<%= settings.usdc_address %>", oracleNodeId = "<%= extras.usdc_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.01') %>", liquidationRewardD18 = "<%= parseEther('2') %>", minDelegationD18 = "<%= parseEther('2') %>", depositingEnabled = true }
     #TODO why is liquidationRatio 1.01 instead of 1.00
 ]
 depends = ["invoke.registerUsdcOracleNode"]
-
 
 # sUSDC WRAPPER SPOT MARKET
 # No wrapper fee or skew scale, async settlement strategy, or atomic fee
@@ -90,15 +82,12 @@ depends = ["invoke.registerUsdcOracleNode"]
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
 
-[setting.synthetixPreset]
-defaultValue = "Andromeda"
-
 [provision.spotFactory]
 source = "<%= settings.spot_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = ""
+options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
 depends = ["provision.system"]
@@ -153,10 +142,8 @@ args = [
 ]
 depends = ["invoke.createUsdcSynth"]
 
-
 # SKIPPING ETH COLLATERAL IN FIRST RELEASE
 # TODO add ETH in later releases as per governance
-
 # PERPS
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
@@ -166,7 +153,7 @@ source = "<%= settings.perps_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = "Andromeda"
+options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
@@ -215,7 +202,6 @@ defaultValue = "0.000001"
 [setting.settlementMaxRoundingLoss]
 defaultValue = "0.000001"
 
-
 [setting.bigCapSettlementDelay]
 defaultValue = "15"
 
@@ -242,7 +228,6 @@ args = [
 extra.btc_oracle_id.event = "NodeRegistered"
 extra.btc_oracle_id.arg = 0
 depends = ["provision.system"]
-
 
 # Perps Configuration
 [setting.btcPerpsMarketId]
@@ -297,7 +282,7 @@ defaultValue = "0.0016"
 defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13" # TODO
 
 [setting.pythBtcFeedId]
-defaultValue="0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
 
 [invoke.createBtcPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -458,7 +443,7 @@ defaultValue = "0.0016"
 defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13" # TODO
 
 [setting.pythEthFeedId]
-defaultValue="0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
 
 [invoke.createEthPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -550,11 +535,8 @@ depends = ["invoke.createEthPerpsMarket"]
 
 # Litecoin Perpetual Futures
 # TODO
-
 # XRP Perpetual Futures
 # TODO
-
-
 # CREATE POOL
 [invoke.permitCreatePool]
 target = ["system.CoreProxy"]
@@ -600,7 +582,4 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = [
-    "invoke.createScPool",
-    "provision.perpsFactory"
-]
+depends = ["invoke.createScPool", "provision.perpsFactory"]
