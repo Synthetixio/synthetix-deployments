@@ -1,0 +1,20 @@
+include = ["../core.toml"]
+
+[setting.eth_aggregator_address]
+
+[setting.constant_eth_price]
+defaultValue = "5"
+
+[invoke.registerEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = constant
+    8,
+    # 3 parameters are: price
+    "<%= defaultAbiCoder.encode(['int256'], [parseEther(settings.constant_eth_price)]) %>",
+    []
+]
+extra.eth_oracle_id.event = "NodeRegistered"
+extra.eth_oracle_id.arg = 0
+depends = ["provision.system"]

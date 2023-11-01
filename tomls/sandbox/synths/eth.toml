@@ -1,0 +1,51 @@
+include = ["../../oracles/synths/eth.toml"]
+
+# Synth Configuration
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.0005"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "100"
+
+[setting.synthEthSkewScale]
+defaultValue = "1000000"
+
+[setting.synthEthWrapFee]
+defaultValue = "0.0001"
+
+[setting.synthEthUnwrapFee]
+defaultValue = "0.0001"
+
+[invoke.setPerpsProxyCustomTransactorOnEthSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
+    "<%= parseEther(settings.synthEthAsyncFixedFee) %>"
+]
+depends = ["provision.perpsFactory", "invoke.createEthSynth"]
+
+# ETH Synth configuration on Core system
+[invoke.configuresETHCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= extras.synth_eth_token_address %>", oracleNodeId = "<%= extras.synth_eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
+]
+depends = ["invoke.setSynthPriceEth", "invoke.registerSynthEthOracleNode"]
+
+[invoke.setSynthEthMaxMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_eth_token_address %>",
+    "<%= parseEther(settings.perpsEthMaxMarketSize) %>"
+]
+depends = ["invoke.createEthSynth", "provision.perpsFactory"]

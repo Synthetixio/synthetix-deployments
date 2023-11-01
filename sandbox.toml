@@ -1,0 +1,122 @@
+name = "synthetix-omnibus"
+version = "3.3.3-dev.e141cd8c"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    # "tomls/settings-testnet.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/collaterals/wbtc.toml",
+    "tomls/collaterals/op.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-base-goerli-competition/pools/spots.toml",
+    "tomls/omnibus-base-goerli-competition/pools/perps.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-transferCrossChain.toml",
+    "tomls/markets/spot/eth.toml",
+    "tomls/markets/spot/btc.toml",
+    "tomls/markets/perps/eth.toml",
+    "tomls/markets/perps/btc.toml",
+    # overrides for the oracles
+    "tomls/sandbox/oracles/constant-eth.toml",
+    # "tomls/oracles/pyth-btc.toml",
+    # overrides for perp markets
+    "tomls/omnibus-base-goerli-competition/perps/global.toml",
+    "tomls/omnibus-base-goerli-competition/perps/btc.toml",
+    "tomls/omnibus-base-goerli-competition/perps/eth.toml",
+    # overrides for synth markets
+    "tomls/omnibus-base-goerli-competition/synths/btc.toml",
+    "tomls/omnibus-base-goerli-competition/synths/eth.toml",
+]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.3-dev.e141cd8c"
+
+[setting.target_preset]
+defaultValue = "competition"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
+
+[setting.salt]
+defaultValue = "competition"
+
+[setting.spotMarketExternalNodeAddress]
+defaultValue = "0xF6D1e72c3608344F831606078e3d7eb8c51aa99A"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
+
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.weth_aggregator_address]
+defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.btc_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.snx_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.link_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.op_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "60"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.spots_pool_id]
+defaultValue = "10"
+
+[setting.perps_pool_id]
+defaultValue = "11"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends = [
+    "invoke.createScPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "provision.perpsFactory"
+]
+
+# test with build
+# 1. create account
+# 2. modify collateral
+# 3. open position

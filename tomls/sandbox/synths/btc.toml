@@ -1,0 +1,83 @@
+include = ["../../oracles/synths/btc.toml"]
+
+# Synth Configuration
+[setting.synthBtcAsyncFixedFee]
+defaultValue = "0.0005"
+
+[setting.synthBtcSkewScale]
+defaultValue = "100000"
+
+[invoke.setPerpsProxyCustomTransactorOnBtcSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
+    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
+]
+depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
+
+[invoke.setExternalNodeCustomTransactorOnBtcSynthMarket]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
+func = "setCustomTransactorFees"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= settings.spotMarketExternalNodeAddress %>",
+    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
+]
+depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
+
+[invoke.configuresBTCCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+]
+depends = ["invoke.setSynthPriceBtc", "invoke.registerSynthBtcOracleNode"]
+
+[invoke.setSynthBtcMaxMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_btc_token_address %>",
+    "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"
+]
+depends = ["invoke.createBtcSynth", "provision.perpsFactory"]
+
+# override synth config to use chainlink oracle id
+[setting.chainlink_btc_aggregator_address]
+defaultValue = "0xAC15714c08986DACC0379193e22382736796496f"
+
+[invoke.registerBtcChainlinkOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.chainlink_btc_aggregator_address, 0, 8]) %>",
+    []
+]
+extra.chainlink_btc_oracle_id.event = "NodeRegistered"
+extra.chainlink_btc_oracle_id.arg = 0
+depends = ["provision.system"]
+
+[invoke.setSynthPriceBtcToChainlink]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= extras.chainlink_btc_oracle_id %>",
+    "<%= extras.chainlink_btc_oracle_id %>"
+]
+depends = ["invoke.createBtcSynth", "invoke.registerBtcChainlinkOracleNode"]
