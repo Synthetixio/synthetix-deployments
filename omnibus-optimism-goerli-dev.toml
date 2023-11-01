@@ -37,7 +37,10 @@ include = [
 defaultValue = "dev"
 
 [setting.salt]
-defaultValue = "snax"
+defaultValue = "dev"
+
+[setting.bundleSalt]
+defaultValue = "dev"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.3-dev.9b6781de"
@@ -135,9 +138,3 @@ depends = [
     "invoke.createLinkSynth",
     "provision.perpsFactory"
 ]
-
-[invoke.unapprove_wrongfully_deployed_snx_pool]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "removeApprovedPool"
-args = ["<%= settings.snx_pool_id %>"]
