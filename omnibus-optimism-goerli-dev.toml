@@ -1,0 +1,140 @@
+name = "synthetix-omnibus"
+version = "3.3.3-dev.9b6781de"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings-testnet.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    "tomls/collaterals/snx.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-perps-createAccount.toml",
+    "tomls/permit-all-transferCrossChain.toml",
+    "tomls/markets/spot/eth.toml",
+    "tomls/markets/spot/btc.toml",
+    "tomls/markets/spot/link.toml",
+    "tomls/markets/perps/eth.toml",
+    "tomls/markets/perps/btc.toml",
+    # overrides for the oracles (will replace imports from above modules to use pyth instead of chainlink)
+    # "tomls/oracles/pyth-eth.toml",
+    # "tomls/oracles/pyth-btc.toml",
+    # "tomls/oracles/pyth-snx.toml",
+    # "tomls/oracles/pyth-link.toml",
+    # "tomls/oracles/pyth-op.toml",
+    # overrides for perp markets
+    "tomls/omnibus-optimism-goerli-dev/perps/global.toml",
+    "tomls/omnibus-optimism-goerli-dev/perps/btc.toml",
+    "tomls/omnibus-optimism-goerli-dev/perps/eth.toml",
+    # overrides for synth markets
+    "tomls/omnibus-optimism-goerli-dev/synths/btc.toml",
+    "tomls/omnibus-optimism-goerli-dev/synths/eth.toml",
+    "tomls/omnibus-optimism-goerli-dev/synths/link.toml",
+]
+
+[setting.target_preset]
+defaultValue = "dev"
+
+[setting.salt]
+defaultValue = "dev"
+
+[setting.bundleSalt]
+defaultValue = "dev"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.3-dev.9b6781de"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.3-dev.9b6781de"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.3-dev.9b6781de"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.snx_address]
+defaultValue = "0x2E5ED97596a8368EB9E44B1f3F25B2E813845303"
+
+[setting.snx_aggregator_address]
+defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
+
+[setting.weth_address]
+defaultValue = "0x4200000000000000000000000000000000000006"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x57241A37733983F97C4Ab06448F244A1E0Ca0ba8"
+
+[setting.btc_aggregator_address]
+defaultValue = "0xC16679B963CeB52089aD2d95312A5b85E318e9d2"
+
+[setting.link_aggregator_address]
+defaultValue = "0x69C5297001f38cCBE30a81359da06E5256bd28B9"
+
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.snx_pool_id]
+defaultValue = "69"
+
+[setting.snx_pool_owner]
+defaultValue = "<%= settings.pool_owner %>"
+
+[setting.ccip_router]
+defaultValue = "0xeb52e9ae4a9fb37172978642d4c141ef53876f26"
+
+[setting.ccip_token_pool]
+defaultValue = "0xd23c2ef3a533040b57cadaf33ccb111edbaca018"
+
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+# ETH Synth Configuration
+# Note: this is now added to the event but because the synth is already created
+# we need to manually set it here
+# Pyth settlement strategy config
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythLinkFeedId]
+defaultValue = "0x83be4ed61dd8a3518d198098ce37240c494710a7b9d85e35d9fceac21df08994"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends = [
+    "invoke.createScPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "invoke.createLinkSynth",
+    "provision.perpsFactory"
+]
