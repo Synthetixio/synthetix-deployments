@@ -1,585 +1,97 @@
 name = "synthetix-omnibus"
 version = "3.3.3-dev.e141cd8c"
 description = "Andromeda"
+include = [
+    "tomls/settings-testnet.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml", # Allow deployer to create pools
+    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
 
-# TODO: Remove unneccesary "depends"
-[setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" ## TBD
+    # Mock USDC and sUSDC spot market/wrapper
+    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml",
 
-## PROVISION CORE SYSTEM
+    # the perps
+    "tomls/markets/perps/eth.toml",
+    "tomls/markets/perps/btc.toml",
+    "tomls/markets/perps/ltc.toml",
+    "tomls/markets/perps/xrp.toml",
+
+    # overrides for the oracles
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-ltc.toml",
+    "tomls/oracles/pyth-xrp.toml",
+    # overrides for perp markets
+    "tomls/omnibus-base-goerli-andromeda/perps/global.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/btc.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
+]
+
 [setting.snx_package]
 defaultValue = "synthetix:3.3.3-dev.e141cd8c"
 
 [setting.target_preset]
 defaultValue = "andromeda"
 
-[provision.system]
-source = "<%= settings.snx_package %>"
-targetPreset = "<%= settings.target_preset %>"
-options.owner = "<%= settings.owner %>"
-options.salt = "<%= settings.salt %>"
-options.bundleSalt = "<%= settings.bundleSalt %>"
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
 
-## MAKE TOKEN NAME AND SYMBOL CONFIGURATION IN SYNTHETIX PACKAGE
-## options.stablecoinName = "KAINSUSD"
-## options.stablecoinSymbol = "USDK"
-## SKIPPING CCIP CONFIG
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
+
+[setting.salt]
+defaultValue = "andromeda"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
+
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.btc_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.ltc_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.xrp_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
 [setting.minimum_liquidity_ratio]
 defaultValue = "1250000000000000000" # 125% min market collateralization
 
 [setting.account_timeout_withdraw]
-defaultValue = "86400" # 1 day withdrawal lock
+defaultValue = "86400" # 1 day
 
-[invoke.setMinimumLiquidityRatio]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setMinLiquidityRatio(uint256)"
-args = ["<%= settings.minimum_liquidity_ratio %>"]
-depends = ["provision.system"]
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[invoke.setAccountTimeoutWithdraw]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setConfig"
-args = [
-    "<%= formatBytes32String('accountTimeoutWithdraw') %>",
-    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>"
-]
-depends = ["provision.system"]
-
-# ADD USDC AS COLLATERAL WITH CONSTANT PRICE OF 1
-[setting.usdc_address]
-defaultValue = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
-
-[invoke.registerUsdcOracleNode]
-target = ["system.oracle_manager.Proxy"]
-func = "registerNode"
-args = [
-    # 8 = CONSTANT NODE
-    8,
-    "<%= defaultAbiCoder.encode(['int256'], [One]) %>",
-    []
-]
-extra.usdc_oracle_id.event = "NodeRegistered"
-extra.usdc_oracle_id.arg = 0
-depends = ["provision.system"]
-
-# VERIFY THIS IS ALL CONFIGURED CORRECTLY
-# SHOULD BE: ISSUANCE: INFINITE, LIQUIDATION AT 100%, LIQUIDATION REWARD/MIN DELEGATION: $2
-[invoke.configureUsdcCollateral]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= settings.usdc_address %>", oracleNodeId = "<%= extras.usdc_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.01') %>", liquidationRewardD18 = "<%= parseEther('2') %>", minDelegationD18 = "<%= parseEther('2') %>", depositingEnabled = true }
-    #TODO why is liquidationRatio 1.01 instead of 1.00
-]
-depends = ["invoke.registerUsdcOracleNode"]
-
-# sUSDC WRAPPER SPOT MARKET
-# No wrapper fee or skew scale, async settlement strategy, or atomic fee
-# Just for USDC -> sUSDC -> kUSD and back, PnL is always 0
-[setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
-
-[provision.spotFactory]
-source = "<%= settings.spot_market_package %>"
-targetPreset = "<%= settings.target_preset %>"
-options.coreProxyOwner = "<%= settings.owner %>"
-options.owner = "<%= settings.owner %>"
-options.salt = "<%= settings.salt %>"
-options.synthetixPackage = "<%= settings.snx_package %>"
-options.synthetixPreset = "<%= settings.target_preset %>"
-depends = ["provision.system"]
-
-[setting.synthUsdcMaxMarketCollateral]
-defaultValue = "<%= parseEther('1000000') %>" # 1 million USDC max
-
-[invoke.createUsdcSynth]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "owner"
-func = "createSynth"
-args = ["Synthetic USDC", "sUSDC", "<%= settings.owner %>"]
-extra.synth_usdc_market_id.event = "SynthRegistered"
-extra.synth_usdc_market_id.arg = 0
-extra.synth_usdc_token_address.event = "SynthRegistered"
-extra.synth_usdc_token_address.arg = 1
-depends = ["provision.spotFactory"]
-
-[invoke.setSynthPriceUsdc]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
-func = "updatePriceData"
-args = [
-    "<%= extras.synth_usdc_market_id %>",
-    "<%= extras.usdc_oracle_id %>",
-    "<%= extras.usdc_oracle_id %>"
-]
-depends = ["invoke.createUsdcSynth", "invoke.registerUsdcOracleNode"]
-
-[invoke.configureSynthWrapperUsdc]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
-func = "setWrapper"
-args = [
-    "<%= extras.synth_usdc_market_id %>",
-    "<%= settings.usdc_address %>",
-    "<%= parseEther(settings.synthUsdcMaxMarketCollateral) %>"
-]
-depends = ["invoke.createUsdcSynth"]
-
-[invoke.setSynthMaxMarketCollateralUsdc]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-fromCall.args = []
-func = "configureMaximumMarketCollateral"
-args = [
-    "<%= extras.synth_usdc_market_id %>",
-    "<%= settings.usdc_address %>",
-    "<%= parseEther(settings.synthUsdcMaxMarketCollateral) %>"
-]
-depends = ["invoke.createUsdcSynth"]
-
-# SKIPPING ETH COLLATERAL IN FIRST RELEASE
-# TODO add ETH in later releases as per governance
-# PERPS
-[setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
-
-[provision.perpsFactory]
-source = "<%= settings.perps_market_package %>"
-targetPreset = "<%= settings.target_preset %>"
-options.coreProxyOwner = "<%= settings.owner %>"
-options.owner = "<%= settings.owner %>"
-options.salt = "<%= settings.salt %>"
-options.synthetixPackage = "<%= settings.snx_package %>"
-options.spotMarketPackage = "<%= settings.spot_market_package %>"
-options.synthetixPreset = "<%= settings.target_preset %>"
-options.spotMarketPreset = "<%= settings.target_preset %>"
-depends = ["provision.spotFactory"]
-
-[setting.perpsMinLiquidationReward]
+[setting.sc_pool_id]
 defaultValue = "1"
 
-[setting.perpsMaxLiquidationReward]
-defaultValue = "500"
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[invoke.setPerpsLiquidationRewardLimits]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setLiquidationRewardGuards"
-args = ["<%= parseEther('1') %>", "<%= parseEther('500') %>"]
-depends = ["provision.perpsFactory"]
-
-[invoke.setPerpsMaxCollateralForSnxUsd]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxCollateralAmount"
-args = ["0", "<%= MaxUint256 %>"]
-depends = ["provision.perpsFactory"]
-
-[invoke.setPerAccountCapsPerps]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setPerAccountCaps"
-args = ["5", "3"]
-depends = ["provision.perpsFactory"]
-
-[setting.pythPriceVerificationAddress]
-defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
-
-[setting.pythFeedUrl]
-defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
-
-[setting.settlementReward]
-defaultValue = "0"
-
-[setting.settlementMinimumUsdExchangeAmount]
-defaultValue = "0.000001"
-
-[setting.settlementMaxRoundingLoss]
-defaultValue = "0.000001"
-
-[setting.bigCapSettlementDelay]
-defaultValue = "15"
-
-[setting.bigCapSettlementWindowDuration]
-defaultValue = "60"
-
-[setting.bigCapPriceWindowDuration]
-defaultValue = "600"
-
-# Bitcoin Perpetual Futures
-[setting.btc_aggregator_address]
-defaultValue = "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
-
-[invoke.registerBtcOracleNode]
-target = ["system.oracle_manager.Proxy"]
-func = "registerNode"
-args = [
-    # 3 = chainlink aggregator type
-    3,
-    # 3 parameters are: address of the chainlink oracle
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.btc_aggregator_address, 0, 8]) %>",
-    []
-]
-extra.btc_oracle_id.event = "NodeRegistered"
-extra.btc_oracle_id.arg = 0
-depends = ["provision.system"]
-
-# Perps Configuration
-[setting.btcPerpsMarketId]
-defaultValue = "200"
-
-[setting.perpsBtcSkewScale]
-defaultValue = "1000000"
-
-[setting.perpsBtcMaxFundingVelocity]
-defaultValue = "9"
-
-[setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0007"
-
-[setting.perpsBtcTakerFeeRatio]
-defaultValue = "0.0003"
-
-[setting.perpsBtcMaxMarketSize]
-defaultValue = "100000"
-
-[setting.perpsBtcInitialMarginRatio]
-defaultValue = "1"
-
-[setting.perpsBtcMaintenanceMarginScalar]
-defaultValue = "0.5"
-
-[setting.perpsBtcMinimumInitialMarginRatio]
-defaultValue = "0.02"
-
-[setting.perpsBtcLiquidationRewardRatioD18]
-defaultValue = "0.01"
-
-[setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "0.5"
-
-[setting.perpsBtcMaxSecondsInLiquidationWindow]
-defaultValue = "30"
-
-[setting.perpsBtcMinimumPositionMargin]
-defaultValue = "0"
-
-[setting.perpsBtcLockedOiRatio]
-defaultValue = "0.5"
-
-[setting.perpsBtcSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
-[setting.perpsBtcMaxLiquidationPd]
-defaultValue = "0.0016"
-
-[setting.perpsBtcEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13" # TODO
-
-[setting.pythBtcFeedId]
-defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
-
-[invoke.createBtcPerpsMarket]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "createMarket"
-args = ["<%= settings.btcPerpsMarketId %>", "Bitcoin", "BTC"]
-depends = ["provision.perpsFactory"]
-
-[invoke.setPerpsPriceBtc]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "updatePriceData"
-args = ["<%= settings.btcPerpsMarketId %>", "<%= extras.btc_oracle_id %>"]
-depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
-
-[invoke.setPerpsBtcSettlementStrategy]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "addSettlementStrategy"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
-]
-depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setPerpsBtcFundingParameters]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setFundingParameters"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcSkewScale) %>",
-    "<%= parseEther(settings.perpsBtcMaxFundingVelocity) %>"
-]
-depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setPerpsBtcOrderFees]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setOrderFees"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcMakerFeeRatio) %>",
-    "<%= parseEther(settings.perpsBtcTakerFeeRatio) %>"
-]
-depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setPerpsBtcMaxMarketSize]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxMarketSize"
-args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"]
-depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setPerpsBtcMaxLiquidationParameters]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxLiquidationParameters"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcMaxLiquidationLimitAccumulationMultiplier) %>",
-    "<%= settings.perpsBtcMaxSecondsInLiquidationWindow %>",
-    "<%= parseEther(settings.perpsBtcMaxLiquidationPd) %>",
-    "<%= settings.perpsBtcEndorsedLiquidator %>"
-]
-depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setPerpsBtcLiquidationParameters]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setLiquidationParameters"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcInitialMarginRatio) %>",
-    "<%= parseEther(settings.perpsBtcMinimumInitialMarginRatio) %>",
-    "<%= parseEther(settings.perpsBtcMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsBtcLiquidationRewardRatioD18) %>",
-    "<%= parseEther(settings.perpsBtcMinimumPositionMargin) %>"
-]
-depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setPerpsBtcLockedOiRatio]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setLockedOiRatio"
-args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcLockedOiRatio) %>"]
-depends = ["invoke.createBtcPerpsMarket"]
-
-# Ethereum Perpetual Futures
-[setting.eth_aggregator_address]
-defaultValue = "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
-
-[invoke.registerEthOracleNode]
-target = ["system.oracle_manager.Proxy"]
-func = "registerNode"
-args = [
-    # 3 = chainlink aggregator type
-    3,
-    # 3 parameters are: address of the chainlink oracle
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
-    []
-]
-extra.eth_oracle_id.event = "NodeRegistered"
-extra.eth_oracle_id.arg = 0
-depends = ["provision.system"]
-
-# Perps Configuration
-[setting.ethPerpsMarketId]
-defaultValue = "100"
-
-[setting.perpsEthSkewScale]
-defaultValue = "1000000"
-
-[setting.perpsEthMaxFundingVelocity]
-defaultValue = "9"
-
-[setting.perpsEthMakerFeeRatio]
-defaultValue = "0.0002"
-
-[setting.perpsEthTakerFeeRatio]
-defaultValue = "0.0005"
-
-[setting.perpsEthMaxMarketSize]
-defaultValue = "100000"
-
-[setting.perpsEthInitialMarginRatio]
-defaultValue = "1"
-
-[setting.perpsEthMinimumInitialMarginRatio]
-defaultValue = "0.02"
-
-[setting.perpsEthMaintenanceMarginScalar]
-defaultValue = "0.5"
-
-[setting.perpsEthLiquidationRewardRatioD18]
-defaultValue = "0.01"
-
-[setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "1"
-
-[setting.perpsEthMaxSecondsInLiquidationWindow]
-defaultValue = "30"
-
-[setting.perpsEthMinimumPositionMargin]
-defaultValue = "0"
-
-[setting.perpsEthLockedOiRatio]
-defaultValue = "0.5"
-
-[setting.perpsEthSynthMaxCollateralAmount]
-defaultValue = "<%= MaxUint256 %>"
-
-[setting.perpsEthMaxLiquidationPd]
-defaultValue = "0.0016"
-
-[setting.perpsEthEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13" # TODO
-
-[setting.pythEthFeedId]
-defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
-
-[invoke.createEthPerpsMarket]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "createMarket"
-args = ["<%= settings.ethPerpsMarketId %>", "Ethereum", "ETH"]
-depends = ["provision.perpsFactory"]
-
-[invoke.setPerpsPriceEth]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "updatePriceData"
-args = ["<%= settings.ethPerpsMarketId %>", "<%= extras.eth_oracle_id %>"]
-depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
-
-[invoke.setPerpsEthSettlementStrategy]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "addSettlementStrategy"
-args = [
-    "<%= settings.ethPerpsMarketId %>",
-    # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
-]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsEthFundingParameters]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setFundingParameters"
-args = [
-    "<%= settings.ethPerpsMarketId %>",
-    "<%= parseEther(settings.perpsEthSkewScale) %>",
-    "<%= parseEther(settings.perpsEthMaxFundingVelocity) %>"
-]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsEthOrderFees]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setOrderFees"
-args = [
-    "<%= settings.ethPerpsMarketId %>",
-    "<%= parseEther(settings.perpsEthMakerFeeRatio) %>",
-    "<%= parseEther(settings.perpsEthTakerFeeRatio) %>"
-]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsEthMaxMarketSize]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxMarketSize"
-args = ["<%= settings.ethPerpsMarketId %>", "<%= parseEther(settings.perpsEthMaxMarketSize) %>"]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsEthMaxLiquidationParameters]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxLiquidationParameters"
-args = [
-    "<%= settings.ethPerpsMarketId %>",
-    "<%= parseEther(settings.perpsEthMaxLiquidationLimitAccumulationMultiplier) %>",
-    "<%= settings.perpsEthMaxSecondsInLiquidationWindow %>",
-    "<%= parseEther(settings.perpsEthMaxLiquidationPd) %>",
-    "<%= settings.perpsBtcEndorsedLiquidator %>"
-]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsEthLiquidationParameters]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setLiquidationParameters"
-args = [
-    "<%= settings.ethPerpsMarketId %>",
-    "<%= parseEther(settings.perpsEthInitialMarginRatio) %>",
-    "<%= parseEther(settings.perpsEthMinimumInitialMarginRatio) %>",
-    "<%= parseEther(settings.perpsEthMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsEthLiquidationRewardRatioD18) %>",
-    "<%= parseEther(settings.perpsEthMinimumPositionMargin) %>"
-]
-depends = ["invoke.createEthPerpsMarket"]
-
-[invoke.setPerpsEthLockedOiRatio]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setLockedOiRatio"
-args = ["<%= settings.ethPerpsMarketId %>", "<%= parseEther(settings.perpsEthLockedOiRatio) %>"]
-depends = ["invoke.createEthPerpsMarket"]
-
-# Litecoin Perpetual Futures
-# TODO
-# XRP Perpetual Futures
-# TODO
-# CREATE POOL
-[invoke.permitCreatePool]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "addToFeatureFlagAllowlist"
-args = ["<%= formatBytes32String('createPool') %>", "<%= settings.owner %>"]
-depends = ["provision.system"]
-
-[setting.pool_id]
-defaultValue = "1"
-
-[invoke.createScPool]
-target = ["system.CoreProxy"]
-from = "<%= settings.owner %>"
-func = "createPool"
-args = ["<%= settings.pool_id %>", "<%= settings.owner %>"]
-depends = ["invoke.permitCreatePool"]
-
-[invoke.setScPoolName]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.pool_id %>"]
-func = "setPoolName"
-args = ["<%= settings.pool_id %>", "Based Pool"]
-depends = ["invoke.createScPool"]
-
-[invoke.setPreferredPool]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setPreferredPool"
-args = ["<%= settings.pool_id %>"]
-depends = ["invoke.createScPool"]
-
-# The pool doesn't back the spot market. Its PnL is always 0
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.pool_id %>"]
+fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "setPoolConfiguration"
 args = [
-    "<%= settings.pool_id %>",
+    "<%= settings.sc_pool_id %>",
     [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = ["invoke.createScPool", "provision.perpsFactory"]
+depends = [
+    "provision.perpsFactory"
+]
+

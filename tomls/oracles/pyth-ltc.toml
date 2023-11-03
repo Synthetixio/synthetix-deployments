@@ -1,0 +1,16 @@
+include = ["../core.toml"]
+
+[setting.snx_aggregator_address]
+
+[invoke.registerSnxOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 2 = external aggregator type (later this will be PYTH)
+    2,
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.snx_aggregator_address, settings.pythSnxFeedId, 30]) %>",
+    []
+]
+extra.snx_oracle_id.event = "NodeRegistered"
+extra.snx_oracle_id.arg = 0
+depends = ["provision.system"]

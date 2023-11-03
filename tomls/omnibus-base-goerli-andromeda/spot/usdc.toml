@@ -1,0 +1,62 @@
+[provision.usdc_mock_collateral]
+source = "mintable-token"
+sourcePreset="permissionless-mint"
+
+[setting.usdc_address]
+
+[setting.synthUsdcMaxMarketCollateral]
+
+[invoke.createUsdcSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic USD Coin", "sUSDC", "<%= settings.owner %>"]
+extra.synth_usdc_market_id.event = "SynthRegistered"
+extra.synth_usdc_market_id.arg = 0
+extra.synth_usdc_token_address.event = "SynthRegistered"
+extra.synth_usdc_token_address.arg = 1
+depends = ["provision.spotFactory"]
+
+[invoke.setSynthPriceUsdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= imports.system.extras.const_one_oracle_id %>",
+    "<%= imports.system.extras.const_one_oracle_id %>"
+]
+depends = ["invoke.createUsdcSynth", "invoke.registerUsdcOracleNode"]
+
+[invoke.setSynthMaxMarketCollateralUsdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
+    "<%= parseEther(settings.synthUsdcMaxMarketCollateral) %>"
+]
+depends = ["invoke.createUsdcSynth"]
+
+[invoke.configureSynthWrapperUsdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
+    "<%= parseEther(settings.synthUsdcMaxMarketCollateral) %>"
+]
+depends = ["invoke.createUsdcSynth"]
+
+[invoke.configure_susdc_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>", oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('0.5') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = true }
+]
