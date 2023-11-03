@@ -2,9 +2,6 @@ include = ["../core.toml"]
 
 [setting.spot_market_package]
 
-[setting.synthetixPreset]
-defaultValue = "competition"
-
 [provision.spotFactory]
 source = "<%= settings.spot_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
