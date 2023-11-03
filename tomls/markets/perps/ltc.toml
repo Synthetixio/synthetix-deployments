@@ -38,7 +38,7 @@ include = [
 [setting.strategyType]
 defaultValue = "0"
 
-[invoke.createLTCPerpsMarket]
+[invoke.createLtcPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
@@ -124,10 +124,3 @@ fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.ltcPerpsMarketId %>", "<%= parseEther(settings.perpsLtcLockedOiRatio) %>"]
 depends = ["invoke.createLtcPerpsMarket"]
-
-[invoke.setMaxCollateralAmountLtc]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxCollateralAmount"
-args = ["<%= extras.synth_ltc_market_id %>", "<%= settings.perpsLtcSynthMaxCollateralAmount %>"]
-depends = ["invoke.createLtcSynth", "provision.perpsFactory"]

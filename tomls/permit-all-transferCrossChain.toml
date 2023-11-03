@@ -1,3 +1,14 @@
+[setting.ccip_router]
+
+[setting.ccip_token_pool]
+
+[invoke.configureChainlinkCrossChain]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureChainlinkCrossChain"
+args = ["<%= settings.ccip_router %>", "<%= settings.ccip_token_pool %>"]
+depends = ["provision.system"]
+
 [invoke.allowAllTransferCrossChain]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"

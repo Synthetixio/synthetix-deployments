@@ -8,25 +8,29 @@ include = [
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
 
     # Mock USDC and sUSDC spot market/wrapper
-    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml",
+    "tomls/markets/spot/usdc.toml",
 
     # the perps
-    "tomls/markets/perps/eth.toml",
     "tomls/markets/perps/btc.toml",
+    "tomls/markets/perps/eth.toml",
     "tomls/markets/perps/ltc.toml",
     "tomls/markets/perps/xrp.toml",
 
     # overrides for the oracles
-    "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/pyth-ltc.toml",
     "tomls/oracles/pyth-xrp.toml",
-    # overrides for perp markets
+
+   # overrides for perp markets
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/btc.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
-    "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml",
+
+    # overrides for spot markets
+    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml",
 ]
 
 [setting.snx_package]
@@ -91,7 +95,3 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
     ],
 ]
-depends = [
-    "provision.perpsFactory"
-]
-

@@ -115,10 +115,3 @@ fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcLockedOiRatio) %>"]
 depends = ["invoke.createBtcPerpsMarket"]
-
-[invoke.setMaxCollateralAmountBtc]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxCollateralAmount"
-args = ["<%= extras.synth_btc_market_id %>", "<%= settings.perpsBtcSynthMaxCollateralAmount %>"]
-depends = ["invoke.createBtcSynth", "provision.perpsFactory"]
