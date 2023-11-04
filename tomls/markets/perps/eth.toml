@@ -28,6 +28,10 @@ include = [
 
 [setting.perpsEthMaxSecondsInLiquidationWindow]
 
+[setting.perpsEthMaxLiquidationPd]
+
+[setting.perpsEthEndorsedLiquidator]
+
 [setting.perpsEthMinimumPositionMargin]
 
 [setting.perpsEthLockedOiRatio]
@@ -95,7 +99,7 @@ args = [
     "<%= parseEther(settings.perpsEthMaxLiquidationLimitAccumulationMultiplier) %>",
     "<%= settings.perpsEthMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsEthMaxLiquidationPd) %>",
-    "<%= settings.perpsBtcEndorsedLiquidator %>"
+    "<%= settings.perpsEthEndorsedLiquidator %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
