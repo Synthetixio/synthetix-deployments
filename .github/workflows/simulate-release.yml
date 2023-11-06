@@ -20,6 +20,7 @@ jobs:
           - "omnibus-optimism-mainnet.toml"
           - "omnibus-goerli.toml"
           # - "omnibus-optimism-goerli.toml" # TODO: enable when deployed
+          - "omnibus-base-goerli-andromeda.toml"
           # - "omnibus-optimism-goerli-dev.toml" # TODO: enable when deployed
           - "omnibus-base-goerli.toml"
           # - "omnibus-base-mainnet.toml" # TODO: enable when deployed
@@ -53,6 +54,11 @@ jobs:
           #  preset: "dev"
           #  chainId: 420
           #  providerUrl: "https://optimism-goerli.infura.io/v3/$INFURA_API_KEY"
+
+          - toml: "omnibus-base-goerli-andromeda.toml"
+            preset: "andromeda"
+            chainId: 84531
+            providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
 
           #- toml: "omnibus-base-mainnet.toml"
           #  preset: "main"
