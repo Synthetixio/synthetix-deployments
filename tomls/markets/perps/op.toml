@@ -100,7 +100,7 @@ args = [
     "<%= parseEther(settings.perpsOpMaxLiquidationLimitAccumulationMultiplier) %>",
     "<%= settings.perpsOpMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsOpMaxLiquidationPd) %>",
-    "<%= settings.perpsBtcEndorsedLiquidator %>"
+    "<%= settings.perpsOpEndorsedLiquidator %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
