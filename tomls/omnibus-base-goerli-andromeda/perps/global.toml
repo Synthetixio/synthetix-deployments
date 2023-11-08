@@ -24,12 +24,8 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
-args = [
-    ["0"]
-]
-depends = [
-    "provision.perpsFactory"
-]
+args = [["0"]]
+depends = ["provision.perpsFactory"]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]
