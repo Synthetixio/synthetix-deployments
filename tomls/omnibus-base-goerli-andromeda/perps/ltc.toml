@@ -18,7 +18,7 @@ defaultValue = "0.0007"
 defaultValue = "0.0003"
 
 [setting.perpsLtcMaxMarketSize]
-defaultValue = "100000"
+defaultValue = "13333" #approx $1m
 
 [setting.perpsLtcInitialMarginRatio]
 defaultValue = "1"
