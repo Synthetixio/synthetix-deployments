@@ -1,0 +1,190 @@
+name = "kwenta-synthetix-omnibus-test-3"
+version = "3.3.3-dev.e141cd8c"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings-testnet.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/collaterals/wbtc.toml",
+    "tomls/collaterals/op.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-base-goerli-competition/pools/spots.toml",
+    "tomls/omnibus-base-goerli-competition/pools/perps.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
+    "tomls/permit-all-transferCrossChain.toml",
+    "tomls/markets/spot/eth.toml",
+    "tomls/markets/spot/btc.toml",
+    "tomls/markets/spot/snx.toml",
+    "tomls/markets/spot/link.toml",
+    "tomls/markets/spot/op.toml",
+    "tomls/markets/perps/eth.toml",
+    "tomls/markets/perps/btc.toml",
+    "tomls/markets/perps/snx.toml",
+    "tomls/markets/perps/link.toml",
+    "tomls/markets/perps/op.toml",
+    # overrides for the oracles
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/oracles/pyth-link.toml",
+    "tomls/oracles/pyth-op.toml",
+    # overrides for perp markets
+    "tomls/omnibus-base-goerli-competition/perps/global.toml",
+    "tomls/omnibus-base-goerli-competition/perps/btc.toml",
+    "tomls/omnibus-base-goerli-competition/perps/eth.toml",
+    "tomls/omnibus-base-goerli-competition/perps/op.toml",
+    "tomls/omnibus-base-goerli-competition/perps/link.toml",
+    "tomls/omnibus-base-goerli-competition/perps/snx.toml",
+    # overrides for synth markets
+    "tomls/omnibus-base-goerli-competition/synths/btc.toml",
+    "tomls/omnibus-base-goerli-competition/synths/eth.toml",
+    "tomls/omnibus-base-goerli-competition/synths/op.toml",
+    "tomls/omnibus-base-goerli-competition/synths/link.toml",
+    "tomls/omnibus-base-goerli-competition/synths/snx.toml",
+]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.3-dev.e141cd8c"
+
+[setting.target_preset]
+defaultValue = "kwenta-test-3"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.3-dev.e141cd8c"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.3-dev.e141cd8c"
+
+[setting.salt]
+defaultValue = "kwenta-test-3"
+
+[setting.spotMarketExternalNodeAddress]
+defaultValue = "0xF6D1e72c3608344F831606078e3d7eb8c51aa99A"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0x5955C1478F0dAD753C7E2B4dD1b4bC530C64749f"
+
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-testnet/api/get_vaa_ccip?data={data}"
+
+[setting.owner]
+defaultValue = "0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991"
+
+[setting.weth_address]
+defaultValue = "0x4200000000000000000000000000000000000006"
+
+[setting.wbtc_address]
+defaultValue = "0xe7798f023fc62146e8aa1b36da45fb70855a77ea"
+
+[setting.op_address]
+defaultValue = "0x4200000000000000000000000000000000000042"
+
+[setting.weth_aggregator_address]
+defaultValue = "0xcD2A119bD1F7DF95d706DE6F2057fDD45A0503E2"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.btc_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.snx_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.link_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.op_aggregator_address]
+defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "2000000000000000000"
+
+[setting.account_timeout_withdraw]
+defaultValue = "60"
+
+[setting.deployer]
+defaultValue = "0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.spots_pool_id]
+defaultValue = "10"
+
+[setting.perps_pool_id]
+defaultValue = "11"
+
+[setting.pool_owner]
+defaultValue = "0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991"
+
+[setting.ccip_router]
+defaultValue = "0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991"
+
+[setting.ccip_token_pool]
+defaultValue = "0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_op_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_snx_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends = [
+    "invoke.createScPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "invoke.createSnxSynth",
+    "invoke.createLinkSynth",
+    "invoke.createOpSynth",
+    "provision.perpsFactory"
+]
+
+[invoke.setPerpsPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.perps_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.perps_pool_id %>",
+    [
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+    ],
+]
+depends = ["invoke.createPerpsPool", "provision.perpsFactory"]
+
+[invoke.setSpotsPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spots_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.spots_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_op_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_snx_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+depends = [
+    "invoke.createSpotsPool",
+    "invoke.createEthSynth",
+    "invoke.createBtcSynth",
+    "invoke.createSnxSynth",
+    "invoke.createLinkSynth",
+    "invoke.createOpSynth"
+]
