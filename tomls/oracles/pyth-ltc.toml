@@ -1,14 +1,15 @@
 include = ["../core.toml"]
 
-[setting.ltc_aggregator_address]
+[import.pyth]
+source = "pyth:1.4.0"
 
 [invoke.registerLtcOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    # 2 = external aggregator type (later this will be PYTH)
-    2,
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.ltc_aggregator_address, settings.pythLtcFeedId, 30]) %>",
+    # 5 = pyth aggregator type 
+    5,
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [imports.pyth.contracts.Pyth.address, settings.pythLtcFeedId, false]) %>",
     []
 ]
 extra.ltc_oracle_id.event = "NodeRegistered"

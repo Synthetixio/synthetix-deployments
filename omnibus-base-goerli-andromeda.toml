@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.e141cd8c+1"
+version = "3.3.3-dev.e141cd8c.cfg1"
 description = "Andromeda"
 include = [
     "tomls/settings-testnet.toml",

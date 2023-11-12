@@ -1,14 +1,15 @@
 include = ["../core.toml"]
 
-[setting.eth_aggregator_address]
+[import.pyth]
+source = "pyth:1.4.0"
 
 [invoke.registerEthOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    # 2 = external aggregator type (later this will be PYTH)
-    2,
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.eth_aggregator_address, settings.pythEthFeedId, 30]) %>",
+    # 5 = pyth aggregator type 
+    5,
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [imports.pyth.contracts.Pyth.address, settings.pythEthFeedId, false]) %>",
     []
 ]
 extra.eth_oracle_id.event = "NodeRegistered"
