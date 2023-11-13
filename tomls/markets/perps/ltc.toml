@@ -1,0 +1,126 @@
+include = [
+    "../perps-factory.toml",
+    # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+    # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+    "../../oracles/pyth-ltc.toml",
+    "../common/bigcap-settings.toml",
+]
+
+[setting.ltcPerpsMarketId]
+
+[setting.perpsLtcSkewScale]
+
+[setting.perpsLtcMaxFundingVelocity]
+
+[setting.perpsLtcMakerFeeRatio]
+
+[setting.perpsLtcTakerFeeRatio]
+
+[setting.perpsLtcMaxMarketSize]
+
+[setting.perpsLtcInitialMarginRatio]
+
+[setting.perpsLtcMaintenanceMarginFraction]
+
+[setting.perpsLtcLiquidationRewardRatioD18]
+
+[setting.perpsLtcMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsLtcMaxSecondsInLiquidationWindow]
+
+[setting.perpsLtcMinimumPositionMargin]
+
+[setting.perpsLtcLockedOiRatio]
+
+[setting.pythLtcFeedId]
+
+# strategy type for Perps markets is 0, for spot markets is 1
+[setting.strategyType]
+defaultValue = "0"
+
+[invoke.createLtcPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.ltcPerpsMarketId %>", "Litecoin", "LTC"]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsPriceLtc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = ["<%= settings.ltcPerpsMarketId %>", "<%= extras.ltc_oracle_id %>"]
+depends = ["invoke.createLtcPerpsMarket", "invoke.registerLtcOracleNode"]
+
+[invoke.setPerpsLtcSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+    "<%= settings.ltcPerpsMarketId %>",
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+]
+depends = ["invoke.createLtcPerpsMarket"]
+
+[invoke.setPerpsLtcFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.ltcPerpsMarketId %>",
+    "<%= parseEther(settings.perpsLtcSkewScale) %>",
+    "<%= parseEther(settings.perpsLtcMaxFundingVelocity) %>"
+]
+depends = ["invoke.createLtcPerpsMarket"]
+
+[invoke.setPerpsLtcOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.ltcPerpsMarketId %>",
+    "<%= parseEther(settings.perpsLtcMakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsLtcTakerFeeRatio) %>"
+]
+depends = ["invoke.createLtcPerpsMarket"]
+
+[invoke.setPerpsLtcMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.ltcPerpsMarketId %>", "<%= parseEther(settings.perpsLtcMaxMarketSize) %>"]
+depends = ["invoke.createLtcPerpsMarket"]
+
+[invoke.setPerpsLtcMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.ltcPerpsMarketId %>",
+    "<%= parseEther(settings.perpsLtcMaxLiquidationLimitAccumulationMultiplier) %>",
+    "<%= settings.perpsLtcMaxSecondsInLiquidationWindow %>",
+    "<%= parseEther(settings.perpsLtcMaxLiquidationPd) %>",
+    "<%= settings.perpsLtcEndorsedLiquidator %>"
+]
+depends = ["invoke.createLtcPerpsMarket"]
+
+[invoke.setPerpsLtcLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.ltcPerpsMarketId %>",
+    "<%= parseEther(settings.perpsLtcInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsLtcMinimumInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsLtcMaintenanceMarginScalar) %>",
+    "<%= parseEther(settings.perpsLtcLiquidationRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsLtcMinimumPositionMargin) %>"
+]
+depends = ["invoke.createLtcPerpsMarket"]
+
+[invoke.setPerpsLtcLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.ltcPerpsMarketId %>", "<%= parseEther(settings.perpsLtcLockedOiRatio) %>"]
+depends = ["invoke.createLtcPerpsMarket"]

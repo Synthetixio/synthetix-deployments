@@ -1,0 +1,16 @@
+include = ["../core.toml"]
+
+[setting.xrp_aggregator_address]
+
+[invoke.registerXrpOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 2 = external aggregator type (later this will be PYTH)
+    2,
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [settings.xrp_aggregator_address, settings.pythXrpFeedId, 30]) %>",
+    []
+]
+extra.xrp_oracle_id.event = "NodeRegistered"
+extra.xrp_oracle_id.arg = 0
+depends = ["provision.system"]

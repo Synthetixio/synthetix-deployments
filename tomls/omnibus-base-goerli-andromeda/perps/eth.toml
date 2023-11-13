@@ -1,0 +1,55 @@
+# Pyth settlement strategy config
+[setting.pythEthFeedId]
+defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+
+# Perps Configuration
+[setting.ethPerpsMarketId]
+defaultValue = "100"
+
+[setting.perpsEthSkewScale]
+defaultValue = "1000000"
+
+[setting.perpsEthMaxFundingVelocity]
+defaultValue = "9"
+
+[setting.perpsEthMakerFeeRatio]
+defaultValue = "0.0002"
+
+[setting.perpsEthTakerFeeRatio]
+defaultValue = "0.0005"
+
+[setting.perpsEthMaxMarketSize]
+defaultValue = "525" # approx $1m
+
+[setting.perpsEthInitialMarginRatio]
+defaultValue = "1"
+
+[setting.perpsEthMinimumInitialMarginRatio]
+defaultValue = "0.02"
+
+[setting.perpsEthMaintenanceMarginScalar]
+defaultValue = "0.5"
+
+[setting.perpsEthLiquidationRewardRatioD18]
+defaultValue = "0.01"
+
+[setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "1"
+
+[setting.perpsEthMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsEthMinimumPositionMargin]
+defaultValue = "0"
+
+[setting.perpsEthLockedOiRatio]
+defaultValue = "0.5"
+
+[setting.perpsEthSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.perpsEthMaxLiquidationPd]
+defaultValue = "0.0016"
+
+[setting.perpsEthEndorsedLiquidator]
+defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"

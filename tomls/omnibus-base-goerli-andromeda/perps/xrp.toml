@@ -1,0 +1,54 @@
+[setting.pythXrpFeedId]
+defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
+
+# Perps Configuration
+[setting.xrpPerpsMarketId]
+defaultValue = "400"
+
+[setting.perpsXrpSkewScale]
+defaultValue = "1000000"
+
+[setting.perpsXrpMaxFundingVelocity]
+defaultValue = "9"
+
+[setting.perpsXrpMakerFeeRatio]
+defaultValue = "0.0007"
+
+[setting.perpsXrpTakerFeeRatio]
+defaultValue = "0.0003"
+
+[setting.perpsXrpMaxMarketSize]
+defaultValue = "1500000" #approx $1m
+
+[setting.perpsXrpInitialMarginRatio]
+defaultValue = "1"
+
+[setting.perpsXrpMaintenanceMarginScalar]
+defaultValue = "0.5"
+
+[setting.perpsXrpMinimumInitialMarginRatio]
+defaultValue = "0.02"
+
+[setting.perpsXrpLiquidationRewardRatioD18]
+defaultValue = "0.01"
+
+[setting.perpsXrpMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "0.5"
+
+[setting.perpsXrpMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsXrpMinimumPositionMargin]
+defaultValue = "0"
+
+[setting.perpsXrpLockedOiRatio]
+defaultValue = "0.5"
+
+[setting.perpsXrpSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.perpsXrpMaxLiquidationPd]
+defaultValue = "0.0016"
+
+[setting.perpsXrpEndorsedLiquidator]
+defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
