@@ -15,13 +15,13 @@
   "devDependencies": {
     "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
-    "@usecannon/builder": "^2.9.4",
-    "@usecannon/cli": "^2.9.5",
+    "@usecannon/builder": "2.9.10",
+    "@usecannon/cli": "2.9.11-alpha.0",
     "debug": "^4.3.4",
     "ethers": "^5.7.2",
-    "hardhat": "^2.18.3",
+    "hardhat": "^2.19.0",
     "mocha": "^10.2.0",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "prettier-plugin-toml": "^1.0.0",
     "solc": "^0.8.22"
   },

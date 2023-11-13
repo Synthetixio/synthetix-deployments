@@ -112,14 +112,23 @@ jobs:
             --chain-id ${{ matrix.chainId }} \
             --dry-run | tee deployment.log
 
-          grep 'Successfully built package synthetix-omnibus' deployment.log
+          echo "grep '💥' deployment.log" 
+          grep '💥' deployment.log
 
-          if [ $(grep -c 'exec: contract.InitialCoreProxy' deployment.log) -gt 0 ]; then
-            echo "Proxy InitialCoreProxy was modified"
+          echo "grep -c 'Executing [contract.InitialCoreProxy]' deployment.log" 
+          if [ $(grep -c 'Executing [contract.InitialCoreProxy]' deployment.log) -gt 0 ]; then
+            echo "Proxy contract.InitialCoreProxy was modified"
             exit 1
           fi
 
-          if [ $(grep -c 'exec: contract.InitialProxy' deployment.log) -gt 0 ]; then
-            echo "Proxy InitialProxy was modified"
+          echo "grep -c 'Executing [contract.InitialProxy]' deployment.log" 
+          if [ $(grep -c 'Executing [contract.InitialProxy]' deployment.log) -gt 0 ]; then
+            echo "Proxy contract.InitialProxy was modified"
+            exit 1
+          fi
+
+          echo "grep -c 'Executing [contract.InitialSpotMarketProxy]' deployment.log" 
+          if [ $(grep -c 'Executing [contract.InitialSpotMarketProxy]' deployment.log) -gt 0 ]; then
+            echo "Proxy contract.InitialSpotMarketProxy was modified"
             exit 1
           fi
