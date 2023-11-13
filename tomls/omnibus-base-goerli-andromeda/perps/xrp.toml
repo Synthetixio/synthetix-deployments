@@ -1,5 +1,5 @@
 [setting.pythXrpFeedId]
-defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
+defaultValue = "0xbfaf7739cb6fe3e1c57a0ac08e1d931e9e6062d476fa57804e165ab572b5b621"
 
 # Perps Configuration
 [setting.xrpPerpsMarketId]
