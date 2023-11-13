@@ -34,16 +34,19 @@ jobs:
             preset: "main"
             chainId: 1
             providerUrl: "https://mainnet.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           - toml: "omnibus-optimism-mainnet.toml"
             preset: "main"
             chainId: 10
             providerUrl: "https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           - toml: "omnibus-goerli.toml"
             preset: "main"
             chainId: 5
             providerUrl: "https://goerli.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           #- toml: "omnibus-optimism-goerli.toml"
           #  preset: "main"
@@ -59,6 +62,7 @@ jobs:
             preset: "andromeda"
             chainId: 84531
             providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:3.3.3-dev.e141cd8c"
 
           #- toml: "omnibus-base-mainnet.toml"
           #  preset: "main"
@@ -69,21 +73,25 @@ jobs:
             preset: "main"
             chainId: 84531
             providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           - toml: "omnibus-base-goerli-competition.toml"
             preset: "competition"
             chainId: 84531
             providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           - toml: "omnibus-sepolia.toml"
             preset: "main"
             chainId: 11155111
             providerUrl: "https://sepolia.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           - toml: "omnibus-polygon-mumbai.toml"
             preset: "main"
             chainId: 80001
             providerUrl: "https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY"
+            upgradeFrom: "synthetix-omnibus:latest"
 
           # - toml: "omnibus-arbitrum-goerli.toml"
           #   preset: "main"
@@ -106,7 +114,7 @@ jobs:
       - run: |
           yarn cannon build \
             ${{ matrix.toml }} \
-            --upgrade-from synthetix-omnibus:latest \
+            --upgrade-from ${{ matrix.upgradeFrom }} \
             --preset ${{ matrix.preset }} \
             --provider-url ${{ matrix.providerUrl }} \
             --chain-id ${{ matrix.chainId }} \
@@ -115,20 +123,11 @@ jobs:
           echo "grep '💥' deployment.log" 
           grep '💥' deployment.log
 
-          echo "grep -c 'Executing [contract.InitialCoreProxy]' deployment.log" 
-          if [ $(grep -c 'Executing [contract.InitialCoreProxy]' deployment.log) -gt 0 ]; then
-            echo "Proxy contract.InitialCoreProxy was modified"
-            exit 1
-          fi
-
-          echo "grep -c 'Executing [contract.InitialProxy]' deployment.log" 
-          if [ $(grep -c 'Executing [contract.InitialProxy]' deployment.log) -gt 0 ]; then
-            echo "Proxy contract.InitialProxy was modified"
-            exit 1
-          fi
-
-          echo "grep -c 'Executing [contract.InitialSpotMarketProxy]' deployment.log" 
-          if [ $(grep -c 'Executing [contract.InitialSpotMarketProxy]' deployment.log) -gt 0 ]; then
-            echo "Proxy contract.InitialSpotMarketProxy was modified"
-            exit 1
-          fi
+          export PROXIES="contract.InitialCoreProxy contract.InitialProxy contract.InitialSpotMarketProxy" 
+          for PROXY in $PROXIES; do
+            echo "grep -c "Executing [$PROXY]" deployment.log" 
+            if [ $(grep -c "Executing [$PROXY]" deployment.log) -gt 0 ]; then
+              echo "Proxy $PROXY was modified"
+              exit 1
+            fi
+          done
