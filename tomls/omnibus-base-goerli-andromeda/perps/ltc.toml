@@ -1,5 +1,5 @@
 [setting.pythLtcFeedId]
-defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
+defaultValue = "0x997e0bf451cb36b4aea096e6b5c254d700922211dd933d9d17c467f0d6f34321"
 
 # Perps Configuration
 [setting.ltcPerpsMarketId]
