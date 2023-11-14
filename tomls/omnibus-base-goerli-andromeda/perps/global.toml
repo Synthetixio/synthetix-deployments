@@ -5,6 +5,30 @@ defaultValue = "1"
 [setting.perpsMaxLiquidationReward]
 defaultValue = "500"
 
+[setting.perpsStrictStalenessTolerance]
+defaultValue = "60"
+
+[setting.perpsKeeperCostOracleNodeAddress]
+defaultValue = "0x9E3AD6FD3069A04DE804445DA24D0fF75Ba65EbF"
+
+[setting.perpsKeeperL1CostSettleGasUnits]
+defaultValue = "0"
+
+[setting.perpsKeeperL2CostSettleGasUnits]
+defaultValue = "0"
+
+[setting.perpsKeeperL1CostFlagGasUnits]
+defaultValue = "0"
+
+[setting.perpsKeeperL2CostFlagGasUnits]
+defaultValue = "0"
+
+[setting.perpsKeeperL1CostLiquidateGasUnits]
+defaultValue = "0"
+
+[setting.perpsKeeperL2CostLiquidateGasUnits]
+defaultValue = "0"
+
 # ------------------------------
 [invoke.setPerpsLiquidationRewardLimits]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -32,4 +56,11 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
 args = ["5", "3"]
+depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsMarketKeeperCostNodeId]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateKeeperCostNodeId"
+args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
 depends = ["provision.perpsFactory"]

@@ -18,6 +18,7 @@ include = [
     "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/pyth-ltc.toml",
     "tomls/oracles/pyth-xrp.toml",
+    "tomls/oracles/perps-keeper-cost.toml",
     # overrides for perp markets
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/btc.toml",

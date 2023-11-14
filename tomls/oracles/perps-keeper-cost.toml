@@ -1,0 +1,33 @@
+include = ["../core.toml"]
+
+[setting.perpsKeeperCostOracleNodeAddress]
+
+[invoke.registerPerpsKeeperCostEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 2 = external node
+    2,
+    # 7 parameters: 1 is the external node contract address, 2 to 7 gas units
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [settings.perpsKeeperCostOracleNodeAddress, settings.perpsKeeperL1CostSettleGasUnits, settings.perpsKeeperL2CostSettleGasUnits, settings.perpsKeeperL1CostFlagGasUnits, settings.perpsKeeperL2CostFlagGasUnits, settings.perpsKeeperL1CostLiquidateGasUnits, settings.perpsKeeperL2CostLiquidateGasUnits]) %>",
+    []
+]
+extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
+extra.perps_keeper_cost_eth_oracle_id.arg = 0
+depends = ["provision.system"]
+
+
+[invoke.registerPerpsKeeperCostUsdOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 1 = reducer node
+    1,
+    # 1 parameters: 1 operation = 5 for product
+    "<%= defaultAbiCoder.encode(['uint256'], [5]) %>",
+    # 2 parent: 1 is the eth txn price node id, 2 is the eth oracle node id
+    ["<%= extras.perps_keeper_cost_eth_oracle_id %>", "<%= extras.eth_oracle_id %>"]
+]
+extra.perps_keeper_cost_usd_oracle_id.event = "NodeRegistered"
+extra.perps_keeper_cost_usd_oracle_id.arg = 0
+depends = ["provision.system", "invoke.registerEthOracleNode", "invoke.registerPerpsKeeperCostEthOracleNode"]

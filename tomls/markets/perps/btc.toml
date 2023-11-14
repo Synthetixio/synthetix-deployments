@@ -39,7 +39,7 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = ["<%= settings.btcPerpsMarketId %>", "<%= extras.btc_oracle_id %>"]
+args = ["<%= settings.btcPerpsMarketId %>", "<%= extras.btc_oracle_id %>", "<%= settings.perpsStrictStalenessTolerance %>"]
 depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
 
 [invoke.setPerpsBtcSettlementStrategy]

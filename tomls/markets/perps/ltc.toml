@@ -49,7 +49,7 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = ["<%= settings.ltcPerpsMarketId %>", "<%= extras.ltc_oracle_id %>"]
+args = ["<%= settings.ltcPerpsMarketId %>", "<%= extras.ltc_oracle_id %>", "<%= settings.perpsStrictStalenessTolerance %>"]
 depends = ["invoke.createLtcPerpsMarket", "invoke.registerLtcOracleNode"]
 
 [invoke.setPerpsLtcSettlementStrategy]
