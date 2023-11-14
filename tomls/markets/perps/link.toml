@@ -46,7 +46,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= extras.link_oracle_id %>",
-    "<%= settings.perpsStrictStalenessTolerance %>"
+    "<%= settings.perps_StrictStalenessTolerance %>"
 ]
 depends = ["invoke.createLinkPerpsMarket", "invoke.registerLinkOracleNode"]
 

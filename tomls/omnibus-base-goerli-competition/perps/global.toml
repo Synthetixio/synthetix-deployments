@@ -1,8 +1,8 @@
 # GLOBAL PERPS SETTINGS
-[setting.perpsMinLiquidationReward]
+[setting.perps_MinLiquidationReward]
 defaultValue = "1"
 
-[setting.perpsMaxLiquidationReward]
+[setting.perps_MaxLiquidationReward]
 defaultValue = "500"
 
 # ------------------------------

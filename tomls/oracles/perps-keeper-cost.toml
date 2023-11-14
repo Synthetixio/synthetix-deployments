@@ -1,22 +1,24 @@
 include = ["../core.toml"]
 
-[setting.perpsKeeperCostOracleNodeAddress]
+[provision.perps_gas_oracle_node]
+source = "op-gas-price-oracle"
 
-[invoke.registerPerpsKeeperCostEthOracleNode]
+# sourcePreset = "andromeda"
+[invoke.registerPerps_KeeperCostEthOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     # 2 = external node
     2,
     # 7 parameters: 1 is the external node contract address, 2 to 7 gas units
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [settings.perpsKeeperCostOracleNodeAddress, settings.perpsKeeperL1CostSettleGasUnits, settings.perpsKeeperL2CostSettleGasUnits, settings.perpsKeeperL1CostFlagGasUnits, settings.perpsKeeperL2CostFlagGasUnits, settings.perpsKeeperL1CostLiquidateGasUnits, settings.perpsKeeperL2CostLiquidateGasUnits]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [imports.perps_gas_oracle_node.contracts.OpGasPriceOracle.address, settings.perps_KeeperL1CostSettleGasUnits, settings.perps_KeeperL2CostSettleGasUnits, settings.perps_KeeperL1CostFlagGasUnits, settings.perps_KeeperL2CostFlagGasUnits, settings.perps_KeeperL1CostLiquidateGasUnits, settings.perps_KeeperL2CostLiquidateGasUnits]) %>",
     []
 ]
 extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_eth_oracle_id.arg = 0
 depends = ["provision.system"]
 
-[invoke.registerPerpsKeeperCostUsdOracleNode]
+[invoke.registerPerps_KeeperCostUsdOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -32,5 +34,5 @@ extra.perps_keeper_cost_usd_oracle_id.arg = 0
 depends = [
     "provision.system",
     "invoke.registerEthOracleNode",
-    "invoke.registerPerpsKeeperCostEthOracleNode"
+    "invoke.registerPerps_KeeperCostEthOracleNode"
 ]

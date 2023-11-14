@@ -52,7 +52,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.xrpPerpsMarketId %>",
     "<%= extras.xrp_oracle_id %>",
-    "<%= settings.perpsStrictStalenessTolerance %>"
+    "<%= settings.perps_StrictStalenessTolerance %>"
 ]
 depends = ["invoke.createXrpPerpsMarket", "invoke.registerXrpOracleNode"]
 

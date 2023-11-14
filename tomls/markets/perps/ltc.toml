@@ -52,7 +52,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.ltcPerpsMarketId %>",
     "<%= extras.ltc_oracle_id %>",
-    "<%= settings.perpsStrictStalenessTolerance %>"
+    "<%= settings.perps_StrictStalenessTolerance %>"
 ]
 depends = ["invoke.createLtcPerpsMarket", "invoke.registerLtcOracleNode"]
 

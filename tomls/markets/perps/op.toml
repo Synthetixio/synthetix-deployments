@@ -52,7 +52,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.opPerpsMarketId %>",
     "<%= extras.op_oracle_id %>",
-    "<%= settings.perpsStrictStalenessTolerance %>"
+    "<%= settings.perps_StrictStalenessTolerance %>"
 ]
 depends = ["invoke.createOpPerpsMarket", "invoke.registerOpOracleNode"]
 

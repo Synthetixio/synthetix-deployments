@@ -1,32 +1,41 @@
 # GLOBAL PERPS SETTINGS
-[setting.perpsMinLiquidationReward]
+[setting.perps_MinLiquidationReward]
 defaultValue = "1"
 
-[setting.perpsMaxLiquidationReward]
+[setting.perps_MaxLiquidationReward]
 defaultValue = "500"
 
-[setting.perpsStrictStalenessTolerance]
+[setting.perps_StrictStalenessTolerance]
 defaultValue = "60"
 
-[setting.perpsKeeperCostOracleNodeAddress]
-defaultValue = "0x9E3AD6FD3069A04DE804445DA24D0fF75Ba65EbF"
-
-[setting.perpsKeeperL1CostSettleGasUnits]
+[setting.perps_KeeperL1CostSettleGasUnits]
 defaultValue = "0"
 
-[setting.perpsKeeperL2CostSettleGasUnits]
+[setting.perps_KeeperL2CostSettleGasUnits]
 defaultValue = "0"
 
-[setting.perpsKeeperL1CostFlagGasUnits]
+[setting.perps_KeeperL1CostFlagGasUnits]
 defaultValue = "0"
 
-[setting.perpsKeeperL2CostFlagGasUnits]
+[setting.perps_KeeperL2CostFlagGasUnits]
 defaultValue = "0"
 
-[setting.perpsKeeperL1CostLiquidateGasUnits]
+[setting.perps_KeeperL1CostLiquidateGasUnits]
 defaultValue = "0"
 
-[setting.perpsKeeperL2CostLiquidateGasUnits]
+[setting.perps_KeeperL2CostLiquidateGasUnits]
+defaultValue = "0"
+
+[setting.perps_liquidation_minKeeperRewardUsd]
+defaultValue = "1"
+
+[setting.perps_liquidation_minKeeperProfitRatioD18]
+defaultValue = "0"
+
+[setting.perps_liquidation_maxKeeperRewardUsd]
+defaultValue = "500"
+
+[setting.perps_liquidation_maxKeeperScalingRatioD18]
 defaultValue = "0"
 
 # ------------------------------
@@ -35,10 +44,10 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setKeeperRewardGuards"
 args = [
-    "<%= parseEther('1') %>",
-    "<%= parseEther('0') %>",
-    "<%= parseEther('500') %>",
-    "<%= parseEther('0') %>"
+    "<%= parseEther(settings.perps_liquidation_minKeeperRewardUsd) %>",
+    "<%= parseEther(settings.perps_liquidation_minKeeperProfitRatioD18) %>",
+    "<%= parseEther(settings.perps_liquidation_maxKeeperRewardUsd) %>",
+    "<%= parseEther(settings.perps_liquidation_maxKeeperScalingRatioD18) %>"
 ]
 depends = ["provision.perpsFactory"]
 
