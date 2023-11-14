@@ -9,14 +9,14 @@ defaultValue = "500"
 [invoke.setPerpsLiquidationRewardLimits]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setLiquidationRewardGuards"
-args = ["<%= parseEther('1') %>", "<%= parseEther('500') %>"]
+func = "setKeeperRewardGuards"
+args = ["<%= parseEther('1') %>", "<%= parseEther('0') %>", "<%= parseEther('500') %>", "<%= parseEther('0') %>"]
 depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["0", "<%= MaxUint256 %>"]
 depends = ["provision.perpsFactory"]
 
@@ -51,37 +51,37 @@ args = ["5", "3"]
 depends = ["provision.perpsFactory"]
 
 # set global max cap for allowed collateral on perps super market
-[invoke.setMaxCollateralAmountBtc]
+[invoke.setCollateralConfigurationBtc]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["<%= extras.synth_btc_market_id %>", "<%= settings.perpsBtcSynthMaxCollateralAmount %>"]
 depends = ["invoke.createBtcSynth", "provision.perpsFactory"]
 
-[invoke.setMaxCollateralAmountEth]
+[invoke.setCollateralConfigurationEth]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["<%= extras.synth_eth_market_id %>", "<%= settings.perpsEthSynthMaxCollateralAmount %>"]
 depends = ["invoke.createEthSynth", "provision.perpsFactory"]
 
-[invoke.setMaxCollateralAmountLink]
+[invoke.setCollateralConfigurationLink]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["<%= extras.synth_link_market_id %>", "<%= settings.perpsLinkSynthMaxCollateralAmount %>"]
 depends = ["invoke.createLinkSynth", "provision.perpsFactory"]
 
-[invoke.setMaxCollateralAmountOp]
+[invoke.setCollateralConfigurationOp]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["<%= extras.synth_op_market_id %>", "<%= settings.perpsOpSynthMaxCollateralAmount %>"]
 depends = ["invoke.createOpSynth", "provision.perpsFactory"]
 
-[invoke.setMaxCollateralAmountSnx]
+[invoke.setCollateralConfigurationSnx]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["<%= extras.synth_snx_market_id %>", "<%= settings.perpsSnxSynthMaxCollateralAmount %>"]
 depends = ["invoke.createSnxSynth", "provision.perpsFactory"]

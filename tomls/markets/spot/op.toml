@@ -24,7 +24,8 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_op_market_id %>",
     "<%= extras.op_oracle_id %>",
-    "<%= extras.op_oracle_id %>"
+    "<%= extras.op_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>"
 ]
 depends = ["invoke.createOpSynth", "invoke.registerOpOracleNode"]
 

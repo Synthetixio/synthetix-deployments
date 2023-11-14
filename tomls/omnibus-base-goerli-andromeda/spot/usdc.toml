@@ -1,2 +1,5 @@
 [setting.synthUsdcMaxMarketCollateral]
 defaultValue = "5000000"
+
+[setting.spotStrictStalenessTolerance]
+defaultValue = "60"
