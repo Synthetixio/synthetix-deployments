@@ -16,7 +16,6 @@ extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_eth_oracle_id.arg = 0
 depends = ["provision.system"]
 
-
 [invoke.registerPerpsKeeperCostUsdOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
@@ -30,4 +29,8 @@ args = [
 ]
 extra.perps_keeper_cost_usd_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_usd_oracle_id.arg = 0
-depends = ["provision.system", "invoke.registerEthOracleNode", "invoke.registerPerpsKeeperCostEthOracleNode"]
+depends = [
+    "provision.system",
+    "invoke.registerEthOracleNode",
+    "invoke.registerPerpsKeeperCostEthOracleNode"
+]

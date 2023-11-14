@@ -34,7 +34,12 @@ defaultValue = "0"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setKeeperRewardGuards"
-args = ["<%= parseEther('1') %>", "<%= parseEther('0') %>", "<%= parseEther('500') %>", "<%= parseEther('0') %>"]
+args = [
+    "<%= parseEther('1') %>",
+    "<%= parseEther('0') %>",
+    "<%= parseEther('500') %>",
+    "<%= parseEther('0') %>"
+]
 depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]

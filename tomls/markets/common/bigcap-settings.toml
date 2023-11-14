@@ -11,4 +11,3 @@ defaultValue = "600"
 
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
-
