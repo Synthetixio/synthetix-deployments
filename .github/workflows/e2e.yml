@@ -19,6 +19,7 @@ jobs:
           - "omnibus-optimism-mainnet.toml"
           - "omnibus-goerli.toml"
           - "omnibus-optimism-goerli.toml"
+          - "omnibus-base-goerli-andromeda.toml"
 
         include:
           - toml: "omnibus-mainnet.toml"
@@ -36,6 +37,10 @@ jobs:
           - toml: "omnibus-optimism-goerli.toml"
             chainId: 420
             providerUrl: "https://optimism-goerli.infura.io/v3/$INFURA_API_KEY"
+
+          - toml: "omnibus-base-goerli-andromeda.toml"
+            chainId: 84531
+            providerUrl: "https://base-goerli.infura.io/v3/$INFURA_API_KEY"
 
     steps:
       - name: Install Foundry (Cannon)
@@ -60,4 +65,4 @@ jobs:
           wget -q -O - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data='{"method":"eth_chainId","params":[],"id":1,"jsonrpc":"2.0"}' --header='Content-Type:application/json' http://127.0.0.1:8545
 
           echo "Execute tests"
-          yarn test
+          TEST_TOML="${{ matrix.toml }}" yarn test e2e/tests/${{ matrix.toml }}/*.e2e.js

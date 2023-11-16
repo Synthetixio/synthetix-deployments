@@ -11,15 +11,15 @@ const CURRENT_DIR = __dirname;
 const ROOT = path.resolve(`${CURRENT_DIR}/..`);
 
 async function fetchDeployment({ chainId, deploymentFile, registry, loader }) {
-  await fs.mkdir(`${CURRENT_DIR}/deployments/${chainId}`, { recursive: true });
-
   const config = await fs.readFile(deploymentFile, 'utf8');
   const { name, version, setting } = toml.parse(config);
   const preset = setting?.target_preset?.defaultValue ?? 'main';
 
+  await fs.mkdir(`${CURRENT_DIR}/deployments/${chainId}-${preset}`, { recursive: true });
+
   const snxAddress = setting?.snx_address?.defaultValue ?? ethers.constants.AddressZero;
   await fs.writeFile(
-    `${CURRENT_DIR}/deployments/${chainId}/snx.json`,
+    `${CURRENT_DIR}/deployments/${chainId}-${preset}/snx.json`,
     JSON.stringify({ address: snxAddress }, null, 2)
   );
 
@@ -34,7 +34,7 @@ async function fetchDeployment({ chainId, deploymentFile, registry, loader }) {
     deploymentFile: path.relative(ROOT, deploymentFile),
   };
   await fs.writeFile(
-    `${CURRENT_DIR}/deployments/${chainId}/meta.json`,
+    `${CURRENT_DIR}/deployments/${chainId}-${preset}/meta.json`,
     JSON.stringify(meta, null, 2)
   );
 
@@ -45,14 +45,42 @@ async function fetchDeployment({ chainId, deploymentFile, registry, loader }) {
   // TODO: extract other contracts as necessary
   // See https://github.com/Synthetixio/synthetix-v3/blob/main/utils/docgen/abis.js for details
 
-  const address = system.contracts.CoreProxy.address;
-  const abi = new ethers.utils.Interface(system.contracts.CoreProxy.abi).format(
-    ethers.utils.FormatTypes.full
-  );
   await fs.writeFile(
-    `${CURRENT_DIR}/deployments/${chainId}/CoreProxy.json`,
-    JSON.stringify({ address, abi }, null, 2)
+    `${CURRENT_DIR}/deployments/${chainId}-${preset}/CoreProxy.json`,
+    JSON.stringify(
+      {
+        address: system.contracts.CoreProxy.address,
+        abi: new ethers.utils.Interface(system.contracts.CoreProxy.abi).format(
+          ethers.utils.FormatTypes.full
+        ),
+      },
+      null,
+      2
+    )
   );
+
+  async function mintableToken(provisionStep) {
+    const fakeCollateral =
+      deployments?.state?.[`provision.${provisionStep}`]?.artifacts?.imports?.[provisionStep];
+    if (fakeCollateral) {
+      const [, ticker] = fakeCollateral.contracts.MintableToken.constructorArgs;
+      await fs.writeFile(
+        `${CURRENT_DIR}/deployments/${chainId}-${preset}/FakeCollateral${ticker}.json`,
+        JSON.stringify(
+          {
+            address: fakeCollateral.contracts.MintableToken.address,
+            abi: new ethers.utils.Interface(fakeCollateral.contracts.MintableToken.abi).format(
+              ethers.utils.FormatTypes.full
+            ),
+          },
+          null,
+          2
+        )
+      );
+    }
+  }
+  await mintableToken('usdc_mock_collateral');
+  await mintableToken('mintableToken');
 }
 
 async function run() {
@@ -104,6 +132,12 @@ async function run() {
       loader,
       chainId: 84531,
       deploymentFile: `${ROOT}/omnibus-base-goerli-competition.toml`,
+    }),
+    fetchDeployment({
+      registry,
+      loader,
+      chainId: 84531,
+      deploymentFile: `${ROOT}/omnibus-base-goerli-andromeda.toml`,
     }),
     fetchDeployment({
       registry,

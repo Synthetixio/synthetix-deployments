@@ -18,7 +18,7 @@ const {
   withdrawCollateral,
 } = require('../tasks');
 
-describe('Staking', function () {
+exports.run = function () {
   let address;
   let privateKey;
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -163,4 +163,4 @@ describe('Staking', function () {
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'SNX' }), 300);
   });
-});
+};

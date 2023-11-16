@@ -26,9 +26,6 @@
     "solc": "^0.8.22"
   },
   "mocha": {
-    "spec": [
-      "e2e/tests/**/*.e2e.js"
-    ],
     "timeout": "2m",
     "recursive": true,
     "bail": true,
