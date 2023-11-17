@@ -148,6 +148,11 @@ jobs:
               --write-script-format json | tee ./e2e/cannon-build.log
 
       - run: grep '💥' ./e2e/cannon-build.log
+      - run:
+          name: "Halt if no changes detected"
+          command: |
+            [ -s ./e2e/upgrade.json ] || circleci-agent step halt
+
       - run: yarn prettier --write ./e2e/upgrade.json
       - store_artifacts:
           path: "./e2e/upgrade.json"
