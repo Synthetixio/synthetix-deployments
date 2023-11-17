@@ -146,10 +146,24 @@ jobs:
               --provider-url << parameters.provider-url >> \
               --write-script ./e2e/upgrade.json \
               --write-script-format json | tee ./e2e/cannon-build.log
-            yarn prettier --write ./e2e/upgrade.json
 
+      - run: grep '💥' ./e2e/cannon-build.log
+      - run: yarn prettier --write ./e2e/upgrade.json
       - store_artifacts:
           path: "./e2e/upgrade.json"
+
+      - run:
+          name: "Check fort Proxies redeployment"
+          environment:
+            - PROXIES: "contract.InitialCoreProxy contract.InitialProxy contract.InitialSpotMarketProxy"
+          command: |
+            for PROXY in $PROXIES; do
+              echo "grep -c "Executing [$PROXY]" ./e2e/cannon-build.log" 
+              if [ $(grep -c "Executing [$PROXY]" ./e2e/cannon-build.log) -gt 0 ]; then
+                echo "Proxy $PROXY was modified"
+                exit 1
+              fi
+            done
 
       - run:
           name: "Generate deployments"
