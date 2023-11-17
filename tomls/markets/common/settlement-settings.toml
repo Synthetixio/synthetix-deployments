@@ -3,7 +3,7 @@
 [setting.pythFeedUrl]
 
 [setting.settlementReward]
-defaultValue = "0"
+defaultValue = "0.1"
 
 [setting.settlementMinimumUsdExchangeAmount]
 defaultValue = "0.000001"
