@@ -116,11 +116,11 @@ jobs:
       - install-anvil
       - run-anvil:
           chain: base-goerli
-      - install-ipfs
-      - run-ipfs
+      #- install-ipfs
+      #- run-ipfs
       - yarn-install
       - wait-for-anvil
-      - wait-for-ipfs
+      #- wait-for-ipfs
 
       - run:
           name: "Generate upgrade transactions"
@@ -133,7 +133,7 @@ jobs:
               --chain-id 84531 \
               --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY \
               --write-script ./e2e/upgrade--base-goerli-andromeda.json \
-              --write-script-format json
+              --write-script-format json | tee ./e2e/cannon-build.log
             yarn prettier --write ./e2e/upgrade--base-goerli-andromeda.json
 
       - store_artifacts:
@@ -141,7 +141,7 @@ jobs:
 
       - run:
           name: "Generate deployments"
-          command: node e2e/fetch-local-deployment.js 84531 omnibus-base-goerli-andromeda.toml
+          command: node e2e/fetch-local-deployment.js ./e2e/cannon-build.log
 
       - store_artifacts:
           path: "./e2e/deployments"
