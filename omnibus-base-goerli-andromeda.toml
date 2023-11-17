@@ -65,7 +65,7 @@ defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 defaultValue = "0x9172995177A9A10FE1b7Df76E2A3266c0cFc71c7"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "1250000000000000000" # 125% min market collateralization
+defaultValue = "<%= parseEther('1.251111111') %>" # 125% min market collateralization
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400" # 1 day

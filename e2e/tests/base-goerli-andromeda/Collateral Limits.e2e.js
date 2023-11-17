@@ -1,11 +1,9 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
-const {
-  getFakeCollateralTKNBalance,
-  getEthBalance,
-  setEthBalance,
-  setFakeCollateralTKNBalance,
-} = require('../../tasks');
+const { getFakeCollateralTKNBalance } = require('../../tasks/getFakeCollateralTKNBalance');
+const { getEthBalance } = require('../../tasks/getEthBalance');
+const { setEthBalance } = require('../../tasks/setEthBalance');
+const { setFakeCollateralTKNBalance } = require('../../tasks/setFakeCollateralTKNBalance');
 
 describe('base-goerli-andromeda: Collateral Limits', function () {
   let address;

@@ -122,7 +122,39 @@ jobs:
       - wait-for-anvil
       - wait-for-ipfs
 
-      - run: echo "OK"
+      - run:
+          name: "Generate upgrade transactions"
+          command: |
+            yarn cannon build \
+              omnibus-base-goerli-andromeda.toml \
+              --dry-run \
+              --preset andromeda \
+              --upgrade-from synthetix-omnibus:latest \
+              --chain-id 84531 \
+              --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY \
+              --write-script ./e2e/upgrade--base-goerli-andromeda.json \
+              --write-script-format json
+            yarn prettier --write ./e2e/upgrade--base-goerli-andromeda.json
+
+      - store_artifacts:
+          path: "./e2e/upgrade--base-goerli-andromeda.json"
+
+      - run:
+          name: "Generate deployments"
+          command: node e2e/fetch-local-deployment.js 84531 omnibus-base-goerli-andromeda.toml
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - run:
+          name: "Upgrade on local fork"
+          command: node e2e/deploy.js ./e2e/upgrade--base-goerli-andromeda.json
+
+      - run:
+          name: "Run tests"
+          environment:
+            - DEBUG: "tasks:*"
+          command: yarn mocha e2e/tests/base-goerli-andromeda/*.e2e.js
 
 workflows:
   version: 2.1
