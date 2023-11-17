@@ -40,7 +40,7 @@ commands:
 
   run-anvil:
     parameters:
-      chain:
+      provider-url:
         type: string
       port:
         type: integer
@@ -48,7 +48,10 @@ commands:
     steps:
       - run:
           name: Run anvil on 127.0.0.1:<< parameters.port >>
-          command: anvil --port << parameters.port >> --fork-url https://<< parameters.chain >>.infura.io/v3/$INFURA_API_KEY
+          command: |
+            anvil \
+              --port << parameters.port >> \
+              --fork-url << parameters.provider-url >>
           background: true
 
   wait-for-anvil:
@@ -128,7 +131,7 @@ jobs:
       - checkout
       - install-anvil
       - run-anvil:
-          chain: base-goerli
+          provider-url: << parameters.provider-url >>
       #- install-ipfs
       #- run-ipfs
       - yarn-install
