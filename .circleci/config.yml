@@ -1,0 +1,132 @@
+version: 2.1
+
+parameters:
+  node-version:
+    type: string
+    default: "18.18.0"
+
+commands:
+  yarn-install:
+    steps:
+      - run: yarn install --immutable
+
+  install-anvil:
+    steps:
+      - restore_cache:
+          keys:
+            - foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
+
+      - run:
+          name: "Install Foundry"
+          working_directory: ~/
+          environment:
+            SHELL: /bin/bash
+          command: |-
+            export PATH="$PATH:$HOME/.foundry/bin"
+            echo 'export PATH=$PATH:$HOME/.foundry/bin' >> $BASH_ENV
+
+            if command -v anvil; then
+              echo "Anvil already installed"
+              anvil --version
+            else
+              curl -L https://foundry.paradigm.xyz | bash
+              foundryup
+            fi
+
+      - save_cache:
+          key: foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
+          paths:
+            - "~/.foundry"
+
+  run-anvil:
+    parameters:
+      chain:
+        type: string
+      port:
+        type: integer
+        default: 8545
+    steps:
+      - run:
+          name: Run anvil on 127.0.0.1:<< parameters.port >>
+          command: anvil --port << parameters.port >> --fork-url https://<< parameters.chain >>.infura.io/v3/$INFURA_API_KEY
+          background: true
+
+  wait-for-anvil:
+    parameters:
+      port:
+        type: integer
+        default: 8545
+    steps:
+      - run:
+          name: Wait for anvil ready on 127.0.0.1:<< parameters.port >>
+          command: wget -q -O - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data='{"method":"eth_chainId","params":[],"id":1,"jsonrpc":"2.0"}' --header='Content-Type:application/json' http://127.0.0.1:<< parameters.port >>
+
+  install-ipfs:
+    steps:
+      - restore_cache:
+          keys:
+            - ipfs-{{ .Environment.IPFS_CACHE_VERSION }}
+
+      - run:
+          name: "Install IPFS"
+          working_directory: ~/
+          command: |
+            export PATH="$PATH:$HOME/go-ipfs"
+            echo 'export PATH=$PATH:$HOME/go-ipfs' >> $BASH_ENV
+
+            if command -v ipfs; then
+              echo "IPFS already installed"
+              ipfs version
+              ipfs id
+            else
+              LATEST_VERSION=$(curl -sSL https://dist.ipfs.tech/go-ipfs/versions | tail -n 1)
+              LATEST_VERSION_NUMBER=${LATEST_VERSION#*v}
+              DOWNLOAD_URL="https://dist.ipfs.tech/go-ipfs/${LATEST_VERSION}/go-ipfs_${LATEST_VERSION}_linux-amd64.tar.gz"
+              echo "DOWNLOAD_URL=$DOWNLOAD_URL"
+              curl -sSL -o ipfs.tar.gz $DOWNLOAD_URL
+              tar -xzf ipfs.tar.gz
+              rm -rf ~/.ipfs
+              ipfs init
+            fi
+
+      - save_cache:
+          key: ipfs-{{ .Environment.IPFS_CACHE_VERSION }}
+          paths:
+            - "~/go-ipfs"
+            - "~/.ipfs"
+
+  run-ipfs:
+    steps:
+      - run:
+          command: ipfs daemon
+          background: true
+
+  wait-for-ipfs:
+    steps:
+      - run:
+          name: "Wait for IPFS daemon to start"
+          command: wget --output-document - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
+
+jobs:
+  base-goerli-andromeda:
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - install-anvil
+      - run-anvil:
+          chain: base-goerli
+      - install-ipfs
+      - run-ipfs
+      - yarn-install
+      - wait-for-anvil
+      - wait-for-ipfs
+
+      - run: echo "OK"
+
+workflows:
+  version: 2.1
+
+  tests:
+    jobs:
+      - base-goerli-andromeda
