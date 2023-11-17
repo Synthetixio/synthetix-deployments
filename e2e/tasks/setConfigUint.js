@@ -1,13 +1,12 @@
 const { ethers } = require('ethers');
-const { importCoreProxy } = require('./importCoreProxy');
 const { setEthBalance } = require('./setEthBalance');
 const { getConfigUint } = require('./getConfigUint');
 const { hexlify, hexZeroPad } = require('@ethersproject/bytes');
+const CoreProxy = require('../deployments/CoreProxy.json');
 
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
 async function setConfigUint({ key, value }) {
-  const CoreProxy = await importCoreProxy();
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
   const owner = await coreProxy.owner();

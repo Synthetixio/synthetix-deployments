@@ -1,5 +1,5 @@
 const { ethers } = require('ethers');
-const { importCoreProxy } = require('./importCoreProxy');
+const CoreProxy = require('../deployments/CoreProxy.json');
 
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
@@ -10,7 +10,6 @@ const erc20Abi = [
 ];
 
 async function wrapEth({ privateKey, amount }) {
-  const CoreProxy = await importCoreProxy();
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = new ethers.Wallet(privateKey, provider);
 

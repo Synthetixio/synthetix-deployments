@@ -1,12 +1,11 @@
 const { ethers } = require('ethers');
-const crypto = require('crypto');
-const { importCoreProxy } = require('./importCoreProxy');
+// const crypto = require('crypto');
 const { getAccountOwner } = require('./getAccountOwner');
+const CoreProxy = require('../deployments/CoreProxy.json');
 
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
 async function createAccount({ privateKey, accountId }) {
-  const CoreProxy = await importCoreProxy();
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = new ethers.Wallet(privateKey, provider);
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
