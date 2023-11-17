@@ -111,6 +111,15 @@ commands:
           command: wget --output-document - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
 
 jobs:
+  lint:
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+      - run: yarn dedupe --check
+      - run: yarn pretty:check
+
   fork-test:
     parameters:
       toml:
@@ -195,6 +204,8 @@ workflows:
 
   tests:
     jobs:
+      - lint
+
       - fork-test:
           name: base-goerli-andromeda
           toml: omnibus-base-goerli-andromeda.toml
