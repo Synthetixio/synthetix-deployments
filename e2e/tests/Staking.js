@@ -1,22 +1,20 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
 const crypto = require('crypto');
-const {
-  approveCollateral,
-  createAccount,
-  delegateCollateral,
-  depositCollateral,
-  getAccountCollateral,
-  getAccountOwner,
-  getCollateralAllowance,
-  getCollateralBalance,
-  getConfigUint,
-  getEthBalance,
-  setConfigUint,
-  setEthBalance,
-  setSnxBalance,
-  withdrawCollateral,
-} = require('../tasks');
+const { approveCollateral } = require('../tasks/approveCollateral');
+const { createAccount } = require('../tasks/createAccount');
+const { delegateCollateral } = require('../tasks/delegateCollateral');
+const { depositCollateral } = require('../tasks/depositCollateral');
+const { getAccountCollateral } = require('../tasks/getAccountCollateral');
+const { getAccountOwner } = require('../tasks/getAccountOwner');
+const { getCollateralAllowance } = require('../tasks/getCollateralAllowance');
+const { getCollateralBalance } = require('../tasks/getCollateralBalance');
+const { getConfigUint } = require('../tasks/getConfigUint');
+const { getEthBalance } = require('../tasks/getEthBalance');
+const { setConfigUint } = require('../tasks/setConfigUint');
+const { setEthBalance } = require('../tasks/setEthBalance');
+const { setSnxBalance } = require('../tasks/setSnxBalance');
+const { withdrawCollateral } = require('../tasks/withdrawCollateral');
 
 exports.run = function () {
   let address;

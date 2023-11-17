@@ -1,7 +1,5 @@
 const { ethers } = require('ethers');
-const { getCollateralConfig } = require('./getCollateralConfig');
-const { setEthBalance } = require('./setEthBalance');
-const { importFakeCollateralTKN } = require('./importFakeCollateralTKN');
+const FakeCollateralTKN = require('../deployments/FakeCollateralTKN.json');
 
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
@@ -9,7 +7,6 @@ async function setFakeCollateralTKNBalance({ privateKey, balance }) {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = new ethers.Wallet(privateKey, provider);
 
-  const FakeCollateralTKN = await importFakeCollateralTKN();
   const erc20 = new ethers.Contract(FakeCollateralTKN.address, FakeCollateralTKN.abi, wallet);
 
   const oldBalance = parseFloat(ethers.utils.formatUnits(await erc20.balanceOf(wallet.address)));

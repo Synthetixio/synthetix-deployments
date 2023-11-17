@@ -1,5 +1,5 @@
 const { run } = require('../Staking');
 
-describe('mainnet: Staking', function () {
+describe('Staking', function () {
   run();
 });
