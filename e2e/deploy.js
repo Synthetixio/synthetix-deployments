@@ -1,5 +1,6 @@
 const util = require('util');
 const path = require('path');
+const fs = require('fs/promises');
 const { ethers } = require('ethers');
 
 util.inspect.defaultOptions.depth = null;
@@ -15,22 +16,26 @@ ethers.BigNumber.prototype[util.inspect.custom] = function (depth, inspectOption
   return `${fgCyan}BigNumber( ${fgYellow}${fgGreen}${this.toHexString()} ${fgYellow}${this.toString()}${fgCyan} )${fgReset}`;
 };
 
-const [txnsFile] = process.argv.slice(2);
-if (!txnsFile) {
+const [ndjsonTxnsFile] = process.argv.slice(2);
+if (!ndjsonTxnsFile) {
   console.error(`${fgRed}ERROR: Expected 1 argument${fgReset}`);
-  console.error(`Usage: ${fgCyan}node e2e/deploy.js "TXNS_FILE"${fgReset}`);
+  console.error(`Usage: ${fgGreen}node e2e/deploy.js ${fgCyan}"ndjsonTxnsFile"${fgReset}`);
   console.error(
-    `Example: ${fgGreen}node e2e/deploy.js "./upgrade--base-goerli-andromeda.json"${fgReset}`
+    `Example: ${fgGreen}node e2e/deploy.js ${fgCyan}"./e2e/deployments/upgrade.ndjson"${fgReset}`
   );
   process.exit(1);
 }
-console.log(`Loading update transactions from ${fgGreen}"${txnsFile}"${fgReset}`);
-const upgrade = require(path.resolve(txnsFile));
 
 async function run() {
+  console.log(`Loading update transactions from ${fgCyan}"${ndjsonTxnsFile}"${fgReset}`);
+  const ndjson = await fs.readFile(path.resolve(ndjsonTxnsFile), 'utf8');
+  const txns = ndjson
+    .split('\n')
+    .filter(Boolean)
+    .flatMap((line) => JSON.parse(line).txns);
+
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
-  for (const { hash, from, to, data, value } of upgrade.txns) {
-    // console.log(`provider`, provider);
+  for (const { hash, from, to, data, value } of txns) {
     console.log();
     console.log();
     console.log();

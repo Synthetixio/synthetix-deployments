@@ -156,27 +156,26 @@ jobs:
               --upgrade-from << parameters.upgrade-from >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-              --write-script ./e2e/upgrade.json \
-              --write-script-format json | tee ./e2e/cannon-build.log
+              --write-script ./e2e/deployments/upgrade.ndjson \
+              --write-script-format json | tee ./cannon-build.log
 
-      - run: grep '💥' ./e2e/cannon-build.log
+      - run: grep '💥' ./cannon-build.log
       - run:
           name: "Halt if no changes detected"
           command: |
-            [ -s ./e2e/upgrade.json ] || circleci-agent step halt
+            [ -s ./e2e/deployments/upgrade.ndjson ] || circleci-agent step halt
 
-      - run: yarn prettier --write ./e2e/upgrade.json
       - store_artifacts:
-          path: "./e2e/upgrade.json"
+          path: "./e2e/deployments/upgrade.ndjson"
 
       - run:
-          name: "Check fort Proxies redeployment"
+          name: "Check for Proxies redeployment"
           environment:
             - PROXIES: "contract.InitialCoreProxy contract.InitialProxy contract.InitialSpotMarketProxy"
           command: |
             for PROXY in $PROXIES; do
-              echo "grep -c "Executing [$PROXY]" ./e2e/cannon-build.log" 
-              if [ $(grep -c "Executing [$PROXY]" ./e2e/cannon-build.log) -gt 0 ]; then
+              echo "grep -c "Executing [$PROXY]" ./cannon-build.log" 
+              if [ $(grep -c "Executing [$PROXY]" ./cannon-build.log) -gt 0 ]; then
                 echo "Proxy $PROXY was modified"
                 exit 1
               fi
@@ -184,14 +183,14 @@ jobs:
 
       - run:
           name: "Generate deployments"
-          command: node e2e/fetch-local-deployment.js ./e2e/cannon-build.log
+          command: node e2e/fetch-local-deployment.js ./cannon-build.log
 
       - store_artifacts:
           path: "./e2e/deployments"
 
       - run:
           name: "Upgrade on local fork"
-          command: node e2e/deploy.js ./e2e/upgrade.json
+          command: node e2e/deploy.js ./e2e/deployments/upgrade.ndjson
 
       - run:
           name: "Run tests"
@@ -244,7 +243,7 @@ workflows:
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: optimism-mainnet
+          name: polygon-mumbai
           toml: omnibus-polygon-mumbai.toml
           chain-id: 80001
           provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
