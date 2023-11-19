@@ -47,7 +47,7 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = ["<%= settings.ethPerpsMarketId %>", "<%= extras.eth_oracle_id %>"]
+args = ["<%= settings.ethPerpsMarketId %>", "<%= extras.eth_oracle_id %>", "<%= settings.bigCapStrictStalenessTolerance %>"]
 depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
 
 [invoke.setPerpsEthSettlementStrategy]
@@ -57,7 +57,7 @@ func = "addSettlementStrategy"
 args = [
     "<%= settings.ethPerpsMarketId %>",
     # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
