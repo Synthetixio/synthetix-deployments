@@ -1,20 +1,13 @@
-const util = require('util');
 const path = require('path');
 const fs = require('fs/promises');
 const { ethers } = require('ethers');
-
-util.inspect.defaultOptions.depth = null;
-util.inspect.defaultOptions.maxArrayLength = null;
+require('./inspect');
 
 const fgReset = '\x1b[0m';
 const fgRed = '\x1b[31m';
 const fgGreen = '\x1b[32m';
 const fgYellow = '\x1b[33m';
 const fgCyan = '\x1b[36m';
-
-ethers.BigNumber.prototype[util.inspect.custom] = function (depth, inspectOptions, inspect) {
-  return `${fgCyan}BigNumber( ${fgYellow}${fgGreen}${this.toHexString()} ${fgYellow}${this.toString()}${fgCyan} )${fgReset}`;
-};
 
 const [ndjsonTxnsFile] = process.argv.slice(2);
 if (!ndjsonTxnsFile) {

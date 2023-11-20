@@ -7,6 +7,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start:mainnet": "cannon run synthetix-omnibus:latest@main --chain-id 1 --provider-url https://mainnet.infura.io/v3/$INFURA_KEY",
+    "start:goerli": "cannon run synthetix-omnibus:latest@main --chain-id 5 --provider-url https://goerli.infura.io/v3/$INFURA_KEY",
+    "start:sepolia": "cannon run synthetix-omnibus:latest@main --chain-id 11155111 --provider-url https://sepolia.infura.io/v3/$INFURA_KEY",
+    "start:optimism": "cannon run synthetix-omnibus:latest@main --chain-id 10 --provider-url https://optimism.infura.io/v3/$INFURA_KEY",
+    "start:optimism-goerli": "cannon run synthetix-omnibus:latest@main --chain-id 420 --provider-url https://optimism-goerli.infura.io/v3/$INFURA_KEY",
+    "start:base-goerli": "cannon run synthetix-omnibus:latest@main --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
+    "start:andromeda": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
     "build": "node e2e/fetch-deployments.js",
     "test": "DEBUG='tasks:*' mocha",
     "pretty": "prettier . '**/*.toml' --write",
