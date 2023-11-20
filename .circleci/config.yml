@@ -161,6 +161,7 @@ jobs:
 
       - run: grep '💥' ./cannon-build.log
 
+      # TODO: uncomment later if tests are too flaky and we don't want to fork-test when there is no changes
       #- run:
       #    name: "Halt if no changes detected"
       #    command: |
