@@ -2,6 +2,7 @@ const { ethers } = require('ethers');
 const extras = require('../deployments/extras.json');
 const SpotMarketProxy = require('../deployments/SpotMarketProxy.json');
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const { parseError } = require('../parseError');
 
 async function unwrapUsdc({ wallet, amount }) {
   const token = new ethers.Contract(
@@ -18,11 +19,14 @@ async function unwrapUsdc({ wallet, amount }) {
 
   const spotMarket = new ethers.Contract(SpotMarketProxy.address, SpotMarketProxy.abi, wallet);
 
-  const tx = await spotMarket.unwrap(
-    extras.synth_usdc_market_id,
-    ethers.utils.parseEther(`${amount}`),
-    ethers.utils.parseEther(`${amount}`)
-  );
+  const tx = await spotMarket
+    .unwrap(
+      extras.synth_usdc_market_id,
+      ethers.utils.parseEther(`${amount}`),
+      ethers.utils.parseEther(`${amount}`),
+      { gasLimit: 10_000_000 }
+    )
+    .catch(parseError);
   await tx.wait();
 
   const newBalance = parseFloat(ethers.utils.formatUnits(await token.balanceOf(wallet.address)));

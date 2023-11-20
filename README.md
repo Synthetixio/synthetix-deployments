@@ -51,7 +51,8 @@ Example based on `omnibus-base-goerli-andromeda.toml`
    ```sh
    yarn cannon build omnibus-base-goerli-andromeda.toml \
      --dry-run \
-     --upgrade-from syncthetix-omnibus:latest \
+     --preset andromeda \
+     --upgrade-from synthetix-omnibus:latest \
      --chain-id 84531 \
      --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY \
      --write-script ./e2e/deployments/upgrade.ndjson \
@@ -109,5 +110,5 @@ Example based on `omnibus-base-goerli-andromeda.toml`
    ```
    or
    ```sh
-   yarn test e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
+   yarn test:andromeda
    ```

@@ -1,6 +1,7 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
+const { parseError } = require('../parseError');
 
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
@@ -12,12 +13,14 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
 
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
 
-  const tx = await coreProxy.deposit(
-    ethers.BigNumber.from(accountId),
-    config.tokenAddress,
-    ethers.utils.parseEther(`${amount}`),
-    { gasLimit: 10_000_000 }
-  );
+  const tx = await coreProxy
+    .deposit(
+      ethers.BigNumber.from(accountId),
+      config.tokenAddress,
+      ethers.utils.parseEther(`${amount}`),
+      { gasLimit: 10_000_000 }
+    )
+    .catch(parseError);
   await tx.wait();
 
   return accountId;

@@ -7,7 +7,7 @@ const { delegateCollateral } = require('../tasks/delegateCollateral');
 const { depositCollateral } = require('../tasks/depositCollateral');
 const { getAccountCollateral } = require('../tasks/getAccountCollateral');
 const { getAccountOwner } = require('../tasks/getAccountOwner');
-const { getCollateralAllowance } = require('../tasks/getCollateralAllowance');
+const { isCollateralApproved } = require('../tasks/isCollateralApproved');
 const { getCollateralBalance } = require('../tasks/getCollateralBalance');
 const { getConfigUint } = require('../tasks/getConfigUint');
 const { getEthBalance } = require('../tasks/getEthBalance');
@@ -46,15 +46,12 @@ exports.run = function () {
 
   it('should approve SNX spending', async () => {
     assert.equal(
-      await getCollateralAllowance({ address, symbol: 'SNX' }),
-      0,
-      'New wallet has 0 SNX allowance for CoreProxy'
+      await isCollateralApproved({ address, symbol: 'SNX' }),
+      false,
+      'new wallet has not yet approved SNX for CoreProxy'
     );
     await approveCollateral({ privateKey, symbol: 'SNX' });
-    assert.equal(
-      await getCollateralAllowance({ address, symbol: 'SNX' }),
-      parseFloat(ethers.utils.formatUnits(ethers.constants.MaxUint256))
-    );
+    assert.equal(await isCollateralApproved({ address, symbol: 'SNX' }), true);
   });
 
   it('should create user account', async () => {

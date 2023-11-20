@@ -18,9 +18,9 @@ const fgCyan = '\x1b[36m';
 const [buildLog] = process.argv.slice(2);
 if (!buildLog) {
   console.error(`${fgRed}ERROR: Expected 1 argument${fgReset}`);
-  console.error(`Usage: ${fgGreen}node e2e/fetch-local-deployment.js ${fgCyan}buildLog${fgReset}`);
+  console.error(`Usage: ${fgGreen}node e2e/fetch-deployments.js ${fgCyan}buildLog${fgReset}`);
   console.error(
-    `Example: ${fgGreen}node e2e/fetch-local-deployment.js ${fgCyan}e2e/cannon-build.log${fgReset}`
+    `Example: ${fgGreen}node e2e/fetch-deployments.js ${fgCyan}e2e/cannon-build.log${fgReset}`
   );
   process.exit(1);
 }
@@ -90,6 +90,11 @@ async function run() {
   await mintableToken('mintableToken');
 
   Object.assign(extras, deployments?.state?.[`invoke.createUsdcSynth`]?.artifacts?.extras);
+
+  contracts.AllErrors = {
+    address: ethers.constants.AddressZero,
+    abi: Object.values(contracts).flatMap(({ abi }) => abi.filter((item) => item.type === 'error')),
+  };
 
   console.log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));

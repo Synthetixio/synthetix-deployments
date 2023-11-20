@@ -185,7 +185,7 @@ jobs:
 
       - run:
           name: "Generate deployments"
-          command: node e2e/fetch-local-deployment.js ./cannon-build.log
+          command: node e2e/fetch-deployments.js ./cannon-build.log
 
       - store_artifacts:
           path: "./e2e/deployments"

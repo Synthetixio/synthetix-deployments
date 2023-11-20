@@ -91,6 +91,7 @@ describe('Collateral Limits', function () {
     );
     assert.ok(currentMarketCollateral < 5_000_000);
     const maxWrap = Math.floor(5_000_000 - currentMarketCollateral);
+    assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
     const balance = await wrapUsdc({ wallet, amount: maxWrap });
     assert.equal(balance, maxWrap);
   });
