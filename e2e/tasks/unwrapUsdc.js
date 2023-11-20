@@ -3,7 +3,7 @@ const extras = require('../deployments/extras.json');
 const SpotMarketProxy = require('../deployments/SpotMarketProxy.json');
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
-async function wrapUsdc({ wallet, amount }) {
+async function unwrapUsdc({ wallet, amount }) {
   const token = new ethers.Contract(
     extras.synth_usdc_token_address,
     [
@@ -18,7 +18,7 @@ async function wrapUsdc({ wallet, amount }) {
 
   const spotMarket = new ethers.Contract(SpotMarketProxy.address, SpotMarketProxy.abi, wallet);
 
-  const tx = await spotMarket.wrap(
+  const tx = await spotMarket.unwrap(
     extras.synth_usdc_market_id,
     ethers.utils.parseEther(`${amount}`),
     ethers.utils.parseEther(`${amount}`)
@@ -31,5 +31,5 @@ async function wrapUsdc({ wallet, amount }) {
 }
 
 module.exports = {
-  wrapUsdc,
+  unwrapUsdc,
 };
