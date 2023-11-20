@@ -160,10 +160,12 @@ jobs:
               --write-script-format json | tee ./cannon-build.log
 
       - run: grep '💥' ./cannon-build.log
-      - run:
-          name: "Halt if no changes detected"
-          command: |
-            [ -s ./e2e/deployments/upgrade.ndjson ] || circleci-agent step halt
+
+      # TODO: uncomment later if tests are too flaky and we don't want to fork-test when there is no changes
+      #- run:
+      #    name: "Halt if no changes detected"
+      #    command: |
+      #      [ -s ./e2e/deployments/upgrade.ndjson ] || circleci-agent step halt
 
       - store_artifacts:
           path: "./e2e/deployments/upgrade.ndjson"
@@ -183,7 +185,7 @@ jobs:
 
       - run:
           name: "Generate deployments"
-          command: node e2e/fetch-local-deployment.js ./cannon-build.log
+          command: node e2e/fetch-deployments.js ./cannon-build.log
 
       - store_artifacts:
           path: "./e2e/deployments"

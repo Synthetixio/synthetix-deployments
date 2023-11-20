@@ -39,3 +39,76 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 - Publish your new packages on the Cannon registry: `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3 --chain-id <CHAIN_ID>` (_The --private-key parameter is unnecessary if using [Frame](https://frame.sh/)_)
 - Commit and merge the change to this repository.
 - Run the [**Export ABIs** action](https://github.com/Synthetixio/v3-abi-exporter/actions/workflows/main.yml) in the `v3-abi-exporter` repository.
+
+## Fork-testing locally
+
+Example based on `omnibus-base-goerli-andromeda.toml`
+
+**IMPORTANT** Restart Anvil node and apply upgrades after each full test suite execution because of the global system state change, which affects things like global collateral limits
+
+1. Build locally with --dry-run
+
+   ```sh
+   yarn cannon build omnibus-base-goerli-andromeda.toml \
+     --dry-run \
+     --preset andromeda \
+     --upgrade-from synthetix-omnibus:latest \
+     --chain-id 84531 \
+     --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY \
+     --write-script ./e2e/deployments/upgrade.ndjson \
+     --write-script-format json \
+       | tee ./e2e/cannon-build.log
+   ```
+
+   or
+
+   ```sh
+   yarn build:andromeda
+   ```
+
+2. Fetch deployments and store as JSON files
+
+   ```sh
+   node ./e2e/fetch-deployments.js ./e2e/cannon-build.log
+   ```
+
+   or
+
+   ```sh
+   yarn fetch-deployments
+   ```
+
+3. Run local Anvil node for the required network.
+
+   ```sh
+   yarn cannon run synthetix-omnibus:latest@andromeda \
+     --chain-id 84531 \
+     --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY
+   ```
+
+   or
+
+   ```sh
+   yarn start:andromeda
+   ```
+
+4. Deploy changes to the local fork
+
+   ```sh
+   node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson
+   ```
+
+   or
+
+   ```sh
+   yarn deploy
+   ```
+
+5. Execute tests
+   ```sh
+   DEBUG='tasks:*' mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
+   ```
+   or
+   ```sh
+   yarn test:andromeda
+   ```

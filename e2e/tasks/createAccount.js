@@ -2,6 +2,7 @@ const { ethers } = require('ethers');
 // const crypto = require('crypto');
 const { getAccountOwner } = require('./getAccountOwner');
 const CoreProxy = require('../deployments/CoreProxy.json');
+const { parseError } = require('../parseError');
 
 const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
 
@@ -19,7 +20,11 @@ async function createAccount({ privateKey, accountId }) {
     return accountId;
   }
 
-  const tx = await coreProxy['createAccount(uint128)'](accountId, { gasLimit: 10_000_000 });
+  const tx = await coreProxy['createAccount(uint128)'](
+    //
+    accountId,
+    { gasLimit: 10_000_000 }
+  ).catch(parseError);
   await tx.wait();
 
   const newAccountOwner = await getAccountOwner({ accountId });
