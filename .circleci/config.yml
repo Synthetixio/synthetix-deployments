@@ -160,10 +160,11 @@ jobs:
               --write-script-format json | tee ./cannon-build.log
 
       - run: grep '💥' ./cannon-build.log
-      - run:
-          name: "Halt if no changes detected"
-          command: |
-            [ -s ./e2e/deployments/upgrade.ndjson ] || circleci-agent step halt
+
+      #- run:
+      #    name: "Halt if no changes detected"
+      #    command: |
+      #      [ -s ./e2e/deployments/upgrade.ndjson ] || circleci-agent step halt
 
       - store_artifacts:
           path: "./e2e/deployments/upgrade.ndjson"
