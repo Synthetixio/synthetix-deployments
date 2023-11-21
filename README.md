@@ -1,6 +1,6 @@
-# Synthetix Deployments
+# Kwenta Synthetix Deployments
 
-This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/synthetixio/synthetix-v3) protocol.
+This the Kwenta GitOps repo for deployment of the [Synthetix](https://www.github.com/synthetixio/synthetix-v3) protocol.
 
 ## Deployment Guide
 
@@ -39,3 +39,12 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 - Publish your new packages on the Cannon registry: `cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3 --chain-id <CHAIN_ID>` (_The --private-key parameter is unnecessary if using [Frame](https://frame.sh/)_)
 - Commit and merge the change to this repository.
 - Run the [**Export ABIs** action](https://github.com/Synthetixio/v3-abi-exporter/actions/workflows/main.yml) in the `v3-abi-exporter` repository.
+
+## Kwenta Deployment Notes
+
+### Interacting with the Kwenta Synthetix V3 version
+
+Kwenta has now deployed a version of Synthetix V3 on Base Goerli testnet. The name of this deployment is [kwenta-synthetix-omnibus-test-3](https://usecannon.com/packages/kwenta-synthetix-omnibus-test-3/3.3.3-dev.e141cd8c/84531-main). To interact with this can either [use the the UI here](https://usecannon.com/packages/kwenta-synthetix-omnibus-test-3/3.3.3-dev.e141cd8c/84531-main/interact/system/InitialCoreProxy/0x24DE4907c00B0b7aF1E78E1A11a480D047C1b063), or use this command via cannon:
+```bash
+cannon interact --chain-id 84531 --provider-url <BASE_GOERLI_PROVIDER_URL> --private-key <PRIVATE_KEY> kwenta-synthetix-omnibus-test-3
+```
