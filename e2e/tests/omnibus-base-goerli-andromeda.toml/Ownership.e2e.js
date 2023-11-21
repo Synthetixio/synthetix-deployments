@@ -19,76 +19,100 @@ describe('Ownership checks', function () {
     provider
   );
 
-  it('should validate Proxies ownership', async () => {
-    const abi = [
-      'function owner() view returns (address)',
-      'function nominatedOwner() view returns (address)',
-    ];
-    log({ contracts: meta.contracts });
-    const owners = Object.fromEntries(
-      await Promise.all(
-        Object.entries(meta.contracts).map(async ([name, address]) => {
-          const Contract = new ethers.Contract(address, abi, provider);
-          const [owner, nominatedOwner] = await Promise.all([
-            Contract.owner().catch(() => ethers.constants.AddressZero),
-            Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
-          ]);
-          return [name, { name, owner, nominatedOwner }];
-        })
-      )
-    );
-    log({ owners });
+  const contractOwnershipAbi = [
+    'function owner() view returns (address)',
+    'function nominatedOwner() view returns (address)',
+  ];
 
-    assert.deepEqual(owners.CoreProxy, {
-      name: 'CoreProxy',
-      owner: DAO_GNOSIS_SAFE,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.AccountProxy, {
-      name: 'AccountProxy',
-      owner: meta.contracts.CoreProxy,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.USDProxy, {
-      name: 'USDProxy',
-      owner: meta.contracts.CoreProxy,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.OracleManagerProxy, {
-      name: 'OracleManagerProxy',
-      owner: DAO_GNOSIS_SAFE,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.SpotMarketProxy, {
-      name: 'SpotMarketProxy',
-      owner: DAO_GNOSIS_SAFE,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.PerpsMarketProxy, {
-      name: 'PerpsMarketProxy',
-      owner: DAO_GNOSIS_SAFE,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.PerpsAccountProxy, {
-      name: 'PerpsAccountProxy',
-      owner: meta.contracts.PerpsMarketProxy,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
-
-    assert.deepEqual(owners.FakeCollateralTKN, {
-      name: 'FakeCollateralTKN',
-      owner: ethers.constants.AddressZero,
-      nominatedOwner: ethers.constants.AddressZero,
-    });
+  it('should validate CoreProxy owned by DAO Safe', async () => {
+    const { CoreProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'CoreProxy', address, owner, nominatedOwner });
+    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
   });
 
-  it('should validate approved pools ownership', async () => {
+  it('should validate AccountProxy owned by CoreProxy Contract', async () => {
+    const { AccountProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'AccountProxy', address, owner, nominatedOwner });
+    assert.equal(owner, meta.contracts.CoreProxy);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
+  });
+
+  it('should validate USDProxy owned by CoreProxy Contract', async () => {
+    const { USDProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'USDProxy', address, owner, nominatedOwner });
+    assert.equal(owner, meta.contracts.CoreProxy);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
+  });
+
+  it('should validate OracleManagerProxy owned by DAO Safe', async () => {
+    const { OracleManagerProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'OracleManagerProxy', address, owner, nominatedOwner });
+
+    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
+  });
+
+  it('should validate SpotMarketProxy owned by DAO Safe', async () => {
+    const { SpotMarketProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'SpotMarketProxy', address, owner, nominatedOwner });
+
+    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
+  });
+
+  it('should validate PerpsMarketProxy owned by DAO Safe', async () => {
+    const { PerpsMarketProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'PerpsMarketProxy', address, owner, nominatedOwner });
+
+    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
+  });
+
+  it('should validate PerpsAccountProxy owned by PerpsMarketProxy Contract', async () => {
+    const { PerpsAccountProxy: address } = meta.contracts;
+    const Contract = new ethers.Contract(address, contractOwnershipAbi, provider);
+    const [owner, nominatedOwner] = await Promise.all([
+      Contract.owner().catch(() => ethers.constants.AddressZero),
+      Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
+    ]);
+    log({ name: 'PerpsAccountProxy', address, owner, nominatedOwner });
+
+    assert.equal(owner, meta.contracts.PerpsMarketProxy);
+    assert.equal(nominatedOwner, ethers.constants.AddressZero);
+  });
+
+  it('should validate approved pools owned by DAO Safe', async () => {
     const approvedPools = await CoreProxy.getApprovedPools();
     const preferredPool = await CoreProxy.getPreferredPool();
     log({ approvedPools, preferredPool });
