@@ -106,7 +106,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
 
 5. Execute tests
    ```sh
-   DEBUG='tasks:*' mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
+   DEBUG='e2e:*' mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
    ```
    or
    ```sh

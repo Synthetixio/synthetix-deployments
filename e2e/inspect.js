@@ -1,15 +1,33 @@
 const util = require('util');
 const { ethers } = require('ethers');
 
+util.inspect.defaultOptions.compact = true;
+util.inspect.defaultOptions.breakLength = Infinity;
+util.inspect.defaultOptions.colors = true;
 util.inspect.defaultOptions.depth = null;
 util.inspect.defaultOptions.maxArrayLength = null;
 
-const fgReset = '\x1b[0m';
-const fgRed = '\x1b[31m';
-const fgGreen = '\x1b[32m';
-const fgYellow = '\x1b[33m';
-const fgCyan = '\x1b[36m';
+const res = '\x1b[0m';
+const gr = '\x1b[32m';
+const ye = '\x1b[33m';
+const cy = '\x1b[36m';
+
+function number(obj) {
+  if (obj.eq(ethers.constants.MaxUint256)) {
+    return 'MaxUint256';
+  }
+  if (obj.eq(ethers.constants.MaxInt256)) {
+    return 'MaxInt256';
+  }
+  if (obj.gt(1e12)) {
+    // Assuming everything bigger than 1e12 is a wei
+    return `wei ${parseFloat(ethers.utils.formatEther(`${obj}`))}`;
+  }
+  return parseFloat(obj.toString());
+}
 
 ethers.BigNumber.prototype[util.inspect.custom] = function (depth, inspectOptions, inspect) {
-  return `${fgCyan}BigNumber( ${fgYellow}${fgGreen}${this.toHexString()} ${fgYellow}${this.toString()}${fgCyan} )${fgReset}`;
+  const hex = this.toHexString();
+  const num = number(this);
+  return `${cy}BigNumber( ${ye}${num} ${gr}${hex}${cy} )${res}`;
 };

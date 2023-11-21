@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 const extras = require('../deployments/extras.json');
 const SpotMarketProxy = require('../deployments/SpotMarketProxy.json');
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { parseError } = require('../parseError');
 
 async function unwrapUsdc({ wallet, amount }) {

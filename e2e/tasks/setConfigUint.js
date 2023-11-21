@@ -4,7 +4,7 @@ const { getConfigUint } = require('./getConfigUint');
 const { hexlify, hexZeroPad } = require('@ethersproject/bytes');
 const CoreProxy = require('../deployments/CoreProxy.json');
 
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function setConfigUint({ key, value }) {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');

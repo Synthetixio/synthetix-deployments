@@ -2,7 +2,7 @@ const { ethers } = require('ethers');
 const extras = require('../deployments/extras.json');
 const SpotMarketProxy = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function wrapUsdc({ wallet, amount }) {
   const token = new ethers.Contract(

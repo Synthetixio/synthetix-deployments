@@ -2,7 +2,7 @@ const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { setEthBalance } = require('./setEthBalance');
 
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function getOwner() {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
