@@ -64,12 +64,12 @@ cannon build kwenta-base-goerli-competition.toml --provider-url <BASE_GOERLI_RPC
 - `<BASE_GOERLI_RPC_URL> ` should be an RPC url for an eth node on the Base Goerli network.
 - `<DEPLOYER_PRIVATE_KEY>` should be the private key for the EOA you want to deploy the system from. I used the Kwenta Testnet Admin (address: `0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991`).
 - This is the step to try and debug any issues with the deployment before using real ETH.
-1. Send a chunky amount of ETH (it cost me 0.17 ETH, but send extra!) to the deployment address. Gas costs are volatile and you don't want to get caught with a mid-deployment failure. A semi-deployed/configured system is hard to fix! The Synthetix system is expensive to deploy. It is large and consists of many different modules and proxies. In theory cannon provides functionality for recovering a deployment that failed mid-way, in practice I was not able to get this to work.
+4. Send a chunky amount of ETH (it cost me 0.17 ETH, but send extra!) to the deployment address. Gas costs are volatile and you don't want to get caught with a mid-deployment failure. A semi-deployed/configured system is hard to fix! The Synthetix system is expensive to deploy. It is large and consists of many different modules and proxies. In theory cannon provides functionality for recovering a deployment that failed mid-way, in practice I was not able to get this to work.
 2. Now you are ready for the real deal! Use this command to actually deploy the system 🔥 🚀 💫 (simply remove the `--dry-run` flag):
 ```bash
 cannon build kwenta-base-goerli-competition.toml --provider-url <BASE_GOERLI_RPC_URL> --private-key <DEPLOYER_PRIVATE_KEY>
 ```
-1. Now verify ✅ the system on etherscan with the following command:
+5. Now verify ✅ the system on etherscan with the following command:
 ```bash
 cannon verify kwenta-synthetix-omnibus-test-3:3.3.3-dev.e141cd8c --chain-id 84531 --api-key <ETHERSCAN_API_KEY> 
 ```
@@ -78,7 +78,7 @@ cannon verify kwenta-synthetix-omnibus-test-3:3.3.3-dev.e141cd8c --chain-id 8453
   - `kwenta-synthetix-omnibus-test-3` - defined as the name in the cannonfile.
   - `3.3.3-dev.e141cd8c` - the version defined in the cannonfile.
 - Awesome, your contracts should be verified now! 🥳 
-1. The final step - register your IPFS deployment on the cannon registry! This will allow you to view your contracts on [the online registry](https://usecannon.com/packages). It will show you loads of useful information about your contracts, let you people download the ABIs and contract addresses, and provide a UI for interacting with the contracts (etherscan won't work with the router-proxy-architecture used in synthetix).
+6. The final step - register your IPFS deployment on the cannon registry! This will allow you to view your contracts on [the online registry](https://usecannon.com/packages). It will show you loads of useful information about your contracts, let you people download the ABIs and contract addresses, and provide a UI for interacting with the contracts (etherscan won't work with the router-proxy-architecture used in synthetix).
    1. To complete this step you need some mainnet ETH. Send some to the EOA on mainnet you want to use for the registry transaction.
    2. Execute the following command:
 ```bash
@@ -87,6 +87,24 @@ cannon publish kwenta-synthetix-omnibus-test-3:3.3.3-dev.e141cd8c --chain-id 845
 - For those interested, this process writes data to the [CannonRegistry contract](https://etherscan.io/address/0xd442Dc2Ac1f3cA1C86C8329246e47Ca0C91D0471#code) on Ethereum mainnet. This is actually just the implementation of contract, it is upgradeable and has a proxy. You can [see the code for the whole system here](https://github.com/usecannon/cannon/tree/main/packages/registry) and specifically [the code for the CannonRegistry contract here](https://github.com/usecannon/cannon/blob/main/packages/registry/contracts/CannonRegistry.sol).
 
 If you made it this far - congratulations! You just deployed synthetix! 🎉
+
+But... we are not finished with smart contract tasks yet from Kwenta's perspective. We still need to do step 7:
+
+7. Deploy `smart-margin-v3` - for that you will need [this repo](https://github.com/Kwenta/smart-margin-v3) - you can use the [Deploy.s.sol script](https://github.com/Kwenta/smart-margin-v3/blob/main/script/Deploy.s.sol) with forge.
+
+## Integrating the front-end the Kwenta deployment
+
+The following steps needed completing once the smart contracts were deployed:
+1. Get the ABIs from the [cannon registry site](https://usecannon.com/packages). Got to the deployment page - e.g. [like this one](https://usecannon.com/packages/kwenta-synthetix-omnibus-test-3/3.3.3-dev.e141cd8c/84531-main), scroll down and click the download addresses + ABIs button.
+![](2023-11-21-21-40-52.png)
+2. Update the FE with all the new addresses, including:
+- Addresses for all synths - e.g. `sUSD`, `sBTC`, `sETH`, `sLINK`, `sOP` etc.
+- MarginEngine and depending on the FE setup, the new TrustMulticallForwarder address if applicable.
+- A subgraph needs deploying for everything to work fully, however without doing that, the following shortcut can be helpful:
+  - Hardcode all settlement strategies to `0`.
+- PerpsV3MarketProxy
+- AccountProxy
+3. Other stuff I am not aware of as a measly smart-contract engineer.
 
 ## Interacting with Kwenta Synthetix V3 Base Goerli
 
