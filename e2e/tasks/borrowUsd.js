@@ -3,7 +3,7 @@ const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
 
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
   const config = await getCollateralConfig(symbol);

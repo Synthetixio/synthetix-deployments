@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 const CoreProxy = require('../deployments/CoreProxy.json');
 
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 const erc20Abi = [
   'function symbol() view returns (string)',
