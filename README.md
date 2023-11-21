@@ -42,9 +42,13 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 
 ## Kwenta Deployment Notes
 
+
+
 ### Interacting with the Kwenta Synthetix V3 version
 
 Kwenta has now deployed a version of Synthetix V3 on Base Goerli testnet. The name of this deployment is [kwenta-synthetix-omnibus-test-3](https://usecannon.com/packages/kwenta-synthetix-omnibus-test-3/3.3.3-dev.e141cd8c/84531-main). To interact with this can either [use the the UI here](https://usecannon.com/packages/kwenta-synthetix-omnibus-test-3/3.3.3-dev.e141cd8c/84531-main/interact/system/InitialCoreProxy/0x24DE4907c00B0b7aF1E78E1A11a480D047C1b063), or use this command via cannon:
 ```bash
 cannon interact --chain-id 84531 --provider-url <BASE_GOERLI_PROVIDER_URL> --private-key <PRIVATE_KEY> kwenta-synthetix-omnibus-test-3
 ```
+- `<BASE_GOERLI_PROVIDER_URL> ` should be an RPC url for an eth node on the Base Goerli network.
+- `<PRIVATE_KEY>` can be any private key you want to use when executing transactions against the deployment. Use the Kwenta Testnet Admin (address: 0xC2ecD777d06FFDF8B3179286BEabF52B67E9d991) private key if you want to do privileged actions.
