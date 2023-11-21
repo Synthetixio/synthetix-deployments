@@ -1067,7 +1067,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/wei@npm:^2.74.1":
+"@synthetixio/wei@npm:^2.74.1, @synthetixio/wei@npm:^2.74.4":
   version: 2.74.4
   resolution: "@synthetixio/wei@npm:2.74.4"
   dependencies:
@@ -4894,6 +4894,7 @@ __metadata:
   dependencies:
     "@ethersproject/bytes": ^5.7.0
     "@iarna/toml": ^3.0.0
+    "@synthetixio/wei": ^2.74.4
     "@usecannon/builder": 2.9.11
     "@usecannon/cli": 2.9.11
     debug: ^4.3.4

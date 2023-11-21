@@ -24,6 +24,7 @@
   "devDependencies": {
     "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
+    "@synthetixio/wei": "^2.74.4",
     "@usecannon/builder": "2.9.11",
     "@usecannon/cli": "2.9.11",
     "debug": "^4.3.4",
