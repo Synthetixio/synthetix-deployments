@@ -90,6 +90,11 @@ async function run() {
   await mintableToken('mintableToken');
 
   Object.assign(extras, deployments?.state?.[`invoke.createUsdcSynth`]?.artifacts?.extras);
+  Object.assign(meta, {
+    contracts: Object.fromEntries(
+      Object.entries(contracts).map(([name, { address }]) => [name, address])
+    ),
+  });
 
   contracts.AllErrors = {
     address: ethers.constants.AddressZero,
