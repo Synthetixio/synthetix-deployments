@@ -16,8 +16,8 @@
   "devDependencies": {
     "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
-    "@usecannon/builder": "2.10.0-alpha.1",
-    "@usecannon/cli": "2.10.0-alpha.1",
+    "@usecannon/builder": "2.10.0-alpha.2",
+    "@usecannon/cli": "2.10.0-alpha.2",
     "debug": "^4.3.4",
     "ethers": "^5.7.2",
     "hardhat": "^2.19.0",
