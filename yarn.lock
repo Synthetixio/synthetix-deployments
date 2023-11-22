@@ -1187,9 +1187,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.9.11, @usecannon/builder@npm:^2.9.11":
-  version: 2.9.11
-  resolution: "@usecannon/builder@npm:2.9.11"
+"@usecannon/builder@npm:2.10.0-alpha.0, @usecannon/builder@npm:^2.10.0-alpha.0":
+  version: 2.10.0-alpha.0
+  resolution: "@usecannon/builder@npm:2.10.0-alpha.0"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.2.2
@@ -1204,17 +1204,17 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: a25a503004f7802121b28b3d66c615abef8f891c5a82ec37613e1ce4e8bac44fcdd2d047e8915d6dcc2c30caffe753971f780718f237d0b6e410d2520148b45e
+  checksum: 30c41b8739d1987e7d8b5975fd427100bce3e40d8a71cb443d61fac394047512943630f8719d9208564eaf779396a7da99ba80b772b805cd6f61415d39809505
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.9.11":
-  version: 2.9.11
-  resolution: "@usecannon/cli@npm:2.9.11"
+"@usecannon/cli@npm:2.10.0-alpha.0":
+  version: 2.10.0-alpha.0
+  resolution: "@usecannon/cli@npm:2.10.0-alpha.0"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.9.11
+    "@usecannon/builder": ^2.10.0-alpha.0
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1231,7 +1231,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: ebed5c5ed3a9e6d6cd117a2cfdd406b1d2532c26693713fdc1c2ad81e2d8032b7fd68347e2eb0bcf7c8502bbc27895de3b08c5cc6f88442791aa94e3ea4dd99c
+  checksum: 6b46f6559d8f0a802bdb7486234aff80f7c4a6eee91f35739bd3d8ad409c5f51f653d70ed24f1563660da9f6d4c255239070a819a88f432dc60e0bc97619a0cd
   languageName: node
   linkType: hard
 
@@ -4894,8 +4894,8 @@ __metadata:
   dependencies:
     "@ethersproject/bytes": ^5.7.0
     "@iarna/toml": ^3.0.0
-    "@usecannon/builder": 2.9.11
-    "@usecannon/cli": 2.9.11
+    "@usecannon/builder": 2.10.0-alpha.0
+    "@usecannon/cli": 2.10.0-alpha.0
     debug: ^4.3.4
     ethers: ^5.7.2
     hardhat: ^2.19.0
