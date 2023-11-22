@@ -67,7 +67,8 @@ async function run() {
   const trustedMulticallForwarder =
     system.imports?.oracle_manager?.imports?.trusted_multicall_forwarder;
   if (trustedMulticallForwarder) {
-    contracts.TrustedMulticallForwarder = trustedMulticallForwarder.contracts.TrustedMulticallForwarder;
+    contracts.TrustedMulticallForwarder =
+      trustedMulticallForwarder.contracts.TrustedMulticallForwarder;
   }
 
   const spotFactory =

@@ -6,8 +6,8 @@
     "lib": ["esnext"],
     "outDir": "./dist",
     "strict": false,
-    "esModuleInterop": true, 
-    "skipLibCheck": true, 
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["e2e/**/*"],
@@ -20,6 +20,6 @@
     "*.json",
     "*.toml",
     "*.yml",
-    "*.md",
+    "*.md"
   ]
 }

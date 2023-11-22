@@ -74,7 +74,7 @@ describe('Perps Configuration Settings', function () {
       'getMarketSummary',
       [200],
       pythUrl
-    )
+    );
 
     assert.ok(marketSummary.summary.size);
   });
