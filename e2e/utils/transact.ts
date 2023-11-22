@@ -1,5 +1,6 @@
 import { Contract } from '@ethersproject/contracts';
-import { Provider } from '@ethersproject/providers';
+import { Wallet } from '@ethersproject/wallet';
+import { JsonRpcProvider } from '@ethersproject/providers';
 import {
   createPublicClient,
   createWalletClient,
@@ -20,7 +21,7 @@ const TrustedMulticallForwarder = new Contract(
   TrustedMulticallForwarderDeployment.abi
 );
 
-function getClients(provider: Provider) {
+function getClients(provider: JsonRpcProvider) {
   const publicClient = createPublicClient({
     transport: custom({
       request: ({ method, params }) => (provider as any).send(method, params),
@@ -76,7 +77,7 @@ function makeMulticall(txns: Partial<TransactionRequestBase>[]): {
 }
 
 export async function contractCall(
-  provider: Provider,
+  provider: JsonRpcProvider,
   contract: Contract,
   functionName: string,
   params: any,
@@ -111,33 +112,31 @@ export async function contractCall(
   }
 }
 
-// export async function contractTransaction(
-//     from: Address,
-//     to: Address,
-//     functionName: string,
-//     params: any,
-//     abi: any,
-//     provider: ethers.providers.Provider,
-//     pythUrl: string
-// ) {
-//     const { publicClient, walletClient } = getClients(provider);
+export async function contractTransaction(
+  from: Address,
+  provider: JsonRpcProvider,
+  wallet: Wallet,
+  contract: Contract,
+  functionName: string,
+  params: any,
+  pythUrl: string
+) {
+  const { publicClient } = getClients(provider);
 
-//     const data = encodeFunctionData({
-//         abi,
-//         functionName,
-//         args: Array.isArray(params) ? params : [params],
-//     });
-//     const txn = {
-//         account: from,
-//         to,
-//         data,
-//     };
-//     const call = await generate7412CompatibleCall(publicClient, txn, pythUrl);
-//     const hash = await walletClient.sendTransaction({
-//         account: from,
-//         to: call.to,
-//         data: call.data,
-//         value: call.value,
-//     });
-//     return hash;
-// }
+  const data = contract.interface.encodeFunctionData(functionName, params);
+
+  const txn = {
+    account: from,
+    to: contract.address,
+    data,
+  } as Partial<TransactionRequestBase>;
+  const call = await generate7412CompatibleCall(publicClient, txn, pythUrl);
+
+  const tx = await wallet.sendTransaction({
+    from,
+    to: call.to,
+    data: call.data,
+    value: call.value,
+  });
+  return tx;
+}

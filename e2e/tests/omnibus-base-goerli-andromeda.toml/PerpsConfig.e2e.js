@@ -2,7 +2,7 @@ const assert = require('assert');
 const { ethers } = require('ethers');
 const { wei } = require('@synthetixio/wei');
 
-const { contractCall } = require('../../utils/transact');
+const { contractCall, contractTransaction } = require('../../utils/transact');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
@@ -37,11 +37,18 @@ describe('Perps Configuration Settings', function () {
   });
 
   it('Creates a Perps account NFT', async () => {
-    // Get account id
-    const tx = await PerpsMarketProxy['createAccount()']();
-
+    const tx = await contractTransaction(
+      address,
+      provider,
+      wallet,
+      PerpsMarketProxy,
+      'createAccount()',
+      [],
+      pythUrl
+    );
     const receipt = await tx.wait();
-    const events = receipt.events;
+
+    const events = await PerpsMarketProxy.queryFilter('AccountCreated', receipt.blockHash);
     const event = events.find((e) => e.event === 'AccountCreated');
     accountId = event.args.accountId;
 
@@ -67,7 +74,7 @@ describe('Perps Configuration Settings', function () {
     assert.equal(wei(maxOI, 18, true).toNumber(), 30);
   });
 
-  it('Check Perps Market Id is correct', async () => {
+  it('Can request a perps market summary', async () => {
     const marketSummary = await contractCall(
       provider,
       PerpsMarketProxy,
