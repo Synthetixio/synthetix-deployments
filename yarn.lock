@@ -1296,21 +1296,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0":
-  version: 20.9.0
-  resolution: "@types/node@npm:20.9.0"
+"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^20.9.3":
+  version: 20.9.4
+  resolution: "@types/node@npm:20.9.4"
   dependencies:
     undici-types: ~5.26.4
-  checksum: bfd927da6bff8a32051fa44bb47ca32a56d2c8bc8ba0170770f181cc1fa3c0b05863c9b930f0ba8604a48d5eb0d319166601709ca53bf2deae0025d8b6c6b8a3
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^20.9.3":
-  version: 20.9.3
-  resolution: "@types/node@npm:20.9.3"
-  dependencies:
-    undici-types: ~5.26.4
-  checksum: 0cfbfd2a8bd18acc75aa4d7685c7dcf56344f48addd4041d306dc194f3132f8014d56fd49fcb26bcdf400b883f9527e5e2beaf52dfce029cef15c69b8ed2e72a
+  checksum: 619144cfee8235f692009e4268a8b80ef4ec496670273ab1cef04e4a053b471f391af6701e65f2f91a107256933d902b6caec079d551b109e981b0b706624815
   languageName: node
   linkType: hard
 
@@ -1365,7 +1356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.9.11, @usecannon/builder@npm:^2.9.11":
+"@usecannon/builder@npm:2.9.11":
   version: 2.9.11
   resolution: "@usecannon/builder@npm:2.9.11"
   dependencies:
@@ -1386,7 +1377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.9.12":
+"@usecannon/builder@npm:^2.9.11, @usecannon/builder@npm:^2.9.12":
   version: 2.9.12
   resolution: "@usecannon/builder@npm:2.9.12"
   dependencies:
@@ -1716,18 +1707,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.2.2":
-  version: 1.5.0
-  resolution: "axios@npm:1.5.0"
-  dependencies:
-    follow-redirects: ^1.15.0
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: e7405a5dbbea97760d0e6cd58fecba311b0401ddb4a8efbc4108f5537da9b3f278bde566deb777935a960beec4fa18e7b8353881f2f465e4f2c0e949fead35be
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.5.1":
+"axios@npm:^1.2.2, axios@npm:^1.5.1":
   version: 1.6.2
   resolution: "axios@npm:1.6.2"
   dependencies:
