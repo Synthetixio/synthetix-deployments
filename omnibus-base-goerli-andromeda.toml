@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.ebbab360"
+version = "3.3.3-dev.a9e7b5b7"
 description = "Andromeda"
 include = [
     "tomls/settings-testnet.toml",
@@ -30,16 +30,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.ebbab360"
+defaultValue = "synthetix:3.3.3-dev.a9e7b5b7"
 
 [setting.target_preset]
 defaultValue = "andromeda"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.ebbab360"
+defaultValue = "synthetix-spot-market:3.3.3-dev.a9e7b5b7"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.ebbab360"
+defaultValue = "synthetix-perps-market:3.3.3-dev.a9e7b5b7"
 
 [setting.salt]
 defaultValue = "andromeda"
