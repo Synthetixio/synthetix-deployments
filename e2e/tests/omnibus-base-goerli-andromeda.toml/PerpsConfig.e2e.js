@@ -2,6 +2,8 @@ const assert = require('assert');
 const { ethers } = require('ethers');
 const { wei } = require('@synthetixio/wei');
 
+const { contractCall } = require('../../utils/transact');
+
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 
@@ -12,10 +14,12 @@ describe('Perps Configuration Settings', function () {
   let address;
   let provider;
   let accountId;
+  let pythUrl;
   let PerpsMarketProxy;
 
   before(() => {
     provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+    pythUrl = 'https://xc-testnet.pyth.network/';
     wallet = ethers.Wallet.createRandom().connect(provider);
     address = wallet.address;
 
@@ -64,8 +68,15 @@ describe('Perps Configuration Settings', function () {
   });
 
   it('Check Perps Market Id is correct', async () => {
-    const marketId = await PerpsMarketProxy.getMarketSummary(200);
-    assert.equal(marketId.toNumber(), 200);
+    const marketSummary = await contractCall(
+      provider,
+      PerpsMarketProxy,
+      'getMarketSummary',
+      [200],
+      pythUrl
+    )
+
+    assert.ok(marketSummary.summary.size);
   });
 
   it('Check BTC Market Max Funding Velocity is correctly configured', async () => {});

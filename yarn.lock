@@ -47,6 +47,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.15.4":
+  version: 7.23.4
+  resolution: "@babel/runtime@npm:7.23.4"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 8eb6a6b2367f7d60e7f7dd83f477cc2e2fdb169e5460694d7614ce5c730e83324bcf29251b70940068e757ad1ee56ff8073a372260d90cad55f18a825caf97cd
+  languageName: node
+  linkType: hard
+
 "@chainsafe/as-sha256@npm:^0.3.1":
   version: 0.3.1
   resolution: "@chainsafe/as-sha256@npm:0.3.1"
@@ -997,6 +1006,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pythnetwork/price-service-client@npm:*":
+  version: 1.8.2
+  resolution: "@pythnetwork/price-service-client@npm:1.8.2"
+  dependencies:
+    "@pythnetwork/price-service-sdk": "*"
+    "@types/ws": ^8.5.3
+    axios: ^1.5.1
+    axios-retry: ^3.8.0
+    isomorphic-ws: ^4.0.1
+    ts-log: ^2.2.4
+    ws: ^8.6.0
+  checksum: 89fe51a671ce0e937f3657893dc60f20e439f8db87b4c157be2c3c44245936c93a62c93fd088b8b872a5e49ee8450ad159e94ebfa13598eefca56bd2a2ecd648
+  languageName: node
+  linkType: hard
+
+"@pythnetwork/price-service-sdk@npm:*":
+  version: 1.4.1
+  resolution: "@pythnetwork/price-service-sdk@npm:1.4.1"
+  checksum: 861c433e6a108835bd2bf55076188e426c1d0fb2ae5bfc420c802dd410eb8b811b189735bdc3938f76092955b0efbb4724d08b7730dbc2f69a73e827371ded47
+  languageName: node
+  linkType: hard
+
+"@pythnetwork/pyth-evm-js@npm:^1.29.2":
+  version: 1.29.2
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.29.2"
+  dependencies:
+    "@pythnetwork/price-service-client": "*"
+    buffer: ^6.0.3
+  checksum: 395f6466eab6a13e05bd30a9c2d7fab1845382342e66e7bd0572629caa8a48795107df0c9fcb77b59a4138d36b38bfdf35d1a892f7f573949313bd625dab08b3
+  languageName: node
+  linkType: hard
+
 "@scure/base@npm:~1.1.0, @scure/base@npm:~1.1.2":
   version: 1.1.3
   resolution: "@scure/base@npm:1.1.3"
@@ -1312,6 +1353,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 6f521a08486a98e71c8529f5c3119f99e610196a47243cc6052c6160b216dff2c85dc50a8f3208ed47028dbb470bbb6fdee47a3fdc064687e46021d5a712767c
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:^8.5.3":
+  version: 8.5.10
+  resolution: "@types/ws@npm:8.5.10"
+  dependencies:
+    "@types/node": "*"
+  checksum: 3ec416ea2be24042ebd677932a462cf16d2080393d8d7d0b1b3f5d6eaa4a7387aaf0eefb99193c0bfd29444857cf2e0c3ac89899e130550dc6c14ada8a46d25e
   languageName: node
   linkType: hard
 
@@ -1656,6 +1706,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios-retry@npm:^3.8.0":
+  version: 3.9.1
+  resolution: "axios-retry@npm:3.9.1"
+  dependencies:
+    "@babel/runtime": ^7.15.4
+    is-retry-allowed: ^2.2.0
+  checksum: 44e574ad559e4ee638e735662e9b9fcb69a1da6652adc3a75ca4b060e0fd40bdd7ac718e7743f51c0dad54149a6f3c09109275bf90298042542e80a17740a4e5
+  languageName: node
+  linkType: hard
+
 "axios@npm:^1.2.2":
   version: 1.5.0
   resolution: "axios@npm:1.5.0"
@@ -1664,6 +1724,17 @@ __metadata:
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
   checksum: e7405a5dbbea97760d0e6cd58fecba311b0401ddb4a8efbc4108f5537da9b3f278bde566deb777935a960beec4fa18e7b8353881f2f465e4f2c0e949fead35be
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.5.1":
+  version: 1.6.2
+  resolution: "axios@npm:1.6.2"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 4a7429e2b784be0f2902ca2680964391eae7236faa3967715f30ea45464b98ae3f1c6f631303b13dfe721b17126b01f486c7644b9ef276bfc63112db9fd379f8
   languageName: node
   linkType: hard
 
@@ -3388,6 +3459,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-retry-allowed@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "is-retry-allowed@npm:2.2.0"
+  checksum: 3d1103a9290b5d03626756a41054844633eac78bc5d3e3a95b13afeae94fa3cfbcf7f0b5520d83f75f48a25ce7b142fdbac4217dc4b0630f3ea55e866ec3a029
+  languageName: node
+  linkType: hard
+
 "is-unicode-supported@npm:^0.1.0":
   version: 0.1.0
   resolution: "is-unicode-supported@npm:0.1.0"
@@ -3399,6 +3477,15 @@ __metadata:
   version: 2.0.0
   resolution: "isexe@npm:2.0.0"
   checksum: 26bf6c5480dda5161c820c5b5c751ae1e766c587b1f951ea3fcfc973bafb7831ae5b54a31a69bd670220e42e99ec154475025a468eae58ea262f813fdc8d1c62
+  languageName: node
+  linkType: hard
+
+"isomorphic-ws@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "isomorphic-ws@npm:4.0.1"
+  peerDependencies:
+    ws: "*"
+  checksum: d7190eadefdc28bdb93d67b5f0c603385aaf87724fa2974abb382ac1ec9756ed2cfb27065cbe76122879c2d452e2982bc4314317f3d6c737ddda6c047328771a
   languageName: node
   linkType: hard
 
@@ -4679,6 +4766,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "regenerator-runtime@npm:0.14.0"
+  checksum: 1c977ad82a82a4412e4f639d65d22be376d3ebdd30da2c003eeafdaaacd03fc00c2320f18120007ee700900979284fc78a9f00da7fb593f6e6eeebc673fba9a3
+  languageName: node
+  linkType: hard
+
 "require-directory@npm:^2.1.1":
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
@@ -5251,6 +5345,7 @@ __metadata:
   dependencies:
     "@ethersproject/bytes": ^5.7.0
     "@iarna/toml": ^3.0.0
+    "@pythnetwork/pyth-evm-js": ^1.29.2
     "@synthetixio/wei": ^2.74.4
     "@types/mocha": ^10.0.5
     "@types/node": ^20.9.3
@@ -5375,6 +5470,13 @@ __metadata:
   peerDependencies:
     typescript: ">=3.7.0"
   checksum: 74d75868acf7f8b95e447d8b3b7442ca21738c6894e576df9917a352423fde5eb43c5651da5f78997da6061458160ae1f6b279150b42f47ccc58b73e55acaa2f
+  languageName: node
+  linkType: hard
+
+"ts-log@npm:^2.2.4":
+  version: 2.2.5
+  resolution: "ts-log@npm:2.2.5"
+  checksum: 28f78ab15b8555d56c089dbc243327d8ce4331219956242a29fc4cb3bad6bb0cb8234dd17a292381a1b1dba99a7e4849a2181b2e1a303e8247e9f4ca4e284f2d
   languageName: node
   linkType: hard
 
@@ -5877,6 +5979,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: c3c100a181b731f40b7f2fddf004aa023f79d64f489706a28bc23ff88e87f6a64b3c6651fbec3a84a53960b75159574d7a7385709847a62ddb7ad6af76f49138
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.6.0":
+  version: 8.14.2
+  resolution: "ws@npm:8.14.2"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 3ca0dad26e8cc6515ff392b622a1467430814c463b3368b0258e33696b1d4bed7510bc7030f7b72838b9fdeb8dbd8839cbf808367d6aae2e1d668ce741d4308b
   languageName: node
   linkType: hard
 

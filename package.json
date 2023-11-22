@@ -24,6 +24,7 @@
   "devDependencies": {
     "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
+    "@pythnetwork/pyth-evm-js": "^1.29.2",
     "@synthetixio/wei": "^2.74.4",
     "@types/mocha": "^10.0.5",
     "@types/node": "^20.9.3",

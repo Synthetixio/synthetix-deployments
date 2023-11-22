@@ -63,6 +63,7 @@ async function run() {
   contracts.AccountProxy = system.contracts.AccountProxy;
   contracts.USDProxy = system.contracts.USDProxy;
   contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
+  contracts.TrustedMulticallForwarder = system.imports.oracle_manager.imports.trusted_multicall_forwarder.contracts.TrustedMulticallForwarder;
 
   const spotFactory =
     deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
