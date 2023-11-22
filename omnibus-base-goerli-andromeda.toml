@@ -1,6 +1,7 @@
 name = "synthetix-omnibus"
 version = "3.3.3-dev.a9e7b5b7"
 description = "Andromeda"
+preset = "andromeda"
 include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
