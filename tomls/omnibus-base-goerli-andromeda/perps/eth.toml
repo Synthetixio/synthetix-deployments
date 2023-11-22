@@ -30,7 +30,7 @@ defaultValue = "0.02"
 [setting.perpsEthMaintenanceMarginScalar]
 defaultValue = "0.5"
 
-[setting.perpsEthLiquidationRewardRatioD18]
+[setting.perpsEthFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]

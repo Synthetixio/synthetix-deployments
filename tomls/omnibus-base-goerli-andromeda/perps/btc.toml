@@ -29,7 +29,7 @@ defaultValue = "0.5"
 [setting.perpsBtcMinimumInitialMarginRatio]
 defaultValue = "0.02"
 
-[setting.perpsBtcLiquidationRewardRatioD18]
+[setting.perpsBtcFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]

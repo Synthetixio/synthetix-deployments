@@ -22,7 +22,7 @@ include = [
 
 [setting.perpsSnxMaintenanceMarginFraction]
 
-[setting.perpsSnxLiquidationRewardRatioD18]
+[setting.perpsSnxFlagRewardRatioD18]
 
 [setting.perpsSnxMaxLiquidationLimitAccumulationMultiplier]
 
@@ -117,7 +117,7 @@ args = [
     "<%= parseEther(settings.perpsSnxInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsSnxMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsSnxMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsSnxLiquidationRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsSnxFlagRewardRatioD18) %>",
     "<%= parseEther(settings.perpsSnxMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createSnxPerpsMarket"]

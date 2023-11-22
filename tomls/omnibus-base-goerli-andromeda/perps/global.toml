@@ -1,10 +1,4 @@
 # GLOBAL PERPS SETTINGS
-[setting.perps_MinLiquidationReward]
-defaultValue = "1"
-
-[setting.perps_MaxLiquidationReward]
-defaultValue = "500"
-
 [setting.perps_StrictStalenessTolerance]
 defaultValue = "60"
 

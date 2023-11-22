@@ -18,7 +18,7 @@ include = ["../perps-factory.toml", "../../oracles/btc.toml", "../common/bigcap-
 
 [setting.perpsBtcMaintenanceMarginFraction]
 
-[setting.perpsBtcLiquidationRewardRatioD18]
+[setting.perpsBtcFlagRewardRatioD18]
 
 [setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
 
@@ -108,7 +108,7 @@ args = [
     "<%= parseEther(settings.perpsBtcInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsBtcMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsBtcMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsBtcLiquidationRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsBtcFlagRewardRatioD18) %>",
     "<%= parseEther(settings.perpsBtcMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createBtcPerpsMarket"]

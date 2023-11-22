@@ -20,7 +20,7 @@ include = [
 
 [setting.perpsLinkMaintenanceMarginFraction]
 
-[setting.perpsLinkLiquidationRewardRatioD18]
+[setting.perpsLinkFlagRewardRatioD18]
 
 [setting.perpsLinkMaxLiquidationLimitAccumulationMultiplier]
 
@@ -112,7 +112,7 @@ args = [
     "<%= parseEther(settings.perpsLinkInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsLinkMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsLinkMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsLinkLiquidationRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsLinkFlagRewardRatioD18) %>",
     "<%= parseEther(settings.perpsLinkMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createLinkPerpsMarket"]

@@ -29,7 +29,7 @@ defaultValue = "0.5"
 [setting.perpsLtcMinimumInitialMarginRatio]
 defaultValue = "0.02"
 
-[setting.perpsLtcLiquidationRewardRatioD18]
+[setting.perpsLtcFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsLtcMaxLiquidationLimitAccumulationMultiplier]
