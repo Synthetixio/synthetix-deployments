@@ -65,7 +65,7 @@ async function run() {
   contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
 
   const trustedMulticallForwarder =
-    system.imports.oracle_manager.imports.trusted_multicall_forwarder;
+    system.imports?.oracle_manager?.imports?.trusted_multicall_forwarder;
   if (trustedMulticallForwarder) {
     contracts.TrustedMulticallForwarder = trustedMulticallForwarder.contracts.TrustedMulticallForwarder;
   }
