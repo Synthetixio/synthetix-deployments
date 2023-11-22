@@ -39,11 +39,7 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= extras.btc_oracle_id %>",
-    "<%= settings.perps_StrictStalenessTolerance %>"
-]
+args = ["<%= settings.btcPerpsMarketId %>", "<%= extras.btc_oracle_id %>", "<%= settings.bigCapStrictStalenessTolerance %>"]
 depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
 
 [invoke.setPerpsBtcSettlementStrategy]
@@ -53,7 +49,7 @@ func = "addSettlementStrategy"
 args = [
     "<%= settings.btcPerpsMarketId %>",
     # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 
