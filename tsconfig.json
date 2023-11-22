@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "lib": ["esnext"],
+    "outDir": "./dist",
+    "strict": false,
+    "esModuleInterop": true, 
+    "skipLibCheck": true, 
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["e2e/**/*"],
+  "exclude": [
+    "node_modules",
+    ".circleci",
+    ".yarn",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "*.json",
+    "*.toml",
+    "*.yml",
+    "*.md",
+  ]
+}
