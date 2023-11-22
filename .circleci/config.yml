@@ -198,7 +198,7 @@ jobs:
           name: "Run tests"
           environment:
             - DEBUG: "e2e:*"
-          command: yarn mocha e2e/tests/<< parameters.toml >>/*.e2e.js
+          command: yarn mocha e2e/tests/<< parameters.toml >>/*.e2e.{js,ts}
 
 workflows:
   version: 2.1
