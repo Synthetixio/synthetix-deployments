@@ -10,13 +10,14 @@
     "build": "node e2e/fetch-deployments.js",
     "test": "DEBUG='tasks:*' mocha",
     "pretty": "prettier . '**/*.toml' --write",
-    "pretty:check": "prettier . '**/*.toml' --check"
+    "pretty:check": "prettier . '**/*.toml' --check",
+    "cannon": "cannon"
   },
   "devDependencies": {
     "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
-    "@usecannon/builder": "2.10.0-alpha.0",
-    "@usecannon/cli": "2.10.0-alpha.0",
+    "@usecannon/builder": "2.10.0-alpha.1",
+    "@usecannon/cli": "2.10.0-alpha.1",
     "debug": "^4.3.4",
     "ethers": "^5.7.2",
     "hardhat": "^2.19.0",

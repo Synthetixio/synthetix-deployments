@@ -1187,9 +1187,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.0-alpha.0, @usecannon/builder@npm:^2.10.0-alpha.0":
-  version: 2.10.0-alpha.0
-  resolution: "@usecannon/builder@npm:2.10.0-alpha.0"
+"@usecannon/builder@npm:2.10.0-alpha.1, @usecannon/builder@npm:^2.10.0-alpha.1":
+  version: 2.10.0-alpha.1
+  resolution: "@usecannon/builder@npm:2.10.0-alpha.1"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.2.2
@@ -1204,17 +1204,17 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 30c41b8739d1987e7d8b5975fd427100bce3e40d8a71cb443d61fac394047512943630f8719d9208564eaf779396a7da99ba80b772b805cd6f61415d39809505
+  checksum: b78afadfbd4b0edd67f0f0cb647e1a38eceb1307ef155ca53a25a166ad2c576fbd1f4dcadbed419331b66203d7856f6759729684030bca8f8444b30e63f0258d
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.10.0-alpha.0":
-  version: 2.10.0-alpha.0
-  resolution: "@usecannon/cli@npm:2.10.0-alpha.0"
+"@usecannon/cli@npm:2.10.0-alpha.1":
+  version: 2.10.0-alpha.1
+  resolution: "@usecannon/cli@npm:2.10.0-alpha.1"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.10.0-alpha.0
+    "@usecannon/builder": ^2.10.0-alpha.1
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1231,7 +1231,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: 6b46f6559d8f0a802bdb7486234aff80f7c4a6eee91f35739bd3d8ad409c5f51f653d70ed24f1563660da9f6d4c255239070a819a88f432dc60e0bc97619a0cd
+  checksum: ac1e2812880fc8e041cdac309ac499a9d10b675ddb13b38bcd51a2bde80806ee57a3a3aceff41d4dae0e2923519472b9b9d748ce3c241298e7c8d3cfae9e184b
   languageName: node
   linkType: hard
 
@@ -4894,8 +4894,8 @@ __metadata:
   dependencies:
     "@ethersproject/bytes": ^5.7.0
     "@iarna/toml": ^3.0.0
-    "@usecannon/builder": 2.10.0-alpha.0
-    "@usecannon/cli": 2.10.0-alpha.0
+    "@usecannon/builder": 2.10.0-alpha.1
+    "@usecannon/cli": 2.10.0-alpha.1
     debug: ^4.3.4
     ethers: ^5.7.2
     hardhat: ^2.19.0

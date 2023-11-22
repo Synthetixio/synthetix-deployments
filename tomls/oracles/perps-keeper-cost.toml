@@ -1,7 +1,7 @@
 include = ["../core.toml"]
 
 [provision.perps_gas_oracle_node]
-source = "op-gas-price-oracle"
+source = "op-gas-price-oracle:dev"
 
 # sourcePreset = "andromeda"
 [invoke.registerPerps_KeeperCostEthOracleNode]
