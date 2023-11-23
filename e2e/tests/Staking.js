@@ -17,12 +17,13 @@ const { setSnxBalance } = require('../tasks/setSnxBalance');
 const { withdrawCollateral } = require('../tasks/withdrawCollateral');
 
 exports.run = function () {
+  let wallet;
   let address;
   let privateKey;
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
 
   it('should create new random wallet', async () => {
-    const wallet = ethers.Wallet.createRandom();
+    wallet = ethers.Wallet.createRandom();
     address = wallet.address;
     privateKey = wallet.privateKey;
     assert.ok(address);
@@ -60,7 +61,7 @@ exports.run = function () {
       ethers.constants.AddressZero,
       'New wallet should not have an account yet'
     );
-    await createAccount({ privateKey, accountId });
+    await createAccount({ wallet, accountId });
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
