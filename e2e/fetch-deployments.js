@@ -84,7 +84,7 @@ async function run() {
       perpsFactory.contracts.PerpsAccountProxy ?? perpsFactory.contracts.AccountProxy;
   }
 
-  async function mintableToken(provisionStep) {
+  function mintableToken(provisionStep) {
     const fakeCollateral =
       deployments?.state?.[`provision.${provisionStep}`]?.artifacts?.imports?.[provisionStep];
     if (fakeCollateral) {
@@ -92,12 +92,40 @@ async function run() {
       contracts[`FakeCollateral${ticker}`] = fakeCollateral.contracts.MintableToken;
     }
   }
-  await mintableToken('usdc_mock_collateral');
-  await mintableToken('mintableToken');
+  mintableToken('usdc_mock_collateral');
+  mintableToken('mintableToken');
 
+  // Extract all extras
   Object.values(deployments?.state).forEach((step) =>
     Object.assign(extras, step?.artifacts?.extras)
   );
+
+  // Extract all oracle addresses
+  const oracles = {};
+  function oracleNode(invokeStep) {
+    const oracleNodeArgs =
+      deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
+        ?.NodeRegistered?.[0]?.args;
+    console.log(`oracleNodeArgs`, oracleNodeArgs?.length, oracleNodeArgs);
+    if (oracleNodeArgs?.length === 4) {
+      const [id, nodeType, data] = oracleNodeArgs;
+      const [address, feedId, staleness] = ethers.utils.defaultAbiCoder.decode(
+        ['address', 'bytes32', 'uint256'],
+        data
+      );
+      oracles[invokeStep] = {
+        id,
+        address,
+        nodeType: parseInt(nodeType.toString()),
+        feedId,
+        staleness: parseInt(staleness.toString()),
+      };
+    }
+  }
+  oracleNode('registerBtcOracleNode');
+  oracleNode('registerEthOracleNode');
+  oracleNode('registerLtcOracleNode');
+  oracleNode('registerXrpOracleNode');
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
@@ -112,6 +140,9 @@ async function run() {
 
   console.log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
+
+  console.log('Writing', `deployments/oracles.json`);
+  await fs.writeFile(`${__dirname}/deployments/oracles.json`, JSON.stringify(oracles, null, 2));
 
   console.log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
