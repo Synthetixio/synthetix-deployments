@@ -17,7 +17,7 @@
     "start:andromeda": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
     "fetch-deployments": "node ./e2e/fetch-deployments.js ./e2e/cannon-build.log",
     "deploy": "node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson",
-    "test:andromeda": "DEBUG='e2e:*' mocha -r ts-node/register ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.{js,ts}",
+    "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.js",
     "pretty": "prettier . '**/*.toml' --write",
     "pretty:check": "prettier . '**/*.toml' --check"
   },
@@ -26,8 +26,6 @@
     "@iarna/toml": "^3.0.0",
     "@pythnetwork/pyth-evm-js": "^1.29.2",
     "@synthetixio/wei": "^2.74.4",
-    "@types/mocha": "^10.0.5",
-    "@types/node": "^20.9.3",
     "@usecannon/builder": "2.9.11",
     "@usecannon/cli": "2.9.11",
     "debug": "^4.3.4",
@@ -38,8 +36,6 @@
     "prettier": "^3.1.0",
     "prettier-plugin-toml": "^1.0.0",
     "solc": "^0.8.22",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.3.2",
     "viem": "^1.19.6"
   },
   "mocha": {

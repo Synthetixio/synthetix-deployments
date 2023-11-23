@@ -1,36 +1,24 @@
-import { Contract } from '@ethersproject/contracts';
-import { Wallet } from '@ethersproject/wallet';
-import { JsonRpcProvider } from '@ethersproject/providers';
-import {
-  createPublicClient,
-  createWalletClient,
-  Address,
-  Hex,
-  TransactionRequestBase,
-  zeroAddress,
-  PublicClient,
-  WalletClient,
-  custom,
-} from 'viem';
+const { ethers } = require('ethers');
+const { createPublicClient, createWalletClient, zeroAddress, custom } = require('viem');
 import { EIP7412 } from 'erc7412';
 import { PythAdapter } from 'erc7412/dist/src/adapters/pyth';
 const TrustedMulticallForwarderDeployment = require('../deployments/TrustedMulticallForwarder.json');
 
-const TrustedMulticallForwarder = new Contract(
+const TrustedMulticallForwarder = new ethers.Contract(
   TrustedMulticallForwarderDeployment.address,
   TrustedMulticallForwarderDeployment.abi
 );
 
-function getClients(provider: JsonRpcProvider) {
+function getClients(provider) {
   const publicClient = createPublicClient({
     transport: custom({
-      request: ({ method, params }) => (provider as any).send(method, params),
+      request: ({ method, params }) => provider.send(method, params),
     }),
   });
 
   const walletClient = createWalletClient({
     transport: custom({
-      request: ({ method, params }) => (provider as any).send(method, params),
+      request: ({ method, params }) => provider.send(method, params),
     }),
   });
   return {
@@ -39,21 +27,12 @@ function getClients(provider: JsonRpcProvider) {
   };
 }
 
-async function generate7412CompatibleCall(
-  client: PublicClient,
-  txn: Partial<TransactionRequestBase>,
-  pythUrl: string
-) {
+async function generate7412CompatibleCall(client, txn, pythUrl) {
   const converter = new EIP7412([new PythAdapter(pythUrl)], makeMulticall);
-  return await converter.enableERC7412(client as any, txn);
+  return await converter.enableERC7412(client, txn);
 }
 
-function makeMulticall(txns: Partial<TransactionRequestBase>[]): {
-  operation: string;
-  to: Address;
-  value: bigint;
-  data: Hex;
-} {
+function makeMulticall(txns) {
   let totalValue = BigInt(0);
   for (const txn of txns) {
     totalValue = totalValue + (txn.value || BigInt(0));
@@ -66,60 +45,54 @@ function makeMulticall(txns: Partial<TransactionRequestBase>[]): {
       value: txn.value || '0',
       allowFailure: false,
     })),
-  ]) as `0x${string}`;
+  ]);
 
   return {
     operation: '1', // multicall is a DELEGATECALL
-    to: TrustedMulticallForwarder.address as Address,
+    to: TrustedMulticallForwarder.address,
     value: totalValue,
     data,
   };
 }
 
-export async function contractCall(
-  provider: JsonRpcProvider,
-  contract: Contract,
-  functionName: string,
-  params: any,
-  pythUrl: string
-) {
+export async function contractCall(provider, contract, functionName, params, pythUrl) {
   const data = contract.interface.encodeFunctionData(functionName, params);
   const txn = {
     to: contract.address,
     data,
-  } as Partial<TransactionRequestBase>;
+  };
   const { publicClient } = getClients(provider);
 
   const call = await generate7412CompatibleCall(publicClient, txn, pythUrl);
   const res = await publicClient.call({ ...call, account: zeroAddress });
 
   try {
-    const multicallValue: any = TrustedMulticallForwarder.interface.decodeFunctionResult(
+    const multicallValue = TrustedMulticallForwarder.interface.decodeFunctionResult(
       'aggregate3Value',
-      (res as any).data as any
+      res.data
     );
 
     if (Array.isArray(multicallValue) && multicallValue[multicallValue.length - 1].success) {
       return contract.interface.decodeFunctionResult(
         functionName,
-        multicallValue[multicallValue.length - 1].returnData as any
+        multicallValue[multicallValue.length - 1].returnData
       );
     } else {
-      return contract.interface.decodeFunctionResult(functionName, (res as any).data as any);
+      return contract.interface.decodeFunctionResult(functionName, res.data);
     }
   } catch {
-    return contract.interface.decodeFunctionResult(functionName, (res as any).data as any);
+    return contract.interface.decodeFunctionResult(functionName, res.data);
   }
 }
 
 export async function contractTransaction(
-  from: Address,
-  provider: JsonRpcProvider,
-  wallet: Wallet,
-  contract: Contract,
-  functionName: string,
-  params: any,
-  pythUrl: string
+  from,
+  provider,
+  wallet,
+  contract,
+  functionName,
+  params,
+  pythUrl
 ) {
   const { publicClient } = getClients(provider);
 
@@ -129,7 +102,7 @@ export async function contractTransaction(
     account: from,
     to: contract.address,
     data,
-  } as Partial<TransactionRequestBase>;
+  };
   const call = await generate7412CompatibleCall(publicClient, txn, pythUrl);
 
   const tx = await wallet.sendTransaction({
