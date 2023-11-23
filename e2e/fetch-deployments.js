@@ -39,9 +39,9 @@ async function run() {
   const hash = CliLoader.getCacheHash(url);
   console.log(`Resolved FileName hash:`, { hash });
 
-  const deployments = JSON.parse(
-    await fs.readFile(`${CANNON_DIRECTORY}/ipfs_cache/${CliLoader.getCacheHash(url)}.json`, 'utf8')
-  );
+  const deploymentsFile = `${CANNON_DIRECTORY}/ipfs_cache/${CliLoader.getCacheHash(url)}.json`;
+  console.log(`Deployments state file:`, { file: deploymentsFile.replace(os.homedir(), '~') });
+  const deployments = JSON.parse(await fs.readFile(deploymentsFile, 'utf8'));
 
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
 
@@ -64,8 +64,7 @@ async function run() {
   contracts.USDProxy = system.contracts.USDProxy;
   contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
 
-  const trustedMulticallForwarder =
-    system.imports?.oracle_manager?.imports?.trusted_multicall_forwarder;
+  const trustedMulticallForwarder = system?.imports?.trusted_multicall_forwarder;
   if (trustedMulticallForwarder) {
     contracts.TrustedMulticallForwarder =
       trustedMulticallForwarder.contracts.TrustedMulticallForwarder;
@@ -96,7 +95,10 @@ async function run() {
   await mintableToken('usdc_mock_collateral');
   await mintableToken('mintableToken');
 
-  Object.assign(extras, deployments?.state?.[`invoke.createUsdcSynth`]?.artifacts?.extras);
+  Object.values(deployments?.state).forEach((step) =>
+    Object.assign(extras, step?.artifacts?.extras)
+  );
+
   Object.assign(meta, {
     contracts: Object.fromEntries(
       Object.entries(contracts).map(([name, { address }]) => [name, address])
