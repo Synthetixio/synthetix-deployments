@@ -1,6 +1,11 @@
 const util = require('util');
 const { ethers } = require('ethers');
 
+const ERC7412_ABI = [
+  'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
+  'error FeeRequired(uint feeAmount)',
+];
+
 function parseError(error) {
   const rpcError = error?.error?.error?.error;
   const errorData = rpcError?.data;
@@ -13,7 +18,7 @@ function parseError(error) {
   const errorParsed = (() => {
     try {
       const { abi, address } = require('./deployments/AllErrors.json');
-      const AllErrors = new ethers.Contract(address, abi, provider);
+      const AllErrors = new ethers.Contract(address, abi.concat(ERC7412_ABI), provider);
       const data = AllErrors.interface.parseError(errorData);
       return data;
     } catch (e) {}

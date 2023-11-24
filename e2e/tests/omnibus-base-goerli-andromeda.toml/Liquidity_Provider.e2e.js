@@ -19,24 +19,25 @@ const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
+const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
 
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const USDCDeployment = require('../../deployments/FakeCollateralTKN.json');
 
-describe('Collateral Limits', function () {
-  let wallet;
-  let address;
-  let privateKey;
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
+
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const wallet = ethers.Wallet.createRandom().connect(provider);
+  const address = wallet.address;
+  const privateKey = wallet.privateKey;
 
   it('should create new random wallet', async () => {
-    wallet = ethers.Wallet.createRandom().connect(provider);
-    address = wallet.address;
-    privateKey = wallet.privateKey;
-    assert.ok(address);
+    log({ wallet: wallet.address, pk: wallet.privateKey });
+    assert.ok(wallet.address);
   });
 
   it('should set ETH balance to 100', async () => {
@@ -98,7 +99,7 @@ describe('Collateral Limits', function () {
       ethers.constants.AddressZero,
       'New wallet should not have an account yet'
     );
-    await createAccount({ privateKey, accountId });
+    await createAccount({ wallet, accountId });
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
@@ -156,6 +157,13 @@ describe('Collateral Limits', function () {
       totalAssigned: 0,
       totalLocked: 0,
     });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'BTC' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'LTC' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'XRP' });
+    // LTC and XRP were copypasted from BTC, so the oracle config is exactly the same for them
+    // delegateCollateral still fails with the same issue that oracle data is required for BTC feed
+    // (might be because of a collision?)
     await delegateCollateral({
       privateKey,
       symbol: 'sUSDC',
@@ -176,6 +184,10 @@ describe('Collateral Limits', function () {
       totalAssigned: 300,
       totalLocked: 0,
     });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'BTC' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'LTC' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'XRP' });
     await delegateCollateral({
       privateKey,
       symbol: 'sUSDC',
