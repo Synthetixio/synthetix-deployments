@@ -106,14 +106,13 @@ async function run() {
     const oracleNodeArgs =
       deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
         ?.NodeRegistered?.[0]?.args;
-    console.log(`oracleNodeArgs`, oracleNodeArgs?.length, oracleNodeArgs);
     if (oracleNodeArgs?.length === 4) {
       const [id, nodeType, data] = oracleNodeArgs;
       const [address, feedId, staleness] = ethers.utils.defaultAbiCoder.decode(
         ['address', 'bytes32', 'uint256'],
         data
       );
-      oracles[invokeStep] = {
+      return {
         id,
         address,
         nodeType: parseInt(nodeType.toString()),
@@ -122,10 +121,10 @@ async function run() {
       };
     }
   }
-  oracleNode('registerBtcOracleNode');
-  oracleNode('registerEthOracleNode');
-  oracleNode('registerLtcOracleNode');
-  oracleNode('registerXrpOracleNode');
+  oracles.BTC = oracleNode('registerBtcOracleNode');
+  oracles.ETH = oracleNode('registerEthOracleNode');
+  oracles.LTC = oracleNode('registerLtcOracleNode');
+  oracles.XRP = oracleNode('registerXrpOracleNode');
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
