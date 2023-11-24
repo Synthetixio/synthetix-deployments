@@ -1,26 +1,24 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
 const crypto = require('crypto');
-
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+require('../../inspect');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
 const { createPerpsAccount } = require('../../tasks/createPerpsAccount');
+const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
 
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 
-//const PYTH_MAINNET_ENDPOINT =
-//  process.env.PYTH_MAINNET_ENDPOINT || 'https://xc-mainnet.pyth.network';
-//const PYTH_TESTNET_ENDPOINT =
-//  process.env.PYTH_TESTNET_ENDPOINT || 'https://xc-testnet.pyth.network';
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-describe('Perps Configuration Settings', function () {
-  let wallet;
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const wallet = ethers.Wallet.createRandom().connect(provider);
+
   const PerpsMarketProxy = new ethers.Contract(
     PerpsMarketProxyDeployment.address,
     PerpsMarketProxyDeployment.abi,
@@ -28,7 +26,7 @@ describe('Perps Configuration Settings', function () {
   );
 
   it('should create new random wallet', async () => {
-    wallet = ethers.Wallet.createRandom().connect(provider);
+    log({ wallet: wallet.address, pk: wallet.privateKey });
     assert.ok(wallet.address);
   });
 
@@ -51,33 +49,43 @@ describe('Perps Configuration Settings', function () {
     assert.equal(permissions.length, 0);
   });
 
-  //  it('Check BTC Market exists', async () => {
-  //    const markets = [...(await PerpsMarketProxy.getMarkets())].map((item) => item.toNumber());
-  //    assert.ok(markets.includes(200));
-  //  });
-  //
-  //  it('Check Metadata is', async () => {
-  //    const metadata = await PerpsMarketProxy.metadata(200);
-  //    assert.equal(metadata.name, 'Bitcoin');
-  //    assert.equal(metadata.symbol, 'BTC');
-  //  });
-  //
-  //  it('Check BTC Max Open Interest is', async () => {
-  //    const maxOI = await PerpsMarketProxy.maxOpenInterest(200);
-  //    assert.equal(wei(maxOI, 18, true).toNumber(), 30);
-  //  });
-  //
-  //  it('Can request a perps market summary', async () => {
-  //    const marketSummary = await contractCall(
-  //      provider,
-  //      PerpsMarketProxy,
-  //      'getMarketSummary',
-  //      [200],
-  //      pythUrl
-  //    );
-  //
-  //    assert.ok(marketSummary.summary.size);
-  //  });
+  it('Check BTC Market exists', async () => {
+    const markets = [...(await PerpsMarketProxy.getMarkets())].map((item) => item.toNumber());
+    log({ markets });
+    assert.ok(markets.includes(200));
+  });
+
+  it('Check Metadata is', async () => {
+    const metadata = await PerpsMarketProxy.metadata(200);
+    log({ metadata });
+    assert.equal(metadata.name, 'Bitcoin');
+    assert.equal(metadata.symbol, 'BTC');
+  });
+
+  it('Check BTC Max Open Interest is', async () => {
+    const maxOpenInterest = parseFloat(
+      ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(200))
+    );
+    log({ maxOpenInterest });
+    assert.equal(maxOpenInterest, 30);
+  });
+
+  it('Can request a perps market summary', async () => {
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'BTC' });
+    const data = await PerpsMarketProxy.getMarketSummary(200);
+    log({ data });
+    const marketSummary = {
+      skew: parseFloat(ethers.utils.formatEther(data.skew)),
+      size: parseFloat(ethers.utils.formatEther(data.size)),
+      maxOpenInterest: parseFloat(ethers.utils.formatEther(data.maxOpenInterest)),
+      currentFundingRate: parseFloat(ethers.utils.formatEther(data.currentFundingRate)),
+      currentFundingVelocity: parseFloat(ethers.utils.formatEther(data.currentFundingVelocity)),
+      indexPrice: parseFloat(ethers.utils.formatEther(data.indexPrice)),
+    };
+
+    log({ marketSummary });
+    assert.ok(marketSummary.size > 0);
+  });
 
   //  it('Check BTC Market Max Funding Velocity is configured', async () => {});
   //

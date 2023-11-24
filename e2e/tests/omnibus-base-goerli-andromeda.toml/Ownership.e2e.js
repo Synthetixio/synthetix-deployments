@@ -10,7 +10,7 @@ const meta = require('../../deployments/meta.json');
 // const TESTNET_DEPLOYER = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
 const DAO_GNOSIS_SAFE = '0xb48AecD3CA86a7bE44baEbB6b8BAb77CDf612D14';
 
-describe('Ownership checks', function () {
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
 
   const CoreProxy = new ethers.Contract(
