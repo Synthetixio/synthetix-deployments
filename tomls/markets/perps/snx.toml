@@ -49,7 +49,11 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = ["<%= settings.snxPerpsMarketId %>", "<%= extras.snx_oracle_id %>", "<%= settings.bigCapStrictStalenessTolerance %>"]
+args = [
+    "<%= settings.snxPerpsMarketId %>",
+    "<%= extras.snx_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>"
+]
 depends = ["invoke.createSnxPerpsMarket", "invoke.registerSnxOracleNode"]
 
 [invoke.setPerpsSnxSettlementStrategy]
