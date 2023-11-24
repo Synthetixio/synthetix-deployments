@@ -12,7 +12,7 @@ const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
 
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);

@@ -2,7 +2,7 @@ const assert = require('assert');
 const { ethers } = require('ethers');
 require('../../inspect');
 
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const meta = require('../../deployments/meta.json');
