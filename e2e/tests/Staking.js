@@ -7,7 +7,7 @@ const { delegateCollateral } = require('../tasks/delegateCollateral');
 const { depositCollateral } = require('../tasks/depositCollateral');
 const { getAccountCollateral } = require('../tasks/getAccountCollateral');
 const { getAccountOwner } = require('../tasks/getAccountOwner');
-const { getCollateralAllowance } = require('../tasks/getCollateralAllowance');
+const { isCollateralApproved } = require('../tasks/isCollateralApproved');
 const { getCollateralBalance } = require('../tasks/getCollateralBalance');
 const { getConfigUint } = require('../tasks/getConfigUint');
 const { getEthBalance } = require('../tasks/getEthBalance');
@@ -16,16 +16,18 @@ const { setEthBalance } = require('../tasks/setEthBalance');
 const { setSnxBalance } = require('../tasks/setSnxBalance');
 const { withdrawCollateral } = require('../tasks/withdrawCollateral');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
 exports.run = function () {
-  let address;
-  let privateKey;
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const wallet = ethers.Wallet.createRandom().connect(provider);
+  const address = wallet.address;
+  const privateKey = wallet.privateKey;
 
   it('should create new random wallet', async () => {
-    const wallet = ethers.Wallet.createRandom();
-    address = wallet.address;
-    privateKey = wallet.privateKey;
-    assert.ok(address);
+    log({ wallet: wallet.address, pk: wallet.privateKey });
+    assert.ok(wallet.address);
   });
 
   it('should set ETH balance to 100', async () => {
@@ -46,15 +48,12 @@ exports.run = function () {
 
   it('should approve SNX spending', async () => {
     assert.equal(
-      await getCollateralAllowance({ address, symbol: 'SNX' }),
-      0,
-      'New wallet has 0 SNX allowance for CoreProxy'
+      await isCollateralApproved({ address, symbol: 'SNX' }),
+      false,
+      'new wallet has not yet approved SNX for CoreProxy'
     );
     await approveCollateral({ privateKey, symbol: 'SNX' });
-    assert.equal(
-      await getCollateralAllowance({ address, symbol: 'SNX' }),
-      parseFloat(ethers.utils.formatUnits(ethers.constants.MaxUint256))
-    );
+    assert.equal(await isCollateralApproved({ address, symbol: 'SNX' }), true);
   });
 
   it('should create user account', async () => {
@@ -63,7 +62,7 @@ exports.run = function () {
       ethers.constants.AddressZero,
       'New wallet should not have an account yet'
     );
-    await createAccount({ privateKey, accountId });
+    await createAccount({ wallet, accountId });
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 

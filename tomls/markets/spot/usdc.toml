@@ -5,6 +5,7 @@ source = "mintable-token"
 sourcePreset = "permissionless-mint"
 
 [setting.synthUsdcMaxMarketCollateral]
+description = "Must be in wei"
 
 [invoke.createUsdcSynth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -37,7 +38,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-    "<%= parseEther(settings.synthUsdcMaxMarketCollateral) %>"
+    "<%= settings.synthUsdcMaxMarketCollateral %>"
 ]
 depends = ["invoke.createUsdcSynth"]
 
@@ -49,7 +50,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-    "<%= parseEther(settings.synthUsdcMaxMarketCollateral) %>"
+    "<%= settings.synthUsdcMaxMarketCollateral %>"
 ]
 depends = ["invoke.createUsdcSynth"]
 

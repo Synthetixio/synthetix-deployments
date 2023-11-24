@@ -1,8 +1,9 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
+const { parseError } = require('../parseError');
 
-const log = require('debug')(`tasks:${require('path').basename(__filename, '.js')}`);
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
   const config = await getCollateralConfig(symbol);
@@ -26,13 +27,15 @@ async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
     maxDebt,
     debt,
   });
-  const tx = await coreProxy.mintUsd(
-    ethers.BigNumber.from(accountId),
-    ethers.BigNumber.from(poolId),
-    config.tokenAddress,
-    ethers.utils.parseEther(`${debt}`),
-    { gasLimit: 10_000_000 }
-  );
+  const tx = await coreProxy
+    .mintUsd(
+      ethers.BigNumber.from(accountId),
+      ethers.BigNumber.from(poolId),
+      config.tokenAddress,
+      ethers.utils.parseEther(`${debt}`),
+      { gasLimit: 10_000_000 }
+    )
+    .catch(parseError);
   await tx.wait();
   return debt;
 }
