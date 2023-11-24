@@ -19,8 +19,8 @@ function number(obj) {
   if (obj.eq(ethers.constants.MaxInt256)) {
     return 'MaxInt256';
   }
-  if (obj.gt(1e12)) {
-    // Assuming everything bigger than 1e12 is a wei
+  if (obj.abs().gt(1e10)) {
+    // Assuming everything bigger than 1e10 is a wei
     return `wei ${parseFloat(ethers.utils.formatEther(`${obj}`))}`;
   }
   return parseFloat(obj.toString());

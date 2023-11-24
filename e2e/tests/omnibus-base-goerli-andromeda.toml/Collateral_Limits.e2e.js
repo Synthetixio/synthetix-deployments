@@ -16,7 +16,7 @@ const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const USDCDeployment = require('../../deployments/FakeCollateralTKN.json');
 
-describe('Collateral Limits', function () {
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   let wallet;
   let address;
   let privateKey;

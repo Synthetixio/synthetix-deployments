@@ -39,9 +39,9 @@ async function run() {
   const hash = CliLoader.getCacheHash(url);
   console.log(`Resolved FileName hash:`, { hash });
 
-  const deployments = JSON.parse(
-    await fs.readFile(`${CANNON_DIRECTORY}/ipfs_cache/${CliLoader.getCacheHash(url)}.json`, 'utf8')
-  );
+  const deploymentsFile = `${CANNON_DIRECTORY}/ipfs_cache/${CliLoader.getCacheHash(url)}.json`;
+  console.log(`Deployments state file:`, { file: deploymentsFile.replace(os.homedir(), '~') });
+  const deployments = JSON.parse(await fs.readFile(deploymentsFile, 'utf8'));
 
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
 
@@ -64,6 +64,12 @@ async function run() {
   contracts.USDProxy = system.contracts.USDProxy;
   contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
 
+  const trustedMulticallForwarder = system?.imports?.trusted_multicall_forwarder;
+  if (trustedMulticallForwarder) {
+    contracts.TrustedMulticallForwarder =
+      trustedMulticallForwarder.contracts.TrustedMulticallForwarder;
+  }
+
   const spotFactory =
     deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
   if (spotFactory) {
@@ -78,7 +84,7 @@ async function run() {
       perpsFactory.contracts.PerpsAccountProxy ?? perpsFactory.contracts.AccountProxy;
   }
 
-  async function mintableToken(provisionStep) {
+  function mintableToken(provisionStep) {
     const fakeCollateral =
       deployments?.state?.[`provision.${provisionStep}`]?.artifacts?.imports?.[provisionStep];
     if (fakeCollateral) {
@@ -86,10 +92,40 @@ async function run() {
       contracts[`FakeCollateral${ticker}`] = fakeCollateral.contracts.MintableToken;
     }
   }
-  await mintableToken('usdc_mock_collateral');
-  await mintableToken('mintableToken');
+  mintableToken('usdc_mock_collateral');
+  mintableToken('mintableToken');
 
-  Object.assign(extras, deployments?.state?.[`invoke.createUsdcSynth`]?.artifacts?.extras);
+  // Extract all extras
+  Object.values(deployments?.state).forEach((step) =>
+    Object.assign(extras, step?.artifacts?.extras)
+  );
+
+  // Extract all oracle addresses
+  const oracles = {};
+  function oracleNode(invokeStep) {
+    const oracleNodeArgs =
+      deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
+        ?.NodeRegistered?.[0]?.args;
+    if (oracleNodeArgs?.length === 4) {
+      const [id, nodeType, data] = oracleNodeArgs;
+      const [address, feedId, staleness] = ethers.utils.defaultAbiCoder.decode(
+        ['address', 'bytes32', 'uint256'],
+        data
+      );
+      return {
+        id,
+        address,
+        nodeType: parseInt(nodeType.toString()),
+        feedId,
+        staleness: parseInt(staleness.toString()),
+      };
+    }
+  }
+  oracles.BTC = oracleNode('registerBtcOracleNode');
+  oracles.ETH = oracleNode('registerEthOracleNode');
+  oracles.LTC = oracleNode('registerLtcOracleNode');
+  oracles.XRP = oracleNode('registerXrpOracleNode');
+
   Object.assign(meta, {
     contracts: Object.fromEntries(
       Object.entries(contracts).map(([name, { address }]) => [name, address])
@@ -103,6 +139,9 @@ async function run() {
 
   console.log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
+
+  console.log('Writing', `deployments/oracles.json`);
+  await fs.writeFile(`${__dirname}/deployments/oracles.json`, JSON.stringify(oracles, null, 2));
 
   console.log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));

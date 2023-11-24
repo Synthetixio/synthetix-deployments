@@ -17,13 +17,13 @@
     "start:andromeda": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
     "fetch-deployments": "node ./e2e/fetch-deployments.js ./e2e/cannon-build.log",
     "deploy": "node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson",
-    "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.e2e.js",
+    "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.js",
     "pretty": "prettier . '**/*.toml' --write",
     "pretty:check": "prettier . '**/*.toml' --check"
   },
   "devDependencies": {
-    "@ethersproject/bytes": "^5.7.0",
     "@iarna/toml": "^3.0.0",
+    "@pythnetwork/pyth-evm-js": "^1.29.2",
     "@usecannon/builder": "2.9.11",
     "@usecannon/cli": "2.9.11",
     "debug": "^4.3.4",
