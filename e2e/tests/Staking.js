@@ -16,17 +16,18 @@ const { setEthBalance } = require('../tasks/setEthBalance');
 const { setSnxBalance } = require('../tasks/setSnxBalance');
 const { withdrawCollateral } = require('../tasks/withdrawCollateral');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
 exports.run = function () {
-  let wallet;
-  let address;
-  let privateKey;
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
+  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const wallet = ethers.Wallet.createRandom().connect(provider);
+  const address = wallet.address;
+  const privateKey = wallet.privateKey;
 
   it('should create new random wallet', async () => {
-    wallet = ethers.Wallet.createRandom();
-    address = wallet.address;
-    privateKey = wallet.privateKey;
-    assert.ok(address);
+    log({ wallet: wallet.address, pk: wallet.privateKey });
+    assert.ok(wallet.address);
   });
 
   it('should set ETH balance to 100', async () => {
