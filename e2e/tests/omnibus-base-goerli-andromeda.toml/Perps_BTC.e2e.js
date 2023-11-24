@@ -49,20 +49,28 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('Check BTC Market exists', async () => {
-    const markets = [...(await PerpsMarketProxy.getMarkets())].map((item) => item.toNumber());
+  it('should have BTC market deployed among others', async () => {
+    const markets = await PerpsMarketProxy.getMarkets();
     log({ markets });
-    assert.ok(markets.includes(200));
-  });
-
-  it('Check Metadata is', async () => {
-    const metadata = await PerpsMarketProxy.metadata(200);
+    const metadata = await Promise.all(
+      markets.map((marketId) =>
+        PerpsMarketProxy.metadata(marketId).then(({ name, symbol }) => ({
+          marketId: marketId.toNumber(),
+          name,
+          symbol,
+        }))
+      )
+    );
     log({ metadata });
-    assert.equal(metadata.name, 'Bitcoin');
-    assert.equal(metadata.symbol, 'BTC');
+    assert.deepEqual(metadata, [
+      { marketId: 200, name: 'Bitcoin', symbol: 'BTC' },
+      { marketId: 100, name: 'Ethereum', symbol: 'ETH' },
+      { marketId: 300, name: 'Litecoin', symbol: 'LTC' },
+      { marketId: 400, name: 'Ripple Token', symbol: 'XRP' },
+    ]);
   });
 
-  it('Check BTC Max Open Interest is', async () => {
+  it('should have max open interest 30 BTC', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(200))
     );
@@ -70,7 +78,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(maxOpenInterest, 30);
   });
 
-  it('Can request a perps market summary', async () => {
+  it('should get BTC market summary with ERC7412', async () => {
     await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'BTC' });
     const data = await PerpsMarketProxy.getMarketSummary(200);
     log({ data });
@@ -87,25 +95,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(marketSummary.size > 0);
   });
 
-  //  it('Check BTC Market Max Funding Velocity is configured', async () => {});
-  //
-  //  it('Check BTC Market Maker Fee is configured', async () => {});
-  //
-  //  it('Check BTC Market Taker Fee is configured', async () => {});
-  //
-  //  it('Check BTC Market Max Market Size is configured', async () => {});
-  //
-  //  it('Check BTC Market Initial Margin Ratio is configured', async () => {});
-  //
-  //  it('Check BTC Market Maintenance Margin Fraction is configured', async () => {});
-  //
-  //  it('Check BTC Liquidation Reward Ratio is configured', async () => {});
-  //
-  //  it('Check BTC Max Liquidation Limit Accumulation Multiplier is configured', async () => {});
-  //
-  //  it('Check BTC Market Max Seconds In Liquidation Window configured', async () => {});
-  //
-  //  it('Check BTC Market Minimum Position Margin configured', async () => {});
-  //
-  //  it('Check BTC Market Locked OI Ratio is configured', async () => {});
+  //  it('should have X Max Funding Velocity', async () => {});
+  //  it('should have X Market Maker Fee', async () => {});
+  //  it('should have X Market Taker Fee', async () => {});
+  //  it('should have X Max Market Size', async () => {});
+  //  it('should have X Initial Margin Ratio', async () => {});
+  //  it('should have X Maintenance Margin Fraction', async () => {});
+  //  it('should have X Liquidation Reward Ratio', async () => {});
+  //  it('should have X Max Liquidation Limit Accumulation Multiplier', async () => {});
+  //  it('should have X Max Seconds In Liquidation Window', async () => {});
+  //  it('should have X Minimum Position Margin', async () => {});
+  //  it('should have X Locked OI Ratio', async () => {});
 });
