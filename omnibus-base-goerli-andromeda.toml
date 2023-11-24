@@ -5,8 +5,9 @@ preset = "andromeda"
 include = [
     "tomls/settings-testnet.toml",
     "tomls/core.toml",
-    "tomls/permissions.toml", # Allow deployer to create pools
-    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    "tomls/permissions.toml",                  # Allow deployer to create pools
+    "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
+    "tomls/pools/spartan-council.toml",        # Create Spartan Council Pool
     # Mock USDC and sUSDC spot market/wrapper
     "tomls/markets/spot/usdc.toml",
     # the perps
@@ -89,6 +90,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
