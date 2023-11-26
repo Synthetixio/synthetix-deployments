@@ -1,4 +1,4 @@
-include = ["../../markets/spot-factory.toml"]
+include = ["../../../markets/spot-factory.toml"]
 
 [provision.usdc_mock_collateral]
 source = "mintable-token:latest@permissionless-mint"
