@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.a9e7b5b7"
+version = "3.3.3-dev.5f6cce3d"
 description = "Andromeda"
 preset = "andromeda"
 include = [
@@ -32,16 +32,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.a9e7b5b7"
+defaultValue = "synthetix:3.3.3-dev.5f6cce3d"
 
 [setting.target_preset]
 defaultValue = "andromeda"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.a9e7b5b7"
+defaultValue = "synthetix-spot-market:3.3.3-dev.5f6cce3d"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.a9e7b5b7"
+defaultValue = "synthetix-perps-market:3.3.3-dev.5f6cce3d"
 
 [setting.salt]
 defaultValue = "andromeda"
