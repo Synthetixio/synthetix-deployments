@@ -24,7 +24,8 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_snx_market_id %>",
     "<%= extras.snx_oracle_id %>",
-    "<%= extras.snx_oracle_id %>"
+    "<%= extras.snx_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>"
 ]
 depends = ["invoke.createSnxSynth", "invoke.registerSnxOracleNode"]
 
