@@ -9,7 +9,7 @@ include = [
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     # Mock USDC and sUSDC spot market/wrapper
-    "tomls/markets/spot/usdc.toml",
+    "tomls/markets/spot/andromeda/usdc.toml",
     # the perps
     "tomls/markets/perps/btc.toml",
     "tomls/markets/perps/eth.toml",

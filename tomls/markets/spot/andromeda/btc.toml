@@ -23,7 +23,8 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= extras.btc_oracle_id %>",
-    "<%= extras.btc_oracle_id %>"
+    "<%= extras.btc_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>"
 ]
 depends = ["invoke.createBtcSynth", "invoke.registerBtcOracleNode"]
 

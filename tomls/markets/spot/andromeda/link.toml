@@ -24,7 +24,8 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_link_market_id %>",
     "<%= extras.link_oracle_id %>",
-    "<%= extras.link_oracle_id %>"
+    "<%= extras.link_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>"
 ]
 depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
 
