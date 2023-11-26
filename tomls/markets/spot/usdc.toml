@@ -1,8 +1,7 @@
 include = ["../../markets/spot-factory.toml"]
 
 [provision.usdc_mock_collateral]
-source = "mintable-token"
-sourcePreset = "permissionless-mint"
+source = "mintable-token:latest@permissionless-mint"
 
 [setting.synthUsdcMaxMarketCollateral]
 description = "Must be in wei"
