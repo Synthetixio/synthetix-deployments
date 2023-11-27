@@ -5,7 +5,8 @@ defaultValue = "<%= parseEther(String(5_000_000)) %>"
 defaultValue = "60"
 
 [provision.usdc_mock_collateral]
-source = "mintable-token:latest@permissionless-mint"
+source = "mintable-token"
+sourcePreset = "permissionless-mint"
 
 [invoke.createUsdcSynth]
 target = ["spotFactory.SpotMarketProxy"]
