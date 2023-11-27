@@ -285,8 +285,7 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= extras.eth_oracle_id %>",
-    "<%= settings.spotStrictStalenessTolerance %>"
+    "<%= extras.eth_oracle_id %>"
 ]
 depends = ["invoke.createEthSynth", "invoke.registerEthOracleNode"]
 
