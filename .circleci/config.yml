@@ -136,16 +136,18 @@ jobs:
         default: "synthetix-omnibus:latest"
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      - CANNON_IPFS_URL: "http://127.0.0.1:5001"
     steps:
       - checkout
       - install-anvil
       - run-anvil:
           provider-url: << parameters.provider-url >>
-      #- install-ipfs
-      #- run-ipfs
+      - install-ipfs
+      - run-ipfs
       - yarn-install
       - wait-for-anvil
-      #- wait-for-ipfs
+      - wait-for-ipfs
 
       - run:
           name: "Generate upgrade transactions"
