@@ -1,5 +1,3 @@
-include = ["settings.toml"]
-
 [invoke.setSupportedCrossChainNetworks]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"

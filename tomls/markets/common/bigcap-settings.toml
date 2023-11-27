@@ -9,5 +9,8 @@ defaultValue = "60"
 [setting.bigCapPriceWindowDuration]
 defaultValue = "600"
 
+[setting.bigCapDefaultStalenessTolerance]
+defaultValue = "3600"
+
 [setting.bigCapStrictStalenessTolerance]
-defaultValue = "120"
+defaultValue = "60"

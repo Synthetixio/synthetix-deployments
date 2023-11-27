@@ -1,5 +1,5 @@
 [setting.pythLtcFeedId]
-defaultValue = "0x997e0bf451cb36b4aea096e6b5c254d700922211dd933d9d17c467f0d6f34321"
+defaultValue = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874e19a54" # Using mainnet feed IDs
 
 # Perps Configuration
 [setting.ltcPerpsMarketId]
@@ -51,4 +51,4 @@ defaultValue = "<%= MaxUint256 %>"
 defaultValue = "0.0016"
 
 [setting.perpsLtcEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
+defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"

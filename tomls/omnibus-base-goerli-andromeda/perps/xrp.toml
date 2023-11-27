@@ -1,5 +1,5 @@
 [setting.pythXrpFeedId]
-defaultValue = "0xbfaf7739cb6fe3e1c57a0ac08e1d931e9e6062d476fa57804e165ab572b5b621"
+defaultValue = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8" # Using mainnet feed IDs
 
 # Perps Configuration
 [setting.xrpPerpsMarketId]
@@ -51,4 +51,4 @@ defaultValue = "<%= MaxUint256 %>"
 defaultValue = "0.0016"
 
 [setting.perpsXrpEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
+defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"

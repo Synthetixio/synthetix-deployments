@@ -1,36 +1,33 @@
 # GLOBAL PERPS SETTINGS
-[setting.perps_StrictStalenessTolerance]
-defaultValue = "60"
-
-[setting.perps_KeeperL1CostSettleGasUnits]
-defaultValue = "0"
-
-[setting.perps_KeeperL2CostSettleGasUnits]
-defaultValue = "0"
-
-[setting.perps_KeeperL1CostFlagGasUnits]
-defaultValue = "0"
-
-[setting.perps_KeeperL2CostFlagGasUnits]
-defaultValue = "0"
-
-[setting.perps_KeeperL1CostLiquidateGasUnits]
-defaultValue = "0"
-
-[setting.perps_KeeperL2CostLiquidateGasUnits]
-defaultValue = "0"
-
-[setting.perps_liquidation_minKeeperRewardUsd]
+[setting.perps_keeper_l1_cost_settle_gas_units]
 defaultValue = "1"
 
-[setting.perps_liquidation_minKeeperProfitRatioD18]
-defaultValue = "0"
+[setting.perps_keeper_l2_cost_settle_gas_units]
+defaultValue = "1"
 
-[setting.perps_liquidation_maxKeeperRewardUsd]
+[setting.perps_keeper_l1_cost_flag_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l2_cost_flag_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l1_cost_liquidate_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l2_cost_liquidate_gas_units]
+defaultValue = "1"
+
+[setting.perps_liquidation_min_keeper_reward_usd]
+defaultValue = "1"
+
+[setting.perps_liquidation_min_keeper_profit_ratio_d18]
+defaultValue = "1"
+
+[setting.perps_liquidation_max_keeper_reward_usd]
 defaultValue = "500"
 
-[setting.perps_liquidation_maxKeeperScalingRatioD18]
-defaultValue = "0"
+[setting.perps_liquidation_max_keeper_scaling_ratio_d18]
+defaultValue = "1"
 
 # ------------------------------
 [invoke.setPerpsLiquidationRewardGuards]
@@ -38,37 +35,32 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setKeeperRewardGuards"
 args = [
-    "<%= parseEther(settings.perps_liquidation_minKeeperRewardUsd) %>",
-    "<%= parseEther(settings.perps_liquidation_minKeeperProfitRatioD18) %>",
-    "<%= parseEther(settings.perps_liquidation_maxKeeperRewardUsd) %>",
-    "<%= parseEther(settings.perps_liquidation_maxKeeperScalingRatioD18) %>"
+    "<%= parseEther(settings.perps_liquidation_min_keeper_reward_usd) %>",
+    "<%= parseEther(settings.perps_liquidation_min_keeper_profit_ratio_d18) %>",
+    "<%= parseEther(settings.perps_liquidation_max_keeper_reward_usd) %>",
+    "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>"
 ]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setCollateralConfiguration"
 args = ["0", "<%= MaxUint256 %>"]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsSynthDeductionPriority]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
 args = [["0"]]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
 args = ["5", "3"]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsMarketKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateKeeperCostNodeId"
 args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
-depends = ["provision.perpsFactory"]

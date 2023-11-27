@@ -49,11 +49,11 @@ depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
 [invoke.setPerpsBtcSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "addSettlementStrategy"
+func = "setSettlementStrategy"
 args = [
     "<%= settings.btcPerpsMarketId %>",
-    # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythBtcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    "0",  # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
 depends = ["invoke.createBtcPerpsMarket"]
 
