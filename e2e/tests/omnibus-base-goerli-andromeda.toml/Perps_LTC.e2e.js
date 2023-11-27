@@ -49,7 +49,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should have ETH market deployed among others', async () => {
+  it('should have LTC market deployed among others', async () => {
     const markets = await PerpsMarketProxy.getMarkets();
     log({ markets });
     const metadata = await Promise.all(
@@ -71,17 +71,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     ]);
   });
 
-  it('should have max open interest 30 ETH', async () => {
+  it('should have max open interest 13333 LTC', async () => {
     const maxOpenInterest = parseFloat(
-      ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(100))
+      ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(300))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 30);
+    assert.equal(maxOpenInterest, 13333);
   });
 
-  it('should get BTC market summary with ERC7412', async () => {
-    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
-    const data = await PerpsMarketProxy.getMarketSummary(100);
+  it('should get LTC market summary with ERC7412', async () => {
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'LTC' });
+    const data = await PerpsMarketProxy.getMarketSummary(300);
     log({ data });
     const marketSummary = {
       skew: parseFloat(ethers.utils.formatEther(data.skew)),
@@ -93,34 +93,63 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     };
 
     log({ marketSummary });
-    assert.ok(marketSummary.size > 0);
+    assert.ok(marketSummary.indexPrice);
   });
 
-  it('should have X Max Funding Velocity', async () => {
-    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
-    const data = await PerpsMarketProxy.getMarketSummary(100);
-    log({ data });
-    const marketSummary = {
-      skew: parseFloat(ethers.utils.formatEther(data.skew)),
-      size: parseFloat(ethers.utils.formatEther(data.size)),
-      maxOpenInterest: parseFloat(ethers.utils.formatEther(data.maxOpenInterest)),
-      currentFundingRate: parseFloat(ethers.utils.formatEther(data.currentFundingRate)),
-      currentFundingVelocity: parseFloat(ethers.utils.formatEther(data.currentFundingVelocity)),
-      indexPrice: parseFloat(ethers.utils.formatEther(data.indexPrice)),
-    };
+  it('LTC Market Funding Parameters have been correctly set', async () => {
+    const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(300);
 
-    log({ marketSummary });
-    assert.ok(marketSummary.size > 0);
+    log({ skewScale, maxFundingVelocity });
+    assert.equal(Number(ethers.utils.formatEther(skewScale)), 1000000);
+    assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9);
   });
 
-  //  it('should have X Market Maker Fee', async () => {});
-  //  it('should have X Market Taker Fee', async () => {});
-  //  it('should have X Max Market Size', async () => {});
-  //  it('should have X Initial Margin Ratio', async () => {});
-  //  it('should have X Maintenance Margin Fraction', async () => {});
-  //  it('should have X Liquidation Reward Ratio', async () => {});
-  //  it('should have X Max Liquidation Limit Accumulation Multiplier', async () => {});
-  //  it('should have X Max Seconds In Liquidation Window', async () => {});
-  //  it('should have X Minimum Position Margin', async () => {});
-  //  it('should have X Locked OI Ratio', async () => {});
+  it('should have 13333 LTC Max Market Size', async () => {
+    const maxSize = await PerpsMarketProxy.getMaxMarketSize(300);
+
+    assert.equal(ethers.utils.formatEther(maxSize), 13333);
+  });
+
+  it('LTC Market should have 0.0003 Maker fee, 0.0007 Taker fee', async () => {
+    const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(300);
+
+    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0003);
+    assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0007);
+  });
+
+  it('LTC Market Liquidation Parameters are correctly set', async () => {
+    const {
+      initialMarginRatioD18,
+      minimumInitialMarginRatioD18,
+      maintenanceMarginScalarD18,
+      liquidationRewardRatioD18,
+      minimumPositionMargin,
+    } = await PerpsMarketProxy.getLiquidationParameters(300);
+
+    assert.equal(Number(ethers.utils.formatEther(initialMarginRatioD18)), 1);
+    assert.equal(Number(ethers.utils.formatEther(minimumInitialMarginRatioD18)), 0.02);
+    assert.equal(Number(ethers.utils.formatEther(maintenanceMarginScalarD18)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(liquidationRewardRatioD18)), 0.01);
+    assert.equal(Number(ethers.utils.formatEther(minimumPositionMargin)), 0);
+  });
+
+  it('LTC Market Max liquidation parameters are correctly set', async () => {
+    const {
+      maxLiquidationLimitAccumulationMultiplier,
+      maxSecondsInLiquidationWindow,
+      maxLiquidationPd,
+      endorsedLiquidator,
+    } = await PerpsMarketProxy.getMaxLiquidationParameters(300);
+
+    assert.equal(Number(ethers.utils.formatEther(maxLiquidationLimitAccumulationMultiplier)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxSecondsInLiquidationWindow)), 30 / 1e18);
+    assert.equal(Number(ethers.utils.formatEther(maxLiquidationPd)), 0.0016);
+    assert.equal(endorsedLiquidator, '0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13');
+  });
+
+  it('LTC Market Max locked OI ratio is correctly set', async () => {
+    const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(300);
+
+    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+  });
 });

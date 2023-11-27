@@ -93,7 +93,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     };
 
     log({ marketSummary });
-    assert.ok(marketSummary.size > 0);
+    assert.ok(marketSummary.indexPrice);
   });
 
   it('BTC Market Funding Parameters have been correctly set', async () => {
