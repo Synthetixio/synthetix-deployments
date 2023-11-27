@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.5f6cce3d"
+version = "3.3.3-dev.b88691fb"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -31,13 +31,13 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.5f6cce3d"
+defaultValue = "synthetix:3.3.3-dev.b88691fb"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.5f6cce3d"
+defaultValue = "synthetix-spot-market:3.3.3-dev.b88691fb"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.5f6cce3d"
+defaultValue = "synthetix-perps-market:3.3.3-dev.b88691fb"
 
 [setting.salt]
 defaultValue = "andromeda"
@@ -46,7 +46,7 @@ defaultValue = "andromeda"
 defaultValue = "andromeda" # Preset assigned to provisioned packages
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.3-dev.5f6cce3d"
+source = "pyth-erc7412-wrapper:3.3.3-dev.b88691fb"
 args = ["0xEbe57e8045F2F230872523bbff7374986E45C486"] # Pyth verifier contract address. TODO: Use updated package
 
 [setting.owner]

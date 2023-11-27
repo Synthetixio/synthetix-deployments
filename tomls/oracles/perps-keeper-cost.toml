@@ -1,7 +1,7 @@
 include = ["../core.toml"]
 
 [provision.perps_gas_oracle_node]
-source = "op-gas-price-oracle:dev"
+source = "op-gas-price-oracle:3.3.3-dev.b88691fb"
 
 [invoke.registerPerps_KeeperCostEthOracleNode]
 target = ["system.oracle_manager.Proxy"]
