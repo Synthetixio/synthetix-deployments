@@ -49,7 +49,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should have BTC market deployed among others', async () => {
+  it('should have ETH market deployed among others', async () => {
     const markets = await PerpsMarketProxy.getMarkets();
     log({ markets });
     const metadata = await Promise.all(
@@ -71,17 +71,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     ]);
   });
 
-  it('should have max open interest 30 BTC', async () => {
+  it('should have max open interest 525 ETH', async () => {
     const maxOpenInterest = parseFloat(
-      ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(200))
+      ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(100))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 30);
+    assert.equal(maxOpenInterest, 525);
   });
 
-  it('should get BTC market summary with ERC7412', async () => {
-    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'BTC' });
-    const data = await PerpsMarketProxy.getMarketSummary(200);
+  it('should get ETH market summary with ERC7412', async () => {
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
+    const data = await PerpsMarketProxy.getMarketSummary(100);
     log({ data });
     const marketSummary = {
       skew: parseFloat(ethers.utils.formatEther(data.skew)),
@@ -96,35 +96,35 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(marketSummary.size > 0);
   });
 
-  it('BTC Market Funding Parameters have been correctly set', async () => {
-    const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(200);
+  it('ETH Market Funding Parameters have been correctly set', async () => {
+    const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(100);
 
     log({ skewScale, maxFundingVelocity });
     assert.equal(Number(ethers.utils.formatEther(skewScale)), 1000000);
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9);
   });
 
-  it('should have 30 BTC Max Market Size', async () => {
-    const maxSize = await PerpsMarketProxy.getMaxMarketSize(200);
+  it('should have 525 ETH Max Market Size', async () => {
+    const maxSize = await PerpsMarketProxy.getMaxMarketSize(100);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 30);
+    assert.equal(ethers.utils.formatEther(maxSize), 525);
   });
 
-  it('BTC Market should have 0.0003 Maker fee, 0.0007 Taker fee', async () => {
-    const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(200);
+  it('ETH Market should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
+    const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(100);
 
-    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0003);
-    assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0007);
+    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0002);
+    assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0005);
   });
 
-  it('BTC Market Liquidation Parameters are correctly set', async () => {
+  it('ETH Market Liquidation Parameters are correctly set', async () => {
     const {
       initialMarginRatioD18,
       minimumInitialMarginRatioD18,
       maintenanceMarginScalarD18,
       liquidationRewardRatioD18,
       minimumPositionMargin,
-    } = await PerpsMarketProxy.getLiquidationParameters(200);
+    } = await PerpsMarketProxy.getLiquidationParameters(100);
 
     assert.equal(Number(ethers.utils.formatEther(initialMarginRatioD18)), 1);
     assert.equal(Number(ethers.utils.formatEther(minimumInitialMarginRatioD18)), 0.02);
@@ -133,22 +133,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(minimumPositionMargin)), 0);
   });
 
-  it('BTC Market Max liquidation parameters are correctly set', async () => {
+  it('ETH Market Max liquidation parameters are correctly set', async () => {
     const {
       maxLiquidationLimitAccumulationMultiplier,
       maxSecondsInLiquidationWindow,
       maxLiquidationPd,
       endorsedLiquidator,
-    } = await PerpsMarketProxy.getMaxLiquidationParameters(200);
+    } = await PerpsMarketProxy.getMaxLiquidationParameters(100);
 
-    assert.equal(Number(ethers.utils.formatEther(maxLiquidationLimitAccumulationMultiplier)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxLiquidationLimitAccumulationMultiplier)), 1);
     assert.equal(Number(ethers.utils.formatEther(maxSecondsInLiquidationWindow)), 30 / 1e18);
     assert.equal(Number(ethers.utils.formatEther(maxLiquidationPd)), 0.0016);
     assert.equal(endorsedLiquidator, '0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13');
   });
 
-  it('BTC Market Max locked OI ratio is correctly set', async () => {
-    const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(200);
+  it('ETH Market Max locked OI ratio is correctly set', async () => {
+    const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(100);
 
     assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
   });
