@@ -56,16 +56,28 @@ args = [
 ]
 depends = ["invoke.createXrpPerpsMarket", "invoke.registerXrpOracleNode"]
 
+[invoke.addPerpsXrpSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+    "<%= settings.xrpPerpsMarketId %>",
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>",  priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+]
+extra.xrp_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.xrp_pyth_settlement_strategy.arg = 2
+depends = ["invoke.createXrpPerpsMarket"]
+
 [invoke.setPerpsXrpSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.xrpPerpsMarketId %>",
-    "0",  # Settlement Strategy ID
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>",  priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    "<%= extras.xrp_pyth_settlement_strategy %>",  # Settlement Strategy ID
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>",  priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
 ]
-depends = ["invoke.createXrpPerpsMarket"]
+depends = ["invoke.addPerpsXrpSettlementStrategy"]
 
 [invoke.setPerpsXrpFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]

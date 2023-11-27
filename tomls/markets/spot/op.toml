@@ -28,7 +28,7 @@ args = [
 ]
 depends = ["invoke.createOpSynth", "invoke.registerOpOracleNode"]
 
-[invoke.setSynthSettlementStrategyOp]
+[invoke.addSynthSettlementStrategyOp]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_op_market_id %>"]
@@ -37,7 +37,21 @@ args = [
     "<%= extras.synth_op_market_id %>",
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
+extra.synth_op_settlement_strategy.event = "SettlementStrategyAdded"
+extra.synth_op_settlement_strategy.arg = 1
 depends = ["invoke.createOpSynth"]
+
+[invoke.setSynthSettlementStrategyOp]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_op_market_id %>"]
+func = "setSettlementStrategy"
+args = [
+    "<%= extras.synth_op_market_id %>",
+    "<%= extras.synth_op_settlement_strategy %>",
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+]
+depends = ["invoke.addSynthSettlementStrategyOp"]
 
 [invoke.setSynthAsyncFixedFeeOp]
 target = ["spotFactory.SpotMarketProxy"]

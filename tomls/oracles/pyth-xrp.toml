@@ -1,3 +1,4 @@
+include = ["../core.toml"]
 # This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
 
 # Latest Pyth Price
@@ -6,7 +7,7 @@ target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     5, # 5 = pyth aggregator type
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pythXrpFeedId, false]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], ['0xEbe57e8045F2F230872523bbff7374986E45C486', settings.pythXrpFeedId, false]) %>",
     []
 ]
 extra.xrp_pyth_oracle_id.event = "NodeRegistered"
@@ -31,7 +32,8 @@ func = "registerNode"
 args = [
     7, # 7 = staleness circuit breaker
     "<%= defaultAbiCoder.encode(['uint256'], [settings.bigCapDefaultStalenessTolerance]) %>",
-    ["<%= extras.xrp_pyth_oracle_id >","<%= extras.xrp_lookup_oracle_id >"]
+    ["<%= extras.xrp_pyth_oracle_id %>","<%= extras.xrp_lookup_oracle_id %>"]
 ]
 extra.xrp_oracle_id.event = "NodeRegistered"
 extra.xrp_oracle_id.arg = 0
+depends = ["invoke.registerPythXrpOracleNode", "invoke.registerLookupXrpOracleNode"]

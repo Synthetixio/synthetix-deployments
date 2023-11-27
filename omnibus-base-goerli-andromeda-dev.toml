@@ -21,13 +21,13 @@ include = [
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
     # LTC
-    "tomls/markets/perps/ltc.toml",
-    "tomls/oracles/pyth-ltc.toml",
-    "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
+    # "tomls/markets/perps/ltc.toml",
+    # "tomls/oracles/pyth-ltc.toml",
+    # "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
     # XRP
-    "tomls/markets/perps/xrp.toml",
-    "tomls/oracles/pyth-xrp.toml",
-    "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml"
+    # "tomls/markets/perps/xrp.toml",
+    # "tomls/oracles/pyth-xrp.toml",
+    # "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml"
 ]
 
 [setting.snx_package]
@@ -47,7 +47,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 
 [provision.pyth_erc7412_wrapper]
 source = "pyth-erc7412-wrapper:3.3.3-dev.b88691fb"
-args = ["0xEbe57e8045F2F230872523bbff7374986E45C486"] # Pyth verifier contract address. TODO: Use updated package
+options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"

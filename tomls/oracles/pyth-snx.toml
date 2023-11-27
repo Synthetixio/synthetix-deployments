@@ -1,3 +1,4 @@
+include = ["../core.toml"]
 # This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
 
 # Latest Pyth Price
@@ -31,7 +32,8 @@ func = "registerNode"
 args = [
     7, # 7 = staleness circuit breaker
     "<%= defaultAbiCoder.encode(['uint256'], [settings.bigCapDefaultStalenessTolerance]) %>",
-    ["<%= extras.snx_pyth_oracle_id >","<%= extras.snx_lookup_oracle_id >"]
+    ["<%= extras.snx_pyth_oracle_id %>","<%= extras.snx_lookup_oracle_id %>"]
 ]
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
+depends = ["invoke.registerPythSnxOracleNode", "invoke.registerLookupSnxOracleNode"]
