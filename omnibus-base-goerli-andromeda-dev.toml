@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.b88691fb"
+version = "3.3.3-dev.249e185f"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -33,13 +33,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.b88691fb"
+defaultValue = "synthetix:3.3.3-dev.249e185f"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "op-gas-price-oracle:3.3.3-dev.249e185f"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.b88691fb"
+defaultValue = "synthetix-spot-market:3.3.3-dev.249e185f"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.b88691fb"
+defaultValue = "synthetix-perps-market:3.3.3-dev.249e185f"
 
 [setting.salt]
 defaultValue = "andromeda-dev"
