@@ -24,6 +24,7 @@ args = [
 ]
 extra.ltc_lookup_oracle_id.event = "NodeRegistered"
 extra.ltc_lookup_oracle_id.arg = 0
+depends = ["import.pyth_erc7412_wrapper"]
 
 # Staleness Node
 [invoke.registerLtcOracleNode]
