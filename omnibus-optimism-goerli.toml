@@ -124,6 +124,7 @@ defaultValue = "15"
 
 [setting.bigCapSettlementWindowDuration]
 defaultValue = "60"
+
 #
 #
 # Provision Synthetix Core

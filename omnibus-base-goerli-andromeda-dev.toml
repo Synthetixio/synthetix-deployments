@@ -28,6 +28,7 @@ include = [
     # "tomls/markets/perps/xrp.toml",
     # "tomls/oracles/pyth-xrp.toml",
     # "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml"
+
 ]
 
 [setting.snx_package]

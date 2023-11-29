@@ -62,7 +62,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.xrpPerpsMarketId %>",
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>",  priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
 ]
 extra.xrp_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.xrp_pyth_settlement_strategy.arg = 2
@@ -74,8 +74,8 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.xrpPerpsMarketId %>",
-    "<%= extras.xrp_pyth_settlement_strategy %>",  # Settlement Strategy ID
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>",  priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    "<%= extras.xrp_pyth_settlement_strategy %>", # Settlement Strategy ID
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythXrpFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
 ]
 depends = ["invoke.addPerpsXrpSettlementStrategy"]
 
