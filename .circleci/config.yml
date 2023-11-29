@@ -136,8 +136,8 @@ jobs:
         default: "synthetix-omnibus:latest"
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
-    environment:
-      - CANNON_IPFS_URL: "http://127.0.0.1:5001"
+    #environment:
+    #  - CANNON_IPFS_URL: "http://127.0.0.1:5001"
     steps:
       - checkout
       - install-anvil
