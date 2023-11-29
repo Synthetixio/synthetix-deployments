@@ -13,6 +13,8 @@ include = [
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-perps-createAccount.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/link.toml",

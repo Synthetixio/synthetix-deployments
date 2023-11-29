@@ -1,4 +1,4 @@
-include = ["../perps-factory.toml", "../../oracles/btc.toml", "../common/bigcap-settings.toml"]
+include = ["../../oracles/btc.toml", "../common/bigcap-settings.toml"]
 
 [setting.pythBtcFeedId]
 

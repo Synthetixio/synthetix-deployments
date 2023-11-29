@@ -1,4 +1,4 @@
-include = ["../core.toml"]
+include = ["../../core.toml"]
 
 [setting.spot_market_package]
 
@@ -7,7 +7,7 @@ source = "<%= settings.spot_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = "<%= settings.salt %>"
+options.salt = "" # This was deployed without the salt option initially
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
 depends = ["provision.system"]

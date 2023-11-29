@@ -8,6 +8,8 @@ include = [
     "tomls/permissions.toml", # Allow deployer to create pools
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
     # Mock USDC and sUSDC spot market/wrapper
     "tomls/markets/spot/andromeda/usdc.toml", # TODO
     # the perps

@@ -1,5 +1,4 @@
 include = [
-    "../perps-factory.toml",
     # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
     # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
     "../../oracles/pyth-xrp.toml",

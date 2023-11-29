@@ -1,5 +1,4 @@
 include = [
-    "../perps-factory.toml",
     "../../oracles/pyth-link.toml",
     "../common/bigcap-settings.toml",
 ]

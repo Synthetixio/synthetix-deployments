@@ -8,6 +8,7 @@ include = [
     "tomls/permissions.toml", # Allow deployer to create pools
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
     "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper, mock for USDC
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings

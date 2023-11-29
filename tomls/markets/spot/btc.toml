@@ -1,5 +1,4 @@
 include = [
-    "../spot-factory.toml",
     "../common/bigcap-settings.toml",
     "../common/settlement-settings.toml"
 ]
