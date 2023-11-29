@@ -12,10 +12,10 @@ defaultValue = "1000000"
 defaultValue = "9"
 
 [setting.perpsXrpMakerFeeRatio]
-defaultValue = "0.0007"
+defaultValue = "0.0003"
 
 [setting.perpsXrpTakerFeeRatio]
-defaultValue = "0.0003"
+defaultValue = "0.0007"
 
 [setting.perpsXrpMaxMarketSize]
 defaultValue = "1500000" #approx $1m

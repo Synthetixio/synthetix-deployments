@@ -18,7 +18,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
   const wallet = ethers.Wallet.createRandom().connect(provider);
-  const marketId = 200;
+  const marketId = 100;
 
   const PerpsMarketProxy = new ethers.Contract(
     PerpsMarketProxyDeployment.address,
@@ -63,22 +63,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       )
     );
     log({ metadata });
-    const market = metadata.find(({ symbol }) => symbol === 'BTC');
+    const market = metadata.find(({ symbol }) => symbol === 'ETH');
     log({ market });
-    assert.equal(market.name, 'Bitcoin');
+    assert.equal(market.name, 'Ethereum');
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 30 BTC', async () => {
+  it('should have max open interest 525 ETH', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 30);
+    assert.equal(maxOpenInterest, 525);
   });
 
   it('should get market summary with ERC7412', async () => {
-    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'BTC' });
+    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
     const data = await PerpsMarketProxy.getMarketSummary(marketId);
     log({ data });
     const marketSummary = {
@@ -102,17 +102,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9);
   });
 
-  it('should have 30 BTC Max Market Size', async () => {
+  it('should have 525 ETH Max Market Size', async () => {
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 30);
+    assert.equal(ethers.utils.formatEther(maxSize), 525);
   });
 
-  it('should have 0.0003 Maker fee, 0.0007 Taker fee', async () => {
+  it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
     const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0003);
-    assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0007);
+    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0002);
+    assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0005);
   });
 
   it('should have Liquidation Parameters set', async () => {
@@ -139,7 +139,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       endorsedLiquidator,
     } = await PerpsMarketProxy.getMaxLiquidationParameters(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(maxLiquidationLimitAccumulationMultiplier)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxLiquidationLimitAccumulationMultiplier)), 1);
     assert.equal(maxSecondsInLiquidationWindow.toNumber(), 30);
     assert.equal(Number(ethers.utils.formatEther(maxLiquidationPd)), 0.0016);
     assert.equal(endorsedLiquidator, '0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13');

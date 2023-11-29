@@ -12,10 +12,10 @@ defaultValue = "1000000"
 defaultValue = "9"
 
 [setting.perpsLtcMakerFeeRatio]
-defaultValue = "0.0007"
+defaultValue = "0.0003"
 
 [setting.perpsLtcTakerFeeRatio]
-defaultValue = "0.0003"
+defaultValue = "0.0007"
 
 [setting.perpsLtcMaxMarketSize]
 defaultValue = "13333" #approx $1m
