@@ -1250,9 +1250,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.9.12, @usecannon/builder@npm:^2.9.12":
-  version: 2.9.12
-  resolution: "@usecannon/builder@npm:2.9.12"
+"@usecannon/builder@npm:2.10.0-alpha.2, @usecannon/builder@npm:^2.10.0-alpha.2":
+  version: 2.10.0-alpha.2
+  resolution: "@usecannon/builder@npm:2.10.0-alpha.2"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.2.2
@@ -1267,17 +1267,17 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 2f826e82c1b198700c4de837e299de7f2d690a578fe36b9cdfee429fcd86b78a98bf65384ca7429486ae4f11db9964b675e2ce729b86af9e1a9e349db30dab7b
+  checksum: 2a5d076c9c0ab420cbbd1c0b140e735faebdb275922e862e6ec9a4f5aa8edc1a3ec75ed70993eec88f98adc763d1518af541e6b1d98259994f3c051a47c0455c
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.9.12":
-  version: 2.9.12
-  resolution: "@usecannon/cli@npm:2.9.12"
+"@usecannon/cli@npm:2.10.0-alpha.2":
+  version: 2.10.0-alpha.2
+  resolution: "@usecannon/cli@npm:2.10.0-alpha.2"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.9.12
+    "@usecannon/builder": ^2.10.0-alpha.2
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1294,7 +1294,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: ff9212c563ebfc524c9ccbff2fad53fc45cac497683267b5bab07c750627221680397e59025ddddc2667dc720137ee1cf6808485322e23477322c1c55017b8ee
+  checksum: 5b6f09333c1d008a0b176633eb5004054f5328ad0f0d9971aa35248b8bea724116e78bfe0071c76e8dd63e8ff9ef733560ba0e3b42ec6729ab2cdaf537f934db
   languageName: node
   linkType: hard
 
@@ -3813,6 +3813,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"n@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "n@npm:9.2.0"
+  bin:
+    n: bin/n
+  checksum: 273bfea765304851d87474b8001af6291445d02e0786575e488f128764d94aa2c5a7e1fc8902b9dca0687189bb2169b42dd481ed4af27be7cb90c102aeb86026
+  conditions: "!os=win32"
+  languageName: node
+  linkType: hard
+
 "nanoid@npm:3.3.3":
   version: 3.3.3
   resolution: "nanoid@npm:3.3.3"
@@ -4655,20 +4665,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:0.8.21":
-  version: 0.8.21
-  resolution: "solc@npm:0.8.21"
+"solc@npm:^0.8.22":
+  version: 0.8.23
+  resolution: "solc@npm:0.8.23"
   dependencies:
     command-exists: ^1.2.8
     commander: ^8.1.0
     follow-redirects: ^1.12.1
     js-sha3: 0.8.0
     memorystream: ^0.3.1
+    n: ^9.2.0
     semver: ^5.5.0
     tmp: 0.0.33
   bin:
     solcjs: solc.js
-  checksum: 0145d0e1f4ba7b1ec574a2ad7c4782357c4a27949c3bcc7bb4411a7b325a3ad186c18f93b1802a438ea9a527711dd56d2d7190bc8dd431dc194fb6098ab6ed01
+  checksum: aded3d9b7db2a465c471cfd90522ce87a2a7d110c4820a66dcf80857ac2a7421d6168793b5ae17826ba8d005219af1f36f2ad6ab5574e7cabd9f72bbba3150d2
   languageName: node
   linkType: hard
 
@@ -4876,15 +4887,15 @@ __metadata:
   dependencies:
     "@iarna/toml": ^3.0.0
     "@pythnetwork/pyth-evm-js": ^1.29.2
-    "@usecannon/builder": 2.9.12
-    "@usecannon/cli": 2.9.12
+    "@usecannon/builder": 2.10.0-alpha.2
+    "@usecannon/cli": 2.10.0-alpha.2
     debug: ^4.3.4
     ethers: ^5.7.2
     hardhat: ^2.19.0
     mocha: ^10.2.0
     prettier: ^3.1.0
     prettier-plugin-toml: ^1.0.0
-    solc: 0.8.21
+    solc: ^0.8.22
   languageName: unknown
   linkType: soft
 
