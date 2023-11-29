@@ -1,7 +1,4 @@
-include = [
-    "../common/bigcap-settings.toml",
-    "../common/settlement-settings.toml"
-]
+include = ["../common/bigcap-settings.toml", "../common/settlement-settings.toml"]
 
 [invoke.createBtcSynth]
 target = ["spotFactory.SpotMarketProxy"]

@@ -1,7 +1,4 @@
-include = [
-    "../../oracles/pyth-link.toml",
-    "../common/bigcap-settings.toml",
-]
+include = ["../../oracles/pyth-link.toml", "../common/bigcap-settings.toml"]
 
 [setting.linkPerpsMarketId]
 
