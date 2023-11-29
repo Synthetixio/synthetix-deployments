@@ -1,0 +1,3 @@
+[provision.pyth_erc7412_wrapper]
+source = "<%= setting.pyth_erc7412_wrapper_package %>"
+options.pythAddress = "<%= settings.pyth_verifier_address %>"

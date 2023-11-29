@@ -12,6 +12,7 @@ include = [
     "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper, mock for USDC
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
+    "tomls/oracles/pyth-erc7412-wrapper.toml", # Add pyth erc7412 wrapper
     "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
     # BTC
     "tomls/markets/perps/btc.toml",
@@ -50,9 +51,12 @@ defaultValue = "andromeda-dev"
 [setting.target_preset]
 defaultValue = "andromeda" # Preset assigned to provisioned packages
 
-[provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.3-dev.b88691fb"
-options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486"
+# TODO: import from pyth package after update
+[setting.pyth_verifier_address]
+defaultValue = "0xEbe57e8045F2F230872523bbff7374986E45C486"
+
+[setting.pyth_erc7412_wrapper_package]
+defaultValue = "pyth-erc7412-wrapper:3.3.3-dev.249e185f"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
