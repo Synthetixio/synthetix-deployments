@@ -8,8 +8,9 @@ include = [
     "tomls/permissions.toml", # Allow deployer to create pools
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    "tomls/markets/spot-factory.toml",
     # Mock USDC and sUSDC spot market/wrapper
-    "tomls/markets/spot/andromeda/usdc.toml", # TODO
+    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # TODO
     # the perps
     "tomls/markets/perps/btc.toml",
     "tomls/markets/perps/eth.toml",
@@ -27,8 +28,6 @@ include = [
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml",
-    # overrides for spot markets
-    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml",
 ]
 
 [setting.snx_package]
