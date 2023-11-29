@@ -143,11 +143,11 @@ jobs:
       - install-anvil
       - run-anvil:
           provider-url: << parameters.provider-url >>
-      - install-ipfs
-      - run-ipfs
+      #- install-ipfs
+      #- run-ipfs
       - yarn-install
       - wait-for-anvil
-      - wait-for-ipfs
+      #- wait-for-ipfs
 
       - run:
           name: "Generate upgrade transactions"

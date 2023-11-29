@@ -12,10 +12,10 @@ defaultValue = "1000000"
 defaultValue = "9"
 
 [setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0007"
+defaultValue = "0.0003"
 
 [setting.perpsBtcTakerFeeRatio]
-defaultValue = "0.0003"
+defaultValue = "0.0007"
 
 [setting.perpsBtcMaxMarketSize]
 defaultValue = "30" #approx $1m
