@@ -2,6 +2,8 @@ include = ["../core.toml"]
 
 [provision.perps_gas_oracle_node]
 source = "<%= settings.perps_keeper_cost_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
 
 [invoke.registerPerps_KeeperCostEthOracleNode]
 target = ["system.oracle_manager.Proxy"]
