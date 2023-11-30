@@ -1,7 +1,0 @@
-[setting.pyth_verifier_address]
-
-[setting.pyth_erc7412_wrapper_package]
-
-[provision.pyth_erc7412_wrapper]
-source = "<%= settings.pyth_erc7412_wrapper_package %>"
-options.pythAddress = "<%= settings.pyth_verifier_address %>"
