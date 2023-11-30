@@ -11,6 +11,7 @@ include = [
     #"tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/omnibus-optimism-mainnet/spot-factory.toml",
     "tomls/markets/spot/eth.toml",
 ]
 

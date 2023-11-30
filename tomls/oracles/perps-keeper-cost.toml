@@ -1,7 +1,7 @@
 include = ["../core.toml"]
 
 [provision.perps_gas_oracle_node]
-source = "op-gas-price-oracle:3.3.3-dev.b88691fb"
+source = "<%= settings.perps_keeper_cost_package %>"
 
 [invoke.registerPerps_KeeperCostEthOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -23,8 +23,8 @@ func = "registerNode"
 args = [
     # 1 = reducer node
     1,
-    # 1 parameters: 1 operation = 5 for product
-    "<%= defaultAbiCoder.encode(['uint256'], [5]) %>",
+    # 1 parameters: 1 operation = 7 for mul decimal
+    "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
     # 2 parent: 1 is the eth txn price node id, 2 is the eth oracle node id
     ["<%= extras.perps_keeper_cost_eth_oracle_id %>", "<%= extras.eth_oracle_id %>"]
 ]

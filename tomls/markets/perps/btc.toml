@@ -1,4 +1,4 @@
-include = ["../perps-factory.toml", "../../oracles/btc.toml", "../common/bigcap-settings.toml"]
+include = ["../../oracles/btc.toml", "../common/bigcap-settings.toml"]
 
 [setting.pythBtcFeedId]
 
@@ -46,13 +46,14 @@ args = [
 ]
 depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
 
+# Do not modify this step. Edit [invoke.setPerpsBtcSettlementStrategy] instead.
 [invoke.addPerpsBtcSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.btcPerpsMarketId %>",
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
 ]
 extra.btc_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.btc_pyth_settlement_strategy.arg = 2
@@ -65,7 +66,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.btcPerpsMarketId %>",
     "<%= extras.btc_pyth_settlement_strategy %>", # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", url = "", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
 ]
 depends = ["invoke.addPerpsBtcSettlementStrategy"]
 

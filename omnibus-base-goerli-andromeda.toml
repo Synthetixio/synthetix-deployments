@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.b88691fb"
+version = "3.3.3-dev.249e185f"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -8,6 +8,7 @@ include = [
     "tomls/permissions.toml", # Allow deployer to create pools
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
     "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper, mock for USDC
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
@@ -20,34 +21,28 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
-    # LTC
-    # "tomls/markets/perps/ltc.toml",
-    # "tomls/oracles/pyth-ltc.toml",
-    # "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
-    # XRP
-    # "tomls/markets/perps/xrp.toml",
-    # "tomls/oracles/pyth-xrp.toml",
-    # "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml"
-
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.b88691fb"
+defaultValue = "synthetix:3.3.3-dev.249e185f"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "op-gas-price-oracle:3.3.3-dev.249e185f"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.b88691fb"
+defaultValue = "synthetix-spot-market:3.3.3-dev.249e185f"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.b88691fb"
+defaultValue = "synthetix-perps-market:3.3.3-dev.249e185f"
 
 [setting.salt]
-defaultValue = "andromeda"
+defaultValue = "andromeda-dev"
 
 [setting.target_preset]
 defaultValue = "andromeda" # Preset assigned to provisioned packages
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.3-dev.b88691fb"
+source = "pyth-erc7412-wrapper:3.3.3-dev.249e185f"
 options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486"
 
 [setting.owner]

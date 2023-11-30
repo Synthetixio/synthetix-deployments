@@ -8,6 +8,7 @@ include = [
     "tomls/permissions.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/markets/spot-factory.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
