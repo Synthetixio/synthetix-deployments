@@ -22,15 +22,6 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
-    # LTC
-    # "tomls/markets/perps/ltc.toml",
-    # "tomls/oracles/pyth-ltc.toml",
-    # "tomls/omnibus-base-goerli-andromeda/perps/ltc.toml",
-    # XRP
-    # "tomls/markets/perps/xrp.toml",
-    # "tomls/oracles/pyth-xrp.toml",
-    # "tomls/omnibus-base-goerli-andromeda/perps/xrp.toml"
-
 ]
 
 [setting.snx_package]
