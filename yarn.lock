@@ -1250,12 +1250,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.0-alpha.2, @usecannon/builder@npm:^2.10.0-alpha.2":
-  version: 2.10.0-alpha.2
-  resolution: "@usecannon/builder@npm:2.10.0-alpha.2"
+"@usecannon/builder@npm:2.10.1, @usecannon/builder@npm:^2.10.1":
+  version: 2.10.1
+  resolution: "@usecannon/builder@npm:2.10.1"
   dependencies:
     "@synthetixio/router": ^3.3.0
-    axios: ^1.2.2
+    axios: ^1.6.2
     buffer: ^6.0.3
     debug: ^4.3.4
     form-data: ^4.0.0
@@ -1267,17 +1267,17 @@ __metadata:
     zod: ^3.21.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 2a5d076c9c0ab420cbbd1c0b140e735faebdb275922e862e6ec9a4f5aa8edc1a3ec75ed70993eec88f98adc763d1518af541e6b1d98259994f3c051a47c0455c
+  checksum: 06f55de50ca1511d349d60cdb0a2bc4cd4f9deb2cbd888c3bf0a14c296bad19a3f3a5100fa6d8e4e57ba1117f7edaa6ec64be54e5c750f07d0576b2a723b037b
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.10.0-alpha.2":
-  version: 2.10.0-alpha.2
-  resolution: "@usecannon/cli@npm:2.10.0-alpha.2"
+"@usecannon/cli@npm:2.10.1":
+  version: 2.10.1
+  resolution: "@usecannon/cli@npm:2.10.1"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.10.0-alpha.2
+    "@usecannon/builder": ^2.10.1
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1294,7 +1294,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: 5b6f09333c1d008a0b176633eb5004054f5328ad0f0d9971aa35248b8bea724116e78bfe0071c76e8dd63e8ff9ef733560ba0e3b42ec6729ab2cdaf537f934db
+  checksum: a5b7f5b2e721930e9f37750356055ba05db091d8f4bb3025a398f8beb68525b19030125cbce19cd58bd535d42b8129483c685d634cb6aecbcd781ed37a47df07
   languageName: node
   linkType: hard
 
@@ -1484,7 +1484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.2.2, axios@npm:^1.5.1":
+"axios@npm:^1.5.1, axios@npm:^1.6.2":
   version: 1.6.2
   resolution: "axios@npm:1.6.2"
   dependencies:
@@ -4887,8 +4887,8 @@ __metadata:
   dependencies:
     "@iarna/toml": ^3.0.0
     "@pythnetwork/pyth-evm-js": ^1.29.2
-    "@usecannon/builder": 2.10.0-alpha.2
-    "@usecannon/cli": 2.10.0-alpha.2
+    "@usecannon/builder": 2.10.1
+    "@usecannon/cli": 2.10.1
     debug: ^4.3.4
     ethers: ^5.7.2
     hardhat: ^2.19.0
