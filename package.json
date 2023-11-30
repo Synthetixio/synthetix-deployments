@@ -13,11 +13,11 @@
     "start:optimism": "cannon run synthetix-omnibus:latest@main --chain-id 10 --provider-url https://optimism.infura.io/v3/$INFURA_KEY",
     "start:optimism-goerli": "cannon run synthetix-omnibus:latest@main --chain-id 420 --provider-url https://optimism-goerli.infura.io/v3/$INFURA_KEY",
     "start:base-goerli": "cannon run synthetix-omnibus:latest@main --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
-    "build:andromeda": "yarn cannon build omnibus-base-goerli-andromeda.toml --dry-run --preset andromeda --upgrade-from synthetix-omnibus:latest --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY --write-script ./e2e/deployments/upgrade.ndjson --write-script-format json | tee ./e2e/cannon-build.log",
+    "build:andromeda": "yarn cannon build omnibus-base-goerli-andromeda-dev.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY --write-script ./e2e/deployments/upgrade.ndjson --write-script-format json | tee ./e2e/cannon-build.log",
     "start:andromeda": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
     "fetch-deployments": "node ./e2e/fetch-deployments.js ./e2e/cannon-build.log",
     "deploy": "node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson",
-    "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.js",
+    "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda-dev.toml/**/*.js",
     "pretty": "prettier . '**/*.toml' --write",
     "pretty:check": "prettier . '**/*.toml' --check",
     "cannon": "cannon"
