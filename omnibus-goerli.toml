@@ -2,7 +2,8 @@ name = "synthetix-omnibus"
 version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings-testnet.toml",
+    "tomls/settings.toml",
+    "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",

@@ -2,7 +2,8 @@ name = "synthetix-omnibus"
 version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings-mainnet.toml",
+    "tomls/settings.toml",
+    "tomls/ccip-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
@@ -10,6 +11,7 @@ include = [
     #"tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/omnibus-optimism-mainnet/spot-factory.toml",
     "tomls/markets/spot/eth.toml",
 ]
 

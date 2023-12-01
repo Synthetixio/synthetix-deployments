@@ -125,9 +125,6 @@ defaultValue = "15"
 [setting.bigCapSettlementWindowDuration]
 defaultValue = "60"
 
-[setting.bigCapPriceWindowDuration]
-defaultValue = "600"
-
 #
 #
 # Provision Synthetix Core
@@ -309,7 +306,7 @@ func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_eth_market_id %>",
     # strategyType = 1 (pyth)
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
 ]
 depends = ["invoke.createEthSynth"]
 

@@ -1,5 +1,4 @@
 include = [
-    "../spot-factory.toml",
     "../../oracles/link.toml",
     "../common/bigcap-settings.toml",
     "../common/settlement-settings.toml"
@@ -28,7 +27,7 @@ args = [
 ]
 depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
 
-[invoke.setSynthSettlementStrategyLink]
+[invoke.addSynthSettlementStrategyLink]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_link_market_id %>"]
@@ -37,7 +36,21 @@ args = [
     "<%= extras.synth_link_market_id %>",
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
+extra.synth_link_settlement_strategy.event = "SettlementStrategyAdded"
+extra.synth_link_settlement_strategy.arg = 1
 depends = ["invoke.createLinkSynth"]
+
+[invoke.setSynthSettlementStrategyLink]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_link_market_id %>"]
+func = "setSettlementStrategy"
+args = [
+    "<%= extras.synth_link_market_id %>",
+    "<%= extras.synth_link_settlement_strategy %>",
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+]
+depends = ["invoke.addSynthSettlementStrategyLink"]
 
 [invoke.setSynthAsyncFixedFeeLink]
 target = ["spotFactory.SpotMarketProxy"]

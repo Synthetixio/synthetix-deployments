@@ -102,29 +102,29 @@ async function run() {
 
   // Extract all oracle addresses
   const oracles = {};
-  function oracleNode(invokeStep) {
-    const oracleNodeArgs =
-      deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
-        ?.NodeRegistered?.[0]?.args;
-    if (oracleNodeArgs?.length === 4) {
-      const [id, nodeType, data] = oracleNodeArgs;
-      const [address, feedId, staleness] = ethers.utils.defaultAbiCoder.decode(
-        ['address', 'bytes32', 'uint256'],
-        data
-      );
-      return {
-        id,
-        address,
-        nodeType: parseInt(nodeType.toString()),
-        feedId,
-        staleness: parseInt(staleness.toString()),
-      };
-    }
-  }
-  oracles.BTC = oracleNode('registerBtcOracleNode');
-  oracles.ETH = oracleNode('registerEthOracleNode');
-  oracles.LTC = oracleNode('registerLtcOracleNode');
-  oracles.XRP = oracleNode('registerXrpOracleNode');
+  // function oracleNode(invokeStep) {
+  //   const oracleNodeArgs =
+  //     deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
+  //       ?.NodeRegistered?.[0]?.args;
+  //   if (oracleNodeArgs?.length === 4) {
+  //     const [id, nodeType, data] = oracleNodeArgs;
+  //     const [address, feedId, staleness] = ethers.utils.defaultAbiCoder.decode(
+  //       ['address', 'bytes32', 'uint256'],
+  //       data
+  //     );
+  //     return {
+  //       id,
+  //       address,
+  //       nodeType: parseInt(nodeType.toString()),
+  //       feedId,
+  //       staleness: parseInt(staleness.toString()),
+  //     };
+  //   }
+  // }
+  // The event for node type 7 is different so need to figure out how to use it later
+  // oracles.BTC = oracleNode('registerBtcOracleNode');
+  // oracles.ETH = oracleNode('registerEthOracleNode');
+  // return;
 
   Object.assign(meta, {
     contracts: Object.fromEntries(

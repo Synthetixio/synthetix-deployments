@@ -2,7 +2,9 @@ const { ethers } = require('ethers');
 const CoreProxy = require('../deployments/CoreProxy.json');
 
 async function getCollateralConfig(symbol) {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
 
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
   const collateralConfigs = await coreProxy.getCollateralConfigurations(true);

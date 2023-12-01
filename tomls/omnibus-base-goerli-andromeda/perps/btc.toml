@@ -1,5 +1,5 @@
 [setting.pythBtcFeedId]
-defaultValue = "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b"
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43" # Using mainnet feed IDs
 
 # Perps Configuration
 [setting.btcPerpsMarketId]
@@ -29,7 +29,7 @@ defaultValue = "0.5"
 [setting.perpsBtcMinimumInitialMarginRatio]
 defaultValue = "0.02"
 
-[setting.perpsBtcLiquidationRewardRatioD18]
+[setting.perpsBtcFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
@@ -51,4 +51,4 @@ defaultValue = "<%= MaxUint256 %>"
 defaultValue = "0.0016"
 
 [setting.perpsBtcEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
+defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"

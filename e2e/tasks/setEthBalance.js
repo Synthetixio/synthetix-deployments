@@ -3,7 +3,9 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function setEthBalance({ address, balance }) {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const oldBalance = parseFloat(ethers.utils.formatUnits(await provider.getBalance(address)));
   log({ address, oldBalance });
 

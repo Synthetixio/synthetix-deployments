@@ -2,7 +2,8 @@ name = "synthetix-omnibus"
 version = "3.3.3-dev.e141cd8c"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings-testnet.toml",
+    "tomls/settings.toml",
+    "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/weth.toml",
@@ -14,6 +15,8 @@ include = [
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
     "tomls/markets/spot/eth.toml",
     "tomls/markets/spot/btc.toml",
     "tomls/markets/spot/snx.toml",

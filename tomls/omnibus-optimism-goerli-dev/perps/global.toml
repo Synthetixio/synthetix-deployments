@@ -1,22 +1,27 @@
 # GLOBAL PERPS SETTINGS
-[setting.perpsMinLiquidationReward]
+[setting.perps_MinLiquidationReward]
 defaultValue = "1"
 
-[setting.perpsMaxLiquidationReward]
+[setting.perps_MaxLiquidationReward]
 defaultValue = "500"
 
 # ------------------------------
 [invoke.setPerpsLiquidationRewardLimits]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setLiquidationRewardGuards"
-args = ["<%= parseEther('1') %>", "<%= parseEther('500') %>"]
+func = "setKeeperRewardGuards"
+args = [
+    "<%= parseEther('1') %>",
+    "<%= parseEther('0') %>",
+    "<%= parseEther('500') %>",
+    "<%= parseEther('0') %>"
+]
 depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["0", "<%= MaxUint256 %>"]
 depends = ["provision.perpsFactory"]
 

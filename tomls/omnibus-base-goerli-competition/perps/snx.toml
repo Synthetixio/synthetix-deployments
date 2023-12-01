@@ -29,7 +29,7 @@ defaultValue = "0.5"
 [setting.perpsSnxMinimumInitialMarginRatio]
 defaultValue = "0.05"
 
-[setting.perpsSnxLiquidationRewardRatioD18]
+[setting.perpsSnxFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsSnxMaxLiquidationLimitAccumulationMultiplier]

@@ -7,11 +7,18 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const meta = require('../../deployments/meta.json');
 
-// const TESTNET_DEPLOYER = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
-const DAO_GNOSIS_SAFE = '0xb48AecD3CA86a7bE44baEbB6b8BAb77CDf612D14';
+const TESTNET_DEPLOYER = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
+//const DAO_GNOSIS_SAFE = '0xb48AecD3CA86a7bE44baEbB6b8BAb77CDf612D14';
+
+// While we develop rapidly,
+// we want to quickly deploy, and keep testnet deployer as the owner temporarily
+// TODO: switch to DAO_GNOSIS_SAFE when stable
+const OWNER_ADDRESS = TESTNET_DEPLOYER;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
 
   const CoreProxy = new ethers.Contract(
     CoreProxyDeployment.address,
@@ -32,7 +39,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
     ]);
     log({ name: 'CoreProxy', address, owner, nominatedOwner });
-    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(owner, OWNER_ADDRESS);
     assert.equal(nominatedOwner, ethers.constants.AddressZero);
   });
 
@@ -69,7 +76,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     ]);
     log({ name: 'OracleManagerProxy', address, owner, nominatedOwner });
 
-    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(owner, OWNER_ADDRESS);
     assert.equal(nominatedOwner, ethers.constants.AddressZero);
   });
 
@@ -82,7 +89,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     ]);
     log({ name: 'SpotMarketProxy', address, owner, nominatedOwner });
 
-    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(owner, OWNER_ADDRESS);
     assert.equal(nominatedOwner, ethers.constants.AddressZero);
   });
 
@@ -95,7 +102,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     ]);
     log({ name: 'PerpsMarketProxy', address, owner, nominatedOwner });
 
-    assert.equal(owner, DAO_GNOSIS_SAFE);
+    assert.equal(owner, OWNER_ADDRESS);
     assert.equal(nominatedOwner, ethers.constants.AddressZero);
   });
 
@@ -134,7 +141,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.deepEqual(pools, {
       1: {
         name: 'Spartan Council Pool',
-        owner: DAO_GNOSIS_SAFE,
+        owner: OWNER_ADDRESS,
         isPreferred: true,
         nominatedOwner: ethers.constants.AddressZero,
       },

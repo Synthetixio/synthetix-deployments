@@ -2,12 +2,15 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function setMintableTokenBalance({ privateKey, tokenAddress, balance }) {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const wallet = new ethers.Wallet(privateKey, provider);
 
   const Token = new ethers.Contract(
     tokenAddress,
     [
+      'function owner() view returns (address)',
       'function symbol() view returns (string)',
       'function balanceOf(address account) view returns (uint256)',
       'function mint(uint256 amount, address to)',
@@ -24,8 +27,15 @@ async function setMintableTokenBalance({ privateKey, tokenAddress, balance }) {
     return;
   }
 
-  const tx = await Token.mint(ethers.utils.parseEther(`${balance - oldBalance}`), wallet.address);
+  const owner = await Token.owner();
+  await provider.send('anvil_impersonateAccount', [owner]);
+  const signer = provider.getSigner(owner);
+  const tx = await Token.connect(signer).mint(
+    ethers.utils.parseEther(`${balance - oldBalance}`),
+    wallet.address
+  );
   await tx.wait();
+  await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   const newBalance = parseFloat(ethers.utils.formatUnits(await Token.balanceOf(wallet.address)));
   log({ symbol, tokenAddress, newBalance });

@@ -1,35 +1,66 @@
 # GLOBAL PERPS SETTINGS
-[setting.perpsMinLiquidationReward]
+[setting.perps_keeper_l1_cost_settle_gas_units]
 defaultValue = "1"
 
-[setting.perpsMaxLiquidationReward]
+[setting.perps_keeper_l2_cost_settle_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l1_cost_flag_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l2_cost_flag_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l1_cost_liquidate_gas_units]
+defaultValue = "1"
+
+[setting.perps_keeper_l2_cost_liquidate_gas_units]
+defaultValue = "1"
+
+[setting.perps_liquidation_min_keeper_reward_usd]
+defaultValue = "1"
+
+[setting.perps_liquidation_min_keeper_profit_ratio_d18]
+defaultValue = "1"
+
+[setting.perps_liquidation_max_keeper_reward_usd]
 defaultValue = "500"
 
+[setting.perps_liquidation_max_keeper_scaling_ratio_d18]
+defaultValue = "1"
+
 # ------------------------------
-[invoke.setPerpsLiquidationRewardLimits]
+[invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setLiquidationRewardGuards"
-args = ["<%= parseEther('1') %>", "<%= parseEther('500') %>"]
-depends = ["provision.perpsFactory"]
+func = "setKeeperRewardGuards"
+args = [
+    "<%= parseEther(settings.perps_liquidation_min_keeper_reward_usd) %>",
+    "<%= parseEther(settings.perps_liquidation_min_keeper_profit_ratio_d18) %>",
+    "<%= parseEther(settings.perps_liquidation_max_keeper_reward_usd) %>",
+    "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>"
+]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
-func = "setMaxCollateralAmount"
+func = "setCollateralConfiguration"
 args = ["0", "<%= MaxUint256 %>"]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsSynthDeductionPriority]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
 args = [["0"]]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
 args = ["5", "3"]
-depends = ["provision.perpsFactory"]
+
+[invoke.setPerpsMarketKeeperCostNodeId]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateKeeperCostNodeId"
+args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]

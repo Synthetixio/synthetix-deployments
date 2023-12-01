@@ -14,13 +14,15 @@ const { unwrapUsdc } = require('../../tasks/unwrapUsdc');
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-const USDCDeployment = require('../../deployments/FakeCollateralTKN.json');
+const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   let wallet;
   let address;
   let privateKey;
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
 
   const CoreProxy = new ethers.Contract(
     CoreProxyDeployment.address,

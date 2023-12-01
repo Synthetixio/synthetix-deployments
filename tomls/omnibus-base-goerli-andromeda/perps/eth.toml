@@ -1,6 +1,6 @@
 # Pyth settlement strategy config
 [setting.pythEthFeedId]
-defaultValue = "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6"
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # Using mainnet feed IDs
 
 # Perps Configuration
 [setting.ethPerpsMarketId]
@@ -30,7 +30,7 @@ defaultValue = "0.02"
 [setting.perpsEthMaintenanceMarginScalar]
 defaultValue = "0.5"
 
-[setting.perpsEthLiquidationRewardRatioD18]
+[setting.perpsEthFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
@@ -52,4 +52,4 @@ defaultValue = "<%= MaxUint256 %>"
 defaultValue = "0.0016"
 
 [setting.perpsEthEndorsedLiquidator]
-defaultValue = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
+defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"

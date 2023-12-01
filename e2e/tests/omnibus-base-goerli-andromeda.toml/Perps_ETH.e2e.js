@@ -8,7 +8,6 @@ const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
 const { createPerpsAccount } = require('../../tasks/createPerpsAccount');
-const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
 
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 
@@ -16,7 +15,9 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const wallet = ethers.Wallet.createRandom().connect(provider);
   const marketId = 100;
 
@@ -78,7 +79,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should get market summary with ERC7412', async () => {
-    await fulfillOracleQuery({ wallet, isTestnet: true, symbol: 'ETH' });
     const data = await PerpsMarketProxy.getMarketSummary(marketId);
     log({ data });
     const marketSummary = {
@@ -116,33 +116,27 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should have Liquidation Parameters set', async () => {
-    const {
-      initialMarginRatioD18,
-      minimumInitialMarginRatioD18,
-      maintenanceMarginScalarD18,
-      liquidationRewardRatioD18,
-      minimumPositionMargin,
-    } = await PerpsMarketProxy.getLiquidationParameters(marketId);
+    const params = await PerpsMarketProxy.getLiquidationParameters(marketId);
+    log({ liquidationParameters: params });
 
-    assert.equal(Number(ethers.utils.formatEther(initialMarginRatioD18)), 1);
-    assert.equal(Number(ethers.utils.formatEther(minimumInitialMarginRatioD18)), 0.02);
-    assert.equal(Number(ethers.utils.formatEther(maintenanceMarginScalarD18)), 0.5);
-    assert.equal(Number(ethers.utils.formatEther(liquidationRewardRatioD18)), 0.01);
-    assert.equal(Number(ethers.utils.formatEther(minimumPositionMargin)), 0);
+    assert.equal(Number(ethers.utils.formatEther(params.initialMarginRatioD18)), 1);
+    assert.equal(Number(ethers.utils.formatEther(params.minimumInitialMarginRatioD18)), 0.02);
+    assert.equal(Number(ethers.utils.formatEther(params.maintenanceMarginScalarD18)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(params.flagRewardRatioD18)), 0.01);
+    assert.equal(Number(ethers.utils.formatEther(params.minimumPositionMargin)), 0);
   });
 
   it('should have Max Liquidation parameters set', async () => {
-    const {
-      maxLiquidationLimitAccumulationMultiplier,
-      maxSecondsInLiquidationWindow,
-      maxLiquidationPd,
-      endorsedLiquidator,
-    } = await PerpsMarketProxy.getMaxLiquidationParameters(marketId);
+    const params = await PerpsMarketProxy.getMaxLiquidationParameters(marketId);
+    log({ liquidationParameters: params });
 
-    assert.equal(Number(ethers.utils.formatEther(maxLiquidationLimitAccumulationMultiplier)), 1);
-    assert.equal(maxSecondsInLiquidationWindow.toNumber(), 30);
-    assert.equal(Number(ethers.utils.formatEther(maxLiquidationPd)), 0.0016);
-    assert.equal(endorsedLiquidator, '0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13');
+    assert.equal(
+      Number(ethers.utils.formatEther(params.maxLiquidationLimitAccumulationMultiplier)),
+      1
+    );
+    assert.equal(params.maxSecondsInLiquidationWindow.toNumber(), 30);
+    assert.equal(Number(ethers.utils.formatEther(params.maxLiquidationPd)), 0.0016);
+    assert.equal(params.endorsedLiquidator, '0x11233749514Ab8d00C0A5873DF7428b3db70030f');
   });
 
   it('should have Max Locked OI ratio set to 0.5', async () => {

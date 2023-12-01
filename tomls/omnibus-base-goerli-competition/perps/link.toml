@@ -29,7 +29,7 @@ defaultValue = "0.5"
 [setting.perpsLinkMinimumInitialMarginRatio]
 defaultValue = "0.05"
 
-[setting.perpsLinkLiquidationRewardRatioD18]
+[setting.perpsLinkFlagRewardRatioD18]
 defaultValue = "0.01"
 
 [setting.perpsLinkMaxLiquidationLimitAccumulationMultiplier]

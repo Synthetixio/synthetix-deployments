@@ -1,5 +1,3 @@
-include = ["./spot-factory.toml"]
-
 [setting.perps_market_package]
 
 [provision.perpsFactory]
@@ -7,7 +5,7 @@ source = "<%= settings.perps_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = "alpha"
+options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>"
 options.synthetixPreset = "<%= settings.target_preset %>"

@@ -27,7 +27,9 @@ async function run() {
     .filter(Boolean)
     .flatMap((line) => JSON.parse(line).txns);
 
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   for (const { hash, from, to, data, value } of txns) {
     console.log();
     console.log();

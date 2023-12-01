@@ -1,5 +1,4 @@
 include = [
-    "../perps-factory.toml",
     # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
     # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
     "../../oracles/eth.toml",
@@ -22,7 +21,7 @@ include = [
 
 [setting.perpsEthMaintenanceMarginFraction]
 
-[setting.perpsEthLiquidationRewardRatioD18]
+[setting.perpsEthFlagRewardRatioD18]
 
 [setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
 
@@ -47,19 +46,36 @@ depends = ["provision.perpsFactory"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = ["<%= settings.ethPerpsMarketId %>", "<%= extras.eth_oracle_id %>"]
+args = [
+    "<%= settings.ethPerpsMarketId %>",
+    "<%= extras.eth_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>"
+]
 depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
 
-[invoke.setPerpsEthSettlementStrategy]
+# Do not modify this step. Edit [invoke.setPerpsEthSettlementStrategy] instead.
+[invoke.addPerpsEthSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.ethPerpsMarketId %>",
-    # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
 ]
+extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.eth_pyth_settlement_strategy.arg = 2
 depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsEthSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.ethPerpsMarketId %>",
+    "<%= extras.eth_pyth_settlement_strategy %>", # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+]
+depends = ["invoke.addPerpsEthSettlementStrategy"]
 
 [invoke.setPerpsEthFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -112,7 +128,7 @@ args = [
     "<%= parseEther(settings.perpsEthInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsEthMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsEthMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsEthLiquidationRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsEthFlagRewardRatioD18) %>",
     "<%= parseEther(settings.perpsEthMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createEthPerpsMarket"]

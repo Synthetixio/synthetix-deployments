@@ -1,5 +1,4 @@
 include = [
-    "../spot-factory.toml",
     # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
     # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
     "../../oracles/eth.toml", # TODO: use pyth-eth?
@@ -50,7 +49,7 @@ func = "setAtomicFixedFee"
 args = ["<%= extras.synth_eth_market_id %>", "<%= MaxUint256 %>"]
 depends = ["invoke.createEthSynth"]
 
-[invoke.setSynthSettlementStrategyEth]
+[invoke.addSynthSettlementStrategyEth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
@@ -60,8 +59,21 @@ args = [
     # strategyType = 1 (pyth)
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 ]
+extra.synth_eth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.synth_eth_settlement_strategy.arg = 1
 depends = ["invoke.createEthSynth"]
 
+# [invoke.setSynthSettlementStrategyEth]
+# target = ["spotFactory.SpotMarketProxy"]
+# fromCall.func = "getMarketOwner"
+# fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+# func = "setSettlementStrategy"
+# args = [
+#     "<%= extras.synth_eth_market_id %>",
+#     "<%= extras.synth_eth_settlement_strategy %>",
+#     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+# ]
+# depends = ["invoke.addSynthSettlementStrategyEth"]
 [invoke.setSynthAsyncFixedFeeEth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
