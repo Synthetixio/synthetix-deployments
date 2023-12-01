@@ -16,7 +16,9 @@ const TESTNET_DEPLOYER = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
 const OWNER_ADDRESS = TESTNET_DEPLOYER;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
 
   const CoreProxy = new ethers.Contract(
     CoreProxyDeployment.address,

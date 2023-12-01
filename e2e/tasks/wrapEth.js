@@ -10,7 +10,9 @@ const erc20Abi = [
 ];
 
 async function wrapEth({ privateKey, amount }) {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const wallet = new ethers.Wallet(privateKey, provider);
 
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);

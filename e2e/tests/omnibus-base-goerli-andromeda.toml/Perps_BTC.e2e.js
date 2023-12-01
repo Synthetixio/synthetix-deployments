@@ -15,7 +15,9 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const wallet = ethers.Wallet.createRandom().connect(provider);
   const marketId = 200;
 

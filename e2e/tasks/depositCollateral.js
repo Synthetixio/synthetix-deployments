@@ -7,7 +7,9 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 
 async function depositCollateral({ privateKey, accountId, symbol, amount }) {
   const config = await getCollateralConfig(symbol);
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, amount });
 

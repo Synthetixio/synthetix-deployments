@@ -4,7 +4,9 @@ const CoreProxy = require('../deployments/CoreProxy.json');
 
 async function getAccountCollateral({ accountId, symbol }) {
   const config = await getCollateralConfig(symbol);
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
 
   const [totalDeposited, totalAssigned, totalLocked] = await coreProxy.getAccountCollateral(

@@ -5,7 +5,9 @@ const { setEthBalance } = require('./setEthBalance');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function getOwner() {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const network = await provider.getNetwork();
 
   switch (network.chainId) {
@@ -24,7 +26,9 @@ async function getOwner() {
 
 async function setSnxBalance({ address, balance }) {
   const config = await getCollateralConfig('SNX');
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
 
   const owner = await getOwner();
   await setEthBalance({ address: owner, balance: 1000 });

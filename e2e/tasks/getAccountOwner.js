@@ -2,7 +2,9 @@ const { ethers } = require('ethers');
 const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 async function getAccountOwner({ accountId }) {
-  const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
   const CoreProxy = new ethers.Contract(
     CoreProxyDeployment.address,
     CoreProxyDeployment.abi,
