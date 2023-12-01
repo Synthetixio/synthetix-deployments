@@ -14,7 +14,7 @@ const { unwrapUsdc } = require('../../tasks/unwrapUsdc');
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-const USDCDeployment = require('../../deployments/FakeCollateralTKN.json');
+const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   let wallet;
