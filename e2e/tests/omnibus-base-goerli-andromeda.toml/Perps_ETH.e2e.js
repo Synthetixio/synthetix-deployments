@@ -132,7 +132,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       Number(ethers.utils.formatEther(params.maxLiquidationLimitAccumulationMultiplier)),
-      0.5
+      1
     );
     assert.equal(params.maxSecondsInLiquidationWindow.toNumber(), 30);
     assert.equal(Number(ethers.utils.formatEther(params.maxLiquidationPd)), 0.0016);
