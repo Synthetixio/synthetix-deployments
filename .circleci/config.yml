@@ -124,16 +124,12 @@ jobs:
     parameters:
       toml:
         type: string
-      preset:
-        type: string
-        default: "main"
       chain-id:
         type: integer
       provider-url:
         type: string
       upgrade-from:
         type: string
-        default: "synthetix-omnibus:latest"
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     #environment:
@@ -141,36 +137,50 @@ jobs:
     steps:
       - checkout
       - install-anvil
-      - run-anvil:
-          provider-url: << parameters.provider-url >>
+      #- run-anvil:
+      #    provider-url: << parameters.provider-url >>
       #- install-ipfs
       #- run-ipfs
       - yarn-install
-      - wait-for-anvil
+      #- wait-for-anvil
       #- wait-for-ipfs
 
       - run:
-          name: "Generate upgrade transactions"
+          name: "Build new package upgrading from << parameters.upgrade-from >> and keep RPC running"
+          background: true
           command: |
             yarn cannon build << parameters.toml >> \
+              --keep-alive \
+              --port 8545 \
               --dry-run \
-              --preset << parameters.preset >> \
               --upgrade-from << parameters.upgrade-from >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-              --write-script ./e2e/deployments/upgrade.ndjson \
-              --write-script-format json | tee ./cannon-build.log
+                | tee ./cannon-build.log
+
+      - run:
+          name: "Wait for anvil to start and export RPC_URL"
+          command: |
+            touch ./cannon-build.log
+
+            # First, check if the log file already has the information
+            RPC_URL=$(awk -F'at ' '/Built package RPC URL available at/ {print $2; exit}' ./cannon-build.log)
+            export RPC_URL
+
+            # If the information wasn't found, start tailing the log
+            if [[ -z $RPC_URL ]]; then
+                while IFS= read -r line
+                do
+                    if [[ $line == *"Built package RPC URL available at"* ]]; then
+                        RPC_URL=$(echo "$line" | awk -F'at ' '{print $2}')
+                        echo "export RPC_URL=$RPC_URL" >> $BASH_ENV
+                        source $BASH_ENV
+                        break
+                    fi
+                done < <(tail -f -n0 ./cannon-build.log)            
+            fi
 
       - run: grep '💥' ./cannon-build.log
-
-      # TODO: uncomment later if tests are too flaky and we don't want to fork-test when there is no changes
-      #- run:
-      #    name: "Halt if no changes detected"
-      #    command: |
-      #      [ -s ./e2e/deployments/upgrade.ndjson ] || circleci-agent step halt
-
-      - store_artifacts:
-          path: "./e2e/deployments/upgrade.ndjson"
 
       - run:
           name: "Check for Proxies redeployment"
@@ -193,10 +203,6 @@ jobs:
           path: "./e2e/deployments"
 
       - run:
-          name: "Upgrade on local fork"
-          command: node e2e/deploy.js ./e2e/deployments/upgrade.ndjson
-
-      - run:
           name: "Run tests"
           environment:
             - DEBUG: "e2e:*"
@@ -214,42 +220,48 @@ workflows:
       - fork-test:
           name: base-goerli-andromeda
           toml: omnibus-base-goerli-andromeda.toml
-          preset: andromeda
+          upgrade-from: "synthetix-omnibus:latest@andromeda"
           chain-id: 84531
           provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: base-goerli
           toml: omnibus-base-goerli.toml
+          upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 84531
           provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: goerli
           toml: omnibus-goerli.toml
+          upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 5
           provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: mainnet
           toml: omnibus-mainnet.toml
+          upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 1
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: optimism-mainnet
           toml: omnibus-optimism-mainnet.toml
+          upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: sepolia
           toml: omnibus-sepolia.toml
+          upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: polygon-mumbai
           toml: omnibus-polygon-mumbai.toml
+          upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 80001
           provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
