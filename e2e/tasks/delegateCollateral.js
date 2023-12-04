@@ -11,7 +11,7 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  log({ address: wallet.address, accountId, symbol, amount, poolId });
+  log({ address: wallet.address, accountId, symbol, token: config.tokenAddress, amount, poolId });
 
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
 
