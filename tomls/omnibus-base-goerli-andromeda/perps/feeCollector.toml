@@ -1,0 +1,21 @@
+[provision.snx_mock_collateral]
+source = "mintable-token@permissionless-mint"
+options.name = "Fake Wrapped SNX"
+options.symbol = "fwSNX"
+options.owner = "<%= settings.owner %>"
+
+[provision.buy_back_burn_snx]
+source = "<%= settings.buy_back_snx_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.premium = "<%= settings.buy_back_premium %>"
+options.snx_fee_share = "<%= settings.buy_back_fee_share %>"
+options.oracle_manager_address = "<%= imports.system.contracts.oracle_manager.contracts.Proxy.address %>"
+options.snx_token = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
+options.usd_token = "<%= imports.system.contracts.USDProxy.address %>"
+options.snx_oracle_id = "<%= extras.snx_oracle_id %>"
+
+[invoke.setFeeCollector]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeeCollector"
+args = ["<%= imports.buy_back_burn_snx.contracts.buyback_snx.address %>"]

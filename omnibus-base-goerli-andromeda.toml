@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.3-dev.249e185f"
+version = "3.3.4"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -24,16 +24,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.3-dev.249e185f"
+defaultValue = "synthetix:3.3.4"
 
 [setting.perps_keeper_cost_package]
-defaultValue = "op-gas-price-oracle:3.3.3-dev.249e185f"
+defaultValue = "op-gas-price-oracle:3.3.4"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.3-dev.249e185f"
+defaultValue = "synthetix-spot-market:3.3.4"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.3-dev.249e185f"
+defaultValue = "synthetix-perps-market:3.3.4"
 
 [setting.salt]
 defaultValue = "andromeda-dev"
@@ -42,7 +42,7 @@ defaultValue = "andromeda-dev"
 defaultValue = "andromeda" # Preset assigned to provisioned packages
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.3-dev.249e185f"
+source = "pyth-erc7412-wrapper:3.3.4"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486"
