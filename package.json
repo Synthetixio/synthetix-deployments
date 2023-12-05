@@ -25,8 +25,8 @@
   "devDependencies": {
     "@iarna/toml": "^3.0.0",
     "@pythnetwork/pyth-evm-js": "^1.29.2",
-    "@usecannon/builder": "2.10.1",
-    "@usecannon/cli": "2.10.1",
+    "@usecannon/builder": "2.10.5",
+    "@usecannon/cli": "2.10.5",
     "debug": "^4.3.4",
     "ethers": "^5.7.2",
     "hardhat": "^2.19.0",

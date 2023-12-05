@@ -1250,9 +1250,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.1, @usecannon/builder@npm:^2.10.1":
-  version: 2.10.1
-  resolution: "@usecannon/builder@npm:2.10.1"
+"@usecannon/builder@npm:2.10.5, @usecannon/builder@npm:^2.10.5":
+  version: 2.10.5
+  resolution: "@usecannon/builder@npm:2.10.5"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.6.2
@@ -1262,22 +1262,22 @@ __metadata:
     lodash: ^4.17.21
     pako: ^2.1.0
     promise-events: ^0.2.4
-    typedoc-plugin-markdown: ^3.15.4
+    typedoc-plugin-markdown: ^3.17.1
     typestub-ipfs-only-hash: ^4.0.0
-    zod: ^3.21.4
+    zod: ^3.22.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 06f55de50ca1511d349d60cdb0a2bc4cd4f9deb2cbd888c3bf0a14c296bad19a3f3a5100fa6d8e4e57ba1117f7edaa6ec64be54e5c750f07d0576b2a723b037b
+  checksum: 78d9bf60abfd0e4bdd6da8c5c2e259f848e2f5cd9db271151f689b3cb4eadd970881b3c96dbbe7c337587f96c15c1b945e152d7106a148dd5b01636d75789e5e
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.10.1":
-  version: 2.10.1
-  resolution: "@usecannon/cli@npm:2.10.1"
+"@usecannon/cli@npm:2.10.5":
+  version: 2.10.5
+  resolution: "@usecannon/cli@npm:2.10.5"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.10.1
+    "@usecannon/builder": ^2.10.5
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1294,7 +1294,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: a5b7f5b2e721930e9f37750356055ba05db091d8f4bb3025a398f8beb68525b19030125cbce19cd58bd535d42b8129483c685d634cb6aecbcd781ed37a47df07
+  checksum: 6f2f4118f736d710223234d8cf5d8ccf0d2888098423c79e2ff136c115a908dbf66cc41c5a6d28735a4afe43bcae86ee6c721f7d3d9e0728ce4172fc70a2af4e
   languageName: node
   linkType: hard
 
@@ -4887,8 +4887,8 @@ __metadata:
   dependencies:
     "@iarna/toml": ^3.0.0
     "@pythnetwork/pyth-evm-js": ^1.29.2
-    "@usecannon/builder": 2.10.1
-    "@usecannon/cli": 2.10.1
+    "@usecannon/builder": 2.10.5
+    "@usecannon/cli": 2.10.5
     debug: ^4.3.4
     ethers: ^5.7.2
     hardhat: ^2.19.0
@@ -5042,7 +5042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:^3.15.4":
+"typedoc-plugin-markdown@npm:^3.17.1":
   version: 3.17.1
   resolution: "typedoc-plugin-markdown@npm:3.17.1"
   dependencies:
@@ -5429,7 +5429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.21.4":
+"zod@npm:^3.22.4":
   version: 3.22.4
   resolution: "zod@npm:3.22.4"
   checksum: 80bfd7f8039b24fddeb0718a2ec7c02aa9856e4838d6aa4864335a047b6b37a3273b191ef335bf0b2002e5c514ef261ffcda5a589fb084a48c336ffc4cdbab7f

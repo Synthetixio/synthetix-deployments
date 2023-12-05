@@ -21,6 +21,8 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
+    # SNX
+    "tomls/oracles/pyth-snx.toml",
 ]
 
 [setting.snx_package]
@@ -34,6 +36,9 @@ defaultValue = "synthetix-spot-market:3.3.5"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.5"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.5"
 
 [setting.salt]
 defaultValue = "andromeda-dev"
