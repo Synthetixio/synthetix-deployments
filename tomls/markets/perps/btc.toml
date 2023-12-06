@@ -66,7 +66,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.btcPerpsMarketId %>",
     "<%= extras.btc_pyth_settlement_strategy %>", # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= parseEther(settings.commitmentPriceDelay) %>"  }
 ]
 depends = ["invoke.addPerpsBtcSettlementStrategy"]
 
