@@ -4,3 +4,18 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x159c143eF9Be79d5672726150462C9EfA679b27c", "<%= parseEther('0.02') %>"]
+
+# kwenta
+[invoke.setKwentaAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xFffe627790EF1B28E3b48000b8Ba964b55766fF8", "<%= parseEther('0.02') %>"]
+
+
+# infinex
+[invoke.setInfinexAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xa7DB9b0a95D253022068d43BD1d64756f92eF83C", "<%= parseEther('0.02') %>"]
