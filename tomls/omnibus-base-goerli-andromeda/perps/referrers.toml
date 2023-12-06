@@ -12,7 +12,6 @@ fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0xFffe627790EF1B28E3b48000b8Ba964b55766fF8", "<%= parseEther('0.02') %>"]
 
-
 # infinex
 [invoke.setInfinexAsReferrerOnPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
