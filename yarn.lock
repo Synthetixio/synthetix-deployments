@@ -1250,9 +1250,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.5, @usecannon/builder@npm:^2.10.5":
-  version: 2.10.5
-  resolution: "@usecannon/builder@npm:2.10.5"
+"@usecannon/builder@npm:2.10.6-alpha.4, @usecannon/builder@npm:^2.10.6-alpha.4":
+  version: 2.10.6-alpha.4
+  resolution: "@usecannon/builder@npm:2.10.6-alpha.4"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.6.2
@@ -1267,17 +1267,17 @@ __metadata:
     zod: ^3.22.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 78d9bf60abfd0e4bdd6da8c5c2e259f848e2f5cd9db271151f689b3cb4eadd970881b3c96dbbe7c337587f96c15c1b945e152d7106a148dd5b01636d75789e5e
+  checksum: b7474d6ef89838f8d013dbff71c508519f3ac368546515341ebba1b20833cf31c658201756d3cae448eef62278b7d1329f3e9cdd35b5e805a319b803c8f2d80c
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.10.5":
-  version: 2.10.5
-  resolution: "@usecannon/cli@npm:2.10.5"
+"@usecannon/cli@npm:2.10.6-alpha.4":
+  version: 2.10.6-alpha.4
+  resolution: "@usecannon/cli@npm:2.10.6-alpha.4"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.10.5
+    "@usecannon/builder": ^2.10.6-alpha.4
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1294,7 +1294,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: 6f2f4118f736d710223234d8cf5d8ccf0d2888098423c79e2ff136c115a908dbf66cc41c5a6d28735a4afe43bcae86ee6c721f7d3d9e0728ce4172fc70a2af4e
+  checksum: 4fdbe06f2c9a46ca34d55a1929f4904f95e586cd8dfa968c35ed0418106ffafa9fc7f63d62c55f4ebd3fdcfcafd49d7050a1b45156d15ab4eea820daae893313
   languageName: node
   linkType: hard
 
@@ -4887,8 +4887,8 @@ __metadata:
   dependencies:
     "@iarna/toml": ^3.0.0
     "@pythnetwork/pyth-evm-js": ^1.29.2
-    "@usecannon/builder": 2.10.5
-    "@usecannon/cli": 2.10.5
+    "@usecannon/builder": 2.10.6-alpha.4
+    "@usecannon/cli": 2.10.6-alpha.4
     debug: ^4.3.4
     ethers: ^5.7.2
     hardhat: ^2.19.0
