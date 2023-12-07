@@ -1,0 +1,89 @@
+name = "synthetix-omnibus"
+version = "3.3.5"
+description = "Andromeda dev deployment"
+preset = "andromeda"
+include = [
+    "tomls/core.toml", # Provision the core system
+    "tomls/settings.toml", # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml", # Allow deployer to create pools
+    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    # Collaterals
+    "tomls/collaterals/susdc.toml",
+    # Factories
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
+    # Oracles
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/oracles/pyth-snx.toml",
+    # Spot Markets
+    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
+    # Perps Markets
+    "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
+    # BTC
+    "tomls/markets/perps/btc.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/btc.toml",
+    # ETH
+    "tomls/markets/perps/eth.toml",
+    "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
+    # Permissions
+    "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
+]
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.5"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "op-gas-price-oracle:3.3.5"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.5"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.5"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.5"
+
+[setting.salt]
+defaultValue = "andromeda"
+
+[setting.target_preset]
+defaultValue = "andromeda" # Preset assigned to provisioned packages
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.5"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400" # 1 day
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]

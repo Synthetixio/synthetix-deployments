@@ -1,0 +1,27 @@
+[setting.snx_address]
+defaultValue = ""
+
+[setting.buyback_premium]
+defaultValue = "10000000000000000"
+
+[setting.buyback_fee_share]
+defaultValue = "500000000000000000"
+
+[setting.pythSnxFeedId]
+defaultValue = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
+
+[provision.buyback_snx]
+source = "<%= settings.buyback_snx_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.premium = "<%= settings.buyback_premium %>"
+options.snx_fee_share = "<%= settings.buyback_fee_share %>"
+options.oracle_manager_address = "<%= imports.system.imports.oracle_manager.contracts.Proxy.address %>"
+options.snx_token = "<%= settings.snx_address %>"
+options.usd_token = "<%= imports.system.contracts.USDProxy.address %>"
+options.snx_oracle_id = "<%= extras.snx_oracle_id %>"
+
+[invoke.setFeeCollector]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeeCollector"
+args = ["<%= imports.buyback_snx.contracts.buyback_snx.address %>"]
