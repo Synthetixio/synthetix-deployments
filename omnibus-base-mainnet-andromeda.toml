@@ -29,6 +29,7 @@ include = [
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
     # Permissions
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
+
 ]
 
 [setting.snx_package]
