@@ -1,4 +1,4 @@
-include = ["./feeCollector.toml", "./referrers.toml"]
+include = ["./referrers.toml"] # TODO
 
 # GLOBAL PERPS SETTINGS
 [setting.perps_keeper_l1_cost_settle_gas_units]
@@ -43,6 +43,7 @@ args = [
     "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>"
 ]
 
+# TODO
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -53,7 +54,7 @@ args = ["0", "<%= MaxUint256 %>"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
-args = [["0"]]
+args = [["0", "<%= extras.synth_usdc_market_id %>"]]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]

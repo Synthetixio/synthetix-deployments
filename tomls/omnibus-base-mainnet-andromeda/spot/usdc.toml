@@ -4,12 +4,6 @@ defaultValue = "<%= parseEther(String(50_000)) %>" # 50k LP limit
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
 
-[provision.usdc_mock_collateral]
-source = "mintable-token:1.3"
-options.name = "Fake USD Coin"
-options.symbol = "fUSDC"
-options.owner = "<%= settings.owner %>"
-
 [invoke.createUsdcSynth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"

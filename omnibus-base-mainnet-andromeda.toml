@@ -57,13 +57,15 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 source = "pyth-erc7412-wrapper:3.3.5"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
-options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486"
+options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486" # TODO
 
+# TODO
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = ""
 
+# TODO
 [setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = ""
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
@@ -74,8 +76,9 @@ defaultValue = "86400" # 1 day
 [setting.sc_pool_id]
 defaultValue = "1"
 
+# TODO
 [setting.pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = ""
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
