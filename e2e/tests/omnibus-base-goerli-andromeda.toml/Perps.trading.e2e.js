@@ -122,4 +122,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       1000 - 100
     );
   });
+
+  });
 });
