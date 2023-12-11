@@ -29,7 +29,6 @@ include = [
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
     # Permissions
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
-
 ]
 
 [setting.snx_package]
@@ -61,11 +60,11 @@ options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486" # TODO
 
 # TODO
 [setting.owner]
-defaultValue = ""
+defaultValue = "0xEbe57e8045F2F230872523bbff7374986E45C486"
 
 # TODO
 [setting.deployer]
-defaultValue = ""
+defaultValue = "0xEbe57e8045F2F230872523bbff7374986E45C486"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
@@ -78,7 +77,7 @@ defaultValue = "1"
 
 # TODO
 [setting.pool_owner]
-defaultValue = ""
+defaultValue = "0xEbe57e8045F2F230872523bbff7374986E45C486"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]

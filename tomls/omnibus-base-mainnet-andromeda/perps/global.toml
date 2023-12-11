@@ -43,7 +43,6 @@ args = [
     "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>"
 ]
 
-# TODO
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
