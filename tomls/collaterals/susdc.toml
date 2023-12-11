@@ -7,5 +7,5 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [ # TODO: use settings
-    { tokenAddress = "<%= extras.synth_usdc_token_address %>", oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= settings.susdc_liquidation_ratio %>", liquidationRewardD18 = "<%= settings.susdc_liquidation_reward %>", minDelegationD18 = "<%= settings.susdc_min_delegation %>", depositingEnabled = true }
+    { tokenAddress = "<%= extras.synth_usdc_token_address %>", oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= settings.susdc_issuance_ratio %>", liquidationRatioD18 = "<%= settings.susdc_liquidation_ratio %>", liquidationRewardD18 = "<%= settings.susdc_liquidation_reward %>", minDelegationD18 = "<%= settings.susdc_min_delegation %>", depositingEnabled = true }
 ]
