@@ -1,6 +1,9 @@
 include = ["./referrers.toml"] # TODO
 
 # GLOBAL PERPS SETTINGS
+[setting.settlementReward]
+defaultValue = "0.1"
+
 [setting.perps_keeper_l1_cost_settle_gas_units]
 defaultValue = "1"
 

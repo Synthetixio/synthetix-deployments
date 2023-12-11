@@ -7,7 +7,7 @@ target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     5, # 5 = pyth aggregator type
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pythBtcFeedId, false]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pythBtcFeedId, false]) %>",
     []
 ]
 extra.btc_pyth_oracle_id.event = "NodeRegistered"

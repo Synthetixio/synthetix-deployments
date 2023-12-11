@@ -26,7 +26,7 @@ include = [
     "tomls/oracles/pyth-btc.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
-    "tomls/oracles/pyth-snx.toml",
+    # "tomls/oracles/pyth-snx.toml",
     # Permissions
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
 ]
@@ -43,8 +43,8 @@ defaultValue = "synthetix-spot-market:3.3.5"
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.5"
 
-[setting.buyback_snx_package]
-defaultValue = "buyback-snx:3.3.5"
+# [setting.buyback_snx_package]
+# defaultValue = "buyback-snx:3.3.5"
 
 [setting.salt]
 defaultValue = "andromeda"
@@ -52,11 +52,17 @@ defaultValue = "andromeda"
 [setting.target_preset]
 defaultValue = "andromeda" # Preset assigned to provisioned packages
 
+[setting.pyth_price_verification_address]
+defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
+
 [provision.pyth_erc7412_wrapper]
 source = "pyth-erc7412-wrapper:3.3.5"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
-options.pythAddress = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[setting.usdc_address]
+defaultValue = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
 
 # TODO
 [setting.owner]
