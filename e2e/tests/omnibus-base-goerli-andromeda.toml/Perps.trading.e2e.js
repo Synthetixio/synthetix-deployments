@@ -16,7 +16,7 @@ const { wrapUsdc } = require('../../tasks/wrapUsdc');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { parseError } = require('../../parseError');
 const extras = require('../../deployments/extras.json');
-const { swapToSusd } = require('../../tasks/swapTosUSD');
+const { swapToSusd } = require('../../tasks/swapToSusd');
 const meta = require('../../deployments/meta.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
