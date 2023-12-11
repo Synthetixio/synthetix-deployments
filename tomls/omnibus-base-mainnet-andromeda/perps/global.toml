@@ -5,16 +5,16 @@ include = ["./referrers.toml"] # TODO
 defaultValue = "1"
 
 [setting.perps_keeper_l1_cost_settle_gas_units]
-defaultValue = "55_000"
+defaultValue = "55000"
 
 [setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "1_383_129"
+defaultValue = "1383129"
 
 [setting.perps_keeper_l1_cost_flag_gas_units]
-defaultValue = "22_000"
+defaultValue = "22000"
 
 [setting.perps_keeper_l2_cost_flag_gas_units]
-defaultValue = "1_430_000"
+defaultValue = "1430000"
 
 [setting.perps_keeper_l1_cost_liquidate_gas_units]
 defaultValue = "1"

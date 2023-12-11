@@ -7,7 +7,7 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 defaultValue = "100"
 
 [setting.perpsEthSkewScale]
-defaultValue = "1_000_000"
+defaultValue = "1000000"
 
 [setting.perpsEthMaxFundingVelocity]
 defaultValue = "9"
