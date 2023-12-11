@@ -6,6 +6,7 @@ include = [
     "tomls/core.toml", # Provision the core system
     "tomls/settings.toml", # Apply minimum liquidity ratio and withdrawal timeout
     "tomls/permissions.toml", # Allow deployer to create pools
+    "tomls/omnibus-base-mainnet-andromeda/permissions.toml", # Set deniers, etc.
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     # Collaterals
     "tomls/collaterals/susdc.toml",
