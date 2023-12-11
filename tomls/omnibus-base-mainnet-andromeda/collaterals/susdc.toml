@@ -2,10 +2,10 @@
 defaultValue = "<%= MaxUint256 %>"
 
 [setting.susdc_liquidation_ratio]
-defaultValue = "<%= parseEther('1.1') %>"
+defaultValue = "<%= parseEther('1.01') %>"
 
 [setting.susdc_liquidation_reward]
-defaultValue = "<%= parseEther('0.01') %>"
+defaultValue = "<%= parseEther('5') %>"
 
 [setting.susdc_min_delegation]
-defaultValue = "<%= parseEther('1') %>"
+defaultValue = "<%= parseEther('10') %>"

@@ -6,7 +6,7 @@ defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b
 defaultValue = "200"
 
 [setting.perpsBtcSkewScale]
-defaultValue = "1000000"
+defaultValue = "100_000"
 
 [setting.perpsBtcMaxFundingVelocity]
 defaultValue = "9"
@@ -15,31 +15,31 @@ defaultValue = "9"
 defaultValue = "0.0003"
 
 [setting.perpsBtcTakerFeeRatio]
-defaultValue = "0.0007"
+defaultValue = "0.0005"
 
 [setting.perpsBtcMaxMarketSize]
-defaultValue = "0.4" #approx $10k
+defaultValue = "0.25" #approx $10k
 
 [setting.perpsBtcInitialMarginRatio]
-defaultValue = "1"
+defaultValue = "13.35"
 
 [setting.perpsBtcMaintenanceMarginScalar]
-defaultValue = "0.5"
+defaultValue = "0.28"
 
 [setting.perpsBtcMinimumInitialMarginRatio]
 defaultValue = "0.02"
 
 [setting.perpsBtcFlagRewardRatioD18]
-defaultValue = "0.01"
+defaultValue = "0.0002"
 
 [setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "0.5"
+defaultValue = "1.5"
 
 [setting.perpsBtcMaxSecondsInLiquidationWindow]
 defaultValue = "30"
 
 [setting.perpsBtcMinimumPositionMargin]
-defaultValue = "0"
+defaultValue = "50"
 
 [setting.perpsBtcLockedOiRatio]
 defaultValue = "0.5"
@@ -48,7 +48,7 @@ defaultValue = "0.5"
 defaultValue = "<%= MaxUint256 %>"
 
 [setting.perpsBtcMaxLiquidationPd]
-defaultValue = "0.0016"
+defaultValue = "0.0005"
 
 [setting.perpsBtcEndorsedLiquidator]
 defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
