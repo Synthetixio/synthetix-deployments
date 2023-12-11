@@ -13,15 +13,15 @@ include = [
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
     # Spot Markets
-    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
+    "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
     # Perps Markets
-    "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
+    "tomls/omnibus-base-mainnet-andromeda/perps/global.toml", # Global perps settings
     # BTC
     "tomls/markets/perps/btc.toml",
-    "tomls/omnibus-base-goerli-andromeda/perps/btc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/btc.toml",
     # ETH
     "tomls/markets/perps/eth.toml",
-    "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
     # Oracles
     "tomls/oracles/pyth-btc.toml",
     "tomls/oracles/pyth-eth.toml",
@@ -56,7 +56,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 source = "pyth-erc7412-wrapper:3.3.5"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
-options.pythAddress = "0xEbe57e8045F2F230872523bbff7374986E45C486" # TODO
+options.pythAddress = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
 
 # TODO
 [setting.owner]
