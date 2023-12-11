@@ -103,4 +103,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       amount
     );
   });
+  it('should withdraw $100 sUSD as perps margin', async () => {
+    const amount = -100;
+    assert.equal(
+      (await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)).toString(),
+      1000
+    );
+
+    try {
+      await PerpsMarketProxy.connect(wallet).modifyCollateral(accountId, sUSDMarketId, amount, {
+        gasLimit: 10_000_000,
+      });
+    } catch (error) {
+      console.log(parseError(error));
+    }
+    assert.equal(
+      (await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)).toString(),
+      1000 - 100
+    );
+  });
 });
