@@ -1,4 +1,3 @@
-// @ts-check
 const assert = require('assert');
 const { ethers } = require('ethers');
 const crypto = require('crypto');
@@ -22,6 +21,8 @@ const meta = require('../../deployments/meta.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
+const { USDProxy: sUSDAddress } = meta.contracts;
+const sUSDMarketId = 0;
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
@@ -60,3 +61,46 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const permissions = await getPerpsAccountPermissions({ accountId });
     assert.equal(permissions.length, 0);
   });
+
+  it('should deposit $1000 sUSD as perps margin', async () => {
+    // Get some USDC
+    await setMintableTokenBalance({
+      privateKey: wallet.privateKey,
+      tokenAddress: USDCDeployment.address,
+      balance: 10_000_000,
+    });
+    // Approve USDC to spot market, so we can wrap it
+    await approveToken({
+      privateKey: wallet.privateKey,
+      tokenAddress: USDCDeployment.address,
+      spenderAddress: SpotMarketProxyDeployment.address,
+    });
+
+    const amount = 1000;
+    await wrapUsdc({ wallet, amount });
+    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount });
+    await approveToken({
+      privateKey: wallet.privateKey,
+      tokenAddress: sUSDAddress,
+      spenderAddress: PerpsMarketProxyDeployment.address,
+    });
+
+    assert.equal(
+      (await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)).toString(),
+      0
+    );
+
+    try {
+      await PerpsMarketProxy.connect(wallet).modifyCollateral(accountId, sUSDMarketId, amount, {
+        gasLimit: 10_000_000,
+      });
+    } catch (error) {
+      console.log(parseError(error));
+    }
+
+    assert.equal(
+      (await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)).toString(),
+      amount
+    );
+  });
+});
