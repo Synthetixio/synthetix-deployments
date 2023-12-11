@@ -1,7 +1,7 @@
 include = ["./settlement-settings.toml"]
 
 [setting.bigCapSettlementDelay]
-defaultValue = "15"
+defaultValue = "2"
 
 [setting.bigCapSettlementWindowDuration]
 defaultValue = "60"

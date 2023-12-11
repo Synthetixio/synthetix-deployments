@@ -33,6 +33,12 @@ include = [
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
 ]
 
+[setting.commitmentPriceDelay]
+defaultValue = "2"
+
+[setting.bigCapSettlementDelay]
+defaultValue = "2"
+
 [setting.snx_package]
 defaultValue = "synthetix:3.3.5"
 
