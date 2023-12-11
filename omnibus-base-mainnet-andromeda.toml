@@ -12,11 +12,6 @@ include = [
     # Factories
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    # Oracles
-    "tomls/oracles/pyth-btc.toml",
-    "tomls/oracles/pyth-eth.toml",
-    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
-    "tomls/oracles/pyth-snx.toml",
     # Spot Markets
     "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
     # Perps Markets
@@ -27,6 +22,11 @@ include = [
     # ETH
     "tomls/markets/perps/eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
+    # Oracles
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/oracles/pyth-snx.toml",
     # Permissions
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
 ]
