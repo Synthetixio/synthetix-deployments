@@ -62,7 +62,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.snxPerpsMarketId %>",
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythSnxFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythSnxFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
 ]
 extra.snx_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.snx_pyth_settlement_strategy.arg = 2
