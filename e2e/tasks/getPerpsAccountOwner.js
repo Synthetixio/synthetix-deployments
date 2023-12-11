@@ -1,5 +1,5 @@
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/CoreProxy.json');
+const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 
 async function getPerpsAccountOwner({ accountId }) {
   const provider = new ethers.providers.JsonRpcProvider(
