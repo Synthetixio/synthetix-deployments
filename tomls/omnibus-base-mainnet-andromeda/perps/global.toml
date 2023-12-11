@@ -56,7 +56,7 @@ args = ["0", "<%= MaxUint256 %>"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSynthDeductionPriority"
-args = [["0", "<%= extras.synth_usdc_market_id %>"]]
+args = [["0"]]
 
 [invoke.setPerAccountCapsPerps]
 target = ["perpsFactory.PerpsMarketProxy"]

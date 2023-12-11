@@ -9,6 +9,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/permissions.toml", # Set deniers, etc.
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     # Collaterals
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
     # Factories
     "tomls/markets/spot-factory.toml",
