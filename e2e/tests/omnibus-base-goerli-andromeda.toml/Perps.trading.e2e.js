@@ -123,5 +123,49 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
+  it('trade', async () => {
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
+    const { settlementDelay, feedId: priceFeedId } = strategy;
+    const delay = settlementDelay.toNumber();
+    const x = await getPrice(priceFeedId);
+    const pythPrice = x.getPriceAsNumberUnchecked();
+    const sizeDelta = parseEther('0.1');
+    const availMargin = await PerpsMarketProxy.getAvailableMargin(accountId);
+    const indexPrice = await PerpsMarketProxy.indexPrice(marketId);
+    const fillPrice = await PerpsMarketProxy.fillPrice(marketId, sizeDelta, indexPrice);
+    console.log({ pythPrice, indexPrice, fillPrice, sizeDelta, availMargin });
+
+    let commitReceipt;
+    try {
+      const tx = await PerpsMarketProxy.connect(wallet).commitOrder({
+        marketId,
+        accountId,
+        sizeDelta,
+        settlementStrategyId,
+        acceptablePrice: parseEther(Math.floor(pythPrice * 2).toString()),
+        referrer: ethers.constants.AddressZero,
+        trackingCode: ethers.constants.HashZero,
+      });
+      console.log('commit sent');
+      commitReceipt = await tx.wait();
+    } catch (error) {
+      console.log(parseError(error));
+    }
+
+    console.log('commit done');
+    const block = await provider.getBlock(commitReceipt.blockNumber);
+
+    const commitmentTime = block.timestamp;
+
+    const settlementTime = commitmentTime + delay + 1;
+    // Fast forward 1ms past settlement time
+    await provider.send('evm_setNextBlockTimestamp', [settlementTime]);
+    await provider.send('evm_mine', []);
+    console.log('moved time forward to', settlementTime);
+
+    const settleTx = await PerpsMarketProxy.connect(wallet).settleOrder(accountId);
+    await settleTx.wait();
+    console.log('settled');
   });
 });
