@@ -6,8 +6,7 @@ const oracles = require('../deployments/oracles.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-const PYTH_MAINNET_ENDPOINT = 'https://xc-mainnet.pyth.network';
-const PYTH_TESTNET_ENDPOINT = 'https://xc-testnet.pyth.network';
+const PYTH_MAINNET_ENDPOINT = 'https://hermes.pyth.network';
 
 const ERC7412_ABI = [
   'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
@@ -39,17 +38,18 @@ async function getPrice(feedId) {
 }
 
 module.exports = {
+  getPrice,
   fulfillOracleQuery,
 };
 
 if (require.main === module) {
-  const [pk, testnet, symbol] = process.argv.slice(2);
-  if (!pk || !testnet || !symbol) {
+  const [pk, symbol] = process.argv.slice(2);
+  if (!pk || !symbol) {
     const bin = `./${require('path').basename(__filename)}`;
     throw new Error(
       [
         'Usage:',
-        `  ${bin} pk testnet symbol`,
+        `  ${bin} pk symbol`,
         'Example:',
         `  ${bin} 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 testnet BTC`,
         '',
@@ -60,5 +60,5 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  fulfillOracleQuery({ wallet, symbol, isTestnet: testnet === 'testnet' }).then(console.log);
+  fulfillOracleQuery({ wallet, symbol }).then(console.log);
 }
