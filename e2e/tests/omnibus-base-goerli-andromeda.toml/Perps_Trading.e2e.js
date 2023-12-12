@@ -25,6 +25,7 @@ const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
+const { getPrice, fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -255,7 +256,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         }
       );
     } catch (error) {
-      console.log(parseError(error));
+      parseError(error);
     }
     assert.equal(
       parseFloat(
