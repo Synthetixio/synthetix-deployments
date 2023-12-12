@@ -1,5 +1,6 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
+const crypto = require('crypto');
 require('../../inspect');
 
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
@@ -75,7 +76,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(ethers.utils.formatEther(maxSize), 30);
   });
 
-  it('should have 0.0002 Maker fee, 0.0007 Taker fee', async () => {
+  it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
     const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
 
     assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0002);
