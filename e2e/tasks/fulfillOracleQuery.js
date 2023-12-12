@@ -15,21 +15,15 @@ const ERC7412_ABI = [
   'function oracleId() view external returns (bytes32)',
   'function fulfillOracleQuery(bytes calldata signedOffchainData) payable external',
 ];
+const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
-async function fulfillOracleQuery({ wallet, symbol, isTestnet }) {
-  if (!(symbol in oracles)) {
-    throw new Error(`Symbol ${symbol} not found in oracles`);
+async function getPrice(feedId) {
+  const priceFeed = await priceService.getLatestPriceFeeds([feedId]);
+  if (priceFeed) {
+    return priceFeed[0].getPriceUnchecked();
   }
-
-  const priceService = new EvmPriceServiceConnection(
-    isTestnet ? PYTH_TESTNET_ENDPOINT : PYTH_MAINNET_ENDPOINT
-  );
-
-  log({ symbol });
-
-  const oracle = oracles[symbol];
-
-  const [offchainData] = await priceService.getPriceFeedsUpdateData([oracle.feedId]);
+  throw Error(`Price feed not found, feed id: ${feedId}`);
+}
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
     [1, oracle.staleness, [oracle.feedId], [offchainData]]
