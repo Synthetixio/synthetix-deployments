@@ -12,7 +12,7 @@ defaultValue = "100000"
 defaultValue = "9"
 
 [setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0003"
+defaultValue = "0.0002"
 
 [setting.perpsBtcTakerFeeRatio]
 defaultValue = "0.0005"
@@ -30,7 +30,7 @@ defaultValue = "0.28"
 defaultValue = "0.02"
 
 [setting.perpsBtcFlagRewardRatioD18]
-defaultValue = "0.0002"
+defaultValue = "0.0003"
 
 [setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
 defaultValue = "1.5"

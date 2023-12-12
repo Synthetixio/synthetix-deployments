@@ -31,7 +31,7 @@ defaultValue = "0.02"
 defaultValue = "0.28"
 
 [setting.perpsEthFlagRewardRatioD18]
-defaultValue = "0.0002"
+defaultValue = "0.0003"
 
 [setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
 defaultValue = "1.5"
