@@ -2,7 +2,7 @@
 
 const { ethers } = require('ethers');
 const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
-const oracles = require('../deployments/oracles.json');
+const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -23,18 +23,41 @@ async function getPrice(feedId) {
   }
   throw Error(`Price feed not found, feed id: ${feedId}`);
 }
+
+function base64ToHex(str) {
+  const raw = Buffer.from(str, 'base64');
+  return '0x' + raw.toString('hex');
+}
+
+async function fulfillOracleQuery({
+  wallet,
+  priceVerificationContractAddress,
+  oracleFeedId,
+  timestamp,
+}) {
+  log({ oracleFeedId });
+  const [offchainData] = await priceService.getVaa(oracleFeedId, timestamp);
+  const UPDATE_TYPE = 2;
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
-    [1, oracle.staleness, [oracle.feedId], [offchainData]]
+    [UPDATE_TYPE, timestamp, [oracleFeedId], [base64ToHex(offchainData)]]
   );
-  const OracleBTC = new ethers.Contract(oracle.address, ERC7412_ABI, wallet);
 
-  const tx = await OracleBTC.fulfillOracleQuery(offchainDataEncoded, {
-    value: ethers.BigNumber.from(1), // 1 wei,
-    gasLimit: 10_000_000,
-  });
-  await tx.wait();
-  log({ symbol, updated: true });
+  const PriceVerificationContract = new ethers.Contract(
+    priceVerificationContractAddress,
+    ERC7412_ABI,
+    wallet
+  );
+  try {
+    const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
+      value: ethers.BigNumber.from(1), // 1 wei,
+    });
+    await tx.wait();
+  } catch (error) {
+    parseError(error);
+  }
+
+  log({ oracleFeedId, updated: true });
 }
 
 module.exports = {
