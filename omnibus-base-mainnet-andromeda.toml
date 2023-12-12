@@ -72,11 +72,9 @@ options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
 
-# TODO
 [setting.owner]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
-# TODO
 [setting.deployer]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
@@ -89,7 +87,6 @@ defaultValue = "86400" # 1 day
 [setting.sc_pool_id]
 defaultValue = "1"
 
-# TODO
 [setting.pool_owner]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
