@@ -6,11 +6,11 @@ include = [
     "tomls/core.toml", # Provision the core system
     "tomls/settings.toml", # Apply minimum liquidity ratio and withdrawal timeout
     "tomls/permissions.toml", # Allow deployer to create pools
+    "tomls/permit-deniers.toml", # Add feature flag deniers to perps and core systems
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
     "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper, mock for USDC
-#    "tomls/omnibus-base-goerli-andromeda/permissions.toml", # Set deniers, etc. ?? does not exist on goerli?
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/omnibus-base-goerli-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
