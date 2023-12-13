@@ -48,14 +48,11 @@ async function fulfillOracleQuery({
     ERC7412_ABI,
     wallet
   );
-  try {
-    const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
-      value: ethers.BigNumber.from(1), // 1 wei,
-    });
-    await tx.wait();
-  } catch (error) {
-    parseError(error);
-  }
+
+  const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
+    value: ethers.BigNumber.from(1), // 1 wei,
+  }).catch(parseError);
+  await tx.wait().catch(parseError);
 
   log({ oracleFeedId, updated: true });
 }

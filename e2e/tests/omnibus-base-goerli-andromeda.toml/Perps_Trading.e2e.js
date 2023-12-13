@@ -222,7 +222,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       .modifyCollateral(accountId, sUSDMarketId, ethers.utils.parseEther(String(5_000)), {
         gasLimit: 10_000_000,
       })
-      .catch(parseError(error));
+      .catch(parseError);
 
     assert.equal(
       parseFloat(
@@ -248,7 +248,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       .modifyCollateral(accountId, sUSDMarketId, ethers.utils.parseEther(String(-100)), {
         gasLimit: 10_000_000,
       })
-      .catch(parseError(error));
+      .catch(parseError);
 
     assert.equal(
       parseFloat(
@@ -303,8 +303,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const settleTx = await PerpsMarketProxy.connect(wallet)
       .settleOrder(accountId)
-      .catch(parseError(error));
-    await settleTx.wait().catch(parseError(error));
+      .catch(parseError);
+    await settleTx.wait().catch(parseError);
     log('Open order settled');
 
     const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
@@ -352,8 +352,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const settleTx = await PerpsMarketProxy.connect(wallet)
       .settleOrder(accountId)
-      .catch(parseError(error));
-    await settleTx.wait().catch(parseError(error));
+      .catch(parseError);
+    await settleTx.wait().catch(parseError);
     log('Close order settled');
 
     const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
