@@ -263,17 +263,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should open a 0.1 btc position', async () => {
     const btcMarketId = 200;
     const marketId = btcMarketId;
-    const strategyId = 0;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, strategyId);
+
+    log(`Fetching settlement strategy ${settlementStrategyId} for BTC`);
+    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
 
     const { feedId: priceFeedId, priceVerificationContract, commitmentPriceDelay } = strategy;
 
+    log('Fetching pyth price, to create acceptable price');
     const price = await getPrice(priceFeedId);
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('0.1');
 
-    await setSettlementDelay({ strategyId, marketId, delay: 1 });
+    log(`Setting settlementDelay to 1s`);
+    await setSettlementDelay({ strategyId: settlementStrategyId, marketId, delay: 1 });
+
+    log('Committing order order for 0.1 BTC');
     const tx = await PerpsMarketProxy.connect(wallet)
       .commitOrder({
         marketId,
@@ -288,9 +293,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const commitReceipt = await tx.wait().catch(parseError);
     log('Order committed');
 
+    log('Fetching commitment time');
     const block = await provider.getBlock(commitReceipt.blockNumber);
     const commitmentTime = block.timestamp;
 
+    log('Waiting 1s for settlement delay');
     // wait 1 seconds for settlement delay
     await wait(1000);
 
@@ -300,7 +307,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       priceVerificationContractAddress: priceVerificationContract,
       timestamp: commitmentTime + commitmentPriceDelay.toNumber(),
     });
-
+    log('Sending settleOrder tx');
     const settleTx = await PerpsMarketProxy.connect(wallet)
       .settleOrder(accountId)
       .catch(parseError);
@@ -314,16 +321,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a 0.1 btc position', async () => {
     const btcMarketId = 200;
     const marketId = btcMarketId;
-    const strategyId = 0;
 
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, strategyId);
+
+    log(`Fetching settlement strategy ${settlementStrategyId} for BTC`);
+    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
 
     const { feedId: priceFeedId, priceVerificationContract, commitmentPriceDelay } = strategy;
+    log('Fetching pyth price, to create acceptable price');
     const price = await getPrice(priceFeedId);
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('-0.1');
 
+    log('Committing close order for -0.1 BTC');
     const tx = await PerpsMarketProxy.connect(wallet)
       .commitOrder({
         marketId,
@@ -340,7 +350,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const block = await provider.getBlock(commitReceipt.blockNumber);
     const commitmentTime = block.timestamp;
-
+    log('Waiting 1s for settlement delay');
     // wait 1 seconds for settlement delay
     await wait(1000);
     await fulfillOracleQuery({
@@ -349,7 +359,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       priceVerificationContractAddress: priceVerificationContract,
       timestamp: commitmentTime + commitmentPriceDelay.toNumber(),
     });
-
+    log('Sending settleOrder tx');
     const settleTx = await PerpsMarketProxy.connect(wallet)
       .settleOrder(accountId)
       .catch(parseError);
