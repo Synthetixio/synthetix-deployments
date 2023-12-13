@@ -1,38 +1,33 @@
 name = "synthetix-omnibus"
 version = "3.3.5"
-description = "Andromeda dev deployment"
+description = "Andromeda deployment"
 preset = "andromeda"
 include = [
     "tomls/core.toml", # Provision the core system
     "tomls/settings.toml", # Apply minimum liquidity ratio and withdrawal timeout
     "tomls/permissions.toml", # Allow deployer to create pools
-    "tomls/omnibus-base-mainnet-andromeda/permissions.toml", # Set deniers, etc.
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
-    # Collaterals
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
-    "tomls/collaterals/susdc.toml",
-    # Factories
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    # Spot Markets
     "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
-    # Perps Markets
+    "tomls/omnibus-base-mainnet-andromeda/permissions.toml", # Set deniers, etc.
+    "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
+    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+#    "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml", ?? does not exist on mainnet
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
+    "tomls/collaterals/susdc.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
+    "tomls/oracles/pyth-btc.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/btc.toml",
     # ETH
     "tomls/markets/perps/eth.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
-    # Oracles
-    "tomls/oracles/pyth-btc.toml",
     "tomls/oracles/pyth-eth.toml",
-    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
-    # "tomls/oracles/pyth-snx.toml",
-    # Permissions
-    "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
-
+    "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
+#    # SNX ?? does not exist on mainnet
+#    "tomls/oracles/pyth-snx.toml", ?? does not exist on mainnet
 ]
 
 [setting.commitmentPriceDelay]
@@ -55,6 +50,7 @@ defaultValue = "synthetix-perps-market:3.3.5"
 
 # [setting.buyback_snx_package]
 # defaultValue = "buyback-snx:3.3.5"
+
 [setting.salt]
 defaultValue = "andromeda"
 
@@ -69,9 +65,6 @@ source = "pyth-erc7412-wrapper:3.3.5"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
-
-[setting.usdc_address]
-defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
 
 [setting.owner]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
@@ -102,3 +95,6 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
+
+[setting.usdc_address]
+defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"

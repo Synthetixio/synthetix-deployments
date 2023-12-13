@@ -60,7 +60,7 @@ func = "configureCollateral" # "args" see below in the multiline block
 tokenAddress = "<%= settings.usdc_address %>"
 oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
 issuanceRatioD18 = "<%= MaxUint256 %>"
-liquidationRatioD18 = "<%= parseEther('1.1') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('1') %>"
+liquidationRatioD18 = "<%= parseEther('1.005') %>"
+liquidationRewardD18 = "<%= parseEther('0.005') %>"
+minDelegationD18 = "<%= parseEther('100') %>"
 depositingEnabled = false

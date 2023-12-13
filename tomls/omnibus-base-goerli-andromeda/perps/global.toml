@@ -1,32 +1,35 @@
-[setting.perps_keeper_l1_cost_settle_gas_units]
+[setting.settlementReward]
 defaultValue = "1"
+
+[setting.perps_keeper_l1_cost_settle_gas_units]
+defaultValue = "30000"
 
 [setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "1"
+defaultValue = "1200000"
 
 [setting.perps_keeper_l1_cost_flag_gas_units]
-defaultValue = "1"
+defaultValue = "15500"
 
 [setting.perps_keeper_l2_cost_flag_gas_units]
-defaultValue = "1"
+defaultValue = "250000"
 
 [setting.perps_keeper_l1_cost_liquidate_gas_units]
-defaultValue = "1"
+defaultValue = "5500"
 
 [setting.perps_keeper_l2_cost_liquidate_gas_units]
-defaultValue = "1"
+defaultValue = "1100000"
 
 [setting.perps_liquidation_min_keeper_reward_usd]
-defaultValue = "1"
+defaultValue = "5"
 
 [setting.perps_liquidation_min_keeper_profit_ratio_d18]
-defaultValue = "1"
+defaultValue = "0.30"
 
 [setting.perps_liquidation_max_keeper_reward_usd]
-defaultValue = "500"
+defaultValue = "100"
 
 [setting.perps_liquidation_max_keeper_scaling_ratio_d18]
-defaultValue = "1"
+defaultValue = "0.3"
 
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -55,7 +58,7 @@ args = [["0"]]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
-args = ["5", "3"]
+args = ["2", "1"]
 
 [invoke.setPerpsMarketKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]

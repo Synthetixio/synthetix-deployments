@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.5-1"
+version = "3.3.5-2"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -10,11 +10,14 @@ include = [
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
     "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper, mock for USDC
+#    "tomls/omnibus-base-goerli-andromeda/permissions.toml", # Set deniers, etc. ?? does not exist on goerli?
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
-    "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
     "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml",
+#    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml", ?? does not exist on goerli
+#    "tomls/collaterals/susdc.toml", ?? does not exist on goerli
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -26,6 +29,12 @@ include = [
     # SNX
     "tomls/oracles/pyth-snx.toml",
 ]
+
+[setting.commitmentPriceDelay]
+defaultValue = "2"
+
+[setting.bigCapSettlementDelay]
+defaultValue = "2"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.5"

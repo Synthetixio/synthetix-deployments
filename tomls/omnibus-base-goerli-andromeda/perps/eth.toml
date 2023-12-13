@@ -5,7 +5,7 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 defaultValue = "100"
 
 [setting.perpsEthSkewScale]
-defaultValue = "1000000"
+defaultValue = "10000000"
 
 [setting.perpsEthMaxFundingVelocity]
 defaultValue = "9"
@@ -20,25 +20,25 @@ defaultValue = "0.0005"
 defaultValue = "525" # approx $1m
 
 [setting.perpsEthInitialMarginRatio]
-defaultValue = "1"
+defaultValue = "8.92"
 
 [setting.perpsEthMinimumInitialMarginRatio]
 defaultValue = "0.02"
 
 [setting.perpsEthMaintenanceMarginScalar]
-defaultValue = "0.5"
+defaultValue = "0.28"
 
 [setting.perpsEthFlagRewardRatioD18]
-defaultValue = "0.01"
+defaultValue = "0.0003"
 
 [setting.perpsEthMaxLiquidationLimitAccumulationMultiplier]
-defaultValue = "1"
+defaultValue = "1.5"
 
 [setting.perpsEthMaxSecondsInLiquidationWindow]
 defaultValue = "30"
 
 [setting.perpsEthMinimumPositionMargin]
-defaultValue = "0"
+defaultValue = "50"
 
 [setting.perpsEthLockedOiRatio]
 defaultValue = "0.5"

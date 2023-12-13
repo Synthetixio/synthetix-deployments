@@ -1,6 +1,9 @@
 [setting.snx_address]
 defaultValue = ""
 
+
+
+
 [setting.buyback_premium]
 defaultValue = "<%= parseEther('0.01') %>"
 
