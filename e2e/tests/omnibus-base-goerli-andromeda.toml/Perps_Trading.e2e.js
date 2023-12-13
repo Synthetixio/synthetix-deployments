@@ -32,10 +32,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const sUSDMarketId = 0;
 
-function wait(ms) {
-  console.log('wating ' + ms + 'ms');
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
