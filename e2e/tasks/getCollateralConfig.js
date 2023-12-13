@@ -1,29 +1,12 @@
-const { ethers } = require('ethers');
-const CoreProxy = require('../deployments/CoreProxy.json');
+const { getCollateralConfigurations } = require('./getCollateralConfigurations');
 
 async function getCollateralConfig(symbol) {
-  const provider = new ethers.providers.JsonRpcProvider(
-    process.env.RPC_URL || 'http://127.0.0.1:8545'
-  );
-
-  const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, provider);
-  const collateralConfigs = await coreProxy.getCollateralConfigurations(true);
-  for (const config of collateralConfigs) {
-    try {
-      const contract = new ethers.Contract(
-        config.tokenAddress,
-        ['function symbol() view returns (string)'],
-        provider
-      );
-      const collateralSymbol = await contract.symbol();
-      if (collateralSymbol === symbol) {
-        return config;
-      }
-    } catch (e) {
-      // nevermind
-    }
+  const collateralConfigs = await getCollateralConfigurations();
+  const config = collateralConfigs.find((cfg) => cfg.symbol === symbol);
+  if (!config) {
+    throw new Error(`Collateral config for "${symbol}" does not exist`);
   }
-  throw new Error(`Collateral config for "${symbol}" does not exist`);
+  return config;
 }
 
 module.exports = {

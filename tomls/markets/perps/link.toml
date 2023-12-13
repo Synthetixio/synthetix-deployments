@@ -53,7 +53,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.linkPerpsMarketId %>",
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
 ]
 extra.link_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.link_pyth_settlement_strategy.arg = 2
@@ -66,7 +66,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= extras.link_pyth_settlement_strategy %>", # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
 ]
 depends = ["invoke.addPerpsLinkSettlementStrategy"]
 

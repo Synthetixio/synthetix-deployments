@@ -5,13 +5,14 @@ This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/s
 ## Deployment Guide
 
 - Run `yarn cannon setup` and ensure you have a reliable IPFS url for publishing.
-- Run `yarn cannon plugin add cannon-plugin-router` to install the router generator plug-in.
 
 ### Specify Upgrade
 
 - After [publishing any new versions of the provisioned packages](https://github.com/synthetixio/synthetix-v3#deployment-guide) (`oracle-manager`, `synthetix` and `spot-market`), bump the versions throughout the cannonfiles to match.
 - Add new settings and invoke actions as necessary.
-- Increment the version number and update the values in the network-specific omnibus cannonfiles as desired.
+- Increment the version number and update the values in the network-specific omnibus cannonfiles as desired. The main version should match synthetix version, and if it a configuration change on the same version use a dash.
+  Version: 3.3.5
+  Version with config changes: 3.3.5-1
 
 ### Execute Upgrade
 
@@ -19,22 +20,56 @@ Conduct the following process for each network:
 
 - Perform a dry-run and confirm that the actions that would be executed by Cannon are expected:
 
-```
-yarn cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRENT_VERSION> --provider-url <RPC_URL>  --private-key <DEPLOYER_PRIVATE_KEY> --dry-run
-```
+  ```sh
+  yarn cannon build omnibus-base-goerli-andromeda.toml \
+    --dry-run \
+    --upgrade-from synthetix-omnibus:latest@andromeda \
+    --chain-id 84531 \
+    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
+  ```
 
 - Remove the dry-run option to execute the upgrade:
 
-```
-yarn cannon build omnibus-<NETWORK_NAME>.toml --upgrade-from synthetix-omnibus:<CURRENT_VERSION> --provider-url <RPC_URL> --private-key <DEPLOYER_PRIVATE_KEY>
-```
+  ```sh
+  yarn cannon build omnibus-base-goerli-andromeda.toml \
+    --upgrade-from synthetix-omnibus:latest@andromeda \
+    --chain-id 84531 \
+    --private-key $TESTNET_DEPLOYER_PRIVATE_KEY \
+    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
+  ```
+
+- After this you can run the dry-run command again (without upgrade-from), and should see no changes
+
+  ```sh
+  yarn cannon build omnibus-base-goerli-andromeda.toml \
+    --dry-run \
+    --chain-id 84531 \
+    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
+  ```
 
 _The --provider-url and --private-key parameters are unnecessary if using [Frame](https://frame.sh/)_
 
 ### Finalize Release
 
-- If you've updated the provisioned packages, verify your new contracts on Etherscan: `yarn cannon verify synthetix-omnibus:<VERSION_NUMBER> --api-key <ETHERSCAN_API_KEY> --chain-id <CHAIN_ID>`. Make sure you set your preset if it's set in the toml files.
-- Publish your new packages on the Cannon registry: `yarn cannon publish synthetix-omnibus:<VERSION_NUMBER> --private-key <KEY_THAT_HAS_ETH_ON_MAINNET> --tags latest,3 --chain-id <CHAIN_ID>` (_The --private-key parameter is unnecessary if using [Frame](https://frame.sh/)_)
+- If you've updated the provisioned packages, verify your new contracts on Etherscan:
+
+  ```sh
+    yarn cannon verify synthetix-omnibus:3.3.5-1@andromeda --chain-id 84531 --api-key $ETHERSCAN_API_KEY
+  ```
+
+- Publish your new packages on the Cannon registry:
+
+  ```sh
+  yarn cannon publish synthetix-omnibus:3.3.5-1@andromeda \
+      --chain-id 84531 \
+      --private-key $MAINNET_DEPLOYER_PRIVATE_KEY \
+      --tags latest,3 \
+      --include-provisioned
+  ```
+
+  If you use frame:
+  (_The --private-key parameter is unnecessary if using [Frame](https://frame.sh/)_)
+
 - Commit and merge the change to this repository.
 - Run the [**Export ABIs** action](https://github.com/Synthetixio/v3-abi-exporter/actions/workflows/main.yml) in the `v3-abi-exporter` repository.
 
@@ -49,12 +84,9 @@ Example based on `omnibus-base-goerli-andromeda.toml`
    ```sh
    yarn cannon build omnibus-base-goerli-andromeda.toml \
      --dry-run \
-     --preset andromeda \
-     --upgrade-from synthetix-omnibus:latest \
+     --upgrade-from synthetix-omnibus:latest@andromeda \
      --chain-id 84531 \
      --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY \
-     --write-script ./e2e/deployments/upgrade.ndjson \
-     --write-script-format json \
        | tee ./e2e/cannon-build.log
    ```
 
@@ -79,9 +111,13 @@ Example based on `omnibus-base-goerli-andromeda.toml`
 3. Run local Anvil node for the required network.
 
    ```sh
-   yarn cannon run synthetix-omnibus:latest@andromeda \
-     --chain-id 84531 \
-     --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY
+   yarn cannon build omnibus-base-goerli-andromeda.toml \
+      --port 8545 \
+      --keep-alive \
+      --dry-run \
+      --upgrade-from synthetix-omnibus:latest@andromeda \
+      --chain-id 84531 \
+      --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY
    ```
 
    or
@@ -90,19 +126,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
    yarn start:andromeda
    ```
 
-4. Deploy changes to the local fork
-
-   ```sh
-   node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson
-   ```
-
-   or
-
-   ```sh
-   yarn deploy
-   ```
-
-5. Execute tests
+4. Execute tests
    ```sh
    DEBUG='e2e:*' mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
    ```

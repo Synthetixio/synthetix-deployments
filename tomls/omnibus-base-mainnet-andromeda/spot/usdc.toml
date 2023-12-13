@@ -1,14 +1,8 @@
 [setting.synthUsdcMaxMarketCollateral]
-defaultValue = "<%= parseEther(String(5_000_000)) %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
-
-[provision.usdc_mock_collateral]
-source = "mintable-token:1.3"
-options.name = "Fake USD Coin"
-options.symbol = "fUSDC"
-options.owner = "<%= settings.owner %>"
 
 [invoke.createUsdcSynth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -40,7 +34,7 @@ fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
-    "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.usdc_address %>",
     "<%= settings.synthUsdcMaxMarketCollateral %>"
 ]
 depends = ["invoke.createUsdcSynth"]
@@ -52,7 +46,7 @@ fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
-    "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.usdc_address %>",
     "<%= settings.synthUsdcMaxMarketCollateral %>"
 ]
 depends = ["invoke.createUsdcSynth"]
@@ -63,24 +57,10 @@ fromCall.func = "owner"
 func = "configureCollateral" # "args" see below in the multiline block
 
 [[invoke.configure_usdc_collateral.args]]
-tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+tokenAddress = "<%= settings.usdc_address %>"
 oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
 issuanceRatioD18 = "<%= MaxUint256 %>"
 liquidationRatioD18 = "<%= parseEther('1.1') %>"
 liquidationRewardD18 = "<%= parseEther('0.01') %>"
 minDelegationD18 = "<%= parseEther('1') %>"
 depositingEnabled = false
-
-[invoke.configure_susdc_collateral]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral" # "args" see below in the multiline block
-
-[[invoke.configure_susdc_collateral.args]]
-tokenAddress = "<%= extras.synth_usdc_token_address %>"
-oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
-issuanceRatioD18 = "<%= MaxUint256 %>"
-liquidationRatioD18 = "<%= parseEther('1.1') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('1') %>"
-depositingEnabled = true
