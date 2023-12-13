@@ -1,4 +1,3 @@
-// @ts-check
 const { ethers } = require('ethers');
 const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { setEthBalance } = require('./setEthBalance');
