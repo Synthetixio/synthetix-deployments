@@ -31,6 +31,7 @@ include = [
     # "tomls/oracles/pyth-snx.toml",
     # Permissions
     "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
+
 ]
 
 [setting.commitmentPriceDelay]
@@ -53,7 +54,6 @@ defaultValue = "synthetix-perps-market:3.3.5"
 
 # [setting.buyback_snx_package]
 # defaultValue = "buyback-snx:3.3.5"
-
 [setting.salt]
 defaultValue = "andromeda"
 
