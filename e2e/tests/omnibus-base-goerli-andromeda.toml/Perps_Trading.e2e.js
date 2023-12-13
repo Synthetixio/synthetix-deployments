@@ -20,6 +20,8 @@ const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { wrapUsdc } = require('../../tasks/wrapUsdc');
+const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
+const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 
 const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
@@ -30,8 +32,6 @@ const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const sUSDMarketId = 0;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
@@ -209,55 +209,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should deposit 5_000 snxUSD to Perps', async () => {
-    assert.equal(
-      parseFloat(
-        ethers.utils.formatUnits(
-          await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)
-        )
-      ),
-      0
-    );
-
-    await PerpsMarketProxy.connect(wallet)
-      .modifyCollateral(accountId, sUSDMarketId, ethers.utils.parseEther(String(5_000)), {
-        gasLimit: 10_000_000,
-      })
-      .catch(parseError);
-
-    assert.equal(
-      parseFloat(
-        ethers.utils.formatUnits(
-          await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)
-        )
-      ),
-      5_000
-    );
+    assert.equal(await getPerpsCollateral({ accountId }), 0);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 5_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 5_000);
   });
 
   it('should withdraw 100 snxUSD from Perps', async () => {
-    assert.equal(
-      parseFloat(
-        ethers.utils.formatUnits(
-          await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)
-        )
-      ),
-      5_000
-    );
-
-    await PerpsMarketProxy.connect(wallet)
-      .modifyCollateral(accountId, sUSDMarketId, ethers.utils.parseEther(String(-100)), {
-        gasLimit: 10_000_000,
-      })
-      .catch(parseError);
-
-    assert.equal(
-      parseFloat(
-        ethers.utils.formatUnits(
-          await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId)
-        )
-      ),
-      4_900
-    );
+    assert.equal(await getPerpsCollateral({ accountId }), 5_000);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -100 });
+    assert.equal(await getPerpsCollateral({ accountId }), 4_900);
   });
 
   it('should open a 0.1 btc position', async () => {
