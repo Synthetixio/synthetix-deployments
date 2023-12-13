@@ -10,7 +10,6 @@ const { getEthBalance } = require('../../tasks/getEthBalance');
 const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
-const { parseError } = require('../../parseError');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
@@ -18,6 +17,8 @@ const { wrapUsdc } = require('../../tasks/wrapUsdc');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
+const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
+const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
 const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
@@ -228,10 +229,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should reduce settlement delay to 1s', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-
-    const strat = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
-    log({ strat });
-
     await setSettlementDelay({ settlementStrategyId, marketId, delay: 1 });
     const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
     log({ strategy });
@@ -241,7 +238,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should open a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -249,25 +245,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-
     await wait(1000); // wait for settlement delay
     await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
-
-    const settleTx = await PerpsMarketProxy.connect(wallet)
-      .settleOrder(accountId)
-      .catch(parseError);
-
-    await settleTx.wait().catch(parseError);
-    log('Open order settled');
-
-    const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
-    assert.equal(parseFloat(ethers.utils.formatUnits(position.positionSize)), 0.1);
+    await settlePerpsOrder({ wallet, accountId, marketId });
+    const position = await getPerpsPosition({ accountId, marketId });
+    assert.equal(position.positionSize, 0.1);
   });
 
   it('should close a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -275,18 +262,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-
     await wait(1000); // wait for settlement delay
     await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
-
-    const settleTx = await PerpsMarketProxy.connect(wallet)
-      .settleOrder(accountId)
-      .catch(parseError);
-    await settleTx.wait().catch(parseError);
-    log('Close order settled');
-
-    const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
-    assert.equal(parseFloat(ethers.utils.formatUnits(position.positionSize)), 0);
+    await settlePerpsOrder({ wallet, accountId, marketId });
+    const position = await getPerpsPosition({ accountId, marketId });
+    assert.equal(position.positionSize, 0);
   });
 
   it('should reset settlement delay to 15s', async () => {
