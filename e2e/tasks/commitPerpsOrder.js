@@ -30,7 +30,9 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
     accountId,
     sizeDelta: ethers.utils.parseEther(`${sizeDelta}`),
     settlementStrategyId,
-    acceptablePrice: ethers.utils.parseEther(Math.floor(pythPrice * 2).toString()),
+    acceptablePrice: ethers.utils.parseEther(
+      Math.floor(pythPrice * (sizeDelta > 0 ? 2 : 0.5)).toString()
+    ),
     referrer: ethers.constants.AddressZero,
     trackingCode: ethers.constants.HashZero,
   }).catch(parseError);
