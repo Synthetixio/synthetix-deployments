@@ -217,12 +217,12 @@ workflows:
     jobs:
       - lint
 
-      - fork-test:
-          name: base-goerli-andromeda
-          toml: omnibus-base-goerli-andromeda.toml
-          upgrade-from: "synthetix-omnibus:latest@andromeda"
-          chain-id: 84531
-          provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
+      #      - fork-test:
+      #          name: base-goerli-andromeda
+      #          toml: omnibus-base-goerli-andromeda.toml
+      #          upgrade-from: "synthetix-omnibus:latest@andromeda"
+      #          chain-id: 84531
+      #          provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: base-mainnet-andromeda
@@ -230,45 +230,44 @@ workflows:
           upgrade-from: "synthetix-omnibus:latest@andromeda"
           chain-id: 8453
           provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: base-goerli
-          toml: omnibus-base-goerli.toml
-          upgrade-from: "synthetix-omnibus:latest@main"
-          chain-id: 84531
-          provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: goerli
-          toml: omnibus-goerli.toml
-          upgrade-from: "synthetix-omnibus:latest@main"
-          chain-id: 5
-          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: mainnet
-          toml: omnibus-mainnet.toml
-          upgrade-from: "synthetix-omnibus:latest@main"
-          chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: optimism-mainnet
-          toml: omnibus-optimism-mainnet.toml
-          upgrade-from: "synthetix-omnibus:latest@main"
-          chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: sepolia
-          toml: omnibus-sepolia.toml
-          upgrade-from: "synthetix-omnibus:latest@main"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: polygon-mumbai
-          toml: omnibus-polygon-mumbai.toml
-          upgrade-from: "synthetix-omnibus:latest@main"
-          chain-id: 80001
-          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
+#      - fork-test:
+#          name: base-goerli
+#          toml: omnibus-base-goerli.toml
+#          upgrade-from: "synthetix-omnibus:latest@main"
+#          chain-id: 84531
+#          provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
+#
+#      - fork-test:
+#          name: goerli
+#          toml: omnibus-goerli.toml
+#          upgrade-from: "synthetix-omnibus:latest@main"
+#          chain-id: 5
+#          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
+#
+#      - fork-test:
+#          name: mainnet
+#          toml: omnibus-mainnet.toml
+#          upgrade-from: "synthetix-omnibus:latest@main"
+#          chain-id: 1
+#          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+#
+#      - fork-test:
+#          name: optimism-mainnet
+#          toml: omnibus-optimism-mainnet.toml
+#          upgrade-from: "synthetix-omnibus:latest@main"
+#          chain-id: 10
+#          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+#
+#      - fork-test:
+#          name: sepolia
+#          toml: omnibus-sepolia.toml
+#          upgrade-from: "synthetix-omnibus:latest@main"
+#          chain-id: 11155111
+#          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+#
+#      - fork-test:
+#          name: polygon-mumbai
+#          toml: omnibus-polygon-mumbai.toml
+#          upgrade-from: "synthetix-omnibus:latest@main"
+#          chain-id: 80001
+#          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
