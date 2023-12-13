@@ -51,7 +51,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.opPerpsMarketId %>",
     "<%= extras.op_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>"
 ]
 depends = ["invoke.createOpPerpsMarket", "invoke.registerOpOracleNode"]
 
@@ -62,7 +62,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.opPerpsMarketId %>",
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
 ]
 extra.op_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.op_pyth_settlement_strategy.arg = 2
@@ -75,7 +75,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.opPerpsMarketId %>",
     "<%= extras.op_pyth_settlement_strategy %>", # Settlement Strategy ID
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
 ]
 depends = ["invoke.addPerpsOpSettlementStrategy"]
 
@@ -86,7 +86,7 @@ func = "setFundingParameters"
 args = [
     "<%= settings.opPerpsMarketId %>",
     "<%= parseEther(settings.perpsOpSkewScale) %>",
-    "<%= parseEther(settings.perpsOpMaxFundingVelocity) %>",
+    "<%= parseEther(settings.perpsOpMaxFundingVelocity) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -97,7 +97,7 @@ func = "setOrderFees"
 args = [
     "<%= settings.opPerpsMarketId %>",
     "<%= parseEther(settings.perpsOpMakerFeeRatio) %>",
-    "<%= parseEther(settings.perpsOpTakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsOpTakerFeeRatio) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -117,7 +117,7 @@ args = [
     "<%= parseEther(settings.perpsOpMaxLiquidationLimitAccumulationMultiplier) %>",
     "<%= settings.perpsOpMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsOpMaxLiquidationPd) %>",
-    "<%= settings.perpsOpEndorsedLiquidator %>",
+    "<%= settings.perpsOpEndorsedLiquidator %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
@@ -131,7 +131,7 @@ args = [
     "<%= parseEther(settings.perpsOpMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsOpMaintenanceMarginScalar) %>",
     "<%= parseEther(settings.perpsOpFlagRewardRatioD18) %>",
-    "<%= parseEther(settings.perpsOpMinimumPositionMargin) %>",
+    "<%= parseEther(settings.perpsOpMinimumPositionMargin) %>"
 ]
 depends = ["invoke.createOpPerpsMarket"]
 
