@@ -1,8 +1,6 @@
-# Pyth settlement strategy config
 [setting.pythEthFeedId]
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # Using mainnet feed IDs
 
-# Perps Configuration
 [setting.ethPerpsMarketId]
 defaultValue = "100"
 

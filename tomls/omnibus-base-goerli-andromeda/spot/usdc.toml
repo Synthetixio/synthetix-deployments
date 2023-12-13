@@ -60,15 +60,27 @@ depends = ["invoke.createUsdcSynth"]
 [invoke.configure_usdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>", oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false }
-]
+func = "configureCollateral" # "args" see below in the multiline block
+
+[[invoke.configure_usdc_collateral.args]]
+tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= MaxUint256 %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('0.01') %>"
+minDelegationD18 = "<%= parseEther('1') %>"
+depositingEnabled = false
 
 [invoke.configure_susdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= extras.synth_usdc_token_address %>", oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= MaxUint256 %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.01') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = true }
-]
+func = "configureCollateral" # "args" see below in the multiline block
+
+[[invoke.configure_susdc_collateral.args]]
+tokenAddress = "<%= extras.synth_usdc_token_address %>"
+oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= MaxUint256 %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('0.01') %>"
+minDelegationD18 = "<%= parseEther('1') %>"
+depositingEnabled = true
