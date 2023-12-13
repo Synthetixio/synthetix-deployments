@@ -21,9 +21,7 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount }) {
     accountId,
     sUSDMarketId,
     ethers.utils.parseEther(`${deltaAmount}`),
-    {
-      gasLimit: 10_000_000,
-    }
+    { gasLimit: 10_000_000 }
   ).catch(parseError);
   await tx.wait().catch(parseError);
 

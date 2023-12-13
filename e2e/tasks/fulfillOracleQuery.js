@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
 const { parseError } = require('../parseError');
+const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -16,35 +17,27 @@ const ERC7412_ABI = [
 ];
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
-async function getPrice(feedId) {
-  const priceFeed = await priceService.getLatestPriceFeeds([feedId]);
-  if (priceFeed) {
-    return priceFeed[0].getPriceUnchecked();
-  }
-  throw Error(`Price feed not found, feed id: ${feedId}`);
-}
-
 function base64ToHex(str) {
   const raw = Buffer.from(str, 'base64');
   return '0x' + raw.toString('hex');
 }
 
-async function fulfillOracleQuery({
-  wallet,
-  priceVerificationContractAddress,
-  oracleFeedId,
-  timestamp,
-}) {
-  log({ oracleFeedId });
-  const [offchainData] = await priceService.getVaa(oracleFeedId, timestamp);
+async function fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime }) {
+  const { feedId, priceVerificationContract, commitmentPriceDelay } =
+    await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
+
+  log({ feedId, priceVerificationContract, commitmentPriceDelay });
+
+  const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
+  const [offchainData] = await priceService.getVaa(feedId, timestamp);
   const UPDATE_TYPE = 2;
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
-    [UPDATE_TYPE, timestamp, [oracleFeedId], [base64ToHex(offchainData)]]
+    [UPDATE_TYPE, timestamp, [feedId], [base64ToHex(offchainData)]]
   );
 
   const PriceVerificationContract = new ethers.Contract(
-    priceVerificationContractAddress,
+    priceVerificationContract,
     ERC7412_ABI,
     wallet
   );
@@ -54,24 +47,24 @@ async function fulfillOracleQuery({
   }).catch(parseError);
   await tx.wait().catch(parseError);
 
-  log({ oracleFeedId, updated: true });
+  log({ feedId, updated: true });
 }
 
 module.exports = {
-  getPrice,
   fulfillOracleQuery,
 };
 
 if (require.main === module) {
-  const [pk, symbol] = process.argv.slice(2);
-  if (!pk || !symbol) {
+  const [pk, marketId, settlementStrategyId] = process.argv.slice(2);
+  if (!pk || !marketId || !settlementStrategyId) {
     const bin = `./${require('path').basename(__filename)}`;
     throw new Error(
       [
+        //
         'Usage:',
-        `  ${bin} pk symbol`,
-        'Example:',
-        `  ${bin} 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 testnet BTC`,
+        `  ${bin} pk marketId settlementStrategyId`,
+        'Example (for BTC):',
+        `  ${bin} pk 200 0`,
         '',
       ].join('\n')
     );
@@ -80,5 +73,10 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  fulfillOracleQuery({ wallet, symbol }).then(console.log);
+  fulfillOracleQuery({
+    wallet,
+    marketId,
+    settlementStrategyId,
+    commitmentTime: Date.now(),
+  }).then(console.log);
 }
