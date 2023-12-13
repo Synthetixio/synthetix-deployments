@@ -26,11 +26,17 @@ const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.jso
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
 const { getPrice, fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
+const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 const sUSDMarketId = 0;
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+
+function wait(ms) {
+  console.log('wating ' + ms + 'ms');
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -271,23 +277,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should open a 0.1 btc position', async () => {
     const btcMarketId = 200;
     const marketId = btcMarketId;
+    const strategyId = 0;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, 0);
+    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, strategyId);
 
-    const {
-      settlementDelay: settlementDelayBn,
-      feedId: priceFeedId,
-      priceVerificationContract,
-      commitmentPriceDelay,
-    } = strategy;
+    const { feedId: priceFeedId, priceVerificationContract, commitmentPriceDelay } = strategy;
 
-    const settlementDelay = settlementDelayBn.toNumber();
     const price = await getPrice(priceFeedId);
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('0.1');
 
     let commitReceipt;
     try {
+      await setSettlementDelay({ strategyId, marketId, delay: 0 });
       const tx = await PerpsMarketProxy.connect(wallet).commitOrder({
         marketId,
         accountId,
@@ -297,21 +299,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         referrer: ethers.constants.AddressZero,
         trackingCode: ethers.constants.HashZero,
       });
-      log('Order commented');
+      log('Order comitted');
       commitReceipt = await tx.wait();
     } catch (error) {
       parseError(error);
     }
 
     const block = await provider.getBlock(commitReceipt.blockNumber);
-
     const commitmentTime = block.timestamp;
-    const settlementTime = commitmentTime + settlementDelay;
-
-    // Fast forward to settlement time
-    await provider.send('evm_setNextBlockTimestamp', [settlementTime]);
-    await provider.send('evm_mine', []);
-
     try {
       await fulfillOracleQuery({
         wallet,
@@ -333,17 +328,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a 0.1 btc position', async () => {
     const btcMarketId = 200;
     const marketId = btcMarketId;
+    const strategyId = 0;
+
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, 0);
+    const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, strategyId);
 
-    const {
-      settlementDelay: settlementDelayBn,
-      feedId: priceFeedId,
-      priceVerificationContract,
-      commitmentPriceDelay,
-    } = strategy;
-
-    const settlementDelay = settlementDelayBn.toNumber();
+    const { feedId: priceFeedId, priceVerificationContract, commitmentPriceDelay } = strategy;
     const price = await getPrice(priceFeedId);
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('-0.1');
@@ -366,13 +356,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     }
 
     const block = await provider.getBlock(commitReceipt.blockNumber);
-
     const commitmentTime = block.timestamp;
-    const settlementTime = commitmentTime + settlementDelay;
-
-    // Fast forward to settlement time
-    await provider.send('evm_setNextBlockTimestamp', [settlementTime]);
-    await provider.send('evm_mine', []);
 
     try {
       await fulfillOracleQuery({
@@ -388,6 +372,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     } catch (error) {
       parseError(error);
     }
+    const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
     assert.equal(parseFloat(ethers.utils.formatUnits(position.positionSize)), 0);
   });
 });
