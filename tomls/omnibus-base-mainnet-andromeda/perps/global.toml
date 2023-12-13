@@ -1,6 +1,3 @@
-include = ["./referrers.toml"] # TODO
-
-# GLOBAL PERPS SETTINGS
 [setting.settlementReward]
 defaultValue = "1"
 
@@ -34,7 +31,6 @@ defaultValue = "100"
 [setting.perps_liquidation_max_keeper_scaling_ratio_d18]
 defaultValue = "0.2"
 
-# ------------------------------
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

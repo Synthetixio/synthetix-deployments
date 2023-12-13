@@ -17,7 +17,8 @@ include = [
     # Spot Markets
     "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
     # Perps Markets
-    "tomls/omnibus-base-mainnet-andromeda/perps/global.toml", # Global perps settings
+    "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/btc.toml",
