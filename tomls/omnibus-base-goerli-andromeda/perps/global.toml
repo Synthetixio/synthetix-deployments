@@ -1,6 +1,3 @@
-include = ["./feeCollector.toml", "./referrers.toml"]
-
-# GLOBAL PERPS SETTINGS
 [setting.perps_keeper_l1_cost_settle_gas_units]
 defaultValue = "1"
 
@@ -31,7 +28,6 @@ defaultValue = "500"
 [setting.perps_liquidation_max_keeper_scaling_ratio_d18]
 defaultValue = "1"
 
-# ------------------------------
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
