@@ -7,13 +7,13 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const meta = require('../../deployments/meta.json');
 
-const TESTNET_DEPLOYER = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
-//const DAO_GNOSIS_SAFE = '0xb48AecD3CA86a7bE44baEbB6b8BAb77CDf612D14';
+//const TESTNET_DEPLOYER = '0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9';
+const DAO_GNOSIS_SAFE = '0xb48AecD3CA86a7bE44baEbB6b8BAb77CDf612D14';
 
 // While we develop rapidly,
 // we want to quickly deploy, and keep testnet deployer as the owner temporarily
 // TODO: switch to DAO_GNOSIS_SAFE when stable
-const OWNER_ADDRESS = TESTNET_DEPLOYER;
+const OWNER_ADDRESS = DAO_GNOSIS_SAFE;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
