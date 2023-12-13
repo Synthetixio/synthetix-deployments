@@ -29,6 +29,7 @@ const { getPrice, fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery
 const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const sUSDMarketId = 0;
 
@@ -216,18 +217,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       ),
       0
     );
-    try {
-      await PerpsMarketProxy.connect(wallet).modifyCollateral(
-        accountId,
-        sUSDMarketId,
-        ethers.utils.parseEther(String(5_000)),
-        {
-          gasLimit: 10_000_000,
-        }
-      );
-    } catch (error) {
-      log({ error: parseError(error) });
-    }
+
+    await PerpsMarketProxy.connect(wallet)
+      .modifyCollateral(accountId, sUSDMarketId, ethers.utils.parseEther(String(5_000)), {
+        gasLimit: 10_000_000,
+      })
+      .catch(parseError(error));
+
     assert.equal(
       parseFloat(
         ethers.utils.formatUnits(
@@ -248,18 +244,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       5_000
     );
 
-    try {
-      await PerpsMarketProxy.connect(wallet).modifyCollateral(
-        accountId,
-        sUSDMarketId,
-        ethers.utils.parseEther(String(-100)),
-        {
-          gasLimit: 10_000_000,
-        }
-      );
-    } catch (error) {
-      parseError(error);
-    }
+    await PerpsMarketProxy.connect(wallet)
+      .modifyCollateral(accountId, sUSDMarketId, ethers.utils.parseEther(String(-100)), {
+        gasLimit: 10_000_000,
+      })
+      .catch(parseError(error));
+
     assert.equal(
       parseFloat(
         ethers.utils.formatUnits(
@@ -283,7 +273,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('0.1');
 
-    await setSettlementDelay({ strategyId, marketId, delay: 0 });
+    await setSettlementDelay({ strategyId, marketId, delay: 1 });
     const tx = await PerpsMarketProxy.connect(wallet)
       .commitOrder({
         marketId,
@@ -300,20 +290,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const block = await provider.getBlock(commitReceipt.blockNumber);
     const commitmentTime = block.timestamp;
-    try {
-      await fulfillOracleQuery({
-        wallet,
-        oracleFeedId: priceFeedId,
-        priceVerificationContractAddress: priceVerificationContract,
-        timestamp: commitmentTime + commitmentPriceDelay.toNumber(),
-      });
 
-      const settleTx = await PerpsMarketProxy.connect(wallet).settleOrder(accountId);
-      await settleTx.wait();
-      log('Order settled');
-    } catch (error) {
-      console.log(parseError(error));
-    }
+    // wait 1 seconds for settlement delay
+    await wait(1000);
+
+    await fulfillOracleQuery({
+      wallet,
+      oracleFeedId: priceFeedId,
+      priceVerificationContractAddress: priceVerificationContract,
+      timestamp: commitmentTime + commitmentPriceDelay.toNumber(),
+    });
+
+    const settleTx = await PerpsMarketProxy.connect(wallet)
+      .settleOrder(accountId)
+      .catch(parseError(error));
+    await settleTx.wait().catch(parseError(error));
+    log('Open order settled');
+
     const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
     assert.equal(parseFloat(ethers.utils.formatUnits(position.positionSize)), 0.1);
   });
@@ -348,20 +341,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const block = await provider.getBlock(commitReceipt.blockNumber);
     const commitmentTime = block.timestamp;
 
-    try {
-      await fulfillOracleQuery({
-        wallet,
-        oracleFeedId: priceFeedId,
-        priceVerificationContractAddress: priceVerificationContract,
-        timestamp: commitmentTime + commitmentPriceDelay.toNumber(),
-      });
+    // wait 1 seconds for settlement delay
+    await wait(1000);
+    await fulfillOracleQuery({
+      wallet,
+      oracleFeedId: priceFeedId,
+      priceVerificationContractAddress: priceVerificationContract,
+      timestamp: commitmentTime + commitmentPriceDelay.toNumber(),
+    });
 
-      const settleTx = await PerpsMarketProxy.connect(wallet).settleOrder(accountId);
-      await settleTx.wait();
-      log('Close order settled');
-    } catch (error) {
-      parseError(error);
-    }
+    const settleTx = await PerpsMarketProxy.connect(wallet)
+      .settleOrder(accountId)
+      .catch(parseError(error));
+    await settleTx.wait().catch(parseError(error));
+    log('Close order settled');
+
     const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
     assert.equal(parseFloat(ethers.utils.formatUnits(position.positionSize)), 0);
   });

@@ -25,7 +25,7 @@ async function setSettlementDelay({ strategyId = 1, marketId, delay }) {
   await provider.send('anvil_impersonateAccount', [owner]);
   await setEthBalance({ address: owner, balance: '1' });
   const signer = provider.getSigner(owner);
-  const newStrategy = { ...strategy, settlementDelay: ethers.utils.parseEther(`${delay}`) };
+  const newStrategy = { ...strategy, settlementDelay: delay };
   const tx = await PerpsMarketProxy.connect(signer).setSettlementStrategy(
     marketId,
     strategyId,
