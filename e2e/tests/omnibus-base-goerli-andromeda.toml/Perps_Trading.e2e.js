@@ -18,13 +18,14 @@ const { wrapUsdc } = require('../../tasks/wrapUsdc');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
+const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
+const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
+const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 
 const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
-const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
-const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -224,10 +225,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId }), 4_900);
   });
 
+  it('should reduce settlement delay to 1s', async () => {
+    const marketId = 200;
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+
+    const strat = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
+    log({ strat });
+
+    await setSettlementDelay({ settlementStrategyId, marketId, delay: 1 });
+    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
+    log({ strategy });
+    assert.equal(strategy.settlementDelay, 1);
+  });
+
   it('should open a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelay({ settlementStrategyId, marketId, delay: 1 });
 
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
@@ -237,8 +250,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       settlementStrategyId,
     });
 
-    // wait 1 seconds for settlement delay
-    await wait(1000);
+    await wait(1000); // wait for settlement delay
     await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
 
     const settleTx = await PerpsMarketProxy.connect(wallet)
@@ -255,7 +267,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelay({ settlementStrategyId, marketId, delay: 1 });
 
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
@@ -265,9 +276,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       settlementStrategyId,
     });
 
-    // wait 1 seconds for settlement delay
-    await wait(1000);
-
+    await wait(1000); // wait for settlement delay
     await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
 
     const settleTx = await PerpsMarketProxy.connect(wallet)
@@ -278,5 +287,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const position = await PerpsMarketProxy.getOpenPosition(accountId, marketId);
     assert.equal(parseFloat(ethers.utils.formatUnits(position.positionSize)), 0);
+  });
+
+  it('should reset settlement delay to 15s', async () => {
+    const marketId = 200;
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    await setSettlementDelay({ settlementStrategyId, marketId, delay: 15 });
+    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
+    log({ strategy });
+    assert.equal(strategy.settlementDelay, 15);
   });
 });

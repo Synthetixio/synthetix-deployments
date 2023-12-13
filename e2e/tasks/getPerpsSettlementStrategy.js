@@ -12,7 +12,8 @@ async function getPerpsSettlementStrategy({ marketId, settlementStrategyId }) {
     provider
   );
 
-  const {
+  const [
+    strategyType,
     settlementDelay,
     settlementWindowDuration,
     priceVerificationContract,
@@ -20,9 +21,10 @@ async function getPerpsSettlementStrategy({ marketId, settlementStrategyId }) {
     settlementReward,
     disabled,
     commitmentPriceDelay,
-  } = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
+  ] = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
 
   return {
+    strategyType,
     settlementDelay,
     settlementWindowDuration,
     priceVerificationContract,

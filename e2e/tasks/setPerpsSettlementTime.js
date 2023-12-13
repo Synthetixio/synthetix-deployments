@@ -27,10 +27,12 @@ async function setSettlementDelay({ settlementStrategyId, marketId, delay }) {
   await provider.send('anvil_impersonateAccount', [owner]);
   await setEthBalance({ address: owner, balance: '1' });
   const signer = provider.getSigner(owner);
+  strategy.settlementDelay = ethers.BigNumber.from(delay);
   const tx = await PerpsMarketProxy.connect(signer).setSettlementStrategy(
     marketId,
     settlementStrategyId,
-    { ...strategy, settlementDelay: delay }
+    strategy,
+    { gasLimit: 10_000_000 }
   );
   await tx.wait();
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
