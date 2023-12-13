@@ -61,23 +61,9 @@ tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address
 oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
 issuanceRatioD18 = "<%= MaxUint256 %>"
 liquidationRatioD18 = "<%= parseEther('1.005') %>"
-liquidationRewardD18 = "<%= parseEther('0.005') %>"
+liquidationRewardD18 = "<%= parseEther('5') %>"
 minDelegationD18 = "<%= parseEther('100') %>"
 depositingEnabled = false
-
-[invoke.configure_susdc_collateral]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral" # "args" see below in the multiline block
-
-[[invoke.configure_susdc_collateral.args]]
-tokenAddress = "<%= extras.synth_usdc_token_address %>"
-oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
-issuanceRatioD18 = "<%= MaxUint256 %>"
-liquidationRatioD18 = "<%= parseEther('1.1') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('1') %>"
-depositingEnabled = true
 
 [provision.usdc_mock_collateral]
 source = "mintable-token:1.3"

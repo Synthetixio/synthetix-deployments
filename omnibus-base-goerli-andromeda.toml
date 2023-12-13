@@ -16,8 +16,9 @@ include = [
     "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
     "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
     "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml",
-#    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml", ?? does not exist on goerli
-#    "tomls/collaterals/susdc.toml", ?? does not exist on goerli
+    # Collaterals
+   "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
+   "tomls/collaterals/susdc.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/oracles/pyth-btc.toml",
