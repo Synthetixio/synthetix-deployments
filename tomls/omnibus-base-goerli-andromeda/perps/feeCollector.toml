@@ -5,10 +5,10 @@ options.symbol = "fwSNX"
 options.owner = "<%= settings.owner %>"
 
 [setting.buyback_premium]
-defaultValue = "10000000000000000"
+defaultValue = "<%= parseEther('0.01') %>"
 
 [setting.buyback_fee_share]
-defaultValue = "500000000000000000"
+defaultValue = "<%= parseEther('0.5') %>"
 
 [setting.pythSnxFeedId]
 defaultValue = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
