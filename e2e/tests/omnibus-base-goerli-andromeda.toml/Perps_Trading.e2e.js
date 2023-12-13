@@ -32,9 +32,9 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const wait = (ms) =>
   new Promise((resolve) => {
-    log(`Waiting ${ms}ms`);
+    require('debug')(`e2e:wait`)('Start', { ms });
     setTimeout(() => {
-      log(`Done waiting${ms}ms`);
+      require('debug')(`e2e:wait`)('Finish', { ms });
       resolve();
     }, ms);
   });
@@ -255,6 +255,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    await wait(1000); // wait for settlement delay
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
