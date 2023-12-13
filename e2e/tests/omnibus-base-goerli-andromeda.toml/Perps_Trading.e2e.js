@@ -32,7 +32,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const sUSDMarketId = 0;
 
-describe.only(require('path').basename(__filename, '.e2e.js'), function () {
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -283,10 +283,9 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('0.1');
 
-    let commitReceipt;
-    try {
-      await setSettlementDelay({ strategyId, marketId, delay: 0 });
-      const tx = await PerpsMarketProxy.connect(wallet).commitOrder({
+    await setSettlementDelay({ strategyId, marketId, delay: 0 });
+    const tx = await PerpsMarketProxy.connect(wallet)
+      .commitOrder({
         marketId,
         accountId,
         sizeDelta,
@@ -294,12 +293,10 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
         acceptablePrice: ethers.utils.parseEther(Math.floor(pythPrice * 2).toString()),
         referrer: ethers.constants.AddressZero,
         trackingCode: ethers.constants.HashZero,
-      });
-      log('Order comitted');
-      commitReceipt = await tx.wait();
-    } catch (error) {
-      parseError(error);
-    }
+      })
+      .catch(parseError);
+    const commitReceipt = await tx.wait().catch(parseError);
+    log('Order committed');
 
     const block = await provider.getBlock(commitReceipt.blockNumber);
     const commitmentTime = block.timestamp;
@@ -334,9 +331,8 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     const pythPrice = price.getPriceAsNumberUnchecked();
     const sizeDelta = ethers.utils.parseEther('-0.1');
 
-    let commitReceipt;
-    try {
-      const tx = await PerpsMarketProxy.connect(wallet).commitOrder({
+    const tx = await PerpsMarketProxy.connect(wallet)
+      .commitOrder({
         marketId,
         accountId,
         sizeDelta,
@@ -344,12 +340,10 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
         acceptablePrice: ethers.utils.parseEther(Math.floor(pythPrice * 0.5).toString()),
         referrer: ethers.constants.AddressZero,
         trackingCode: ethers.constants.HashZero,
-      });
-      log('Open order commented');
-      commitReceipt = await tx.wait();
-    } catch (error) {
-      parseError(error);
-    }
+      })
+      .catch(parseError);
+    const commitReceipt = await tx.wait().catch(parseError);
+    log('Close order committed');
 
     const block = await provider.getBlock(commitReceipt.blockNumber);
     const commitmentTime = block.timestamp;
