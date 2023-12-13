@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 // const crypto = require('crypto');
 const { getPerpsAccountOwner } = require('./getPerpsAccountOwner');
-const PerpsMarketProxyDeployment = require('../deployments/CoreProxy.json');
+const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
