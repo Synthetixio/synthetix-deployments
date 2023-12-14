@@ -98,7 +98,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(marketId);
 
     log({ skewScale, maxFundingVelocity });
-    assert.equal(Number(ethers.utils.formatEther(skewScale)), 10000000, 'skewScale');
+    assert.equal(Number(ethers.utils.formatEther(skewScale)), 10_000_000, 'skewScale');
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
