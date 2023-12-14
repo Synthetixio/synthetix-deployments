@@ -4,9 +4,6 @@ options.name = "Fake Wrapped SNX"
 options.symbol = "fwSNX"
 options.owner = "<%= settings.owner %>"
 
-
-
-
 [setting.buybackStalenessTolerance]
 defaultValue = "30"
 
