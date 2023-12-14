@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
-const crypto = require('crypto');
+const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
+
 require('../../inspect');
 
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
@@ -144,5 +145,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(marketId);
 
     assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+  });
+
+  it('should have settlement strategy 0 delay set to 2s', async () => {
+    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId: 0 });
+    log({ strategy });
+    assert.equal(strategy.settlementDelay.toNumber(), 2);
   });
 });

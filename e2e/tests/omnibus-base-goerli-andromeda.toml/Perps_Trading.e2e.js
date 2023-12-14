@@ -270,12 +270,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(position.positionSize, 0);
   });
 
-  it('should reset settlement delay to 15s', async () => {
+  it('should reset settlement delay to 2s', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelay({ settlementStrategyId, marketId, delay: 15 });
+    await setSettlementDelay({ settlementStrategyId, marketId, delay: 2 });
     const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
     log({ strategy });
-    assert.equal(strategy.settlementDelay, 15);
+    assert.equal(strategy.settlementDelay, 2);
   });
 });

@@ -8,6 +8,7 @@ const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
 const { createPerpsAccount } = require('../../tasks/createPerpsAccount');
+const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 
@@ -176,5 +177,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(marketId);
 
     assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+  });
+
+  it('should have settlement strategy 0 delay set to 2s', async () => {
+    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId: 0 });
+    log({ strategy });
+    assert.equal(strategy.settlementDelay.toNumber(), 2);
   });
 });
