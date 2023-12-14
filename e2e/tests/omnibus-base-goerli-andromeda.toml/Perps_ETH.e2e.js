@@ -167,7 +167,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     assert.equal(
       params.endorsedLiquidator,
-      '0x11233749514Ab8d00C0A5873DF7428b3db70030f',
+      '0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306',
       'endorsedLiquidator'
     );
   });
