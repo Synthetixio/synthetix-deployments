@@ -24,7 +24,7 @@ options.snx_fee_share = "<%= settings.buyback_fee_share %>"
 options.oracle_manager_address = "<%= imports.system.imports.oracle_manager.contracts.Proxy.address %>"
 options.snx_token = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
 options.usd_token = "<%= imports.system.contracts.USDProxy.address %>"
-options.snx_oracle_id = "<%= extras.snx_oracle_id %>"
+options.snx_oracle_id = "<%= extras.snx_oracle_id_buyback %>"
 
 [invoke.setFeeCollector]
 target = ["perpsFactory.PerpsMarketProxy"]
