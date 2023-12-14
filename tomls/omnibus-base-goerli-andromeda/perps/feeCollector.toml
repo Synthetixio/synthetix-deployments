@@ -4,6 +4,12 @@ options.name = "Fake Wrapped SNX"
 options.symbol = "fwSNX"
 options.owner = "<%= settings.owner %>"
 
+
+
+
+[setting.buybackStalenessTolerance]
+defaultValue = "30"
+
 [setting.buyback_premium]
 defaultValue = "<%= parseEther('0.01') %>"
 
@@ -28,3 +34,42 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFeeCollector"
 args = ["<%= imports.buyback_snx.contracts.buyback_snx.address %>"]
+
+# This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
+# Latest Pyth Price
+[invoke.registerPythSnxOracleNodeBuyback]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    5, # 5 = pyth aggregator type
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pythSnxFeedId, false]) %>",
+    []
+]
+extra.snx_pyth_oracle_id_buyback.event = "NodeRegistered"
+extra.snx_pyth_oracle_id_buyback.arg = 0
+
+# Pyth Off-chain Lookup
+[invoke.registerLookupSnxOracleNodeBuyback]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    9, # 9 = PythOffchainLookupNode
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pythSnxFeedId, settings.buybackStalenessTolerance]) %>",
+    []
+]
+extra.snx_lookup_oracle_id_buyback.event = "NodeRegistered"
+extra.snx_lookup_oracle_id_buyback.arg = 0
+depends = ["provision.pyth_erc7412_wrapper"]
+
+# Staleness Node
+[invoke.registerSnxOracleNodeBuyback]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.buybackStalenessTolerance]) %>",
+    ["<%= extras.snx_pyth_oracle_id_buyback %>", "<%= extras.snx_lookup_oracle_id_buyback %>"]
+]
+extra.snx_oracle_id_buyback.event = "NodeRegistered"
+extra.snx_oracle_id_buyback.arg = 0
+depends = ["invoke.registerPythSnxOracleNodeBuyback", "invoke.registerLookupSnxOracleNodeBuyback"]
