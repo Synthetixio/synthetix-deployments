@@ -15,7 +15,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
-#    "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml", ?? does not exist on mainnet
+#    "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml", ?? commented about until SIP-345 released
     "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
     # BTC
