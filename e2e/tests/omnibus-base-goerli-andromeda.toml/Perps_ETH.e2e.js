@@ -98,8 +98,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(marketId);
 
     log({ skewScale, maxFundingVelocity });
-    assert.equal(Number(ethers.utils.formatEther(skewScale)), 1000000);
-    assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9);
+    assert.equal(Number(ethers.utils.formatEther(skewScale)), 10000000, 'skewScale');
+    assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
   it('should have 525 ETH Max Market Size', async () => {
@@ -119,11 +119,31 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const params = await PerpsMarketProxy.getLiquidationParameters(marketId);
     log({ liquidationParameters: params });
 
-    assert.equal(Number(ethers.utils.formatEther(params.initialMarginRatioD18)), 1);
-    assert.equal(Number(ethers.utils.formatEther(params.minimumInitialMarginRatioD18)), 0.02);
-    assert.equal(Number(ethers.utils.formatEther(params.maintenanceMarginScalarD18)), 0.5);
-    assert.equal(Number(ethers.utils.formatEther(params.flagRewardRatioD18)), 0.01);
-    assert.equal(Number(ethers.utils.formatEther(params.minimumPositionMargin)), 0);
+    assert.equal(
+      Number(ethers.utils.formatEther(params.initialMarginRatioD18)),
+      8.92,
+      'initialMarginRatioD18'
+    );
+    assert.equal(
+      Number(ethers.utils.formatEther(params.minimumInitialMarginRatioD18)),
+      0.02,
+      'minimumInitialMarginRatioD18'
+    );
+    assert.equal(
+      Number(ethers.utils.formatEther(params.maintenanceMarginScalarD18)),
+      0.28,
+      'maintenanceMarginScalarD18'
+    );
+    assert.equal(
+      Number(ethers.utils.formatEther(params.flagRewardRatioD18)),
+      0.0003,
+      'flagRewardRatioD18'
+    );
+    assert.equal(
+      Number(ethers.utils.formatEther(params.minimumPositionMargin)),
+      50,
+      'minimumPositionMargin'
+    );
   });
 
   it('should have Max Liquidation parameters set', async () => {
@@ -132,11 +152,24 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       Number(ethers.utils.formatEther(params.maxLiquidationLimitAccumulationMultiplier)),
-      1
+      1.5,
+      'maxLiquidationLimitAccumulationMultiplier'
     );
-    assert.equal(params.maxSecondsInLiquidationWindow.toNumber(), 30);
-    assert.equal(Number(ethers.utils.formatEther(params.maxLiquidationPd)), 0.0016);
-    assert.equal(params.endorsedLiquidator, '0x11233749514Ab8d00C0A5873DF7428b3db70030f');
+    assert.equal(
+      params.maxSecondsInLiquidationWindow.toNumber(),
+      30,
+      'maxSecondsInLiquidationWindow'
+    );
+    assert.equal(
+      Number(ethers.utils.formatEther(params.maxLiquidationPd)),
+      0.0016,
+      'maxLiquidationPd'
+    );
+    assert.equal(
+      params.endorsedLiquidator,
+      '0x11233749514Ab8d00C0A5873DF7428b3db70030f',
+      'endorsedLiquidator'
+    );
   });
 
   it('should have Max Locked OI ratio set to 0.5', async () => {
