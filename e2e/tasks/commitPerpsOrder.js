@@ -24,21 +24,21 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
 
   const pythPrice = await getPythPrice({ feedId });
   log({ pythPrice });
-
-  const tx = await PerpsMarketProxy.commitOrder(
-    {
-      marketId,
-      accountId,
-      sizeDelta: ethers.utils.parseEther(`${sizeDelta}`),
-      settlementStrategyId,
-      acceptablePrice: ethers.utils.parseEther(
-        Math.floor(pythPrice * (sizeDelta > 0 ? 2 : 0.5)).toString()
-      ),
-      referrer: ethers.constants.AddressZero,
-      trackingCode: ethers.constants.HashZero,
-    },
-    { gasLimit: 10_000_000 }
-  ).catch(parseError);
+  const params = {
+    marketId,
+    accountId,
+    sizeDelta: ethers.utils.parseEther(`${sizeDelta}`),
+    settlementStrategyId,
+    acceptablePrice: ethers.utils.parseEther(
+      Math.floor(pythPrice * (sizeDelta > 0 ? 2 : 0.5)).toString()
+    ),
+    referrer: ethers.constants.AddressZero,
+    trackingCode: ethers.constants.HashZero,
+  };
+  const gasLimit = await PerpsMarketProxy.estimateGas.commitOrder(params).catch(parseError);
+  const tx = await PerpsMarketProxy.commitOrder(params, { gasLimit: gasLimit.mul(2) }).catch(
+    parseError
+  );
   await tx.wait().catch(parseError);
 
   const commitReceipt = await tx.wait().catch(parseError);
