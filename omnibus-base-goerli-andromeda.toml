@@ -17,7 +17,7 @@ include = [
     "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
     "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml",
     # Collaterals
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
+    "tomls/omnibus-base-goerli-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
