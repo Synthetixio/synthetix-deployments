@@ -1,37 +1,62 @@
 const { ethers } = require('ethers');
+const { getCollateralConfig } = require('./getCollateralConfig');
 const extras = require('../deployments/extras.json');
-const SpotMarketProxy = require('../deployments/SpotMarketProxy.json');
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
 async function unwrapUsdc({ wallet, amount }) {
-  const token = new ethers.Contract(
-    extras.synth_usdc_token_address,
+  const config = await getCollateralConfig('USDC');
+
+  const USDCToken = new ethers.Contract(
+    config.tokenAddress,
     [
-      'function symbol() view returns (string)',
+      'function decimals() view returns (uint8)',
       'function balanceOf(address account) view returns (uint256)',
     ],
     wallet
   );
-  const symbol = await token.symbol();
-  const oldBalance = parseFloat(ethers.utils.formatUnits(await token.balanceOf(wallet.address)));
-  log({ symbol, oldBalance });
+  const usdcDecimals = await USDCToken.decimals();
 
-  const spotMarket = new ethers.Contract(SpotMarketProxy.address, SpotMarketProxy.abi, wallet);
+  const sUSDCToken = new ethers.Contract(
+    extras.synth_usdc_token_address,
+    ['function balanceOf(address account) view returns (uint256)'],
+    wallet
+  );
 
-  const tx = await spotMarket
-    .unwrap(
-      extras.synth_usdc_market_id,
-      ethers.utils.parseEther(`${amount}`),
-      ethers.utils.parseEther(`${amount}`),
-      { gasLimit: 10_000_000 }
-    )
-    .catch(parseError);
+  log({
+    oldBalance_sUSDC: parseFloat(
+      ethers.utils.formatUnits(await sUSDCToken.balanceOf(wallet.address))
+    ),
+    oldBalance_USDC: parseFloat(
+      ethers.utils.formatUnits(await USDCToken.balanceOf(wallet.address))
+    ),
+  });
+
+  const SpotMarket = new ethers.Contract(
+    SpotMarketProxyDeployment.address,
+    SpotMarketProxyDeployment.abi,
+    wallet
+  );
+
+  const args = [
+    extras.synth_usdc_market_id,
+    ethers.utils.parseUnits(`${amount}`), // sUSDC
+    ethers.utils.parseUnits(`${amount}`, usdcDecimals), // USDC, min received
+  ];
+  log({ args });
+  const gas = await SpotMarket.estimateGas.unwrap(...args).catch(parseError);
+  const tx = await SpotMarket.unwrap(...args, { gasLimit: gas.mul(2) }).catch(parseError);
   await tx.wait();
-
-  const newBalance = parseFloat(ethers.utils.formatUnits(await token.balanceOf(wallet.address)));
-  log({ symbol, newBalance });
-  return newBalance;
+  const newBalance_USDC = parseFloat(
+    ethers.utils.formatUnits(await USDCToken.balanceOf(wallet.address), usdcDecimals)
+  );
+  const newBalance_sUSDC = parseFloat(
+    ethers.utils.formatUnits(await sUSDCToken.balanceOf(wallet.address))
+  );
+  log({ newBalance_sUSDC, newBalance_USDC });
+  return newBalance_sUSDC;
 }
 
 module.exports = {

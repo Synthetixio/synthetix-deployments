@@ -4,25 +4,27 @@ require('../../inspect');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { isTokenApproved } = require('../../tasks/isTokenApproved');
-const { approveToken } = require('../../tasks/approveToken');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { wrapUsdc } = require('../../tasks/wrapUsdc');
 const { unwrapUsdc } = require('../../tasks/unwrapUsdc');
+const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
+const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
+const { approveCollateral } = require('../../tasks/approveCollateral');
+const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
+
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  let wallet;
-  let address;
-  let privateKey;
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
+  const wallet = ethers.Wallet.createRandom().connect(provider);
+  const address = wallet.address;
+  const privateKey = wallet.privateKey;
 
   const CoreProxy = new ethers.Contract(
     CoreProxyDeployment.address,
@@ -31,9 +33,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   );
 
   it('should create new random wallet', async () => {
-    wallet = ethers.Wallet.createRandom().connect(provider);
-    address = wallet.address;
-    privateKey = wallet.privateKey;
+    log({ wallet: wallet.address, pk: wallet.privateKey });
     assert.ok(address);
   });
 
@@ -43,58 +43,54 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 10_000_000', async () => {
+  it('should set USDC balance to 100_000', async () => {
     assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),
+      await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
       'New wallet has 0 USDC balance'
     );
-    await setMintableTokenBalance({
-      privateKey,
-      tokenAddress: USDCDeployment.address,
-      balance: 10_000_000,
-    });
-    assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),
-      10_000_000
-    );
+    await setUSDCTokenBalance({ wallet, balance: 100_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
   });
 
   it('should approve USDC spending for SpotMarket', async () => {
     assert.equal(
-      await isTokenApproved({
-        walletAddress: address,
-        tokenAddress: USDCDeployment.address,
+      await isCollateralApproved({
+        address,
+        symbol: 'USDC',
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       false,
       'New wallet has not allowed SpotMarket USDC spending'
     );
-    await approveToken({
+    await approveCollateral({
       privateKey,
-      tokenAddress: USDCDeployment.address,
+      symbol: 'USDC',
       spenderAddress: SpotMarketProxyDeployment.address,
     });
     assert.equal(
-      await isTokenApproved({
-        walletAddress: address,
-        tokenAddress: USDCDeployment.address,
+      await isCollateralApproved({
+        address,
+        symbol: 'USDC',
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       true
     );
   });
 
-  it('should wrap maximum USDC from allowed global limit of $5_000_000', async () => {
+  it('should wrap maximum USDC from allowed global limit of 50_000', async () => {
     const currentMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
       )
     );
-    assert.ok(currentMarketCollateral < 5_000_000);
-    const maxWrap = Math.floor(5_000_000 - currentMarketCollateral);
+    log({ currentMarketCollateral });
+    assert.ok(currentMarketCollateral < 50_000);
+    const maxWrap = Math.floor(50_000 - currentMarketCollateral);
+    log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
     const balance = await wrapUsdc({ wallet, amount: maxWrap });
+    log({ balance });
     assert.equal(balance, maxWrap);
   });
 
@@ -105,7 +101,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       )
     );
     assert.ok(
-      5_000_000 - newMarketCollateral < 1,
+      50_000 - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
     await assert.rejects(async () => await wrapUsdc({ wallet, amount: 1 }));
@@ -116,11 +112,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       walletAddress: address,
       tokenAddress: extras.synth_usdc_token_address,
     });
+    log({ sUsdcBalance });
     const balance = await unwrapUsdc({ wallet, amount: sUsdcBalance });
+    log({ balance });
     assert.equal(balance, 0);
-    assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),
-      10_000_000
-    );
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
   });
 });

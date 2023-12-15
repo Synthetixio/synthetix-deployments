@@ -9,12 +9,16 @@ async function getTokenBalance({ walletAddress, tokenAddress }) {
     tokenAddress,
     [
       'function symbol() view returns (string)',
+      'function decimals() view returns (uint8)',
       'function balanceOf(address account) view returns (uint256)',
     ],
     provider
   );
+  const decimals = await Token.decimals();
   const symbol = await Token.symbol();
-  const balance = parseFloat(ethers.utils.formatUnits(await Token.balanceOf(walletAddress)));
+  const balance = parseFloat(
+    ethers.utils.formatUnits(await Token.balanceOf(walletAddress), decimals)
+  );
   log({ symbol, tokenAddress, balance });
   return balance;
 }

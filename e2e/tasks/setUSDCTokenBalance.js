@@ -6,7 +6,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 
 async function setUSDCTokenBalance({ wallet, balance }) {
   const config = await getCollateralConfig('USDC');
-  console.log(`config`, config);
   const Token = new ethers.Contract(
     config.tokenAddress,
     [
