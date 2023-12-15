@@ -5,7 +5,6 @@ require('../../inspect');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { wrapUsdc } = require('../../tasks/wrapUsdc');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
@@ -20,10 +19,10 @@ const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
+const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 
 const extras = require('../../deployments/extras.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -57,25 +56,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set USDC balance to 10_000_000', async () => {
+  it('should set USDC balance to 100_000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fUSDC' }),
+      await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
       'New wallet has 0 USDC balance'
     );
-    await setMintableTokenBalance({
-      privateKey,
-      tokenAddress: USDCDeployment.address,
-      balance: 10_000_000,
-    });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
+    await setUSDCTokenBalance({ wallet, balance: 100_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
   });
 
   it('should approve USDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fUSDC',
+        symbol: 'USDC',
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       false,
@@ -83,13 +78,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fUSDC',
+      symbol: 'USDC',
       spenderAddress: SpotMarketProxyDeployment.address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fUSDC',
+        symbol: 'USDC',
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       true
