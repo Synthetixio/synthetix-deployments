@@ -15,6 +15,28 @@ const fgGreen = '\x1b[32m';
 const fgYellow = '\x1b[33m';
 const fgCyan = '\x1b[36m';
 
+const ERC20Abi = [
+  'constructor(string name, string symbol, uint256 initialSupply) payable',
+  'event Approval(address indexed owner, address indexed spender, uint256 value)',
+  'event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)',
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+  'function allowance(address owner, address spender) view returns (uint256)',
+  'function approve(address spender, uint256 amount) returns (bool)',
+  'function balanceOf(address account) view returns (uint256)',
+  'function decimals() view returns (uint8)',
+  'function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)',
+  'function increaseAllowance(address spender, uint256 addedValue) returns (bool)',
+  'function mint(uint256 amount, address to)',
+  'function name() view returns (string)',
+  'function owner() view returns (address)',
+  'function renounceOwnership()',
+  'function symbol() view returns (string)',
+  'function totalSupply() view returns (uint256)',
+  'function transfer(address to, uint256 amount) returns (bool)',
+  'function transferFrom(address from, address to, uint256 amount) returns (bool)',
+  'function transferOwnership(address newOwner)',
+];
+
 const [buildLog] = process.argv.slice(2);
 if (!buildLog) {
   console.error(`${fgRed}ERROR: Expected 1 argument${fgReset}`);
@@ -94,6 +116,16 @@ async function run() {
   }
   mintableToken('usdc_mock_collateral');
   mintableToken('mintableToken');
+
+  const usdc = deployments?.def?.setting?.usdc_address?.defaultValue;
+  if (usdc) {
+    contracts['USDCToken'] = { address: usdc, abi: ERC20Abi };
+  }
+
+  const snx = deployments?.def?.setting?.snx_address?.defaultValue;
+  if (snx) {
+    contracts['SNXToken'] = { address: snx, abi: ERC20Abi };
+  }
 
   // Extract all extras
   Object.values(deployments?.state).forEach((step) =>
