@@ -74,9 +74,11 @@ function parseError(error) {
     } catch (e) {}
     return {};
   })();
-  const args = Object.fromEntries(
-    Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
-  );
+  const args = errorParsed.args
+    ? Object.fromEntries(
+        Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
+      )
+    : {};
   error.message = `${errorParsed.name} (${util.inspect(args)})`;
   throw error;
 }
