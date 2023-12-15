@@ -251,7 +251,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price delay
+    await wait(1000); // wait for commitment price/ settlement delay
     await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
@@ -261,7 +261,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await wait(1000); // wait for settlement delay
+
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -269,7 +269,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price delay
+    await wait(1000); // wait for commitment price/ settlement delay
     await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
