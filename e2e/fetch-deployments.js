@@ -178,6 +178,20 @@ async function run() {
   console.log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
 
+  await fs.writeFile(
+    `${__dirname}/deployments/cannon.json`,
+    JSON.stringify(
+      deployments,
+      (key, value) => {
+        if (key === 'abi' && Array.isArray(value)) {
+          return readableAbi(value);
+        }
+        return value;
+      },
+      2
+    )
+  );
+
   for (const [name, { address, abi }] of Object.entries(contracts)) {
     console.log('Writing', `deployments/${name}.json`, { address });
     await fs.writeFile(
