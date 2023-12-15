@@ -39,6 +39,9 @@ module.exports = {
 
 if (require.main === module) {
   const [pk, accountId] = process.argv.slice(2);
-  const wallet = new ethers.Wallet(pk);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(pk, provider);
   createAccount({ wallet, accountId }).then(console.log);
 }

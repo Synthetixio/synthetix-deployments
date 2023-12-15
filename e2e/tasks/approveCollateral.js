@@ -14,3 +14,8 @@ async function approveCollateral({ privateKey, symbol, spenderAddress = CoreProx
 module.exports = {
   approveCollateral,
 };
+
+if (require.main === module) {
+  const [pk, symbol, spenderAddress] = process.argv.slice(2);
+  approveCollateral({ privateKey: pk, symbol, spenderAddress }).then(console.log);
+}

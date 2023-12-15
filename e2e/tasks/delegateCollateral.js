@@ -33,3 +33,8 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
 module.exports = {
   delegateCollateral,
 };
+
+if (require.main === module) {
+  const [privateKey, accountId, symbol, amount, poolId] = process.argv.slice(2);
+  delegateCollateral({ privateKey, accountId, symbol, amount, poolId }).then(console.log);
+}

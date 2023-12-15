@@ -31,3 +31,8 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
 module.exports = {
   depositCollateral,
 };
+
+if (require.main === module) {
+  const [privateKey, accountId, symbol, amount] = process.argv.slice(2);
+  depositCollateral({ privateKey, accountId, symbol, amount }).then(console.log);
+}
