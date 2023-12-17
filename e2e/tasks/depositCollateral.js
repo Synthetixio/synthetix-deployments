@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');

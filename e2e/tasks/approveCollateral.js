@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { approveToken } = require('./approveToken');
 const CoreProxy = require('../deployments/CoreProxy.json');
@@ -16,6 +18,6 @@ module.exports = {
 };
 
 if (require.main === module) {
-  const [pk, symbol, spenderAddress] = process.argv.slice(2);
-  approveCollateral({ privateKey: pk, symbol, spenderAddress }).then(console.log);
+  const [privateKey, symbol, spenderAddress] = process.argv.slice(2);
+  approveCollateral({ privateKey, symbol, spenderAddress }).then(console.log);
 }
