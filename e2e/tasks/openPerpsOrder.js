@@ -6,19 +6,6 @@ const { parseError } = require('../parseError');
 const { getPerpsPosition } = require('./getPerpsPosition');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 const { getPythPrice } = require('./getPythPrice');
-const { doStrictPriceUpdate } = require('./doStrictPriceUpdate');
-const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
-const PYTH_MAINNET_ENDPOINT = 'https://hermes.pyth.network';
-const ERC7412_ABI = [
-  'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
-  'error FeeRequired(uint feeAmount)',
-  'function oracleId() view external returns (bytes32)',
-  'function fulfillOracleQuery(bytes calldata signedOffchainData) payable external',
-];
-function base64ToHex(str) {
-  const raw = Buffer.from(str, 'base64');
-  return '0x' + raw.toString('hex');
-}
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const wait = (ms) =>
@@ -82,54 +69,7 @@ async function openPerpsOrder({ wallet, accountId, marketId, sizeDelta, settleme
   await (
     await PerpsMarketProxy.settleOrder(accountId, {
       gasLimit: (
-        await PerpsMarketProxy.estimateGas.settleOrder(...settleOrderArgs).catch(async (error) => {
-          const errorData =
-            error?.error?.error?.error?.data ||
-            error?.error?.data?.data ||
-            error?.error?.error?.data;
-          const Errors = new ethers.Contract(
-            ethers.constants.AddressZero,
-            ERC7412_ABI,
-            wallet.provider
-          );
-          const data = Errors.interface.parseError(errorData);
-          if (
-            data?.name === 'OracleDataRequired' &&
-            data?.args?.oracleContract &&
-            data?.args?.oracleQuery
-          ) {
-            const oracleContract = data?.args?.oracleContract;
-            const oracleQuery = data?.args?.oracleQuery;
-            const decoded = ethers.utils.defaultAbiCoder.decode(
-              ['uint8', 'uint64', 'bytes32'],
-              oracleQuery
-            );
-            const [updateType, timestamp, priceId] = decoded;
-            log({ updateType, timestamp, priceId });
-            const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
-            log({ oracleContract, oracleQuery, decoded, updateType, timestamp, priceId });
-
-            const [offchainData] = await priceService.getVaa(feedId, timestamp.toNumber());
-            log({ offchainData: base64ToHex(offchainData) });
-
-            const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
-              ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
-              [updateType, timestamp, [feedId], [base64ToHex(offchainData)]]
-            );
-            log({ offchainDataEncoded });
-            const PriceVerificationContract = new ethers.Contract(
-              oracleContract,
-              ERC7412_ABI,
-              wallet
-            );
-            const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
-              value: ethers.BigNumber.from(1), // 1 wei,
-            }).catch(parseError);
-            await tx.wait().catch(parseError);
-          }
-
-          parseError(error);
-        })
+        await PerpsMarketProxy.estimateGas.settleOrder(...settleOrderArgs).catch(parseError)
       ).mul(2),
     }).catch(parseError)
   )
