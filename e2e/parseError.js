@@ -74,6 +74,11 @@ function parseError(error) {
     } catch (e) {}
     return {};
   })();
+  if (!errorParsed.name) {
+    log('Error has data but could not be parsed');
+    throw error;
+  }
+  console.log({ errorParsed });
   const args = Object.fromEntries(
     Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
   );
