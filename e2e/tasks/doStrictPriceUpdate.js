@@ -51,7 +51,7 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
 }
 
 module.exports = {
-  fulfillOracleQuery,
+  doStrictPriceUpdate,
 };
 
 if (require.main === module) {
