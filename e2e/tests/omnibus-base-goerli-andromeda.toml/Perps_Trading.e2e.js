@@ -40,7 +40,7 @@ const wait = (ms) =>
     }, ms);
   });
 
-describe.only(require('path').basename(__filename, '.e2e.js'), function () {
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
