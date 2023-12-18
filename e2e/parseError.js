@@ -75,20 +75,30 @@ function parseError(error) {
         data?.args?.oracleContract &&
         data?.args?.oracleQuery
       ) {
+        const oracleAddress = data?.args?.oracleAddress;
         const oracleQueryRaw = data?.args?.oracleQuery;
         const decoded = ethers.utils.defaultAbiCoder.decode(
           ['uint8', 'uint64', 'bytes32'],
           oracleQueryRaw
         );
         const [updateType, timestamp, priceId] = decoded;
-        Object.assign(data?.args, {
-          oracleQueryRaw,
-          oracleQuery: {
-            updateType,
-            timestamp: timestamp.toNumber(),
-            priceId,
+        const err = {
+          name: data.name,
+          args: {
+            oracleAddress,
+            oracleQuery: {
+              updateType,
+              timestamp: timestamp.toNumber(),
+              priceId,
+            },
+            oracleQueryRaw,
           },
-        });
+          signature: data.signature,
+          sighash: data.sighash,
+          errorFragment: data.errorFragment,
+        };
+        log(err);
+        return err;
       }
       return data;
     } catch (e) {
@@ -96,12 +106,12 @@ function parseError(error) {
     }
     return {};
   })();
-  const args = errorParsed.args
+  const args = errorParsed?.args
     ? Object.fromEntries(
         Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
       )
     : {};
-  error.message = `${errorParsed.name} (${util.inspect(args)})`;
+  error.message = `${errorParsed?.name}, ${errorParsed?.sighash} (${util.inspect(args)})`;
   throw error;
 }
 
