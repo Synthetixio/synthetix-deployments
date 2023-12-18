@@ -19,7 +19,7 @@ const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
-const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
+const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
@@ -263,7 +263,7 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
       settlementStrategyId,
     });
     await wait(1000); // wait for commitment price/ settlement delay
-    await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
+    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0.1);
@@ -281,7 +281,7 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
       settlementStrategyId,
     });
     await wait(1000); // wait for commitment price/ settlement delay
-    await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
+    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0);

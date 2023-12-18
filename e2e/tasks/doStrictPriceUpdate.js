@@ -22,11 +22,11 @@ function base64ToHex(str) {
   return '0x' + raw.toString('hex');
 }
 
-async function fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime }) {
+async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime }) {
   const { feedId, priceVerificationContract, commitmentPriceDelay } =
     await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
 
-  log({ feedId, priceVerificationContract, commitmentPriceDelay });
+  log({ marketId, feedId, priceVerificationContract, commitmentPriceDelay });
 
   const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
   const [offchainData] = await priceService.getVaa(feedId, timestamp);
@@ -47,7 +47,7 @@ async function fulfillOracleQuery({ wallet, marketId, settlementStrategyId, comm
   }).catch(parseError);
   await tx.wait().catch(parseError);
 
-  log({ feedId, updated: true });
+  log({ marketId, feedId, updated: true });
 }
 
 module.exports = {
@@ -73,7 +73,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  fulfillOracleQuery({
+  doStrictPriceUpdate({
     wallet,
     marketId,
     settlementStrategyId,
