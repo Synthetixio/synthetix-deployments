@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -26,3 +28,8 @@ async function getTokenBalance({ walletAddress, tokenAddress }) {
 module.exports = {
   getTokenBalance,
 };
+
+if (require.main === module) {
+  const [walletAddress, tokenAddress] = process.argv.slice(2);
+  getTokenBalance({ walletAddress, tokenAddress }).then(console.log);
+}

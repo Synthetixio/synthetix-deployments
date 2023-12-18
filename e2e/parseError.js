@@ -70,8 +70,30 @@ function parseError(error) {
         provider
       );
       const data = AllErrors.interface.parseError(errorData);
+      if (
+        data?.name === 'OracleDataRequired' &&
+        data?.args?.oracleContract &&
+        data?.args?.oracleQuery
+      ) {
+        const oracleQueryRaw = data?.args?.oracleQuery;
+        const decoded = ethers.utils.defaultAbiCoder.decode(
+          ['uint8', 'uint64', 'bytes32'],
+          oracleQueryRaw
+        );
+        const [updateType, timestamp, priceId] = decoded;
+        Object.assign(data?.args, {
+          oracleQueryRaw,
+          oracleQuery: {
+            updateType,
+            timestamp: timestamp.toNumber(),
+            priceId,
+          },
+        });
+      }
       return data;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e.stack);
+    }
     return {};
   })();
   const args = errorParsed.args

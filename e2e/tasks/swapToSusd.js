@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
@@ -25,3 +27,12 @@ async function swapToSusd({ wallet, marketId, amount }) {
 module.exports = {
   swapToSusd,
 };
+
+if (require.main === module) {
+  const [privateKey, marketId, amount] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(privateKey, provider);
+  swapToSusd({ wallet, marketId, amount }).then(console.log);
+}

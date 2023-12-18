@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getConfigUint } = require('./getConfigUint');
@@ -42,3 +44,8 @@ async function setConfigUint({ key, value }) {
 module.exports = {
   setConfigUint,
 };
+
+if (require.main === module) {
+  const [key, value] = process.argv.slice(2);
+  setConfigUint({ key, value }).then(console.log);
+}

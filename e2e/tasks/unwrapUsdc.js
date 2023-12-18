@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const extras = require('../deployments/extras.json');
@@ -62,3 +64,12 @@ async function unwrapUsdc({ wallet, amount }) {
 module.exports = {
   unwrapUsdc,
 };
+
+if (require.main === module) {
+  const [pk, amount] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(pk, provider);
+  unwrapUsdc({ wallet, amount }).then(console.log);
+}

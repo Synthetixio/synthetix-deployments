@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -21,3 +23,7 @@ async function mineBlock() {
 module.exports = {
   mineBlock,
 };
+
+if (require.main === module) {
+  mineBlock().then(console.log);
+}
