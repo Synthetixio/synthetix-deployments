@@ -12,17 +12,15 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
   );
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, amount });
-
+  log('wallet balance', wallet.getBalance());
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
-
-  const tx = await coreProxy
-    .deposit(
-      ethers.BigNumber.from(accountId),
-      config.tokenAddress,
-      ethers.utils.parseEther(`${amount}`),
-      { gasLimit: 10_000_000 }
-    )
-    .catch(parseError);
+  const params = [
+    ethers.BigNumber.from(accountId),
+    config.tokenAddress,
+    ethers.utils.parseEther(`${amount}`),
+  ];
+  const gasLimit = await coreProxy.estimateGas.deposit(...params);
+  const tx = await coreProxy.deposit(...params, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   await tx.wait();
 
   return accountId;
