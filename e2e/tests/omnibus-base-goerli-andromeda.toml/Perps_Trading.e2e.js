@@ -20,6 +20,7 @@ const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
+const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 
@@ -39,7 +40,7 @@ const wait = (ms) =>
     }, ms);
   });
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -103,6 +104,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
+  });
+
+  it('should make a price update', async () => {
+    // commitOrder and views requiring price will fail if there's no price update within the last hour
+    // so we send off a price update just to be safe
+    await doPriceUpdate({
+      wallet,
+      marketId: 200,
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+    });
   });
 
   it('should wrap 10_000 USDC', async () => {
