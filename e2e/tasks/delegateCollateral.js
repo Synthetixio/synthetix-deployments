@@ -12,18 +12,18 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
   );
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, token: config.tokenAddress, amount, poolId });
-
+  log('wallet balance', wallet.getBalance());
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
-
+  const params = [
+    ethers.BigNumber.from(accountId),
+    ethers.BigNumber.from(poolId),
+    config.tokenAddress,
+    ethers.utils.parseEther(`${amount}`),
+    ethers.utils.parseEther(`1`),
+  ];
+  const gasLimit = await coreProxy.estimateGas.delegateCollateral(...params).catch(parseError);
   const tx = await coreProxy
-    .delegateCollateral(
-      ethers.BigNumber.from(accountId),
-      ethers.BigNumber.from(poolId),
-      config.tokenAddress,
-      ethers.utils.parseEther(`${amount}`),
-      ethers.utils.parseEther(`1`),
-      { gasLimit: 10_000_000 }
-    )
+    .delegateCollateral(...params, { gasLimit: gasLimit.mul(2) })
     .catch(parseError);
   await tx.wait();
 

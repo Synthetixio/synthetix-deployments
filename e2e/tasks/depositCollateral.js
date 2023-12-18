@@ -12,7 +12,7 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
   );
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, amount });
-  log('wallet balance', wallet.getBalance());
+
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
   const params = [
     ethers.BigNumber.from(accountId),
