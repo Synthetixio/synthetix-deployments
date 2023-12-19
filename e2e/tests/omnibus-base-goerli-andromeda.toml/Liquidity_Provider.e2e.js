@@ -20,6 +20,7 @@ const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
+const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 
 const extras = require('../../deployments/extras.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
@@ -94,6 +95,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
+  });
+
+  it('should make a price update', async () => {
+    await doPriceUpdate({
+      wallet,
+      marketId: 200, // BTC
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 100, // ETH
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
   });
 
   it('should wrap 500 USDC', async () => {
