@@ -29,19 +29,13 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
   log({ marketId, feedId, priceVerificationContract, commitmentPriceDelay });
 
   const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
-  //  const timestamp = commitmentPriceDelay.toNumber();
   const [offchainData] = await priceService.getVaa(feedId, timestamp);
-  //  console.log(`offchainData`, offchainData);
 
   const UPDATE_TYPE = 2;
-  console.log([UPDATE_TYPE, timestamp, [feedId], [base64ToHex(offchainData)]]);
-
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
     [UPDATE_TYPE, timestamp, [feedId], [base64ToHex(offchainData)]]
-    //    [UPDATE_TYPE, commitmentPriceDelay.toNumber(), [feedId], [base64ToHex(offchainData)]]
   );
-  console.log(`offchainDataEncoded`, offchainDataEncoded);
 
   const PriceVerificationContract = new ethers.Contract(
     priceVerificationContract,
