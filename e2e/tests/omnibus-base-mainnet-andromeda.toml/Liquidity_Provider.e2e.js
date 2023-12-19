@@ -20,6 +20,7 @@ const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
 const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
+const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 
 const extras = require('../../deployments/extras.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
@@ -122,6 +123,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalAssigned: 0,
       totalLocked: 0,
     });
+  });
+
+  it('should make a price update', async () => {
+    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
+    // so we send off a price update just to be safe
+    await Promise.all([
+      doPriceUpdate({
+        wallet,
+        marketId: 100,
+        settlementStrategyId: extras.eth_pyth_settlement_strategy,
+      }),
+      doPriceUpdate({
+        wallet,
+        marketId: 200,
+        settlementStrategyId: extras.btc_pyth_settlement_strategy,
+      }),
+    ]);
   });
 
   it('should delegate 300 sUSDC into the Spartan Council pool', async () => {
