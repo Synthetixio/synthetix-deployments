@@ -67,7 +67,7 @@ async function openPerpsOrder({ wallet, accountId, marketId, sizeDelta, settleme
 
   const settleOrderArgs = [accountId];
   await (
-    await PerpsMarketProxy.settleOrder(accountId, {
+    await PerpsMarketProxy.settleOrder(...settleOrderArgs, {
       gasLimit: (
         await PerpsMarketProxy.estimateGas.settleOrder(...settleOrderArgs).catch(parseError)
       ).mul(2),
