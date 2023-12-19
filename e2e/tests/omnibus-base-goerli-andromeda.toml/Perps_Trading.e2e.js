@@ -28,6 +28,7 @@ const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
+const { formatEther } = require('ethers/lib/utils');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -290,6 +291,27 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0);
+  });
+
+  it('should revert when trade > Max Market Size', async () => {
+    const marketId = 200;
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    try {
+      await commitPerpsOrder({
+        wallet,
+        accountId,
+        marketId,
+        sizeDelta: parseFloat(formatEther(maxSize)),
+        settlementStrategyId,
+      });
+      throw Error('Commit should revert');
+    } catch (error) {
+      const errorData =
+        error?.error?.error?.error?.data || error?.error?.data?.data || error?.error?.error?.data;
+      const parsedError = PerpsMarketProxy.interface.parseError(errorData);
+      assert.equal(parsedError.name, 'MaxOpenInterestReached');
+    }
   });
 
   it('should reset settlement and commitment delay to 2s', async () => {
