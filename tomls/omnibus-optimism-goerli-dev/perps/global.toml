@@ -14,7 +14,7 @@ args = [
     "<%= parseEther('1') %>",
     "<%= parseEther('0') %>",
     "<%= parseEther('500') %>",
-    "<%= parseEther('0') %>"
+    "<%= parseEther('0') %>",
 ]
 depends = ["provision.perpsFactory"]
 

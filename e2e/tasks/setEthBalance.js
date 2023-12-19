@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -21,3 +23,8 @@ async function setEthBalance({ address, balance }) {
 module.exports = {
   setEthBalance,
 };
+
+if (require.main === module) {
+  const [address, balance] = process.argv.slice(2);
+  setEthBalance({ address, balance }).then(console.log);
+}

@@ -14,7 +14,9 @@
     "start:optimism-goerli": "cannon run synthetix-omnibus:latest@main --chain-id 420 --provider-url https://optimism-goerli.infura.io/v3/$INFURA_KEY",
     "start:base-goerli": "cannon run synthetix-omnibus:latest@main --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
     "build:andromeda": "cannon build omnibus-base-goerli-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY | tee ./e2e/cannon-build.log",
+    "build:base": "cannon build omnibus-base-mainnet-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 8453 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY | tee ./e2e/cannon-build.log",
     "start:andromeda": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY",
+    "start:base": "cannon run synthetix-omnibus:latest@andromeda --chain-id 8453 --provider-url https://mainnet.base.org",
     "fetch-deployments": "node ./e2e/fetch-deployments.js ./e2e/cannon-build.log",
     "deploy": "node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson",
     "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.js",
@@ -25,15 +27,15 @@
   "devDependencies": {
     "@iarna/toml": "^3.0.0",
     "@pythnetwork/pyth-evm-js": "^1.29.2",
-    "@usecannon/builder": "2.10.6-alpha.4",
-    "@usecannon/cli": "2.10.6-alpha.4",
+    "@usecannon/builder": "2.10.6",
+    "@usecannon/cli": "2.10.6",
     "debug": "^4.3.4",
     "ethers": "^5.7.2",
-    "hardhat": "^2.19.0",
+    "hardhat": "^2.19.2",
     "mocha": "^10.2.0",
-    "prettier": "^3.1.0",
-    "prettier-plugin-toml": "^1.0.0",
-    "solc": "^0.8.22"
+    "prettier": "^3.1.1",
+    "prettier-plugin-toml": "^2.0.1",
+    "solc": "0.8.21"
   },
   "mocha": {
     "timeout": "2m",

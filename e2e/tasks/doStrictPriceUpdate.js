@@ -30,6 +30,7 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
 
   const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
   const [offchainData] = await priceService.getVaa(feedId, timestamp);
+
   const UPDATE_TYPE = 2;
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],

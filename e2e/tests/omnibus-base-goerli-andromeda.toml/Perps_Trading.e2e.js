@@ -13,7 +13,7 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
-const { wrapUsdc } = require('../../tasks/wrapUsdc');
+const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
@@ -111,13 +111,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     // so we send off a price update just to be safe
     await doPriceUpdate({
       wallet,
+      marketId: 100,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
       marketId: 200,
       settlementStrategyId: extras.btc_pyth_settlement_strategy,
     });
   });
 
   it('should wrap 10_000 USDC', async () => {
-    const balance = await wrapUsdc({ wallet, amount: 10_000 });
+    const balance = await wrapFakeUsdc({ wallet, amount: 10_000 });
     assert.equal(balance, 10_000);
   });
 

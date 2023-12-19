@@ -8,8 +8,8 @@ const { isTokenApproved } = require('../../tasks/isTokenApproved');
 const { approveToken } = require('../../tasks/approveToken');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
-const { wrapUsdc } = require('../../tasks/wrapUsdc');
-const { unwrapUsdc } = require('../../tasks/unwrapUsdc');
+const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
+const { unwrapFakeUsdc } = require('../../tasks/unwrapFakeUsdc');
 
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
@@ -94,7 +94,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(currentMarketCollateral < 5_000_000);
     const maxWrap = Math.floor(5_000_000 - currentMarketCollateral);
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
-    const balance = await wrapUsdc({ wallet, amount: maxWrap });
+    const balance = await wrapFakeUsdc({ wallet, amount: maxWrap });
     assert.equal(balance, maxWrap);
   });
 
@@ -108,7 +108,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       5_000_000 - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
-    await assert.rejects(async () => await wrapUsdc({ wallet, amount: 1 }));
+    await assert.rejects(async () => await wrapFakeUsdc({ wallet, amount: 1 }));
   });
 
   it('should unwrap all the sUSDC back to USDC and reduce market collateral', async () => {
@@ -116,7 +116,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       walletAddress: address,
       tokenAddress: extras.synth_usdc_token_address,
     });
-    const balance = await unwrapUsdc({ wallet, amount: sUsdcBalance });
+    const balance = await unwrapFakeUsdc({ wallet, amount: sUsdcBalance });
     assert.equal(balance, 0);
     assert.equal(
       await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),

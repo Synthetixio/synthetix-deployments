@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { getTokenBalance } = require('./getTokenBalance');
 
@@ -12,3 +14,8 @@ async function getCollateralBalance({ address, symbol }) {
 module.exports = {
   getCollateralBalance,
 };
+
+if (require.main === module) {
+  const [address, symbol] = process.argv.slice(2);
+  getCollateralBalance({ address, symbol }).then(console.log);
+}

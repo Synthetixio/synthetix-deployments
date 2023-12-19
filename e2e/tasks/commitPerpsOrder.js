@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getPythPrice } = require('./getPythPrice');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
@@ -52,3 +54,14 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
 module.exports = {
   commitPerpsOrder,
 };
+
+if (require.main === module) {
+  const [privateKey, accountId, marketId, sizeDelta, settlementStrategyId] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(privateKey, provider);
+  commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settlementStrategyId }).then(
+    console.log
+  );
+}

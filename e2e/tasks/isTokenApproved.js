@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -25,3 +27,8 @@ async function isTokenApproved({ walletAddress, tokenAddress, spenderAddress }) 
 module.exports = {
   isTokenApproved,
 };
+
+if (require.main === module) {
+  const [walletAddress, tokenAddress, spenderAddress] = process.argv.slice(2);
+  isTokenApproved({ walletAddress, tokenAddress, spenderAddress }).then(console.log);
+}

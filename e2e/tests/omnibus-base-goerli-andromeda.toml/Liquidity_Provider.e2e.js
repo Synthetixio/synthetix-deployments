@@ -6,7 +6,7 @@ require('../../inspect');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
-const { wrapUsdc } = require('../../tasks/wrapUsdc');
+const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
@@ -100,18 +100,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should make a price update', async () => {
     await doPriceUpdate({
       wallet,
-      marketId: 200, // BTC
-      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+      marketId: 100,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
-      marketId: 100, // ETH
-      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+      marketId: 200,
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
     });
   });
 
   it('should wrap 500 USDC', async () => {
-    const balance = await wrapUsdc({ wallet, amount: 500 });
+    const balance = await wrapFakeUsdc({ wallet, amount: 500 });
     assert.equal(balance, 500);
   });
 

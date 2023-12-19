@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 // const crypto = require('crypto');
 const { getPerpsAccountOwner } = require('./getPerpsAccountOwner');
@@ -39,7 +41,10 @@ module.exports = {
 };
 
 if (require.main === module) {
-  const [pk, accountId] = process.argv.slice(2);
-  const wallet = new ethers.Wallet(pk);
+  const [privateKey, accountId] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(privateKey, provider);
   createPerpsAccount({ wallet, accountId }).then(console.log);
 }

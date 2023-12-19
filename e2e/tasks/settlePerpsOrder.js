@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { parseError } = require('../parseError');
@@ -16,7 +18,9 @@ async function settlePerpsOrder({ wallet, accountId, marketId }) {
   const oldOpenPosition = await getPerpsPosition({ accountId, marketId });
   log({ oldOpenPosition });
 
-  const tx = await PerpsMarketProxy.settleOrder(accountId, { gasLimit: 10_000_000 }).catch(
+  const args = [accountId];
+  const gasLimit = await PerpsMarketProxy.estimateGas.settleOrder(...args).catch(parseError);
+  const tx = await PerpsMarketProxy.settleOrder(accountId, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
   await tx.wait().catch(parseError);
@@ -28,3 +32,13 @@ async function settlePerpsOrder({ wallet, accountId, marketId }) {
 module.exports = {
   settlePerpsOrder,
 };
+
+if (require.main === module) {
+  const [pk, accountId, marketId] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(pk, provider);
+
+  settlePerpsOrder({ wallet, accountId, marketId }).then(console.log);
+}

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
@@ -29,3 +31,8 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
 module.exports = {
   depositCollateral,
 };
+
+if (require.main === module) {
+  const [privateKey, accountId, symbol, amount] = process.argv.slice(2);
+  depositCollateral({ privateKey, accountId, symbol, amount }).then(console.log);
+}

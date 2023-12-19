@@ -77,6 +77,6 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.snx_pool_id %>",
     "<%= settings.snx_address %>",
-    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" },
 ]
 depends = ["invoke.create_snx_pool"]

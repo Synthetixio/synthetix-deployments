@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { setEthBalance } = require('./setEthBalance');

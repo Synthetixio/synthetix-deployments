@@ -1,7 +1,7 @@
 include = [
     "../../oracles/link.toml",
     "../common/bigcap-settings.toml",
-    "../common/settlement-settings.toml"
+    "../common/settlement-settings.toml",
 ]
 
 [invoke.createLinkSynth]
@@ -23,7 +23,7 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_link_market_id %>",
     "<%= extras.link_oracle_id %>",
-    "<%= extras.link_oracle_id %>"
+    "<%= extras.link_oracle_id %>",
 ]
 depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
 
@@ -34,7 +34,7 @@ fromCall.args = ["<%= extras.synth_link_market_id %>"]
 func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_link_market_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false },
 ]
 extra.synth_link_settlement_strategy.event = "SettlementStrategyAdded"
 extra.synth_link_settlement_strategy.arg = 1
@@ -48,7 +48,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_link_market_id %>",
     "<%= extras.synth_link_settlement_strategy %>",
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false },
 ]
 depends = ["invoke.addSynthSettlementStrategyLink"]
 

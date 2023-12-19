@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { getCollateralConfigurations } = require('./getCollateralConfigurations');
 
 async function getCollateralConfig(symbol) {
@@ -12,3 +14,8 @@ async function getCollateralConfig(symbol) {
 module.exports = {
   getCollateralConfig,
 };
+
+if (require.main === module) {
+  const [symbol] = process.argv.slice(2);
+  getCollateralConfig(symbol).then(console.log);
+}

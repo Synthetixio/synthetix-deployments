@@ -42,7 +42,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= extras.link_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>"
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 depends = ["invoke.createLinkPerpsMarket", "invoke.registerLinkOracleNode"]
 
@@ -53,7 +53,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.linkPerpsMarketId %>",
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 extra.link_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.link_pyth_settlement_strategy.arg = 2
@@ -65,8 +65,8 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.linkPerpsMarketId %>",
-    "<%= extras.link_pyth_settlement_strategy %>", # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
+    "<%= extras.link_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = ["invoke.addPerpsLinkSettlementStrategy"]
 
@@ -77,7 +77,7 @@ func = "setFundingParameters"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= parseEther(settings.perpsLinkSkewScale) %>",
-    "<%= parseEther(settings.perpsLinkMaxFundingVelocity) %>"
+    "<%= parseEther(settings.perpsLinkMaxFundingVelocity) %>",
 ]
 depends = ["invoke.createLinkPerpsMarket"]
 
@@ -88,7 +88,7 @@ func = "setOrderFees"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= parseEther(settings.perpsLinkMakerFeeRatio) %>",
-    "<%= parseEther(settings.perpsLinkTakerFeeRatio) %>"
+    "<%= parseEther(settings.perpsLinkTakerFeeRatio) %>",
 ]
 depends = ["invoke.createLinkPerpsMarket"]
 
@@ -108,7 +108,7 @@ args = [
     "<%= parseEther(settings.perpsLinkMaxLiquidationLimitAccumulationMultiplier) %>",
     "<%= settings.perpsLinkMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsLinkMaxLiquidationPd) %>",
-    "<%= settings.perpsLinkEndorsedLiquidator %>"
+    "<%= settings.perpsLinkEndorsedLiquidator %>",
 ]
 depends = ["invoke.createLinkPerpsMarket"]
 
@@ -122,7 +122,7 @@ args = [
     "<%= parseEther(settings.perpsLinkMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsLinkMaintenanceMarginScalar) %>",
     "<%= parseEther(settings.perpsLinkFlagRewardRatioD18) %>",
-    "<%= parseEther(settings.perpsLinkMinimumPositionMargin) %>"
+    "<%= parseEther(settings.perpsLinkMinimumPositionMargin) %>",
 ]
 depends = ["invoke.createLinkPerpsMarket"]
 
