@@ -1,5 +1,6 @@
 const util = require('util');
 const { ethers } = require('ethers');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 const ERC7412_ABI = [
   'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
@@ -51,9 +52,10 @@ const PYTH_ERRORS = [
 ];
 
 function parseError(error) {
-  const rpcError = error?.error?.error?.error;
-  const errorData = rpcError?.data;
+  const errorData =
+    error?.error?.error?.error?.data || error?.error?.data?.data || error?.error?.error?.data;
   if (!errorData) {
+    log('Error data missing');
     throw error;
   }
   const provider = new ethers.providers.JsonRpcProvider(
@@ -72,6 +74,10 @@ function parseError(error) {
     } catch (e) {}
     return {};
   })();
+  if (!errorParsed.name) {
+    log('Error has data but could not be parsed');
+    throw error;
+  }
   const args = Object.fromEntries(
     Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
   );
