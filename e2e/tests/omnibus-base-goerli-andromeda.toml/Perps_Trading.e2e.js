@@ -111,6 +111,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     // so we send off a price update just to be safe
     await doPriceUpdate({
       wallet,
+      marketId: 100,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
       marketId: 200,
       settlementStrategyId: extras.btc_pyth_settlement_strategy,
     });

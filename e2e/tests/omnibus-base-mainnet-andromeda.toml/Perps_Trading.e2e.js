@@ -104,18 +104,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should make a price update', async () => {
     // commitOrder and views requiring price will fail if there's no price update within the last hour,
     // so we send off a price update just to be safe
-    await Promise.all([
-      doPriceUpdate({
-        wallet,
-        marketId: 100,
-        settlementStrategyId: extras.eth_pyth_settlement_strategy,
-      }),
-      doPriceUpdate({
-        wallet,
-        marketId: 200,
-        settlementStrategyId: extras.btc_pyth_settlement_strategy,
-      }),
-    ]);
+    await doPriceUpdate({
+      wallet,
+      marketId: 100,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 200,
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+    });
   });
 
   it('should wrap 10_000 USDC', async () => {
