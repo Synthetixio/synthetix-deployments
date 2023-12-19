@@ -21,12 +21,10 @@ async function createAccount({ wallet, accountId }) {
     log({ accountId, result: 'SKIP' });
     return accountId;
   }
-
-  const tx = await CoreProxy['createAccount(uint128)'](
-    //
-    accountId,
-    { gasLimit: 10_000_000 }
-  ).catch(parseError);
+  const gasLimit = await CoreProxy.estimateGas['createAccount(uint128)'](accountId);
+  const tx = await CoreProxy['createAccount(uint128)'](accountId, {
+    gasLimit: gasLimit.mul(2),
+  }).catch(parseError);
   await tx.wait();
 
   const newAccountOwner = await getAccountOwner({ accountId });

@@ -1,5 +1,6 @@
 const util = require('util');
 const { ethers } = require('ethers');
+
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 const ERC7412_ABI = [
@@ -106,6 +107,10 @@ function parseError(error) {
     }
     return {};
   })();
+  if (!errorParsed.name) {
+    log('Error has data but could not be parsed');
+    throw error;
+  }
   const args = errorParsed?.args
     ? Object.fromEntries(
         Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
