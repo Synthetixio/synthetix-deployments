@@ -14,7 +14,7 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
   );
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, token: config.tokenAddress, amount, poolId });
-
+  log('wallet balance', await wallet.getBalance());
   const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
 
   const args = [

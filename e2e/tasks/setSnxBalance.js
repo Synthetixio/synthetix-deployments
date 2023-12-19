@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
+const { parseError } = require('../parseError');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { setEthBalance } = require('./setEthBalance');
 
@@ -16,7 +17,8 @@ async function getOwner() {
     case 1:
       return '0xAc86855865CbF31c8f9FBB68C749AD5Bd72802e3';
     case 5:
-      return '0x48914229dedd5a9922f44441ffccfc2cb7856ee9';
+      //      return '0x48914229dedd5a9922f44441ffccfc2cb7856ee9';
+      return '0x310f640354b265438797ffA472CfCa1Ae9b136F7';
     case 10:
       return '0x6330D5F08f51057F36F46d6751eCDc0c65Ef7E9e';
     case 420:
@@ -31,9 +33,6 @@ async function setSnxBalance({ address, balance }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
-
-  const owner = await getOwner();
-  await setEthBalance({ address: owner, balance: 1000 });
 
   const erc20 = new ethers.Contract(
     config.tokenAddress,
@@ -52,16 +51,47 @@ async function setSnxBalance({ address, balance }) {
     return;
   }
 
+  //  const network = await provider.getNetwork();
+  //  if (network.chainId === 5) {
+  //    await provider.send('anvil_impersonateAccount', [address]);
+  //    const signer = provider.getSigner(address);
+  //    const Faucet = new ethers.Contract(
+  //      '0x9B79D6dFe4650d70f35dbb80f7d1EC0Cf7f823Fd',
+  //      ['function exchangeEtherForSNX() payable returns (uint256)'],
+  //      signer
+  //    );
+  //    const gasLimit = await Faucet.estimateGas.exchangeEtherForSNX().catch(parseError);
+  //    const tx = await Faucet.exchangeEtherForSNX({
+  //      value: ethers.utils.parseEther('100'),
+  //      gasLimit: gasLimit.mul(2),
+  //    }).catch(parseError);
+  //    const result = await tx.wait().catch(parseError);
+  //    log(result);
+  //    await provider.send('anvil_stopImpersonatingAccount', [address]);
+  //  } else {
+  const owner = await getOwner();
+  await setEthBalance({ address: owner, balance: 1000 });
   const ownerBalance = parseFloat(ethers.utils.formatUnits(await erc20.balanceOf(owner)));
   log({ owner, ownerBalance });
 
   await provider.send('anvil_impersonateAccount', [owner]);
   const signer = provider.getSigner(owner);
+  const args = [
+    //
+    address,
+    ethers.utils.parseEther(`${balance - oldBalance}`),
+  ];
+  const gasLimit = await erc20
+    .connect(signer)
+    .estimateGas.transfer(...args)
+    .catch(parseError);
   const transferTx = await erc20
     .connect(signer)
-    .transfer(address, ethers.utils.parseEther(`${balance - oldBalance}`));
-  await transferTx.wait();
+    .transfer(...args, { gasLimit: gasLimit.mul(2) })
+    .catch(parseError);
+  await transferTx.wait().catch(parseError);
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
+  //  }
 
   const newBalance = parseFloat(ethers.utils.formatUnits(await erc20.balanceOf(address)));
   log({ address, newBalance });
