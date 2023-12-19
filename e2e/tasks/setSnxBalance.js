@@ -1,4 +1,5 @@
 const { ethers } = require('ethers');
+const { parseError } = require('../parseError');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { setEthBalance } = require('./setEthBalance');
 
@@ -55,10 +56,21 @@ async function setSnxBalance({ address, balance }) {
 
   await provider.send('anvil_impersonateAccount', [owner]);
   const signer = provider.getSigner(owner);
+  const args = [
+    //
+    address,
+    ethers.utils.parseEther(`${balance - oldBalance}`),
+  ];
+  const gasLimit = await erc20
+    .connect(signer)
+    .estimateGas.transfer(...args)
+    .catch(parseError);
   const transferTx = await erc20
     .connect(signer)
-    .transfer(address, ethers.utils.parseEther(`${balance - oldBalance}`));
-  await transferTx.wait();
+    .transfer(...args, { gasLimit: gasLimit.mul(2) })
+    .catch(parseError);
+  const result = await transferTx.wait().catch(parseError);
+  log(result);
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   const newBalance = parseFloat(ethers.utils.formatUnits(await erc20.balanceOf(address)));
