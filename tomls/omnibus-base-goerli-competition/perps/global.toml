@@ -14,7 +14,7 @@ args = [
     "<%= parseEther('1') %>",
     "<%= parseEther('0') %>",
     "<%= parseEther('500') %>",
-    "<%= parseEther('0') %>"
+    "<%= parseEther('0') %>",
 ]
 depends = ["provision.perpsFactory"]
 
@@ -36,8 +36,8 @@ args = [
         "<%= extras.synth_link_market_id %>",
         "<%= extras.synth_eth_market_id %>",
         "<%= extras.synth_btc_market_id %>",
-        "0"
-    ]
+        "0",
+    ],
 ]
 depends = [
     "invoke.createOpSynth",
@@ -45,7 +45,7 @@ depends = [
     "invoke.createEthSynth",
     "invoke.createSnxSynth",
     "invoke.createBtcSynth",
-    "provision.perpsFactory"
+    "provision.perpsFactory",
 ]
 
 [invoke.setPerAccountCapsPerps]

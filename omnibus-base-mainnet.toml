@@ -111,7 +111,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 depends = ["invoke.createScPool", "invoke.createEthSynth"]
@@ -124,6 +124,6 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.weth_address %>",
-    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" }
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" },
 ]
 depends = ["invoke.createScPool"]

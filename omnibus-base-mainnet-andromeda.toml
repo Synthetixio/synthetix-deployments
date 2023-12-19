@@ -3,18 +3,18 @@ version = "3.3.5"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
-    "tomls/core.toml", # Provision the core system
-    "tomls/settings.toml", # Apply minimum liquidity ratio and withdrawal timeout
-    "tomls/permissions.toml", # Allow deployer to create pools
-    "tomls/permit-deniers.toml", # Add feature flag deniers to perps and core systems
-    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    "tomls/core.toml",                                              # Provision the core system
+    "tomls/settings.toml",                                          # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml",                                       # Allow deployer to create pools
+    "tomls/permit-deniers.toml",                                    # Add feature flag deniers to perps and core systems
+    "tomls/pools/spartan-council.toml",                             # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper
-    "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
+    "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper
+    "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
-    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
     "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml",
     # Collaterals
     "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",

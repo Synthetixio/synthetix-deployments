@@ -24,7 +24,7 @@ args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.system.extras.const_one_oracle_id %>",
     "<%= imports.system.extras.const_one_oracle_id %>",
-    "<%= settings.spotStrictStalenessTolerance %>"
+    "<%= settings.spotStrictStalenessTolerance %>",
 ]
 
 [invoke.setSynthMaxMarketCollateralUsdc]
@@ -35,7 +35,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-    "<%= settings.synthUsdcMaxMarketCollateral %>"
+    "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
 depends = ["invoke.createUsdcSynth"]
 
@@ -47,14 +47,14 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-    "<%= settings.synthUsdcMaxMarketCollateral %>"
+    "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
 depends = ["invoke.createUsdcSynth"]
 
 [invoke.configure_usdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral" # "args" see below in the multiline block
+func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_usdc_collateral.args]]
 tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"

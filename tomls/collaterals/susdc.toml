@@ -3,7 +3,7 @@
 [invoke.configure_susdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral" # "args" see below in the multiline block
+func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_susdc_collateral.args]]
 tokenAddress = "<%= extras.synth_usdc_token_address %>"

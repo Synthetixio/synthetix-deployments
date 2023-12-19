@@ -155,7 +155,7 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= formatBytes32String('accountTimeoutWithdraw') %>",
-    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>"
+    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>",
 ]
 depends = ["provision.system"]
 
@@ -184,14 +184,20 @@ fromCall.func = "owner"
 func = "setSupportedCrossChainNetworks"
 # https://docs.chain.link/ccip/supported-networks
 args = [
-    ["11155111", "420", "421613", "80001", "84531"],
+    [
+        "11155111",
+        "420",
+        "421613",
+        "80001",
+        "84531",
+    ],
     [
         "16015286601757825753",
         "2664363617261496610",
         "6101244977088475029",
         "12532609583862916517",
-        "5790810961207155433"
-    ]
+        "5790810961207155433",
+    ],
 ]
 depends = ["provision.system"]
 
@@ -208,7 +214,8 @@ args = [
     3,
     # 3 parameters are: address of the chainlink oracle
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.snx_aggregator_address, 0, 8]) %>",
-    [],
+    [
+    ],
 ]
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
@@ -224,7 +231,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-    { tokenAddress = "<%= settings.snx_address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('4') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>", minDelegationD18 = "<%= settings.snx_liquidation_reward %>", depositingEnabled = true }
+    { tokenAddress = "<%= settings.snx_address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('4') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>", minDelegationD18 = "<%= settings.snx_liquidation_reward %>", depositingEnabled = true },
 ]
 depends = ["invoke.registerSnxOracleManager"]
 
@@ -256,7 +263,8 @@ args = [
     3,
     # 3 parameters are: address of the chainlink oracle
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
-    []
+    [
+    ],
 ]
 extra.eth_oracle_id.event = "NodeRegistered"
 extra.eth_oracle_id.arg = 0
@@ -286,7 +294,7 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= extras.eth_oracle_id %>"
+    "<%= extras.eth_oracle_id %>",
 ]
 depends = ["invoke.createEthSynth", "invoke.registerEthOracleNode"]
 
@@ -306,7 +314,7 @@ func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_eth_market_id %>",
     # strategyType = 1 (pyth)
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false }
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", disabled = false },
 ]
 depends = ["invoke.createEthSynth"]
 
@@ -326,7 +334,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
+    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>",
 ]
 depends = ["invoke.createEthSynth"]
 
@@ -338,7 +346,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
+    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>",
 ]
 depends = ["invoke.createEthSynth"]
 
@@ -358,7 +366,7 @@ func = "setWrapperFees"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= parseEther(settings.synthEthWrapFee) %>",
-    "<%= parseEther(settings.synthEthUnwrapFee) %>"
+    "<%= parseEther(settings.synthEthUnwrapFee) %>",
 ]
 depends = ["invoke.createEthSynth"]
 
@@ -402,7 +410,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 depends = ["invoke.create_spartan_council_pool", "invoke.createEthSynth"]
