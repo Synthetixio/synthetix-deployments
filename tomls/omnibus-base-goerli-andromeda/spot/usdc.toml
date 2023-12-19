@@ -4,12 +4,6 @@ defaultValue = "<%= parseEther(String(5_000_000)) %>"
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
 
-[provision.usdc_mock_collateral]
-source = "mintable-token:1.3"
-options.name = "Fake USD Coin"
-options.symbol = "fUSDC"
-options.owner = "<%= settings.owner %>"
-
 [invoke.createUsdcSynth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
@@ -30,7 +24,7 @@ args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.system.extras.const_one_oracle_id %>",
     "<%= imports.system.extras.const_one_oracle_id %>",
-    "<%= settings.spotStrictStalenessTolerance %>"
+    "<%= settings.spotStrictStalenessTolerance %>",
 ]
 
 [invoke.setSynthMaxMarketCollateralUsdc]
@@ -41,7 +35,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-    "<%= settings.synthUsdcMaxMarketCollateral %>"
+    "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
 depends = ["invoke.createUsdcSynth"]
 
@@ -53,34 +47,26 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-    "<%= settings.synthUsdcMaxMarketCollateral %>"
+    "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
 depends = ["invoke.createUsdcSynth"]
 
 [invoke.configure_usdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral" # "args" see below in the multiline block
+func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_usdc_collateral.args]]
 tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
 oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
 issuanceRatioD18 = "<%= MaxUint256 %>"
-liquidationRatioD18 = "<%= parseEther('1.1') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('1') %>"
+liquidationRatioD18 = "<%= parseEther('1.005') %>"
+liquidationRewardD18 = "<%= parseEther('5') %>"
+minDelegationD18 = "<%= parseEther('100') %>"
 depositingEnabled = false
 
-[invoke.configure_susdc_collateral]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral" # "args" see below in the multiline block
-
-[[invoke.configure_susdc_collateral.args]]
-tokenAddress = "<%= extras.synth_usdc_token_address %>"
-oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
-issuanceRatioD18 = "<%= MaxUint256 %>"
-liquidationRatioD18 = "<%= parseEther('1.1') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('1') %>"
-depositingEnabled = true
+[provision.usdc_mock_collateral]
+source = "mintable-token:1.3"
+options.name = "Fake USD Coin"
+options.symbol = "fUSDC"
+options.owner = "<%= settings.owner %>"

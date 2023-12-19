@@ -10,7 +10,8 @@ args = [
     3,
     # 3 parameters are: address of the chainlink oracle
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.usdc_aggregator_address, 0, 8]) %>",
-    []
+    [
+    ],
 ]
 extra.usdc_oracle_id.event = "NodeRegistered"
 extra.usdc_oracle_id.arg = 0

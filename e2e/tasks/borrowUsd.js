@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
@@ -45,3 +47,8 @@ async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
 module.exports = {
   borrowUsd,
 };
+
+if (require.main === module) {
+  const [privateKey, accountId, symbol, amount, poolId] = process.argv.slice(2);
+  borrowUsd({ privateKey, accountId, symbol, amount, poolId }).then(console.log);
+}

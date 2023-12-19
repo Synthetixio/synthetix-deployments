@@ -142,7 +142,7 @@ args = [
         { marketId = "<%= extras.synth_link_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_op_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_snx_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 depends = [
@@ -152,7 +152,7 @@ depends = [
     "invoke.createSnxSynth",
     "invoke.createLinkSynth",
     "invoke.createOpSynth",
-    "provision.perpsFactory"
+    "provision.perpsFactory",
 ]
 
 [invoke.setPerpsPoolConfig]
@@ -163,7 +163,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.perps_pool_id %>",
     [
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 depends = ["invoke.createPerpsPool", "provision.perpsFactory"]
@@ -189,7 +189,7 @@ depends = [
     "invoke.createBtcSynth",
     "invoke.createSnxSynth",
     "invoke.createLinkSynth",
-    "invoke.createOpSynth"
+    "invoke.createOpSynth",
 ]
 
 # TODO clean this block after deployment

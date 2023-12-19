@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -46,3 +48,8 @@ async function setMintableTokenBalance({ privateKey, tokenAddress, balance }) {
 module.exports = {
   setMintableTokenBalance,
 };
+
+if (require.main === module) {
+  const [privateKey, tokenAddress, balance] = process.argv.slice(2);
+  setMintableTokenBalance({ privateKey, tokenAddress, balance }).then(console.log);
+}

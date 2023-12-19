@@ -15,6 +15,6 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= formatBytes32String('accountTimeoutWithdraw') %>",
-    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>"
+    "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>",
 ]
 depends = ["provision.system"]

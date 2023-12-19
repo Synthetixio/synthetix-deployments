@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
@@ -31,3 +33,8 @@ async function withdrawCollateral({ privateKey, accountId, symbol, amount }) {
 module.exports = {
   withdrawCollateral,
 };
+
+if (require.main === module) {
+  const [privateKey, accountId, symbol, amount] = process.argv.slice(2);
+  withdrawCollateral({ privateKey, accountId, symbol, amount }).then(console.log);
+}

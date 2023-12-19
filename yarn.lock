@@ -95,48 +95,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chevrotain/cst-dts-gen@npm:11.0.3":
-  version: 11.0.3
-  resolution: "@chevrotain/cst-dts-gen@npm:11.0.3"
-  dependencies:
-    "@chevrotain/gast": 11.0.3
-    "@chevrotain/types": 11.0.3
-    lodash-es: 4.17.21
-  checksum: 414229a827e06b4564e271ca3a02ed6f475d400a184dc5ae05308bbc6e966959b84a40a063dacf7debd8f9a1dba5bf8785a891e7b588eafd9f821b43ec16b109
-  languageName: node
-  linkType: hard
-
-"@chevrotain/gast@npm:11.0.3":
-  version: 11.0.3
-  resolution: "@chevrotain/gast@npm:11.0.3"
-  dependencies:
-    "@chevrotain/types": 11.0.3
-    lodash-es: 4.17.21
-  checksum: 5190ba3a3f03f6f58331dbd108c36172b90314f60675b88dfefca25f704549164577796a1127fa407dd546aefa9f221d6c043e5b95298a0852ffd060b4fff117
-  languageName: node
-  linkType: hard
-
-"@chevrotain/regexp-to-ast@npm:11.0.3":
-  version: 11.0.3
-  resolution: "@chevrotain/regexp-to-ast@npm:11.0.3"
-  checksum: 5d665b3340493e302f245c9bbcd73de9b973ca79d0e59c4fbed6cc733b665998b41a2b8a5963bc2e90c763c8b4ba30f6e53736325c40f3fccef0ad3de2095ff2
-  languageName: node
-  linkType: hard
-
-"@chevrotain/types@npm:11.0.3":
-  version: 11.0.3
-  resolution: "@chevrotain/types@npm:11.0.3"
-  checksum: 4496bf1955f1db2b08c188f508db23d9f1cbecdf0bfa7f23f8d8dcd3f9ca450529b71acc83a941c59c0f8188b54c0f5687f6e203dcd7dca622ac4ea6291df316
-  languageName: node
-  linkType: hard
-
-"@chevrotain/utils@npm:11.0.3":
-  version: 11.0.3
-  resolution: "@chevrotain/utils@npm:11.0.3"
-  checksum: 099f0aa65ff82a7d49ffefd7a90182efcc1518b89b88d516d2125ca730eaa38d61e36ee40fad6c21f7896b6e8393b1e6810b6a69122fabff283f0522ee49eaa5
-  languageName: node
-  linkType: hard
-
 "@ethersproject/abi@npm:5.7.0, @ethersproject/abi@npm:^5.1.2, @ethersproject/abi@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/abi@npm:5.7.0"
@@ -1139,22 +1097,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@toml-tools/lexer@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@toml-tools/lexer@npm:1.0.0"
-  dependencies:
-    chevrotain: ^11.0.1
-  checksum: 9a0915903a56dc865a363843f4a8e5ea8ba5e33d7ab7483646fa8b5c9cc8bedd1ee26b2200fde752e824989c0d02adde80a58d424b0adc0ba87f92c0508a1572
+"@taplo/core@npm:^0.1.0":
+  version: 0.1.1
+  resolution: "@taplo/core@npm:0.1.1"
+  checksum: 4673176900669a14e4d6a0900f7c5b6556b8275b85ab4541be517c150a95fe6b5883e7bf672f71d81488b723e3c115933cb5b36977d3dc0d8d75874495b52aaf
   languageName: node
   linkType: hard
 
-"@toml-tools/parser@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@toml-tools/parser@npm:1.0.0"
+"@taplo/lib@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "@taplo/lib@npm:0.4.0-alpha.2"
   dependencies:
-    "@toml-tools/lexer": ^1.0.0
-    chevrotain: ^11.0.1
-  checksum: 3846d9dd7b96622dc363bb73f1b746ea4a04eb1f099f087cb0668f58d471853c94833e2781bd700a464d20a3b2451e408af10b6ec49648901e4cc99e02ef2033
+    "@taplo/core": ^0.1.0
+  checksum: 891fbb433eed8f7faee33136d91352e79a82b1dad806369c2f796772a566afd08061d458d1a03464830c5d8df18517a5ff812c50dfe370786fab601f752702bc
   languageName: node
   linkType: hard
 
@@ -1250,9 +1205,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.6-alpha.4, @usecannon/builder@npm:^2.10.6-alpha.4":
-  version: 2.10.6-alpha.4
-  resolution: "@usecannon/builder@npm:2.10.6-alpha.4"
+"@usecannon/builder@npm:2.10.6, @usecannon/builder@npm:^2.10.6":
+  version: 2.10.6
+  resolution: "@usecannon/builder@npm:2.10.6"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.6.2
@@ -1267,17 +1222,17 @@ __metadata:
     zod: ^3.22.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: b7474d6ef89838f8d013dbff71c508519f3ac368546515341ebba1b20833cf31c658201756d3cae448eef62278b7d1329f3e9cdd35b5e805a319b803c8f2d80c
+  checksum: 14e82ce66e3a4719df856ae2bfdbae063820e366543317d2f11e88fdee106502762b05499492d9d8c633477582a75dbc841b514924223407e5620b7741e9a60f
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.10.6-alpha.4":
-  version: 2.10.6-alpha.4
-  resolution: "@usecannon/cli@npm:2.10.6-alpha.4"
+"@usecannon/cli@npm:2.10.6":
+  version: 2.10.6
+  resolution: "@usecannon/cli@npm:2.10.6"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.10.6-alpha.4
+    "@usecannon/builder": ^2.10.6
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1294,7 +1249,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: 4fdbe06f2c9a46ca34d55a1929f4904f95e586cd8dfa968c35ed0418106ffafa9fc7f63d62c55f4ebd3fdcfcafd49d7050a1b45156d15ab4eea820daae893313
+  checksum: 1ecd434da3c0846795bdc103d5c1ff7b75600b54396800b56cd0d6420abaf3ac5a68de3cd6ad99a3f2a5353294bd5128154c4a1b2c3d0a342e5c9a94f73123e1
   languageName: node
   linkType: hard
 
@@ -1774,20 +1729,6 @@ __metadata:
     ansi-styles: ^4.1.0
     supports-color: ^7.1.0
   checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
-  languageName: node
-  linkType: hard
-
-"chevrotain@npm:^11.0.1":
-  version: 11.0.3
-  resolution: "chevrotain@npm:11.0.3"
-  dependencies:
-    "@chevrotain/cst-dts-gen": 11.0.3
-    "@chevrotain/gast": 11.0.3
-    "@chevrotain/regexp-to-ast": 11.0.3
-    "@chevrotain/types": 11.0.3
-    "@chevrotain/utils": 11.0.3
-    lodash-es: 4.17.21
-  checksum: 43abce4ef2be2ae499027066ad5bfb2dd6b838423108adc69839133655b925a4d86212b97125d8deef9f84dc173b34457eedf59a2d178b6d0b2a0d2e2a7762a4
   languageName: node
   linkType: hard
 
@@ -2636,9 +2577,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.19.0":
-  version: 2.19.1
-  resolution: "hardhat@npm:2.19.1"
+"hardhat@npm:^2.19.2":
+  version: 2.19.2
+  resolution: "hardhat@npm:2.19.2"
   dependencies:
     "@ethersproject/abi": ^5.1.2
     "@metamask/eth-sig-util": ^4.0.0
@@ -2698,7 +2639,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/bootstrap.js
-  checksum: 0c12069e8eae47419d595e38d22716049136cf74390f9e89121ae73fdc716ffcb6cd3283e3ca8676ce00e3ff90804dfa95473830d96340ec01860dfa6237d8d3
+  checksum: 0b5499890e46750ca8c51bbe1205599b1424a2e5293b40c9f7cb56320d56b9935fbd4e276de370e07664ae81fa57dc7ab227bf2b2363f5732ef9f06df1a9a6d9
   languageName: node
   linkType: hard
 
@@ -3341,13 +3282,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:4.17.21":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
-  languageName: node
-  linkType: hard
-
 "lodash.truncate@npm:^4.4.2":
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
@@ -3813,16 +3747,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"n@npm:^9.2.0":
-  version: 9.2.0
-  resolution: "n@npm:9.2.0"
-  bin:
-    n: bin/n
-  checksum: 273bfea765304851d87474b8001af6291445d02e0786575e488f128764d94aa2c5a7e1fc8902b9dca0687189bb2169b42dd481ed4af27be7cb90c102aeb86026
-  conditions: "!os=win32"
-  languageName: node
-  linkType: hard
-
 "nanoid@npm:3.3.3":
   version: 3.3.3
   resolution: "nanoid@npm:3.3.3"
@@ -4142,24 +4066,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-toml@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "prettier-plugin-toml@npm:1.0.0"
+"prettier-plugin-toml@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "prettier-plugin-toml@npm:2.0.1"
   dependencies:
-    "@toml-tools/lexer": ^1.0.0
-    "@toml-tools/parser": ^1.0.0
+    "@taplo/lib": ^0.4.0-alpha.2
   peerDependencies:
-    prettier: ^3.0.0
-  checksum: 6c883670611831df2f86f3f638d4e3f2079d26942c89484ece2d9821d90ee2cd6019fd96d0f8b52e59d48ec9e171b37077ef581d3fe18a8db7305002ce240402
+    prettier: ^3.0.3
+  checksum: a327adde74fd2f804c56934e127f1b6687532be271d9fa4a425674b1373c4a038515f91bcce7654554515ae94e8144227cca3bad7ecdcfa5545a1d58a6fa248a
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "prettier@npm:3.1.0"
+"prettier@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "prettier@npm:3.1.1"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 44b556bd56f74d7410974fbb2418bb4e53a894d3e7b42f6f87779f69f27a6c272fa7fc27cec0118cd11730ef3246478052e002cbd87e9a253f9cd04a56aa7d9b
+  checksum: e386855e3a1af86a748e16953f168be555ce66d6233f4ba54eb6449b88eb0c6b2ca79441b11eae6d28a7f9a5c96440ce50864b9d5f6356d331d39d6bb66c648e
   languageName: node
   linkType: hard
 
@@ -4665,21 +4588,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:^0.8.22":
-  version: 0.8.23
-  resolution: "solc@npm:0.8.23"
+"solc@npm:0.8.21":
+  version: 0.8.21
+  resolution: "solc@npm:0.8.21"
   dependencies:
     command-exists: ^1.2.8
     commander: ^8.1.0
     follow-redirects: ^1.12.1
     js-sha3: 0.8.0
     memorystream: ^0.3.1
-    n: ^9.2.0
     semver: ^5.5.0
     tmp: 0.0.33
   bin:
     solcjs: solc.js
-  checksum: aded3d9b7db2a465c471cfd90522ce87a2a7d110c4820a66dcf80857ac2a7421d6168793b5ae17826ba8d005219af1f36f2ad6ab5574e7cabd9f72bbba3150d2
+  checksum: 0145d0e1f4ba7b1ec574a2ad7c4782357c4a27949c3bcc7bb4411a7b325a3ad186c18f93b1802a438ea9a527711dd56d2d7190bc8dd431dc194fb6098ab6ed01
   languageName: node
   linkType: hard
 
@@ -4887,15 +4809,15 @@ __metadata:
   dependencies:
     "@iarna/toml": ^3.0.0
     "@pythnetwork/pyth-evm-js": ^1.29.2
-    "@usecannon/builder": 2.10.6-alpha.4
-    "@usecannon/cli": 2.10.6-alpha.4
+    "@usecannon/builder": 2.10.6
+    "@usecannon/cli": 2.10.6
     debug: ^4.3.4
     ethers: ^5.7.2
-    hardhat: ^2.19.0
+    hardhat: ^2.19.2
     mocha: ^10.2.0
-    prettier: ^3.1.0
-    prettier-plugin-toml: ^1.0.0
-    solc: ^0.8.22
+    prettier: ^3.1.1
+    prettier-plugin-toml: ^2.0.1
+    solc: 0.8.21
   languageName: unknown
   linkType: soft
 

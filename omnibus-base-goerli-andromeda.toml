@@ -1,20 +1,24 @@
 name = "synthetix-omnibus"
-version = "3.3.5-1"
+version = "3.3.5-2"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
-    "tomls/core.toml", # Provision the core system
-    "tomls/settings.toml", # Apply minimum liquidity ratio and withdrawal timeout
-    "tomls/permissions.toml", # Allow deployer to create pools
-    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    "tomls/core.toml",                                             # Provision the core system
+    "tomls/settings.toml",                                         # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml",                                      # Allow deployer to create pools
+    "tomls/permit-deniers.toml",                                   # Add feature flag deniers to perps and core systems
+    "tomls/pools/spartan-council.toml",                            # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml", # sUSDC spot market/wrapper, mock for USDC
-    "tomls/permit-all-perps-perpsSystem.toml", # Enable perps market
-    "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml",
+    "tomls/omnibus-base-goerli-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper, mock for USDC
+    "tomls/permit-all-perps-perpsSystem.toml",                     # Enable perps market
     "tomls/omnibus-base-goerli-andromeda/perps/referrers.toml",
-    "tomls/omnibus-base-goerli-andromeda/perps/global.toml", # Global perps settings
-    "tomls/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/omnibus-base-goerli-andromeda/perps/global.toml",       # Global perps settings
+    "tomls/oracles/perps-keeper-cost.toml",                        # Add gas oracle for keeper fees
+    "tomls/omnibus-base-goerli-andromeda/perps/feeCollector.toml",
+    # Collaterals
+    "tomls/omnibus-base-goerli-andromeda/collaterals/susdc.toml",
+    "tomls/collaterals/susdc.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -23,9 +27,13 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
-    # SNX
-    "tomls/oracles/pyth-snx.toml",
 ]
+
+[setting.commitmentPriceDelay]
+defaultValue = "2"
+
+[setting.bigCapSettlementDelay]
+defaultValue = "2"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.5"
@@ -40,7 +48,7 @@ defaultValue = "synthetix-spot-market:3.3.5"
 defaultValue = "synthetix-perps-market:3.3.5"
 
 [setting.buyback_snx_package]
-defaultValue = "buyback-snx:3.3.5"
+defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
 
 [setting.salt]
 defaultValue = "andromeda-dev"

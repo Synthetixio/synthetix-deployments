@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getAccountOwner } = require('./getAccountOwner');
 const CoreProxyDeployment = require('../deployments/CoreProxy.json');
@@ -19,12 +21,10 @@ async function createAccount({ wallet, accountId }) {
     log({ accountId, result: 'SKIP' });
     return accountId;
   }
-
-  const tx = await CoreProxy['createAccount(uint128)'](
-    //
-    accountId,
-    { gasLimit: 10_000_000 }
-  ).catch(parseError);
+  const gasLimit = await CoreProxy.estimateGas['createAccount(uint128)'](accountId);
+  const tx = await CoreProxy['createAccount(uint128)'](accountId, {
+    gasLimit: gasLimit.mul(2),
+  }).catch(parseError);
   await tx.wait();
 
   const newAccountOwner = await getAccountOwner({ accountId });
@@ -38,7 +38,10 @@ module.exports = {
 };
 
 if (require.main === module) {
-  const [pk, accountId] = process.argv.slice(2);
-  const wallet = new ethers.Wallet(pk);
+  const [privateKey, accountId] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(privateKey, provider);
   createAccount({ wallet, accountId }).then(console.log);
 }

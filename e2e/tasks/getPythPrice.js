@@ -22,3 +22,8 @@ async function getPythPrice({ feedId }) {
 module.exports = {
   getPythPrice,
 };
+
+if (require.main === module) {
+  const [feedId] = process.argv.slice(2);
+  getPythPrice({ feedId }).then(console.log);
+}

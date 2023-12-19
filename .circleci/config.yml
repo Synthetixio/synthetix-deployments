@@ -208,7 +208,7 @@ jobs:
             - DEBUG: "e2e:*"
           command: |
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
-            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --retries 1 --exit"
+            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --exit"
 
 workflows:
   version: 2.1
@@ -223,6 +223,13 @@ workflows:
           upgrade-from: "synthetix-omnibus:latest@andromeda"
           chain-id: 84531
           provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
+
+      - fork-test:
+          name: base-mainnet-andromeda
+          toml: omnibus-base-mainnet-andromeda.toml
+          upgrade-from: "synthetix-omnibus:latest@andromeda"
+          chain-id: 8453
+          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: base-goerli

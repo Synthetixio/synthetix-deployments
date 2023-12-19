@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxy = require('../deployments/CoreProxy.json');
@@ -24,3 +26,8 @@ async function getAccountCollateral({ accountId, symbol }) {
 module.exports = {
   getAccountCollateral,
 };
+
+if (require.main === module) {
+  const [accountId, symbol] = process.argv.slice(2);
+  getAccountCollateral({ accountId, symbol }).then(console.log);
+}

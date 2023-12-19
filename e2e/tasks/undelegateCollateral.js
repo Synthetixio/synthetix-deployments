@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxyDeployment = require('../deployments/CoreProxy.json');
@@ -82,3 +84,12 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
 module.exports = {
   undelegateCollateral,
 };
+
+if (require.main === module) {
+  const [pk, accountId, symbol, targetAmount, poolId] = process.argv.slice(2);
+  const provider = new ethers.providers.JsonRpcProvider(
+    process.env.RPC_URL || 'http://127.0.0.1:8545'
+  );
+  const wallet = new ethers.Wallet(pk, provider);
+  undelegateCollateral({ wallet, accountId, symbol, targetAmount, poolId }).then(console.log);
+}

@@ -29,7 +29,7 @@ defaultValue = "0.30"
 defaultValue = "100"
 
 [setting.perps_liquidation_max_keeper_scaling_ratio_d18]
-defaultValue = "0.2"
+defaultValue = "0.3"
 
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -39,7 +39,7 @@ args = [
     "<%= parseEther(settings.perps_liquidation_min_keeper_reward_usd) %>",
     "<%= parseEther(settings.perps_liquidation_min_keeper_profit_ratio_d18) %>",
     "<%= parseEther(settings.perps_liquidation_max_keeper_reward_usd) %>",
-    "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>"
+    "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>",
 ]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
@@ -58,7 +58,7 @@ args = [["0"]]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
-args = ["5", "3"]
+args = ["2", "1"]
 
 [invoke.setPerpsMarketKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]

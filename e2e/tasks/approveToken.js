@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -26,3 +28,8 @@ async function approveToken({ privateKey, tokenAddress, spenderAddress }) {
 module.exports = {
   approveToken,
 };
+
+if (require.main === module) {
+  const [privateKey, tokenAddress, spenderAddress] = process.argv.slice(2);
+  approveToken({ privateKey, tokenAddress, spenderAddress }).then(console.log);
+}

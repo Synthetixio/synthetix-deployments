@@ -15,7 +15,7 @@ func = "setCustomTransactorFees"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>",
-    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
+    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>",
 ]
 depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
 
@@ -27,7 +27,7 @@ func = "setCustomTransactorFees"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= settings.spotMarketExternalNodeAddress %>",
-    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>"
+    "<%= parseEther(settings.synthBtcAsyncFixedFee) %>",
 ]
 depends = ["provision.perpsFactory", "invoke.createBtcSynth"]
 
@@ -36,7 +36,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-    { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false }
+    { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.synth_btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
 ]
 depends = ["invoke.setSynthPriceBtc", "invoke.registerSynthBtcOracleNode"]
 
@@ -48,7 +48,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_btc_token_address %>",
-    "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"
+    "<%= parseEther(settings.perpsBtcMaxMarketSize) %>",
 ]
 depends = ["invoke.createBtcSynth", "provision.perpsFactory"]
 
@@ -64,7 +64,8 @@ args = [
     3,
     # 3 parameters are: address of the chainlink oracle
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.chainlink_btc_aggregator_address, 0, 8]) %>",
-    []
+    [
+    ],
 ]
 extra.chainlink_btc_oracle_id.event = "NodeRegistered"
 extra.chainlink_btc_oracle_id.arg = 0
@@ -78,6 +79,6 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= extras.chainlink_btc_oracle_id %>",
-    "<%= extras.chainlink_btc_oracle_id %>"
+    "<%= extras.chainlink_btc_oracle_id %>",
 ]
 depends = ["invoke.createBtcSynth", "invoke.registerBtcChainlinkOracleNode"]

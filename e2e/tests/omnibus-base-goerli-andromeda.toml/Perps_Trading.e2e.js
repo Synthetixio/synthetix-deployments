@@ -13,14 +13,15 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
-const { wrapUsdc } = require('../../tasks/wrapUsdc');
+const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
-const { fulfillOracleQuery } = require('../../tasks/fulfillOracleQuery');
-const { setSettlementDelay } = require('../../tasks/setPerpsSettlementTime');
+const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
+const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 
 const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
@@ -105,8 +106,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
+  it('should make a price update', async () => {
+    // commitOrder and views requiring price will fail if there's no price update within the last hour
+    // so we send off a price update just to be safe
+    await doPriceUpdate({
+      wallet,
+      marketId: 100,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 200,
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+    });
+  });
+
   it('should wrap 10_000 USDC', async () => {
-    const balance = await wrapUsdc({ wallet, amount: 10_000 });
+    const balance = await wrapFakeUsdc({ wallet, amount: 10_000 });
     assert.equal(balance, 10_000);
   });
 
@@ -226,13 +242,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId }), 4_900);
   });
 
-  it('should reduce settlement delay to 1s', async () => {
+  it('should reduce settlement and commitment delay to 1s', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelay({ settlementStrategyId, marketId, delay: 1 });
+    await setSettlementDelays({
+      settlementStrategyId,
+      marketId,
+      settlementDelay: 1,
+      commitmentPriceDelay: 1,
+    });
     const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
     log({ strategy });
     assert.equal(strategy.settlementDelay, 1);
+    assert.equal(strategy.commitmentPriceDelay, 1);
   });
 
   it('should open a 0.1 btc position', async () => {
@@ -245,8 +267,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for settlement delay
-    await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
+    await wait(1000); // wait for commitment price/ settlement delay
+    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0.1);
@@ -255,7 +277,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await wait(1000); // wait for settlement delay
+
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -263,19 +285,25 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for settlement delay
-    await fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime });
+    await wait(1000); // wait for commitment price/ settlement delay
+    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0);
   });
 
-  it('should reset settlement delay to 15s', async () => {
+  it('should reset settlement and commitment delay to 2s', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelay({ settlementStrategyId, marketId, delay: 15 });
+    await setSettlementDelays({
+      settlementStrategyId,
+      marketId,
+      settlementDelay: 2,
+      commitmentPriceDelay: 2,
+    });
     const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
     log({ strategy });
-    assert.equal(strategy.settlementDelay, 15);
+    assert.equal(strategy.settlementDelay, 2);
+    assert.equal(strategy.commitmentPriceDelay, 2);
   });
 });

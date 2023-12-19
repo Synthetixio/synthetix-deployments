@@ -1,6 +1,8 @@
 const util = require('util');
 const { ethers } = require('ethers');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
 const ERC7412_ABI = [
   'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
   'error FeeRequired(uint feeAmount)',
@@ -51,9 +53,10 @@ const PYTH_ERRORS = [
 ];
 
 function parseError(error) {
-  const rpcError = error?.error?.error?.error;
-  const errorData = rpcError?.data;
+  const errorData =
+    error?.error?.error?.error?.data || error?.error?.data?.data || error?.error?.error?.data;
   if (!errorData) {
+    log('Error data missing');
     throw error;
   }
   const provider = new ethers.providers.JsonRpcProvider(
@@ -68,14 +71,52 @@ function parseError(error) {
         provider
       );
       const data = AllErrors.interface.parseError(errorData);
+      if (
+        data?.name === 'OracleDataRequired' &&
+        data?.args?.oracleContract &&
+        data?.args?.oracleQuery
+      ) {
+        const oracleAddress = data?.args?.oracleAddress;
+        const oracleQueryRaw = data?.args?.oracleQuery;
+        const decoded = ethers.utils.defaultAbiCoder.decode(
+          ['uint8', 'uint64', 'bytes32'],
+          oracleQueryRaw
+        );
+        const [updateType, timestamp, priceId] = decoded;
+        const err = {
+          name: data.name,
+          args: {
+            oracleAddress,
+            oracleQuery: {
+              updateType,
+              timestamp: timestamp.toNumber(),
+              priceId,
+            },
+            oracleQueryRaw,
+          },
+          signature: data.signature,
+          sighash: data.sighash,
+          errorFragment: data.errorFragment,
+        };
+        log(err);
+        return err;
+      }
       return data;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e.stack);
+    }
     return {};
   })();
-  const args = Object.fromEntries(
-    Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
-  );
-  error.message = `${errorParsed.name} (${util.inspect(args)})`;
+  if (!errorParsed.name) {
+    log('Error has data but could not be parsed');
+    throw error;
+  }
+  const args = errorParsed?.args
+    ? Object.fromEntries(
+        Object.entries(errorParsed.args).filter(([key]) => `${parseInt(key)}` !== key)
+      )
+    : {};
+  error.message = `${errorParsed?.name}, ${errorParsed?.sighash} (${util.inspect(args)})`;
   throw error;
 }
 

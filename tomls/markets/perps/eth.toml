@@ -49,7 +49,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.ethPerpsMarketId %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>"
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 depends = ["invoke.createEthPerpsMarket", "invoke.registerEthOracleNode"]
 
@@ -60,7 +60,7 @@ fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.ethPerpsMarketId %>",
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
 ]
 extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.eth_pyth_settlement_strategy.arg = 2
@@ -72,8 +72,8 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.ethPerpsMarketId %>",
-    "<%= extras.eth_pyth_settlement_strategy %>", # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" }
+    "<%= extras.eth_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = ["invoke.addPerpsEthSettlementStrategy"]
 
@@ -84,7 +84,7 @@ func = "setFundingParameters"
 args = [
     "<%= settings.ethPerpsMarketId %>",
     "<%= parseEther(settings.perpsEthSkewScale) %>",
-    "<%= parseEther(settings.perpsEthMaxFundingVelocity) %>"
+    "<%= parseEther(settings.perpsEthMaxFundingVelocity) %>",
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
@@ -95,7 +95,7 @@ func = "setOrderFees"
 args = [
     "<%= settings.ethPerpsMarketId %>",
     "<%= parseEther(settings.perpsEthMakerFeeRatio) %>",
-    "<%= parseEther(settings.perpsEthTakerFeeRatio) %>"
+    "<%= parseEther(settings.perpsEthTakerFeeRatio) %>",
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
@@ -115,7 +115,7 @@ args = [
     "<%= parseEther(settings.perpsEthMaxLiquidationLimitAccumulationMultiplier) %>",
     "<%= settings.perpsEthMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsEthMaxLiquidationPd) %>",
-    "<%= settings.perpsEthEndorsedLiquidator %>"
+    "<%= settings.perpsEthEndorsedLiquidator %>",
 ]
 depends = ["invoke.createEthPerpsMarket"]
 
@@ -129,7 +129,7 @@ args = [
     "<%= parseEther(settings.perpsEthMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsEthMaintenanceMarginScalar) %>",
     "<%= parseEther(settings.perpsEthFlagRewardRatioD18) %>",
-    "<%= parseEther(settings.perpsEthMinimumPositionMargin) %>"
+    "<%= parseEther(settings.perpsEthMinimumPositionMargin) %>",
 ]
 depends = ["invoke.createEthPerpsMarket"]
 

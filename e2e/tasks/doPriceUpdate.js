@@ -17,23 +17,20 @@ const ERC7412_ABI = [
 ];
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
-function base64ToHex(str) {
-  const raw = Buffer.from(str, 'base64');
-  return '0x' + raw.toString('hex');
-}
+async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
+  const { feedId, priceVerificationContract } = await getPerpsSettlementStrategy({
+    marketId,
+    settlementStrategyId,
+  });
 
-async function fulfillOracleQuery({ wallet, marketId, settlementStrategyId, commitmentTime }) {
-  const { feedId, priceVerificationContract, commitmentPriceDelay } =
-    await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
+  log({ marketId, feedId, priceVerificationContract });
 
-  log({ feedId, priceVerificationContract, commitmentPriceDelay });
-
-  const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
-  const [offchainData] = await priceService.getVaa(feedId, timestamp);
-  const UPDATE_TYPE = 2;
+  const [offchainData] = await priceService.getPriceFeedsUpdateData([feedId]);
+  const UPDATE_TYPE = 1;
+  const stalenessTolerance = 10;
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
-    [UPDATE_TYPE, timestamp, [feedId], [base64ToHex(offchainData)]]
+    [UPDATE_TYPE, stalenessTolerance, [feedId], [offchainData]]
   );
 
   const PriceVerificationContract = new ethers.Contract(
@@ -47,11 +44,11 @@ async function fulfillOracleQuery({ wallet, marketId, settlementStrategyId, comm
   }).catch(parseError);
   await tx.wait().catch(parseError);
 
-  log({ feedId, updated: true });
+  log({ marketId, feedId, updated: true });
 }
 
 module.exports = {
-  fulfillOracleQuery,
+  doPriceUpdate,
 };
 
 if (require.main === module) {
@@ -73,10 +70,9 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  fulfillOracleQuery({
+  doPriceUpdate({
     wallet,
     marketId,
     settlementStrategyId,
-    commitmentTime: Date.now(),
   }).then(console.log);
 }

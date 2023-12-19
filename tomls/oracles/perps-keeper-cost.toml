@@ -13,7 +13,8 @@ args = [
     2,
     # 7 parameters: 1 is the external node contract address, 2 to 7 gas units
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [imports.perps_gas_oracle_node.contracts.OpGasPriceOracle.address, settings.perps_keeper_l1_cost_settle_gas_units, settings.perps_keeper_l2_cost_settle_gas_units, settings.perps_keeper_l1_cost_flag_gas_units, settings.perps_keeper_l2_cost_flag_gas_units, settings.perps_keeper_l1_cost_liquidate_gas_units, settings.perps_keeper_l2_cost_liquidate_gas_units]) %>",
-    []
+    [
+    ],
 ]
 extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_eth_oracle_id.arg = 0
@@ -28,12 +29,12 @@ args = [
     # 1 parameters: 1 operation = 7 for mul decimal
     "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
     # 2 parent: 1 is the eth txn price node id, 2 is the eth oracle node id
-    ["<%= extras.perps_keeper_cost_eth_oracle_id %>", "<%= extras.eth_oracle_id %>"]
+    ["<%= extras.perps_keeper_cost_eth_oracle_id %>", "<%= extras.eth_oracle_id %>"],
 ]
 extra.perps_keeper_cost_usd_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_usd_oracle_id.arg = 0
 depends = [
     "provision.system",
     "invoke.registerEthOracleNode",
-    "invoke.registerPerps_KeeperCostEthOracleNode"
+    "invoke.registerPerps_KeeperCostEthOracleNode",
 ]
