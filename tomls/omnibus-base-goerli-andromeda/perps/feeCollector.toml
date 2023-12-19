@@ -38,8 +38,8 @@ args = ["<%= imports.buyback_snx.contracts.buyback_snx.address %>"]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    5, # 5 = pyth aggregator type
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pythSnxFeedId, false]) %>",
+    "<%= chainId == 13370 ? 8 : 5 %>", # 5 = pyth aggregator type, 8 = constant node
+    "<%= chainId == 13370 ? defaultAbiCoder.encode(['uint256'], [parseEther('1')]) : defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pythSnxFeedId, false]) %>",
     [
     ],
 ]
