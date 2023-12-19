@@ -44,7 +44,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 525 ETH', async () => {
+  it('should have max open interest 4.5 ETH', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
