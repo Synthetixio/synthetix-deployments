@@ -107,7 +107,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // commitOrder and views requiring price will fail if there's no price update within the last hour
+    // commitOrder and views requiring price will fail if there's no price update within the last hour,
     // so we send off a price update just to be safe
     await doPriceUpdate({
       wallet,
@@ -267,12 +267,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-    log({
-      commitmentTime,
-      now: Math.floor(Date.now() / 1000),
-      diff: Math.floor(Date.now() / 1000 - commitmentTime),
-    });
-    await wait(1000); // wait for commitment price/ settlement delay
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - commitmentTime;
+    log({ commitmentTime, now, diff });
+    // Wait for commitment price/settlement delay
+    // When we run steps and advance blocks we may end up in the "future" so Pyth fails with 404 error
+    await wait(diff < 0 ? Math.abs(diff) * 1000 + 3000 : 3000);
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
@@ -291,12 +291,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-    log({
-      commitmentTime,
-      now: Math.floor(Date.now() / 1000),
-      diff: Math.floor(Date.now() / 1000 - commitmentTime),
-    });
-    await wait(1000); // wait for commitment price/ settlement delay
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - commitmentTime;
+    log({ commitmentTime, now, diff });
+    // Wait for commitment price/settlement delay
+    // When we run steps and advance blocks we may end up in the "future" so Pyth fails with 404 error
+    await wait(diff < 0 ? Math.abs(diff) * 1000 + 3000 : 3000);
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
