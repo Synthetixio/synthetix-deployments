@@ -35,7 +35,7 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
       Math.floor(pythPrice * (sizeDelta > 0 ? 1.05 : 0.95)).toString()
     ),
     referrer: ethers.constants.AddressZero,
-    trackingCode: 'SNXCLI',
+    trackingCode: ethers.utils.formatBytes32String('SNX_CLI'),
   };
   const gasLimit = await PerpsMarketProxy.estimateGas.commitOrder(params).catch(parseError);
   const tx = await PerpsMarketProxy.commitOrder(params, { gasLimit: gasLimit.mul(2) }).catch(
