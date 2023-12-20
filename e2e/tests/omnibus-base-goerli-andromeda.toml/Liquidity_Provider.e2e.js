@@ -97,22 +97,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should make a price update', async () => {
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: extras.eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: extras.btc_pyth_settlement_strategy,
-    });
-  });
-
-  it('should wrap 500 USDC', async () => {
-    const balance = await wrapFakeUsdc({ wallet, amount: 500 });
-    assert.equal(balance, 500);
+  it('should wrap 30_000 USDC', async () => {
+    const balance = await wrapFakeUsdc({ wallet, amount: 30_000 });
+    assert.equal(balance, 30_000);
   });
 
   it('should approve sUSDC spending for CoreProxy', async () => {
@@ -125,27 +112,42 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await isCollateralApproved({ address, symbol: 'sUSDC' }), true);
   });
 
-  it('should deposit 400 sUSDC into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 500);
+  it('should deposit 29_000 sUSDC into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 30_000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 400 });
+    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 29_000 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 100);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 1_000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 400,
+      totalDeposited: 29_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
+  it('should make a price update', async () => {
+    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
+    // so we send off a price update just to be safe
+    await doPriceUpdate({
+      wallet,
+      marketId: 100,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 200,
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+    });
+  });
+
   it('should delegate 300 sUSDC into the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 400,
+      totalDeposited: 29_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -153,12 +155,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       symbol: 'sUSDC',
       accountId,
-      amount: 300,
+      amount: 28_000,
       poolId: 1,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 400,
-      totalAssigned: 300,
+      totalDeposited: 29_000,
+      totalAssigned: 28_000,
       totalLocked: 0,
     });
   });
@@ -204,8 +206,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should undelegate 200 sUSDC from the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 400,
-      totalAssigned: 300,
+      totalDeposited: 29_000,
+      totalAssigned: 28_000,
       totalLocked: 0,
     });
 
@@ -213,13 +215,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       symbol: 'sUSDC',
-      targetAmount: 100,
+      targetAmount: 27_800,
       poolId: 1,
     });
 
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 400,
-      totalAssigned: 100,
+      totalDeposited: 29_000,
+      totalAssigned: 27_800,
       totalLocked: 0,
     });
   });
@@ -249,10 +251,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       amount: 200,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 200,
-      totalAssigned: 100,
+      totalDeposited: 28_800,
+      totalAssigned: 27_800,
       totalLocked: 0,
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 250);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 1_150);
   });
 });
