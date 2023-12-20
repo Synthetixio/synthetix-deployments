@@ -28,7 +28,6 @@ const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
-const { formatEther } = require('ethers/lib/utils');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -268,7 +267,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+    await wait(2000); // wait for commitment price/ settlement delay
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
@@ -279,6 +278,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
+    await wait(2000); // wait for commitment price/ settlement delay
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -286,7 +286,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+    await wait(2000); // wait for commitment price/ settlement delay
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
@@ -297,19 +297,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    log({ marketId, maxSize });
     try {
       await commitPerpsOrder({
         wallet,
         accountId,
         marketId,
-        sizeDelta: parseFloat(formatEther(maxSize)),
+        sizeDelta: parseFloat(ethers.utils.formatEther(maxSize.mul(2))),
         settlementStrategyId,
       });
       throw Error('Commit should revert');
     } catch (error) {
       const errorData =
-        error?.error?.error?.error?.data || error?.error?.data?.data || error?.error?.error?.data;
-      const parsedError = PerpsMarketProxy.interface.parseError(errorData);
+        error?.error?.error?.error?.data ||
+        error?.error?.data?.data ||
+        error?.error?.error?.data ||
+        error?.error?.data;
+      const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
       assert.equal(parsedError.name, 'MaxOpenInterestReached');
     }
   });

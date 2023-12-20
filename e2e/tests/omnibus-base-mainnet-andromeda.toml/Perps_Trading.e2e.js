@@ -252,8 +252,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(strategy.commitmentPriceDelay, 1);
   });
 
-  // TODO: enable after PYTH has upgraded contracts
-  it.skip('should open a 0.1 btc position', async () => {
+  it('should open a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
     const { commitmentTime } = await commitPerpsOrder({
@@ -263,18 +262,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+    await wait(2000); // wait for commitment price/ settlement delay
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0.1);
   });
 
-  // TODO: enable after PYTH has upgraded contracts
-  it.skip('should close a 0.1 btc position', async () => {
+  it('should close a 0.1 btc position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
+    await wait(2000); // wait for commitment price/ settlement delay
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -282,11 +281,36 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+    await wait(2000); // wait for commitment price/ settlement delay
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0);
+  });
+
+  it('should revert when trade > Max Market Size', async () => {
+    const marketId = 200;
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    log({ marketId, maxSize });
+    try {
+      await commitPerpsOrder({
+        wallet,
+        accountId,
+        marketId,
+        sizeDelta: parseFloat(ethers.utils.formatEther(maxSize.mul(2))),
+        settlementStrategyId,
+      });
+      throw Error('Commit should revert');
+    } catch (error) {
+      const errorData =
+        error?.error?.error?.error?.data ||
+        error?.error?.data?.data ||
+        error?.error?.error?.data ||
+        error?.error?.data;
+      const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
+      assert.equal(parsedError.name, 'MaxOpenInterestReached');
+    }
   });
 
   it('should reset settlement and commitment delay to 2s', async () => {
