@@ -55,7 +55,7 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
               ethers.BigNumber.from(accountId),
               ethers.BigNumber.from(poolId),
               config.tokenAddress,
-              debt.mul(1.01), // smth bigger than current debt
+              debt.mul(2), // smth bigger than current debt
             ]),
           }
         : null,
@@ -73,7 +73,7 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
   ];
 
   const gasLimit = await Multicall.estimateGas.tryBlockAndAggregate(...args).catch(parseError);
-  const tx = await Multicall.tryBlockAndAggregate({ gasLimit: gasLimit.mul(1.5) }).catch(
+  const tx = await Multicall.tryBlockAndAggregate(...args, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
   await tx.wait().catch(parseError);
