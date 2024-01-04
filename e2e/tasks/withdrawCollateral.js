@@ -35,6 +35,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [privateKey, accountId, symbol, amount] = process.argv.slice(2);
   withdrawCollateral({ privateKey, accountId, symbol, amount }).then(console.log);
 }

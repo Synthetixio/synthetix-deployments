@@ -16,6 +16,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [oracleQuery] = process.argv.slice(2);
   decodeOracleQuery({ oracleQuery });
 }

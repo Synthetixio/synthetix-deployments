@@ -30,6 +30,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [privateKey, tokenAddress, spenderAddress] = process.argv.slice(2);
   approveToken({ privateKey, tokenAddress, spenderAddress }).then(console.log);
 }

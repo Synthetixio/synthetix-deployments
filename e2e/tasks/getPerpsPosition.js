@@ -30,6 +30,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [accountId, marketId] = process.argv.slice(2);
   getPerpsPosition({ accountId, marketId }).then(console.log);
 }

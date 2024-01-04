@@ -46,6 +46,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [key, value] = process.argv.slice(2);
   setConfigUint({ key, value }).then(console.log);
 }

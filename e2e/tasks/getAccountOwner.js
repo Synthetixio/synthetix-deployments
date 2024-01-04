@@ -21,6 +21,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [accountId] = process.argv.slice(2);
   getAccountOwner({ accountId }).then(console.log);
 }

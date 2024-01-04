@@ -50,6 +50,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [privateKey, accountId, symbol, poolId] = process.argv.slice(2);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'

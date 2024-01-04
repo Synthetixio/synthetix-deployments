@@ -18,6 +18,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [privateKey, symbol, spenderAddress] = process.argv.slice(2);
   approveCollateral({ privateKey, symbol, spenderAddress }).then(console.log);
 }

@@ -18,6 +18,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [walletAddress, symbol, spenderAddress] = process.argv.slice(2);
   isCollateralApproved({ walletAddress, symbol, spenderAddress }).then(console.log);
 }

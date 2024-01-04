@@ -56,6 +56,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [pk, marketId, settlementStrategyId] = process.argv.slice(2);
   if (!pk || !marketId || !settlementStrategyId) {
     const bin = `./${require('path').basename(__filename)}`;
