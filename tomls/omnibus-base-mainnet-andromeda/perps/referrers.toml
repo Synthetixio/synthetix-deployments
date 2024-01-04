@@ -12,9 +12,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x3bD64247d879AF879e6f6e62F81430186391Bdb8", "<%= settings.referrerFee %>"]
-#
-# [invoke.setInfinexAsReferrerOnPerpsMarket]
-# target = ["perpsFactory.PerpsMarketProxy"]
-# fromCall.func = "owner"
-# func = "updateReferrerShare"
-# args = ["0xa7DB9b0a95D253022068d43BD1d64756f92eF83C", "<%= settings.referrerFee %>"] #TODO add mainnet address
+
+[invoke.setInfinexAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x24f5A599a40730dc0475eCE8dD41C4D3A4Ba4Bf3", "<%= settings.referrerFee %>"]
