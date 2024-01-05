@@ -284,10 +284,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     // We must sync timestamp of the fork before making time-sensitive operations
     await syncTime();
 
-    const now = Math.floor(Date.now() / 1000);
-    await provider.send('evm_setNextBlockTimestamp', [now]);
-    await provider.send('evm_mine', []);
-
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
