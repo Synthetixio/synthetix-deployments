@@ -65,6 +65,7 @@ async function run() {
   console.log(`Deployments state file:`, { file: deploymentsFile.replace(os.homedir(), '~') });
   const deployments = JSON.parse(await fs.readFile(deploymentsFile, 'utf8'));
 
+  await fs.rm(`${__dirname}/deployments`, { recursive: true });
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
 
   const meta = {

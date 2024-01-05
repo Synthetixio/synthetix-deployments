@@ -23,6 +23,7 @@ const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
+const { syncTime } = require('../../tasks/syncTime');
 
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
@@ -53,6 +54,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     PerpsMarketProxyDeployment.abi,
     wallet
   );
+
+  let snapshot;
+
+  before('Create snapshot', async () => {
+    snapshot = await provider.send('evm_snapshot', []);
+    log('Create snapshot', { snapshot });
+  });
+
+  after('Restore snapshot', async () => {
+    log('Restore snapshot', { snapshot });
+    await provider.send('evm_revert', [snapshot]);
+  });
+
+  it('should sync time of the fork', async () => {
+    await syncTime();
+  });
 
   it('should create new random wallet', async () => {
     log({ wallet: wallet.address, pk: wallet.privateKey });
@@ -102,6 +119,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
+    // We must sync timestamp of the fork before making price updates
+    await syncTime();
+
     // commitOrder and views requiring price will fail if there's no price update within the last hour,
     // so we send off a price update just to be safe
     await doPriceUpdate({
@@ -255,6 +275,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should open a short 0.1 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -262,12 +286,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.1,
       settlementStrategyId,
     });
-    const now = Math.floor(Date.now() / 1000);
-    const diff = now - commitmentTime;
-    log({ commitmentTime, now, diff });
     // Wait for commitment price/settlement delay
-    // When we run steps and advance blocks we may end up in the "future" so Pyth fails with 404 error
-    await wait(diff < 0 ? Math.abs(diff) * 1000 + 3000 : 3000);
+    await wait(2000);
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
@@ -278,7 +298,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
-    //    await wait(2000); // wait for commitment price/ settlement delay
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
@@ -286,12 +308,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.1,
       settlementStrategyId,
     });
-    const now = Math.floor(Date.now() / 1000);
-    const diff = now - commitmentTime;
-    log({ commitmentTime, now, diff });
     // Wait for commitment price/settlement delay
-    // When we run steps and advance blocks we may end up in the "future" so Pyth fails with 404 error
-    await wait(diff < 0 ? Math.abs(diff) * 1000 + 3000 : 3000);
+    await wait(2000);
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });

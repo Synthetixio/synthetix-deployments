@@ -2,7 +2,7 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxy = require('../deployments/CoreProxy.json');
+const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -15,16 +15,18 @@ async function withdrawCollateral({ privateKey, accountId, symbol, amount }) {
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, amount });
 
-  const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
+  const CoreProxy = new ethers.Contract(
+    CoreProxyDeployment.address,
+    CoreProxyDeployment.abi,
+    wallet
+  );
 
-  const tx = await coreProxy
-    .withdraw(
-      ethers.BigNumber.from(accountId),
-      config.tokenAddress,
-      ethers.utils.parseEther(`${amount}`),
-      { gasLimit: 10_000_000 }
-    )
-    .catch(parseError);
+  const tx = await CoreProxy.withdraw(
+    ethers.BigNumber.from(accountId),
+    config.tokenAddress,
+    ethers.utils.parseEther(`${amount}`),
+    { gasLimit: 10_000_000 }
+  ).catch(parseError);
   await tx.wait();
 
   return accountId;

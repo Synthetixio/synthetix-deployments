@@ -2,9 +2,13 @@
 
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { isTokenApproved } = require('./isTokenApproved');
-const CoreProxy = require('../deployments/CoreProxy.json');
+const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
-async function isCollateralApproved({ address, symbol, spenderAddress = CoreProxy.address }) {
+async function isCollateralApproved({
+  address,
+  symbol,
+  spenderAddress = CoreProxyDeployment.address,
+}) {
   const config = await getCollateralConfig(symbol);
   return isTokenApproved({
     walletAddress: address,

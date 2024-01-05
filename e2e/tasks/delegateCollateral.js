@@ -2,8 +2,9 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxy = require('../deployments/CoreProxy.json');
+const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
+const { traceTxn } = require('../traceTxn');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -14,8 +15,11 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
   );
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, token: config.tokenAddress, amount, poolId });
-  log('wallet balance', await wallet.getBalance());
-  const coreProxy = new ethers.Contract(CoreProxy.address, CoreProxy.abi, wallet);
+  const CoreProxy = new ethers.Contract(
+    CoreProxyDeployment.address,
+    CoreProxyDeployment.abi,
+    wallet
+  );
 
   const args = [
     ethers.BigNumber.from(accountId),
@@ -24,11 +28,15 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
     ethers.utils.parseEther(`${amount}`),
     ethers.utils.parseEther(`1`),
   ];
-  const gasLimit = await coreProxy.estimateGas.delegateCollateral(...args).catch(parseError);
-  const tx = await coreProxy
-    .delegateCollateral(...args, { gasLimit: gasLimit.mul(2) })
-    .catch(parseError);
-  await tx.wait();
+  const gasLimit = await CoreProxy.estimateGas
+    .delegateCollateral(...args)
+    .catch(parseError)
+    .catch(() => ethers.BigNumber.from(10_000_000));
+  const tx = await CoreProxy.delegateCollateral(...args, { gasLimit: gasLimit.mul(2) });
+  await tx
+    .wait()
+    .then(({ events }) => log({ events }))
+    .catch(traceTxn(tx));
 
   return accountId;
 }
