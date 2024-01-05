@@ -84,11 +84,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 10_000_000', async () => {
+  it('should set fUSDC balance to 10_000_000', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
-      'New wallet has 0 USDC balance'
+      'New wallet has 0 fUSDC balance'
     );
     await setMintableTokenBalance({
       privateKey,
@@ -98,7 +98,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 
-  it('should approve USDC spending for SpotMarket', async () => {
+  it('should approve fUSDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
@@ -106,7 +106,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       false,
-      'New wallet has not allowed SpotMarket USDC spending'
+      'New wallet has not allowed SpotMarket fUSDC spending'
     );
     await approveCollateral({
       privateKey,
@@ -141,9 +141,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should wrap 500 USDC', async () => {
-    const balance = await wrapFakeUsdc({ wallet, amount: 500 });
-    assert.equal(balance, 500);
+  it('should wrap 100_000 fUSDC', async () => {
+    const balance = await wrapFakeUsdc({ wallet, amount: 100_000 });
+    assert.equal(balance, 100_000);
   });
 
   // TODO: uncomment if we need to top up LP
@@ -168,7 +168,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //    assert.equal(await isCollateralApproved({ address, symbol: 'sUSDC' }), true);
   //  });
   //
-  //  it('should deposit 500 sUSDC into the system', async () => {
+  //  it('should deposit 100_000 sUSDC into the system', async () => {
   //    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 10_000);
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
   //      totalDeposited: 0,
@@ -176,11 +176,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //      totalLocked: 0,
   //    });
   //
-  //    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 500 });
+  //    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 100_000 });
   //
-  //    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 500);
+  //    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 100_000);
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-  //      totalDeposited: 500,
+  //      totalDeposited: 100_000,
   //      totalAssigned: 0,
   //      totalLocked: 0,
   //    });
@@ -188,7 +188,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //
   //  it('should delegate 300 sUSDC into the Spartan Council pool', async () => {
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-  //      totalDeposited: 500,
+  //      totalDeposited: 100_000,
   //      totalAssigned: 0,
   //      totalLocked: 0,
   //    });
@@ -196,12 +196,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //      privateKey,
   //      symbol: 'sUSDC',
   //      accountId,
-  //      amount: 500,
+  //      amount: 100_000,
   //      poolId: 1,
   //    });
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-  //      totalDeposited: 500,
-  //      totalAssigned: 500,
+  //      totalDeposited: 100_000,
+  //      totalAssigned: 100_000,
   //      totalLocked: 0,
   //    });
   //  });
@@ -219,10 +219,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should atomic swap 500 sUSDC to snxUSD to trade', async () => {
+  it('should atomic swap 100_000 sUSDC to snxUSD to trade', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 500 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 500);
+    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 100_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000);
   });
 
   it('should approve snxUSD spending for PerpsMarketProxy', async () => {
@@ -250,16 +250,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 500 snxUSD to Perps', async () => {
+  it('should deposit 100_000 snxUSD to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
-    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 500 });
-    assert.equal(await getPerpsCollateral({ accountId }), 500);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 100_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 100_000);
   });
 
-  it('should withdraw 100 snxUSD from Perps', async () => {
-    assert.equal(await getPerpsCollateral({ accountId }), 500);
-    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -100 });
-    assert.equal(await getPerpsCollateral({ accountId }), 400);
+  it('should withdraw 1_000 snxUSD from Perps', async () => {
+    assert.equal(await getPerpsCollateral({ accountId }), 100_000);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -1_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 99_000);
   });
 
   it('should reduce settlement and commitment delay to 1s', async () => {
@@ -277,29 +277,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(strategy.commitmentPriceDelay, 1);
   });
 
-  it('should open a 0.01 BTC position', async () => {
-    const marketId = 200;
-    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-
-    // We must sync timestamp of the fork before making time-sensitive operations
-    await syncTime();
-
-    const { commitmentTime } = await commitPerpsOrder({
-      wallet,
-      accountId,
-      marketId,
-      sizeDelta: 0.01,
-      settlementStrategyId,
-    });
-    // Wait for commitment price/settlement delay
-    await wait(2000);
-    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
-    await settlePerpsOrder({ wallet, accountId, marketId });
-    const position = await getPerpsPosition({ accountId, marketId });
-    assert.equal(position.positionSize, 0.1);
-  });
-
-  it('should close a 0.01 BTC position', async () => {
+  it('should open a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
@@ -312,8 +290,35 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.01,
       settlementStrategyId,
     });
+
     // Wait for commitment price/settlement delay
-    await wait(2000);
+    await wait(3000);
+
+    await syncTime();
+    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
+    await settlePerpsOrder({ wallet, accountId, marketId });
+    const position = await getPerpsPosition({ accountId, marketId });
+    assert.equal(position.positionSize, -0.01);
+  });
+
+  it('should close a short 0.01 BTC position', async () => {
+    const marketId = 200;
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+    const { commitmentTime } = await commitPerpsOrder({
+      wallet,
+      accountId,
+      marketId,
+      sizeDelta: 0.01,
+      settlementStrategyId,
+    });
+
+    // Wait for commitment price/settlement delay
+    await wait(3000);
+
+    await syncTime();
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });

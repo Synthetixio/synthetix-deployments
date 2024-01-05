@@ -33,6 +33,11 @@ async function syncTime() {
     oldBlockTimestamp: new Date(oldTimes.blockTimestamp * 1000),
   });
 
+  if (oldTimes.blockTimestamp === oldTimes.now) {
+    log('SKIP');
+    return;
+  }
+
   if (oldTimes.blockTimestamp < oldTimes.now) {
     // We restored from snapshot, or working with an old fork, so block timestamp is out of date
     await provider.send('evm_setNextBlockTimestamp', [oldTimes.now]);
