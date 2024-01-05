@@ -222,21 +222,21 @@ workflows:
           toml: omnibus-base-goerli-andromeda.toml
           upgrade-from: "synthetix-omnibus:latest@andromeda"
           chain-id: 84531
-          provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
+          provider-url: https://goerli.base.org
 
       - fork-test:
           name: base-mainnet-andromeda
           toml: omnibus-base-mainnet-andromeda.toml
           upgrade-from: "synthetix-omnibus:latest@andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: https://mainnet.base.org
 #
 #      - fork-test:
 #          name: base-goerli
 #          toml: omnibus-base-goerli.toml
 #          upgrade-from: "synthetix-omnibus:latest@main"
 #          chain-id: 84531
-#          provider-url: https://base-goerli.infura.io/v3/$INFURA_API_KEY
+#          provider-url: https://goerli.base.org
 #
 #      - fork-test:
 #          name: goerli
