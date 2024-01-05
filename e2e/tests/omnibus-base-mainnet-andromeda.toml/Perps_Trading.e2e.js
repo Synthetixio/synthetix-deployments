@@ -272,7 +272,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(strategy.commitmentPriceDelay, 1);
   });
 
-  it('should open a short 0.1 BTC position', async () => {
+  it('should open a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
@@ -283,18 +283,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId,
-      sizeDelta: -0.1,
+      sizeDelta: -0.01,
       settlementStrategyId,
     });
     // Wait for commitment price/settlement delay
-    await wait(2000);
+    await wait(3000);
+
+    await syncTime();
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
-    assert.equal(position.positionSize, -0.1);
+    assert.equal(position.positionSize, -0.01);
   });
 
-  it('should close a short 0.1 BTC position', async () => {
+  it('should close a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
@@ -305,11 +307,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId,
-      sizeDelta: 0.1,
+      sizeDelta: 0.01,
       settlementStrategyId,
     });
     // Wait for commitment price/settlement delay
-    await wait(2000);
+    await wait(3000);
+
+    await syncTime();
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
