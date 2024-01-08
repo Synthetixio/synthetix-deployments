@@ -46,7 +46,7 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
   const commitReceipt = await tx.wait().catch(parseError);
   const block = await wallet.provider.getBlock(commitReceipt.blockNumber);
   const commitmentTime = block.timestamp;
-  log({ commitmentTime });
+  log({ commitmentTime: new Date(commitmentTime * 1000) });
 
   return { commitmentTime };
 }

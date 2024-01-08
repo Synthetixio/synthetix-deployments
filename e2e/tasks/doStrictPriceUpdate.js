@@ -26,9 +26,17 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
   const { feedId, priceVerificationContract, commitmentPriceDelay } =
     await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
 
-  log({ marketId, feedId, priceVerificationContract, commitmentPriceDelay });
-
   const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
+
+  log({
+    marketId,
+    feedId,
+    priceVerificationContract,
+    commitmentPriceDelay,
+    timestamp: new Date(timestamp * 1000),
+    now: new Date(),
+  });
+
   const [offchainData] = await priceService.getVaa(feedId, timestamp);
 
   const UPDATE_TYPE = 2;

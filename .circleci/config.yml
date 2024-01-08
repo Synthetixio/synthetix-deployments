@@ -208,7 +208,7 @@ jobs:
             - DEBUG: "e2e:*"
           command: |
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
-            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
+            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --exit"
 
 workflows:
   version: 2.1
