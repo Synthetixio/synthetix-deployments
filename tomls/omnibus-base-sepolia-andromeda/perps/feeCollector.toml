@@ -58,7 +58,6 @@ args = [
 ]
 extra.snx_lookup_oracle_id_buyback.event = "NodeRegistered"
 extra.snx_lookup_oracle_id_buyback.arg = 0
-depends = ["provision.pyth_erc7412_wrapper"]
 
 # Staleness Node
 [invoke.registerSnxOracleNodeBuyback]
@@ -74,4 +73,3 @@ args = [
 ]
 extra.snx_oracle_id_buyback.event = "NodeRegistered"
 extra.snx_oracle_id_buyback.arg = 0
-depends = ["invoke.registerPythSnxOracleNodeBuyback", "invoke.registerLookupSnxOracleNodeBuyback"]
