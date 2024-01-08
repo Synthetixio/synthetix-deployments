@@ -26,9 +26,17 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
   const { feedId, priceVerificationContract, commitmentPriceDelay } =
     await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
 
-  log({ marketId, feedId, priceVerificationContract, commitmentPriceDelay });
-
   const timestamp = commitmentTime + commitmentPriceDelay.toNumber();
+
+  log({
+    marketId,
+    feedId,
+    priceVerificationContract,
+    commitmentPriceDelay,
+    timestamp: new Date(timestamp * 1000),
+    now: new Date(),
+  });
+
   const [offchainData] = await priceService.getVaa(feedId, timestamp);
 
   const UPDATE_TYPE = 2;
@@ -56,6 +64,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [pk, marketId, settlementStrategyId] = process.argv.slice(2);
   if (!pk || !marketId || !settlementStrategyId) {
     const bin = `./${require('path').basename(__filename)}`;

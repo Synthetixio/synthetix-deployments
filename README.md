@@ -86,7 +86,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
      --dry-run \
      --upgrade-from synthetix-omnibus:latest@andromeda \
      --chain-id 84531 \
-     --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY \
+     --provider-url https://goerli.base.org \
        | tee ./e2e/cannon-build.log
    ```
 
@@ -117,7 +117,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
       --dry-run \
       --upgrade-from synthetix-omnibus:latest@andromeda \
       --chain-id 84531 \
-      --provider-url https://base-goerli.infura.io/v3/$INFURA_KEY
+      --provider-url https://goerli.base.org
    ```
 
    or

@@ -16,6 +16,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [symbol] = process.argv.slice(2);
   getCollateralConfig(symbol).then(console.log);
 }

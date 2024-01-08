@@ -25,5 +25,6 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   mineBlock().then(console.log);
 }

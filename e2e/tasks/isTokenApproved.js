@@ -29,6 +29,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [walletAddress, tokenAddress, spenderAddress] = process.argv.slice(2);
   isTokenApproved({ walletAddress, tokenAddress, spenderAddress }).then(console.log);
 }

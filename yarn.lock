@@ -1205,9 +1205,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.6, @usecannon/builder@npm:^2.10.6":
-  version: 2.10.6
-  resolution: "@usecannon/builder@npm:2.10.6"
+"@usecannon/builder@npm:2.10.7-alpha.0":
+  version: 2.10.7-alpha.0
+  resolution: "@usecannon/builder@npm:2.10.7-alpha.0"
   dependencies:
     "@synthetixio/router": ^3.3.0
     axios: ^1.6.2
@@ -1222,17 +1222,38 @@ __metadata:
     zod: ^3.22.4
   peerDependencies:
     ethers: ">=5.6.0 < 6.0.0"
-  checksum: 14e82ce66e3a4719df856ae2bfdbae063820e366543317d2f11e88fdee106502762b05499492d9d8c633477582a75dbc841b514924223407e5620b7741e9a60f
+  checksum: 21b82cfecd7720d0069a845c09e60a25947451e01dbaf8693f0a329d7077cd0d0058949657b3139c4224d04f7c98e489bd3274360e8f2528c06e76866f08080d
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.10.6":
-  version: 2.10.6
-  resolution: "@usecannon/cli@npm:2.10.6"
+"@usecannon/builder@npm:^2.10.7-alpha.0":
+  version: 2.10.7-alpha.1
+  resolution: "@usecannon/builder@npm:2.10.7-alpha.1"
+  dependencies:
+    "@synthetixio/router": ^3.3.0
+    axios: ^1.6.2
+    buffer: ^6.0.3
+    debug: ^4.3.4
+    form-data: ^4.0.0
+    lodash: ^4.17.21
+    pako: ^2.1.0
+    promise-events: ^0.2.4
+    typedoc-plugin-markdown: ^3.17.1
+    typestub-ipfs-only-hash: ^4.0.0
+    zod: ^3.22.4
+  peerDependencies:
+    ethers: ">=5.6.0 < 6.0.0"
+  checksum: be16f41460816120764ea14977807282f0428c1798554a4d773f4144984768661955901ffe620f554da49cfda6b2e85d8acb3a049c751993bc51333df96c151d
+  languageName: node
+  linkType: hard
+
+"@usecannon/cli@npm:2.10.7-alpha.0":
+  version: 2.10.7-alpha.0
+  resolution: "@usecannon/cli@npm:2.10.7-alpha.0"
   dependencies:
     "@iarna/toml": ^3.0.0
     "@synthetixio/wei": ^2.74.1
-    "@usecannon/builder": ^2.10.6
+    "@usecannon/builder": ^2.10.7-alpha.0
     chalk: ^4.1.2
     commander: ^9.5.0
     debug: ^4.3.4
@@ -1249,7 +1270,7 @@ __metadata:
     untildify: ^4.0.0
   bin:
     cannon: bin/cannon.js
-  checksum: 1ecd434da3c0846795bdc103d5c1ff7b75600b54396800b56cd0d6420abaf3ac5a68de3cd6ad99a3f2a5353294bd5128154c4a1b2c3d0a342e5c9a94f73123e1
+  checksum: 2911bd8357731d6680b3575f2fabfa7e3ed030636e007a664102f495d5b64b2efc4b032ce384e5f82e295df515b747f54ca0e588bfe94a6702e4f233d48da6c9
   languageName: node
   linkType: hard
 
@@ -2577,9 +2598,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.19.2":
-  version: 2.19.2
-  resolution: "hardhat@npm:2.19.2"
+"hardhat@npm:^2.19.4":
+  version: 2.19.4
+  resolution: "hardhat@npm:2.19.4"
   dependencies:
     "@ethersproject/abi": ^5.1.2
     "@metamask/eth-sig-util": ^4.0.0
@@ -2639,7 +2660,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/bootstrap.js
-  checksum: 0b5499890e46750ca8c51bbe1205599b1424a2e5293b40c9f7cb56320d56b9935fbd4e276de370e07664ae81fa57dc7ab227bf2b2363f5732ef9f06df1a9a6d9
+  checksum: 05dcaeab5bb641e74426ad47acfda903dcd3fd229b0d30f45b9de1d3c54fe6364161f3c88517984233d18f5b9294a050500ca7336b6ca069fa259fede6f5acb1
   languageName: node
   linkType: hard
 
@@ -4809,11 +4830,11 @@ __metadata:
   dependencies:
     "@iarna/toml": ^3.0.0
     "@pythnetwork/pyth-evm-js": ^1.29.2
-    "@usecannon/builder": 2.10.6
-    "@usecannon/cli": 2.10.6
+    "@usecannon/builder": 2.10.7-alpha.0
+    "@usecannon/cli": 2.10.7-alpha.0
     debug: ^4.3.4
     ethers: ^5.7.2
-    hardhat: ^2.19.2
+    hardhat: ^2.19.4
     mocha: ^10.2.0
     prettier: ^3.1.1
     prettier-plugin-toml: ^2.0.1

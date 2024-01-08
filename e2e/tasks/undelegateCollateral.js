@@ -5,6 +5,7 @@ const { getCollateralConfig } = require('./getCollateralConfig');
 const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const MulticallDeployment = require('../deployments/TrustedMulticallForwarder.json');
 const { mineBlock } = require('./mineBlock');
+const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -44,7 +45,7 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
   // We must burn debt with delegation change within the same block.
   // If we burn and then undelegate, the debt will change because of the block increment
   // TODO: maybe cover case with negative debt (???)
-  const tx = await Multicall.tryBlockAndAggregate(
+  const args = [
     true,
     [
       debt.gt(0)
@@ -69,9 +70,13 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
         ]),
       },
     ].filter(Boolean),
-    { gasLimit: 10_000_000 }
+  ];
+
+  const gasLimit = await Multicall.estimateGas.tryBlockAndAggregate(...args).catch(parseError);
+  const tx = await Multicall.tryBlockAndAggregate(...args, { gasLimit: gasLimit.mul(2) }).catch(
+    parseError
   );
-  await tx.wait();
+  await tx.wait().catch(parseError);
 
   const newDebt = await CoreProxy.callStatic.getPositionDebt(
     ethers.BigNumber.from(accountId),
@@ -86,6 +91,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [pk, accountId, symbol, targetAmount, poolId] = process.argv.slice(2);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
