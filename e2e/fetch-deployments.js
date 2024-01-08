@@ -6,7 +6,7 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs/promises');
 const { ethers } = require('ethers');
-const { CliLoader } = require('@usecannon/cli/dist/src/loader');
+const { getMainLoader } = require('@usecannon/cli/dist/src/loader');
 const CANNON_DIRECTORY = path.join(os.homedir(), '.local', 'share', 'cannon');
 
 const fgReset = '\x1b[0m';
@@ -58,13 +58,21 @@ async function run() {
   const [, url] = log.match(/Deployment Data\s*│\s*(ipfs:\/\/Qm\S+)/im) || [];
   console.log(`Resolved URL:`, { url });
 
-  const hash = CliLoader.getCacheHash(url);
-  console.log(`Resolved FileName hash:`, { hash });
+  const loader = getMainLoader({
+    ipfsUrl: 'https://ipfs.synthetix.io',
+    //    ipfsUrl: 'http://127.0.0.1:5001',
+    cannonDirectory: CANNON_DIRECTORY,
+  });
+  const deployments = await loader.ipfs.read(url);
 
-  const deploymentsFile = `${CANNON_DIRECTORY}/ipfs_cache/${CliLoader.getCacheHash(url)}.json`;
-  console.log(`Deployments state file:`, { file: deploymentsFile.replace(os.homedir(), '~') });
-  const deployments = JSON.parse(await fs.readFile(deploymentsFile, 'utf8'));
+  //  const hash = CliLoader.getCacheHash(url);
+  //  console.log(`Resolved FileName hash:`, { hash });
 
+  //  const deploymentsFile = `${CANNON_DIRECTORY}/ipfs_cache/${CliLoader.getCacheHash(url)}.json`;
+  //  console.log(`Deployments state file:`, { file: deploymentsFile.replace(os.homedir(), '~') });
+  //  const deployments = JSON.parse(await fs.readFile(deploymentsFile, 'utf8'));
+
+  await fs.rm(`${__dirname}/deployments`, { recursive: true, force: true });
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
 
   const meta = {

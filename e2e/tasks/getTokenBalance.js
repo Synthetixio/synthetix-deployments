@@ -30,6 +30,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [walletAddress, tokenAddress] = process.argv.slice(2);
   getTokenBalance({ walletAddress, tokenAddress }).then(console.log);
 }

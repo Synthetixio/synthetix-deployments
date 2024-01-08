@@ -23,12 +23,12 @@ const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
+const { syncTime } = require('../../tasks/syncTime');
 
 const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
-const { formatEther } = require('ethers/lib/utils');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -56,6 +56,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     wallet
   );
 
+  let snapshot;
+
+  before('Create snapshot', async () => {
+    snapshot = await provider.send('evm_snapshot', []);
+    log('Create snapshot', { snapshot });
+  });
+
+  after('Restore snapshot', async () => {
+    log('Restore snapshot', { snapshot });
+    await provider.send('evm_revert', [snapshot]);
+  });
+
+  it('should sync time of the fork', async () => {
+    await syncTime();
+  });
+
   it('should create new random wallet', async () => {
     log({ wallet: wallet.address, pk: wallet.privateKey });
     assert.ok(wallet.address);
@@ -68,11 +84,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 10_000_000', async () => {
+  it('should set fUSDC balance to 10_000_000', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
-      'New wallet has 0 USDC balance'
+      'New wallet has 0 fUSDC balance'
     );
     await setMintableTokenBalance({
       privateKey,
@@ -82,7 +98,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 
-  it('should approve USDC spending for SpotMarket', async () => {
+  it('should approve fUSDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
@@ -90,7 +106,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       false,
-      'New wallet has not allowed SpotMarket USDC spending'
+      'New wallet has not allowed SpotMarket fUSDC spending'
     );
     await approveCollateral({
       privateKey,
@@ -108,7 +124,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // commitOrder and views requiring price will fail if there's no price update within the last hour
+    // We must sync timestamp of the fork before making price updates
+    await syncTime();
+
+    // commitOrder and views requiring price will fail if there's no price update within the last hour,
     // so we send off a price update just to be safe
     await doPriceUpdate({
       wallet,
@@ -122,9 +141,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should wrap 10_000 USDC', async () => {
-    const balance = await wrapFakeUsdc({ wallet, amount: 10_000 });
-    assert.equal(balance, 10_000);
+  it('should wrap 100_000 fUSDC', async () => {
+    const balance = await wrapFakeUsdc({ wallet, amount: 100_000 });
+    assert.equal(balance, 100_000);
   });
 
   // TODO: uncomment if we need to top up LP
@@ -149,7 +168,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //    assert.equal(await isCollateralApproved({ address, symbol: 'sUSDC' }), true);
   //  });
   //
-  //  it('should deposit 5_000 sUSDC into the system', async () => {
+  //  it('should deposit 100_000 sUSDC into the system', async () => {
   //    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 10_000);
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
   //      totalDeposited: 0,
@@ -157,11 +176,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //      totalLocked: 0,
   //    });
   //
-  //    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 5_000 });
+  //    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 100_000 });
   //
-  //    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_000);
+  //    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 100_000);
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-  //      totalDeposited: 5_000,
+  //      totalDeposited: 100_000,
   //      totalAssigned: 0,
   //      totalLocked: 0,
   //    });
@@ -169,7 +188,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //
   //  it('should delegate 300 sUSDC into the Spartan Council pool', async () => {
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-  //      totalDeposited: 5_000,
+  //      totalDeposited: 100_000,
   //      totalAssigned: 0,
   //      totalLocked: 0,
   //    });
@@ -177,12 +196,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //      privateKey,
   //      symbol: 'sUSDC',
   //      accountId,
-  //      amount: 5_000,
+  //      amount: 100_000,
   //      poolId: 1,
   //    });
   //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-  //      totalDeposited: 5_000,
-  //      totalAssigned: 5_000,
+  //      totalDeposited: 100_000,
+  //      totalAssigned: 100_000,
   //      totalLocked: 0,
   //    });
   //  });
@@ -200,10 +219,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should atomic swap 5_000 sUSDC to snxUSD to trade', async () => {
+  it('should atomic swap 100_000 sUSDC to snxUSD to trade', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 5_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 5_000);
+    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 100_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000);
   });
 
   it('should approve snxUSD spending for PerpsMarketProxy', async () => {
@@ -231,62 +250,62 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 5_000 snxUSD to Perps', async () => {
+  it('should deposit 100_000 snxUSD to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
-    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 5_000 });
-    assert.equal(await getPerpsCollateral({ accountId }), 5_000);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 100_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 100_000);
   });
 
-  it('should withdraw 100 snxUSD from Perps', async () => {
-    assert.equal(await getPerpsCollateral({ accountId }), 5_000);
-    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -100 });
-    assert.equal(await getPerpsCollateral({ accountId }), 4_900);
+  it('should withdraw 1_000 snxUSD from Perps', async () => {
+    assert.equal(await getPerpsCollateral({ accountId }), 100_000);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -1_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 99_000);
   });
 
-  it('should reduce settlement and commitment delay to 1s', async () => {
+  it('should open a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelays({
-      settlementStrategyId,
-      marketId,
-      settlementDelay: 1,
-      commitmentPriceDelay: 1,
-    });
-    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
-    log({ strategy });
-    assert.equal(strategy.settlementDelay, 1);
-    assert.equal(strategy.commitmentPriceDelay, 1);
-  });
 
-  it('should open a 0.1 btc position', async () => {
-    const marketId = 200;
-    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+    await wait(1000);
+
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
       marketId,
-      sizeDelta: 0.1,
+      sizeDelta: -0.01,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+
+    // Wait for commitment price/settlement delay
+    await wait(4000);
+
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
-    assert.equal(position.positionSize, 0.1);
+    assert.equal(position.positionSize, -0.01);
   });
 
-  it('should close a 0.1 btc position', async () => {
+  it('should close a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+    await wait(1000);
 
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
       marketId,
-      sizeDelta: -0.1,
+      sizeDelta: 0.01,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+
+    // Wait for commitment price/settlement delay
+    await wait(4000);
+
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
@@ -297,35 +316,24 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    log({ marketId, maxSize });
     try {
       await commitPerpsOrder({
         wallet,
         accountId,
         marketId,
-        sizeDelta: parseFloat(formatEther(maxSize)),
+        sizeDelta: parseFloat(ethers.utils.formatEther(maxSize.mul(2))),
         settlementStrategyId,
       });
       throw Error('Commit should revert');
     } catch (error) {
       const errorData =
-        error?.error?.error?.error?.data || error?.error?.data?.data || error?.error?.error?.data;
-      const parsedError = PerpsMarketProxy.interface.parseError(errorData);
+        error?.error?.error?.error?.data ||
+        error?.error?.data?.data ||
+        error?.error?.error?.data ||
+        error?.error?.data;
+      const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
       assert.equal(parsedError.name, 'MaxOpenInterestReached');
     }
-  });
-
-  it('should reset settlement and commitment delay to 2s', async () => {
-    const marketId = 200;
-    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelays({
-      settlementStrategyId,
-      marketId,
-      settlementDelay: 2,
-      commitmentPriceDelay: 2,
-    });
-    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
-    log({ strategy });
-    assert.equal(strategy.settlementDelay, 2);
-    assert.equal(strategy.commitmentPriceDelay, 2);
   });
 });

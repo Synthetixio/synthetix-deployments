@@ -23,6 +23,7 @@ const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
+const { syncTime } = require('../../tasks/syncTime');
 
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
@@ -53,6 +54,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     PerpsMarketProxyDeployment.abi,
     wallet
   );
+
+  let snapshot;
+
+  before('Create snapshot', async () => {
+    snapshot = await provider.send('evm_snapshot', []);
+    log('Create snapshot', { snapshot });
+  });
+
+  after('Restore snapshot', async () => {
+    log('Restore snapshot', { snapshot });
+    await provider.send('evm_revert', [snapshot]);
+  });
+
+  it('should sync time of the fork', async () => {
+    await syncTime();
+  });
 
   it('should create new random wallet', async () => {
     log({ wallet: wallet.address, pk: wallet.privateKey });
@@ -102,6 +119,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
+    // We must sync timestamp of the fork before making price updates
+    await syncTime();
+
     // commitOrder and views requiring price will fail if there's no price update within the last hour,
     // so we send off a price update just to be safe
     await doPriceUpdate({
@@ -237,70 +257,78 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId }), 4_900);
   });
 
-  it('should reduce settlement and commitment delay to 1s', async () => {
+  it('should open a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelays({
-      settlementStrategyId,
-      marketId,
-      settlementDelay: 1,
-      commitmentPriceDelay: 1,
-    });
-    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
-    log({ strategy });
-    assert.equal(strategy.settlementDelay, 1);
-    assert.equal(strategy.commitmentPriceDelay, 1);
-  });
 
-  // TODO: enable after PYTH has upgraded contracts
-  it.skip('should open a 0.1 btc position', async () => {
-    const marketId = 200;
-    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+    await wait(1000);
+
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
       marketId,
-      sizeDelta: 0.1,
+      sizeDelta: -0.01,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+
+    // Wait for commitment price/settlement delay
+    await wait(4000);
+
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
-    assert.equal(position.positionSize, 0.1);
+    assert.equal(position.positionSize, -0.01);
   });
 
-  // TODO: enable after PYTH has upgraded contracts
-  it.skip('should close a 0.1 btc position', async () => {
+  it('should close a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+    await wait(1000);
 
     const { commitmentTime } = await commitPerpsOrder({
       wallet,
       accountId,
       marketId,
-      sizeDelta: -0.1,
+      sizeDelta: 0.01,
       settlementStrategyId,
     });
-    await wait(1000); // wait for commitment price/ settlement delay
+
+    // Wait for commitment price/settlement delay
+    await wait(4000);
+
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0);
   });
 
-  it('should reset settlement and commitment delay to 2s', async () => {
+  it('should revert when trade > Max Market Size', async () => {
     const marketId = 200;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
-    await setSettlementDelays({
-      settlementStrategyId,
-      marketId,
-      settlementDelay: 2,
-      commitmentPriceDelay: 2,
-    });
-    const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
-    log({ strategy });
-    assert.equal(strategy.settlementDelay, 2);
-    assert.equal(strategy.commitmentPriceDelay, 2);
+    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    log({ marketId, maxSize });
+    try {
+      await commitPerpsOrder({
+        wallet,
+        accountId,
+        marketId,
+        sizeDelta: parseFloat(ethers.utils.formatEther(maxSize.mul(2))),
+        settlementStrategyId,
+      });
+      throw Error('Commit should revert');
+    } catch (error) {
+      const errorData =
+        error?.error?.error?.error?.data ||
+        error?.error?.data?.data ||
+        error?.error?.error?.data ||
+        error?.error?.data;
+      const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
+      assert.equal(parsedError.name, 'MaxOpenInterestReached');
+    }
   });
 });

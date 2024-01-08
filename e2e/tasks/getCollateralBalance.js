@@ -16,6 +16,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [address, symbol] = process.argv.slice(2);
   getCollateralBalance({ address, symbol }).then(console.log);
 }

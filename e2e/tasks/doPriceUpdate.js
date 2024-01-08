@@ -52,6 +52,7 @@ module.exports = {
 };
 
 if (require.main === module) {
+  require('../inspect');
   const [pk, marketId, settlementStrategyId] = process.argv.slice(2);
   if (!pk || !marketId || !settlementStrategyId) {
     const bin = `./${require('path').basename(__filename)}`;
@@ -59,9 +60,9 @@ if (require.main === module) {
       [
         //
         'Usage:',
-        `  ${bin} pk marketId settlementStrategyId`,
+        `  ${bin} $PK marketId settlementStrategyId`,
         'Example (for BTC):',
-        `  ${bin} pk 200 0`,
+        `  ${bin} $PK 200 0`,
         '',
       ].join('\n')
     );

@@ -11,6 +11,7 @@ const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
+const { syncTime } = require('../../tasks/syncTime');
 
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
@@ -31,6 +32,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     CoreProxyDeployment.abi,
     provider
   );
+
+  let snapshot;
+
+  before('Create snapshot', async () => {
+    snapshot = await provider.send('evm_snapshot', []);
+    log('Create snapshot', { snapshot });
+  });
+
+  after('Restore snapshot', async () => {
+    log('Restore snapshot', { snapshot });
+    await provider.send('evm_revert', [snapshot]);
+  });
+
+  it('should sync time of the fork', async () => {
+    await syncTime();
+  });
 
   it('should create new random wallet', async () => {
     log({ wallet: wallet.address, pk: wallet.privateKey });
