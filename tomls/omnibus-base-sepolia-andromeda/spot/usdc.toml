@@ -1,0 +1,72 @@
+[setting.synthUsdcMaxMarketCollateral]
+defaultValue = "<%= parseEther(String(5_000_000)) %>"
+
+[setting.spotStrictStalenessTolerance]
+defaultValue = "60"
+
+[invoke.createUsdcSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic USD Coin", "sUSDC", "<%= settings.owner %>"]
+extra.synth_usdc_market_id.event = "SynthRegistered"
+extra.synth_usdc_market_id.arg = 0
+extra.synth_usdc_token_address.event = "SynthRegistered"
+extra.synth_usdc_token_address.arg = 1
+depends = ["provision.spotFactory"]
+
+[invoke.setSynthPriceUsdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= imports.system.extras.const_one_oracle_id %>",
+    "<%= imports.system.extras.const_one_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>",
+]
+
+[invoke.setSynthMaxMarketCollateralUsdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.synthUsdcMaxMarketCollateral %>",
+]
+depends = ["invoke.createUsdcSynth"]
+
+[invoke.configureSynthWrapperUsdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.synthUsdcMaxMarketCollateral %>",
+]
+depends = ["invoke.createUsdcSynth"]
+
+[invoke.configure_usdc_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_usdc_collateral.args]]
+tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= MaxUint256 %>"
+liquidationRatioD18 = "<%= parseEther('1.005') %>"
+liquidationRewardD18 = "<%= parseEther('5') %>"
+minDelegationD18 = "<%= parseEther('100') %>"
+depositingEnabled = false
+
+[provision.usdc_mock_collateral]
+source = "mintable-token:1.3"
+options.name = "Fake USD Coin"
+options.symbol = "fUSDC"
+options.owner = "<%= settings.owner %>"
