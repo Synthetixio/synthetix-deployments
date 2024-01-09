@@ -60,14 +60,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 100_000', async () => {
+  it('should set USDC balance to 1_100_000', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: 100_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
+    await setUSDCTokenBalance({ wallet, balance: 1_100_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1_100_000);
   });
 
   it('should approve USDC spending for SpotMarket', async () => {
@@ -95,15 +95,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should wrap maximum USDC from allowed global limit of 50_000', async () => {
+  it('should wrap maximum USDC from allowed global limit of 1_000_000', async () => {
     const currentMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
       )
     );
     log({ currentMarketCollateral });
-    assert.ok(currentMarketCollateral < 50_000);
-    const maxWrap = Math.floor(50_000 - currentMarketCollateral);
+    assert.ok(currentMarketCollateral < 1_000_000);
+    const maxWrap = Math.floor(1_000_000 - currentMarketCollateral);
     log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
     const balance = await wrapUsdc({ wallet, amount: maxWrap });
@@ -118,7 +118,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       )
     );
     assert.ok(
-      50_000 - newMarketCollateral < 1,
+      1_000_000 - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
     await assert.rejects(async () => await wrapUsdc({ wallet, amount: 1 }));
@@ -133,6 +133,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await unwrapUsdc({ wallet, amount: sUsdcBalance });
     log({ balance });
     assert.equal(balance, 0);
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1_100_000);
   });
 });
