@@ -4,18 +4,18 @@ require('../../inspect');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { isTokenApproved } = require('../../tasks/isTokenApproved');
-const { approveToken } = require('../../tasks/approveToken');
-const { getTokenBalance } = require('../../tasks/getTokenBalance');
+const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
+const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
+const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
+const { approveCollateral } = require('../../tasks/approveCollateral');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
-const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
-const { unwrapFakeUsdc } = require('../../tasks/unwrapFakeUsdc');
+const { wrapCollateral } = require('../../tasks/wrapCollateral');
+const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
 const extras = require('../../deployments/extras.json');
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -62,49 +62,43 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 10_000_000', async () => {
+  it('should set fUSDC balance to 10_000_000', async () => {
+    const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),
+      await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
-      'New wallet has 0 USDC balance'
+      'New wallet has 0 fUSDC balance'
     );
-    await setMintableTokenBalance({
-      privateKey,
-      tokenAddress: USDCDeployment.address,
-      balance: 10_000_000,
-    });
-    assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),
-      10_000_000
-    );
+    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 10_000_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 
-  it('should approve USDC spending for SpotMarket', async () => {
+  it('should approve fUSDC spending for SpotMarket', async () => {
     assert.equal(
-      await isTokenApproved({
-        walletAddress: address,
-        tokenAddress: USDCDeployment.address,
+      await isCollateralApproved({
+        address,
+        symbol: 'fUSDC',
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       false,
-      'New wallet has not allowed SpotMarket USDC spending'
+      'New wallet has not allowed SpotMarket fUSDC spending'
     );
-    await approveToken({
+    await approveCollateral({
       privateKey,
-      tokenAddress: USDCDeployment.address,
+      symbol: 'fUSDC',
       spenderAddress: SpotMarketProxyDeployment.address,
     });
     assert.equal(
-      await isTokenApproved({
-        walletAddress: address,
-        tokenAddress: USDCDeployment.address,
+      await isCollateralApproved({
+        address,
+        symbol: 'fUSDC',
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       true
     );
   });
 
-  it('should wrap maximum USDC from allowed global limit of $5_000_000', async () => {
+  it('should wrap maximum fUSDC from allowed global limit of $5_000_000', async () => {
     const currentMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
@@ -112,12 +106,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     assert.ok(currentMarketCollateral < 5_000_000);
     const maxWrap = Math.floor(5_000_000 - currentMarketCollateral);
-    assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
-    const balance = await wrapFakeUsdc({ wallet, amount: maxWrap });
+    assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 fUSDC');
+    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: maxWrap });
     assert.equal(balance, maxWrap);
   });
 
-  it('should reject wrapping even $1 more USDC', async () => {
+  it('should reject wrapping even $1 more fUSDC', async () => {
     const newMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
@@ -125,21 +119,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     assert.ok(
       5_000_000 - newMarketCollateral < 1,
-      'Less than 1 USDC left before reaching max collateral limit'
+      'Less than 1 fUSDC left before reaching max collateral limit'
     );
-    await assert.rejects(async () => await wrapFakeUsdc({ wallet, amount: 1 }));
+    await assert.rejects(async () => await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 1 }));
   });
 
-  it('should unwrap all the sUSDC back to USDC and reduce market collateral', async () => {
-    const sUsdcBalance = await getTokenBalance({
-      walletAddress: address,
-      tokenAddress: extras.synth_usdc_token_address,
-    });
-    const balance = await unwrapFakeUsdc({ wallet, amount: sUsdcBalance });
+  it('should unwrap all the sUSDC back to fUSDC and reduce market collateral', async () => {
+    const sUsdcBalance = await getCollateralBalance({ address, symbol: 'sUSDC' });
+    const balance = await unwrapCollateral({ wallet, symbol: 'fUSDC', amount: sUsdcBalance });
     assert.equal(balance, 0);
-    assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: USDCDeployment.address }),
-      10_000_000
-    );
+    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 });

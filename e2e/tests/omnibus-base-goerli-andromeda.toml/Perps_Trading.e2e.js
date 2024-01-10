@@ -10,10 +10,11 @@ const { getEthBalance } = require('../../tasks/getEthBalance');
 const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
+const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
-const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
+const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
@@ -21,11 +22,8 @@ const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
-const { setSettlementDelays } = require('../../tasks/setPerpsSettlementDelays');
-const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 const { syncTime } = require('../../tasks/syncTime');
 
-const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
 const extras = require('../../deployments/extras.json');
@@ -85,16 +83,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should set fUSDC balance to 10_000_000', async () => {
+    const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
       'New wallet has 0 fUSDC balance'
     );
-    await setMintableTokenBalance({
-      privateKey,
-      tokenAddress: USDCDeployment.address,
-      balance: 10_000_000,
-    });
+    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 10_000_000 });
     assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 
@@ -142,7 +137,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 100_000 fUSDC', async () => {
-    const balance = await wrapFakeUsdc({ wallet, amount: 100_000 });
+    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 100_000 });
     assert.equal(balance, 100_000);
   });
 

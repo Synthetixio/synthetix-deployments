@@ -6,9 +6,10 @@ require('../../inspect');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
-const { wrapFakeUsdc } = require('../../tasks/wrapFakeUsdc');
+const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
+const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { getAccountCollateral } = require('../../tasks/getAccountCollateral');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
@@ -29,7 +30,6 @@ const { syncTime } = require('../../tasks/syncTime');
 
 const extras = require('../../deployments/extras.json');
 const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-const USDCDeployment = require('../../deployments/FakeCollateralfUSDC.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -79,21 +79,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set USDC balance to 10_000_000', async () => {
+  it('should set fUSDC balance to 10_000_000', async () => {
+    const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
-      'New wallet has 0 USDC balance'
+      'New wallet has 0 fUSDC balance'
     );
-    await setMintableTokenBalance({
-      privateKey,
-      tokenAddress: USDCDeployment.address,
-      balance: 10_000_000,
-    });
+    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 10_000_000 });
     assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 
-  it('should approve USDC spending for SpotMarket', async () => {
+  it('should approve fUSDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
@@ -101,7 +98,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         spenderAddress: SpotMarketProxyDeployment.address,
       }),
       false,
-      'New wallet has not allowed SpotMarket USDC spending'
+      'New wallet has not allowed SpotMarket fUSDC spending'
     );
     await approveCollateral({
       privateKey,
@@ -131,8 +128,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should wrap 5_000_000 USDC', async () => {
-    const balance = await wrapFakeUsdc({ wallet, amount: 5_000_000 });
+  it('should wrap 5_000_000 fUSDC', async () => {
+    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 5_000_000 });
     assert.equal(balance, 5_000_000);
   });
 
