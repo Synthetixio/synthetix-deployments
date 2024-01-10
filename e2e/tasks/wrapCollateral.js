@@ -8,10 +8,10 @@ const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-async function wrapUsdc({ wallet, amount }) {
-  const config = await getCollateralConfig('USDC');
+async function wrapCollateral({ wallet, symbol, amount }) {
+  const config = await getCollateralConfig(symbol);
 
-  const USDCToken = new ethers.Contract(
+  const CollateralToken = new ethers.Contract(
     config.tokenAddress,
     [
       'function symbol() view returns (string)',
@@ -20,9 +20,9 @@ async function wrapUsdc({ wallet, amount }) {
     ],
     wallet
   );
-  const usdcDecimals = await USDCToken.decimals();
+  const collateralDecimals = await CollateralToken.decimals();
 
-  const sUSDCToken = new ethers.Contract(
+  const SynthToken = new ethers.Contract(
     extras.synth_usdc_token_address,
     [
       'function symbol() view returns (string)',
@@ -31,15 +31,15 @@ async function wrapUsdc({ wallet, amount }) {
     ],
     wallet
   );
-  const symbol = await sUSDCToken.symbol();
+  const synthSymbol = await SynthToken.symbol();
 
   log({
-    symbol,
-    oldBalance_sUSDC: parseFloat(
-      ethers.utils.formatUnits(await sUSDCToken.balanceOf(wallet.address))
+    symbol: synthSymbol,
+    oldBalance_synth: parseFloat(
+      ethers.utils.formatUnits(await SynthToken.balanceOf(wallet.address))
     ),
-    oldBalance_USDC: parseFloat(
-      ethers.utils.formatUnits(await USDCToken.balanceOf(wallet.address))
+    oldBalance_token: parseFloat(
+      ethers.utils.formatUnits(await CollateralToken.balanceOf(wallet.address), collateralDecimals)
     ),
   });
 
@@ -51,33 +51,33 @@ async function wrapUsdc({ wallet, amount }) {
 
   const args = [
     extras.synth_usdc_market_id,
-    ethers.utils.parseUnits(`${amount}`, usdcDecimals), // USDC
-    ethers.utils.parseUnits(`${amount}`), // sUSDC, min received
+    ethers.utils.parseUnits(`${amount}`, collateralDecimals), // Token
+    ethers.utils.parseUnits(`${amount}`), // Synth, min received
   ];
   log({ args });
   const gas = await SpotMarket.estimateGas.wrap(...args).catch(parseError);
   const tx = await SpotMarket.wrap(...args, { gasLimit: gas.mul(2) }).catch(parseError);
   await tx.wait();
-  const newBalance_USDC = parseFloat(
-    ethers.utils.formatUnits(await USDCToken.balanceOf(wallet.address), usdcDecimals)
+  const newBalance_token = parseFloat(
+    ethers.utils.formatUnits(await CollateralToken.balanceOf(wallet.address), collateralDecimals)
   );
-  const newBalance_sUSDC = parseFloat(
-    ethers.utils.formatUnits(await sUSDCToken.balanceOf(wallet.address))
+  const newBalance_synth = parseFloat(
+    ethers.utils.formatUnits(await SynthToken.balanceOf(wallet.address))
   );
-  log({ newBalance_sUSDC, newBalance_USDC });
-  return newBalance_sUSDC;
+  log({ newBalance_synth, newBalance_token });
+  return newBalance_synth;
 }
 
 module.exports = {
-  wrapUsdc,
+  wrapCollateral,
 };
 
 if (require.main === module) {
   require('../inspect');
-  const [pk, amount] = process.argv.slice(2);
+  const [pk, symbol, amount] = process.argv.slice(2);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  wrapUsdc({ wallet, amount }).then(console.log);
+  wrapCollateral({ wallet, symbol, amount }).then(log);
 }
