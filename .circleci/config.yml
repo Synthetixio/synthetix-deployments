@@ -283,9 +283,10 @@ workflows:
     jobs:
       - lint
 
-      - fork-test-new:
+      - fork-test:
           name: base-sepolia-andromeda
           toml: omnibus-base-sepolia-andromeda.toml
+          upgrade-from: "synthetix-omnibus:latest@andromeda"
           chain-id: 84532
           provider-url: https://sepolia.base.org
 
