@@ -13,7 +13,7 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
-const { wrapUsdc } = require('../../tasks/wrapUsdc');
+const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
@@ -137,7 +137,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 10_000 USDC', async () => {
-    const balance = await wrapUsdc({ wallet, amount: 10_000 });
+    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 10_000 });
     assert.equal(balance, 10_000);
   });
 

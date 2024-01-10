@@ -4,13 +4,13 @@ require('../../inspect');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { getTokenBalance } = require('../../tasks/getTokenBalance');
-const { wrapUsdc } = require('../../tasks/wrapUsdc');
-const { unwrapUsdc } = require('../../tasks/unwrapUsdc');
+const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
+const { wrapCollateral } = require('../../tasks/wrapCollateral');
+const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
 const extras = require('../../deployments/extras.json');
@@ -111,7 +111,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const maxWrap = Math.floor(SYNTH_USDC_MAX_MARKET_COLLATERAL - currentMarketCollateral);
     log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
-    const balance = await wrapUsdc({ wallet, amount: maxWrap });
+    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: maxWrap });
     log({ balance });
     assert.equal(balance, maxWrap);
   });
@@ -130,12 +130,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should unwrap all the sUSDC back to USDC and reduce market collateral', async () => {
-    const sUsdcBalance = await getTokenBalance({
-      walletAddress: address,
-      tokenAddress: extras.synth_usdc_token_address,
-    });
+    const sUsdcBalance = await getCollateralBalance({ address, symbol: 'sUSDC' });
     log({ sUsdcBalance });
-    const balance = await unwrapUsdc({ wallet, amount: sUsdcBalance });
+    const balance = await unwrapCollateral({ wallet, symbol: 'USDC', amount: sUsdcBalance });
     log({ balance });
     assert.equal(balance, 0);
     assert.equal(
