@@ -6,6 +6,9 @@
   "author": "Synthetix",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "e2e"
+  ],
   "scripts": {
     "start:mainnet": "cannon run synthetix-omnibus:latest@main --chain-id 1 --provider-url https://mainnet.infura.io/v3/$INFURA_KEY",
     "start:goerli": "cannon run synthetix-omnibus:latest@main --chain-id 5 --provider-url https://goerli.infura.io/v3/$INFURA_KEY",
@@ -51,5 +54,5 @@
     "async-only": true,
     "exit": true
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@4.0.2"
 }
