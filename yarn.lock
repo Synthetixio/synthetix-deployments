@@ -950,13 +950,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.29.2":
-  version: 1.29.2
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.29.2"
+"@pythnetwork/pyth-evm-js@npm:^1.29.3":
+  version: 1.29.3
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.29.3"
   dependencies:
     "@pythnetwork/price-service-client": "npm:*"
     buffer: "npm:^6.0.3"
-  checksum: 7fbbc4f0f5c6e1189b57a1d02703d0a11ecc6c23e419c4aa39ee6b3ac13e9457e9f04911b7918cc90923dd2b98e4ab41026741ff9b55f7e28a4aaf6f16986c9a
+  checksum: 5ce3295d0662880475076bac99c0e17b866638447fddccf084452ec9ea755e2182fe4d43b516d9ddaf4bae619f2e5acacfb56380a618c31fff456163a89f71fa
   languageName: node
   linkType: hard
 
@@ -1205,14 +1205,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.10.7-alpha.0":
-  version: 2.10.7-alpha.0
-  resolution: "@usecannon/builder@npm:2.10.7-alpha.0"
+"@usecannon/builder@npm:2.11.0-alpha.5, @usecannon/builder@npm:^2.11.0-alpha.5":
+  version: 2.11.0-alpha.5
+  resolution: "@usecannon/builder@npm:2.11.0-alpha.5"
   dependencies:
     "@synthetixio/router": "npm:^3.3.0"
     axios: "npm:^1.6.2"
     buffer: "npm:^6.0.3"
     debug: "npm:^4.3.4"
+    ethers: "npm:^5.6.0"
     form-data: "npm:^4.0.0"
     lodash: "npm:^4.17.21"
     pako: "npm:^2.1.0"
@@ -1220,45 +1221,22 @@ __metadata:
     typedoc-plugin-markdown: "npm:^3.17.1"
     typestub-ipfs-only-hash: "npm:^4.0.0"
     zod: "npm:^3.22.4"
-  peerDependencies:
-    ethers: ">=5.6.0 < 6.0.0"
-  checksum: 30214e01f3afd2c80651b4a796fbb915a7ed621fa78d4f33172edaa5a63876528f0c0fda3a10b2c4cbb5c705ec95acf63e31947a9eebda68b6d79293ad7b0953
+  checksum: 0f4f29fabf53bee2b124ec14720077c56bddb3c96cd26a9db65d4b88255ea37a546b6ca4fb53f93d4acbd8a6126bcbaf49ef965249d8f1400f1e82b70807464e
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:^2.10.7-alpha.0":
-  version: 2.10.7-alpha.1
-  resolution: "@usecannon/builder@npm:2.10.7-alpha.1"
-  dependencies:
-    "@synthetixio/router": "npm:^3.3.0"
-    axios: "npm:^1.6.2"
-    buffer: "npm:^6.0.3"
-    debug: "npm:^4.3.4"
-    form-data: "npm:^4.0.0"
-    lodash: "npm:^4.17.21"
-    pako: "npm:^2.1.0"
-    promise-events: "npm:^0.2.4"
-    typedoc-plugin-markdown: "npm:^3.17.1"
-    typestub-ipfs-only-hash: "npm:^4.0.0"
-    zod: "npm:^3.22.4"
-  peerDependencies:
-    ethers: ">=5.6.0 < 6.0.0"
-  checksum: 8833854c1ac2d2251811d0cc873c4c45b6d1a37635ca9c5b3b42b623559e349e74853fb9ae4bff373c87556c1662fac0604fbe43327e421edf4a5d20e83f7e70
-  languageName: node
-  linkType: hard
-
-"@usecannon/cli@npm:2.10.7-alpha.0":
-  version: 2.10.7-alpha.0
-  resolution: "@usecannon/cli@npm:2.10.7-alpha.0"
+"@usecannon/cli@npm:2.11.0-alpha.5":
+  version: 2.11.0-alpha.5
+  resolution: "@usecannon/cli@npm:2.11.0-alpha.5"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:^2.10.7-alpha.0"
+    "@usecannon/builder": "npm:^2.11.0-alpha.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
     debug: "npm:^4.3.4"
     eth-provider: "npm:^0.13.6"
-    ethers: "npm:^5.7.1"
+    ethers: "npm:^5.6.0"
     fastq: "npm:^1.15.0"
     fs-extra: "npm:^10.1.0"
     lodash: "npm:^4.17.21"
@@ -1270,7 +1248,7 @@ __metadata:
     untildify: "npm:^4.0.0"
   bin:
     cannon: bin/cannon.js
-  checksum: abece71e2c9b64016b910aeb138ae9bf4bf92a0307c13d41eb12279b20d63af2e40ef07c18a5496aa355bae1464207258083092b6022fa1dd3a3463e76072016
+  checksum: f29f7ec54b85c99b06017759da4772f34f2248118b9922b6fe0b969dc4bc9114c65baab4f51673271f83ab4ee6623dd4b26968f129fdb813adefb3c3fc5946a7
   languageName: node
   linkType: hard
 
@@ -2223,7 +2201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.7.1, ethers@npm:^5.7.2":
+"ethers@npm:^5.6.0, ethers@npm:^5.7.1, ethers@npm:^5.7.2":
   version: 5.7.2
   resolution: "ethers@npm:5.7.2"
   dependencies:
@@ -4829,9 +4807,9 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@pythnetwork/pyth-evm-js": "npm:^1.29.2"
-    "@usecannon/builder": "npm:2.10.7-alpha.0"
-    "@usecannon/cli": "npm:2.10.7-alpha.0"
+    "@pythnetwork/pyth-evm-js": "npm:^1.29.3"
+    "@usecannon/builder": "npm:2.11.0-alpha.5"
+    "@usecannon/cli": "npm:2.11.0-alpha.5"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.19.4"
