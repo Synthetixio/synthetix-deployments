@@ -19,6 +19,8 @@ const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.jso
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 1_000_000;
+
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -60,14 +62,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 100_000', async () => {
+  it(`should set USDC balance to ${SYNTH_USDC_MAX_MARKET_COLLATERAL}`, async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: 100_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
+    await setUSDCTokenBalance({ wallet, balance: SYNTH_USDC_MAX_MARKET_COLLATERAL });
+    assert.equal(
+      await getCollateralBalance({ address, symbol: 'USDC' }),
+      SYNTH_USDC_MAX_MARKET_COLLATERAL
+    );
   });
 
   it('should approve USDC spending for SpotMarket', async () => {
@@ -95,15 +100,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should wrap maximum USDC from allowed global limit of 50_000', async () => {
+  it(`should wrap maximum USDC from allowed global limit of ${SYNTH_USDC_MAX_MARKET_COLLATERAL}`, async () => {
     const currentMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
       )
     );
     log({ currentMarketCollateral });
-    assert.ok(currentMarketCollateral < 50_000);
-    const maxWrap = Math.floor(50_000 - currentMarketCollateral);
+    assert.ok(currentMarketCollateral < SYNTH_USDC_MAX_MARKET_COLLATERAL);
+    const maxWrap = Math.floor(SYNTH_USDC_MAX_MARKET_COLLATERAL - currentMarketCollateral);
     log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
     const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: maxWrap });
@@ -118,7 +123,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       )
     );
     assert.ok(
-      50_000 - newMarketCollateral < 1,
+      SYNTH_USDC_MAX_MARKET_COLLATERAL - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
     await assert.rejects(async () => await wrapUsdc({ wallet, amount: 1 }));
@@ -130,6 +135,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await unwrapCollateral({ wallet, symbol: 'USDC', amount: sUsdcBalance });
     log({ balance });
     assert.equal(balance, 0);
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
+    assert.equal(
+      await getCollateralBalance({ address, symbol: 'USDC' }),
+      SYNTH_USDC_MAX_MARKET_COLLATERAL
+    );
   });
 });
