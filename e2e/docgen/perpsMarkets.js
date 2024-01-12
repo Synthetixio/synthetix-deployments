@@ -1,45 +1,8 @@
 const { ethers } = require('ethers');
-const numbro = require('numbro');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
-
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-
-function readableBigWei(bigNumber) {
-  return numbro(Number(ethers.utils.formatEther(bigNumber))).format({
-    trimMantissa: true,
-    thousandSeparated: true,
-    average: true,
-    mantissa: 2,
-    spaceSeparated: true,
-  });
-}
-
-function readableWei(smallNumber) {
-  return numbro(Number(ethers.utils.formatEther(smallNumber))).format({
-    trimMantissa: true,
-    thousandSeparated: true,
-    spaceSeparated: true,
-  });
-}
-
-function readableBigNumber(bigNumber) {
-  return numbro(bigNumber).format({
-    trimMantissa: true,
-    thousandSeparated: true,
-    average: true,
-    mantissa: 2,
-    spaceSeparated: true,
-  });
-}
-
-function readableNumber(smallNumber) {
-  return numbro(smallNumber).format({
-    trimMantissa: true,
-    thousandSeparated: true,
-    spaceSeparated: true,
-  });
-}
+const { readableBigWei, readableWei, readableNumber } = require('./lib/numbers');
 
 async function perpsMarkets() {
   const provider = new ethers.providers.JsonRpcProvider(
