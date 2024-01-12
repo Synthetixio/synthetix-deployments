@@ -2,7 +2,7 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { readableBigWei, readableWei, readableNumber } = require('./lib/numbers');
+const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
 
 async function perpsMarkets() {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -33,7 +33,7 @@ async function perpsMarkets() {
   for (const market of markets) {
     out.push(`# Perps Market ${market.symbol} / ${market.name}`);
     out.push('');
-    out.push(`Market ID: <code>${market.id}</code>`);
+    out.push(`Perps market ID: <code>${market.id}</code>`);
     const marketId = market.id;
 
     const table = [];
@@ -56,7 +56,7 @@ async function perpsMarkets() {
       <tr>
         <td>maxMarketSize</td>
         <td>${readableBigWei(maxMarketSize)}</td>
-        <td><code>${maxMarketSize}</code></td>
+        <td>${rawValue(maxMarketSize)}</td>
       </tr>
     `);
 
@@ -66,7 +66,7 @@ async function perpsMarkets() {
       <tr>
         <td>maxOpenInterest</td>
         <td>${readableBigWei(maxOpenInterest)}</td>
-        <td><code>${maxOpenInterest}</code></td>
+        <td>${rawValue(maxOpenInterest)}</td>
       </tr>
     `);
 
@@ -78,14 +78,15 @@ async function perpsMarkets() {
       <tr>
         <td>skewScale</td>
         <td>${readableBigWei(skewScale)}</td>
-        <td><code>${skewScale}</code></td>
+        <td>${rawValue(skewScale)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxFundingVelocity</td>
         <td>${readableWei(maxFundingVelocity)}</td>
-        <td><code>${maxFundingVelocity}</code></td>
+        <td>${rawValue(maxFundingVelocity)}</td>
+        <td>${rawValue(maxFundingVelocity)}</td>
       </tr>
     `);
 
@@ -97,14 +98,14 @@ async function perpsMarkets() {
       <tr>
         <td>makerFee</td>
         <td>${readableWei(makerFee)}</td>
-        <td><code>${makerFee}</code></td>
+        <td>${rawValue(makerFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>takerFee</td>
         <td>${readableWei(takerFee)}</td>
-        <td><code>${takerFee}</code></td>
+        <td>${rawValue(takerFee)}</td>
       </tr>
     `);
 
@@ -128,35 +129,35 @@ async function perpsMarkets() {
       <tr>
         <td>initialMarginRatioD18</td>
         <td>${readableWei(initialMarginRatioD18)}</td>
-        <td><code>${initialMarginRatioD18}</code></td>
+        <td>${rawValue(initialMarginRatioD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>minimumInitialMarginRatioD18</td>
         <td>${readableWei(minimumInitialMarginRatioD18)}</td>
-        <td><code>${minimumInitialMarginRatioD18}</code></td>
+        <td>${rawValue(minimumInitialMarginRatioD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maintenanceMarginScalarD18</td>
         <td>${readableWei(maintenanceMarginScalarD18)}</td>
-        <td><code>${maintenanceMarginScalarD18}</code></td>
+        <td>${rawValue(maintenanceMarginScalarD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>flagRewardRatioD18</td>
         <td>${readableWei(flagRewardRatioD18)}</td>
-        <td><code>${flagRewardRatioD18}</code></td>
+        <td>${rawValue(flagRewardRatioD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>minimumPositionMargin</td>
         <td>${readableWei(minimumPositionMargin)}</td>
-        <td><code>${minimumPositionMargin}</code></td>
+        <td>${rawValue(minimumPositionMargin)}</td>
       </tr>
     `);
 
@@ -178,21 +179,21 @@ async function perpsMarkets() {
       <tr>
         <td>maxLiquidationLimitAccumulationMultiplier</td>
         <td>${readableWei(maxLiquidationLimitAccumulationMultiplier)}</td>
-        <td><code>${maxLiquidationLimitAccumulationMultiplier}</code></td>
+        <td>${rawValue(maxLiquidationLimitAccumulationMultiplier)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxSecondsInLiquidationWindow</td>
         <td>${readableNumber(maxSecondsInLiquidationWindow)}</td>
-        <td><code>${maxSecondsInLiquidationWindow}</code></td>
+        <td>${rawValue(maxSecondsInLiquidationWindow)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxLiquidationPd</td>
         <td>${readableWei(maxLiquidationPd)}</td>
-        <td><code>${maxLiquidationPd}</code></td>
+        <td>${rawValue(maxLiquidationPd)}</td>
       </tr>
     `);
     table.push(`
@@ -213,21 +214,21 @@ async function perpsMarkets() {
       <tr>
         <td>settlementStrategy.strategyType</td>
         <td>${readableWei(settlementStrategy.strategyType)}</td>
-        <td><code>${settlementStrategy.strategyType}</code></td>
+        <td>${rawValue(settlementStrategy.strategyType)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementStrategy.settlementDelay</td>
         <td>${readableNumber(settlementStrategy.settlementDelay)}</td>
-        <td><code>${settlementStrategy.settlementDelay}</code></td>
+        <td>${rawValue(settlementStrategy.settlementDelay)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementStrategy.settlementWindowDuration</td>
         <td>${readableNumber(settlementStrategy.settlementWindowDuration)}</td>
-        <td><code>${settlementStrategy.settlementWindowDuration}</code></td>
+        <td>${rawValue(settlementStrategy.settlementWindowDuration)}</td>
       </tr>
     `);
     table.push(`
@@ -241,28 +242,28 @@ async function perpsMarkets() {
       <tr>
         <td>settlementStrategy.feedId</td>
         <td></td>
-        <td><code>${settlementStrategy.feedId}</code></td>
+        <td>${rawValue(settlementStrategy.feedId)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementStrategy.settlementReward</td>
         <td>${readableWei(settlementStrategy.settlementReward)}</td>
-        <td><code>${settlementStrategy.settlementReward}</code></td>
+        <td>${rawValue(settlementStrategy.settlementReward)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementStrategy.disabled</td>
-        <td>${settlementStrategy.disabled ? 'disabled' : 'enabled'}</td>
-        <td><code>${JSON.stringify(settlementStrategy.disabled)}</code></td>
+        <td>${settlementStrategy.disabled ? '🚫 Disabled' : '✅ Enabled'}</td>
+        <td>${rawValue(JSON.stringify(settlementStrategy.disabled))}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementStrategy.commitmentPriceDelay</td>
         <td>${readableNumber(settlementStrategy.commitmentPriceDelay)}</td>
-        <td><code>${settlementStrategy.commitmentPriceDelay}</code></td>
+        <td>${rawValue(settlementStrategy.commitmentPriceDelay)}</td>
       </tr>
     `);
 

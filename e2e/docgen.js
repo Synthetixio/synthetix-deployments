@@ -12,6 +12,8 @@ const { prettyMd } = require('./docgen/lib/pretty');
 
 async function docgen() {
   const out = [];
+  out.push('# Contracts owners');
+  out.push('');
   out.push(await contractsOwnership().catch(log));
   out.push(await poolsOwnership().catch(log));
   out.push(await marketsOwnership().catch(log));

@@ -10,17 +10,12 @@ async function poolsOwnership() {
   const { chainId } = await provider.getNetwork();
 
   const out = [];
-  out.push('# Pools owners');
-  out.push('');
-
   const table = [];
   table.push(`
       <table data-full-width="true">
         <thead>
           <tr>
-            <th width="100">Pool ID</th>
-            <th width="500">Pool name</th>
-            <th width="100">Preferred</th>
+            <th width="400">Pool</th>
             <th width="500">Owner</th>
             <th width="500">Nominated owner</th>
           </tr>
@@ -56,9 +51,7 @@ async function poolsOwnership() {
   for (const { poolId, name, isPreferred, owner, nominatedOwner } of pools) {
     table.push(`
       <tr>
-        <td>${poolId}</td>
-        <td>${name}</td>
-        <td>${isPreferred ? '✅' : ''}</td>
+        <td><code>${poolId}</code> ${name} ${isPreferred ? '(_✅ Preferred_)' : ''}</td>
         <td>${owner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, owner)}</td>
         <td>${nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, nominatedOwner)}</td>
       </tr>

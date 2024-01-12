@@ -2,9 +2,13 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { readableBigWei, readableWei, readableBigNumber, readableNumber } = require('./lib/numbers');
+const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
 
-async function collateralConfigurations() {
+function sortBySymbol(c1, c2) {
+  return c1.symbol.localeCompare(c2.symbol);
+}
+
+async function renderCollateralConfig(config) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -12,18 +16,7 @@ async function collateralConfigurations() {
 
   const out = [];
 
-  const { getCollateralConfigurations } = require('../tasks/getCollateralConfigurations');
-  const allConfigs = await getCollateralConfigurations();
-  const configs = Object.values(
-    allConfigs.reverse().reduce((result, config) => {
-      if (config.symbol in result) {
-        return result;
-      }
-      return Object.assign(result, { [config.symbol]: config });
-    }, {})
-  ).sort((c1, c2) => c1.symbol.localeCompare(c2.symbol));
-
-  out.push(`# Collaterals`);
+  out.push(`Token address: ${addrHtmlLink(chainId, config.tokenAddress)}`);
   out.push('');
 
   const table = [];
@@ -31,37 +24,62 @@ async function collateralConfigurations() {
       <table data-full-width="true">
         <thead>
           <tr>
-            <th width="100">Symbol</th>
-            <th width="100">Deposit Enabled</th>
-            <th width="100">Name</th>
-            <th width="100">Decimals</th>
-            <th width="500">Token address</th>
-            <th width="100">Issuance Ratio</th>
-            <th width="100">Liquidation Ratio</th>
-            <th width="100">Liquidation Reward</th>
-            <th width="800">Oracle Node</th>
-            <th width="100">Min Delegation</th>
+            <th width="200">Parameter name</th>
+            <th width="100">Value</th>
+            <th width="800">Raw value</th>
           </tr>
         </thead>
         <tbody>
     `);
-
-  for (const config of configs) {
-    table.push(`
+  table.push(`
       <tr>
-        <td><b>${config.symbol}</b></td>
-        <td>${config.depositingEnabled ? '✅' : ''}</td>
-        <td>${config.name}</td>
-        <td>${readableNumber(config.decimals)}</td>
-        <td>${addrHtmlLink(chainId, config.tokenAddress)}</td>
-        <td>${readableBigWei(config.issuanceRatioD18)}</td>
-        <td>${readableWei(config.liquidationRatioD18)}</td>
-        <td>${readableWei(config.liquidationRewardD18)}</td>
-        <td><code>${config.oracleNodeId}</code></td>
-        <td>${readableBigWei(config.minDelegationD18)}</td>
+        <td>depositingEnabled</td>
+        <td>${config.depositingEnabled ? '✅ Enabled' : '🚫 Disabled'}</td>
+        <td>${rawValue(config.depositingEnabled)}</td>
       </tr>
     `);
-  }
+  table.push(`
+      <tr>
+        <td>decimals</td>
+        <td>${readableNumber(config.decimals)}</td>
+        <td>${rawValue(config.decimals)}</td>
+      </tr>
+    `);
+  table.push(`
+      <tr>
+        <td>issuanceRatioD18</td>
+        <td>${readableBigWei(config.issuanceRatioD18)}</td>
+        <td>${rawValue(config.issuanceRatioD18)}</td>
+      </tr>
+    `);
+  table.push(`
+      <tr>
+        <td>liquidationRatioD18</td>
+        <td>${readableWei(config.liquidationRatioD18)}</td>
+        <td>${rawValue(config.liquidationRatioD18)}</td>
+      </tr>
+    `);
+  table.push(`
+      <tr>
+        <td>liquidationRatioD18</td>
+        <td>${readableWei(config.liquidationRewardD18)}</td>
+        <td>${rawValue(config.liquidationRewardD18)}</td>
+      </tr>
+    `);
+  table.push(`
+      <tr>
+        <td>oracleNodeId</td>
+        <td></td>
+        <td>${rawValue(config.oracleNodeId)}</td>
+      </tr>
+    `);
+  table.push(`
+      <tr>
+        <td>minDelegationD18</td>
+        <td>${readableBigWei(config.minDelegationD18)}</td>
+        <td>${rawValue(config.minDelegationD18)}</td>
+      </tr>
+    `);
 
   table.push(`
         </tbody>
@@ -69,6 +87,37 @@ async function collateralConfigurations() {
     `);
 
   out.push(await prettyHtml(table.join('\n')));
+
+  return out.join('\n');
+}
+
+async function collateralConfigurations() {
+  const out = [];
+
+  const { getCollateralConfigurations } = require('../tasks/getCollateralConfigurations');
+  const allConfigs = await getCollateralConfigurations();
+  const { deprecated, configs } = allConfigs.reverse().reduce(
+    (result, config) => {
+      if (config.symbol in result.configs) {
+        result.deprecated.unshift(config);
+      } else {
+        Object.assign(result.configs, { [config.symbol]: config });
+      }
+      return result;
+    },
+    { deprecated: [], configs: {} }
+  );
+  log({ deprecated });
+
+  for (const config of Object.values(configs).sort(sortBySymbol)) {
+    out.push(`# Collateral ${config.symbol} / ${config.name}`);
+    out.push(await renderCollateralConfig(config));
+  }
+
+  for (const config of deprecated) {
+    out.push(`# Deprecated Collateral **DO NOT USE!** ${config.symbol} / ${config.name}`);
+    out.push(await renderCollateralConfig(config));
+  }
 
   out.push('');
   out.push('');

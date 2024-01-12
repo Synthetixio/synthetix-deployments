@@ -1,14 +1,30 @@
 const { ethers } = require('ethers');
 const numbro = require('numbro');
 
-function readableBigWei(bigNumber) {
-  if (bigNumber.eq(ethers.constants.MaxUint256)) {
+function rawValue(value) {
+  if (value instanceof ethers.BigNumber) {
+    if (ethers.constants.MaxUint256.eq(value)) {
+      return `<code>MaxUint256</code> / <code>${value.toHexString()}</code>`;
+    }
+    if (ethers.constants.MaxInt256.eq(value)) {
+      return `<code>MaxInt256</code> / <code>${value.toHexString()}</code>`;
+    }
+    return `<code>${value.toString()}</code> / <code>${value.toHexString()}</code>`;
+  }
+  return `<code>${JSON.stringify(value)}</code>`;
+}
+
+function readableBigWei(value) {
+  if (!(value instanceof ethers.BigNumber)) {
+    return rawValue(value);
+  }
+  if (ethers.constants.MaxUint256.eq(value)) {
     return '<code>MaxUint256</code>';
   }
-  if (bigNumber.eq(ethers.constants.MaxInt256)) {
+  if (ethers.constants.MaxInt256.eq(value)) {
     return '<code>MaxInt256</code>';
   }
-  return numbro(Number(ethers.utils.formatEther(bigNumber))).format({
+  return numbro(Number(ethers.utils.formatEther(value))).format({
     trimMantissa: true,
     thousandSeparated: true,
     average: true,
@@ -17,16 +33,19 @@ function readableBigWei(bigNumber) {
   });
 }
 
-function readableWei(smallNumber) {
-  return numbro(Number(ethers.utils.formatEther(smallNumber))).format({
+function readableWei(value) {
+  if (!(value instanceof ethers.BigNumber)) {
+    return rawValue(value);
+  }
+  return numbro(Number(ethers.utils.formatEther(value))).format({
     trimMantissa: true,
     thousandSeparated: true,
     spaceSeparated: true,
   });
 }
 
-function readableBigNumber(bigNumber) {
-  return numbro(bigNumber).format({
+function readableBigNumber(value) {
+  return numbro(value).format({
     trimMantissa: true,
     thousandSeparated: true,
     average: true,
@@ -35,8 +54,8 @@ function readableBigNumber(bigNumber) {
   });
 }
 
-function readableNumber(smallNumber) {
-  return numbro(smallNumber).format({
+function readableNumber(value) {
+  return numbro(value).format({
     trimMantissa: true,
     thousandSeparated: true,
     spaceSeparated: true,
@@ -48,4 +67,5 @@ module.exports = {
   readableWei,
   readableBigNumber,
   readableNumber,
+  rawValue,
 };
