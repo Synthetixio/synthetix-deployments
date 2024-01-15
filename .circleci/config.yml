@@ -376,7 +376,7 @@ jobs:
             node e2e/docgen > docs/<< parameters.chain-id >>-<< parameters.preset >>.md
 
             mkdir -p ~/synthetix-gitbook-v3/for-developers/deployment-info
-            cp docs/<< parameters.chain-id >>-<< parameters.preset >>.md ~/synthetix-gitbook-v3/for-developers/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>.md
+            cp docs/<< parameters.chain-id >>-<< parameters.preset >>.md ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>.md
 
       - store_artifacts:
           path: "./docs"
