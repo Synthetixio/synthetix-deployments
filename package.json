@@ -24,7 +24,7 @@
     "anvil:base": "anvil --chain-id 8453 --fork-url https://mainnet.base.org",
     "anvil:base-goerli": "anvil --chain-id 84531 --fork-url https://goerli.base.org",
     "anvil:base-sepolia": "anvil --chain-id 84532 --fork-url https://sepolia.base.org",
-    "fetch-deployments": "node ./e2e/fetch-deployments.js ./e2e/cannon-build.log",
+    "fetch-deployments": "node e2e/extractCannonState ./e2e/cannon-build.log > /tmp/cannonState.json && node e2e/generateDeployments /tmp/cannonState.json",
     "deploy": "node ./e2e/deploy.js ./e2e/deployments/upgrade.ndjson",
     "test:andromeda": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-goerli-andromeda.toml/**/*.js",
     "test:base": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-mainnet-andromeda.toml/**/*.js",

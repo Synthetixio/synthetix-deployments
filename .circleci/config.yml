@@ -172,6 +172,9 @@ jobs:
                 done < <(tail -f -n0 ./cannon-build.log)            
             fi
 
+      - store_artifacts:
+          path: "./cannon-build.log"
+
       - run: grep '💥' ./cannon-build.log
 
       - run:
@@ -188,8 +191,12 @@ jobs:
             done
 
       - run:
+          name: "Extract cannon state"
+          command: node e2e/extractCannonState ./cannon-build.log > ./cannon-state.json
+
+      - run:
           name: "Generate deployments"
-          command: node e2e/fetch-deployments.js ./cannon-build.log
+          command: node e2e/generateDeployments ./cannon-state.json
 
       - store_artifacts:
           path: "./e2e/deployments"
@@ -243,11 +250,18 @@ jobs:
                 done < <(tail -f -n0 ./cannon-build.log)            
             fi
 
+      - store_artifacts:
+          path: "./cannon-build.log"
+
       - run: grep '💥' ./cannon-build.log
 
       - run:
+          name: "Extract cannon state"
+          command: node e2e/extractCannonState ./cannon-build.log > ./cannon-state.json
+
+      - run:
           name: "Generate deployments"
-          command: node e2e/fetch-deployments.js ./cannon-build.log
+          command: node e2e/generateDeployments ./cannon-state.json
 
       - store_artifacts:
           path: "./e2e/deployments"
@@ -260,10 +274,52 @@ jobs:
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
             echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
 
+  docgen-configs:
+    parameters:
+      package:
+        type: string
+      chain-id:
+        type: integer
+      provider-url:
+        type: string
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - install-anvil
+      - run-anvil:
+          provider-url: << parameters.provider-url >>
+      - yarn-install
+      - wait-for-anvil
+
+      - run:
+          name: "Extract cannon state"
+          command: yarn cannon inspect << parameters.package >> --chain-id << parameters.chain-id >> --json > ./cannon-state.json
+
+      - run:
+          name: "Generate deployments"
+          command: node e2e/generateDeployments ./cannon-state.json
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - run:
+          name: "Generate docs"
+          environment:
+            - DEBUG: "e2e:*"
+          command: node e2e/docgen > ./docs.md
+
+      - store_artifacts:
+          path: "./docs.md"
+
 workflows:
   version: 2.1
 
   tests:
+    unless:
+      or:
+        - equal: ["docgen", << pipeline.git.branch >>]
+        - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
     jobs:
       - lint
 
@@ -329,3 +385,17 @@ workflows:
           upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 80001
           provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
+
+  dev-docgen-configs:
+    unless:
+      or:
+        - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
+    jobs:
+      - docgen-configs:
+          filters:
+            branches:
+              only: /docgen/
+          name: docgen-configs-base-sepolia-andromeda
+          package: "synthetix-omnibus:latest@andromeda"
+          chain-id: 84532
+          provider-url: https://sepolia.base.org
