@@ -5,6 +5,7 @@ require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
+const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
 const meta = require('../../deployments/meta.json');
 
 const MAINNET_DEPLOYER = '0xEde8a407913A874Dd7e3d5B731AFcA135D30375E';
@@ -148,5 +149,25 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         nominatedOwner: NOMINATED_OWNER,
       },
     });
+  });
+
+  it('should validate spot markets owned by DAO Safe', async () => {
+    const SpotMarketProxy = new ethers.Contract(
+      SpotMarketProxyDeployment.address,
+      SpotMarketProxyDeployment.abi,
+      provider
+    );
+    const marketId = 1;
+    const owner = await SpotMarketProxy.getMarketOwner(marketId);
+    const nominatedOwner = await SpotMarketProxy.getNominatedMarketOwner(marketId);
+    log({ marketId, owner, nominatedOwner });
+    assert.deepEqual(
+      { marketId, owner, nominatedOwner },
+      {
+        marketId,
+        owner: OWNER_ADDRESS,
+        nominatedOwner: NOMINATED_OWNER,
+      }
+    );
   });
 });
