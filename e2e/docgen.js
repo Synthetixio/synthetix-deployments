@@ -51,6 +51,8 @@ async function contractsOwnership() {
   const { chainId } = await provider.getNetwork();
 
   const out = [];
+  out.push('## Contracts ownership');
+  out.push('');
 
   out.push('| System  | Owner | Nominated owner |');
   out.push('| --- | --- | --- |');
@@ -75,6 +77,10 @@ async function contractsOwnership() {
       ].join(' | ')} |`
     );
   }
+
+  out.push('');
+  out.push('');
+
   return out.join('\n');
 }
 
@@ -86,6 +92,8 @@ async function poolsOwnership() {
   const { chainId } = await provider.getNetwork();
 
   const out = [];
+  out.push('## Pools ownership');
+  out.push('');
 
   out.push('| Pool ID | Pool name | Preferred | Owner | Nominated owner |');
   out.push('| --- | --- | --- | --- | --- |');
@@ -127,6 +135,9 @@ async function poolsOwnership() {
     );
   }
 
+  out.push('');
+  out.push('');
+
   return out.join('\n');
 }
 
@@ -140,6 +151,8 @@ async function marketsOwnership() {
   const MARKET_IDS = [1];
 
   const out = [];
+  out.push('## Markets ownership');
+  out.push('');
 
   out.push('| Market ID | Market name | Owner | Nominated owner |');
   out.push('| --- | --- | --- | --- |');
@@ -175,21 +188,16 @@ async function marketsOwnership() {
     );
   }
 
+  out.push('');
+  out.push('');
   return out.join('\n');
 }
 
 async function run() {
   const out = [];
-  out.push('## Contracts ownership');
-  out.push(await contractsOwnership());
-  out.push('');
-  out.push('');
-  out.push('## Pools ownership');
-  out.push(await poolsOwnership());
-  out.push('');
-  out.push('');
-  out.push('## Markets ownership');
-  out.push(await marketsOwnership());
+  out.push(await contractsOwnership().catch(() => ''));
+  out.push(await poolsOwnership().catch(() => ''));
+  out.push(await marketsOwnership().catch(() => ''));
   return out.join('\n');
 }
 
