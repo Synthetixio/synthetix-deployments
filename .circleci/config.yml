@@ -471,8 +471,28 @@ workflows:
           filters:
             branches:
               only: /docgen/
-          name: deployment-info-base-sepolia-andromeda
+          name: deployment-info-andromeda-on-base-sepolia
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://sepolia.base.org
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-andromeda-on-base-goerli
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 84531
+          provider-url: https://goerli.base.org
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-andromeda-on-base-mainnet
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 8453
+          provider-url: https://mainnet.base.org
