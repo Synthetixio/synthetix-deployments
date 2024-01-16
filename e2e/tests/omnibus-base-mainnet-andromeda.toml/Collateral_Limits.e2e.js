@@ -4,7 +4,6 @@ require('../../inspect');
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
@@ -126,7 +125,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       SYNTH_USDC_MAX_MARKET_COLLATERAL - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
-    await assert.rejects(async () => await wrapUsdc({ wallet, amount: 1 }));
+    await assert.rejects(async () => await wrapCollateral({ wallet, symbol: 'USDC', amount: 1 }));
   });
 
   it('should unwrap all the sUSDC back to USDC and reduce market collateral', async () => {
