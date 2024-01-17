@@ -1205,15 +1205,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.0-alpha.5, @usecannon/builder@npm:^2.11.0-alpha.5":
-  version: 2.11.0-alpha.5
-  resolution: "@usecannon/builder@npm:2.11.0-alpha.5"
+"@usecannon/builder@npm:2.10.7, @usecannon/builder@npm:^2.10.7":
+  version: 2.10.7
+  resolution: "@usecannon/builder@npm:2.10.7"
   dependencies:
     "@synthetixio/router": "npm:^3.3.0"
     axios: "npm:^1.6.2"
     buffer: "npm:^6.0.3"
     debug: "npm:^4.3.4"
-    ethers: "npm:^5.6.0"
     form-data: "npm:^4.0.0"
     lodash: "npm:^4.17.21"
     pako: "npm:^2.1.0"
@@ -1221,22 +1220,24 @@ __metadata:
     typedoc-plugin-markdown: "npm:^3.17.1"
     typestub-ipfs-only-hash: "npm:^4.0.0"
     zod: "npm:^3.22.4"
-  checksum: 0f4f29fabf53bee2b124ec14720077c56bddb3c96cd26a9db65d4b88255ea37a546b6ca4fb53f93d4acbd8a6126bcbaf49ef965249d8f1400f1e82b70807464e
+  peerDependencies:
+    ethers: ">=5.6.0 < 6.0.0"
+  checksum: b39f240e112f08a248a136f622dda71fd6473d9ca6b4c7f5932e49b290127b8012b236f806e70c8746c82315c2989c90c041ecbd0c888cbf7ad715d4f1873479
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.0-alpha.5":
-  version: 2.11.0-alpha.5
-  resolution: "@usecannon/cli@npm:2.11.0-alpha.5"
+"@usecannon/cli@npm:2.10.7":
+  version: 2.10.7
+  resolution: "@usecannon/cli@npm:2.10.7"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:^2.11.0-alpha.5"
+    "@usecannon/builder": "npm:^2.10.7"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
     debug: "npm:^4.3.4"
     eth-provider: "npm:^0.13.6"
-    ethers: "npm:^5.6.0"
+    ethers: "npm:^5.7.1"
     fastq: "npm:^1.15.0"
     fs-extra: "npm:^10.1.0"
     lodash: "npm:^4.17.21"
@@ -1246,9 +1247,11 @@ __metadata:
     table: "npm:^6.8.0"
     tildify: "npm:2.0.0"
     untildify: "npm:^4.0.0"
+    znv: "npm:^0.4.0"
+    zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: f29f7ec54b85c99b06017759da4772f34f2248118b9922b6fe0b969dc4bc9114c65baab4f51673271f83ab4ee6623dd4b26968f129fdb813adefb3c3fc5946a7
+  checksum: b4ffca89548c4639c70c41642bf5a0b6c0e51134d1a60c4fca6f8654beeb7d9bb49b0fcee5b6b0abc37d27c8d5cbd2f32443922605dffc9fd35acfc6e043813f
   languageName: node
   linkType: hard
 
@@ -1850,6 +1853,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"colorette@npm:^2.0.19":
+  version: 2.0.20
+  resolution: "colorette@npm:2.0.20"
+  checksum: 0b8de48bfa5d10afc160b8eaa2b9938f34a892530b2f7d7897e0458d9535a066e3998b49da9d21161c78225b272df19ae3a64d6df28b4c9734c0e55bbd02406f
+  languageName: node
+  linkType: hard
+
 "combined-stream@npm:^1.0.8":
   version: 1.0.8
   resolution: "combined-stream@npm:1.0.8"
@@ -2201,7 +2211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.6.0, ethers@npm:^5.7.1, ethers@npm:^5.7.2":
+"ethers@npm:^5.7.1, ethers@npm:^5.7.2":
   version: 5.7.2
   resolution: "ethers@npm:5.7.2"
   dependencies:
@@ -4076,12 +4086,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "prettier@npm:3.1.1"
+"prettier@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "prettier@npm:3.2.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 26a249f321b97d26c04483f1bf2eeb22e082a76f4222a2c922bebdc60111691aad4ec3979610e83942e0b956058ec361d9e9c81c185172264eb6db9aa678082b
+  checksum: ab9470ff6cfd19f28bc424f22e58f2fc4a488d148b9384f6c3739235017c8350cae82b3697392c23d9b098b9d8dfaa1cc9ff4ef25fd45f54c97b95f9cc7a1f7d
   languageName: node
   linkType: hard
 
@@ -4807,13 +4817,13 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.29.3"
-    "@usecannon/builder": "npm:2.11.0-alpha.5"
-    "@usecannon/cli": "npm:2.11.0-alpha.5"
+    "@usecannon/builder": "npm:2.10.7"
+    "@usecannon/cli": "npm:2.10.7"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.19.4"
     mocha: "npm:^10.2.0"
-    prettier: "npm:^3.1.1"
+    prettier: "npm:^3.2.2"
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
   languageName: unknown
@@ -5346,6 +5356,17 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"znv@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "znv@npm:0.4.0"
+  dependencies:
+    colorette: "npm:^2.0.19"
+  peerDependencies:
+    zod: ^3.13.2
+  checksum: ba0f47b03c8912581cba25adae60ac5437b8506e847a77996a11436d98353aac192cabe51280627ca52abc2fdf011c409ac79733e8187274d223f568ba277940
   languageName: node
   linkType: hard
 
