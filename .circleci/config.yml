@@ -110,6 +110,59 @@ commands:
           name: "Wait for IPFS daemon to start"
           command: wget --output-document - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
 
+  github-pr:
+    parameters:
+      working_directory:
+        type: string
+      repo_slug:
+        type: string
+      branch_head:
+        type: string
+      branch_base:
+        type: string
+      commit_message:
+        type: string
+    steps:
+      - run:
+          working_directory: << parameters.working_directory >>
+          name: "Push to '<< parameters.branch_head >>' branch in '<< parameters.repo_slug >>' and open a PR"
+          command: |
+            STATUS=$(git status)
+            if [[ $STATUS == *"nothing to commit, working tree clean"* ]]; then
+              echo "SKIP. Working tree is clean. No changes"
+              exit 0
+            fi
+
+            git branch "<< parameters.branch_head >>"
+            git checkout "<< parameters.branch_head >>"
+
+            git config --global user.email engineering@snxdao.io
+            git config --global user.name synthetix-team
+
+            git add .
+            git commit -m "<< parameters.commit_message >>"
+            git push --set-upstream --force origin "<< parameters.branch_head >>"
+
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              https://api.github.com/repos/<< parameters.repo_slug >>/pulls?state=open | tee /tmp/opened-pulls.txt
+
+            PR_URL=$(cat /tmp/opened-pulls.txt | jq -r '.[] | select(.head.ref=="<< parameters.branch_head >>") | .html_url')
+            echo "Existing PR: $PR_URL"
+
+            # If no PR exists with the branch "<< parameters.branch_head >>", create one
+            # If PR already exists it would be updated with the most recent docs via forced push
+            if [ -z "$PR_URL" ]; then
+              curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                https://api.github.com/repos/<< parameters.repo_slug >>/pulls \
+                -d '{
+                  "title": "<< parameters.commit_message >>",
+                  "head": "<< parameters.branch_head >>", 
+                  "base": "<< parameters.branch_base >>"
+                }'
+            else
+              echo "Pull Request already exists: $PR_URL"
+            fi
+
 jobs:
   lint:
     docker:
@@ -143,7 +196,7 @@ jobs:
       #- run-ipfs
       - yarn-install
       #- wait-for-anvil
-      # - wait-for-ipfs
+      #- wait-for-ipfs
 
       - run:
           name: "Build new package upgrading from << parameters.upgrade-from >> and keep RPC running"
@@ -172,6 +225,9 @@ jobs:
                 done < <(tail -f -n0 ./cannon-build.log)            
             fi
 
+      - store_artifacts:
+          path: "./cannon-build.log"
+
       - run: grep '💥' ./cannon-build.log
 
       - run:
@@ -188,8 +244,12 @@ jobs:
             done
 
       - run:
+          name: "Extract cannon state"
+          command: node e2e/extractCannonState ./cannon-build.log > ./cannon-state.json
+
+      - run:
           name: "Generate deployments"
-          command: node e2e/fetch-deployments.js ./cannon-build.log
+          command: node e2e/generateDeployments ./cannon-state.json
 
       - store_artifacts:
           path: "./e2e/deployments"
@@ -243,11 +303,18 @@ jobs:
                 done < <(tail -f -n0 ./cannon-build.log)            
             fi
 
+      - store_artifacts:
+          path: "./cannon-build.log"
+
       - run: grep '💥' ./cannon-build.log
 
       - run:
+          name: "Extract cannon state"
+          command: node e2e/extractCannonState ./cannon-build.log > ./cannon-state.json
+
+      - run:
           name: "Generate deployments"
-          command: node e2e/fetch-deployments.js ./cannon-build.log
+          command: node e2e/generateDeployments ./cannon-state.json
 
       - store_artifacts:
           path: "./e2e/deployments"
@@ -260,10 +327,75 @@ jobs:
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
             echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
 
+  deployment-info:
+    parameters:
+      package:
+        type: string
+      chain-id:
+        type: integer
+      preset:
+        type: string
+      provider-url:
+        type: string
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - add_ssh_keys:
+          fingerprints: "4b:3a:c8:23:b8:4e:86:32:8e:d3:2d:17:0c:2b:63:b6"
+      - run:
+          working_directory: ~/
+          name: "Checkout docs"
+          command: |
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            git clone git@github.com:Synthetixio/Synthetix-Gitbook-v3.git --verbose --depth 1 --no-tags --single-branch synthetix-gitbook-v3
+
+      - checkout
+      - install-anvil
+      - run-anvil:
+          provider-url: << parameters.provider-url >>
+      - yarn-install
+      - wait-for-anvil
+
+      - run:
+          name: "Extract cannon state"
+          command: yarn cannon inspect << parameters.package >>@<< parameters.preset >> --chain-id << parameters.chain-id >> --json > ./cannon-state.json
+
+      - run:
+          name: "Generate deployments"
+          command: node e2e/generateDeployments ./cannon-state.json
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - run:
+          name: "Generate docs"
+          environment:
+            - DEBUG: "e2e:*"
+          command: |
+            mkdir -p docs
+            node e2e/docgen > docs/<< parameters.chain-id >>-<< parameters.preset >>.md
+
+            mkdir -p ~/synthetix-gitbook-v3/for-developers/deployment-info
+            cp docs/<< parameters.chain-id >>-<< parameters.preset >>.md ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>.md
+
+      - store_artifacts:
+          path: "./docs"
+
+      - github-pr:
+          working_directory: "~/synthetix-gitbook-v3"
+          repo_slug: "Synthetixio/Synthetix-Gitbook-v3"
+          branch_head: "deployment-info-<< parameters.chain-id >>-<< parameters.preset >>"
+          branch_base: en
+          commit_message: "Update deployment info for << parameters.chain-id >>-<< parameters.preset >>"
+
 workflows:
   version: 2.1
 
   tests:
+    unless:
+      or:
+        #- equal: ["docgen", << pipeline.git.branch >>]
+        - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
     jobs:
       - lint
 
@@ -329,3 +461,88 @@ workflows:
           upgrade-from: "synthetix-omnibus:latest@main"
           chain-id: 80001
           provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
+
+  dev-deployment-info:
+    unless:
+      or:
+        - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
+    jobs:
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-andromeda-on-base-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 84532
+          provider-url: https://sepolia.base.org
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-andromeda-on-base-goerli
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 84531
+          provider-url: https://goerli.base.org
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-andromeda-on-base-mainnet
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 8453
+          provider-url: https://mainnet.base.org
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-on-mainnet
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 1
+          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-on-goerli
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 5
+          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-on-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-on-optimism-mainnet
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 10
+          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - deployment-info:
+          filters:
+            branches:
+              only: /docgen/
+          name: deployment-info-on-optimism-goerli
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 420
+          provider-url: https://optimism-goerli.infura.io/v3/$INFURA_API_KEY
