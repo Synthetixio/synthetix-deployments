@@ -187,7 +187,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     assert.equal(
       Number(ethers.utils.formatEther(params.maxLiquidationPd)),
-      0.0016,
+      0.0005,
       'maxLiquidationPd'
     );
     assert.equal(
