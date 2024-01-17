@@ -159,22 +159,14 @@ jobs:
                 | tee ./cannon-build.log
 
       - run:
-          name: "Wait for anvil to start and export RPC_URL"
+          name: "Wait for cannon to complete the build"
           command: |
             touch ./cannon-build.log
-
-            # First, check if the log file already has the information
-            RPC_URL=$(awk -F'at ' '/Built package RPC URL available at/ {print $2; exit}' ./cannon-build.log)
-            export RPC_URL
-
             # If the information wasn't found, start tailing the log
-            if [[ -z $RPC_URL ]]; then
+            if ! grep -q 'Built package RPC URL available' ./cannon-build.log; then
                 while IFS= read -r line
                 do
-                    if [[ $line == *"Built package RPC URL available at"* ]]; then
-                        RPC_URL=$(echo "$line" | awk -F'at ' '{print $2}')
-                        echo "export RPC_URL=$RPC_URL" >> $BASH_ENV
-                        source $BASH_ENV
+                    if [[ $line == *"Built package RPC URL available"* ]]; then
                         break
                     fi
                 done < <(tail -f -n0 ./cannon-build.log)            
@@ -238,22 +230,14 @@ jobs:
                 | tee ./cannon-build.log
 
       - run:
-          name: "Wait for anvil to start and export RPC_URL"
+          name: "Wait for cannon to complete the build"
           command: |
             touch ./cannon-build.log
-
-            # First, check if the log file already has the information
-            RPC_URL=$(awk -F'at ' '/Built package RPC URL available at/ {print $2; exit}' ./cannon-build.log)
-            export RPC_URL
-
             # If the information wasn't found, start tailing the log
-            if [[ -z $RPC_URL ]]; then
+            if ! grep -q 'Built package RPC URL available' ./cannon-build.log; then
                 while IFS= read -r line
                 do
-                    if [[ $line == *"Built package RPC URL available at"* ]]; then
-                        RPC_URL=$(echo "$line" | awk -F'at ' '{print $2}')
-                        echo "export RPC_URL=$RPC_URL" >> $BASH_ENV
-                        source $BASH_ENV
+                    if [[ $line == *"Built package RPC URL available"* ]]; then
                         break
                     fi
                 done < <(tail -f -n0 ./cannon-build.log)            
