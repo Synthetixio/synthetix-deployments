@@ -21,7 +21,7 @@
     "build:base-sepolia": "cannon build omnibus-base-sepolia-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log",
     "start:andromeda": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84531 --provider-url https://goerli.base.org",
     "start:base": "cannon run synthetix-omnibus:latest@andromeda --chain-id 8453 --provider-url https://mainnet.base.org",
-    "start:base-sepolia": "cannon run synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org",
+    "start:base-sepolia": "cannon build omnibus-base-sepolia-andromeda.toml --keep-alive --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log",
     "anvil:base": "anvil --chain-id 8453 --fork-url https://mainnet.base.org",
     "anvil:base-goerli": "anvil --chain-id 84531 --fork-url https://goerli.base.org",
     "anvil:base-sepolia": "anvil --chain-id 84532 --fork-url https://sepolia.base.org",

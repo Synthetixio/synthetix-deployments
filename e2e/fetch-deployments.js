@@ -117,9 +117,10 @@ async function run() {
   function mintableToken(provisionStep) {
     const fakeCollateral =
       deployments?.state?.[`provision.${provisionStep}`]?.artifacts?.imports?.[provisionStep];
-    if (fakeCollateral) {
-      const [, ticker] = fakeCollateral.contracts.MintableToken.constructorArgs;
-      contracts[`FakeCollateral${ticker}`] = fakeCollateral.contracts.MintableToken;
+    const fakeCollateralOptions = deployments?.def?.provision?.[provisionStep]?.options;
+    if (fakeCollateral && fakeCollateralOptions) {
+      contracts[`FakeCollateral${fakeCollateralOptions.symbol}`] =
+        fakeCollateral.contracts.MintableToken;
     }
   }
   mintableToken('usdc_mock_collateral');
