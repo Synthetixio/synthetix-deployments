@@ -1,11 +1,12 @@
 [setting.pythBtcFeedId]
-defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43" # Using mainnet feed IDs
+# https://pyth.network/developers/price-feed-ids
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
 
 [setting.btcPerpsMarketId]
 defaultValue = "200"
 
 [setting.perpsBtcSkewScale]
-defaultValue = "100000"
+defaultValue = "<%= String(100_000) %>"
 
 [setting.perpsBtcMaxFundingVelocity]
 defaultValue = "9"
