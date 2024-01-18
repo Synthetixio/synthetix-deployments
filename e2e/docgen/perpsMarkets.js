@@ -83,7 +83,7 @@ async function perpsMarkets() {
           <tr>
             <th width="400">Parameter name</th>
             <th width="100">Value</th>
-            <th width="500">Raw value</th>
+            <th width="800">Raw value</th>
           </tr>
         </thead>
         <tbody>
@@ -109,7 +109,7 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    table.push(`<tr> <td></td> <td></td> <td></td> <td></td> </tr>`);
+    table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
     const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(marketId);
     log({ skewScale, maxFundingVelocity });
@@ -128,7 +128,7 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    table.push(`<tr> <td></td> <td></td> <td></td> <td></td> </tr>`);
+    table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
     const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
     log({ makerFee, takerFee });
@@ -147,7 +147,7 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    table.push(`<tr> <td></td> <td></td> <td></td> <td></td> </tr>`);
+    table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
     const {
       initialMarginRatioD18,
@@ -199,7 +199,7 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    table.push(`<tr> <td></td> <td></td> <td></td> <td></td> </tr>`);
+    table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
     const {
       maxLiquidationLimitAccumulationMultiplier,
@@ -242,7 +242,7 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    table.push(`<tr> <td></td> <td></td> <td></td> <td></td> </tr>`);
+    table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
     const settlementStrategyId = 0;
     const { getPerpsSettlementStrategy } = require('../tasks/getPerpsSettlementStrategy');
