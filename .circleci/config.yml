@@ -394,7 +394,7 @@ workflows:
   tests:
     unless:
       or:
-        #- equal: ["docgen", << pipeline.git.branch >>]
+        - equal: ["docgen", << pipeline.git.branch >>]
         - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
     jobs:
       - lint

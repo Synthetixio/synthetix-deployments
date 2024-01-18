@@ -33,6 +33,8 @@ const ERC20Abi = [
   'function transferOwnership(address newOwner)',
 ];
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
 const [cannonState] = process.argv.slice(2);
 if (!cannonState) {
   console.error(`${fgRed}ERROR: Expected 1 argument${fgReset}`);
@@ -48,7 +50,6 @@ function readableAbi(abi) {
 }
 
 async function run() {
-  console.log(`path.resolve(cannonState)`, path.resolve(cannonState));
   const deployments = require(path.resolve(cannonState));
 
   await fs.rm(`${__dirname}/deployments`, { recursive: true, force: true });
@@ -63,7 +64,7 @@ async function run() {
     miscUrl: deployments.miscUrl,
   };
   const extras = {};
-  console.log('Generating deployments info for', meta);
+  log('Generating deployments info for', meta);
 
   const system = deployments.state['provision.system'].artifacts.imports.system;
   const contracts = {};
@@ -157,13 +158,13 @@ async function run() {
     abi: Object.values(contracts).flatMap(({ abi }) => abi.filter((item) => item.type === 'error')),
   };
 
-  console.log('Writing', `deployments/meta.json`);
+  log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
 
-  console.log('Writing', `deployments/oracles.json`);
+  log('Writing', `deployments/oracles.json`);
   await fs.writeFile(`${__dirname}/deployments/oracles.json`, JSON.stringify(oracles, null, 2));
 
-  console.log('Writing', `deployments/extras.json`);
+  log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
 
   await fs.writeFile(
@@ -181,7 +182,7 @@ async function run() {
   );
 
   for (const [name, { address, abi }] of Object.entries(contracts)) {
-    console.log('Writing', `deployments/${name}.json`, { address });
+    log('Writing', `deployments/${name}.json`, { address });
     await fs.writeFile(
       `${__dirname}/deployments/${name}.json`,
       JSON.stringify({ address, abi: readableAbi(abi) }, null, 2)

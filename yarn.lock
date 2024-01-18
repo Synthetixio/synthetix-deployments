@@ -1496,6 +1496,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bignumber.js@npm:^8 || ^9":
+  version: 9.1.2
+  resolution: "bignumber.js@npm:9.1.2"
+  checksum: d89b8800a987225d2c00dcbf8a69dc08e92aa0880157c851c287b307d31ceb2fc2acb0c62c3e3a3d42b6c5fcae9b004035f13eb4386e56d529d7edac18d5c9d8
+  languageName: node
+  linkType: hard
+
 "binary-extensions@npm:^2.0.0":
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
@@ -3882,6 +3889,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"numbro@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "numbro@npm:2.4.0"
+  dependencies:
+    bignumber.js: "npm:^8 || ^9"
+  checksum: 4d7b6d00482d051aaf38947018ce20ac0c2c48ae74ce4dbf6dba7de344bf36289f20cf4cf1346fb8726ac1b7320418c219e788db036dbdf1105a2b8bdb9d7129
+  languageName: node
+  linkType: hard
+
 "obliterator@npm:^2.0.0":
   version: 2.0.4
   resolution: "obliterator@npm:2.0.4"
@@ -4823,6 +4839,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.19.4"
     mocha: "npm:^10.2.0"
+    numbro: "npm:^2.4.0"
     prettier: "npm:^3.2.2"
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"

@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
 const prettier = require('prettier');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 const { contractsOwnership } = require('./docgen/contractsOwnership');
 const { poolsOwnership } = require('./docgen/poolsOwnership');
 const { marketsOwnership } = require('./docgen/marketsOwnership');
+const { perpsMarkets } = require('./docgen/perpsMarkets');
 
 const prettierOptions = {
   printWidth: 120,
@@ -20,9 +22,10 @@ async function prettyMd(md) {
 
 async function docgen() {
   const out = [];
-  out.push(await contractsOwnership().catch(() => ''));
-  out.push(await poolsOwnership().catch(() => ''));
-  out.push(await marketsOwnership().catch(() => ''));
+  out.push(await contractsOwnership().catch(log));
+  out.push(await poolsOwnership().catch(log));
+  out.push(await marketsOwnership().catch(log));
+  out.push(await perpsMarkets().catch(log));
   return out.join('\n');
 }
 
