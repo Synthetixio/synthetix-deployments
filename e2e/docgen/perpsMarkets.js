@@ -292,8 +292,8 @@ async function perpsMarkets() {
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.feedId</td>
-        <td>${settlementStrategy.disabled ? 'disabled' : ''}</td>
+        <td>settlementStrategy.disabled</td>
+        <td>${settlementStrategy.disabled ? 'disabled' : 'enabled'}</td>
         <td><code>${JSON.stringify(settlementStrategy.disabled)}</code></td>
       </tr>
     `);
