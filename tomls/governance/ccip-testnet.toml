@@ -1,0 +1,18 @@
+[invoke.setSupportedCrossChainNetworks]
+target = [
+    "ambassador_council.CoreProxy",
+    "grants_council.CoreProxy",
+    "spartan_council.CoreProxy",
+    "treasury_council.CoreProxy",
+]
+fromCall.func = "owner"
+func = "setSupportedCrossChainNetworks"
+# https://docs.chain.link/ccip/supported-networks
+args = [
+    [
+        "11155111", # Sepolia
+        "80001",    # Mumbai
+        "84531",    # Base Goerli
+    ],
+    ["16015286601757825753", "12532609583862916517", "5790810961207155433"],
+]

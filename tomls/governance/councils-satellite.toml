@@ -1,0 +1,27 @@
+[provision.ambassador_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-ambassador"
+options.owner = "<%= settings.owner %>"
+options.council_token_name = "Synthetix Ambassador Council Token"
+options.council_token_symbol = "SNXAMB"
+
+[provision.grants_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-grants"
+options.owner = "<%= settings.owner %>"
+options.council_token_name = "Synthetix Grants Council Token"
+options.council_token_symbol = "SNXGRT"
+
+[provision.spartan_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-spartan"
+options.owner = "<%= settings.owner %>"
+options.council_token_name = "Synthetix Spartan Council Token"
+options.council_token_symbol = "SNXSPR"
+
+[provision.treasury_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-treasury"
+options.owner = "<%= settings.owner %>"
+options.council_token_name = "Synthetix Treasury Council Token"
+options.council_token_symbol = "SNXTRY"

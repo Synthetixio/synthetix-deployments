@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.4"
+version = "3.3.4-1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -11,6 +11,10 @@ include = [
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    # Governance
+    "tomls/governance/councils-satellite.toml",
+    "tomls/governance/snapshot-contract-mock.toml",
+    "tomls/governance/ccip-testnet.toml",
 ]
 
 [setting.snx_package]
@@ -65,3 +69,13 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "removeApprovedPool"
 args = ["2"]
+
+# Governance Councils Configuration
+[setting.governance_snapshot_record_package]
+defaultValue = "synthetix-snapshot-record-mock:3.0.0"
+
+[setting.governance_package]
+defaultValue = "synthetix-governance-satellite:3.0.0"
+
+[setting.governance_salt]
+defaultValue = "synthetix-council"

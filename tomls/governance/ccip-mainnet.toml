@@ -1,0 +1,18 @@
+[invoke.setSupportedCrossChainNetworks]
+target = [
+    "ambassador_council.CoreProxy",
+    "grants_council.CoreProxy",
+    "spartan_council.CoreProxy",
+    "treasury_council.CoreProxy",
+]
+fromCall.func = "owner"
+func = "setSupportedCrossChainNetworks"
+# https://docs.chain.link/ccip/supported-networks
+args = [
+    [
+        "10",   # Optimism
+        "1",    # Ethereum Mainnet
+        "8453", # Base
+    ],
+    ["3734403246176062136", "5009297550715157269", "15971525489660198786"],
+]

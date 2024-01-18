@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.5-2"
+version = "3.3.5-3"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -27,6 +27,10 @@ include = [
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
+    # Governance
+    "tomls/governance/councils-satellite.toml",
+    "tomls/governance/snapshot-contract-mock.toml",
+    "tomls/governance/ccip-testnet.toml",
 ]
 
 [setting.commitmentPriceDelay]
@@ -94,3 +98,13 @@ args = [
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
+
+# Governance Councils Configuration
+[setting.governance_snapshot_record_package]
+defaultValue = "synthetix-snapshot-record-mock:3.0.0"
+
+[setting.governance_package]
+defaultValue = "synthetix-governance-satellite:3.0.0"
+
+[setting.governance_salt]
+defaultValue = "synthetix-council"
