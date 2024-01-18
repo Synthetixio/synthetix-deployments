@@ -10,7 +10,7 @@ async function contractsOwnership() {
   const { chainId } = await provider.getNetwork();
 
   const out = [];
-  out.push('## Contracts ownership');
+  out.push('# Contracts owners');
   out.push('');
 
   const table = [];

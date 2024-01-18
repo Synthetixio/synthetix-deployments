@@ -49,8 +49,6 @@ async function perpsMarkets() {
   log({ chainId });
 
   const out = [];
-  out.push('## Perps Markets');
-  out.push('');
 
   const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 
@@ -70,9 +68,9 @@ async function perpsMarkets() {
   );
 
   for (const market of markets) {
-    out.push(`### ${market.symbol} / ${market.name}`);
+    out.push(`# Perps Market ${market.symbol} / ${market.name}`);
     out.push('');
-    out.push(`Market ID: ${market.id}`);
+    out.push(`Market ID: <code>${market.id}</code>`);
     const marketId = market.id;
 
     const table = [];

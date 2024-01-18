@@ -15,7 +15,7 @@ async function marketsOwnership() {
   const { chainId } = await provider.getNetwork();
 
   const out = [];
-  out.push('## Markets ownership');
+  out.push('# Markets owners');
   out.push('');
 
   const table = [];
