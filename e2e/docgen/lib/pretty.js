@@ -7,6 +7,7 @@ const prettierOptions = {
   bracketSpacing: true,
   trailingComma: 'es5',
   proseWrap: 'never',
+  embeddedLanguageFormatting: 'off',
 };
 
 async function prettyMd(md) {
@@ -14,7 +15,8 @@ async function prettyMd(md) {
 }
 
 async function prettyHtml(html) {
-  return await prettier.format(html, { parser: 'html', ...prettierOptions });
+  const formatted = await prettier.format(html, { parser: 'html', ...prettierOptions });
+  return formatted.replace(/(\n{2,})/gm, '\n');
 }
 
 module.exports = {
