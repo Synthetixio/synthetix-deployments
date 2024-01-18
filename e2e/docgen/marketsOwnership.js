@@ -1,6 +1,7 @@
 const { ethers } = require('ethers');
-const { addrLink } = require('./lib/addrLink');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { addrHtmlLink } = require('./lib/addrLink');
+const { prettyMd, prettyHtml } = require('./lib/pretty');
 
 const MARKET_IDS = [
   // We cannot get the list of markets from contract, can only hardcode it
@@ -17,8 +18,19 @@ async function marketsOwnership() {
   out.push('## Markets ownership');
   out.push('');
 
-  out.push('| Market ID | Market name | Owner | Nominated owner |');
-  out.push('| --- | --- | --- | --- |');
+  const table = [];
+  table.push(`
+      <table data-full-width="true">
+        <thead>
+          <tr>
+            <th width="100">Market ID</th>
+            <th width="500">Market name</th>
+            <th width="500">Owner</th>
+            <th width="500">Nominated owner</th>
+          </tr>
+        </thead>
+        <tbody>
+    `);
 
   const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 
@@ -41,15 +53,22 @@ async function marketsOwnership() {
   );
   log({ markets });
   for (const { marketId, name, owner, nominatedOwner } of markets) {
-    out.push(
-      `| ${[
-        marketId,
-        name,
-        owner === ethers.constants.AddressZero ? 'n/a' : addrLink(chainId, owner),
-        nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrLink(chainId, nominatedOwner),
-      ].join(' | ')} |`
-    );
+    table.push(`
+      <tr>
+        <td>${marketId}</td>
+        <td>${name}</td>
+        <td>${owner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, owner)}</td>
+        <td>${nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, nominatedOwner)}</td>
+      </tr>
+    `);
   }
+
+  table.push(`
+        </tbody>
+      </table>
+    `);
+
+  out.push(await prettyHtml(table.join('\n')));
 
   out.push('');
   out.push('');
@@ -59,3 +78,8 @@ async function marketsOwnership() {
 module.exports = {
   marketsOwnership,
 };
+
+if (require.main === module) {
+  require('../inspect');
+  marketsOwnership().then(prettyMd).then(console.log);
+}

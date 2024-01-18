@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const prettier = require('prettier');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 const { contractsOwnership } = require('./docgen/contractsOwnership');
@@ -8,17 +7,7 @@ const { poolsOwnership } = require('./docgen/poolsOwnership');
 const { marketsOwnership } = require('./docgen/marketsOwnership');
 const { perpsMarkets } = require('./docgen/perpsMarkets');
 
-const prettierOptions = {
-  printWidth: 120,
-  semi: true,
-  singleQuote: true,
-  bracketSpacing: true,
-  trailingComma: 'es5',
-};
-
-async function prettyMd(md) {
-  return await prettier.format(md, { parser: 'markdown', ...prettierOptions });
-}
+const { prettyMd } = require('./docgen/lib/pretty');
 
 async function docgen() {
   const out = [];

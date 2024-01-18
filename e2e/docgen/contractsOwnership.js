@@ -1,6 +1,7 @@
 const { ethers } = require('ethers');
-const { addrLink } = require('./lib/addrLink');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { addrHtmlLink } = require('./lib/addrLink');
+const { prettyMd, prettyHtml } = require('./lib/pretty');
 
 async function contractsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -12,8 +13,18 @@ async function contractsOwnership() {
   out.push('## Contracts ownership');
   out.push('');
 
-  out.push('| System  | Owner | Nominated owner |');
-  out.push('| --- | --- | --- |');
+  const table = [];
+  table.push(`
+      <table data-full-width="true">
+        <thead>
+          <tr>
+            <th width="400">System</th>
+            <th width="500">Owner</th>
+            <th width="500">Nominated owner</th>
+          </tr>
+        </thead>
+        <tbody>
+    `);
 
   const meta = require('../deployments/meta.json');
   const abi = [
@@ -27,14 +38,22 @@ async function contractsOwnership() {
       Contract.nominatedOwner().catch(() => ethers.constants.AddressZero),
     ]);
     log({ name, address, owner, nominatedOwner });
-    out.push(
-      `| ${[
-        name,
-        owner === ethers.constants.AddressZero ? 'n/a' : addrLink(chainId, owner),
-        nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrLink(chainId, nominatedOwner),
-      ].join(' | ')} |`
-    );
+
+    table.push(`
+      <tr>
+        <td>${name}</td>
+        <td>${owner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, owner)}</td>
+        <td>${nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, nominatedOwner)}</td>
+      </tr>
+    `);
   }
+
+  table.push(`
+        </tbody>
+      </table>
+    `);
+
+  out.push(await prettyHtml(table.join('\n')));
 
   out.push('');
   out.push('');
@@ -45,3 +64,8 @@ async function contractsOwnership() {
 module.exports = {
   contractsOwnership,
 };
+
+if (require.main === module) {
+  require('../inspect');
+  contractsOwnership().then(prettyMd).then(console.log);
+}

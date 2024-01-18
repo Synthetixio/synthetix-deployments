@@ -1,6 +1,7 @@
 const { ethers } = require('ethers');
-const { addrLink } = require('./lib/addrLink');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { addrHtmlLink } = require('./lib/addrLink');
+const { prettyMd, prettyHtml } = require('./lib/pretty');
 
 async function poolsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -12,8 +13,20 @@ async function poolsOwnership() {
   out.push('## Pools ownership');
   out.push('');
 
-  out.push('| Pool ID | Pool name | Preferred | Owner | Nominated owner |');
-  out.push('| --- | --- | --- | --- | --- |');
+  const table = [];
+  table.push(`
+      <table data-full-width="true">
+        <thead>
+          <tr>
+            <th width="100">Pool ID</th>
+            <th width="500">Pool name</th>
+            <th width="100">Preferred</th>
+            <th width="500">Owner</th>
+            <th width="500">Nominated owner</th>
+          </tr>
+        </thead>
+        <tbody>
+    `);
 
   const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
@@ -41,16 +54,23 @@ async function poolsOwnership() {
   );
   log({ pools });
   for (const { poolId, name, isPreferred, owner, nominatedOwner } of pools) {
-    out.push(
-      `| ${[
-        poolId,
-        name,
-        isPreferred ? '✅' : '',
-        owner === ethers.constants.AddressZero ? 'n/a' : addrLink(chainId, owner),
-        nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrLink(chainId, nominatedOwner),
-      ].join(' | ')} |`
-    );
+    table.push(`
+      <tr>
+        <td>${poolId}</td>
+        <td>${name}</td>
+        <td>${isPreferred ? '✅' : ''}</td>
+        <td>${owner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, owner)}</td>
+        <td>${nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, nominatedOwner)}</td>
+      </tr>
+    `);
   }
+
+  table.push(`
+        </tbody>
+      </table>
+    `);
+
+  out.push(await prettyHtml(table.join('\n')));
 
   out.push('');
   out.push('');
@@ -61,3 +81,8 @@ async function poolsOwnership() {
 module.exports = {
   poolsOwnership,
 };
+
+if (require.main === module) {
+  require('../inspect');
+  poolsOwnership().then(prettyMd).then(console.log);
+}
