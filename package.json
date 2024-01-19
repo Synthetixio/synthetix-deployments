@@ -41,6 +41,7 @@
     "ethers": "^5.7.2",
     "hardhat": "^2.19.4",
     "mocha": "^10.2.0",
+    "numbro": "^2.4.0",
     "prettier": "^3.2.2",
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21"
