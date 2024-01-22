@@ -21,8 +21,8 @@ function readableBigWei(value) {
   if (ethers.constants.MaxUint256.eq(value)) {
     return '<code>MaxUint256</code>';
   }
-  if (ethers.constants.MaxInt256.eq(value)) {
-    return '<code>MaxInt256</code>';
+  if (ethers.constants.MaxInt256.eq(value.abs())) {
+    return `<code>${value.isNegative() ? '-' : ''}MaxInt256</code>`;
   }
   return numbro(Number(ethers.utils.formatEther(value))).format({
     trimMantissa: true,
