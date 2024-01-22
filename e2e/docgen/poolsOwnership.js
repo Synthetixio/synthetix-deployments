@@ -51,7 +51,7 @@ async function poolsOwnership() {
   for (const { poolId, name, isPreferred, owner, nominatedOwner } of pools) {
     table.push(`
       <tr>
-        <td><code>${poolId}</code> ${name} ${isPreferred ? '(_✅ Preferred_)' : ''}</td>
+        <td><code>${poolId}</code> ${name} ${isPreferred ? '<i>* preferred</i>' : ''}</td>
         <td>${owner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, owner)}</td>
         <td>${nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, nominatedOwner)}</td>
       </tr>

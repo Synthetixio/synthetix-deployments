@@ -231,19 +231,14 @@ async function perpsMarkets() {
         <td>${rawValue(settlementStrategyId)}</td>
       </tr>
     `);
-    const settlementStrategyTypes = ['PYTH'];
-
-    // enum Type {
-    //   PYTH
-    // }
-    const settlementStrategyType =
-      [
-        'PYTH', // 0
-      ][settlementStrategy.strategyType] || 'Unknown';
     table.push(`
       <tr>
         <td>strategyType</td>
-        <td>${settlementStrategyType}</td>
+        <td>${
+          [
+            'PYTH', // 0
+          ][settlementStrategy.strategyType] || 'Unknown'
+        }</td>
         <td>${rawValue(settlementStrategy.strategyType)}</td>
       </tr>
     `);
@@ -286,7 +281,7 @@ async function perpsMarkets() {
       <tr>
         <td>disabled</td>
         <td>${settlementStrategy.disabled ? '🚫 Disabled' : '✅ Enabled'}</td>
-        <td>${rawValue(JSON.stringify(settlementStrategy.disabled))}</td>
+        <td>${rawValue(settlementStrategy.disabled)}</td>
       </tr>
     `);
     table.push(`
