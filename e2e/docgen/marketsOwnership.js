@@ -15,16 +15,12 @@ async function marketsOwnership() {
   const { chainId } = await provider.getNetwork();
 
   const out = [];
-  out.push('# Markets owners');
-  out.push('');
-
   const table = [];
   table.push(`
       <table data-full-width="true">
         <thead>
           <tr>
-            <th width="100">Market ID</th>
-            <th width="500">Market name</th>
+            <th width="400">Synth Market</th>
             <th width="500">Owner</th>
             <th width="500">Nominated owner</th>
           </tr>
@@ -55,8 +51,7 @@ async function marketsOwnership() {
   for (const { marketId, name, owner, nominatedOwner } of markets) {
     table.push(`
       <tr>
-        <td>${marketId}</td>
-        <td>${name}</td>
+        <td><code>${marketId}</code> ${name}</td>
         <td>${owner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, owner)}</td>
         <td>${nominatedOwner === ethers.constants.AddressZero ? 'n/a' : addrHtmlLink(chainId, nominatedOwner)}</td>
       </tr>
