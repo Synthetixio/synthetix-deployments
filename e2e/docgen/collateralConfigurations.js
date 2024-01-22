@@ -24,7 +24,7 @@ async function renderCollateralConfig(config) {
       <table data-full-width="true">
         <thead>
           <tr>
-            <th width="200">Parameter name</th>
+            <th width="400">Parameter name</th>
             <th width="100">Value</th>
             <th width="800">Raw value</th>
           </tr>

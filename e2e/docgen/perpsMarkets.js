@@ -86,7 +86,6 @@ async function perpsMarkets() {
         <td>maxFundingVelocity</td>
         <td>${readableWei(maxFundingVelocity)}</td>
         <td>${rawValue(maxFundingVelocity)}</td>
-        <td>${rawValue(maxFundingVelocity)}</td>
       </tr>
     `);
 
@@ -204,7 +203,22 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
+    table.push(`
+        </tbody>
+      </table>
+    `);
+
+    table.push(`
+      <table data-full-width="true">
+        <thead>
+          <tr>
+            <th width="400">Settlement strategy parameter</th>
+            <th width="100">Value</th>
+            <th width="800">Raw value</th>
+          </tr>
+        </thead>
+        <tbody>
+    `);
 
     const settlementStrategyId = 0;
     const { getPerpsSettlementStrategy } = require('../tasks/getPerpsSettlementStrategy');
@@ -212,56 +226,63 @@ async function perpsMarkets() {
     log({ settlementStrategy });
     table.push(`
       <tr>
-        <td>settlementStrategy.strategyType</td>
-        <td>${readableWei(settlementStrategy.strategyType)}</td>
+        <td>strategyId</td>
+        <td>${readableNumber(settlementStrategyId)}</td>
+        <td>${rawValue(settlementStrategyId)}</td>
+      </tr>
+    `);
+    table.push(`
+      <tr>
+        <td>strategyType</td>
+        <td>${readableNumber(settlementStrategy.strategyType)}</td>
         <td>${rawValue(settlementStrategy.strategyType)}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.settlementDelay</td>
+        <td>settlementDelay</td>
         <td>${readableNumber(settlementStrategy.settlementDelay)}</td>
         <td>${rawValue(settlementStrategy.settlementDelay)}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.settlementWindowDuration</td>
+        <td>settlementWindowDuration</td>
         <td>${readableNumber(settlementStrategy.settlementWindowDuration)}</td>
         <td>${rawValue(settlementStrategy.settlementWindowDuration)}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.priceVerificationContract</td>
+        <td>priceVerificationContract</td>
         <td></td>
         <td>${addrHtmlLink(chainId, settlementStrategy.priceVerificationContract)}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.feedId</td>
+        <td>feedId</td>
         <td></td>
         <td>${rawValue(settlementStrategy.feedId)}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.settlementReward</td>
+        <td>settlementReward</td>
         <td>${readableWei(settlementStrategy.settlementReward)}</td>
         <td>${rawValue(settlementStrategy.settlementReward)}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.disabled</td>
+        <td>disabled</td>
         <td>${settlementStrategy.disabled ? '🚫 Disabled' : '✅ Enabled'}</td>
         <td>${rawValue(JSON.stringify(settlementStrategy.disabled))}</td>
       </tr>
     `);
     table.push(`
       <tr>
-        <td>settlementStrategy.commitmentPriceDelay</td>
+        <td>commitmentPriceDelay</td>
         <td>${readableNumber(settlementStrategy.commitmentPriceDelay)}</td>
         <td>${rawValue(settlementStrategy.commitmentPriceDelay)}</td>
       </tr>
