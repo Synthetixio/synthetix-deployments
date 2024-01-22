@@ -7,15 +7,13 @@ const { poolsOwnership } = require('./docgen/poolsOwnership');
 const { marketsOwnership } = require('./docgen/marketsOwnership');
 const { collateralConfigurations } = require('./docgen/collateralConfigurations');
 const { perpsMarkets } = require('./docgen/perpsMarkets');
+const { abi } = require('./docgen/abi');
 
 const { prettyMd } = require('./docgen/lib/pretty');
 
 async function docgen() {
   const out = [];
-  out.push('# Contracts');
-  out.push('');
-  out.push('See [Addresses + ABIs](../for-developers/addresses-+-abis.md) Page');
-  out.push('');
+  out.push(await abi().catch(log));
   out.push(await collateralConfigurations().catch(log));
   out.push(await perpsMarkets().catch(log));
   out.push('# Owners');

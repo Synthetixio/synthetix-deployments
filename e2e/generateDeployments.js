@@ -49,15 +49,21 @@ function readableAbi(abi) {
   return new ethers.utils.Interface(abi).format(ethers.utils.FormatTypes.full);
 }
 
+function jsonAbi(abi) {
+  return JSON.parse(new ethers.utils.Interface(abi).format(ethers.utils.FormatTypes.json));
+}
+
 async function run() {
   const deployments = require(path.resolve(cannonState));
 
   await fs.rm(`${__dirname}/deployments`, { recursive: true, force: true });
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
+  await fs.mkdir(`${__dirname}/deployments/abi`, { recursive: true });
 
   const meta = {
     chainId: deployments.chainId,
     name: deployments.def.name,
+    preset: deployments.def.preset ?? 'main',
     version: deployments.def.version,
     generator: deployments.generator,
     timestamp: deployments.timestamp,
@@ -122,7 +128,7 @@ async function run() {
   );
 
   // Extract all oracle addresses
-  const oracles = {};
+  // const oracles = {};
   // function oracleNode(invokeStep) {
   //   const oracleNodeArgs =
   //     deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
@@ -155,14 +161,20 @@ async function run() {
 
   contracts.AllErrors = {
     address: ethers.constants.AddressZero,
-    abi: Object.values(contracts).flatMap(({ abi }) => abi.filter((item) => item.type === 'error')),
+    abi: Array.from(
+      new Set(
+        Object.values(contracts)
+          .flatMap(({ abi }) => abi.filter((item) => item.type === 'error'))
+          .map((item) => JSON.stringify(item))
+      )
+    ).map((item) => JSON.parse(item)),
   };
 
   log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
 
-  log('Writing', `deployments/oracles.json`);
-  await fs.writeFile(`${__dirname}/deployments/oracles.json`, JSON.stringify(oracles, null, 2));
+  //  log('Writing', `deployments/oracles.json`);
+  //  await fs.writeFile(`${__dirname}/deployments/oracles.json`, JSON.stringify(oracles, null, 2));
 
   log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
@@ -186,6 +198,19 @@ async function run() {
     await fs.writeFile(
       `${__dirname}/deployments/${name}.json`,
       JSON.stringify({ address, abi: readableAbi(abi) }, null, 2)
+    );
+  }
+
+  for (const [name, { abi }] of Object.entries(contracts)) {
+    log('Writing', `deployments/abi/${name}.json`);
+    await fs.writeFile(
+      `${__dirname}/deployments/abi/${name}.json`,
+      JSON.stringify(jsonAbi(abi), null, 2)
+    );
+    log('Writing', `deployments/abi/${name}.readable.json`);
+    await fs.writeFile(
+      `${__dirname}/deployments/abi/${name}.readable.json`,
+      JSON.stringify(readableAbi(abi), null, 2)
     );
   }
 }
