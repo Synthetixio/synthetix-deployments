@@ -12,13 +12,17 @@ const { prettyMd } = require('./docgen/lib/pretty');
 
 async function docgen() {
   const out = [];
-  out.push('# Contracts owners');
+  out.push('# Contracts');
+  out.push('');
+  out.push('See [Addresses + ABIs](../for-developers/addresses-+-abis.md) Page');
+  out.push('');
+  out.push(await collateralConfigurations().catch(log));
+  out.push(await perpsMarkets().catch(log));
+  out.push('# Owners');
   out.push('');
   out.push(await contractsOwnership().catch(log));
   out.push(await poolsOwnership().catch(log));
   out.push(await marketsOwnership().catch(log));
-  out.push(await collateralConfigurations().catch(log));
-  out.push(await perpsMarkets().catch(log));
   return out.join('\n');
 }
 
