@@ -231,10 +231,19 @@ async function perpsMarkets() {
         <td>${rawValue(settlementStrategyId)}</td>
       </tr>
     `);
+    const settlementStrategyTypes = ['PYTH'];
+
+    // enum Type {
+    //   PYTH
+    // }
+    const settlementStrategyType =
+      [
+        'PYTH', // 0
+      ][settlementStrategy.strategyType] || 'Unknown';
     table.push(`
       <tr>
         <td>strategyType</td>
-        <td>${readableNumber(settlementStrategy.strategyType)}</td>
+        <td>${settlementStrategyType}</td>
         <td>${rawValue(settlementStrategy.strategyType)}</td>
       </tr>
     `);
