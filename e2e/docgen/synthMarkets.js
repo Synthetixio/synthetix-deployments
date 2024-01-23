@@ -17,7 +17,10 @@ async function synthMarkets() {
   const SYNTH_MARKET_IDS = [
     // We cannot get the list of markets from contract, can only hardcode it
     extras.synth_usdc_market_id,
-  ];
+    extras.synth_btc_market_id,
+    extras.synth_eth_market_id,
+    extras.synth_link_market_id,
+  ].filter(Boolean);
 
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -32,13 +35,6 @@ async function synthMarkets() {
   const SpotMarketProxy = new ethers.Contract(
     SpotMarketProxyDeployment.address,
     SpotMarketProxyDeployment.abi,
-    provider
-  );
-
-  const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
-  const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
     provider
   );
 
@@ -121,7 +117,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const implAddress = await SpotMarketProxy.getSynthImpl(synthMarketId).catch(catcher());
+    const implAddress = await Promise.resolve()
+      .then(() => SpotMarketProxy.getSynthImpl(synthMarketId))
+      .catch(catcher());
     log({ implAddress });
     table.push(`
       <tr>
@@ -131,8 +129,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const collateralLeverage =
-      await SpotMarketProxy.getCollateralLeverage(synthMarketId).catch(catcher());
+    const collateralLeverage = await Promise.resolve()
+      .then(() => SpotMarketProxy.getCollateralLeverage(synthMarketId))
+      .catch(catcher());
     log({ collateralLeverage });
     table.push(`
       <tr>
@@ -142,7 +141,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const minimumCredit = await SpotMarketProxy.minimumCredit(synthMarketId).catch(catcher());
+    const minimumCredit = await Promise.resolve()
+      .then(() => SpotMarketProxy.minimumCredit(synthMarketId))
+      .catch(catcher());
     log({ minimumCredit });
     table.push(`
       <tr>
@@ -152,7 +153,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const feeCollector = await SpotMarketProxy.getFeeCollector(synthMarketId).catch(catcher());
+    const feeCollector = await Promise.resolve()
+      .then(() => SpotMarketProxy.getFeeCollector(synthMarketId))
+      .catch(catcher());
     log({ feeCollector });
     table.push(`
       <tr>
@@ -162,8 +165,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const { atomicFixedFee, asyncFixedFee, wrapFee, unwrapFee } =
-      await SpotMarketProxy.getMarketFees(synthMarketId).catch(catcher({}));
+    const { atomicFixedFee, asyncFixedFee, wrapFee, unwrapFee } = await Promise.resolve()
+      .then(() => SpotMarketProxy.getMarketFees(synthMarketId))
+      .catch(catcher({}));
     log({ atomicFixedFee, asyncFixedFee, wrapFee, unwrapFee });
     table.push(`
       <tr>
@@ -194,8 +198,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const utilizationFeeRate =
-      await SpotMarketProxy.getMarketUtilizationFees(synthMarketId).catch(catcher());
+    const utilizationFeeRate = await Promise.resolve()
+      .then(() => SpotMarketProxy.getMarketUtilizationFees(synthMarketId))
+      .catch(catcher());
     log({ utilizationFeeRate });
     table.push(`
       <tr>
@@ -205,7 +210,9 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const skewScale = await SpotMarketProxy.getMarketSkewScale(synthMarketId).catch(catcher());
+    const skewScale = await Promise.resolve()
+      .then(() => SpotMarketProxy.getMarketSkewScale(synthMarketId))
+      .catch(catcher());
     log({ skewScale });
     table.push(`
       <tr>

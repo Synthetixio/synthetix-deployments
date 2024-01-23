@@ -4,10 +4,12 @@ const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
 
-function catcher(error) {
-  log({ error: error });
-  console.error(error);
-  return {};
+function catcher(value = undefined) {
+  return (error) => {
+    log({ error: error });
+    console.error(error);
+    return value;
+  };
 }
 
 async function perpsMarkets() {
@@ -36,7 +38,7 @@ async function perpsMarkets() {
       .sort()
       .map((id) =>
         PerpsMarketProxy.metadata(id)
-          .catch(catcher)
+          .catch(catcher({}))
           .then(({ name, symbol }) => ({ id, name, symbol }))
       )
   );
@@ -62,8 +64,9 @@ async function perpsMarkets() {
     `);
 
     const SNXUSD_SYNTH_MARKET_ID = 0;
-    const maxCollateralAmount =
-      await PerpsMarketProxy.getCollateralConfiguration(SNXUSD_SYNTH_MARKET_ID).catch(catcher);
+    const maxCollateralAmount = await Promise.resolve()
+      .then(() => PerpsMarketProxy?.getCollateralConfiguration(SNXUSD_SYNTH_MARKET_ID))
+      .catch(catcher());
     log({ maxCollateralAmount });
     table.push(`
       <tr>
@@ -73,7 +76,9 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId).catch(catcher);
+    const maxMarketSize = await Promise.resolve()
+      .then(() => PerpsMarketProxy.getMaxMarketSize(marketId))
+      .catch(catcher());
     log({ maxMarketSize });
     table.push(`
       <tr>
@@ -83,7 +88,9 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    const maxOpenInterest = await PerpsMarketProxy.maxOpenInterest(marketId).catch(catcher);
+    const maxOpenInterest = await Promise.resolve()
+      .then(() => PerpsMarketProxy.maxOpenInterest(marketId))
+      .catch(catcher());
     log({ maxOpenInterest });
     table.push(`
       <tr>
@@ -95,8 +102,9 @@ async function perpsMarkets() {
 
     table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
-    const { skewScale, maxFundingVelocity } =
-      await PerpsMarketProxy.getFundingParameters(marketId).catch(catcher);
+    const { skewScale, maxFundingVelocity } = await Promise.resolve()
+      .then(() => PerpsMarketProxy.getFundingParameters(marketId))
+      .catch(catcher({}));
     log({ skewScale, maxFundingVelocity });
     table.push(`
       <tr>
@@ -115,7 +123,9 @@ async function perpsMarkets() {
 
     table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
-    const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId).catch(catcher);
+    const { makerFee, takerFee } = await Promise.resolve()
+      .then(() => PerpsMarketProxy.getOrderFees(marketId))
+      .catch(catcher({}));
     log({ makerFee, takerFee });
     table.push(`
       <tr>
@@ -140,7 +150,9 @@ async function perpsMarkets() {
       maintenanceMarginScalarD18,
       flagRewardRatioD18,
       minimumPositionMargin,
-    } = await PerpsMarketProxy.getLiquidationParameters(marketId).catch(catcher);
+    } = await Promise.resolve()
+      .then(() => PerpsMarketProxy.getLiquidationParameters(marketId))
+      .catch(catcher({}));
     log({
       initialMarginRatioD18,
       minimumInitialMarginRatioD18,
@@ -191,7 +203,9 @@ async function perpsMarkets() {
       maxSecondsInLiquidationWindow,
       maxLiquidationPd,
       endorsedLiquidator,
-    } = await PerpsMarketProxy.getMaxLiquidationParameters(marketId).catch(catcher);
+    } = await Promise.resolve()
+      .then(() => PerpsMarketProxy.getMaxLiquidationParameters(marketId))
+      .catch(catcher({}));
     log({
       maxLiquidationLimitAccumulationMultiplier,
       maxSecondsInLiquidationWindow,
@@ -234,7 +248,9 @@ async function perpsMarkets() {
       minKeeperProfitRatioD18,
       maxKeeperRewardUsd,
       maxKeeperScalingRatioD18,
-    } = await PerpsMarketProxy.getKeeperRewardGuards().catch(catcher);
+    } = await Promise.resolve()
+      .then(() => PerpsMarketProxy.getKeeperRewardGuards())
+      .catch(catcher({}));
     log({
       minKeeperRewardUsd,
       minKeeperProfitRatioD18,
@@ -289,7 +305,10 @@ async function perpsMarkets() {
 
     const settlementStrategyId = 0;
     const { getPerpsSettlementStrategy } = require('../tasks/getPerpsSettlementStrategy');
-    const settlementStrategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });
+    const settlementStrategy = await getPerpsSettlementStrategy({
+      marketId,
+      settlementStrategyId,
+    }).catch(catcher({}));
     log({ settlementStrategy });
     table.push(`
       <tr>
