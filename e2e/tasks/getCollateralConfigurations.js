@@ -22,12 +22,22 @@ async function getCollateralConfigurations() {
     try {
       const contract = new ethers.Contract(
         config.tokenAddress,
-        ['function symbol() view returns (string)'],
+        [
+          'function symbol() view returns (string)',
+          'function name() view returns (string)',
+          'function decimals() view returns (uint8)',
+        ],
         provider
       );
-      const symbol = await contract.symbol();
+      const [symbol, name, decimals] = await Promise.all([
+        contract.symbol(),
+        contract.name(),
+        contract.decimals(),
+      ]);
       const collateralConfig = {
         symbol,
+        name,
+        decimals,
         tokenAddress: config.tokenAddress,
         depositingEnabled: config.depositingEnabled,
         issuanceRatioD18: config.issuanceRatioD18,
