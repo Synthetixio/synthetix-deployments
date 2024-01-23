@@ -63,7 +63,7 @@ async function renderCollateralConfig(config) {
   `);
   table.push(`
     <tr>
-      <td>liquidationRatioD18</td>
+      <td>liquidationRewardD18</td>
       <td>${readableWei(config.liquidationRewardD18)}</td>
       <td>${rawValue(config.liquidationRewardD18)}</td>
     </tr>

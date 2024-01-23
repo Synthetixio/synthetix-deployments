@@ -3,6 +3,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
+const { getSynthMarketIds } = require('./lib/getSynthMarketIds');
 
 function catcher(value = undefined) {
   return (error) => {
@@ -13,21 +14,18 @@ function catcher(value = undefined) {
 }
 
 async function synthMarkets() {
-  const extras = require('../deployments/extras.json');
-  const SYNTH_MARKET_IDS = [
-    // We cannot get the list of markets from contract, can only hardcode it
-    extras.synth_usdc_market_id,
-    extras.synth_btc_market_id,
-    extras.synth_eth_market_id,
-    extras.synth_link_market_id,
-  ].filter(Boolean);
-
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const network = await provider.getNetwork();
   const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
+
+  const synthMarketIds = await getSynthMarketIds();
+  log({ synthMarketIds });
+  if (synthMarketIds.length < 1) {
+    return '';
+  }
 
   const out = [];
 
@@ -38,7 +36,7 @@ async function synthMarkets() {
     provider
   );
 
-  for (const synthMarketId of SYNTH_MARKET_IDS) {
+  for (const synthMarketId of synthMarketIds) {
     const name = await SpotMarketProxy.name(synthMarketId).catch(catcher());
     log({ synthMarketId, name });
 
@@ -148,7 +146,7 @@ async function synthMarkets() {
     table.push(`
       <tr>
         <td>minimumCredit</td>
-        <td>${readableWei(minimumCredit)}</td>
+        <td>${readableBigWei(minimumCredit)}</td>
         <td>${rawValue(minimumCredit)}</td>
       </tr>
     `);
@@ -217,7 +215,7 @@ async function synthMarkets() {
     table.push(`
       <tr>
         <td>skewScale</td>
-        <td>${readableWei(skewScale)}</td>
+        <td>${readableBigWei(skewScale)}</td>
         <td>${rawValue(skewScale)}</td>
       </tr>
     `);

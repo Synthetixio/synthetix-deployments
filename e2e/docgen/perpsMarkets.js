@@ -65,7 +65,7 @@ async function perpsMarkets() {
 
     const SNXUSD_SYNTH_MARKET_ID = 0;
     const maxCollateralAmount = await Promise.resolve()
-      .then(() => PerpsMarketProxy?.getCollateralConfiguration(SNXUSD_SYNTH_MARKET_ID))
+      .then(() => PerpsMarketProxy.getCollateralConfiguration(SNXUSD_SYNTH_MARKET_ID))
       .catch(catcher());
     log({ maxCollateralAmount });
     table.push(`
