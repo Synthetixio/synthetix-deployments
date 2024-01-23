@@ -15,6 +15,9 @@ function rawValue(value) {
 }
 
 function readableBigWei(value) {
+  if (typeof value === 'undefined' || value === null) {
+    return 'n/a';
+  }
   if (!(value instanceof ethers.BigNumber)) {
     return rawValue(value);
   }
@@ -34,6 +37,9 @@ function readableBigWei(value) {
 }
 
 function readableWei(value) {
+  if (typeof value === 'undefined' || value === null) {
+    return 'n/a';
+  }
   if (!(value instanceof ethers.BigNumber)) {
     return rawValue(value);
   }
@@ -45,6 +51,9 @@ function readableWei(value) {
 }
 
 function readableBigNumber(value) {
+  if (typeof value === 'undefined' || value === null) {
+    return 'n/a';
+  }
   return numbro(value).format({
     trimMantissa: true,
     thousandSeparated: true,
@@ -55,6 +64,9 @@ function readableBigNumber(value) {
 }
 
 function readableNumber(value) {
+  if (typeof value === 'undefined' || value === null) {
+    return 'n/a';
+  }
   return numbro(value).format({
     trimMantissa: true,
     thousandSeparated: true,

@@ -4,6 +4,12 @@ const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
 
+function catcher(error) {
+  log({ error: error });
+  console.error(error);
+  return {};
+}
+
 async function perpsMarkets() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -28,7 +34,11 @@ async function perpsMarkets() {
     marketIds
       .map((marketId) => marketId.toNumber())
       .sort()
-      .map((id) => PerpsMarketProxy.metadata(id).then(({ name, symbol }) => ({ id, name, symbol })))
+      .map((id) =>
+        PerpsMarketProxy.metadata(id)
+          .catch(catcher)
+          .then(({ name, symbol }) => ({ id, name, symbol }))
+      )
   );
 
   for (const market of markets) {
@@ -51,7 +61,19 @@ async function perpsMarkets() {
         <tbody>
     `);
 
-    const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    const SNXUSD_SYNTH_MARKET_ID = 0;
+    const maxCollateralAmount =
+      await PerpsMarketProxy.getCollateralConfiguration(SNXUSD_SYNTH_MARKET_ID).catch(catcher);
+    log({ maxCollateralAmount });
+    table.push(`
+      <tr>
+        <td>maxCollateralAmount of snxUSD (market <code>${SNXUSD_SYNTH_MARKET_ID}</code>)</td>
+        <td>${readableBigWei(maxCollateralAmount)}</td>
+        <td>${rawValue(maxCollateralAmount)}</td>
+      </tr>
+    `);
+
+    const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId).catch(catcher);
     log({ maxMarketSize });
     table.push(`
       <tr>
@@ -61,7 +83,7 @@ async function perpsMarkets() {
       </tr>
     `);
 
-    const maxOpenInterest = await PerpsMarketProxy.maxOpenInterest(marketId);
+    const maxOpenInterest = await PerpsMarketProxy.maxOpenInterest(marketId).catch(catcher);
     log({ maxOpenInterest });
     table.push(`
       <tr>
@@ -73,7 +95,8 @@ async function perpsMarkets() {
 
     table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
-    const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(marketId);
+    const { skewScale, maxFundingVelocity } =
+      await PerpsMarketProxy.getFundingParameters(marketId).catch(catcher);
     log({ skewScale, maxFundingVelocity });
     table.push(`
       <tr>
@@ -92,7 +115,7 @@ async function perpsMarkets() {
 
     table.push(`<tr> <td></td> <td></td> <td></td> </tr>`);
 
-    const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
+    const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId).catch(catcher);
     log({ makerFee, takerFee });
     table.push(`
       <tr>
@@ -117,7 +140,7 @@ async function perpsMarkets() {
       maintenanceMarginScalarD18,
       flagRewardRatioD18,
       minimumPositionMargin,
-    } = await PerpsMarketProxy.getLiquidationParameters(marketId);
+    } = await PerpsMarketProxy.getLiquidationParameters(marketId).catch(catcher);
     log({
       initialMarginRatioD18,
       minimumInitialMarginRatioD18,
@@ -168,7 +191,7 @@ async function perpsMarkets() {
       maxSecondsInLiquidationWindow,
       maxLiquidationPd,
       endorsedLiquidator,
-    } = await PerpsMarketProxy.getMaxLiquidationParameters(marketId);
+    } = await PerpsMarketProxy.getMaxLiquidationParameters(marketId).catch(catcher);
     log({
       maxLiquidationLimitAccumulationMultiplier,
       maxSecondsInLiquidationWindow,
@@ -201,6 +224,49 @@ async function perpsMarkets() {
         <td>endorsedLiquidator</td>
         <td></td>
         <td>${addrHtmlLink(chainId, endorsedLiquidator)}</td>
+      </tr>
+    `);
+
+    //      "function getKeeperRewardGuards() view returns (uint256 minKeeperRewardUsd, uint256 minKeeperProfitRatioD18, uint256 maxKeeperRewardUsd, uint256 maxKeeperScalingRatioD18)",
+
+    const {
+      minKeeperRewardUsd,
+      minKeeperProfitRatioD18,
+      maxKeeperRewardUsd,
+      maxKeeperScalingRatioD18,
+    } = await PerpsMarketProxy.getKeeperRewardGuards().catch(catcher);
+    log({
+      minKeeperRewardUsd,
+      minKeeperProfitRatioD18,
+      maxKeeperRewardUsd,
+      maxKeeperScalingRatioD18,
+    });
+    table.push(`
+      <tr>
+        <td>minKeeperRewardUsd</td>
+        <td>${readableWei(minKeeperRewardUsd)}</td>
+        <td>${rawValue(minKeeperRewardUsd)}</td>
+      </tr>
+    `);
+    table.push(`
+      <tr>
+        <td>minKeeperProfitRatioD18</td>
+        <td>${readableWei(minKeeperProfitRatioD18)}</td>
+        <td>${rawValue(minKeeperProfitRatioD18)}</td>
+      </tr>
+    `);
+    table.push(`
+      <tr>
+        <td>maxKeeperRewardUsd</td>
+        <td>${readableWei(maxKeeperRewardUsd)}</td>
+        <td>${rawValue(maxKeeperRewardUsd)}</td>
+      </tr>
+    `);
+    table.push(`
+      <tr>
+        <td>maxKeeperScalingRatioD18</td>
+        <td>${readableWei(maxKeeperScalingRatioD18)}</td>
+        <td>${rawValue(maxKeeperScalingRatioD18)}</td>
       </tr>
     `);
 

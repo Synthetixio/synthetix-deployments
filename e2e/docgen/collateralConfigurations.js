@@ -23,70 +23,70 @@ async function renderCollateralConfig(config) {
 
   const table = [];
   table.push(`
-      <table data-full-width="true">
-        <thead>
-          <tr>
-            <th width="400">Parameter name</th>
-            <th width="100">Value</th>
-            <th width="800">Raw value</th>
-          </tr>
-        </thead>
-        <tbody>
-    `);
+    <table data-full-width="true">
+      <thead>
+        <tr>
+          <th width="400">Parameter name</th>
+          <th width="100">Value</th>
+          <th width="800">Raw value</th>
+        </tr>
+      </thead>
+      <tbody>
+  `);
   table.push(`
-      <tr>
-        <td>depositingEnabled</td>
-        <td>${config.depositingEnabled ? '✅ Enabled' : '🚫 Disabled'}</td>
-        <td>${rawValue(config.depositingEnabled)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>depositingEnabled</td>
+      <td>${config.depositingEnabled ? '✅ Enabled' : '🚫 Disabled'}</td>
+      <td>${rawValue(config.depositingEnabled)}</td>
+    </tr>
+  `);
   table.push(`
-      <tr>
-        <td>decimals</td>
-        <td>${readableNumber(config.decimals)}</td>
-        <td>${rawValue(config.decimals)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>decimals</td>
+      <td>${readableNumber(config.decimals)}</td>
+      <td>${rawValue(config.decimals)}</td>
+    </tr>
+  `);
   table.push(`
-      <tr>
-        <td>issuanceRatioD18</td>
-        <td>${readableBigWei(config.issuanceRatioD18)}</td>
-        <td>${rawValue(config.issuanceRatioD18)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>issuanceRatioD18</td>
+      <td>${readableBigWei(config.issuanceRatioD18)}</td>
+      <td>${rawValue(config.issuanceRatioD18)}</td>
+    </tr>
+  `);
   table.push(`
-      <tr>
-        <td>liquidationRatioD18</td>
-        <td>${readableWei(config.liquidationRatioD18)}</td>
-        <td>${rawValue(config.liquidationRatioD18)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>liquidationRatioD18</td>
+      <td>${readableWei(config.liquidationRatioD18)}</td>
+      <td>${rawValue(config.liquidationRatioD18)}</td>
+    </tr>
+  `);
   table.push(`
-      <tr>
-        <td>liquidationRatioD18</td>
-        <td>${readableWei(config.liquidationRewardD18)}</td>
-        <td>${rawValue(config.liquidationRewardD18)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>liquidationRatioD18</td>
+      <td>${readableWei(config.liquidationRewardD18)}</td>
+      <td>${rawValue(config.liquidationRewardD18)}</td>
+    </tr>
+  `);
   table.push(`
-      <tr>
-        <td>oracleNodeId</td>
-        <td></td>
-        <td>${rawValue(config.oracleNodeId)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>oracleNodeId</td>
+      <td></td>
+      <td>${rawValue(config.oracleNodeId)}</td>
+    </tr>
+  `);
   table.push(`
-      <tr>
-        <td>minDelegationD18</td>
-        <td>${readableBigWei(config.minDelegationD18)}</td>
-        <td>${rawValue(config.minDelegationD18)}</td>
-      </tr>
-    `);
+    <tr>
+      <td>minDelegationD18</td>
+      <td>${readableBigWei(config.minDelegationD18)}</td>
+      <td>${rawValue(config.minDelegationD18)}</td>
+    </tr>
+  `);
 
   table.push(`
-        </tbody>
-      </table>
-    `);
+      </tbody>
+    </table>
+  `);
 
   out.push(await prettyHtml(table.join('\n')));
 
@@ -112,12 +112,12 @@ async function collateralConfigurations() {
   log({ deprecated });
 
   for (const config of Object.values(configs).sort(sortBySymbol)) {
-    out.push(`# Collateral ${config.symbol} / ${config.name}`);
+    out.push(`# Collateral \`${config.symbol}\` ${config.name}`);
     out.push(await renderCollateralConfig(config));
   }
 
   for (const config of deprecated) {
-    out.push(`# Deprecated Collateral **DO NOT USE!** ${config.symbol} / ${config.name}`);
+    out.push(`# Deprecated Collateral (DO NOT USE!) \`${config.symbol}\` ${config.name}`);
     out.push(await renderCollateralConfig(config));
   }
 
