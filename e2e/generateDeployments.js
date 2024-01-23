@@ -127,31 +127,13 @@ async function run() {
     Object.assign(extras, step?.artifacts?.extras)
   );
 
-  // Extract all oracle addresses
-  // const oracles = {};
-  // function oracleNode(invokeStep) {
-  //   const oracleNodeArgs =
-  //     deployments?.state?.[`invoke.${invokeStep}`]?.artifacts?.txns?.[invokeStep]?.events
-  //       ?.NodeRegistered?.[0]?.args;
-  //   if (oracleNodeArgs?.length === 4) {
-  //     const [id, nodeType, data] = oracleNodeArgs;
-  //     const [address, feedId, staleness] = ethers.utils.defaultAbiCoder.decode(
-  //       ['address', 'bytes32', 'uint256'],
-  //       data
-  //     );
-  //     return {
-  //       id,
-  //       address,
-  //       nodeType: parseInt(nodeType.toString()),
-  //       feedId,
-  //       staleness: parseInt(staleness.toString()),
-  //     };
-  //   }
-  // }
-  // The event for node type 7 is different so need to figure out how to use it later
-  // oracles.BTC = oracleNode('registerBtcOracleNode');
-  // oracles.ETH = oracleNode('registerEthOracleNode');
-  // return;
+  // Extract synth markets
+  function synthMarkets(symbol, address) {
+    if (address) {
+      contracts[symbol] = { address, abi: ERC20Abi };
+    }
+  }
+  synthMarkets('SynthUSDCToken', extras.synth_usdc_token_address);
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
@@ -172,9 +154,6 @@ async function run() {
 
   log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
-
-  //  log('Writing', `deployments/oracles.json`);
-  //  await fs.writeFile(`${__dirname}/deployments/oracles.json`, JSON.stringify(oracles, null, 2));
 
   log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));

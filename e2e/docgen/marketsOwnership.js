@@ -3,12 +3,14 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 
-const MARKET_IDS = [
-  // We cannot get the list of markets from contract, can only hardcode it
-  1,
-];
-
 async function marketsOwnership() {
+  const extras = require('../deployments/extras.json');
+
+  const MARKET_IDS = [
+    // We cannot get the list of markets from contract, can only hardcode it
+    extras.synth_usdc_market_id,
+  ];
+
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
