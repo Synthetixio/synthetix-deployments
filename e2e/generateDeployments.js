@@ -133,7 +133,12 @@ async function run() {
       contracts[symbol] = { address, abi: ERC20Abi };
     }
   }
+  synthMarkets('SynthBTCToken', extras.synth_btc_token_address);
+  synthMarkets('SynthETHToken', extras.synth_eth_token_address);
+  synthMarkets('SynthSNXToken', extras.synth_snx_token_address);
   synthMarkets('SynthUSDCToken', extras.synth_usdc_token_address);
+  synthMarkets('SynthOPToken', extras.synth_op_token_address);
+  synthMarkets('SynthLINKToken', extras.synth_link_token_address);
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
