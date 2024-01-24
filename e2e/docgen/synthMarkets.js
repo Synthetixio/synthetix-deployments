@@ -3,7 +3,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
-const { getSynthMarketIds } = require('./lib/getSynthMarketIds');
+const { getSynthMarketIds, getSettlementStrategyId } = require('./lib/getSynthMarketIds');
 
 function catcher(value = undefined) {
   return (error) => {
@@ -139,17 +139,18 @@ async function synthMarkets() {
       </tr>
     `);
 
-    const minimumCredit = await Promise.resolve()
-      .then(() => SpotMarketProxy.minimumCredit(synthMarketId))
-      .catch(catcher());
-    log({ minimumCredit });
-    table.push(`
-      <tr>
-        <td>minimumCredit</td>
-        <td>${readableBigWei(minimumCredit)}</td>
-        <td>${rawValue(minimumCredit)}</td>
-      </tr>
-    `);
+    // This is a dynamic value
+    //const minimumCredit = await Promise.resolve()
+    //  .then(() => SpotMarketProxy.minimumCredit(synthMarketId))
+    //  .catch(catcher());
+    //log({ minimumCredit });
+    //table.push(`
+    //  <tr>
+    //    <td>minimumCredit</td>
+    //    <td>${readableBigWei(minimumCredit)}</td>
+    //    <td>${rawValue(minimumCredit)}</td>
+    //  </tr>
+    //`);
 
     const feeCollector = await Promise.resolve()
       .then(() => SpotMarketProxy.getFeeCollector(synthMarketId))
@@ -225,8 +226,123 @@ async function synthMarkets() {
       </table>
     `);
 
-    //        "function getSettlementStrategy(uint128 marketId, uint256 strategyId) view returns (tuple(uint8 strategyType, uint256 settlementDelay, uint256 settlementWindowDuration, address priceVerificationContract, bytes32 feedId, string url, uint256 settlementReward, uint256 priceDeviationTolerance, uint256 minimumUsdExchangeAmount, uint256 maxRoundingLoss, bool disabled) settlementStrategy)",
+    const settlementStrategyId = getSettlementStrategyId(synthMarketId) || 0;
+    if (settlementStrategyId !== undefined && settlementStrategyId !== null) {
+      const { getSpotSettlementStrategy } = require('../tasks/getSpotSettlementStrategy');
+      const settlementStrategy = await getSpotSettlementStrategy({
+        synthMarketId,
+        settlementStrategyId,
+      }).catch(catcher());
+      log({ settlementStrategy });
 
+      if (settlementStrategy) {
+        table.push(`
+          <table data-full-width="true">
+            <thead>
+              <tr>
+                <th width="400">Settlement strategy parameter</th>
+                <th width="100">Value</th>
+                <th width="800">Raw value</th>
+              </tr>
+            </thead>
+            <tbody>
+        `);
+
+        table.push(`
+          <tr>
+            <td>settlementStrategyId</td>
+            <td>${readableNumber(settlementStrategyId)}</td>
+            <td>${rawValue(settlementStrategyId)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>strategyType</td>
+            <td>${
+              [
+                'ONCHAIN', // 0
+                'PYTH', // 1
+              ][settlementStrategy.strategyType] || 'Unknown'
+            }</td>
+            <td>${rawValue(settlementStrategy.strategyType)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>settlementDelay</td>
+            <td>${readableNumber(settlementStrategy.settlementDelay)}</td>
+            <td>${rawValue(settlementStrategy.settlementDelay)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>settlementWindowDuration</td>
+            <td>${readableNumber(settlementStrategy.settlementWindowDuration)}</td>
+            <td>${rawValue(settlementStrategy.settlementWindowDuration)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>priceVerificationContract</td>
+            <td></td>
+            <td>${addrHtmlLink(chainId, settlementStrategy.priceVerificationContract)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>feedId</td>
+            <td></td>
+            <td>${rawValue(settlementStrategy.feedId)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>url</td>
+            <td></td>
+            <td>${rawValue(settlementStrategy.url)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>settlementReward</td>
+            <td>${readableWei(settlementStrategy.settlementReward)}</td>
+            <td>${rawValue(settlementStrategy.settlementReward)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>priceDeviationTolerance</td>
+            <td>${readableWei(settlementStrategy.priceDeviationTolerance)}</td>
+            <td>${rawValue(settlementStrategy.priceDeviationTolerance)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>minimumUsdExchangeAmount</td>
+            <td>${readableWei(settlementStrategy.minimumUsdExchangeAmount)}</td>
+            <td>${rawValue(settlementStrategy.minimumUsdExchangeAmount)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>maxRoundingLoss</td>
+            <td>${readableWei(settlementStrategy.maxRoundingLoss)}</td>
+            <td>${rawValue(settlementStrategy.maxRoundingLoss)}</td>
+          </tr>
+        `);
+        table.push(`
+          <tr>
+            <td>disabled</td>
+            <td>${settlementStrategy.disabled === true ? '🚫 Disabled' : settlementStrategy.disabled === false ? '✅ Enabled' : 'n/a'}</td>
+            <td>${rawValue(settlementStrategy.disabled)}</td>
+          </tr>
+        `);
+        table.push(`
+            </tbody>
+          </table>
+        `);
+      }
+    }
     out.push(await prettyHtml(table.join('\n')));
   }
 

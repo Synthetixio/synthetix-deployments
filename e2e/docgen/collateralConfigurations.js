@@ -36,7 +36,7 @@ async function renderCollateralConfig(config) {
   table.push(`
     <tr>
       <td>depositingEnabled</td>
-      <td>${config.depositingEnabled ? '✅ Enabled' : '🚫 Disabled'}</td>
+      <td>${config.depositingEnabled === true ? '✅ Enabled' : config.depositingEnabled === false ? '🚫 Disabled' : 'n/a'}</td>
       <td>${rawValue(config.depositingEnabled)}</td>
     </tr>
   `);

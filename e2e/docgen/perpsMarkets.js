@@ -366,7 +366,7 @@ async function perpsMarkets() {
     table.push(`
       <tr>
         <td>disabled</td>
-        <td>${settlementStrategy.disabled ? '🚫 Disabled' : '✅ Enabled'}</td>
+        <td>${settlementStrategy.disabled === true ? '🚫 Disabled' : settlementStrategy.disabled === false ? '✅ Enabled' : 'n/a'}</td>
         <td>${rawValue(settlementStrategy.disabled)}</td>
       </tr>
     `);
