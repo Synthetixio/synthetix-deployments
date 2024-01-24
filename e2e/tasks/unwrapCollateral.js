@@ -78,5 +78,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  unwrapCollateral({ wallet, symbol, amount }).then(log);
+  unwrapCollateral({ wallet, symbol, amount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }
