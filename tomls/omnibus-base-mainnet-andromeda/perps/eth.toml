@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0005"
 
 [setting.perpsEthMaxMarketSize]
-defaultValue = "4.5" # approx $10k
+defaultValue = "385" # approx $1m
 
 [setting.perpsEthInitialMarginRatio]
 defaultValue = "8.92"
