@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const { getCollateralConfig } = require('./getCollateralConfig');
-const { getTokenBalance } = require('./getTokenBalance');
 const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 async function getMarketCollateralValue({ marketId }) {
@@ -29,5 +27,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId] = process.argv.slice(2);
-  getMarketCollateralValue({ marketId }).then(console.log);
+  getMarketCollateralValue({ marketId }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }
