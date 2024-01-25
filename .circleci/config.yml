@@ -341,7 +341,8 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
       - add_ssh_keys:
-          fingerprints: "4b:3a:c8:23:b8:4e:86:32:8e:d3:2d:17:0c:2b:63:b6"
+          fingerprints:
+            - "4b:3a:c8:23:b8:4e:86:32:8e:d3:2d:17:0c:2b:63:b6"
       - run:
           working_directory: ~/
           name: "Checkout docs"
@@ -468,86 +469,66 @@ workflows:
           chain-id: 80001
           provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
 
-  dev-deployment-info:
-    unless:
+  deployment-info:
+    when:
       or:
-        - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
+        - and:
+            - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
+            - equal: ["deployment-info", << pipeline.schedule.name >>]
+        - equal: ["docgen", << pipeline.git.branch >>]
+
     jobs:
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-andromeda-on-base-sepolia
+          name: docs-base-sepolia-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://sepolia.base.org
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-andromeda-on-base-goerli
+          name: docs-base-goerli-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84531
           provider-url: https://goerli.base.org
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-andromeda-on-base-mainnet
+          name: docs-base-mainnet-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
           provider-url: https://mainnet.base.org
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-on-mainnet
+          name: docs-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-on-goerli
+          name: docs-goerli
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 5
           provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-on-sepolia
+          name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-on-optimism-mainnet
+          name: docs-optimism-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          filters:
-            branches:
-              only: /docgen/
-          name: deployment-info-on-optimism-goerli
+          name: docs-optimism-goerli
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 420
