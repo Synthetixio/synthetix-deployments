@@ -2,13 +2,8 @@
 
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { approveToken } = require('./approveToken');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
-async function approveCollateral({
-  privateKey,
-  symbol,
-  spenderAddress = CoreProxyDeployment.address,
-}) {
+async function approveCollateral({ privateKey, symbol, spenderAddress }) {
   const config = await getCollateralConfig(symbol);
   return approveToken({
     privateKey,

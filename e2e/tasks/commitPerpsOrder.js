@@ -3,7 +3,6 @@
 const { ethers } = require('ethers');
 const { getPythPrice } = require('./getPythPrice');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { parseError } = require('../parseError');
 const { getPerpsPosition } = require('./getPerpsPosition');
 
@@ -13,8 +12,8 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
   log({ address: wallet.address, accountId, marketId, sizeDelta, settlementStrategyId });
 
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     wallet
   );
 

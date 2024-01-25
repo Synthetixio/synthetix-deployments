@@ -2,7 +2,6 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
 const { traceTxn } = require('../traceTxn');
 
@@ -17,8 +16,8 @@ async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
   log({ address: wallet.address, accountId, symbol, amount, poolId });
 
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
   const position = await CoreProxy.getPositionCollateral(

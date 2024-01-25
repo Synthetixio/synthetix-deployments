@@ -3,7 +3,6 @@
 const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -21,8 +20,8 @@ async function setSpotWrapper({ marketId, symbol, targetAmount }) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const SpotMarketProxy = new ethers.Contract(
-    SpotMarketProxyDeployment.address,
-    SpotMarketProxyDeployment.abi,
+    require('../deployments/SpotMarketProxy.json').address,
+    require('../deployments/SpotMarketProxy.json').abi,
     provider
   );
 

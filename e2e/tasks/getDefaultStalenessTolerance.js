@@ -1,21 +1,19 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
-const OracleManagerProxyDeployment = require('../deployments/OracleManagerProxy.json');
 
 async function getDefaultStalenessTolerance({ marketId }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     provider
   );
   const OracleManagerProxy = new ethers.Contract(
-    OracleManagerProxyDeployment.address,
-    OracleManagerProxyDeployment.abi,
+    require('../deployments/OracleManagerProxy.json').address,
+    require('../deployments/OracleManagerProxy.json').abi,
     provider
   );
 

@@ -2,8 +2,6 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const extras = require('../deployments/extras.json');
-const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -21,6 +19,7 @@ async function unwrapCollateral({ wallet, symbol, amount }) {
   );
   const collateralDecimals = await CollateralToken.decimals();
 
+  const extras = require('../deployments/extras.json');
   const SynthToken = new ethers.Contract(
     extras.synth_usdc_token_address,
     [
@@ -43,8 +42,8 @@ async function unwrapCollateral({ wallet, symbol, amount }) {
   });
 
   const SpotMarket = new ethers.Contract(
-    SpotMarketProxyDeployment.address,
-    SpotMarketProxyDeployment.abi,
+    require('../deployments/SpotMarketProxy.json').address,
+    require('../deployments/SpotMarketProxy.json').abi,
     wallet
   );
 

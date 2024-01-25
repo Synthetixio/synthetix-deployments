@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 
 async function getPerpsPosition({ accountId, marketId }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     provider
   );
 

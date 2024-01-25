@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
 require('../../inspect');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
@@ -13,12 +14,6 @@ const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
-const extras = require('../../deployments/extras.json');
-const CoreProxyDeployment = require('../../deployments/CoreProxy.json');
-const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
-
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   let wallet;
   let address;
@@ -28,8 +23,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   );
 
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../../deployments/CoreProxy.json').address,
+    require('../../deployments/CoreProxy.json').abi,
     provider
   );
 
@@ -78,7 +73,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       await isCollateralApproved({
         address,
         symbol: 'fUSDC',
-        spenderAddress: SpotMarketProxyDeployment.address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
       'New wallet has not allowed SpotMarket fUSDC spending'
@@ -86,13 +81,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await approveCollateral({
       privateKey,
       symbol: 'fUSDC',
-      spenderAddress: SpotMarketProxyDeployment.address,
+      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
         symbol: 'fUSDC',
-        spenderAddress: SpotMarketProxyDeployment.address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
@@ -101,7 +96,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should wrap maximum fUSDC from allowed global limit of $5_000_000', async () => {
     const currentMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
-        await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
+        await CoreProxy.getMarketCollateralValue(
+          require('../../deployments/extras.json').synth_usdc_market_id
+        )
       )
     );
     assert.ok(currentMarketCollateral < 5_000_000);
@@ -114,7 +111,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should reject wrapping even $1 more fUSDC', async () => {
     const newMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
-        await CoreProxy.getMarketCollateralValue(extras.synth_usdc_market_id)
+        await CoreProxy.getMarketCollateralValue(
+          require('../../deployments/extras.json').synth_usdc_market_id
+        )
       )
     );
     assert.ok(

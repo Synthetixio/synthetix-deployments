@@ -50,12 +50,27 @@ exports.run = function () {
 
   it('should approve SNX spending', async () => {
     assert.equal(
-      await isCollateralApproved({ address, symbol: 'SNX' }),
+      await isCollateralApproved({
+        address,
+        symbol: 'SNX',
+        spenderAddress: require('../deployments/CoreProxy.json').address,
+      }),
       false,
       'new wallet has not yet approved SNX for CoreProxy'
     );
-    await approveCollateral({ privateKey, symbol: 'SNX' });
-    assert.equal(await isCollateralApproved({ address, symbol: 'SNX' }), true);
+    await approveCollateral({
+      privateKey,
+      symbol: 'SNX',
+      spenderAddress: require('../deployments/CoreProxy.json').address,
+    });
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'SNX',
+        spenderAddress: require('../deployments/CoreProxy.json').address,
+      }),
+      true
+    );
   });
 
   it('should create user account', async () => {
