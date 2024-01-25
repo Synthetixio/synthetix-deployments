@@ -7,7 +7,15 @@ async function contractsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
-  const { chainId } = await provider.getNetwork();
+  const network = await provider.getNetwork();
+  const {
+    name,
+    version,
+    preset,
+    chainId = network.chainId,
+    contracts,
+  } = require('../deployments/meta.json');
+  log({ name, version, preset, chainId });
 
   const out = [];
   const table = [];
@@ -23,12 +31,11 @@ async function contractsOwnership() {
         <tbody>
     `);
 
-  const meta = require('../deployments/meta.json');
   const abi = [
     'function owner() view returns (address)',
     'function nominatedOwner() view returns (address)',
   ];
-  for (const [name, address] of Object.entries(meta.contracts)) {
+  for (const [name, address] of Object.entries(contracts)) {
     const Contract = new ethers.Contract(address, abi, provider);
     const [owner, nominatedOwner] = await Promise.all([
       Contract.owner().catch(() => ethers.constants.AddressZero),

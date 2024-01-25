@@ -2,17 +2,21 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-
-const MARKET_IDS = [
-  // We cannot get the list of markets from contract, can only hardcode it
-  1,
-];
+const { getSynthMarketIds } = require('./lib/getSynthMarketIds');
 
 async function marketsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
-  const { chainId } = await provider.getNetwork();
+  const network = await provider.getNetwork();
+  const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
+  log({ name, version, preset, chainId });
+
+  const synthMarketIds = await getSynthMarketIds();
+  log({ synthMarketIds });
+  if (synthMarketIds.length < 1) {
+    return '';
+  }
 
   const out = [];
   const table = [];
@@ -35,8 +39,9 @@ async function marketsOwnership() {
     SpotMarketProxyDeployment.abi,
     provider
   );
+
   const markets = await Promise.all(
-    MARKET_IDS.map(async (marketId) => {
+    synthMarketIds.map(async (marketId) => {
       const [name, owner, nominatedOwner] = await Promise.all([
         SpotMarketProxy.name(marketId),
         SpotMarketProxy.getMarketOwner(marketId),
