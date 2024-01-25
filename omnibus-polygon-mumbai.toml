@@ -13,7 +13,7 @@ include = [
     "tomls/permit-all-transferCrossChain.toml",
     # Governance
     "tomls/governance/councils-satellite.toml",
-    "tomls/governance/snapshot-contract-mock.toml",
+    # "tomls/governance/snapshot-contract-mock.toml",
     "tomls/governance/ccip-testnet.toml",
 ]
 

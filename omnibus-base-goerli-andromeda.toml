@@ -29,7 +29,7 @@ include = [
     "tomls/omnibus-base-goerli-andromeda/perps/eth.toml",
     # Governance
     "tomls/governance/councils-satellite.toml",
-    "tomls/governance/snapshot-contract-mock.toml",
+    # "tomls/governance/snapshot-contract-mock.toml",
     "tomls/governance/ccip-testnet.toml",
 ]
 
