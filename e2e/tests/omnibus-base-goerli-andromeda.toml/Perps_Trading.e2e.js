@@ -274,7 +274,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     // Wait for commitment price/settlement delay
-    await wait(4000);
+    await wait(2000);
+
+    // Wait for pyth to update prices
+    await wait(5000);
 
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
@@ -299,7 +302,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     // Wait for commitment price/settlement delay
-    await wait(4000);
+    await wait(2000);
+
+    // Wait for pyth to update prices
+    await wait(5000);
 
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
