@@ -46,5 +46,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, settlementStrategyId] = process.argv.slice(2);
-  getPerpsSettlementStrategy({ marketId, settlementStrategyId }).then(console.log);
+  getPerpsSettlementStrategy({ marketId, settlementStrategyId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

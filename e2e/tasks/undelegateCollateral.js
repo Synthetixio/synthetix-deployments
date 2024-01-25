@@ -97,5 +97,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  undelegateCollateral({ wallet, accountId, symbol, targetAmount, poolId }).then(console.log);
+  undelegateCollateral({ wallet, accountId, symbol, targetAmount, poolId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

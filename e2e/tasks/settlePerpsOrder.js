@@ -41,5 +41,7 @@ if (require.main === module) {
   );
   const wallet = new ethers.Wallet(pk, provider);
 
-  settlePerpsOrder({ wallet, accountId, marketId }).then(console.log);
+  settlePerpsOrder({ wallet, accountId, marketId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

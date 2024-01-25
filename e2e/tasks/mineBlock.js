@@ -26,5 +26,5 @@ module.exports = {
 
 if (require.main === module) {
   require('../inspect');
-  mineBlock().then(console.log);
+  mineBlock().then((data) => console.log(JSON.stringify(data, null, 2)));
 }

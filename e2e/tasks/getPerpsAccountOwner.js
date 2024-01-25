@@ -23,5 +23,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [accountId] = process.argv.slice(2);
-  getPerpsAccountOwner({ accountId }).then(console.log);
+  getPerpsAccountOwner({ accountId }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

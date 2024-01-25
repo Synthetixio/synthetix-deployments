@@ -21,5 +21,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [symbol] = process.argv.slice(2);
-  getCollateralConfig(symbol).then(console.log);
+  getCollateralConfig(symbol).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

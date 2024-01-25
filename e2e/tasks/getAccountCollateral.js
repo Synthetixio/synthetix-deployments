@@ -34,5 +34,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [accountId, symbol] = process.argv.slice(2);
-  getAccountCollateral({ accountId, symbol }).then(console.log);
+  getAccountCollateral({ accountId, symbol }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

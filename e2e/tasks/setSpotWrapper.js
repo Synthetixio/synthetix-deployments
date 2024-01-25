@@ -46,7 +46,10 @@ async function setSpotWrapper({ marketId, symbol, targetAmount }) {
   const tx = await SpotMarketProxy.connect(signer)
     .setWrapper(...args, { gasLimit: gasLimit.mul(2) })
     .catch(parseError);
-  await tx.wait().then(log).catch(parseError);
+  await tx
+    .wait()
+    .then((data) => console.log(JSON.stringify(data, null, 2)))
+    .catch(parseError);
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 }
 
@@ -57,5 +60,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, symbol, targetAmount] = process.argv.slice(2);
-  setSpotWrapper({ marketId, symbol, targetAmount }).then(console.log);
+  setSpotWrapper({ marketId, symbol, targetAmount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

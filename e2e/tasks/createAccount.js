@@ -44,5 +44,5 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  createAccount({ wallet, accountId }).then(console.log);
+  createAccount({ wallet, accountId }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

@@ -32,5 +32,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, symbol] = process.argv.slice(2);
-  getMaximumMarketCollateral({ marketId, symbol }).then(console.log);
+  getMaximumMarketCollateral({ marketId, symbol }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

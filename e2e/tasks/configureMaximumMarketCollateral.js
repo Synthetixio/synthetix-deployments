@@ -65,5 +65,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, symbol, targetAmount] = process.argv.slice(2);
-  configureMaximumMarketCollateral({ marketId, symbol, targetAmount }).then(console.log);
+  configureMaximumMarketCollateral({ marketId, symbol, targetAmount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

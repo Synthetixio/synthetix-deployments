@@ -35,5 +35,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  swapToSusd({ wallet, marketId, amount }).then(console.log);
+  swapToSusd({ wallet, marketId, amount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

@@ -65,5 +65,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [privateKey, tokenAddress, balance] = process.argv.slice(2);
-  setMintableTokenBalance({ privateKey, tokenAddress, balance }).then(console.log);
+  setMintableTokenBalance({ privateKey, tokenAddress, balance }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

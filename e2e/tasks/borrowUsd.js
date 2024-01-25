@@ -62,5 +62,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [privateKey, accountId, symbol, amount, poolId] = process.argv.slice(2);
-  borrowUsd({ privateKey, accountId, symbol, amount, poolId }).then(console.log);
+  borrowUsd({ privateKey, accountId, symbol, amount, poolId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

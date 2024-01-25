@@ -75,5 +75,5 @@ if (require.main === module) {
     wallet,
     marketId,
     settlementStrategyId,
-  }).then(console.log);
+  }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

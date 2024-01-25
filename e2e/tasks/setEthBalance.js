@@ -27,5 +27,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [address, balance] = process.argv.slice(2);
-  setEthBalance({ address, balance }).then(console.log);
+  setEthBalance({ address, balance }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

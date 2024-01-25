@@ -44,5 +44,7 @@ if (require.main === module) {
       ].join('\n')
     );
   }
-  getDefaultStalenessTolerance({ marketId }).then(console.log);
+  getDefaultStalenessTolerance({ marketId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

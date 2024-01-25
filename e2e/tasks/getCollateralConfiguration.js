@@ -41,5 +41,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [address] = process.argv.slice(2);
-  getCollateralConfiguration(address).then(console.log);
+  getCollateralConfiguration(address).then((data) => console.log(JSON.stringify(data, null, 2)));
 }
