@@ -185,18 +185,10 @@ jobs:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
-    # environment:
-    #   CANNON_IPFS_URL: "http://127.0.0.1:5001"
     steps:
       - checkout
       - install-anvil
-      #- run-anvil:
-      #    provider-url: << parameters.provider-url >>
-      #- install-ipfs
-      #- run-ipfs
       - yarn-install
-      #- wait-for-anvil
-      #- wait-for-ipfs
 
       - run:
           name: "Build new package upgrading from << parameters.upgrade-from >> and keep RPC running"
@@ -340,16 +332,6 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "4b:3a:c8:23:b8:4e:86:32:8e:d3:2d:17:0c:2b:63:b6"
-      - run:
-          working_directory: ~/
-          name: "Checkout docs"
-          command: |
-            ssh-keyscan github.com >> ~/.ssh/known_hosts
-            git clone git@github.com:Synthetixio/Synthetix-Gitbook-v3.git --verbose --depth 1 --no-tags --single-branch synthetix-gitbook-v3
-
       - checkout
       - install-anvil
       - run-anvil:
@@ -376,6 +358,23 @@ jobs:
             mkdir -p docs
             node e2e/docgen > docs/<< parameters.chain-id >>-<< parameters.preset >>.md
 
+      - store_artifacts:
+          path: "./docs"
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5ZmBzDxKOn7bPLBV59jNb++t6inHRCI9k0TwULJWYxA" # Synthetix-Gitbook-v3
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - run:
+          working_directory: ~/
+          name: "Checkout synthetix-gitbook-v3"
+          command: |
+            git clone git@github.com:Synthetixio/Synthetix-Gitbook-v3.git --verbose --depth 1 --no-tags --single-branch synthetix-gitbook-v3
+
+      - run:
+          name: "Update synthetix-gitbook-v3"
+          command: |
             mkdir -p ~/synthetix-gitbook-v3/for-developers/deployment-info
             cp docs/<< parameters.chain-id >>-<< parameters.preset >>.md ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>.md
 
@@ -385,15 +384,67 @@ jobs:
             cp e2e/deployments/extras.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
 
-      - store_artifacts:
-          path: "./docs"
-
       - github-pr:
           working_directory: "~/synthetix-gitbook-v3"
           repo_slug: "Synthetixio/Synthetix-Gitbook-v3"
           branch_head: "deployment-info-<< parameters.chain-id >>-<< parameters.preset >>"
           branch_base: en
           commit_message: "Update deployment info for << parameters.chain-id >>-<< parameters.preset >>"
+
+  npm-package:
+    parameters:
+      package:
+        type: string
+      chain-id:
+        type: integer
+      preset:
+        type: string
+      provider-url:
+        type: string
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - install-anvil
+      - yarn-install
+
+      - run:
+          name: "Extract cannon state"
+          command: yarn cannon inspect << parameters.package >>@<< parameters.preset >> --chain-id << parameters.chain-id >> --json > ./cannon-state.json
+
+      - run:
+          name: "Generate deployments"
+          command: node e2e/generateDeployments ./cannon-state.json
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:su5uak7HO/FZN8fbZtpol0nrh1Ah/MiH49NmCVkNFEg" # v3-contracts
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - run:
+          working_directory: ~/
+          name: "Checkout v3-contracts"
+          command: |
+            git clone git@github.com:Synthetixio/v3-contracts.git --verbose --depth 1 --no-tags --single-branch v3-contracts
+
+      - run:
+          name: "Update v3-contracts"
+          command: |
+            mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
+            cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+
+      - github-pr:
+          working_directory: "~/v3-contracts"
+          repo_slug: "Synthetixio/v3-contracts"
+          branch_head: "<< parameters.chain-id >>-<< parameters.preset >>"
+          branch_base: master
+          commit_message: "Update << parameters.chain-id >>-<< parameters.preset >>"
 
 workflows:
   version: 2.1
@@ -402,6 +453,7 @@ workflows:
     unless:
       or:
         #- equal: ["docgen", << pipeline.git.branch >>]
+        #- equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
         - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
     jobs:
       - lint
@@ -529,6 +581,71 @@ workflows:
 
       - deployment-info:
           name: docs-optimism-goerli
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 420
+          provider-url: https://optimism-goerli.infura.io/v3/$INFURA_API_KEY
+
+  npm-package:
+    when:
+      or:
+        - and:
+            - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
+            - equal: ["npm-package", << pipeline.schedule.name >>]
+        - equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
+
+    jobs:
+      - npm-package:
+          name: npm-base-sepolia-andromeda
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 84532
+          provider-url: https://sepolia.base.org
+
+      - npm-package:
+          name: npm-base-goerli-andromeda
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 84531
+          provider-url: https://goerli.base.org
+
+      - npm-package:
+          name: npm-base-mainnet-andromeda
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 8453
+          provider-url: https://mainnet.base.org
+
+      - npm-package:
+          name: npm-mainnet
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 1
+          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-goerli
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 5
+          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-optimism-mainnet
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 10
+          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-optimism-goerli
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 420
