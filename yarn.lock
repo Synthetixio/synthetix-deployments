@@ -4794,7 +4794,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supports-color@npm:8.1.1":
+"supports-color@npm:8.1.1, supports-color@npm:^8.1.1":
   version: 8.1.1
   resolution: "supports-color@npm:8.1.1"
   dependencies:
@@ -4843,6 +4843,7 @@ __metadata:
     prettier: "npm:^3.2.2"
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
+    supports-color: "npm:^8.1.1"
   languageName: unknown
   linkType: soft
 

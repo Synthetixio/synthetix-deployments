@@ -46,7 +46,8 @@
     "numbro": "^2.4.0",
     "prettier": "^3.2.2",
     "prettier-plugin-toml": "^2.0.1",
-    "solc": "0.8.21"
+    "solc": "0.8.21",
+    "supports-color": "^8.1.1"
   },
   "mocha": {
     "timeout": "2m",

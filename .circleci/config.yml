@@ -249,13 +249,24 @@ jobs:
           path: "./e2e/deployments"
 
       - run:
+          name: "Debug logs"
+          background: true
+          command: |
+            touch "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+            tail -f "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+
+      - run:
           name: "Run tests"
           environment:
             DEBUG: "e2e:*"
+            DEBUG_TARGET: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
             GAS_REPORT: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
           command: |
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
             echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
+
+      - store_artifacts:
+          path: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
 
       - store_artifacts:
           path: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
