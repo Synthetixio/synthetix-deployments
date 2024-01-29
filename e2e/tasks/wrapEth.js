@@ -35,7 +35,7 @@ async function wrapEth({ privateKey, amount }) {
   });
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'WethToken.deposit', log }));
   const newBalance = parseFloat(
     ethers.utils.formatUnits(await WethToken.balanceOf(wallet.address))

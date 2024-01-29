@@ -49,7 +49,7 @@ async function setUSDCTokenBalance({ wallet, balance }) {
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'Token.transfer', log }));
   await wallet.provider.send('anvil_stopImpersonatingAccount', [friendlyWhale]);
 

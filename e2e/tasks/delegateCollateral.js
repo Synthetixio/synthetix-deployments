@@ -35,8 +35,8 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
   const tx = await CoreProxy.delegateCollateral(...args, { gasLimit: gasLimit.mul(2) });
   await tx
     .wait()
-    .then(({ events }) => log({ events }))
-    .catch(traceTxn(tx));
+    .then((txn) => log(txn.events) || txn, traceTxn(tx))
+    .then(gasLog({ action: 'CoreProxy.delegateCollateral', log }));
 
   return accountId;
 }

@@ -24,7 +24,7 @@ async function swapToSusd({ wallet, marketId, amount }) {
   const tx = await SpotMarketProxy.sell(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'SpotMarketProxy.sell', log }));
 }
 

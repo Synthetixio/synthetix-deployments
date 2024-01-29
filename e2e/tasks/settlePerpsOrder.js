@@ -25,7 +25,7 @@ async function settlePerpsOrder({ wallet, accountId, marketId }) {
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'PerpsMarketProxy.settleOrder', log }));
 
   const newPosition = await getPerpsPosition({ accountId, marketId });

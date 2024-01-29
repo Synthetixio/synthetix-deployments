@@ -53,7 +53,7 @@ async function setSettlementDelays({
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'PerpsMarketProxy.setSettlementStrategy', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 

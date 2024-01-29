@@ -29,7 +29,7 @@ async function withdrawCollateral({ privateKey, accountId, symbol, amount }) {
   ).catch(parseError);
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'CoreProxy.withdraw', log }));
 
   return accountId;

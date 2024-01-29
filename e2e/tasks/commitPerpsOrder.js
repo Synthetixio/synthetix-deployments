@@ -43,7 +43,7 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
   );
   const commitReceipt = await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'PerpsMarketProxy.commitOrder', log }));
 
   const block = await wallet.provider.getBlock(commitReceipt.blockNumber);

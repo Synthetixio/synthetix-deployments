@@ -31,7 +31,7 @@ async function createPerpsAccount({ wallet, accountId }) {
 
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'PerpsMarketProxy.createAccount(uint128)', log }));
 
   const newAccountOwner = await getPerpsAccountOwner({ accountId });

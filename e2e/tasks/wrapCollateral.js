@@ -59,7 +59,7 @@ async function wrapCollateral({ wallet, symbol, amount }) {
   const tx = await SpotMarket.wrap(...args, { gasLimit: gas.mul(2) }).catch(parseError);
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'SpotMarket.wrap', log }));
   const newBalance_token = parseFloat(
     ethers.utils.formatUnits(await CollateralToken.balanceOf(wallet.address), collateralDecimals)

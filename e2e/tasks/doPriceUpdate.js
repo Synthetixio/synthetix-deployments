@@ -45,7 +45,7 @@ async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
   }).catch(parseError);
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'PriceVerificationContract.fulfillOracleQuery', log }));
 
   log({ marketId, feedId, updated: true });

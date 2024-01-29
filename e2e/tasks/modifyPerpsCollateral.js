@@ -32,7 +32,7 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount }) {
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'PerpsMarketProxy.modifyCollateral', log }));
 
   const currentAmount = await getPerpsCollateral({ accountId });

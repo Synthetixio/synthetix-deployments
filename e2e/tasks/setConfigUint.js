@@ -39,7 +39,7 @@ async function setConfigUint({ key, value }) {
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'CoreProxy.setConfig', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 

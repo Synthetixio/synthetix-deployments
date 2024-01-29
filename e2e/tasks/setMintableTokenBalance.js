@@ -50,7 +50,7 @@ async function setMintableTokenBalance({ privateKey, tokenAddress, balance }) {
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'Token.mint', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 

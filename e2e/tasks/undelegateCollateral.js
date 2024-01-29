@@ -77,7 +77,7 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
   );
   await tx
     .wait()
-    .then((txn) => log(txn) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'CoreProxy.burnUsd + CoreProxy.delegateCollateral', log }));
 
   const newDebt = await CoreProxy.callStatic.getPositionDebt(

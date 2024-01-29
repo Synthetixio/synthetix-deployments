@@ -50,8 +50,8 @@ async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
   const tx = await CoreProxy.mintUsd(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   await tx
     .wait()
-    .then(({ events }) => log({ events }))
-    .catch(traceTxn(tx));
+    .then((txn) => log(txn.events) || txn, traceTxn(tx))
+    .then(gasLog({ action: 'CoreProxy.mintUsd', log }));
   return debt;
 }
 
