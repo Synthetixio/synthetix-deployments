@@ -2,6 +2,8 @@
 
 const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 async function approveToken({ privateKey, tokenAddress, spenderAddress }) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -21,7 +23,10 @@ async function approveToken({ privateKey, tokenAddress, spenderAddress }) {
   log({ symbol, tokenAddress, spenderAddress });
 
   const tx = await Token.approve(spenderAddress, ethers.constants.MaxUint256);
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn) || txn, parseError)
+    .then(gasLog({ action: 'Token.approve', log }));
   return null;
 }
 

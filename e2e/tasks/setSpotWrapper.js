@@ -4,6 +4,7 @@ const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -47,8 +48,8 @@ async function setSpotWrapper({ marketId, symbol, targetAmount }) {
     .catch(parseError);
   await tx
     .wait()
-    .then((data) => console.log(JSON.stringify(data, null, 2)))
-    .catch(parseError);
+    .then((txn) => log(txn) || txn, parseError)
+    .then(gasLog({ action: 'SpotMarketProxy.setWrapper', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 }
 

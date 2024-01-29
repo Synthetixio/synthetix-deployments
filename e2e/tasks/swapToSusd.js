@@ -2,6 +2,7 @@
 
 const { ethers } = require('ethers');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -13,14 +14,18 @@ async function swapToSusd({ wallet, marketId, amount }) {
     wallet
   );
 
-  const tx = await SpotMarketProxy.sell(
+  const args = [
     ethers.BigNumber.from(marketId), // uint128 marketId
     ethers.utils.parseEther(`${amount}`), // uint256 synthAmount
     ethers.utils.parseEther(`${amount}`), // uint256 minUsdAmount (0% slippage!)
     ethers.constants.AddressZero, // address referrer
-    { gasLimit: 10_000_000 }
-  ).catch(parseError);
-  await tx.wait();
+  ];
+  const gasLimit = await SpotMarketProxy.estimateGas.sell(...args).catch(parseError);
+  const tx = await SpotMarketProxy.sell(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn) || txn, parseError)
+    .then(gasLog({ action: 'SpotMarketProxy.sell', log }));
 }
 
 module.exports = {

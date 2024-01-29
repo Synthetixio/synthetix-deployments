@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -31,7 +32,10 @@ async function burnDebt({ wallet, accountId, symbol, poolId }) {
       oldDebt,
       { gasLimit: 10_000_000 }
     ).catch(parseError);
-    await tx.wait();
+    await tx
+      .wait()
+      .then((txn) => log(txn) || txn, parseError)
+      .then(gasLog({ action: 'CoreProxy.burnUsd', log }));
 
     const newDebt = await CoreProxy.callStatic.getPositionDebt(
       ethers.BigNumber.from(accountId),

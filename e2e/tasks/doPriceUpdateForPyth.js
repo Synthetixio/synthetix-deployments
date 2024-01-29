@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 const { traceTxn } = require('../traceTxn');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);

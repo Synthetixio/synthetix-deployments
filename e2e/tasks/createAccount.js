@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { getAccountOwner } = require('./getAccountOwner');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -24,7 +25,10 @@ async function createAccount({ wallet, accountId }) {
   const tx = await CoreProxy['createAccount(uint128)'](accountId, {
     gasLimit: gasLimit.mul(2),
   }).catch(parseError);
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.createAccount(uint128)', log }));
 
   const newAccountOwner = await getAccountOwner({ accountId });
   log({ accountId, newAccountOwner });

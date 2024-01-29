@@ -2,8 +2,9 @@
 
 const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
-
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 async function setMintableTokenBalance({ privateKey, tokenAddress, balance }) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -47,7 +48,10 @@ async function setMintableTokenBalance({ privateKey, tokenAddress, balance }) {
     ethers.utils.parseUnits(`${balance - oldBalance}`, decimals),
     wallet.address
   );
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn) || txn, parseError)
+    .then(gasLog({ action: 'Token.mint', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   const newBalance = parseFloat(
