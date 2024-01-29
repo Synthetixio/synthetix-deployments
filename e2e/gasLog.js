@@ -5,9 +5,7 @@ const GAS_REPORT = process.env.GAS_REPORT ? require('path').resolve(process.env.
 if (GAS_REPORT) {
   require('fs').writeFileSync(
     GAS_REPORT,
-    ['action', 'gasUsed', 'effectiveGasPrice', 'baseFeePerGas']
-      .map((value) => JSON.stringify(value))
-      .join(';') + '\n',
+    ['action', 'gasUsed', 'baseFeePerGas'].map((value) => JSON.stringify(value)).join(';') + '\n',
     'utf8'
   );
 }
@@ -24,7 +22,6 @@ function gasLog({ action, log }) {
     const gasInfo = {
       action,
       gasUsed: txn.gasUsed.toNumber(),
-      effectiveGasPrice: txn.effectiveGasPrice.toNumber(),
       baseFeePerGas: block.baseFeePerGas.toNumber(),
     };
     log(gasInfo);
