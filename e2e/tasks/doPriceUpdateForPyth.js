@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 const { traceTxn } = require('../traceTxn');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -111,8 +112,8 @@ async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract 
   });
   await tx
     .wait()
-    .then(({ events }) => log({ events }))
-    .catch(traceTxn(tx));
+    .then((txn) => log(txn.events) || txn, traceTxn(tx))
+    .then(gasLog({ action: 'PriceVerificationContract.updatePriceFeeds', log }));
 }
 
 module.exports = {

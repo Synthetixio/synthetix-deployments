@@ -4,6 +4,7 @@ const { ethers } = require('ethers');
 const { getPythPrice } = require('./getPythPrice');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 const { getPerpsPosition } = require('./getPerpsPosition');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -40,9 +41,11 @@ async function commitPerpsOrder({ wallet, accountId, marketId, sizeDelta, settle
   const tx = await PerpsMarketProxy.commitOrder(params, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
-  await tx.wait().catch(parseError);
+  const commitReceipt = await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'PerpsMarketProxy.commitOrder', log }));
 
-  const commitReceipt = await tx.wait().catch(parseError);
   const block = await wallet.provider.getBlock(commitReceipt.blockNumber);
   const commitmentTime = block.timestamp;
   log({ commitmentTime: new Date(commitmentTime * 1000) });

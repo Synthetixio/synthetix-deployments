@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -55,7 +56,10 @@ async function unwrapCollateral({ wallet, symbol, amount }) {
   log({ args });
   const gas = await SpotMarket.estimateGas.unwrap(...args).catch(parseError);
   const tx = await SpotMarket.unwrap(...args, { gasLimit: gas.mul(2) }).catch(parseError);
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'SpotMarket.unwrap', log }));
   const newBalance_token = parseFloat(
     ethers.utils.formatUnits(await CollateralToken.balanceOf(wallet.address), collateralDecimals)
   );

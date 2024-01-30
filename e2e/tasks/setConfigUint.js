@@ -5,6 +5,8 @@ const { setEthBalance } = require('./setEthBalance');
 const { getConfigUint } = require('./getConfigUint');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 async function setConfigUint({ key, value }) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -35,7 +37,10 @@ async function setConfigUint({ key, value }) {
     ethers.utils.hexZeroPad(ethers.utils.hexlify(value), 32),
     { gasLimit: 10_000_000 }
   );
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.setConfig', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   const newValue = await getConfigUint(key);

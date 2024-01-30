@@ -4,6 +4,7 @@ const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { mineBlock } = require('./mineBlock');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -74,7 +75,10 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
   const tx = await Multicall.tryBlockAndAggregate(...args, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
-  await tx.wait().catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.burnUsd + CoreProxy.delegateCollateral', log }));
 
   const newDebt = await CoreProxy.callStatic.getPositionDebt(
     ethers.BigNumber.from(accountId),

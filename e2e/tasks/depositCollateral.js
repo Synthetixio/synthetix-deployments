@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -19,14 +20,17 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
     require('../deployments/CoreProxy.json').abi,
     wallet
   );
-  const params = [
+  const args = [
     ethers.BigNumber.from(accountId),
     config.tokenAddress,
     ethers.utils.parseEther(`${amount}`),
   ];
-  const gasLimit = await CoreProxy.estimateGas.deposit(...params);
-  const tx = await CoreProxy.deposit(...params, { gasLimit: gasLimit.mul(2) }).catch(parseError);
-  await tx.wait();
+  const gasLimit = await CoreProxy.estimateGas.deposit(...args);
+  const tx = await CoreProxy.deposit(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.deposit', log }));
 
   return accountId;
 }

@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 const { traceTxn } = require('../traceTxn');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -49,8 +50,8 @@ async function borrowUsd({ privateKey, accountId, symbol, amount, poolId }) {
   const tx = await CoreProxy.mintUsd(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   await tx
     .wait()
-    .then(({ events }) => log({ events }))
-    .catch(traceTxn(tx));
+    .then((txn) => log(txn.events) || txn, traceTxn(tx))
+    .then(gasLog({ action: 'CoreProxy.mintUsd', log }));
   return debt;
 }
 

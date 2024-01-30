@@ -4,6 +4,8 @@ const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 async function setSettlementDelays({
   settlementStrategyId,
@@ -49,7 +51,10 @@ async function setSettlementDelays({
     strategy,
     { gasLimit: 10_000_000 }
   );
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'PerpsMarketProxy.setSettlementStrategy', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   const newStrategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });

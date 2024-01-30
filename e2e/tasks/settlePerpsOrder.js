@@ -2,6 +2,7 @@
 
 const { ethers } = require('ethers');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 const { getPerpsPosition } = require('./getPerpsPosition');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -22,7 +23,10 @@ async function settlePerpsOrder({ wallet, accountId, marketId }) {
   const tx = await PerpsMarketProxy.settleOrder(accountId, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
-  await tx.wait().catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'PerpsMarketProxy.settleOrder', log }));
 
   const newPosition = await getPerpsPosition({ accountId, marketId });
   log({ newPosition });

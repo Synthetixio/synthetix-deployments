@@ -5,6 +5,7 @@ const { setEthBalance } = require('./setEthBalance');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { getMaximumMarketCollateral } = require('./getMaximumMarketCollateral');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -50,8 +51,8 @@ async function configureMaximumMarketCollateral({ marketId, symbol, targetAmount
     .catch(parseError);
   await tx
     .wait()
-    .then(({ events }) => log({ events }))
-    .catch(parseError);
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.configureMaximumMarketCollateral', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   log({ newMaximumumMarketCollateral: await getMaximumMarketCollateral({ marketId, symbol }) });
