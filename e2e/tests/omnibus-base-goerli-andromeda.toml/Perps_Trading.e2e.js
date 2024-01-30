@@ -14,6 +14,10 @@ const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { swapToSusd } = require('../../tasks/swapToSusd');
+const {
+  configureMaximumMarketCollateral,
+} = require('../../tasks/configureMaximumMarketCollateral');
+const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
@@ -82,15 +86,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set fUSDC balance to 10_000_000', async () => {
+  it('should set fUSDC balance to 20_000_000', async () => {
     const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
       'New wallet has 0 fUSDC balance'
     );
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 10_000_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
+    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 20_000_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 20_000_000);
   });
 
   it('should approve fUSDC spending for SpotMarket', async () => {
@@ -136,9 +140,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should wrap 100_000 fUSDC', async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 100_000 });
-    assert.equal(balance, 100_000);
+  it('should increase max collateral for the test to 20_000_000', async () => {
+    await configureMaximumMarketCollateral({
+      marketId: extras.synth_usdc_market_id,
+      symbol: 'fUSDC',
+      targetAmount: String(20_000_000),
+    });
+    await setSpotWrapper({
+      marketId: extras.synth_usdc_market_id,
+      symbol: 'fUSDC',
+      targetAmount: String(20_000_000),
+    });
+  });
+
+  it('should wrap 10_000_000 fUSDC', async () => {
+    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 10_000_000 });
+    assert.equal(balance, 10_000_000);
   });
 
   // TODO: uncomment if we need to top up LP
@@ -214,10 +231,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should atomic swap 100_000 sUSDC to snxUSD to trade', async () => {
+  it('should atomic swap 10_000_000 sUSDC to snxUSD to trade', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 100_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000);
+    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 10_000_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 10_000_000);
   });
 
   it('should approve snxUSD spending for PerpsMarketProxy', async () => {
@@ -245,16 +262,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 100_000 snxUSD to Perps', async () => {
+  it('should deposit 10_000_000 snxUSD to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
-    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 100_000 });
-    assert.equal(await getPerpsCollateral({ accountId }), 100_000);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 10_000_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 10_000_000);
   });
 
   it('should withdraw 1_000 snxUSD from Perps', async () => {
-    assert.equal(await getPerpsCollateral({ accountId }), 100_000);
+    assert.equal(await getPerpsCollateral({ accountId }), 10_000_000);
     await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -1_000 });
-    assert.equal(await getPerpsCollateral({ accountId }), 99_000);
+    assert.equal(await getPerpsCollateral({ accountId }), 9_999_000);
   });
 
   it('should open a short 0.01 BTC position', async () => {
