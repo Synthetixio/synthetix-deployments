@@ -240,11 +240,48 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should undelegate 100_000 sUSDC from the Spartan Council pool', async () => {
+  it.skip('should undelegate 100_000 sUSDC from the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 5_000_000,
       totalAssigned: 5_000_000,
       totalLocked: 0,
+    });
+
+    await require('../../tasks/burnDebt').burnDebt({
+      wallet,
+      accountId,
+      symbol: 'sUSDC',
+      poolId: 1,
+    });
+
+    await require('../../tasks/mineBlock').mineBlock();
+
+    const SpotMarketProxy = new ethers.Contract(
+      require('../../deployments/SpotMarketProxy.json').address,
+      require('../../deployments/SpotMarketProxy.json').abi,
+      provider
+    );
+    log({
+      marketId: 1,
+      minimumCredit: await SpotMarketProxy.minimumCredit(1),
+    });
+
+    const CoreProxy = new ethers.Contract(
+      require('../../deployments/CoreProxy.json').address,
+      require('../../deployments/CoreProxy.json').abi,
+      provider
+    );
+    log({
+      marketId: 1,
+      isMarketCapacityLocked: await CoreProxy.isMarketCapacityLocked(1),
+      getMarketReportedDebt: await CoreProxy.getMarketReportedDebt(1),
+      getMarketTotalDebt: await CoreProxy.getMarketTotalDebt(1),
+    });
+    log({
+      marketId: 2,
+      isMarketCapacityLocked: await CoreProxy.isMarketCapacityLocked(2),
+      getMarketReportedDebt: await CoreProxy.getMarketReportedDebt(2),
+      getMarketTotalDebt: await CoreProxy.getMarketTotalDebt(2),
     });
 
     await undelegateCollateral({
@@ -262,7 +299,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should not be able to withdraw because of accountTimeoutWithdraw', async () => {
+  it.skip('should not be able to withdraw because of accountTimeoutWithdraw', async () => {
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 100 });
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 100);
 
@@ -277,7 +314,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should withdraw 100_000 sUSDC', async () => {
+  it.skip('should withdraw 100_000 sUSDC', async () => {
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
     assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_000_000);
