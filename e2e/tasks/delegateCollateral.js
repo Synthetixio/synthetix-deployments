@@ -2,7 +2,6 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
 const { traceTxn } = require('../traceTxn');
 
@@ -16,8 +15,8 @@ async function delegateCollateral({ privateKey, accountId, symbol, amount, poolI
   const wallet = new ethers.Wallet(privateKey, provider);
   log({ address: wallet.address, accountId, symbol, token: config.tokenAddress, amount, poolId });
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
 
@@ -48,5 +47,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [privateKey, accountId, symbol, amount, poolId] = process.argv.slice(2);
-  delegateCollateral({ privateKey, accountId, symbol, amount, poolId }).then(console.log);
+  delegateCollateral({ privateKey, accountId, symbol, amount, poolId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

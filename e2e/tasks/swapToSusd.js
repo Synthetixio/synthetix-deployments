@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -9,8 +8,8 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 async function swapToSusd({ wallet, marketId, amount }) {
   log({ address: wallet.address, marketId, amount });
   const SpotMarketProxy = new ethers.Contract(
-    SpotMarketProxyDeployment.address,
-    SpotMarketProxyDeployment.abi,
+    require('../deployments/SpotMarketProxy.json').address,
+    require('../deployments/SpotMarketProxy.json').abi,
     wallet
   );
 
@@ -35,5 +34,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  swapToSusd({ wallet, marketId, amount }).then(console.log);
+  swapToSusd({ wallet, marketId, amount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

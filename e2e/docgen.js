@@ -32,5 +32,7 @@ module.exports = {
 
 if (require.main === module) {
   require('./inspect');
-  docgen().then(prettyMd).then(console.log);
+  docgen()
+    .then(prettyMd)
+    .then((data) => console.log(JSON.stringify(data, null, 2)));
 }

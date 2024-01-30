@@ -1,17 +1,13 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
+require('../../inspect');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
+
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
-
-require('../../inspect');
-
-const extras = require('../../deployments/extras.json');
-const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
-
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const marketId = 200;
@@ -22,8 +18,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   const wallet = ethers.Wallet.createRandom().connect(provider);
 
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../../deployments/PerpsMarketProxy.json').address,
+    require('../../deployments/PerpsMarketProxy.json').abi,
     wallet
   );
 
@@ -94,12 +90,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 100,
-      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 200,
-      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
     });
   });
 

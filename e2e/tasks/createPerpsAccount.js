@@ -3,15 +3,14 @@
 const { ethers } = require('ethers');
 // const crypto = require('crypto');
 const { getPerpsAccountOwner } = require('./getPerpsAccountOwner');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function createPerpsAccount({ wallet, accountId }) {
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     wallet
   );
 
@@ -47,5 +46,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  createPerpsAccount({ wallet, accountId }).then(console.log);
+  createPerpsAccount({ wallet, accountId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

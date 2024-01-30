@@ -2,7 +2,6 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -16,8 +15,8 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
   log({ address: wallet.address, accountId, symbol, amount });
 
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
   const params = [
@@ -39,5 +38,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [privateKey, accountId, symbol, amount] = process.argv.slice(2);
-  depositCollateral({ privateKey, accountId, symbol, amount }).then(console.log);
+  depositCollateral({ privateKey, accountId, symbol, amount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

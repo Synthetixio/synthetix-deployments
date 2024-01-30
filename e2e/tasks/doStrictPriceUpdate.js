@@ -88,5 +88,5 @@ if (require.main === module) {
     marketId,
     settlementStrategyId,
     commitmentTime: Date.now(),
-  }).then(console.log);
+  }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

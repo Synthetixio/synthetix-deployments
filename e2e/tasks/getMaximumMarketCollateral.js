@@ -2,15 +2,14 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 async function getMaximumMarketCollateral({ marketId, symbol }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     provider
   );
 
@@ -32,5 +31,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, symbol] = process.argv.slice(2);
-  getMaximumMarketCollateral({ marketId, symbol }).then(console.log);
+  getMaximumMarketCollateral({ marketId, symbol }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

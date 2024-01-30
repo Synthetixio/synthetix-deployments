@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const AccountProxyDeployment = require('../deployments/AccountProxy.json');
 
 async function getAccounts({ address }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const AccountProxy = new ethers.Contract(
-    AccountProxyDeployment.address,
-    AccountProxyDeployment.abi,
+    require('../deployments/AccountProxy.json').address,
+    require('../deployments/AccountProxy.json').abi,
     provider
   );
   const numberOfAccountTokens = await AccountProxy.balanceOf(address);

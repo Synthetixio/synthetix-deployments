@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { parseError } = require('../parseError');
 const { getPerpsPosition } = require('./getPerpsPosition');
 
@@ -10,8 +9,8 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 async function settlePerpsOrder({ wallet, accountId, marketId }) {
   log({ address: wallet.address, accountId, marketId });
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     wallet
   );
 
@@ -41,5 +40,7 @@ if (require.main === module) {
   );
   const wallet = new ethers.Wallet(pk, provider);
 
-  settlePerpsOrder({ wallet, accountId, marketId }).then(console.log);
+  settlePerpsOrder({ wallet, accountId, marketId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

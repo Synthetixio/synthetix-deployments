@@ -3,7 +3,6 @@
 const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getConfigUint } = require('./getConfigUint');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -12,8 +11,8 @@ async function setConfigUint({ key, value }) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     provider
   );
   const owner = await CoreProxy.owner();
@@ -50,5 +49,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [key, value] = process.argv.slice(2);
-  setConfigUint({ key, value }).then(console.log);
+  setConfigUint({ key, value }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

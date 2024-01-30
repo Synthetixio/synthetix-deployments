@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const assert = require('assert');
 const { ethers } = require('ethers');
 require('../../inspect');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
@@ -27,11 +28,6 @@ const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
-
-const extras = require('../../deployments/extras.json');
-const SpotMarketProxyDeployment = require('../../deployments/SpotMarketProxy.json');
-
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -95,7 +91,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       await isCollateralApproved({
         address,
         symbol: 'fUSDC',
-        spenderAddress: SpotMarketProxyDeployment.address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
       'New wallet has not allowed SpotMarket fUSDC spending'
@@ -103,13 +99,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await approveCollateral({
       privateKey,
       symbol: 'fUSDC',
-      spenderAddress: SpotMarketProxyDeployment.address,
+      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
         symbol: 'fUSDC',
-        spenderAddress: SpotMarketProxyDeployment.address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
@@ -117,12 +113,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should increase max collateral for the test to 10_000_000', async () => {
     await configureMaximumMarketCollateral({
-      marketId: extras.synth_usdc_market_id,
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'fUSDC',
       targetAmount: String(10_000_000),
     });
     await setSpotWrapper({
-      marketId: extras.synth_usdc_market_id,
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'fUSDC',
       targetAmount: String(10_000_000),
     });
@@ -135,12 +131,27 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should approve sUSDC spending for CoreProxy', async () => {
     assert.equal(
-      await isCollateralApproved({ address, symbol: 'sUSDC' }),
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSDC',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
       false,
       'New wallet has not allowed CoreProxy sUSDC spending'
     );
-    await approveCollateral({ privateKey, symbol: 'sUSDC' });
-    assert.equal(await isCollateralApproved({ address, symbol: 'sUSDC' }), true);
+    await approveCollateral({
+      privateKey,
+      symbol: 'sUSDC',
+      spenderAddress: require('../../deployments/CoreProxy.json').address,
+    });
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSDC',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
+      true
+    );
   });
 
   it('should deposit 4_900_000 sUSDC into the system', async () => {
@@ -170,12 +181,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 100,
-      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 200,
-      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
     });
   });
 
@@ -201,18 +212,37 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should atomic swap 50 sUSDC to snxUSD to burn debt', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({ wallet, marketId: extras.synth_usdc_market_id, amount: 50 });
+    await swapToSusd({
+      wallet,
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 50,
+    });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
   });
 
   it('should approve snxUSD spending for CoreProxy', async () => {
     assert.equal(
-      await isCollateralApproved({ address, symbol: 'snxUSD' }),
+      await isCollateralApproved({
+        address,
+        symbol: 'snxUSD',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
       false,
       'New wallet has not allowed CoreProxy snxUSD spending'
     );
-    await approveCollateral({ privateKey, symbol: 'snxUSD' });
-    assert.equal(await isCollateralApproved({ address, symbol: 'snxUSD' }), true);
+    await approveCollateral({
+      privateKey,
+      symbol: 'snxUSD',
+      spenderAddress: require('../../deployments/CoreProxy.json').address,
+    });
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'snxUSD',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
+      true
+    );
   });
 
   it('should deposit 30 snxUSD into the system', async () => {

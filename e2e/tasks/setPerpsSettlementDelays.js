@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { setEthBalance } = require('./setEthBalance');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -18,8 +17,8 @@ async function setSettlementDelays({
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     provider
   );
   const strategy = await getPerpsSettlementStrategy({ marketId, settlementStrategyId });

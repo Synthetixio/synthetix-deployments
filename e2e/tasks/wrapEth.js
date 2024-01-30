@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -18,8 +17,8 @@ async function wrapEth({ privateKey, amount }) {
   const wallet = new ethers.Wallet(privateKey, provider);
 
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
   const collateralConfigs = await CoreProxy.getCollateralConfigurations(true);

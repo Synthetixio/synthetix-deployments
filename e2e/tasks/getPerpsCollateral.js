@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 
 async function getPerpsCollateral({ accountId }) {
   const sUSDMarketId = 0;
@@ -10,8 +9,8 @@ async function getPerpsCollateral({ accountId }) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     provider
   );
 
@@ -27,5 +26,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [accountId] = process.argv.slice(2);
-  getPerpsCollateral({ accountId }).then(console.log);
+  getPerpsCollateral({ accountId }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

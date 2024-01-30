@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 async function getCollateralConfiguration(address) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     provider
   );
   const config = await CoreProxy.getCollateralConfiguration(address);
@@ -41,5 +40,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [address] = process.argv.slice(2);
-  getCollateralConfiguration(address).then(console.log);
+  getCollateralConfiguration(address).then((data) => console.log(JSON.stringify(data, null, 2)));
 }
