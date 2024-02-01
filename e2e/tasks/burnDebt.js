@@ -2,8 +2,8 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -12,8 +12,8 @@ async function burnDebt({ wallet, accountId, symbol, poolId }) {
   log({ address: wallet.address, accountId, symbol, poolId });
 
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
 
@@ -32,7 +32,10 @@ async function burnDebt({ wallet, accountId, symbol, poolId }) {
       oldDebt,
       { gasLimit: 10_000_000 }
     ).catch(parseError);
-    await tx.wait();
+    await tx
+      .wait()
+      .then((txn) => log(txn.events) || txn, parseError)
+      .then(gasLog({ action: 'CoreProxy.burnUsd', log }));
 
     const newDebt = await CoreProxy.callStatic.getPositionDebt(
       ethers.BigNumber.from(accountId),
@@ -56,5 +59,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  burnDebt({ wallet, accountId, symbol, poolId }).then(console.log);
+  burnDebt({ wallet, accountId, symbol, poolId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

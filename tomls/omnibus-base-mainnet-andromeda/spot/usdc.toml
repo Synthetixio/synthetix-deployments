@@ -1,5 +1,5 @@
 [setting.synthUsdcMaxMarketCollateral]
-defaultValue = "<%= parseEther(String(50_000)) %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>" #$1m USDC LP cap
 
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"

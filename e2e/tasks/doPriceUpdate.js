@@ -3,6 +3,7 @@
 const { ethers } = require('ethers');
 const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -42,7 +43,10 @@ async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
   const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
     value: ethers.BigNumber.from(1), // 1 wei,
   }).catch(parseError);
-  await tx.wait().catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'PriceVerificationContract.fulfillOracleQuery', log }));
 
   log({ marketId, feedId, updated: true });
 }
@@ -75,5 +79,5 @@ if (require.main === module) {
     wallet,
     marketId,
     settlementStrategyId,
-  }).then(console.log);
+  }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

@@ -2,23 +2,22 @@
 
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
-const MulticallDeployment = require('../deployments/TrustedMulticallForwarder.json');
 const { mineBlock } = require('./mineBlock');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, poolId }) {
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
 
   const Multicall = new ethers.Contract(
-    MulticallDeployment.address,
-    MulticallDeployment.abi,
+    require('../deployments/TrustedMulticallForwarder.json').address,
+    require('../deployments/TrustedMulticallForwarder.json').abi,
     wallet
   );
 
@@ -76,7 +75,10 @@ async function undelegateCollateral({ wallet, accountId, symbol, targetAmount, p
   const tx = await Multicall.tryBlockAndAggregate(...args, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
-  await tx.wait().catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.burnUsd + CoreProxy.delegateCollateral', log }));
 
   const newDebt = await CoreProxy.callStatic.getPositionDebt(
     ethers.BigNumber.from(accountId),
@@ -97,5 +99,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  undelegateCollateral({ wallet, accountId, symbol, targetAmount, poolId }).then(console.log);
+  undelegateCollateral({ wallet, accountId, symbol, targetAmount, poolId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

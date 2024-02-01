@@ -4,8 +4,8 @@ const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { getMaximumMarketCollateral } = require('./getMaximumMarketCollateral');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -22,8 +22,8 @@ async function configureMaximumMarketCollateral({ marketId, symbol, targetAmount
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     provider
   );
 
@@ -51,8 +51,8 @@ async function configureMaximumMarketCollateral({ marketId, symbol, targetAmount
     .catch(parseError);
   await tx
     .wait()
-    .then(({ events }) => log({ events }))
-    .catch(parseError);
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.configureMaximumMarketCollateral', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   log({ newMaximumumMarketCollateral: await getMaximumMarketCollateral({ marketId, symbol }) });
@@ -65,5 +65,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, symbol, targetAmount] = process.argv.slice(2);
-  configureMaximumMarketCollateral({ marketId, symbol, targetAmount }).then(console.log);
+  configureMaximumMarketCollateral({ marketId, symbol, targetAmount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

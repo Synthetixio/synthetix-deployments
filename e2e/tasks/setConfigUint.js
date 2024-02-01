@@ -3,17 +3,18 @@
 const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getConfigUint } = require('./getConfigUint');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 async function setConfigUint({ key, value }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     provider
   );
   const owner = await CoreProxy.owner();
@@ -36,7 +37,10 @@ async function setConfigUint({ key, value }) {
     ethers.utils.hexZeroPad(ethers.utils.hexlify(value), 32),
     { gasLimit: 10_000_000 }
   );
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.setConfig', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
   const newValue = await getConfigUint(key);
@@ -50,5 +54,5 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [key, value] = process.argv.slice(2);
-  setConfigUint({ key, value }).then(console.log);
+  setConfigUint({ key, value }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

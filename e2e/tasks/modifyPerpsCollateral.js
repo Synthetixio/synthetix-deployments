@@ -2,8 +2,8 @@
 
 const { ethers } = require('ethers');
 const { getPerpsCollateral } = require('./getPerpsCollateral');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -15,8 +15,8 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount }) {
   log({ address: wallet.address, accountId, deltaAmount, oldAmount });
 
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     wallet
   );
 
@@ -30,7 +30,10 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount }) {
   const tx = await PerpsMarketProxy.modifyCollateral(...args, { gasLimit: gasLimit.mul(2) }).catch(
     parseError
   );
-  await tx.wait().catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'PerpsMarketProxy.modifyCollateral', log }));
 
   const currentAmount = await getPerpsCollateral({ accountId });
   log({ address: wallet.address, accountId, deltaAmount, currentAmount });
@@ -47,5 +50,7 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  modifyPerpsCollateral({ wallet, accountId, deltaAmount }).then(console.log);
+  modifyPerpsCollateral({ wallet, accountId, deltaAmount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

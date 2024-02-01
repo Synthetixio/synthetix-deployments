@@ -1,6 +1,8 @@
 const util = require('util');
 const { ethers } = require('ethers');
 
+require('./debugTarget');
+
 // util.inspect.defaultOptions.compact = true;
 // util.inspect.defaultOptions.breakLength = Infinity;
 util.inspect.defaultOptions.colors = true;

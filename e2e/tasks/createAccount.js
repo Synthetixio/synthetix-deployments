@@ -2,15 +2,15 @@
 
 const { ethers } = require('ethers');
 const { getAccountOwner } = require('./getAccountOwner');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function createAccount({ wallet, accountId }) {
   const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
+    require('../deployments/CoreProxy.json').address,
+    require('../deployments/CoreProxy.json').abi,
     wallet
   );
 
@@ -25,7 +25,10 @@ async function createAccount({ wallet, accountId }) {
   const tx = await CoreProxy['createAccount(uint128)'](accountId, {
     gasLimit: gasLimit.mul(2),
   }).catch(parseError);
-  await tx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'CoreProxy.createAccount(uint128)', log }));
 
   const newAccountOwner = await getAccountOwner({ accountId });
   log({ accountId, newAccountOwner });
@@ -44,5 +47,5 @@ if (require.main === module) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  createAccount({ wallet, accountId }).then(console.log);
+  createAccount({ wallet, accountId }).then((data) => console.log(JSON.stringify(data, null, 2)));
 }

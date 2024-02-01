@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const CoreProxyDeployment = require('../deployments/CoreProxy.json');
+const { getCollateralConfig } = require('./getCollateralConfig');
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -17,21 +19,10 @@ async function wrapEth({ privateKey, amount }) {
   );
   const wallet = new ethers.Wallet(privateKey, provider);
 
-  const CoreProxy = new ethers.Contract(
-    CoreProxyDeployment.address,
-    CoreProxyDeployment.abi,
-    wallet
-  );
-  const collateralConfigs = await CoreProxy.getCollateralConfigurations(true);
-  const collaterals = await Promise.all(
-    collateralConfigs.map(async (config) => {
-      const contract = new ethers.Contract(config.tokenAddress, erc20Abi, wallet);
-      const symbol = await contract.symbol();
-      return { contract, symbol };
-    })
-  );
-  const weth = collaterals.find(({ symbol }) => symbol === 'WETH').contract;
-  const balance = parseFloat(ethers.utils.formatUnits(await weth.balanceOf(wallet.address)));
+  const config = await getCollateralConfig('WETH');
+  const WethToken = new ethers.Contract(config.tokenAddress, erc20Abi, wallet);
+
+  const balance = parseFloat(ethers.utils.formatUnits(await WethToken.balanceOf(wallet.address)));
   log({ oldBalance: balance });
 
   if (balance >= amount) {
@@ -39,11 +30,16 @@ async function wrapEth({ privateKey, amount }) {
     return balance;
   }
 
-  const wrapTx = await weth.deposit({
+  const tx = await WethToken.deposit({
     value: ethers.utils.hexValue(ethers.utils.parseEther(`${amount}`).toHexString()),
   });
-  await wrapTx.wait();
-  const newBalance = parseFloat(ethers.utils.formatUnits(await weth.balanceOf(wallet.address)));
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'WethToken.deposit', log }));
+  const newBalance = parseFloat(
+    ethers.utils.formatUnits(await WethToken.balanceOf(wallet.address))
+  );
   log({ newBalance: newBalance });
   return newBalance;
 }

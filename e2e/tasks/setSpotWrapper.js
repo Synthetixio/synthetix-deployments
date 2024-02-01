@@ -3,8 +3,8 @@
 const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const { getCollateralConfig } = require('./getCollateralConfig');
-const SpotMarketProxyDeployment = require('../deployments/SpotMarketProxy.json');
 const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -21,8 +21,8 @@ async function setSpotWrapper({ marketId, symbol, targetAmount }) {
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const SpotMarketProxy = new ethers.Contract(
-    SpotMarketProxyDeployment.address,
-    SpotMarketProxyDeployment.abi,
+    require('../deployments/SpotMarketProxy.json').address,
+    require('../deployments/SpotMarketProxy.json').abi,
     provider
   );
 
@@ -46,7 +46,10 @@ async function setSpotWrapper({ marketId, symbol, targetAmount }) {
   const tx = await SpotMarketProxy.connect(signer)
     .setWrapper(...args, { gasLimit: gasLimit.mul(2) })
     .catch(parseError);
-  await tx.wait().then(log).catch(parseError);
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'SpotMarketProxy.setWrapper', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 }
 
@@ -57,5 +60,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, symbol, targetAmount] = process.argv.slice(2);
-  setSpotWrapper({ marketId, symbol, targetAmount }).then(console.log);
+  setSpotWrapper({ marketId, symbol, targetAmount }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

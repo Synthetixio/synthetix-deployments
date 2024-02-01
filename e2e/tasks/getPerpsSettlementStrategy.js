@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const PerpsMarketProxyDeployment = require('../deployments/PerpsMarketProxy.json');
 
 async function getPerpsSettlementStrategy({ marketId, settlementStrategyId }) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -9,12 +8,14 @@ async function getPerpsSettlementStrategy({ marketId, settlementStrategyId }) {
   );
 
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../deployments/PerpsMarketProxy.json').address,
+    require('../deployments/PerpsMarketProxy.json').abi,
     provider
   );
 
-  const [
+  const strategy = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
+
+  const {
     strategyType,
     settlementDelay,
     settlementWindowDuration,
@@ -23,7 +24,7 @@ async function getPerpsSettlementStrategy({ marketId, settlementStrategyId }) {
     settlementReward,
     disabled,
     commitmentPriceDelay,
-  ] = await PerpsMarketProxy.getSettlementStrategy(marketId, settlementStrategyId);
+  } = strategy;
 
   return {
     strategyType,
@@ -44,5 +45,7 @@ module.exports = {
 if (require.main === module) {
   require('../inspect');
   const [marketId, settlementStrategyId] = process.argv.slice(2);
-  getPerpsSettlementStrategy({ marketId, settlementStrategyId }).then(console.log);
+  getPerpsSettlementStrategy({ marketId, settlementStrategyId }).then((data) =>
+    console.log(JSON.stringify(data, null, 2))
+  );
 }

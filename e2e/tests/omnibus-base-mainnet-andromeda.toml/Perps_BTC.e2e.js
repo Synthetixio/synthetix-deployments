@@ -1,17 +1,13 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
+require('../../inspect');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
+
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
-
-require('../../inspect');
-
-const extras = require('../../deployments/extras.json');
-const PerpsMarketProxyDeployment = require('../../deployments/PerpsMarketProxy.json');
-
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const marketId = 200;
@@ -22,8 +18,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   const wallet = ethers.Wallet.createRandom().connect(provider);
 
   const PerpsMarketProxy = new ethers.Contract(
-    PerpsMarketProxyDeployment.address,
-    PerpsMarketProxyDeployment.abi,
+    require('../../deployments/PerpsMarketProxy.json').address,
+    require('../../deployments/PerpsMarketProxy.json').abi,
     wallet
   );
 
@@ -77,12 +73,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 0.25 BTC', async () => {
+  it('should have max open interest 22 BTC', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 0.25);
+    assert.equal(maxOpenInterest, 22);
   });
 
   it('should make a price update', async () => {
@@ -94,12 +90,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 100,
-      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 200,
-      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
     });
   });
 
@@ -127,10 +123,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
-  it('should have 0.25 BTC Max Market Size', async () => {
+  it('should have 22 BTC Max Market Size', async () => {
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 0.25);
+    assert.equal(ethers.utils.formatEther(maxSize), 22);
   });
 
   it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {

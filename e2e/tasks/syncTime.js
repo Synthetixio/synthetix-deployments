@@ -64,5 +64,5 @@ module.exports = {
 
 if (require.main === module) {
   require('../inspect');
-  syncTime().then(console.log);
+  syncTime().then((data) => console.log(JSON.stringify(data, null, 2)));
 }

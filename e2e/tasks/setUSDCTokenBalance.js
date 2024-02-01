@@ -3,6 +3,8 @@
 const { ethers } = require('ethers');
 const { getCollateralConfig } = require('./getCollateralConfig');
 const { setEthBalance } = require('./setEthBalance');
+const { parseError } = require('../parseError');
+const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -41,11 +43,14 @@ async function setUSDCTokenBalance({ wallet, balance }) {
 
   await wallet.provider.send('anvil_impersonateAccount', [friendlyWhale]);
   const signer = wallet.provider.getSigner(friendlyWhale);
-  const transferTx = await Token.connect(signer).transfer(
+  const tx = await Token.connect(signer).transfer(
     wallet.address,
     ethers.utils.parseUnits(`${balance - oldBalance}`, decimals)
   );
-  await transferTx.wait();
+  await tx
+    .wait()
+    .then((txn) => log(txn.events) || txn, parseError)
+    .then(gasLog({ action: 'Token.transfer', log }));
   await wallet.provider.send('anvil_stopImpersonatingAccount', [friendlyWhale]);
 
   const newBalance = parseFloat(

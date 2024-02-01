@@ -3,6 +3,8 @@
 .idea
 *.log
 
+/tmp
+
 # Yarn v3
 .yarn/*
 .yarn/cache
