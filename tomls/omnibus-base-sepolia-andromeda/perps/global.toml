@@ -82,5 +82,5 @@ func = "setInterestRateParameters"
 args = [
     "<%= parseEther(settings.perps_low_util_gradient) %>",
     "<%= parseEther(settings.perps_gradient_breakpoint) %>",
-    "<%= parseEther(settings.perps_high_util_gradient) %>"
-    ]
+    "<%= parseEther(settings.perps_high_util_gradient) %>",
+]
