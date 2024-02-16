@@ -32,7 +32,7 @@ defaultValue = "100"
 defaultValue = "0.3"
 
 [setting.perps_low_util_gradient]
-defaultValue = "0"
+defaultValue = "0.000025"
 
 [setting.perps_gradient_breakpoint]
 defaultValue = "0.80"
