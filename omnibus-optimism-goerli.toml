@@ -31,6 +31,9 @@ defaultValue = "0x2E5ED97596a8368EB9E44B1f3F25B2E813845303"
 # https://docs.chain.link/data-feeds/price-feeds/addresses/?network=optimism&page=1#optimism-goerli
 defaultValue = "0x89A7630f46B8c35A7fBBC4f6e4783f1E2DC715c6"
 
+[setting.snx_chainlink_staleness_tolerance]
+defaultValue = "3600"
+
 [setting.weth_address]
 # https://goerli-optimism.etherscan.io/token/0x4200000000000000000000000000000000000006
 defaultValue = "0x4200000000000000000000000000000000000006"

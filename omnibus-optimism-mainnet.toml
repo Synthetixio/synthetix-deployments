@@ -36,6 +36,9 @@ defaultValue = "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
 [setting.snx_aggregator_address]
 defaultValue = "0x2FCF37343e916eAEd1f1DdaaF84458a359b53877"
 
+[setting.snx_chainlink_staleness_tolerance]
+defaultValue = "3600"
+
 [setting.weth_address]
 defaultValue = "0x4200000000000000000000000000000000000006"
 
