@@ -19,7 +19,7 @@ extra.snx_oracle_id_raw.event = "NodeRegistered"
 extra.snx_oracle_id_raw.arg = 0
 depends = ["provision.system"]
 
-[invoke.registerSnxOracleNodeBuyback]
+[invoke.registerSnxWithStaleness]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
