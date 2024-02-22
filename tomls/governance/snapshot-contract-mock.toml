@@ -1,0 +1,26 @@
+[provision.snapshot_record_mock]
+source = "<%= settings.governance_snapshot_record_package %>"
+
+[invoke.ambassador_council_setSnapshotContract]
+target = ["ambassador_council.CoreProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = ["<%= imports.snapshot_record_mock.contracts.SnapshotRecordMock.address %>", true]
+
+[invoke.grants_council_setSnapshotContract]
+target = ["grants_council.CoreProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = ["<%= imports.snapshot_record_mock.contracts.SnapshotRecordMock.address %>", true]
+
+[invoke.spartan_council_setSnapshotContract]
+target = ["spartan_council.CoreProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = ["<%= imports.snapshot_record_mock.contracts.SnapshotRecordMock.address %>", true]
+
+[invoke.treasury_council_setSnapshotContract]
+target = ["treasury_council.CoreProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = ["<%= imports.snapshot_record_mock.contracts.SnapshotRecordMock.address %>", true]
