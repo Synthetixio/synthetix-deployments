@@ -13,7 +13,7 @@ include = [
     "tomls/permit-all-transferCrossChain.toml",
     # Governance
     "tomls/governance/councils-satellite.toml",
-    # "tomls/governance/snapshot-contract-mock.toml",
+    "tomls/governance/snapshot-contract-mock.toml",
     "tomls/governance/ccip-testnet.toml",
 ]
 
@@ -75,7 +75,22 @@ args = ["2"]
 defaultValue = "synthetix-snapshot-record-mock:3.0.0"
 
 [setting.governance_package]
-defaultValue = "synthetix-governance-satellite:3.0.0"
+defaultValue = "synthetix-governance-satellite:3.0.3"
 
 [setting.governance_salt]
 defaultValue = "synthetix-council"
+
+[setting.governance_initial_epoch_index]
+defaultValue = "0"
+
+[setting.governance_initial_epoch_start_date]
+defaultValue = "1706193012"
+
+[setting.governance_initial_nomination_period_start_date]
+defaultValue = "1711377012"
+
+[setting.governance_initial_voting_period_start_date]
+defaultValue = "1712673012"
+
+[setting.governance_initial_epoch_end_date]
+defaultValue = "1713969012"

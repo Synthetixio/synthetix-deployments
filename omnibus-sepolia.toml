@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.4-1"
+version = "3.3.4-3"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -71,7 +71,7 @@ args = ["2"]
 defaultValue = "synthetix-snapshot-record-mock:3.0.0"
 
 [setting.governance_package]
-defaultValue = "synthetix-governance:3.0.0"
+defaultValue = "synthetix-governance:3.0.3"
 
 [setting.governance_salt]
 defaultValue = "synthetix-council"
