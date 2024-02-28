@@ -463,12 +463,84 @@ jobs:
           branch_base: master
           commit_message: "Update << parameters.chain-id >>-<< parameters.preset >>"
 
+  preview:
+    parameters:
+      toml:
+        type: string
+      package:
+        type: string
+      chain-id:
+        type: integer
+      preset:
+        type: string
+      provider-url:
+        type: string
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - install-anvil
+      - yarn-install
+
+      - run:
+          name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >>"
+          command: |
+            yarn cannon build << parameters.toml >> \
+              --dry-run \
+              --upgrade-from << parameters.package >>@<< parameters.preset >> \
+              --chain-id << parameters.chain-id >> \
+              --provider-url << parameters.provider-url >> \
+                | tee ./cannon-build.log
+
+            export NEW_CANNON_PACKAGE=$(grep -o '💥 .* built on' cannon-build.log | awk '{print $2}')
+            echo "NEW_CANNON_PACKAGE=${NEW_CANNON_PACKAGE}"
+            echo "export NEW_CANNON_PACKAGE=$NEW_CANNON_PACKAGE" >> $BASH_ENV
+
+      - run:
+          name: "Extract cannon state"
+          command: yarn cannon inspect $NEW_CANNON_PACKAGE --chain-id << parameters.chain-id >> --json > ./cannon-state.json
+
+      - run:
+          name: "Generate deployments"
+          command: node e2e/generateDeployments ./cannon-state.json
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:su5uak7HO/FZN8fbZtpol0nrh1Ah/MiH49NmCVkNFEg" # v3-contracts
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - run:
+          working_directory: ~/
+          name: "Checkout v3-contracts"
+          command: |
+            git clone git@github.com:Synthetixio/v3-contracts.git --verbose --depth 1 --no-tags --single-branch v3-contracts
+
+      - run:
+          name: "Update v3-contracts"
+          command: |
+            mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
+            cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+
+      - github-pr:
+          working_directory: "~/v3-contracts"
+          repo_slug: "Synthetixio/v3-contracts"
+          branch_head: "next-<< parameters.chain-id >>-<< parameters.preset >>"
+          branch_base: master
+          commit_message: "[NEXT] << parameters.chain-id >>-<< parameters.preset >> DO NOT MERGE!"
+
 workflows:
   version: 2.1
 
   tests:
     unless:
       or:
+        - equal: ["v3-contracts-preview", << pipeline.git.branch >>]
         #- equal: ["docgen", << pipeline.git.branch >>]
         #- equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
         - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
@@ -610,3 +682,49 @@ workflows:
           preset: "main"
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+
+  preview:
+    when:
+      or:
+        - and:
+            - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
+            - equal: ["preview", << pipeline.schedule.name >>]
+        - equal: ["v3-contracts-preview", << pipeline.git.branch >>]
+
+    jobs:
+      - preview:
+          name: preview-base-sepolia-andromeda
+          toml: omnibus-base-sepolia-andromeda.toml
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 84532
+          provider-url: https://sepolia.base.org
+#
+#      - preview:
+#          name: preview-base-mainnet-andromeda
+#          package: "synthetix-omnibus:latest"
+#          preset: "andromeda"
+#          chain-id: 8453
+#          provider-url: https://mainnet.base.org
+#
+#      - preview:
+#          name: preview-mainnet
+#          package: "synthetix-omnibus:latest"
+#          preset: "main"
+#          chain-id: 1
+#          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+#
+#      - preview:
+#          name: preview-sepolia
+#          package: "synthetix-omnibus:latest"
+#          preset: "main"
+#          chain-id: 11155111
+#          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+#
+#      - preview:
+#          name: preview-optimism-mainnet
+#          package: "synthetix-omnibus:latest"
+#          preset: "main"
+#          chain-id: 10
+#          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+#
