@@ -86,7 +86,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
      --dry-run \
      --upgrade-from synthetix-omnibus:latest@andromeda \
      --chain-id 84531 \
-     --provider-url https://goerli.base.org \
+     --provider-url https://base-goerli-rpc.publicnode.com \
        | tee ./e2e/cannon-build.log
    ```
 
@@ -117,7 +117,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
       --dry-run \
       --upgrade-from synthetix-omnibus:latest@andromeda \
       --chain-id 84531 \
-      --provider-url https://goerli.base.org
+      --provider-url https://base-goerli-rpc.publicnode.com
    ```
 
    or

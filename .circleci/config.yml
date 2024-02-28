@@ -156,7 +156,7 @@ commands:
                 https://api.github.com/repos/<< parameters.repo_slug >>/pulls \
                 -d '{
                   "title": "<< parameters.commit_message >>",
-                  "head": "<< parameters.branch_head >>", 
+                  "head": "<< parameters.branch_head >>",
                   "base": "<< parameters.branch_base >>"
                 }'
             else
@@ -216,7 +216,7 @@ jobs:
                     if [[ $line == *"Built package RPC URL available"* ]]; then
                         break
                     fi
-                done < <(tail -f -n0 ./cannon-build.log)            
+                done < <(tail -f -n0 ./cannon-build.log)
             fi
 
       - store_artifacts:
@@ -230,7 +230,7 @@ jobs:
             PROXIES: "contract.InitialCoreProxy contract.InitialProxy contract.InitialSpotMarketProxy"
           command: |
             for PROXY in $PROXIES; do
-              echo "grep -c "Executing [$PROXY]" ./cannon-build.log" 
+              echo "grep -c "Executing [$PROXY]" ./cannon-build.log"
               if [ $(grep -c "Executing [$PROXY]" ./cannon-build.log) -gt 0 ]; then
                 echo "Proxy $PROXY was modified"
                 exit 1
@@ -309,7 +309,7 @@ jobs:
                     if [[ $line == *"Built package RPC URL available"* ]]; then
                         break
                     fi
-                done < <(tail -f -n0 ./cannon-build.log)            
+                done < <(tail -f -n0 ./cannon-build.log)
             fi
 
       - store_artifacts:
@@ -489,7 +489,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84531
-          provider-url: https://goerli.base.org
+          provider-url: https://base-goerli-rpc.publicnode.com
 
       - fork-test:
           name: base-mainnet-andromeda
@@ -505,7 +505,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 84531
-          provider-url: https://goerli.base.org
+          provider-url: https://base-goerli-rpc.publicnode.com
 
       - fork-test:
           name: goerli
@@ -568,7 +568,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84531
-          provider-url: https://goerli.base.org
+          provider-url: https://base-goerli-rpc.publicnode.com
 
       - deployment-info:
           name: docs-base-mainnet-andromeda
@@ -633,7 +633,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84531
-          provider-url: https://goerli.base.org
+          provider-url: https://base-goerli-rpc.publicnode.com
 
       - npm-package:
           name: npm-base-mainnet-andromeda
