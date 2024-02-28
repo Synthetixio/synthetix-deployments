@@ -548,13 +548,6 @@ workflows:
           provider-url: https://sepolia.base.org
 
       - deployment-info:
-          name: docs-base-goerli-andromeda
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 84531
-          provider-url: https://goerli.base.org
-
-      - deployment-info:
           name: docs-base-mainnet-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -589,13 +582,6 @@ workflows:
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      - deployment-info:
-          name: docs-optimism-goerli
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 420
-          provider-url: https://optimism-goerli.infura.io/v3/$INFURA_API_KEY
-
   npm-package:
     when:
       or:
@@ -611,13 +597,6 @@ workflows:
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://sepolia.base.org
-
-      - npm-package:
-          name: npm-base-goerli-andromeda
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 84531
-          provider-url: https://goerli.base.org
 
       - npm-package:
           name: npm-base-mainnet-andromeda
@@ -653,10 +632,3 @@ workflows:
           preset: "main"
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - npm-package:
-          name: npm-optimism-goerli
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 420
-          provider-url: https://optimism-goerli.infura.io/v3/$INFURA_API_KEY

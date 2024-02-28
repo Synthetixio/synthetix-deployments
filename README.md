@@ -21,30 +21,30 @@ Conduct the following process for each network:
 - Perform a dry-run and confirm that the actions that would be executed by Cannon are expected:
 
   ```sh
-  yarn cannon build omnibus-base-goerli-andromeda.toml \
+  yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --dry-run \
     --upgrade-from synthetix-omnibus:latest@andromeda \
     --chain-id 84531 \
-    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
+    --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
 - Remove the dry-run option to execute the upgrade:
 
   ```sh
-  yarn cannon build omnibus-base-goerli-andromeda.toml \
+  yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --upgrade-from synthetix-omnibus:latest@andromeda \
     --chain-id 84531 \
     --private-key $TESTNET_DEPLOYER_PRIVATE_KEY \
-    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
+    --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
 - After this you can run the dry-run command again (without upgrade-from), and should see no changes
 
   ```sh
-  yarn cannon build omnibus-base-goerli-andromeda.toml \
+  yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --dry-run \
     --chain-id 84531 \
-    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
+    --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
 _The --provider-url and --private-key parameters are unnecessary if using [Frame](https://frame.sh/)_
@@ -75,18 +75,18 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 
 ## Fork-testing locally
 
-Example based on `omnibus-base-goerli-andromeda.toml`
+Example based on `omnibus-base-sepolia-andromeda.toml`
 
 **IMPORTANT** Restart Anvil node and apply upgrades after each full test suite execution because of the global system state change, which affects things like global collateral limits
 
 1. Build locally with --dry-run
 
    ```sh
-   yarn cannon build omnibus-base-goerli-andromeda.toml \
+   yarn cannon build omnibus-base-sepolia-andromeda.toml \
      --dry-run \
      --upgrade-from synthetix-omnibus:latest@andromeda \
-     --chain-id 84531 \
-     --provider-url https://goerli.base.org \
+     --chain-id 84532 \
+     --provider-url https://sepolia.base.org \
        | tee ./e2e/cannon-build.log
    ```
 
@@ -111,13 +111,13 @@ Example based on `omnibus-base-goerli-andromeda.toml`
 3. Run local Anvil node for the required network.
 
    ```sh
-   yarn cannon build omnibus-base-goerli-andromeda.toml \
+   yarn cannon build omnibus-base-sepolia-andromeda.toml \
       --port 8545 \
       --keep-alive \
       --dry-run \
       --upgrade-from synthetix-omnibus:latest@andromeda \
-      --chain-id 84531 \
-      --provider-url https://goerli.base.org
+      --chain-id 84532 \
+      --provider-url https://sepolia.base.org
    ```
 
    or
@@ -128,9 +128,9 @@ Example based on `omnibus-base-goerli-andromeda.toml`
 
 4. Execute tests
    ```sh
-   DEBUG='e2e:*' mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
+   DEBUG='e2e:*' mocha e2e/tests/omnibus-base-sepolia-andromeda.toml/*.e2e.js
    ```
    or
    ```sh
-   yarn test:andromeda
+   yarn test:base-sepolia
    ```
