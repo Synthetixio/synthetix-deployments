@@ -4,7 +4,7 @@ include = ["../core.toml"]
 
 [setting.snx_chainlink_staleness_tolerance]
 
-[invoke.registerSnxOracleManager]
+[invoke.registerSnxOracleManagerNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -31,4 +31,4 @@ args = [
 ]
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
-depends = ["invoke.registerSnxOracleManager"]
+depends = ["invoke.registerSnxOracleManagerNode"]
