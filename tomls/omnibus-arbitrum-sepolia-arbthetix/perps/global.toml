@@ -1,0 +1,67 @@
+[setting.settlementReward]
+defaultValue = "1"
+
+[setting.perps_keeper_l1_cost_settle_gas_units]
+defaultValue = "30000"
+
+[setting.perps_keeper_l2_cost_settle_gas_units]
+defaultValue = "1200000"
+
+[setting.perps_keeper_l1_cost_flag_gas_units]
+defaultValue = "15500"
+
+[setting.perps_keeper_l2_cost_flag_gas_units]
+defaultValue = "250000"
+
+[setting.perps_keeper_l1_cost_liquidate_gas_units]
+defaultValue = "5500"
+
+[setting.perps_keeper_l2_cost_liquidate_gas_units]
+defaultValue = "1100000"
+
+[setting.perps_liquidation_min_keeper_reward_usd]
+defaultValue = "5"
+
+[setting.perps_liquidation_min_keeper_profit_ratio_d18]
+defaultValue = "0.30"
+
+[setting.perps_liquidation_max_keeper_reward_usd]
+defaultValue = "100"
+
+[setting.perps_liquidation_max_keeper_scaling_ratio_d18]
+defaultValue = "0.3"
+
+[invoke.setPerpsLiquidationRewardGuards]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setKeeperRewardGuards"
+args = [
+    "<%= parseEther(settings.perps_liquidation_min_keeper_reward_usd) %>",
+    "<%= parseEther(settings.perps_liquidation_min_keeper_profit_ratio_d18) %>",
+    "<%= parseEther(settings.perps_liquidation_max_keeper_reward_usd) %>",
+    "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>",
+]
+
+[invoke.setPerpsMaxCollateralForSnxUsd]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = ["0", "<%= MaxUint256 %>"]
+
+[invoke.setPerpsSynthDeductionPriority]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSynthDeductionPriority"
+args = [["0"]]
+
+[invoke.setPerAccountCapsPerps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setPerAccountCaps"
+args = ["2", "1"]
+
+[invoke.setPerpsMarketKeeperCostNodeId]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateKeeperCostNodeId"
+args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
