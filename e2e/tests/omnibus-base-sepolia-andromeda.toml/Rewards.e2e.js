@@ -23,6 +23,26 @@ const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
+const { getTokenBalance } = require('../../tasks/getTokenBalance');
+const { transferToken } = require('../../tasks/transferToken');
+const { setPermissionlessTokenBalance } = require('../../tasks/setPermissionlessTokenBalance');
+const { distributeRewards } = require('../../tasks/distributeRewards');
+const { getPoolOwner } = require('../../tasks/getPoolOwner');
+const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsDistributorInfo');
+const {
+  getTokenRewardsDistributorRewardsAmount,
+} = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
+const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
+const { claimRewards } = require('../../tasks/claimRewards');
+
+const {
+  contracts: {
+    RewardsDistributorForSpartanCouncilPool: distributorAddress,
+    FakeCollateralfwSNX: payoutToken,
+    CoreProxy: rewardManager,
+    SynthUSDCToken: collateralType,
+  },
+} = require('../../deployments/meta.json');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -205,148 +225,84 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should set fwSNX balance to 1_000_000', async () => {
-    const { setPermissionlessTokenBalance } = require('../../tasks/setPermissionlessTokenBalance');
-    const { getTokenBalance } = require('../../tasks/getTokenBalance');
-
-    const {
-      contracts: { FakeCollateralfwSNX: tokenAddress },
-    } = require('../../deployments/meta.json');
-
-    assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress }),
-      0,
-      'New wallet has 0 fwSNX balance'
-    );
-    await setPermissionlessTokenBalance({ privateKey, tokenAddress, balance: 1_000_000 });
-    assert.equal(await getTokenBalance({ walletAddress: address, tokenAddress }), 1_000_000);
+  it('should validate Rewards Distributor info', async () => {
+    const info = await getTokenRewardsDistributorInfo({ distributorAddress });
+    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
+    assert.equal(info.poolId, 1, 'poolId');
+    assert.equal(info.collateralType, collateralType, 'collateralType');
+    assert.equal(info.payoutToken, payoutToken, 'payoutToken');
+    assert.equal(info.precision, 10 ** 18, 'precision');
+    assert.equal(info.token, payoutToken, 'token');
+    assert.equal(info.rewardManager, rewardManager, 'rewardManager');
+    assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
   });
 
-  it('should distribute 1_000_000 fwSNX rewards', async () => {
-    const { getTokenBalance } = require('../../tasks/getTokenBalance');
-    const { transferToken } = require('../../tasks/transferToken');
-    const { parseError } = require('../../parseError');
-    const { gasLog } = require('../../gasLog');
-
-    const deployments = require('../../deployments/cannon.json');
-    const rd =
-      deployments?.state?.[`provision.spartan_council_pool_rewards`]?.artifacts?.imports
-        ?.spartan_council_pool_rewards?.contracts?.RewardsDistributor;
-
-    assert.ok(rd);
-
-    const RewardsDistributor = new ethers.Contract(rd.address, rd.abi, provider);
-
-    const poolId = 1;
-    const { tokenAddress: collateralType } = await getCollateralConfig('sUSDC');
-
-    assert.equal(await RewardsDistributor.name(), 'Spartan Council Pool Rewards');
-    assert.equal(await RewardsDistributor.collateralType(), collateralType);
-
-    const {
-      contracts: { FakeCollateralfwSNX: payoutToken },
-    } = require('../../deployments/meta.json');
-    const CoreProxy = new ethers.Contract(
-      require('../../deployments/CoreProxy.json').address,
-      require('../../deployments/CoreProxy.json').abi,
-      provider
-    );
-
-    assert.equal(await RewardsDistributor.token(), payoutToken, 'token');
-    assert.equal(await RewardsDistributor.payoutToken(), payoutToken, 'payoutToken');
-    assert.equal(await RewardsDistributor.poolId(), poolId, 'poolId');
-    assert.equal(await RewardsDistributor.precision(), 1e18, 'precision');
-    assert.equal(await RewardsDistributor.rewardManager(), CoreProxy.address, 'rewardManager');
-    assert.equal(parseFloat(ethers.utils.formatEther(await RewardsDistributor.rewardsAmount())), 0);
-
+  it('should fund RewardDistributor with 1_000_000 fwSNX', async () => {
     assert.equal(
-      await getTokenBalance({
-        walletAddress: RewardsDistributor.address,
-        tokenAddress: payoutToken,
-      }),
-      0
+      await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
+      0,
+      'Rewards Distributor has 0 fwSNX balance'
     );
+    await setPermissionlessTokenBalance({
+      privateKey,
+      tokenAddress: payoutToken,
+      balance: 1_000_000,
+    });
+
     await transferToken({
       privateKey,
       tokenAddress: payoutToken,
-      targetWalletAddress: RewardsDistributor.address,
+      targetWalletAddress: distributorAddress,
       amount: 1_000_000,
     });
-    assert.equal(
-      await getTokenBalance({
-        walletAddress: RewardsDistributor.address,
-        tokenAddress: payoutToken,
-      }),
-      1_000_000
-    );
 
-    const poolOwner = await CoreProxy.getPoolOwner(poolId);
+    assert.equal(
+      await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
+      1_000_000,
+      'Rewards Distributor has 1_000_000 fwSNX balance'
+    );
+  });
+
+  it('should distribute 1_000_000 fwSNX rewards', async () => {
+    assert.equal(await getTokenRewardsDistributorRewardsAmount({ distributorAddress }), 0);
+
+    const poolId = 1;
+    const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
+
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);
 
     const amount = ethers.utils.parseEther(`${1_000_000}`);
     const start = Math.floor(Date.now() / 1000);
     const duration = 10;
-    const args = [
-      //
+
+    await distributeRewards({
+      wallet: signer,
+      distributorAddress,
       poolId,
       collateralType,
       amount,
       start,
       duration,
-    ];
-    log({ poolId, collateralType, amount, start, duration });
-    const gasLimit = await RewardsDistributor.connect(signer)
-      .estimateGas.distributeRewards(...args)
-      .catch(parseError);
-    const tx = await RewardsDistributor.connect(signer)
-      .distributeRewards(...args, { gasLimit: gasLimit.mul(2) })
-      .catch(parseError);
-    await tx
-      .wait()
-      .then((txn) => log(txn.events) || txn, parseError)
-      .then(gasLog({ action: 'RewardsDistributor.distributeRewards', log }));
+    });
 
     await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
 
-    assert.equal(
-      parseFloat(ethers.utils.formatEther(await RewardsDistributor.rewardsAmount())),
-      1_000_000
-    );
+    assert.equal(await getTokenRewardsDistributorRewardsAmount({ distributorAddress }), 1_000_000);
   });
 
   it('should claim fwSNX rewards', async () => {
     const poolId = 1;
 
-    const deployments = require('../../deployments/cannon.json');
-    const rd =
-      deployments?.state?.[`provision.spartan_council_pool_rewards`]?.artifacts?.imports
-        ?.spartan_council_pool_rewards?.contracts?.RewardsDistributor;
+    const availableRewards = await getAvailableRewards({
+      accountId,
+      poolId,
+      collateralType,
+      distributorAddress,
+    });
 
-    assert.ok(rd);
-    const distributor = rd.address;
-
-    const CoreProxy = new ethers.Contract(
-      require('../../deployments/CoreProxy.json').address,
-      require('../../deployments/CoreProxy.json').abi,
-      provider
-    );
-
-    const { tokenAddress: collateralType } = await getCollateralConfig('sUSDC');
-
-    const availableRewards = parseFloat(
-      ethers.utils.formatEther(
-        await CoreProxy.getAvailableRewards(accountId, poolId, collateralType, distributor)
-      )
-    );
-    log({ availableRewards });
     assert.ok(availableRewards > 0, 'should have some rewards to claim');
-
-    const {
-      contracts: { FakeCollateralfwSNX: payoutToken },
-    } = require('../../deployments/meta.json');
-    const { getTokenBalance } = require('../../tasks/getTokenBalance');
 
     assert.equal(
       await getTokenBalance({ walletAddress: address, tokenAddress: payoutToken }),
@@ -354,31 +310,24 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       'Wallet has 0 fwSNX balance BEFORE claim'
     );
 
-    const { parseError } = require('../../parseError');
-    const { gasLog } = require('../../gasLog');
-
-    const args = [
-      //
+    await claimRewards({
+      wallet,
       accountId,
       poolId,
       collateralType,
-      distributor,
-    ];
-    log({ accountId, poolId, collateralType, distributor });
-    const gasLimit = await CoreProxy.connect(wallet)
-      .estimateGas.claimRewards(...args)
-      .catch(parseError);
-    const tx = await CoreProxy.connect(wallet)
-      .claimRewards(...args, { gasLimit: gasLimit.mul(2) })
-      .catch(parseError);
-    await tx
-      .wait()
-      .then((txn) => log(txn.events) || txn, parseError)
-      .then(gasLog({ action: 'CoreProxy.claimRewards', log }));
+      distributorAddress,
+    });
 
-    assert.ok(
-      (await getTokenBalance({ walletAddress: address, tokenAddress: payoutToken })) > 0,
-      'Wallet has some non-zero fwSNX balance AFTER claim'
+    const postClaimBalance = await getTokenBalance({
+      walletAddress: address,
+      tokenAddress: payoutToken,
+    });
+    assert.ok(postClaimBalance > 0, 'Wallet has some non-zero fwSNX balance AFTER claim');
+
+    assert.equal(
+      await getTokenRewardsDistributorRewardsAmount({ distributorAddress }),
+      1_000_000 - postClaimBalance,
+      'should deduct claimed token amount from total distributor rewards amount'
     );
   });
 });

@@ -100,6 +100,13 @@ async function run() {
       perpsFactory.contracts.PerpsAccountProxy ?? perpsFactory.contracts.AccountProxy;
   }
 
+  const rd =
+    deployments?.state?.[`provision.spartan_council_pool_rewards`]?.artifacts?.imports
+      ?.spartan_council_pool_rewards;
+  if (rd) {
+    contracts[`RewardsDistributorForSpartanCouncilPool`] = rd.contracts.RewardsDistributor;
+  }
+
   function mintableToken(provisionStep) {
     const fakeCollateral =
       deployments?.state?.[`provision.${provisionStep}`]?.artifacts?.imports?.[provisionStep];
