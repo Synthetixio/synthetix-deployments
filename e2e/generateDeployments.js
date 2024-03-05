@@ -109,6 +109,7 @@ async function run() {
         fakeCollateral.contracts.MintableToken;
     }
   }
+  mintableToken('snx_mock_collateral');
   mintableToken('usdc_mock_collateral');
   mintableToken('mintableToken');
 
