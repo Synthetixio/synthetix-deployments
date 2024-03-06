@@ -124,9 +124,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should have 300 BTC Max Market Size', async () => {
-    const { maxMarketSize, maxMarketValue } = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxMarketSize), 300);
+    assert.equal(ethers.utils.formatEther(maxSize), 300);
+  });
+
+  it('should have 18M USD Max Market Value', async () => {
+    const maxMarketValue = await PerpsMarketProxy.getMaxMarketValue(marketId);
+
     assert.equal(ethers.utils.formatEther(maxMarketValue), 18_000_000);
   });
 
