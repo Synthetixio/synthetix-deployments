@@ -92,6 +92,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1000000000') %>" },
     ],
 ]

@@ -111,7 +111,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1000000000') %>" },
     ],
 ]
 depends = ["invoke.createScPool", "invoke.createEthSynth"]
