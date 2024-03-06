@@ -97,7 +97,7 @@ args = [
 ]
 
 [provision.spartan_council_pool_rewards]
-source = "synthetix-rewards-distributor:0.0.1"
+source = "synthetix-rewards-distributor:0.0.2"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
