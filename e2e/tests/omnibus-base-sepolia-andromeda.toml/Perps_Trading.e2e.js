@@ -258,14 +258,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const marketId = 200;
     const settlementStrategyId =
       require('../../deployments/extras.json').btc_pyth_settlement_strategy;
-    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
-    log({ marketId, maxSize });
+    const { maxMarketSize } = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    log({ marketId, maxMarketSize });
     try {
       await commitPerpsOrder({
         wallet,
         accountId,
         marketId,
-        sizeDelta: parseFloat(ethers.utils.formatEther(maxSize.mul(2))),
+        sizeDelta: parseFloat(ethers.utils.formatEther(maxMarketSize.mul(2))),
         settlementStrategyId,
       });
       throw Error('Commit should revert');
