@@ -1,4 +1,4 @@
-include = ["../../oracles/btc.toml", "../common/bigcap-settings.toml"]
+include = ["../../oracles/btc.toml", "../../markets/common/bigcap-settings.toml"]
 
 [setting.pythBtcFeedId]
 
@@ -97,6 +97,13 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"]
+depends = ["invoke.createBtcPerpsMarket"]
+
+[invoke.setPerpsBtcMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcMaxMarketValue) %>"]
 depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcMaxLiquidationParameters]
