@@ -2,8 +2,9 @@ include = [
     # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
     # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
     "../../oracles/eth.toml",
-    "../common/bigcap-settings.toml",
+    "../../markets/common/bigcap-settings.toml",
 ]
+# NOTE: This toml will live until the setMaxMarketValue is on mainnet
 
 [setting.ethPerpsMarketId]
 
@@ -104,6 +105,13 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.ethPerpsMarketId %>", "<%= parseEther(settings.perpsEthMaxMarketSize) %>"]
+depends = ["invoke.createEthPerpsMarket"]
+
+[invoke.setPerpsEthMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.ethPerpsMarketId %>", "<%= parseEther(settings.perpsEthMaxMarketValue) %>"]
 depends = ["invoke.createEthPerpsMarket"]
 
 [invoke.setPerpsEthMaxLiquidationParameters]
