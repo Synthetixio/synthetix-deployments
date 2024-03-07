@@ -96,11 +96,14 @@ depends = ["invoke.createBtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = [
-    "<%= settings.btcPerpsMarketId %>",
-    "<%= parseEther(settings.perpsBtcMaxMarketSize) %>",
-    "<%= parseEther(settings.perpsBtcMaxMarketValue) %>",
-]
+args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcMaxMarketSize) %>"]
+depends = ["invoke.createBtcPerpsMarket"]
+
+[invoke.setPerpsBtcMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.btcPerpsMarketId %>", "<%= parseEther(settings.perpsBtcMaxMarketValue) %>"]
 depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcMaxLiquidationParameters]
