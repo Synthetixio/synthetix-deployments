@@ -18,10 +18,10 @@ include = [
     "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
     "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/feeCollector.toml",
     # Collaterals
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/dai.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/eth.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/arb.toml",
+    #"tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/usdc.toml", // usdc collateral is already included with spot market deploy
+    #"tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/dai.toml", // dai collateral is is already included with the spot market deploy
+    "tomls/collaterals/weth.toml",
+    "tomls/collaterals/arb.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -42,7 +42,7 @@ defaultValue = "2"
 defaultValue = "synthetix:3.3.14"
 
 [setting.perps_keeper_cost_package]
-defaultValue = "op-gas-price-oracle:3.3.14"
+defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.14"
@@ -86,6 +86,18 @@ defaultValue = "1"
 
 [setting.pool_owner]
 defaultValue = "0x07Aeeb7E544A070a2553e142828fb30c214a1F86"
+
+[setting.arb_aggregator_address]
+defaultValue = "0xD1092a65338d049DB68D7Be6bD89d17a0929945e"
+
+[setting.eth_aggregator_address]
+defaultValue = "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165"
+
+[setting.weth_address]
+defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
+
+[setting.arb_address]
+defaultValue = "0xc275B23C035a9d4EC8867b47f55427E0bDCe14cB "
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
