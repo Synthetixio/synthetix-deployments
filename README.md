@@ -24,7 +24,6 @@ Conduct the following process for each network:
   yarn cannon build omnibus-base-goerli-andromeda.toml \
     --dry-run \
     --upgrade-from synthetix-omnibus:latest@andromeda \
-    --chain-id 84531 \
     --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
   ```
 
@@ -33,7 +32,6 @@ Conduct the following process for each network:
   ```sh
   yarn cannon build omnibus-base-goerli-andromeda.toml \
     --upgrade-from synthetix-omnibus:latest@andromeda \
-    --chain-id 84531 \
     --private-key $TESTNET_DEPLOYER_PRIVATE_KEY \
     --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
   ```
@@ -43,7 +41,6 @@ Conduct the following process for each network:
   ```sh
   yarn cannon build omnibus-base-goerli-andromeda.toml \
     --dry-run \
-    --chain-id 84531 \
     --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
   ```
 
@@ -85,7 +82,6 @@ Example based on `omnibus-base-goerli-andromeda.toml`
    yarn cannon build omnibus-base-goerli-andromeda.toml \
      --dry-run \
      --upgrade-from synthetix-omnibus:latest@andromeda \
-     --chain-id 84531 \
      --provider-url https://base-goerli-rpc.publicnode.com \
        | tee ./e2e/cannon-build.log
    ```
@@ -99,12 +95,6 @@ Example based on `omnibus-base-goerli-andromeda.toml`
 2. Fetch deployments and store as JSON files
 
    ```sh
-   node ./e2e/fetch-deployments.js ./e2e/cannon-build.log
-   ```
-
-   or
-
-   ```sh
    yarn fetch-deployments
    ```
 
@@ -116,7 +106,6 @@ Example based on `omnibus-base-goerli-andromeda.toml`
       --keep-alive \
       --dry-run \
       --upgrade-from synthetix-omnibus:latest@andromeda \
-      --chain-id 84531 \
       --provider-url https://base-goerli-rpc.publicnode.com
    ```
 
@@ -128,7 +117,7 @@ Example based on `omnibus-base-goerli-andromeda.toml`
 
 4. Execute tests
    ```sh
-   DEBUG='e2e:*' mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
+   DEBUG='e2e:*' yarn mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
    ```
    or
    ```sh
