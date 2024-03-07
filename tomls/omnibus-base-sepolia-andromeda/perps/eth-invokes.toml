@@ -4,6 +4,7 @@ include = [
     "../../oracles/eth.toml",
     "../../markets/common/bigcap-settings.toml",
 ]
+# NOTE: This toml will live until the setMaxMarketValue is on mainnet
 
 [setting.ethPerpsMarketId]
 
