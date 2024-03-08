@@ -10,10 +10,8 @@ targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
-options.synthetixPackage = "<%= settings.snx_package %>"
-options.spotMarketPackage = "<%= settings.spot_market_package %>"
-options.synthetixPreset = "<%= settings.target_preset %>"
-options.spotMarketPreset = "<%= settings.target_preset %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.spotMarketPackage = "<%= settings.spot_market_package %>@<%= settings.target_preset %>"
 depends = ["provision.spotFactory"]
 
 [invoke.setPerpsMarketName]

@@ -48,7 +48,7 @@ defaultValue = "synthetix-spot-market:3.3.15"
 defaultValue = "synthetix-perps-market:3.3.17"
 
 [setting.buyback_snx_package]
-defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
+defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
 
 [setting.salt]
 defaultValue = "andromeda-dev"

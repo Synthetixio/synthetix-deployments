@@ -1254,9 +1254,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.18":
-  version: 2.11.18
-  resolution: "@usecannon/builder@npm:2.11.18"
+"@usecannon/builder@npm:2.11.19":
+  version: 2.11.19
+  resolution: "@usecannon/builder@npm:2.11.19"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.2"
@@ -1270,17 +1270,17 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.6.1"
     zod: "npm:^3.22.4"
-  checksum: 3eca2331ac451c38a5179279d983110278292b328b021b4994ac5dea5ac3362cdebfafd03464cd8836b56c588f37dfa0551b33bdcd89872b785c95b63d7aa8ff
+  checksum: 734aabe1bf7dc90a462520e33a5674f1fad87ee5abfa60b334b548032a4ee11ce741109c5fdf5b2141b45f208646693fc6f4efac3ca755577e2ecf0d9c2ec139
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.18":
-  version: 2.11.18
-  resolution: "@usecannon/cli@npm:2.11.18"
+"@usecannon/cli@npm:2.11.19":
+  version: 2.11.19
+  resolution: "@usecannon/cli@npm:2.11.19"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.11.18"
+    "@usecannon/builder": "npm:2.11.19"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1300,7 +1300,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 79a22affd87b16da1b0275f48260ce8db087a02d15d595a3e02540d3cce3040660dd3674258f761b142e3037e793ad31f3d1dfc6ef5844080ba5a52a1059301e
+  checksum: 85a0b620c7e8ed4e9af94c73fa2adb340cfebbab4fbbb4405175d08aa4a980991260bf015937609bc2d432b40e64ecd90bbd3ae8c0281cb04d8331cf207d9580
   languageName: node
   linkType: hard
 
@@ -4921,8 +4921,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.29.3"
-    "@usecannon/builder": "npm:2.11.18"
-    "@usecannon/cli": "npm:2.11.18"
+    "@usecannon/builder": "npm:2.11.19"
+    "@usecannon/cli": "npm:2.11.19"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.19.4"
