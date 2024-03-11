@@ -1121,18 +1121,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/router@npm:^3.3.2":
-  version: 3.3.4
-  resolution: "@synthetixio/router@npm:3.3.4"
+"@synthetixio/router@npm:^3.3.7":
+  version: 3.3.7
+  resolution: "@synthetixio/router@npm:3.3.7"
   dependencies:
     "@ethersproject/keccak256": "npm:^5.7.0"
     debug: "npm:^4.3.4"
     mustache: "npm:^4.2.0"
   peerDependencies:
-    "@usecannon/builder": ^2.0.0
     hardhat: ^2.0.0
     solc: ^0.8.17
-  checksum: 558d1571a3e7c17b6b43990d485326f6753ba22b74c14f6149654fc101cb30be947121e64e0ef3c25a33bda16b5d229407adce9be2f375f0cfade547c916fe74
+  checksum: f79d119b249c556ca083e4654ca633c179085f9948933ecbb9aaadced83a5fae74dd6b7c91ac7edd702895fe98d65a7d397d7635d2ce6a059a413101c46e2ecb
   languageName: node
   linkType: hard
 
@@ -1255,11 +1254,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.5":
-  version: 2.11.5
-  resolution: "@usecannon/builder@npm:2.11.5"
+"@usecannon/builder@npm:2.11.19":
+  version: 2.11.19
+  resolution: "@usecannon/builder@npm:2.11.19"
   dependencies:
-    "@synthetixio/router": "npm:^3.3.2"
+    "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.2"
     buffer: "npm:^6.0.3"
     debug: "npm:^4.3.4"
@@ -1271,17 +1270,18 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.6.1"
     zod: "npm:^3.22.4"
-  checksum: 225d5b9fd3f34759a8c5451b2b5ec4d52106a40beb5dffc80fa5060fe1d81e94511b14b84593c287b41968c1076cfab31feca86ad36241666f3c0ed8ab88a714
+  checksum: 734aabe1bf7dc90a462520e33a5674f1fad87ee5abfa60b334b548032a4ee11ce741109c5fdf5b2141b45f208646693fc6f4efac3ca755577e2ecf0d9c2ec139
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.5":
-  version: 2.11.5
-  resolution: "@usecannon/cli@npm:2.11.5"
+"@usecannon/cli@npm:2.11.19":
+  version: 2.11.19
+  resolution: "@usecannon/cli@npm:2.11.19"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.11.5"
+    "@usecannon/builder": "npm:2.11.19"
+    abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
     debug: "npm:^4.3.4"
@@ -1300,7 +1300,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: f3dc9c00605bd6f8c88992a8c29b8746403b7dacddb673ea469632aa9a0748f8f31f1bbe7fba78156b6e96d1e1976475ae766ff2264f6c90967075817af19414
+  checksum: 85a0b620c7e8ed4e9af94c73fa2adb340cfebbab4fbbb4405175d08aa4a980991260bf015937609bc2d432b40e64ecd90bbd3ae8c0281cb04d8331cf207d9580
   languageName: node
   linkType: hard
 
@@ -1323,6 +1323,21 @@ __metadata:
     zod:
       optional: true
   checksum: 38c8d965c75c031854385f1c14da0410e271f1a8255332869a77a1ee836c4607420522c1f0077716c7ad7c4091f53c1b2681ed1d30b5161d1424fdb5a480f104
+  languageName: node
+  linkType: hard
+
+"abitype@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "abitype@npm:1.0.1"
+  peerDependencies:
+    typescript: ">=5.0.4"
+    zod: ^3 >=3.22.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+    zod:
+      optional: true
+  checksum: f7fea889565e78836088497decef787c6748f0a5302b0528163b7533f1d04cdca3d4933361dff67de27c2a38bd7c71f3e71fefee0b4da355a3de942201e48473
   languageName: node
   linkType: hard
 
@@ -4906,8 +4921,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.29.3"
-    "@usecannon/builder": "npm:2.11.5"
-    "@usecannon/cli": "npm:2.11.5"
+    "@usecannon/builder": "npm:2.11.19"
+    "@usecannon/cli": "npm:2.11.19"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.19.4"

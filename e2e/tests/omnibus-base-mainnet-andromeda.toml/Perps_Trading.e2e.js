@@ -23,6 +23,10 @@ const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
+const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
+const {
+  configureMaximumMarketCollateral,
+} = require('../../tasks/configureMaximumMarketCollateral');
 
 const wait = (ms) =>
   new Promise((resolve) => {
@@ -126,6 +130,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       marketId: 200,
       settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
+    });
+  });
+
+  it('should increase max collateral for the test to 1_000_000_000_000', async () => {
+    await configureMaximumMarketCollateral({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
+    await setSpotWrapper({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
     });
   });
 

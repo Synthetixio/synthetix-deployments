@@ -20,6 +20,9 @@ defaultValue = "0.0005"
 [setting.perpsBtcMaxMarketSize]
 defaultValue = "300"
 
+[setting.perpsBtcMaxMarketValue]
+defaultValue = "18000000"
+
 [setting.perpsBtcInitialMarginRatio]
 defaultValue = "13.35"
 

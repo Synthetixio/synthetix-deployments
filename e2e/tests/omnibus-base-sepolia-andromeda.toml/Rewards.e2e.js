@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const assert = require('assert');
 const { ethers } = require('ethers');
 require('../../inspect');
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
@@ -16,19 +17,32 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { setConfigUint } = require('../../tasks/setConfigUint');
-const { getConfigUint } = require('../../tasks/getConfigUint');
-const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { swapToSusd } = require('../../tasks/swapToSusd');
-const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
+const { getTokenBalance } = require('../../tasks/getTokenBalance');
+const { transferToken } = require('../../tasks/transferToken');
+const { setPermissionlessTokenBalance } = require('../../tasks/setPermissionlessTokenBalance');
+const { distributeRewards } = require('../../tasks/distributeRewards');
+const { getPoolOwner } = require('../../tasks/getPoolOwner');
+const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsDistributorInfo');
+const {
+  getTokenRewardsDistributorRewardsAmount,
+} = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
+const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
+const { claimRewards } = require('../../tasks/claimRewards');
 
-const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
+const {
+  contracts: {
+    RewardsDistributorForSpartanCouncilPool: distributorAddress,
+    FakeCollateralfwSNX: payoutToken,
+    CoreProxy: rewardManager,
+    SynthUSDCToken: collateralType,
+  },
+} = require('../../deployments/meta.json');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -76,15 +90,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fUSDC balance to 20_000_000', async () => {
+  it('should set fUSDC balance to 10_000_000', async () => {
     const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
       'New wallet has 0 fUSDC balance'
     );
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 20_000_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 20_000_000);
+    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 10_000_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
   });
 
   it('should approve fUSDC spending for SpotMarket', async () => {
@@ -112,22 +126,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should increase max collateral for the test to 20_000_000', async () => {
+  it('should increase max collateral for the test to 10_000_000', async () => {
     await configureMaximumMarketCollateral({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'fUSDC',
-      targetAmount: String(20_000_000),
+      targetAmount: String(10_000_000),
     });
     await setSpotWrapper({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'fUSDC',
-      targetAmount: String(20_000_000),
+      targetAmount: String(10_000_000),
     });
   });
 
-  it('should wrap 15_000_000 fUSDC', async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 15_000_000 });
-    assert.equal(balance, 15_000_000);
+  it('should wrap 5_000_000 fUSDC', async () => {
+    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 5_000_000 });
+    assert.equal(balance, 5_000_000);
   });
 
   it('should approve sUSDC spending for CoreProxy', async () => {
@@ -155,19 +169,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 5_000_000 sUSDC into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 15_000_000);
+  it('should deposit 4_900_000 sUSDC into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_000_000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 5_000_000 });
+    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 4_900_000 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 10_000_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 100_000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 5_000_000,
+      totalDeposited: 4_900_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -191,9 +205,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should delegate 5_000_000 sUSDC into the Spartan Council pool', async () => {
+  it('should delegate 4_800_000 sUSDC into the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 5_000_000,
+      totalDeposited: 4_900_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -201,165 +215,119 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       symbol: 'sUSDC',
       accountId,
-      amount: 5_000_000,
+      amount: 4_800_000,
       poolId: 1,
-    });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 5_000_000,
-      totalAssigned: 5_000_000,
-      totalLocked: 0,
-    });
-  });
-
-  it('should atomic swap 5_000_000 sUSDC to snxUSD to burn debt', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 10_000_000);
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({
-      wallet,
-      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 5_000_000,
-    });
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_000_000);
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 5_000_000);
-  });
-
-  it('should approve snxUSD spending for CoreProxy', async () => {
-    assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'snxUSD',
-        spenderAddress: require('../../deployments/CoreProxy.json').address,
-      }),
-      false,
-      'New wallet has not allowed CoreProxy snxUSD spending'
-    );
-    await approveCollateral({
-      privateKey,
-      symbol: 'snxUSD',
-      spenderAddress: require('../../deployments/CoreProxy.json').address,
-    });
-    assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'snxUSD',
-        spenderAddress: require('../../deployments/CoreProxy.json').address,
-      }),
-      true
-    );
-  });
-
-  it('should deposit 5_000_000 snxUSD into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 5_000_000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
-      totalDeposited: 0,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
-
-    await depositCollateral({
-      privateKey,
-      symbol: 'snxUSD',
-      accountId,
-      amount: 5_000_000,
-    });
-
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
-      totalDeposited: 5_000_000,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
-  });
-
-  it.skip('should undelegate 100_000 sUSDC from the Spartan Council pool', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 5_000_000,
-      totalAssigned: 5_000_000,
-      totalLocked: 0,
-    });
-
-    await require('../../tasks/burnDebt').burnDebt({
-      wallet,
-      accountId,
-      symbol: 'sUSDC',
-      poolId: 1,
-    });
-
-    await require('../../tasks/mineBlock').mineBlock();
-
-    const SpotMarketProxy = new ethers.Contract(
-      require('../../deployments/SpotMarketProxy.json').address,
-      require('../../deployments/SpotMarketProxy.json').abi,
-      provider
-    );
-    log({
-      marketId: 1,
-      minimumCredit: await SpotMarketProxy.minimumCredit(1),
-    });
-
-    const CoreProxy = new ethers.Contract(
-      require('../../deployments/CoreProxy.json').address,
-      require('../../deployments/CoreProxy.json').abi,
-      provider
-    );
-    log({
-      marketId: 1,
-      isMarketCapacityLocked: await CoreProxy.isMarketCapacityLocked(1),
-      getMarketReportedDebt: await CoreProxy.getMarketReportedDebt(1),
-      getMarketTotalDebt: await CoreProxy.getMarketTotalDebt(1),
-    });
-    log({
-      marketId: 2,
-      isMarketCapacityLocked: await CoreProxy.isMarketCapacityLocked(2),
-      getMarketReportedDebt: await CoreProxy.getMarketReportedDebt(2),
-      getMarketTotalDebt: await CoreProxy.getMarketTotalDebt(2),
-    });
-
-    await undelegateCollateral({
-      wallet,
-      accountId,
-      symbol: 'sUSDC',
-      targetAmount: 4_900_000,
-      poolId: 1,
-    });
-
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 5_000_000,
-      totalAssigned: 4_900_000,
-      totalLocked: 0,
-    });
-  });
-
-  it.skip('should not be able to withdraw because of accountTimeoutWithdraw', async () => {
-    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 100 });
-    assert.equal(await getConfigUint('accountTimeoutWithdraw'), 100);
-
-    await assert.rejects(
-      async () =>
-        await withdrawCollateral({
-          privateKey,
-          symbol: 'sUSDC',
-          accountId,
-          amount: 100_000,
-        })
-    );
-  });
-
-  it.skip('should withdraw 100_000 sUSDC', async () => {
-    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
-    assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_000_000);
-    await withdrawCollateral({
-      privateKey,
-      symbol: 'sUSDC',
-      accountId,
-      amount: 100_000,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 4_900_000,
-      totalAssigned: 4_900_000,
+      totalAssigned: 4_800_000,
       totalLocked: 0,
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_100_000);
+  });
+
+  it('should validate Rewards Distributor info', async () => {
+    const info = await getTokenRewardsDistributorInfo({ distributorAddress });
+    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
+    assert.equal(info.poolId, 1, 'poolId');
+    assert.equal(info.collateralType, collateralType, 'collateralType');
+    assert.equal(info.payoutToken, payoutToken, 'payoutToken');
+    assert.equal(info.precision, 10 ** 18, 'precision');
+    assert.equal(info.token, payoutToken, 'token');
+    assert.equal(info.rewardManager, rewardManager, 'rewardManager');
+    assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
+  });
+
+  it('should fund RewardDistributor with 1_000_000 fwSNX', async () => {
+    assert.equal(
+      await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
+      0,
+      'Rewards Distributor has 0 fwSNX balance'
+    );
+    await setPermissionlessTokenBalance({
+      privateKey,
+      tokenAddress: payoutToken,
+      balance: 1_000_000,
+    });
+
+    await transferToken({
+      privateKey,
+      tokenAddress: payoutToken,
+      targetWalletAddress: distributorAddress,
+      amount: 1_000_000,
+    });
+
+    assert.equal(
+      await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
+      1_000_000,
+      'Rewards Distributor has 1_000_000 fwSNX balance'
+    );
+  });
+
+  it('should distribute 1_000_000 fwSNX rewards', async () => {
+    assert.equal(await getTokenRewardsDistributorRewardsAmount({ distributorAddress }), 0);
+
+    const poolId = 1;
+    const poolOwner = await getPoolOwner({ poolId });
+    log({ poolOwner });
+
+    await provider.send('anvil_impersonateAccount', [poolOwner]);
+    const signer = provider.getSigner(poolOwner);
+
+    const amount = ethers.utils.parseEther(`${1_000_000}`);
+    const start = Math.floor(Date.now() / 1000);
+    const duration = 10;
+
+    await distributeRewards({
+      wallet: signer,
+      distributorAddress,
+      poolId,
+      collateralType,
+      amount,
+      start,
+      duration,
+    });
+
+    await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
+
+    assert.equal(await getTokenRewardsDistributorRewardsAmount({ distributorAddress }), 1_000_000);
+  });
+
+  it('should claim fwSNX rewards', async () => {
+    const poolId = 1;
+
+    const availableRewards = await getAvailableRewards({
+      accountId,
+      poolId,
+      collateralType,
+      distributorAddress,
+    });
+
+    assert.ok(availableRewards > 0, 'should have some rewards to claim');
+
+    assert.equal(
+      await getTokenBalance({ walletAddress: address, tokenAddress: payoutToken }),
+      0,
+      'Wallet has 0 fwSNX balance BEFORE claim'
+    );
+
+    await claimRewards({
+      wallet,
+      accountId,
+      poolId,
+      collateralType,
+      distributorAddress,
+    });
+
+    const postClaimBalance = await getTokenBalance({
+      walletAddress: address,
+      tokenAddress: payoutToken,
+    });
+    assert.ok(postClaimBalance > 0, 'Wallet has some non-zero fwSNX balance AFTER claim');
+
+    assert.equal(
+      await getTokenRewardsDistributorRewardsAmount({ distributorAddress }),
+      1_000_000 - postClaimBalance,
+      'should deduct claimed token amount from total distributor rewards amount'
+    );
   });
 });
