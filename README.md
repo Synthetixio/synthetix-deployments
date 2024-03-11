@@ -42,12 +42,8 @@ Conduct the following process for each network:
   ```sh
   yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --dry-run \
-<<<<<<< HEAD
-    --provider-url https://base-goerli.infura.io/v3/$INFURA_API_KEY
-=======
-    --chain-id 84531 \
+    --chain-id 84532 \
     --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
->>>>>>> main
   ```
 
 _The --provider-url and --private-key parameters are unnecessary if using [Frame](https://frame.sh/)_
@@ -88,12 +84,8 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    yarn cannon build omnibus-base-sepolia-andromeda.toml \
      --dry-run \
      --upgrade-from synthetix-omnibus:latest@andromeda \
-<<<<<<< HEAD
-     --provider-url https://base-goerli-rpc.publicnode.com \
-=======
      --chain-id 84532 \
      --provider-url https://sepolia.base.org \
->>>>>>> main
        | tee ./e2e/cannon-build.log
    ```
 
@@ -117,12 +109,8 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
       --keep-alive \
       --dry-run \
       --upgrade-from synthetix-omnibus:latest@andromeda \
-<<<<<<< HEAD
-      --provider-url https://base-goerli-rpc.publicnode.com
-=======
       --chain-id 84532 \
       --provider-url https://sepolia.base.org
->>>>>>> main
    ```
 
    or
@@ -133,11 +121,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
 
 4. Execute tests
    ```sh
-<<<<<<< HEAD
-   DEBUG='e2e:*' yarn mocha e2e/tests/omnibus-base-goerli-andromeda.toml/*.e2e.js
-=======
    DEBUG='e2e:*' mocha e2e/tests/omnibus-base-sepolia-andromeda.toml/*.e2e.js
->>>>>>> main
    ```
    or
    ```sh
