@@ -163,6 +163,51 @@ commands:
               echo "Pull Request already exists: $PR_URL"
             fi
 
+  github-pr-allow-empty:
+    parameters:
+      working_directory:
+        type: string
+      repo_slug:
+        type: string
+      branch_head:
+        type: string
+      branch_base:
+        type: string
+      commit_message:
+        type: string
+    steps:
+      - run:
+          working_directory: << parameters.working_directory >>
+          name: "Open PR in '<< parameters.repo_slug >>' for '<< parameters.branch_head >>' branch"
+          command: |
+            git config --global user.email engineering@snxdao.io
+            git config --global user.name synthetix-team
+            git branch "<< parameters.branch_head >>"
+            git checkout "<< parameters.branch_head >>"
+            git add .
+            git commit --message "<< parameters.commit_message >>" --allow-empty
+            git push --set-upstream --force origin "<< parameters.branch_head >>"
+
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              https://api.github.com/repos/<< parameters.repo_slug >>/pulls?state=open | tee /tmp/opened-pulls.txt
+
+            PR_URL=$(cat /tmp/opened-pulls.txt | jq -r '.[] | select(.head.ref=="<< parameters.branch_head >>") | .html_url')
+            echo "Existing PR: $PR_URL"
+
+            if [ -z "$PR_URL" ]; then
+              # If no PR exists with the branch "<< parameters.branch_head >>", create one
+              curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                https://api.github.com/repos/<< parameters.repo_slug >>/pulls \
+                -d '{
+                  "title": "<< parameters.commit_message >>",
+                  "head": "<< parameters.branch_head >>", 
+                  "base": "<< parameters.branch_base >>"
+                }'
+            else
+              # If PR already exists do nothing, it would be updated via forced push
+              echo "Pull Request already exists: $PR_URL"
+            fi
+
 jobs:
   lint:
     docker:
@@ -527,7 +572,7 @@ jobs:
             cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
-      - github-pr:
+      - github-pr-allow-empty:
           working_directory: "~/v3-contracts"
           repo_slug: "Synthetixio/v3-contracts"
           branch_head: "next-<< parameters.chain-id >>-<< parameters.preset >>"
