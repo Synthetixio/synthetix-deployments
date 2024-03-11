@@ -61,10 +61,9 @@ extra.synth_eth_token_address.arg = 1
 target = ["core_sandbox.synthetix.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    8, # 8 = constant
+    8,                                                                 # 8 = constant
     "<%= defaultAbiCoder.encode(['int256'], [parseEther('1000')]) %>", # 1 parameter: price
-    [
-    ],
+    [],
 ]
 extra.eth_oracle_id.event = "NodeRegistered"
 extra.eth_oracle_id.arg = 0

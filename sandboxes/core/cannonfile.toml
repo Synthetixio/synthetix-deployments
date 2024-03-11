@@ -71,10 +71,9 @@ extra.synth_box_token_address.arg = 1
 target = ["synthetix.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    8, # 8 = constant
+    8,                                                               # 8 = constant
     "<%= defaultAbiCoder.encode(['int256'], [parseEther('10')]) %>", # 1 parameter: price
-    [
-    ],
+    [],
 ]
 extra.box_oracle_id.event = "NodeRegistered"
 extra.box_oracle_id.arg = 0

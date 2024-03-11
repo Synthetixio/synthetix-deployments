@@ -137,10 +137,9 @@ extra.synth_usdc_token_address.arg = 1
 target = ["synthetix.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    8, # 8 = constant
+    8,                                                              # 8 = constant
     "<%= defaultAbiCoder.encode(['int256'], [parseEther('1')]) %>", # 1 parameter: price, always $1
-    [
-    ],
+    [],
 ]
 extra.usdc_oracle_id.event = "NodeRegistered"
 extra.usdc_oracle_id.arg = 0
@@ -345,19 +344,15 @@ func = "createMarket"
 args = ["100", "Ethereum", "ETH"]
 extra.perps_eth_market_id.event = "MarketCreated"
 extra.perps_eth_market_id.arg = 0
-depends = [
-    'invoke.permit_owner_to_register_markets',
-    'invoke.permit_everyone_to_use_perps',
-]
+depends = ['invoke.permit_owner_to_register_markets', 'invoke.permit_everyone_to_use_perps']
 
 [invoke.register_eth_oracle_node_with_constant_price]
 target = ["synthetix.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    8, # 8 = constant
+    8,                                                                 # 8 = constant
     "<%= defaultAbiCoder.encode(['int256'], [parseEther('1000')]) %>", # 1 parameter: price
-    [
-    ],
+    [],
 ]
 extra.eth_oracle_id.event = "NodeRegistered"
 extra.eth_oracle_id.arg = 0
@@ -508,19 +503,15 @@ func = "createMarket"
 args = ["200", "Bitcoin", "BTC"]
 extra.perps_btc_market_id.event = "MarketCreated"
 extra.perps_btc_market_id.arg = 0
-depends = [
-    'invoke.permit_owner_to_register_markets',
-    'invoke.permit_everyone_to_use_perps',
-]
+depends = ['invoke.permit_owner_to_register_markets', 'invoke.permit_everyone_to_use_perps']
 
 [invoke.register_btc_oracle_node_with_constant_price]
 target = ["synthetix.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
-    8, # 8 = constant
+    8,                                                                         # 8 = constant
     "<%= defaultAbiCoder.encode(['int256'], [parseEther(String(30_000))]) %>", # 1 parameter: price
-    [
-    ],
+    [],
 ]
 extra.btc_oracle_id.event = "NodeRegistered"
 extra.btc_oracle_id.arg = 0
