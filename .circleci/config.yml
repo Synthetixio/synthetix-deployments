@@ -693,38 +693,41 @@ workflows:
 
     jobs:
       - preview:
+          name: preview-mainnet
+          toml: omnibus-mainnet.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 1
+          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - preview:
+          name: preview-sepolia
+          toml: omnibus-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - preview:
+          name: preview-optimism-mainnet
+          toml: omnibus-optimism-mainnet.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 10
+          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - preview:
+          name: preview-base-mainnet-andromeda
+          toml: omnibus-base-mainnet-andromeda.toml
+          package: "synthetix-omnibus:latest"
+          preset: "andromeda"
+          chain-id: 8453
+          provider-url: https://mainnet.base.org
+
+      - preview:
           name: preview-base-sepolia-andromeda
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://sepolia.base.org
-#
-#      - preview:
-#          name: preview-base-mainnet-andromeda
-#          package: "synthetix-omnibus:latest"
-#          preset: "andromeda"
-#          chain-id: 8453
-#          provider-url: https://mainnet.base.org
-#
-#      - preview:
-#          name: preview-mainnet
-#          package: "synthetix-omnibus:latest"
-#          preset: "main"
-#          chain-id: 1
-#          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
-#
-#      - preview:
-#          name: preview-sepolia
-#          package: "synthetix-omnibus:latest"
-#          preset: "main"
-#          chain-id: 11155111
-#          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-#
-#      - preview:
-#          name: preview-optimism-mainnet
-#          package: "synthetix-omnibus:latest"
-#          preset: "main"
-#          chain-id: 10
-#          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
-#
