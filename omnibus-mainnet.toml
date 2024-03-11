@@ -36,6 +36,9 @@ defaultValue = "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f"
 [setting.snx_aggregator_address]
 defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
 
+[setting.snx_chainlink_staleness_tolerance]
+defaultValue = "129600"
+
 [setting.snx_liquidation_reward]
 defaultValue = "10000000000000000000"
 

@@ -2,7 +2,9 @@ include = ["../core.toml"]
 
 [setting.snx_aggregator_address]
 
-[invoke.registerSnxOracleManager]
+[setting.snx_chainlink_staleness_tolerance]
+
+[invoke.registerSnxOracleManagerNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -13,6 +15,20 @@ args = [
     [
     ],
 ]
+extra.snx_oracle_id_raw.event = "NodeRegistered"
+extra.snx_oracle_id_raw.arg = 0
+depends = ["provision.system"]
+
+[invoke.registerSnxWithStaleness]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.snx_chainlink_staleness_tolerance]) %>",
+    [
+        "<%= extras.snx_oracle_id_raw %>",
+    ],
+]
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
-depends = ["provision.system"]
+depends = ["invoke.registerSnxOracleManagerNode"]
