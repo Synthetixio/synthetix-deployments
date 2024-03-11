@@ -24,7 +24,7 @@ Conduct the following process for each network:
   yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --dry-run \
     --upgrade-from synthetix-omnibus:latest@andromeda \
-    --chain-id 84531 \
+    --chain-id 84532 \
     --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
@@ -33,7 +33,6 @@ Conduct the following process for each network:
   ```sh
   yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --upgrade-from synthetix-omnibus:latest@andromeda \
-    --chain-id 84531 \
     --private-key $TESTNET_DEPLOYER_PRIVATE_KEY \
     --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
@@ -43,7 +42,7 @@ Conduct the following process for each network:
   ```sh
   yarn cannon build omnibus-base-sepolia-andromeda.toml \
     --dry-run \
-    --chain-id 84531 \
+    --chain-id 84532 \
     --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
@@ -97,12 +96,6 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    ```
 
 2. Fetch deployments and store as JSON files
-
-   ```sh
-   node ./e2e/fetch-deployments.js ./e2e/cannon-build.log
-   ```
-
-   or
 
    ```sh
    yarn fetch-deployments
