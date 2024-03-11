@@ -11,7 +11,6 @@
   ],
   "scripts": {
     "start:mainnet": "cannon run synthetix-omnibus:latest@main --chain-id 1 --provider-url https://mainnet.infura.io/v3/$INFURA_KEY",
-    "start:goerli": "cannon run synthetix-omnibus:latest@main --chain-id 5 --provider-url https://goerli.infura.io/v3/$INFURA_KEY",
     "start:sepolia": "cannon run synthetix-omnibus:latest@main --chain-id 11155111 --provider-url https://sepolia.infura.io/v3/$INFURA_KEY",
     "start:optimism": "cannon build omnibus-optimism-mainnet.toml --keep-alive --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 10 --provider-url https://optimism-mainnet.infura.io/v3/$INFURA_KEY | tee ./e2e/cannon-build.log",
     "build:base": "cannon build omnibus-base-mainnet-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 8453 --provider-url https://mainnet.base.org | tee ./e2e/cannon-build.log",

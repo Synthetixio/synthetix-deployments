@@ -492,14 +492,6 @@ workflows:
           provider-url: https://mainnet.base.org
 
       - fork-test:
-          name: goerli
-          toml: omnibus-goerli.toml
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 5
-          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
           name: mainnet
           toml: omnibus-mainnet.toml
           package: "synthetix-omnibus:latest"
@@ -562,13 +554,6 @@ workflows:
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          name: docs-goerli
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 5
-          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
-
-      - deployment-info:
           name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -611,13 +596,6 @@ workflows:
           preset: "main"
           chain-id: 1
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - npm-package:
-          name: npm-goerli
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 5
-          provider-url: https://goerli.infura.io/v3/$INFURA_API_KEY
 
       - npm-package:
           name: npm-sepolia
