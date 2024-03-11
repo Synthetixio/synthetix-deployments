@@ -124,9 +124,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should have 5_250 ETH Max Market Size', async () => {
-    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 5_250);
+    assert.equal(ethers.utils.formatEther(maxMarketSize), 5_250);
+  });
+
+  it('should have 18M USD Max Market Size', async () => {
+    const maxMarketValue = await PerpsMarketProxy.getMaxMarketValue(marketId);
+
+    assert.equal(ethers.utils.formatEther(maxMarketValue), 18_000_000);
   });
 
   it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {

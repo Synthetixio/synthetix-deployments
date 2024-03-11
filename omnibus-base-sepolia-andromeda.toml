@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.5-3"
+version = "3.3.17"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -20,11 +20,11 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
     # BTC
-    "tomls/markets/perps/btc.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/btc.toml",
     # ETH
-    "tomls/markets/perps/eth.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/eth-invokes.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/eth.toml",
 ]
@@ -36,19 +36,19 @@ defaultValue = "2"
 defaultValue = "2"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.5"
+defaultValue = "synthetix:3.3.15"
 
 [setting.perps_keeper_cost_package]
-defaultValue = "op-gas-price-oracle:3.3.5"
+defaultValue = "op-gas-price-oracle:3.3.15"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.5"
+defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.5"
+defaultValue = "synthetix-perps-market:3.3.17"
 
 [setting.buyback_snx_package]
-defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
+defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
 
 [setting.salt]
 defaultValue = "andromeda-dev"
@@ -61,7 +61,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 defaultValue = "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.5"
+source = "pyth-erc7412-wrapper:3.3.15"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
