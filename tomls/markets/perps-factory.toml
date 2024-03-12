@@ -1,7 +1,7 @@
 [setting.perps_market_package]
 
 [setting.perps_super_market_name]
-value = "High MCap"
+defaultValue = "High MCap"
 
 # Since multiple of these can be created, should be moved to a High MCap Perps Folder
 [provision.perpsFactory]
