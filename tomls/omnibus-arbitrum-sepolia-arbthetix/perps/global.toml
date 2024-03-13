@@ -2,22 +2,22 @@
 defaultValue = "1"
 
 [setting.perps_keeper_l1_cost_settle_gas_units]
-defaultValue = "30000"
+defaultValue = "<%= String(30_000) %>"
 
 [setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "1200000"
+defaultValue = "<%= String(1_200_000) %>"
 
 [setting.perps_keeper_l1_cost_flag_gas_units]
-defaultValue = "15500"
+defaultValue = "<%= String(15_500) %>"
 
 [setting.perps_keeper_l2_cost_flag_gas_units]
-defaultValue = "250000"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perps_keeper_l1_cost_liquidate_gas_units]
-defaultValue = "5500"
+defaultValue = "<%= String(5_500) %>"
 
 [setting.perps_keeper_l2_cost_liquidate_gas_units]
-defaultValue = "1100000"
+defaultValue = "<%= String(1_100_000) %>"
 
 [setting.perps_liquidation_min_keeper_reward_usd]
 defaultValue = "5"
