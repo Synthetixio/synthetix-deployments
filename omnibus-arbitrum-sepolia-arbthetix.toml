@@ -3,19 +3,19 @@ version = "3.3.14"
 description = "Arbitrum deployment"
 preset = "arbthetix"
 include = [
-    "tomls/core.toml",                                                  # Provision the core system
-    "tomls/settings.toml",                                              # Apply minimum liquidity ratio and withdrawal timeout
-    "tomls/permissions.toml",                                           # Allow deployer to create pools
-    "tomls/permit-deniers.toml",                                        # Add feature flag deniers to perps and core systems
-    "tomls/pools/spartan-council.toml",                                 # Create Spartan Council Pool
+    "tomls/core.toml",                                                         # Provision the core system
+    "tomls/settings.toml",                                                     # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml",                                                  # Allow deployer to create pools
+    "tomls/permit-deniers.toml",                                               # Add feature flag deniers to perps and core systems
+    "tomls/pools/spartan-council.toml",                                        # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/spot/usdc.toml",          # sUSDC spot market/wrapper, mock for USDC
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/spot/dai.toml",           # sUSDC spot market/wrapper, mock for USDC
-    "tomls/permit-all-perps-perpsSystem.toml",                          # Enable perps market
+    "tomls/omnibus-arbitrum-sepolia-arbthetix/spot/usdc.toml",                 # sUSDC spot market/wrapper, mock for USDC
+    "tomls/omnibus-arbitrum-sepolia-arbthetix/spot/dai.toml",                  # sUSDC spot market/wrapper, mock for USDC
+    "tomls/permit-all-perps-perpsSystem.toml",                                 # Enable perps market
     "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/referrers.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/global.toml",       # Global perps settings
-    "tomls/oracles/perps-keeper-cost.toml",                             # Add gas oracle for keeper fees
+    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/global.toml",              # Global perps settings
+    "tomls/omnibus-arbitrum-sepolia-arbthetix/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
     "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/feeCollector.toml",
     # Collaterals
     #"tomls/omnibus-arbitrum-sepolia-arbthetix/collaterals/usdc.toml", // usdc collateral is already included with spot market deployment
