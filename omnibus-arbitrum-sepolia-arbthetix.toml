@@ -39,22 +39,22 @@ defaultValue = "2"
 defaultValue = "2"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.14"
+defaultValue = "synthetix:3.3.15"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.14"
+defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.14"
+defaultValue = "synthetix-perps-market:3.3.17"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
 
 [setting.salt]
-defaultValue = "arbthetix-dev"
+defaultValue = "arbthetix"
 
 [setting.target_preset]
 defaultValue = "arbthetix" # Preset assigned to provisioned packages
@@ -70,10 +70,10 @@ options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
 [setting.owner]
-defaultValue = "0x07Aeeb7E544A070a2553e142828fb30c214a1F86"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.deployer]
-defaultValue = "0x07Aeeb7E544A070a2553e142828fb30c214a1F86"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
@@ -85,7 +85,7 @@ defaultValue = "86400" # 1 day
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0x07Aeeb7E544A070a2553e142828fb30c214a1F86"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.arb_aggregator_address]
 defaultValue = "0xD1092a65338d049DB68D7Be6bD89d17a0929945e"
@@ -97,7 +97,7 @@ defaultValue = "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165"
 defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
 
 [setting.arb_address]
-defaultValue = "0xc275B23C035a9d4EC8867b47f55427E0bDCe14cB "
+defaultValue = "0xc275B23C035a9d4EC8867b47f55427E0bDCe14cB"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
