@@ -54,10 +54,5 @@
     "async-only": true,
     "exit": true
   },
-  "packageManager": "yarn@4.0.2",
-  "resolutions": {
-    "@usecannon/builder": "portal:/home/daniel/code/cannon/packages/builder",
-    "@usecannon/cli": "portal:/home/daniel/code/cannon/packages/cli",
-    "hardhat-cannon": "portal:/home/daniel/code/cannon/packages/hardhat-cannon"
-  }
+  "packageManager": "yarn@4.0.2"
 }
