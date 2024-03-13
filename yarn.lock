@@ -1254,9 +1254,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@portal:/home/daniel/code/cannon/packages/builder::locator=synthetix-deployments%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@usecannon/builder@portal:/home/daniel/code/cannon/packages/builder::locator=synthetix-deployments%40workspace%3A."
+"@usecannon/builder@npm:2.11.19":
+  version: 2.11.19
+  resolution: "@usecannon/builder@npm:2.11.19"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.2"
@@ -1270,12 +1270,13 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.6.1"
     zod: "npm:^3.22.4"
+  checksum: 734aabe1bf7dc90a462520e33a5674f1fad87ee5abfa60b334b548032a4ee11ce741109c5fdf5b2141b45f208646693fc6f4efac3ca755577e2ecf0d9c2ec139
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@usecannon/cli@portal:/home/daniel/code/cannon/packages/cli::locator=synthetix-deployments%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@usecannon/cli@portal:/home/daniel/code/cannon/packages/cli::locator=synthetix-deployments%40workspace%3A."
+"@usecannon/cli@npm:2.11.19":
+  version: 2.11.19
+  resolution: "@usecannon/cli@npm:2.11.19"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
@@ -1299,8 +1300,9 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
+  checksum: 85a0b620c7e8ed4e9af94c73fa2adb340cfebbab4fbbb4405175d08aa4a980991260bf015937609bc2d432b40e64ecd90bbd3ae8c0281cb04d8331cf207d9580
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "abbrev@npm:^2.0.0":
   version: 2.0.0
