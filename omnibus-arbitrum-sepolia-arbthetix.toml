@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.14"
+version = "3.3.15"
 description = "Arbitrum deployment"
 preset = "arbthetix"
 include = [
@@ -111,9 +111,9 @@ args = [
     ],
 ]
 
-[invoke.permitAllPerpsSystem_upd_1]
+[invoke.allowAllPerpsSystem_revert]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('perpsSystem') %>", false]
-depends = ["invoke.permitAllPerpsSystem"]
+depends = ["invoke.allowAllPerpsSystem"]
