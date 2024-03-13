@@ -1,5 +1,3 @@
-include = ["../core.toml"]
-
 [setting.arb_aggregator_address]
 
 [invoke.registerArbOracleNode]
