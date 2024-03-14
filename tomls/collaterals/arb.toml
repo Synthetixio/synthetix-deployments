@@ -1,4 +1,4 @@
-include = ["../oracles/arb.toml"]
+include = ["../oracles/pyth-arb.toml"]
 
 [setting.arb_address]
 

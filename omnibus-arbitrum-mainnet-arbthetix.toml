@@ -1,0 +1,135 @@
+name = "synthetix-omnibus"
+version = "4"
+description = "Arbitrum deployment"
+preset = "arbthetix"
+include = [
+    "tomls/core.toml",                  # Provision the core system
+    "tomls/settings.toml",              # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml",           # Allow deployer to create pools
+    "tomls/permit-deniers.toml",        # Add feature flag deniers to perps and core systems
+    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/usdc.toml",                 # sUSDC spot market/wrapper, mock for USDC
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/dai.toml",                  # sUSDC spot market/wrapper, mock for USDC
+    "tomls/permit-all-perps-perpsSystem.toml",                                 # Enable perps market
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/referrers.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/global.toml",              # Global perps settings
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/perps/feeCollector.toml",
+    # Collaterals
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/collaterals/usdc.toml", // usdc collateral is already included with spot market deployment
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/collaterals/dai.toml", // dai collateral is already included with the spot market deployment
+    "tomls/collaterals/weth.toml",
+    "tomls/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/arb.toml",
+    # BTC
+    "tomls/markets/perps/btc.toml",
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/btc.toml",
+    # ETH
+    "tomls/markets/perps/eth.toml",
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/eth.toml",
+]
+
+[setting.commitmentPriceDelay]
+defaultValue = "2"
+
+[setting.bigCapSettlementDelay]
+defaultValue = "2"
+
+[setting.bigCapDefaultStalenessTolerance]
+defaultValue = "86400"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.15"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "arbitrum-gas-price-oracle:3.3.16"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.15"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.17"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
+
+[setting.salt]
+defaultValue = "ARBTHETIX"
+
+[setting.target_preset]
+defaultValue = "arbthetix" # Preset assigned to provisioned packages
+
+[setting.pyth_price_verification_address]
+# https://docs.pyth.network/documentation/pythnet-price-feeds/evm
+defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.14"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[setting.owner]
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.deployer]
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400" # 1 day
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.weth_address]
+defaultValue = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+
+[setting.arb_address]
+defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+
+[invoke.allowAllPerpsSystem_revert]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('perpsSystem') %>", false]
+depends = ["invoke.allowAllPerpsSystem"]
+
+[invoke.allowCreateAccount_revert]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('createAccount') %>", false]
+
+[invoke.setUsdTokenName]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "initOrUpgradeToken"
+args = [
+    "0x555344546f6b656e000000000000000000000000000000000000000000000000",
+    "DollarWifHat",
+    "USDh",
+    18,
+    "<%= imports.system.contracts.USDRouter.address %>",
+]

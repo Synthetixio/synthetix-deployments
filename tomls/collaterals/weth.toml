@@ -1,4 +1,4 @@
-include = ["../oracles/eth.toml"]
+include = ["../oracles/pyth-eth.toml"]
 
 [setting.weth_address]
 
