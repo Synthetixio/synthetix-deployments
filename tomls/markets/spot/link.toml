@@ -13,7 +13,6 @@ extra.synth_link_market_id.event = "SynthRegistered"
 extra.synth_link_market_id.arg = 0
 extra.synth_link_token_address.event = "SynthRegistered"
 extra.synth_link_token_address.arg = 1
-depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceLink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -25,7 +24,6 @@ args = [
     "<%= extras.link_oracle_id %>",
     "<%= extras.link_oracle_id %>",
 ]
-depends = ["invoke.createLinkSynth", "invoke.registerLinkOracleNode"]
 
 [invoke.addSynthSettlementStrategyLink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -38,7 +36,6 @@ args = [
 ]
 extra.synth_link_settlement_strategy.event = "SettlementStrategyAdded"
 extra.synth_link_settlement_strategy.arg = 1
-depends = ["invoke.createLinkSynth"]
 
 [invoke.setSynthSettlementStrategyLink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -50,7 +47,6 @@ args = [
     "<%= extras.synth_link_settlement_strategy %>",
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false },
 ]
-depends = ["invoke.addSynthSettlementStrategyLink"]
 
 [invoke.setSynthAsyncFixedFeeLink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -58,7 +54,6 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_link_market_id %>"]
 func = "setAsyncFixedFee"
 args = ["<%= extras.synth_link_market_id %>", "<%= parseEther(settings.synthLinkAsyncFixedFee) %>"]
-depends = ["invoke.createLinkSynth"]
 
 [invoke.setSynthSkewScaleLink]
 target = ["spotFactory.SpotMarketProxy"]
@@ -66,4 +61,3 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_link_market_id %>"]
 func = "setMarketSkewScale"
 args = ["<%= extras.synth_link_market_id %>", "<%= parseEther(settings.synthLinkSkewScale) %>"]
-depends = ["invoke.createLinkSynth"]

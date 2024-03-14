@@ -13,4 +13,3 @@ args = [
 ]
 extra.synth_snx_oracle_id.event = "NodeRegistered"
 extra.synth_snx_oracle_id.arg = 0
-depends = ["invoke.createSnxSynth"]

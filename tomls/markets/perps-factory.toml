@@ -12,11 +12,9 @@ options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>@<%= settings.target_preset %>"
-depends = ["provision.spotFactory"]
 
 [invoke.setPerpsMarketName]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerpsMarketName"
 args = ["<%= settings.perps_super_market_name %>"]
-depends = ["provision.perpsFactory"]

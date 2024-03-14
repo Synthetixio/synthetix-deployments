@@ -1,5 +1,3 @@
-include = ["../core.toml"]
-
 # This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
 # Latest Pyth Price
 [invoke.registerPythLinkOracleNode]
@@ -26,7 +24,6 @@ args = [
 ]
 extra.link_lookup_oracle_id.event = "NodeRegistered"
 extra.link_lookup_oracle_id.arg = 0
-depends = ["provision.pyth_erc7412_wrapper"]
 
 # Staleness Node
 [invoke.registerLinkOracleNode]
@@ -42,4 +39,3 @@ args = [
 ]
 extra.link_oracle_id.event = "NodeRegistered"
 extra.link_oracle_id.arg = 0
-depends = ["invoke.registerPythLinkOracleNode", "invoke.registerLookupLinkOracleNode"]

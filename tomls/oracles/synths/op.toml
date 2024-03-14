@@ -13,4 +13,3 @@ args = [
 ]
 extra.synth_op_oracle_id.event = "NodeRegistered"
 extra.synth_op_oracle_id.arg = 0
-depends = ["invoke.createOpSynth"]

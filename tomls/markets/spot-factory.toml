@@ -8,4 +8,3 @@ options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
-depends = ["provision.system"]

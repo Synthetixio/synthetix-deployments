@@ -13,7 +13,6 @@ extra.synth_usdc_market_id.event = "SynthRegistered"
 extra.synth_usdc_market_id.arg = 0
 extra.synth_usdc_token_address.event = "SynthRegistered"
 extra.synth_usdc_token_address.arg = 1
-depends = ["provision.spotFactory"]
 
 [invoke.setSynthPriceUsdc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -37,7 +36,6 @@ args = [
     "<%= settings.usdc_address %>",
     "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
-depends = ["invoke.createUsdcSynth"]
 
 [invoke.configureSynthWrapperUsdc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -49,7 +47,6 @@ args = [
     "<%= settings.usdc_address %>",
     "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
-depends = ["invoke.createUsdcSynth"]
 
 [invoke.configure_usdc_collateral]
 target = ["system.CoreProxy"]

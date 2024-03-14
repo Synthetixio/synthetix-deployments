@@ -1,5 +1,3 @@
-include = ["../core.toml"]
-
 [setting.btc_aggregator_address]
 
 [invoke.registerBtcOracleNode]
@@ -15,4 +13,3 @@ args = [
 ]
 extra.btc_oracle_id.event = "NodeRegistered"
 extra.btc_oracle_id.arg = 0
-depends = ["provision.system"]

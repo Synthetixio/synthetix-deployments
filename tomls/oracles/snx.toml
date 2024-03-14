@@ -1,5 +1,3 @@
-include = ["../core.toml"]
-
 [setting.snx_aggregator_address]
 
 [setting.snx_chainlink_staleness_tolerance]
@@ -17,7 +15,6 @@ args = [
 ]
 extra.snx_oracle_id_raw.event = "NodeRegistered"
 extra.snx_oracle_id_raw.arg = 0
-depends = ["provision.system"]
 
 [invoke.registerSnxWithStaleness]
 target = ["system.oracle_manager.Proxy"]
@@ -31,4 +28,3 @@ args = [
 ]
 extra.snx_oracle_id.event = "NodeRegistered"
 extra.snx_oracle_id.arg = 0
-depends = ["invoke.registerSnxOracleManagerNode"]

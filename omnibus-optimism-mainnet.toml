@@ -115,4 +115,3 @@ args = [
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
-depends = ["invoke.createScPool", "invoke.createEthSynth"]

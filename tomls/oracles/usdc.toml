@@ -1,5 +1,3 @@
-include = ["../core.toml"]
-
 [setting.usdc_aggregator_address]
 
 [invoke.register_usdc_oracle_node]
@@ -15,4 +13,3 @@ args = [
 ]
 extra.usdc_oracle_id.event = "NodeRegistered"
 extra.usdc_oracle_id.arg = 0
-depends = ["provision.system"]

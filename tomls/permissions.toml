@@ -5,4 +5,3 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "addToFeatureFlagAllowlist"
 args = ["<%= formatBytes32String('createPool') %>", "<%= settings.deployer %>"]
-depends = ["provision.system"]
