@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.4"
+version = "4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
