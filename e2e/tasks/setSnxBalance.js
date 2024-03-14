@@ -16,14 +16,9 @@ async function getOwner() {
 
   switch (network.chainId) {
     case 1:
-      return '0xAc86855865CbF31c8f9FBB68C749AD5Bd72802e3';
-    case 5:
-      //      return '0x48914229dedd5a9922f44441ffccfc2cb7856ee9';
-      return '0x310f640354b265438797ffA472CfCa1Ae9b136F7';
+      return '0xfad53cc9480634563e8ec71e8e693ffd07981d38';
     case 10:
-      return '0x6330D5F08f51057F36F46d6751eCDc0c65Ef7E9e';
-    case 420:
-      return '0x48914229dedd5a9922f44441ffccfc2cb7856ee9';
+      return '0x5fc9b8d2b7766f061bd84a41255fd1a76fd1faa2';
     default:
       throw new Error(`Unsupported chain ${network.chainId}`);
   }
