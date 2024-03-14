@@ -1189,12 +1189,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.19":
-  version: 2.11.19
-  resolution: "@usecannon/builder@npm:2.11.19"
+"@usecannon/builder@npm:2.11.20":
+  version: 2.11.20
+  resolution: "@usecannon/builder@npm:2.11.20"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
-    axios: "npm:^1.6.2"
+    axios: "npm:^1.6.7"
+    axios-retry: "npm:^4.0.0"
     buffer: "npm:^6.0.3"
     debug: "npm:^4.3.4"
     form-data: "npm:^4.0.0"
@@ -1205,17 +1206,17 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.6.1"
     zod: "npm:^3.22.4"
-  checksum: 10/734aabe1bf7dc90a462520e33a5674f1fad87ee5abfa60b334b548032a4ee11ce741109c5fdf5b2141b45f208646693fc6f4efac3ca755577e2ecf0d9c2ec139
+  checksum: 10/415031198b8b7db5ca58bc33983fc8cf5f8ebc8d6aea86ffba4ba0bce11a966c2ceab1c379073304665d4513ac6cac9ed88ba963771d8aa60b4548a2f7ce0be6
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.19":
-  version: 2.11.19
-  resolution: "@usecannon/cli@npm:2.11.19"
+"@usecannon/cli@npm:2.11.20":
+  version: 2.11.20
+  resolution: "@usecannon/cli@npm:2.11.20"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.11.19"
+    "@usecannon/builder": "npm:2.11.20"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1235,7 +1236,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/85a0b620c7e8ed4e9af94c73fa2adb340cfebbab4fbbb4405175d08aa4a980991260bf015937609bc2d432b40e64ecd90bbd3ae8c0281cb04d8331cf207d9580
+  checksum: 10/89094621f985f530e44e966b8c2cd3e92db09400d300318c9fcad9df4a50185067229c6e452e0cb2abaa928fba4993185654d72b3aacde9efc2e975b51c391fa
   languageName: node
   linkType: hard
 
@@ -1449,14 +1450,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.5.1, axios@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "axios@npm:1.6.2"
+"axios-retry@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "axios-retry@npm:4.0.0"
   dependencies:
-    follow-redirects: "npm:^1.15.0"
+    is-retry-allowed: "npm:^2.2.0"
+  peerDependencies:
+    axios: 0.x || 1.x
+  checksum: 10/40c72837540a768dd7d7e98b0243395f46a59b623e5e37a7bdd164ba748404783fe68c6284c793b8cdd6e51b006560ed093a3db50587fb13f1e192df26803c96
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.5.1, axios@npm:^1.6.7":
+  version: 1.6.7
+  resolution: "axios@npm:1.6.7"
+  dependencies:
+    follow-redirects: "npm:^1.15.4"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/612bc93f8f738a518e7c5f9de9cc782bcd36aac6bae279160ef6a10260378e21c1786520eab3336898e3d66e0839ebdf739f327fb6d0431baa4d3235703a7652
+  checksum: 10/a1932b089ece759cd261f175d9ebf4d41c8994cf0c0767cda86055c7a19bcfdade8ae3464bf4cec4c8b142f4a657dc664fb77a41855e8376cf38b86d7a86518f
   languageName: node
   linkType: hard
 
@@ -2329,13 +2341,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.12.1, follow-redirects@npm:^1.15.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
+"follow-redirects@npm:^1.12.1, follow-redirects@npm:^1.15.4":
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10/60d98693f4976892f8c654b16ef6d1803887a951898857ab0cdc009570b1c06314ad499505b7a040ac5b98144939f8597766e5e6a6859c0945d157b473aa6f5f
+  checksum: 10/d467f13c1c6aa734599b8b369cd7a625b20081af358f6204ff515f6f4116eb440de9c4e0c49f10798eeb0df26c95dd05d5e0d9ddc5786ab1a8a8abefe92929b4
   languageName: node
   linkType: hard
 
@@ -4705,8 +4717,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.11.19"
-    "@usecannon/cli": "npm:2.11.19"
+    "@usecannon/builder": "npm:2.11.20"
+    "@usecannon/cli": "npm:2.11.20"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
