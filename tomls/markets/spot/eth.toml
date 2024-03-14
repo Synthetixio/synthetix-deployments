@@ -69,7 +69,7 @@ extra.synth_eth_settlement_strategy.arg = 1
 #     "<%= extras.synth_eth_settlement_strategy %>",
 #     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
 # ]
-# depends = ["invoke.addSynthSettlementStrategyEth"]
+
 [invoke.setSynthAsyncFixedFeeEth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"

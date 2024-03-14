@@ -33,7 +33,6 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.btcPerpsMarketId %>", "Bitcoin", "BTC"]
-depends = ["provision.perpsFactory"]
 
 [invoke.setPerpsPriceBtc]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -44,7 +43,7 @@ args = [
     "<%= extras.btc_oracle_id %>",
     "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "invoke.registerBtcOracleNode"]
+depends = ["invoke.createBtcPerpsMarket"]
 
 # DO NOT MODIFY THIS STEP!. Edit [invoke.setPerpsBtcSettlementStrategy] instead.
 [invoke.addPerpsBtcSettlementStrategy]
@@ -68,7 +67,6 @@ args = [
     "<%= extras.btc_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
-depends = ["invoke.addPerpsBtcSettlementStrategy"]
 
 [invoke.setPerpsBtcFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
