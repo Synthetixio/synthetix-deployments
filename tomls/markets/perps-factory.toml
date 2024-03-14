@@ -1,14 +1,21 @@
-include = ["./spot-factory.toml"]
-
 [setting.perps_market_package]
 
+[setting.perps_super_market_name]
+defaultValue = "High MCap"
+
+# Since multiple of these can be created, should be moved to a High MCap Perps Folder
 [provision.perpsFactory]
 source = "<%= settings.perps_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = "alpha"
-options.synthetixPackage = "<%= settings.snx_package %>"
-options.spotMarketPackage = "<%= settings.spot_market_package %>"
-options.synthetixPreset = "<%= settings.target_preset %>"
-options.spotMarketPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.spotMarketPackage = "<%= settings.spot_market_package %>@<%= settings.target_preset %>"
+
+[invoke.setPerpsMarketName]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setPerpsMarketName"
+args = ["<%= settings.perps_super_market_name %>"]
+depends = ["provision.perpsFactory"]

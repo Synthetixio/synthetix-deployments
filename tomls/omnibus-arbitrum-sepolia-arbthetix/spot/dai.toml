@@ -1,0 +1,70 @@
+[setting.synthDaiMaxMarketCollateral]
+defaultValue = "<%= parseEther(String(500_000)) %>"
+
+[setting.spotStrictStalenessTolerance]
+defaultValue = "60"
+
+[invoke.createDaiSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic DAI", "sDAI", "<%= settings.owner %>"]
+extra.synth_dai_market_id.event = "SynthRegistered"
+extra.synth_dai_market_id.arg = 0
+extra.synth_dai_token_address.event = "SynthRegistered"
+extra.synth_dai_token_address.arg = 1
+
+[invoke.setSynthPriceDai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= imports.system.extras.const_one_oracle_id %>",
+    "<%= imports.system.extras.const_one_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>",
+]
+
+[invoke.setSynthMaxMarketCollateralDai]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.synthDaiMaxMarketCollateral %>",
+]
+
+[invoke.configureSynthWrapperDai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.synthDaiMaxMarketCollateral %>",
+]
+
+[invoke.configure_dai_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_dai_collateral.args]]
+tokenAddress = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
+oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= MaxUint256 %>"
+liquidationRatioD18 = "<%= parseEther('1.005') %>"
+liquidationRewardD18 = "<%= parseEther('0.005') %>"
+minDelegationD18 = "<%= parseEther('100') %>"
+depositingEnabled = true
+
+[provision.dai_mock_collateral]
+source = "mintable-token:1.8"
+options.name = "Fake DAI"
+options.symbol = "fDAI"
+options.owner = "<%= settings.owner %>"
+options.decimals = "6"

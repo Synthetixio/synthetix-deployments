@@ -1,8 +1,4 @@
-include = [
-    "../perps-factory.toml",
-    "../../oracles/pyth-link.toml",
-    "../common/bigcap-settings.toml",
-]
+include = ["../../oracles/pyth-link.toml", "../common/bigcap-settings.toml"]
 
 [setting.linkPerpsMarketId]
 
@@ -20,7 +16,7 @@ include = [
 
 [setting.perpsLinkMaintenanceMarginFraction]
 
-[setting.perpsLinkLiquidationRewardRatioD18]
+[setting.perpsLinkFlagRewardRatioD18]
 
 [setting.perpsLinkMaxLiquidationLimitAccumulationMultiplier]
 
@@ -42,17 +38,34 @@ args = ["<%= settings.linkPerpsMarketId %>", "Chainlink Token", "LINK"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
-args = ["<%= settings.linkPerpsMarketId %>", "<%= extras.link_oracle_id %>"]
+args = [
+    "<%= settings.linkPerpsMarketId %>",
+    "<%= extras.link_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
 
-[invoke.setPerpsLinkSettlementStrategy]
+# Do not modify this step. Edit [invoke.setPerpsLinkSettlementStrategy] instead.
+[invoke.addPerpsLinkSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
     "<%= settings.linkPerpsMarketId %>",
-    # strategyType = 0 (pyth)
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceWindowDuration = "<%= settings.bigCapPriceWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythLinkFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = "<%= settings.settlementReward %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
+extra.link_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.link_pyth_settlement_strategy.arg = 2
+
+[invoke.setPerpsLinkSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.linkPerpsMarketId %>",
+    "<%= extras.link_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythLinkFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+]
+depends = ["invoke.addPerpsLinkSettlementStrategy"]
 
 [invoke.setPerpsLinkFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -61,7 +74,7 @@ func = "setFundingParameters"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= parseEther(settings.perpsLinkSkewScale) %>",
-    "<%= parseEther(settings.perpsLinkMaxFundingVelocity) %>"
+    "<%= parseEther(settings.perpsLinkMaxFundingVelocity) %>",
 ]
 
 [invoke.setPerpsLinkOrderFees]
@@ -71,7 +84,7 @@ func = "setOrderFees"
 args = [
     "<%= settings.linkPerpsMarketId %>",
     "<%= parseEther(settings.perpsLinkMakerFeeRatio) %>",
-    "<%= parseEther(settings.perpsLinkTakerFeeRatio) %>"
+    "<%= parseEther(settings.perpsLinkTakerFeeRatio) %>",
 ]
 
 [invoke.setPerpsLinkMaxMarketSize]
@@ -89,7 +102,7 @@ args = [
     "<%= parseEther(settings.perpsLinkMaxLiquidationLimitAccumulationMultiplier) %>",
     "<%= settings.perpsLinkMaxSecondsInLiquidationWindow %>",
     "<%= parseEther(settings.perpsLinkMaxLiquidationPd) %>",
-    "<%= settings.perpsBtcEndorsedLiquidator %>"
+    "<%= settings.perpsLinkEndorsedLiquidator %>",
 ]
 
 [invoke.setPerpsLinkLiquidationParameters]
@@ -101,8 +114,8 @@ args = [
     "<%= parseEther(settings.perpsLinkInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsLinkMinimumInitialMarginRatio) %>",
     "<%= parseEther(settings.perpsLinkMaintenanceMarginScalar) %>",
-    "<%= parseEther(settings.perpsLinkLiquidationRewardRatioD18) %>",
-    "<%= parseEther(settings.perpsLinkMinimumPositionMargin) %>"
+    "<%= parseEther(settings.perpsLinkFlagRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsLinkMinimumPositionMargin) %>",
 ]
 
 [invoke.setPerpsLinkLockedOiRatio]
@@ -110,9 +123,3 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.linkPerpsMarketId %>", "<%= parseEther(settings.perpsLinkLockedOiRatio) %>"]
-
-[invoke.setMaxCollateralAmountLink]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setMaxCollateralAmount"
-args = ["<%= extras.synth_link_market_id %>", "<%= settings.perpsLinkSynthMaxCollateralAmount %>"]

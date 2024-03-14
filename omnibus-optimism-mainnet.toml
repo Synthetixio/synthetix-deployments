@@ -2,15 +2,16 @@ name = "synthetix-omnibus"
 version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
-    "tomls/settings-mainnet.toml",
+    "tomls/settings.toml",
+    "tomls/ccip-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
     # eth collateral is not enabled/set up on v3
     #"tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/pools/passive-snx.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/omnibus-optimism-mainnet/spot-factory.toml",
     "tomls/markets/spot/eth.toml",
 ]
 
@@ -34,6 +35,9 @@ defaultValue = "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
 
 [setting.snx_aggregator_address]
 defaultValue = "0x2FCF37343e916eAEd1f1DdaaF84458a359b53877"
+
+[setting.snx_chainlink_staleness_tolerance]
+defaultValue = "3600"
 
 [setting.weth_address]
 defaultValue = "0x4200000000000000000000000000000000000006"
@@ -108,6 +112,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" }
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]

@@ -1,7 +1,6 @@
 [setting.deployer]
 
 [setting.snx_pool_id]
-defaultValue = "2"
 
 [setting.pool_owner]
 
@@ -24,4 +23,20 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "addApprovedPool"
 args = ["<%= settings.snx_pool_id %>"]
+depends = ["invoke.create_snx_pool"]
+
+[invoke.disable_all_new_collaterals_for_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.snx_pool_id %>"]
+func = "setPoolCollateralDisabledByDefault"
+args = ["<%= settings.snx_pool_id %>", true]
+depends = ["invoke.create_snx_pool"]
+
+[invoke.configure_snx_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.snx_pool_id %>"]
+func = "setPoolConfiguration"
+args = ["<%= settings.snx_pool_id %>", []]
 depends = ["invoke.create_snx_pool"]

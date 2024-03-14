@@ -1,0 +1,20 @@
+[setting.referrerFee]
+defaultValue = "<%= parseEther('0.2') %>"
+
+[invoke.setPolynomialAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x159c143eF9Be79d5672726150462C9EfA679b27c", "<%= settings.referrerFee %>"]
+
+[invoke.setKwentaAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x3bD64247d879AF879e6f6e62F81430186391Bdb8", "<%= settings.referrerFee %>"]
+
+[invoke.setInfinexAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x24f5A599a40730dc0475eCE8dD41C4D3A4Ba4Bf3", "<%= settings.referrerFee %>"]

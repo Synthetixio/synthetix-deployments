@@ -1,10 +1,9 @@
 include = [
-    "../spot-factory.toml",
     # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
     # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
-    "../../oracles/eth.toml", # TODO: use pyth-eth?
+    "../../oracles/eth.toml",             # TODO: use pyth-eth?
     "../common/bigcap-settings.toml",
-    "../common/settlement-settings.toml"
+    "../common/settlement-settings.toml",
 ]
 
 [setting.weth_address]
@@ -37,7 +36,7 @@ func = "updatePriceData"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= extras.eth_oracle_id %>"
+    "<%= extras.eth_oracle_id %>",
 ]
 
 [invoke.setSynthAtomicFixedFeeEth]
@@ -47,7 +46,7 @@ fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "setAtomicFixedFee"
 args = ["<%= extras.synth_eth_market_id %>", "<%= MaxUint256 %>"]
 
-[invoke.setSynthSettlementStrategyEth]
+[invoke.addSynthSettlementStrategyEth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
@@ -55,9 +54,22 @@ func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_eth_market_id %>",
     # strategyType = 1 (pyth)
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false },
 ]
+extra.synth_eth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.synth_eth_settlement_strategy.arg = 1
 
+# [invoke.setSynthSettlementStrategyEth]
+# target = ["spotFactory.SpotMarketProxy"]
+# fromCall.func = "getMarketOwner"
+# fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+# func = "setSettlementStrategy"
+# args = [
+#     "<%= extras.synth_eth_market_id %>",
+#     "<%= extras.synth_eth_settlement_strategy %>",
+#     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythEthFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false }
+# ]
+# depends = ["invoke.addSynthSettlementStrategyEth"]
 [invoke.setSynthAsyncFixedFeeEth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -73,7 +85,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
+    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>",
 ]
 
 [invoke.configureSynthWrapperEth]
@@ -84,7 +96,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>"
+    "<%= parseEther(settings.synthEthMaxMarketCollateral) %>",
 ]
 
 [invoke.setSynthSkewScaleEth]
@@ -102,5 +114,5 @@ func = "setWrapperFees"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= parseEther(settings.synthEthWrapFee) %>",
-    "<%= parseEther(settings.synthEthUnwrapFee) %>"
+    "<%= parseEther(settings.synthEthUnwrapFee) %>",
 ]

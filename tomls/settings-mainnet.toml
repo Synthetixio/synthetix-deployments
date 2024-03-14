@@ -1,7 +1,0 @@
-include = ["settings.toml"]
-
-[invoke.setSupportedCrossChainNetworks]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setSupportedCrossChainNetworks"
-args = [["1", "10"], ["5009297550715157269", "3734403246176062136"]]

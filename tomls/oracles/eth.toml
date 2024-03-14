@@ -1,5 +1,3 @@
-include = ["../core.toml"]
-
 [setting.eth_aggregator_address]
 
 [invoke.registerEthOracleNode]
@@ -10,7 +8,8 @@ args = [
     3,
     # 3 parameters are: address of the chainlink oracle
     "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
-    []
+    [
+    ],
 ]
 extra.eth_oracle_id.event = "NodeRegistered"
 extra.eth_oracle_id.arg = 0

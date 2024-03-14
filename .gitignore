@@ -3,6 +3,8 @@
 .idea
 *.log
 
+/tmp
+
 # Yarn v3
 .yarn/*
 .yarn/cache
@@ -13,3 +15,5 @@
 .yarn/versions
 
 node_modules
+deployments/
+/*.js

@@ -1,0 +1,5 @@
+[invoke.allowAllPerpsSystem]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('perpsSystem') %>", true]
