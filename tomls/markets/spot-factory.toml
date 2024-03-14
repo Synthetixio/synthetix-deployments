@@ -6,5 +6,7 @@ targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
-options.synthetixPackage = "<%= settings.snx_package %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
+
+depends = ["provision.system"]

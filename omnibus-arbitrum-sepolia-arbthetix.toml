@@ -1,17 +1,17 @@
 name = "synthetix-omnibus"
-version = "3.3.15"
+version = "4"
 description = "Arbitrum deployment"
 preset = "arbthetix"
 include = [
-    "tomls/core.toml",                                                         # Provision the core system
-    "tomls/settings.toml",                                                     # Apply minimum liquidity ratio and withdrawal timeout
-    "tomls/permissions.toml",                                                  # Allow deployer to create pools
-    "tomls/permit-deniers.toml",                                               # Add feature flag deniers to perps and core systems
-    "tomls/pools/spartan-council.toml",                                        # Create Spartan Council Pool
+    "tomls/core.toml",                  # Provision the core system
+    "tomls/settings.toml",              # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml",           # Allow deployer to create pools
+    "tomls/permit-deniers.toml",        # Add feature flag deniers to perps and core systems
+    "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/spot/usdc.toml",                 # sUSDC spot market/wrapper, mock for USDC
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/spot/dai.toml",                  # sUSDC spot market/wrapper, mock for USDC
+    #"tomls/omnibus-arbitrum-sepolia-arbthetix/spot/usdc.toml",                 # sUSDC spot market/wrapper, mock for USDC
+    #"tomls/omnibus-arbitrum-sepolia-arbthetix/spot/dai.toml",                  # sUSDC spot market/wrapper, mock for USDC
     "tomls/permit-all-perps-perpsSystem.toml",                                 # Enable perps market
     "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/referrers.toml",
     "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/global.toml",              # Global perps settings
@@ -54,7 +54,7 @@ defaultValue = "synthetix-perps-market:3.3.17"
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
 
 [setting.salt]
-defaultValue = "arbthetix"
+defaultValue = "ARBTHETIX"
 
 [setting.target_preset]
 defaultValue = "arbthetix" # Preset assigned to provisioned packages
@@ -117,3 +117,21 @@ fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('perpsSystem') %>", false]
 depends = ["invoke.allowAllPerpsSystem"]
+
+[invoke.allowCreateAccount_revert]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('createAccount') %>", false]
+
+[invoke.setUsdTokenName]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "initOrUpgradeToken"
+args = [
+    "0x555344546f6b656e000000000000000000000000000000000000000000000000",
+    "DollarWifHat",
+    "USDh",
+    18,
+    "<%= imports.system.contracts.USDRouter.address %>",
+]
