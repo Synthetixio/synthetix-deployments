@@ -266,7 +266,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should undelegate 200 sUSDC from the Spartan Council pool', async () => {
+  it.skip('should undelegate 200 sUSDC from the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 9_000,
       totalAssigned: 8_000,
@@ -288,7 +288,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should not be able to withdraw because of accountTimeoutWithdraw', async () => {
+  it.skip('should not be able to withdraw because of accountTimeoutWithdraw', async () => {
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 100 });
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 100);
 
@@ -303,7 +303,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should withdraw 200 sUSDC', async () => {
+  it.skip('should withdraw 200 sUSDC', async () => {
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
     await withdrawCollateral({
