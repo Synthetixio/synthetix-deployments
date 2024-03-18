@@ -1,5 +1,3 @@
-include = ["../oracles/pyth-arb.toml"]
-
 [setting.arb_address]
 
 [invoke.configureArbCollateral]

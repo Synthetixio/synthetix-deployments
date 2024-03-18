@@ -10,8 +10,8 @@ include = [
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/usdc.toml",                 # sUSDC spot market/wrapper, mock for USDC
-    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/dai.toml",                  # sUSDC spot market/wrapper, mock for USDC
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/usdc.toml",
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/dai.toml",
     "tomls/permit-all-perps-perpsSystem.toml",                                 # Enable perps market
     "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/referrers.toml",
     "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/global.toml",              # Global perps settings
@@ -20,9 +20,6 @@ include = [
     # Collaterals
     #"tomls/omnibus-arbitrum-mainnet-arbthetix/collaterals/usdc.toml", // usdc collateral is already included with spot market deployment
     #"tomls/omnibus-arbitrum-mainnet-arbthetix/collaterals/dai.toml", // dai collateral is already included with the spot market deployment
-    "tomls/collaterals/weth.toml",
-    "tomls/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/arb.toml",
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -30,7 +27,12 @@ include = [
     # ETH
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
+    "tomls/collaterals/weth.toml",
     "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/eth.toml",
+    # ARB
+    "tomls/oracles/pyth-arb.toml",
+    "tomls/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/arb.toml",
 ]
 
 [setting.commitmentPriceDelay]
