@@ -21,8 +21,8 @@ function gasLog({ action, log }) {
     const block = await provider.getBlock(txn.blockNumber);
     const gasInfo = {
       action,
-      gasUsed: txn.gasUsed.toNumber(),
-      baseFeePerGas: block.baseFeePerGas.toNumber(),
+      gasUsed: txn.gasUsed?.toNumber(),
+      baseFeePerGas: block.baseFeePerGas?.toNumber(),
     };
     log(gasInfo);
     if (GAS_REPORT) {
