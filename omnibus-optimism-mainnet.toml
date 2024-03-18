@@ -8,6 +8,7 @@ include = [
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
     # eth collateral is not enabled/set up on v3
+    #"tomls/oracles/eth.toml",
     #"tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",

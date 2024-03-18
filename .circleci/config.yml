@@ -639,6 +639,14 @@ workflows:
           chain-id: 80001
           provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
 
+      - fork-test:
+          name: arbthetix-mainnet
+          toml: omnibus-arbitrum-mainnet-arbthetix.toml
+          package: "synthetix-omnibus:latest"
+          preset: "arbthetix"
+          chain-id: 42161
+          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+
       #- fork-test-new:
       #    name: arbthetix-sepolia
       #    toml: omnibus-arbitrum-sepolia-arbthetix.toml

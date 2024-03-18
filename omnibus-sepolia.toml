@@ -6,6 +6,7 @@ include = [
     "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
+    "tomls/oracles/eth.toml",
     "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",

@@ -10,26 +10,29 @@ include = [
     "tomls/pools/spartan-council.toml", # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    #"tomls/omnibus-arbitrum-sepolia-arbthetix/spot/usdc.toml",
-    #"tomls/omnibus-arbitrum-sepolia-arbthetix/spot/dai.toml",
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/usdc.toml",
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/dai.toml",
     "tomls/permit-all-perps-perpsSystem.toml",                                 # Enable perps market
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/referrers.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/global.toml",              # Global perps settings
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/feeCollector.toml",
-
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/referrers.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/global.toml",              # Global perps settings
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/perps/feeCollector.toml",
+    # Collaterals
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/collaterals/usdc.toml", // usdc collateral is already included with spot market deployment
+    #"tomls/omnibus-arbitrum-mainnet-arbthetix/collaterals/dai.toml", // dai collateral is already included with the spot market deployment
     # BTC
     "tomls/markets/perps/btc.toml",
     "tomls/oracles/pyth-btc.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/btc.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/btc.toml",
     # ETH
     "tomls/markets/perps/eth.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/eth.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/eth.toml",
     # ARB
     "tomls/oracles/pyth-arb.toml",
     "tomls/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/arb.toml",
 ]
 
 [setting.commitmentPriceDelay]
@@ -37,6 +40,9 @@ defaultValue = "2"
 
 [setting.bigCapSettlementDelay]
 defaultValue = "2"
+
+[setting.bigCapDefaultStalenessTolerance]
+defaultValue = "86400"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.15"
@@ -61,7 +67,7 @@ defaultValue = "arbthetix" # Preset assigned to provisioned packages
 
 [setting.pyth_price_verification_address]
 # https://docs.pyth.network/documentation/pythnet-price-feeds/evm
-defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
+defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
 
 [provision.pyth_erc7412_wrapper]
 source = "pyth-erc7412-wrapper:3.3.14"
@@ -70,10 +76,10 @@ options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
@@ -85,19 +91,22 @@ defaultValue = "86400" # 1 day
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.arb_aggregator_address]
-defaultValue = "0xD1092a65338d049DB68D7Be6bD89d17a0929945e"
-
-[setting.eth_aggregator_address]
-defaultValue = "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.weth_address]
-defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
+defaultValue = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
 
 [setting.arb_address]
-defaultValue = "0xc275B23C035a9d4EC8867b47f55427E0bDCe14cB"
+defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
+
+[setting.usdc_address]
+defaultValue = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+
+[setting.dai_address]
+defaultValue = "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+
+[setting.snx_address]
+# defaultValue = "0x"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
