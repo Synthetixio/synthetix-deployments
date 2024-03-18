@@ -1,4 +1,4 @@
-# TODO: which token for buyback, if any?
+[setting.snx_address]
 
 [setting.buybackStalenessTolerance]
 defaultValue = "30"
@@ -18,7 +18,7 @@ targetPreset = "<%= settings.target_preset %>"
 options.premium = "<%= settings.buyback_premium %>"
 options.snx_fee_share = "<%= settings.buyback_fee_share %>"
 options.oracle_manager_address = "<%= imports.system.imports.oracle_manager.contracts.Proxy.address %>"
-options.snx_token = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
+options.snx_token = "<%= settings.snx_address %>"
 options.usd_token = "<%= imports.system.contracts.USDProxy.address %>"
 options.snx_oracle_id = "<%= extras.snx_oracle_id_buyback %>"
 

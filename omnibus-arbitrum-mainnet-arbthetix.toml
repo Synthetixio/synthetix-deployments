@@ -99,6 +99,15 @@ defaultValue = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
 [setting.arb_address]
 defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
 
+[setting.usdc_address]
+defaultValue = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+
+[setting.dai_address]
+defaultValue = "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+
+[setting.snx_address]
+# defaultValue = "0x"
+
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
