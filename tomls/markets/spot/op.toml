@@ -25,18 +25,6 @@ args = [
     "<%= extras.op_oracle_id %>",
 ]
 
-[invoke.addSynthSettlementStrategyOp]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_op_market_id %>"]
-func = "addSettlementStrategy"
-args = [
-    "<%= extras.synth_op_market_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false },
-]
-extra.synth_op_settlement_strategy.event = "SettlementStrategyAdded"
-extra.synth_op_settlement_strategy.arg = 1
-
 [invoke.setSynthSettlementStrategyOp]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -44,7 +32,7 @@ fromCall.args = ["<%= extras.synth_op_market_id %>"]
 func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_op_market_id %>",
-    "<%= extras.synth_op_settlement_strategy %>",
+    "0",
     { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pythPriceVerificationAddress %>", feedId = "<%= settings.pythOpFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= parseEther(settings.settlementMinimumUsdExchangeAmount) %>", maxRoundingLoss = "<%= parseEther(settings.settlementMaxRoundingLoss) %>", priceDeviationTolerance = "<%= parseEther('1') %>", disabled = false },
 ]
 
