@@ -1,8 +1,11 @@
 name = "synthetix-omnibus"
-version = "4"
+version = "5"
 description = "Arbitrum deployment"
 preset = "arbthetix"
 include = [
+    # Deployment-specific permissions
+    "tomls/omnibus-arbitrum-mainnet-arbthetix/permissions.toml",
+
     "tomls/core.toml",                  # Provision the core system
     "tomls/settings.toml",              # Apply minimum liquidity ratio and withdrawal timeout
     "tomls/permissions.toml",           # Allow deployer to create pools
@@ -126,12 +129,6 @@ fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('perpsSystem') %>", false]
 depends = ["invoke.allowAllPerpsSystem"]
-
-[invoke.allowCreateAccount_revert]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('createAccount') %>", false]
 
 [invoke.setUsdTokenName]
 target = ["system.CoreProxy"]
