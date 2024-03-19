@@ -56,10 +56,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   const privateKey = wallet.privateKey;
 
   let snapshot;
+  let initialBalance;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
     log('Create snapshot', { snapshot });
+
+    initialBalance = await getTokenBalance({
+      walletAddress: distributorAddress,
+      tokenAddress: payoutToken,
+    });
+    log('Initial balance', { initialBalance });
   });
 
   after('Restore snapshot', async () => {
@@ -259,11 +266,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should fund RewardDistributor with 1_000_000 fwSNX', async () => {
-    assert.equal(
-      await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
-      0,
-      'Rewards Distributor has 0 fwSNX balance'
-    );
     await setPermissionlessTokenBalance({
       privateKey,
       tokenAddress: payoutToken,
@@ -279,7 +281,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
-      1_000_000,
+      initialBalance + 1_000_000,
       'Rewards Distributor has 1_000_000 fwSNX balance'
     );
   });
