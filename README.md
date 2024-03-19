@@ -53,16 +53,15 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 - If you've updated the provisioned packages, verify your new contracts on Etherscan:
 
   ```sh
-    yarn cannon verify synthetix-omnibus:3.3.5-1@andromeda --chain-id 84531 --api-key $ETHERSCAN_API_KEY
+    yarn cannon verify synthetix-omnibus:6@andromeda --chain-id 84531 --api-key $ETHERSCAN_API_KEY
   ```
 
 - Publish your new packages on the Cannon registry:
 
   ```sh
-  yarn cannon publish synthetix-omnibus:3.3.5-1@andromeda \
+  yarn cannon publish synthetix-omnibus:6@andromeda \
       --chain-id 84531 \
       --private-key $MAINNET_DEPLOYER_PRIVATE_KEY \
-      --tags latest,3 \
       --include-provisioned
   ```
 
