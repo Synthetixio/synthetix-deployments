@@ -44,6 +44,8 @@ const {
   },
 } = require('../../deployments/meta.json');
 
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 10_000_000;
+
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
@@ -90,15 +92,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fUSDC balance to 10_000_000', async () => {
+  it(`should set fUSDC balance to ${SYNTH_USDC_MAX_MARKET_COLLATERAL * 2}`, async () => {
     const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
       'New wallet has 0 fUSDC balance'
     );
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 10_000_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 10_000_000);
+    await setMintableTokenBalance({
+      privateKey,
+      tokenAddress,
+      balance: SYNTH_USDC_MAX_MARKET_COLLATERAL * 2,
+    });
+    assert.equal(
+      await getCollateralBalance({ address, symbol: 'fUSDC' }),
+      SYNTH_USDC_MAX_MARKET_COLLATERAL * 2
+    );
   });
 
   it('should approve fUSDC spending for SpotMarket', async () => {
@@ -126,22 +135,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should increase max collateral for the test to 10_000_000', async () => {
+  it(`should increase max collateral for the test to ${SYNTH_USDC_MAX_MARKET_COLLATERAL * 2}`, async () => {
     await configureMaximumMarketCollateral({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'fUSDC',
-      targetAmount: String(10_000_000),
+      targetAmount: String(SYNTH_USDC_MAX_MARKET_COLLATERAL * 2),
     });
     await setSpotWrapper({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'fUSDC',
-      targetAmount: String(10_000_000),
+      targetAmount: String(SYNTH_USDC_MAX_MARKET_COLLATERAL * 2),
     });
   });
 
-  it('should wrap 5_000_000 fUSDC', async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 5_000_000 });
-    assert.equal(balance, 5_000_000);
+  it(`should wrap ${SYNTH_USDC_MAX_MARKET_COLLATERAL} fUSDC`, async () => {
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'fUSDC',
+      amount: SYNTH_USDC_MAX_MARKET_COLLATERAL,
+    });
+    assert.equal(balance, SYNTH_USDC_MAX_MARKET_COLLATERAL);
   });
 
   it('should approve sUSDC spending for CoreProxy', async () => {
@@ -169,19 +182,27 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 4_900_000 sUSDC into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 5_000_000);
+  it(`should deposit ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000} sUSDC into the system`, async () => {
+    assert.equal(
+      await getCollateralBalance({ address, symbol: 'sUSDC' }),
+      SYNTH_USDC_MAX_MARKET_COLLATERAL
+    );
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'sUSDC', accountId, amount: 4_900_000 });
+    await depositCollateral({
+      privateKey,
+      symbol: 'sUSDC',
+      accountId,
+      amount: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
+    });
 
     assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 100_000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 4_900_000,
+      totalDeposited: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -205,9 +226,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should delegate 4_800_000 sUSDC into the Spartan Council pool', async () => {
+  it(`should delegate ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000} sUSDC into the Spartan Council pool`, async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 4_900_000,
+      totalDeposited: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -215,12 +236,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       symbol: 'sUSDC',
       accountId,
-      amount: 4_800_000,
+      amount: SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000,
       poolId: 1,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: 4_900_000,
-      totalAssigned: 4_800_000,
+      totalDeposited: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
+      totalAssigned: SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000,
       totalLocked: 0,
     });
   });
