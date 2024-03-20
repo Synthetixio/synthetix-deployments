@@ -51,25 +51,13 @@ args = [
     "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
-# Do not modify this step. Edit [invoke.setPerpsEthSettlementStrategy] instead.
-[invoke.addPerpsEthSettlementStrategy]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "addSettlementStrategy"
-args = [
-    "<%= settings.ethPerpsMarketId %>",
-    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
-]
-extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
-extra.eth_pyth_settlement_strategy.arg = 2
-
 [invoke.setPerpsEthSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.ethPerpsMarketId %>",
-    "<%= extras.eth_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    "0",                                                                                                                                                                                                                                                                                                                                                                                                                                                                  # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 

@@ -53,25 +53,13 @@ args = [
     "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
-# Do not modify this step. Edit [invoke.setPerpsOpSettlementStrategy] instead.
-[invoke.addPerpsOpSettlementStrategy]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "addSettlementStrategy"
-args = [
-    "<%= settings.opPerpsMarketId %>",
-    { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
-]
-extra.op_pyth_settlement_strategy.event = "SettlementStrategyAdded"
-extra.op_pyth_settlement_strategy.arg = 2
-
 [invoke.setPerpsOpSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.opPerpsMarketId %>",
-    "<%= extras.op_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                                    # Settlement Strategy ID
+    "0",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            # Settlement Strategy ID
     { strategyType = "<%= settings.strategyType %>", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOpFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 
