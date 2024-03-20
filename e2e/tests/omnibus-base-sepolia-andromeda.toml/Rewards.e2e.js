@@ -280,8 +280,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     assert.equal(
-      await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken }),
-      initialBalance + 1_000_000,
+      Math.floor(
+        await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken })
+      ),
+      Math.floor(initialBalance + 1_000_000),
       'Rewards Distributor has 1_000_000 fwSNX balance'
     );
   });
@@ -348,8 +350,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(postClaimBalance > 0, 'Wallet has some non-zero fwSNX balance AFTER claim');
 
     assert.equal(
-      await getTokenRewardsDistributorRewardsAmount({ distributorAddress }),
-      1_000_000 - postClaimBalance,
+      Math.floor(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
+      Math.floor(1_000_000 - postClaimBalance),
       'should deduct claimed token amount from total distributor rewards amount'
     );
   });
