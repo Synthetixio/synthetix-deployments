@@ -33,7 +33,7 @@ async function setUSDCTokenBalance({ wallet, balance }) {
   }
 
   // Mainnet only!
-  const friendlyWhale = '0x20FE51A9229EEf2cF8Ad9E89d91CAb9312cF3b7A';
+  const friendlyWhale = '0xcdac0d6c6c59727a65f871236188350531885c43';
   const whaleBalance = parseFloat(
     ethers.utils.formatUnits(await Token.balanceOf(friendlyWhale), decimals)
   );
