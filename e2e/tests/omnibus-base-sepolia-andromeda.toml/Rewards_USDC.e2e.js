@@ -81,9 +81,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(info.name, 'Spartan Council Pool USDC Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
     assert.equal(info.collateralType, collateralType, 'collateralType');
-    assert.equal(info.payoutToken, payoutToken, 'payoutToken');
+    assert.equal(
+      `${info.payoutToken}`.toLowerCase(),
+      `${payoutToken}`.toLowerCase(),
+      'payoutToken'
+    );
     assert.equal(info.precision, 10 ** 6, 'precision');
-    assert.equal(info.token, payoutToken, 'token');
+    assert.equal(`${info.token}`.toLowerCase(), `${payoutToken}`.toLowerCase(), 'token');
     assert.equal(info.rewardManager, rewardManager, 'rewardManager');
     assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
   });
