@@ -5,7 +5,7 @@ defaultValue = "1"
 defaultValue = "30000"
 
 [setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "1300000"
+defaultValue = "1500000"
 
 [setting.perps_keeper_l1_cost_flag_gas_units]
 defaultValue = "31000"
