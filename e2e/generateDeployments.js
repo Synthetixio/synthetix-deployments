@@ -100,11 +100,20 @@ async function run() {
       perpsFactory.contracts.PerpsAccountProxy ?? perpsFactory.contracts.AccountProxy;
   }
 
-  const rd =
+  const snxRewards =
     deployments?.state?.[`provision.spartan_council_pool_rewards`]?.artifacts?.imports
       ?.spartan_council_pool_rewards;
-  if (rd) {
-    contracts[`RewardsDistributorForSpartanCouncilPool`] = rd.contracts.RewardsDistributor;
+  if (snxRewards) {
+    contracts[`RewardsDistributorForSpartanCouncilPoolSNX`] =
+      snxRewards.contracts.RewardsDistributor;
+  }
+
+  const usdcRewards =
+    deployments?.state?.[`provision.sccp_313_spartan_council_pool_usdc_rewards`]?.artifacts?.imports
+      ?.sccp_313_spartan_council_pool_usdc_rewards;
+  if (usdcRewards) {
+    contracts[`RewardsDistributorForSpartanCouncilPoolUSDC`] =
+      usdcRewards.contracts.RewardsDistributor;
   }
 
   function mintableToken(provisionStep) {
