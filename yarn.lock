@@ -1189,9 +1189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.21":
-  version: 2.11.21
-  resolution: "@usecannon/builder@npm:2.11.21"
+"@usecannon/builder@npm:2.11.22":
+  version: 2.11.22
+  resolution: "@usecannon/builder@npm:2.11.22"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1206,17 +1206,17 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.6.1"
     zod: "npm:^3.22.4"
-  checksum: 10/955c53e945bcde59b4a9db96de55336307d6c12a1be58e256a05075d6039444f4c3f30e8836c6a7a4b3efb958f938f1a525cb9843ba66f9123b540abca309e9d
+  checksum: 10/9443e9e7a781b8f3eae53496819a891655087ee223c1a2f76149c39cbfc62e380c25f0534e3737e69d36ba9d4691a760a075dec678b20aee6598ae3e0e1425ff
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.21":
-  version: 2.11.21
-  resolution: "@usecannon/cli@npm:2.11.21"
+"@usecannon/cli@npm:2.11.22":
+  version: 2.11.22
+  resolution: "@usecannon/cli@npm:2.11.22"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.11.21"
+    "@usecannon/builder": "npm:2.11.22"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1236,7 +1236,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/d7011f0f0c22eff8b81e5e9c9bd2f3e131a31c96e17c428c31cb41dd85cc04ea2862fdd1ef43780a31bde430cc0e997bb0f10c4fb4db8dea04633508b682e214
+  checksum: 10/a29f11a111cc9559e2d1e5384a8b86eff1f8e374ccb08a7835a25fce245096cfd0e68793ed44d502f85d841e85692c6a4a79bdf73def80caa66addf07ddc9ca8
   languageName: node
   linkType: hard
 
@@ -4717,8 +4717,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.11.21"
-    "@usecannon/cli": "npm:2.11.21"
+    "@usecannon/builder": "npm:2.11.22"
+    "@usecannon/cli": "npm:2.11.22"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
