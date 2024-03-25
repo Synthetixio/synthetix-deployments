@@ -18,10 +18,6 @@ const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
-const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
-const {
-  configureMaximumMarketCollateral,
-} = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
@@ -37,14 +33,12 @@ const { claimRewards } = require('../../tasks/claimRewards');
 
 const {
   contracts: {
-    RewardsDistributorForSpartanCouncilPool: distributorAddress,
+    RewardsDistributorForSpartanCouncilPoolSNX: distributorAddress,
     FakeCollateralfwSNX: payoutToken,
     CoreProxy: rewardManager,
     SynthUSDCToken: collateralType,
   },
 } = require('../../deployments/meta.json');
-
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 10_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -57,6 +51,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   let snapshot;
   let initialBalance;
+  let initialRewardsAmount;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
@@ -67,6 +62,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       tokenAddress: payoutToken,
     });
     log('Initial balance', { initialBalance });
+
+    initialRewardsAmount = await getTokenRewardsDistributorRewardsAmount({ distributorAddress });
+    log('Initial rewards amount', { initialRewardsAmount });
   });
 
   after('Restore snapshot', async () => {
@@ -76,6 +74,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should sync time of the fork', async () => {
     await syncTime();
+  });
+
+  it('should validate Rewards Distributor info', async () => {
+    const info = await getTokenRewardsDistributorInfo({ distributorAddress });
+    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
+    assert.equal(info.poolId, 1, 'poolId');
+    assert.equal(info.collateralType, collateralType, 'collateralType');
+    assert.equal(info.payoutToken, payoutToken, 'payoutToken');
+    assert.equal(info.precision, 10 ** 18, 'precision');
+    assert.equal(info.token, payoutToken, 'token');
+    assert.equal(info.rewardManager, rewardManager, 'rewardManager');
+    assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
   });
 
   it('should create new random wallet', async () => {
@@ -99,7 +109,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it(`should set fUSDC balance to ${SYNTH_USDC_MAX_MARKET_COLLATERAL * 2}`, async () => {
+  it(`should set fUSDC balance to 1_000`, async () => {
     const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fUSDC' }),
@@ -109,12 +119,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await setMintableTokenBalance({
       privateKey,
       tokenAddress,
-      balance: SYNTH_USDC_MAX_MARKET_COLLATERAL * 2,
+      balance: 1_000,
     });
-    assert.equal(
-      await getCollateralBalance({ address, symbol: 'fUSDC' }),
-      SYNTH_USDC_MAX_MARKET_COLLATERAL * 2
-    );
+    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 1_000);
   });
 
   it('should approve fUSDC spending for SpotMarket', async () => {
@@ -142,26 +149,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should increase max collateral for the test to ${SYNTH_USDC_MAX_MARKET_COLLATERAL * 2}`, async () => {
-    await configureMaximumMarketCollateral({
-      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      symbol: 'fUSDC',
-      targetAmount: String(SYNTH_USDC_MAX_MARKET_COLLATERAL * 2),
-    });
-    await setSpotWrapper({
-      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      symbol: 'fUSDC',
-      targetAmount: String(SYNTH_USDC_MAX_MARKET_COLLATERAL * 2),
-    });
-  });
-
-  it(`should wrap ${SYNTH_USDC_MAX_MARKET_COLLATERAL} fUSDC`, async () => {
-    const balance = await wrapCollateral({
-      wallet,
-      symbol: 'fUSDC',
-      amount: SYNTH_USDC_MAX_MARKET_COLLATERAL,
-    });
-    assert.equal(balance, SYNTH_USDC_MAX_MARKET_COLLATERAL);
+  it(`should wrap 1_000 fUSDC`, async () => {
+    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 1_000 });
+    assert.equal(balance, 1_000);
   });
 
   it('should approve sUSDC spending for CoreProxy', async () => {
@@ -189,11 +179,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should deposit ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000} sUSDC into the system`, async () => {
-    assert.equal(
-      await getCollateralBalance({ address, symbol: 'sUSDC' }),
-      SYNTH_USDC_MAX_MARKET_COLLATERAL
-    );
+  it(`should deposit 1_000 sUSDC into the system`, async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 1_000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 0,
       totalAssigned: 0,
@@ -204,12 +191,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       symbol: 'sUSDC',
       accountId,
-      amount: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
+      amount: 1_000,
     });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 100_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 0);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
+      totalDeposited: 1_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -233,9 +220,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it(`should delegate ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000} sUSDC into the Spartan Council pool`, async () => {
+  it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
+      totalDeposited: 1_000,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -243,54 +230,36 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       symbol: 'sUSDC',
       accountId,
-      amount: SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000,
+      amount: 1_000,
       poolId: 1,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
-      totalDeposited: SYNTH_USDC_MAX_MARKET_COLLATERAL - 100_000,
-      totalAssigned: SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000,
+      totalDeposited: 1_000,
+      totalAssigned: 1_000,
       totalLocked: 0,
     });
   });
 
-  it('should validate Rewards Distributor info', async () => {
-    const info = await getTokenRewardsDistributorInfo({ distributorAddress });
-    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
-    assert.equal(info.poolId, 1, 'poolId');
-    assert.equal(info.collateralType, collateralType, 'collateralType');
-    assert.equal(info.payoutToken, payoutToken, 'payoutToken');
-    assert.equal(info.precision, 10 ** 18, 'precision');
-    assert.equal(info.token, payoutToken, 'token');
-    assert.equal(info.rewardManager, rewardManager, 'rewardManager');
-    assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
-  });
-
-  it('should fund RewardDistributor with 1_000_000 fwSNX', async () => {
-    await setPermissionlessTokenBalance({
-      privateKey,
-      tokenAddress: payoutToken,
-      balance: 1_000_000,
-    });
+  it('should fund RewardDistributor with 1_000 fwSNX', async () => {
+    await setPermissionlessTokenBalance({ privateKey, tokenAddress: payoutToken, balance: 1_000 });
 
     await transferToken({
       privateKey,
       tokenAddress: payoutToken,
       targetWalletAddress: distributorAddress,
-      amount: 1_000_000,
+      amount: 1_000,
     });
 
     assert.equal(
       Math.floor(
         await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken })
       ),
-      Math.floor(initialBalance + 1_000_000),
-      'Rewards Distributor has 1_000_000 fwSNX balance'
+      Math.floor(initialBalance + 1_000),
+      'Rewards Distributor has 1_000 extra fwSNX on its balance'
     );
   });
 
-  it('should distribute 1_000_000 fwSNX rewards', async () => {
-    assert.equal(await getTokenRewardsDistributorRewardsAmount({ distributorAddress }), 0);
-
+  it('should distribute 1_000 fwSNX rewards', async () => {
     const poolId = 1;
     const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
@@ -298,8 +267,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);
 
-    const amount = ethers.utils.parseEther(`${1_000_000}`);
-    const start = Math.floor(Date.now() / 1000);
+    const amount = ethers.utils.parseUnits(`${1_000}`, 18); // the number must be in 18 decimals
+    const start = Math.floor(Date.now() / 1_000);
     const duration = 10;
 
     await distributeRewards({
@@ -314,7 +283,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
 
-    assert.equal(await getTokenRewardsDistributorRewardsAmount({ distributorAddress }), 1_000_000);
+    assert.equal(
+      await getTokenRewardsDistributorRewardsAmount({ distributorAddress }),
+      initialRewardsAmount + 1_000,
+      'should have 1_000 extra tokens in rewards'
+    );
   });
 
   it('should claim fwSNX rewards', async () => {
@@ -351,7 +324,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       Math.floor(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
-      Math.floor(1_000_000 - postClaimBalance),
+      Math.floor(initialRewardsAmount + 1_000 - postClaimBalance),
       'should deduct claimed token amount from total distributor rewards amount'
     );
   });
