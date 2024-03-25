@@ -144,3 +144,16 @@ args = [
     "<%= extras.synth_usdc_token_address %>",
     "<%= imports.sccp_313_spartan_council_pool_usdc_rewards.contracts.RewardsDistributor.address %>",
 ]
+
+[invoke.sccp_313_distribute_usdc_rewards]
+target = ["sccp_313_spartan_council_pool_usdc_rewards.RewardsDistributor"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "distributeRewards"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= parseUnits(String(50_000), 6) %>",                                      # amount, WARNING: 6 decimals for USDC
+    "<%= Math.floor(new Date('2024-03-26T03:00:00.000Z').getTime() / 1_000) %>", # start, 2024-03-26 3am UTC
+    "<%= 30 * 24 * 3600 %>",                                                     # duration, 30 days
+]
