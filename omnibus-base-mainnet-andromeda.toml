@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "6"
+version = "7"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -97,6 +97,31 @@ args = [
 
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+
+[setting.snx_address]
+defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
+
+[provision.stp_14_spartan_council_pool_snx_rewards]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= settings.sc_pool_id %>"
+options.collateralType = "<%= extras.synth_usdc_token_address %>"
+options.payoutToken = "<%= settings.snx_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool Rewards"
+
+[invoke.stp_14_register_spartan_council_pool_snx_rewards]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.stp_14_spartan_council_pool_snx_rewards.contracts.RewardsDistributor.address %>",
+]
 
 [provision.sccp_313_spartan_council_pool_usdc_rewards]
 source = "synthetix-rewards-distributor:0.0.2"

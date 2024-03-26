@@ -101,6 +101,8 @@ async function run() {
   }
 
   const snxRewards =
+    deployments?.state?.[`provision.stp_14_spartan_council_pool_snx_rewards`]?.artifacts?.imports
+      ?.stp_14_spartan_council_pool_snx_rewards ??
     deployments?.state?.[`provision.spartan_council_pool_rewards`]?.artifacts?.imports
       ?.spartan_council_pool_rewards;
   if (snxRewards) {
