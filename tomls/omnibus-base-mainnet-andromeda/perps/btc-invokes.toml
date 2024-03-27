@@ -29,7 +29,7 @@ include = ["../../oracles/btc.toml", "../../markets/common/bigcap-settings.toml"
 [setting.perpsBtcLockedOiRatio]
 
 [invoke.createBtcPerpsMarket]
-target = ["perpsFactory.PerpsMarƒåketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.btcPerpsMarketId %>", "Bitcoin", "BTC"]
