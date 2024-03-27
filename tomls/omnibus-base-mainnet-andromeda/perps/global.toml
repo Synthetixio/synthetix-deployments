@@ -31,6 +31,15 @@ defaultValue = "100"
 [setting.perps_liquidation_max_keeper_scaling_ratio_d18]
 defaultValue = "0.3"
 
+[setting.perps_low_util_gradient]
+defaultValue = "0" # not enabled
+
+[setting.perps_gradient_breakpoint]
+defaultValue = "0" # not enabled
+
+[setting.perps_high_util_gradient]
+defaultValue = "0" # not enabled
+
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -65,3 +74,13 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateKeeperCostNodeId"
 args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
+
+[invoke.setInterestRateParams]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setInterestRateParameters"
+args = [
+    "<%= parseEther(settings.perps_low_util_gradient) %>",
+    "<%= parseEther(settings.perps_gradient_breakpoint) %>",
+    "<%= parseEther(settings.perps_high_util_gradient) %>",
+]
