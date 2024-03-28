@@ -39,7 +39,7 @@ include = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.perpsSnxMarketId %>", "Synthetix", "SNX"]
+args = ["<%= settings.perpsSnxMarketId %>", "Synthetix Network Token", "SNX"]
 
 [invoke.setPerpsPriceSnx]
 target = ["perpsFactory.PerpsMarketProxy"]
