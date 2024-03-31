@@ -11,6 +11,8 @@ include = [
     "tomls/pools/spartan-council.toml",
 ]
 
+# --- pkg/import settings --- #
+
 [setting.salt]
 defaultValue = "carina"
 
@@ -24,13 +26,31 @@ defaultValue = "synthetix:3.3.15"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.3.17"
+defaultValue = "synthetix-bfp-market:1.0.0-alpha.1"
+
+[setting.lido_wsteth_to_eth_ratio_oracle_package]
+defaultValue = "lido-wsteth-to-eth-ratio-oracle:3.3.17"
+
+# --- Address settings --- #
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
 [setting.weth_address]
 defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
+
+# @see: https://sepolia.etherscan.io/token/0xb82381a3fbd3fafa77b3a7be693342618240067b
+[setting.wsteth_address]
+defaultValue = "0xb82381a3fbd3fafa77b3a7be693342618240067b"
+
+# NOTE: `0x694AA1769357215DE4FAC081bf1f309aDC325306` is actually ETH/USD.
+[setting.steth_aggregator_address]
+defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+
+# --- Synthetix pool settings -- #
 
 [setting.eth_aggregator_address]
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
@@ -43,9 +63,6 @@ defaultValue = "<%= parseEther('2') %>"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"
-
-[setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.sc_pool_id]
 defaultValue = "1"
@@ -68,3 +85,75 @@ depends = ["provision.system"]
 # --- Provision bfp market --- #
 
 [provision.bfp_market_factory]
+source = "<%= settings.bfp_market_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.coreProxyOwner = "<%= settings.owner %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.synthetixPreset = "<%= settings.target_preset %>"
+depends = ["provision.spot_market_factory"]
+
+# --- Configure oracles for markets --- #
+
+# wstETH/stETH oracle
+[provision.lido_wsteth_to_steth_ratio_oracle]
+source = "<%= settings.lido_wsteth_to_eth_ratio_oracle_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.wsteth = "<%= settings.wsteth_address %>"
+depends = ["provision.system"]
+
+[invoke.register_node_lido_wsteth_to_steth_ratio_oracle]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # external node
+    2,
+    # contract
+    "<%= defaultAbiCoder.encode(['address'], [imports.lido_wsteth_to_steth_ratio_oracle.contracts.LidoWstEthToStEthRatioOracle.address]) %>",
+    [
+    ],
+]
+extra.lido_wsteth_to_steth_ratio_oracle_id.event = "NodeRegistered"
+extra.lido_wsteth_to_steth_ratio_oracle_id.arg = 0
+
+# stETH/USD oracle
+#
+# https://etherscan.io/address/0x86392dC19c0b719886221c78AB11eb8Cf5c52812
+[invoke.register_node_steth_oracle_node]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # chainlink aggregator type
+    3,
+    # contract, twap, decimals
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.steth_aggregator_address, 0, 8]) %>",
+    [
+    ],
+]
+extra.steth_oracle_node_id.event = "NodeRegistered"
+extra.steth_oracle_node_id.arg = 0
+depends = ["provision.system"]
+
+# wstETH/USD
+[invoke.register_node_wsteth_oracle_node]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # reducer node
+    1,
+    # mulDecimal
+    "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
+    # stETH/USD, wstETH/stETH
+    ["<%= extras.steth_oracle_node_id %>", "<%= extras.lido_wsteth_to_steth_ratio_oracle_id %>"],
+]
+extra.wsteth_oracle_node_id.event = "NodeRegistered"
+extra.wsteth_oracle_node_id.arg = 0
+depends = [
+    "invoke.register_node_steth_oracle_node",
+    "invoke.register_node_lido_wsteth_to_steth_ratio_oracle",
+]
+
+# --- Configure synths markets --- #
+
+# --- Configure bfp markets --- #
