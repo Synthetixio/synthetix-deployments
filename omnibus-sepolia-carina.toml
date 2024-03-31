@@ -156,4 +156,26 @@ depends = [
 
 # --- Configure synths markets --- #
 
+# swsteth spot synth
+
+# seth spot synth
+
 # --- Configure bfp markets --- #
+
+# ethperp
+
+# --- Configure SC pool after market creation--- #
+
+# [invoke.set_pool_configuration_sc]
+# target = ["system.CoreProxy"]
+# fromCall.func = "getPoolOwner"
+# fromCall.args = ["<%= settings.sc_pool_id %>"]
+# func = "setPoolConfiguration"
+# args = [
+#     "<%= settings.sc_pool_id %>",
+#     [
+#         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#         { marketId = "<%= extras.synth_wsteth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#         { marketId = "<%= extras.eth_perp_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#     ],
+# ]
