@@ -1,0 +1,70 @@
+name = "synthetix-omnibus"
+preset = "carina"
+version = "1"
+description = "Includes the full synthetix system with configurations applied"
+include = [
+    "tomls/settings.toml",
+    "tomls/core.toml",
+    "tomls/permissions.toml",
+    "tomls/oracles/eth.toml",
+    "tomls/collaterals/weth.toml",
+    "tomls/pools/spartan-council.toml",
+]
+
+[setting.salt]
+defaultValue = "carina"
+
+[setting.target_preset]
+defaultValue = "carina"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.15"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.15"
+
+[setting.bfp_market_package]
+defaultValue = "synthetix-bfp-market:3.3.17"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.weth_address]
+defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
+
+[setting.eth_aggregator_address]
+defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+
+[setting.weth_liquidation_reward]
+defaultValue = "<%= parseEther('10') %>"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('2') %>"
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+# --- Provision spot market --- #
+
+[provision.spot_market_factory]
+source = "<%= settings.spot_market_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.coreProxyOwner = "<%= settings.owner %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.synthetixPreset = "<%= settings.target_preset %>"
+depends = ["provision.system"]
+
+# --- Provision bfp market --- #
+
+[provision.bfp_market_factory]
