@@ -1189,9 +1189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.22":
-  version: 2.11.22
-  resolution: "@usecannon/builder@npm:2.11.22"
+"@usecannon/builder@npm:2.11.24":
+  version: 2.11.24
+  resolution: "@usecannon/builder@npm:2.11.24"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1204,19 +1204,19 @@ __metadata:
     promise-events: "npm:^0.2.4"
     typedoc-plugin-markdown: "npm:^3.17.1"
     typestub-ipfs-only-hash: "npm:^4.0.0"
-    viem: "npm:^2.6.1"
+    viem: "npm:^2.9.3"
     zod: "npm:^3.22.4"
-  checksum: 10/9443e9e7a781b8f3eae53496819a891655087ee223c1a2f76149c39cbfc62e380c25f0534e3737e69d36ba9d4691a760a075dec678b20aee6598ae3e0e1425ff
+  checksum: 10/750674b09fc348913c76c936f218a411241826e3d2177a26dbf21ad279786e776e5c8174e062508d9f1f36b8f75c8104ce0cf493610b3de0c62f88cb615a42bb
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.22":
-  version: 2.11.22
-  resolution: "@usecannon/cli@npm:2.11.22"
+"@usecannon/cli@npm:2.11.24":
+  version: 2.11.24
+  resolution: "@usecannon/cli@npm:2.11.24"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.11.22"
+    "@usecannon/builder": "npm:2.11.24"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1231,12 +1231,12 @@ __metadata:
     table: "npm:^6.8.0"
     tildify: "npm:2.0.0"
     untildify: "npm:^4.0.0"
-    viem: "npm:^2.6.1"
+    viem: "npm:^2.9.3"
     znv: "npm:^0.4.0"
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/a29f11a111cc9559e2d1e5384a8b86eff1f8e374ccb08a7835a25fce245096cfd0e68793ed44d502f85d841e85692c6a4a79bdf73def80caa66addf07ddc9ca8
+  checksum: 10/c2aec9bd647f86002009f7164f507b31845034d59eb8386a0a8be4a5fbad01b30eea7d4fcf55cbc943fd94e8cdaaea944e243628708f279847d9da7e9f3ebfc6
   languageName: node
   linkType: hard
 
@@ -4717,8 +4717,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.11.22"
-    "@usecannon/cli": "npm:2.11.22"
+    "@usecannon/builder": "npm:2.11.24"
+    "@usecannon/cli": "npm:2.11.24"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
@@ -5048,9 +5048,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.6.1":
-  version: 2.7.13
-  resolution: "viem@npm:2.7.13"
+"viem@npm:^2.9.3":
+  version: 2.9.6
+  resolution: "viem@npm:2.9.6"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.0"
     "@noble/curves": "npm:1.2.0"
@@ -5065,7 +5065,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/948073caac0fea1878fa384ddf87bf084a7b4c6011be32f3c9c6e38776ed4a4b10e10603874bb970957993a3aacab5238bf875078ab8ddae3324e0be7b859ad3
+  checksum: 10/e96f96c757a38dd6f61aa486592738fb8bff30cc30c9836ea9267fe76d0efc9bec828b3743d39e2c5593f4c5b99563787f7cfa9dfd308733ba9160ca67a4b847
   languageName: node
   linkType: hard
 
