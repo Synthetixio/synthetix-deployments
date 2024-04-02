@@ -64,6 +64,7 @@ depositingEnabled = false
 
 [provision.usdc_mock_collateral]
 source = "mintable-token:1.8"
+options.salt = "<%= settings.salt %>"
 options.name = "Fake USD Coin"
 options.symbol = "fUSDC"
 options.owner = "<%= settings.owner %>"

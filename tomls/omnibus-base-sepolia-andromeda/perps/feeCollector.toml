@@ -1,5 +1,6 @@
 [provision.snx_mock_collateral]
 source = "mintable-token@permissionless-mint"
+options.salt = "<%= settings.salt %>"
 options.name = "Fake Wrapped SNX"
 options.symbol = "fwSNX"
 options.owner = "<%= settings.owner %>"
@@ -19,6 +20,7 @@ defaultValue = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502d
 [provision.buyback_snx]
 source = "<%= settings.buyback_snx_package %>"
 targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
 options.premium = "<%= settings.buyback_premium %>"
 options.snx_fee_share = "<%= settings.buyback_fee_share %>"
 options.oracle_manager_address = "<%= imports.system.imports.oracle_manager.contracts.Proxy.address %>"
