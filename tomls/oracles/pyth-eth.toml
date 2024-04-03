@@ -11,6 +11,7 @@ args = [
 ]
 extra.eth_pyth_oracle_id.event = "NodeRegistered"
 extra.eth_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythEthFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupEthOracleNode]
@@ -24,6 +25,7 @@ args = [
 ]
 extra.eth_lookup_oracle_id.event = "NodeRegistered"
 extra.eth_lookup_oracle_id.arg = 0
+depends = ['provision.system', 'provision.pyth_erc7412_wrapper', 'setting.pythEthFeedId', 'setting.bigCapDefaultStalenessTolerance']
 
 # Staleness Node
 [invoke.registerEthOracleNode]
