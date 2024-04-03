@@ -264,6 +264,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const poolId = 1;
     const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
+    await setEthBalance({ address: poolOwner, balance: 100 });
 
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);
