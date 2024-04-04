@@ -1189,9 +1189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.11.24":
-  version: 2.11.24
-  resolution: "@usecannon/builder@npm:2.11.24"
+"@usecannon/builder@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@usecannon/builder@npm:2.12.0"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1206,17 +1206,17 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.9.3"
     zod: "npm:^3.22.4"
-  checksum: 10/750674b09fc348913c76c936f218a411241826e3d2177a26dbf21ad279786e776e5c8174e062508d9f1f36b8f75c8104ce0cf493610b3de0c62f88cb615a42bb
+  checksum: 10/4d0895ad1668b9cdb062ba800d48b8619bf7cb91eb2500a5c2a9e89305f75264a242aec6322e69b5dc8d39a3c32a5c55fe9f6b502dba001f1c1770904e9b7073
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.11.24":
-  version: 2.11.24
-  resolution: "@usecannon/cli@npm:2.11.24"
+"@usecannon/cli@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@usecannon/cli@npm:2.12.0"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.11.24"
+    "@usecannon/builder": "npm:2.12.0"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1236,7 +1236,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/c2aec9bd647f86002009f7164f507b31845034d59eb8386a0a8be4a5fbad01b30eea7d4fcf55cbc943fd94e8cdaaea944e243628708f279847d9da7e9f3ebfc6
+  checksum: 10/e0a973ebef763d75dc227f338108bfaf821663b4ddc36aebc5ad157af8936b65cffbb10858b4e23dfd565ad4762f920c3e4fb48f8df78985b8565cca84e86dac
   languageName: node
   linkType: hard
 
@@ -4717,8 +4717,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.11.24"
-    "@usecannon/cli": "npm:2.11.24"
+    "@usecannon/builder": "npm:2.12.0"
+    "@usecannon/cli": "npm:2.12.0"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
