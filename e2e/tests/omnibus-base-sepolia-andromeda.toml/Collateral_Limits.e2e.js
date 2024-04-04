@@ -14,7 +14,7 @@ const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 10_000_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 20_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
