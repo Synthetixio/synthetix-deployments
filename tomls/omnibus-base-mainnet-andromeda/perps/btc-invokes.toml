@@ -76,6 +76,7 @@ depends = [
     'setting.bigCapSettlementWindowDuration',
     'setting.pythBtcFeedId',
     'setting.settlementReward',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsBtcFundingParameters]
