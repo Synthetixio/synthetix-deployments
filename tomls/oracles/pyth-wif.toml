@@ -11,6 +11,7 @@ args = [
 ]
 extra.wif_pyth_oracle_id.event = "NodeRegistered"
 extra.wif_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythWifFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupWifOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.wif_lookup_oracle_id.event = "NodeRegistered"
 extra.wif_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythWifFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerWifOracleNode]
