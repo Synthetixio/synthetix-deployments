@@ -133,6 +133,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       marketId: 200,
       settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
     });
+    await doPriceUpdate({
+      wallet,
+      marketId: 300,
+      settlementStrategyId: require('../../deployments/extras.json').snx_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 400,
+      settlementStrategyId: require('../../deployments/extras.json').sol_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 500,
+      settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
+    });
   });
 
   it('should increase max collateral for the test to 1_000_000_000_000', async () => {
@@ -230,6 +245,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       settlementStrategyId,
     });
 
+    const PerpsMarketProxy = new ethers.Contract(
+      require('../../deployments/PerpsMarketProxy.json').address,
+      require('../../deployments/PerpsMarketProxy.json').abi,
+      provider
+    );
     // Wait for commitment price/settlement delay
     await wait(2000);
 

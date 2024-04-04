@@ -125,7 +125,7 @@ function parseError(error) {
         data?.args?.oracleContract &&
         data?.args?.oracleQuery
       ) {
-        const oracleAddress = data?.args?.oracleAddress;
+        const oracleAddress = data?.args?.oracleContract;
         const oracleQueryRaw = data?.args?.oracleQuery;
         const decoded = ethers.utils.defaultAbiCoder.decode(
           ['uint8', 'uint64', 'bytes32'],

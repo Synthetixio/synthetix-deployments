@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "11"
+version = "12"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -27,6 +27,18 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/eth-invokes.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/eth.toml",
+    # SNX
+    "tomls/omnibus-base-sepolia-andromeda/perps/snx-invokes.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/snx.toml",
+    # SOL
+    "tomls/omnibus-base-sepolia-andromeda/perps/sol-invokes.toml",
+    "tomls/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/sol.toml",
+    # WIF
+    "tomls/omnibus-base-sepolia-andromeda/perps/wif-invokes.toml",
+    "tomls/oracles/pyth-wif.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/wif.toml",
 ]
 
 [setting.commitmentPriceDelay]
