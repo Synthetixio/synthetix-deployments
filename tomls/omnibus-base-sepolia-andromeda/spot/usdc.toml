@@ -1,5 +1,5 @@
 [setting.synthUsdcMaxMarketCollateral]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
+defaultValue = "<%= parseEther(String(20_000_000)) %>"
 
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"

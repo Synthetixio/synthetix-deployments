@@ -29,7 +29,7 @@ const {
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 10_000_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 20_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -208,6 +208,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       marketId: 200,
       settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 300,
+      settlementStrategyId: require('../../deployments/extras.json').snx_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 400,
+      settlementStrategyId: require('../../deployments/extras.json').sol_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 500,
+      settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
     });
   });
 
