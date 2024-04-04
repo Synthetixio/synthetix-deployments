@@ -61,7 +61,12 @@ args = [
 ]
 extra.snx_lookup_oracle_id_buyback.event = "NodeRegistered"
 extra.snx_lookup_oracle_id_buyback.arg = 0
-depends = ['provision.system', 'provision.pyth_erc7412_wrapper', 'setting.pythSnxFeedId', 'setting.buybackStalenessTolerance']
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythSnxFeedId',
+    'setting.buybackStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerSnxOracleNodeBuyback]
