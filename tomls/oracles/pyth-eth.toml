@@ -25,7 +25,12 @@ args = [
 ]
 extra.eth_lookup_oracle_id.event = "NodeRegistered"
 extra.eth_lookup_oracle_id.arg = 0
-depends = ['provision.system', 'provision.pyth_erc7412_wrapper', 'setting.pythEthFeedId', 'setting.bigCapDefaultStalenessTolerance']
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythEthFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerEthOracleNode]

@@ -77,7 +77,17 @@ args = [
     "<%= extras.eth_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
-depends = ['provision.perpsFactory', 'setting.ethPerpsMarketId', 'invoke.addPerpsEthSettlementStrategy', 'provision.pyth_erc7412_wrapper', 'setting.bigCapSettlementDelay', 'setting.bigCapSettlementWindowDuration', 'setting.pythEthFeedId', 'setting.settlementReward', 'setting.commitmentPriceDelay']
+depends = [
+    'provision.perpsFactory',
+    'setting.ethPerpsMarketId',
+    'invoke.addPerpsEthSettlementStrategy',
+    'provision.pyth_erc7412_wrapper',
+    'setting.bigCapSettlementDelay',
+    'setting.bigCapSettlementWindowDuration',
+    'setting.pythEthFeedId',
+    'setting.settlementReward',
+    'setting.commitmentPriceDelay',
+]
 
 [invoke.setPerpsEthFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
