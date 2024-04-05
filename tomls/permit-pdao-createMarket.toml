@@ -1,0 +1,5 @@
+[invoke.allowPdaoToCreateMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createMarket') %>", "<%= settings.pdao %>"]
