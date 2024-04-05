@@ -39,6 +39,10 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/wif-invokes.toml",
     "tomls/oracles/pyth-wif.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/wif.toml",
+    # W
+    "tomls/omnibus-base-sepolia-andromeda/perps/w-invokes.toml",
+    "tomls/oracles/pyth-w.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/w.toml",
 ]
 
 [setting.commitmentPriceDelay]
