@@ -3,3 +3,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addToFeatureFlagAllowlist"
 args = ["<%= formatBytes32String('createMarket') %>", "<%= settings.pdao %>"]
+
+[invoke.removeDeployerFromCreateMarketPerps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "removeFromFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createMarket') %>", "<%= settings.deployer %>"]
