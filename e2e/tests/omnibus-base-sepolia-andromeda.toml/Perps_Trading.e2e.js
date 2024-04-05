@@ -245,11 +245,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       settlementStrategyId,
     });
 
-    const PerpsMarketProxy = new ethers.Contract(
-      require('../../deployments/PerpsMarketProxy.json').address,
-      require('../../deployments/PerpsMarketProxy.json').abi,
-      provider
-    );
     // Wait for commitment price/settlement delay
     await wait(2000);
 
