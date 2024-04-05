@@ -237,6 +237,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       marketId: 500,
       settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
     });
+    await doPriceUpdate({
+      wallet,
+      marketId: 600,
+      settlementStrategyId: require('../../deployments/extras.json').w_pyth_settlement_strategy,
+    });
   });
 
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {
