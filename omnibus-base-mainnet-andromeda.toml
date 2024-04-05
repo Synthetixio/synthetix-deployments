@@ -27,6 +27,18 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/eth-invokes.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
+    # SNX
+    "tomls/omnibus-base-mainnet-andromeda/perps/snx-invokes.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/snx.toml",
+    # SOL
+    "tomls/omnibus-base-mainnet-andromeda/perps/sol-invokes.toml",
+    "tomls/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/sol.toml",
+    # WIF
+    "tomls/omnibus-base-mainnet-andromeda/perps/wif-invokes.toml",
+    "tomls/oracles/pyth-wif.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/wif.toml",
 ]
 
 [setting.commitmentPriceDelay]
