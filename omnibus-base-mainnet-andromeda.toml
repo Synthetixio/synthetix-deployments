@@ -39,7 +39,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/wif-invokes.toml",
     "tomls/oracles/pyth-wif.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/wif.toml",
-    # WIF
+    # W
     "tomls/omnibus-base-mainnet-andromeda/perps/w-invokes.toml",
     "tomls/oracles/pyth-w.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/w.toml",
