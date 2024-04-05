@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0008"
 
 [setting.perpsSolMaxMarketSize]
-defaultValue = "0"
+defaultValue = "2900"
 
 [setting.perpsSolMaxMarketValue]
-defaultValue = "0"
+defaultValue = "500000"
 
 [setting.perpsSolInitialMarginRatio]
 defaultValue = "24.39"
