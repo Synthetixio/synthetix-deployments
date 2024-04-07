@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0005"
 
 [setting.perpsBtcMaxMarketSize]
-defaultValue = "22" #approx $1m
+defaultValue = "149" #approx $10m
 
 [setting.perpsBtcMaxMarketValue]
 defaultValue = "0" # not enabled
