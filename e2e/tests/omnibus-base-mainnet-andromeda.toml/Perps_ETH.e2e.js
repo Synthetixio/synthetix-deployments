@@ -73,12 +73,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 385 ETH', async () => {
+  it('should have max open interest 1399 ETH', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 385);
+    assert.equal(maxOpenInterest, 1399);
   });
 
   it('should make a price update', async () => {
@@ -143,10 +143,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
-  it('should have 385 ETH Max Market Size', async () => {
+  it('should have 1399 ETH Max Market Size', async () => {
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 385);
+    assert.equal(ethers.utils.formatEther(maxSize), 1399);
   });
 
   it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
