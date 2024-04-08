@@ -38,6 +38,10 @@ const {
     SynthUSDCToken: collateralType,
   },
 } = require('../../deployments/meta.json');
+const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
+const {
+  configureMaximumMarketCollateral,
+} = require('../../tasks/configureMaximumMarketCollateral');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -148,6 +152,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
+  });
+
+  it('should increase max collateral for the test to 1_000_000_000_000', async () => {
+    await configureMaximumMarketCollateral({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
+    await setSpotWrapper({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
   });
 
   it(`should wrap 1_000 USDC`, async () => {

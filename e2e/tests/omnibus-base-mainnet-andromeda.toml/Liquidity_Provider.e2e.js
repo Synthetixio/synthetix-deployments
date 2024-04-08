@@ -109,16 +109,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should increase max collateral for the test to 10_000_000', async () => {
+  it('should increase max collateral for the test to 1_000_000_000_000', async () => {
     await configureMaximumMarketCollateral({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'USDC',
-      targetAmount: String(10_000_000),
+      targetAmount: String(1_000_000_000_000),
     });
     await setSpotWrapper({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'USDC',
-      targetAmount: String(10_000_000),
+      targetAmount: String(1_000_000_000_000),
     });
   });
 
