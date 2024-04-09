@@ -84,6 +84,7 @@ depends = [
     'setting.bigCapSettlementWindowDuration',
     'setting.pythSnxFeedId',
     'setting.settlementReward',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsSnxFundingParameters]

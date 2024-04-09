@@ -84,6 +84,7 @@ depends = [
     'setting.bigCapSettlementWindowDuration',
     'setting.pythSolFeedId',
     'setting.settlementReward',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsSolFundingParameters]

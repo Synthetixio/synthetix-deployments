@@ -85,6 +85,7 @@ depends = [
     'setting.pythSnxFeedId',
     'setting.settlementReward',
     'setting.commitmentPriceDelay',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsSnxFundingParameters]
