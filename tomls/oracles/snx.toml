@@ -15,6 +15,7 @@ args = [
 ]
 extra.snx_oracle_id_raw.event = "NodeRegistered"
 extra.snx_oracle_id_raw.arg = 0
+depends = ['provision.system', 'setting.snx_aggregator_address']
 
 [invoke.registerSnxWithStaleness]
 target = ["system.oracle_manager.Proxy"]

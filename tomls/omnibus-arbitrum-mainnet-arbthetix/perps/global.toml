@@ -41,6 +41,13 @@ args = [
     "<%= parseEther(settings.perps_liquidation_max_keeper_reward_usd) %>",
     "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>",
 ]
+depends = [
+    'provision.perpsFactory',
+    'setting.perps_liquidation_min_keeper_reward_usd',
+    'setting.perps_liquidation_min_keeper_profit_ratio_d18',
+    'setting.perps_liquidation_max_keeper_reward_usd',
+    'setting.perps_liquidation_max_keeper_scaling_ratio_d18',
+]
 
 [invoke.setPerpsMaxCollateralForSnxUsd]
 target = ["perpsFactory.PerpsMarketProxy"]
