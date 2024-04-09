@@ -5,7 +5,7 @@ defaultValue = "1"
 defaultValue = "30000"
 
 [setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "1500000"
+defaultValue = "1650000"
 
 [setting.perps_keeper_l1_cost_flag_gas_units]
 defaultValue = "31000"
@@ -74,7 +74,7 @@ args = [["0"]]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
-args = ["2", "1"]
+args = ["3", "1"]
 
 [invoke.setPerpsMarketKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]

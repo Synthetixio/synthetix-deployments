@@ -224,6 +224,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       marketId: 500,
       settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
     });
+    await doPriceUpdate({
+      wallet,
+      marketId: 600,
+      settlementStrategyId: require('../../deployments/extras.json').w_pyth_settlement_strategy,
+    });
   });
 
   it(`should delegate ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000} sUSDC into the Spartan Council pool`, async () => {

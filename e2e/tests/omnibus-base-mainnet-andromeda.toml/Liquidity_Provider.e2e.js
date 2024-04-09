@@ -109,16 +109,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should increase max collateral for the test to 10_000_000', async () => {
+  it('should increase max collateral for the test to 1_000_000_000_000', async () => {
     await configureMaximumMarketCollateral({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'USDC',
-      targetAmount: String(10_000_000),
+      targetAmount: String(1_000_000_000_000),
     });
     await setSpotWrapper({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       symbol: 'USDC',
-      targetAmount: String(10_000_000),
+      targetAmount: String(1_000_000_000_000),
     });
   });
 
@@ -185,6 +185,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       marketId: 200,
       settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 300,
+      settlementStrategyId: require('../../deployments/extras.json').snx_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 400,
+      settlementStrategyId: require('../../deployments/extras.json').sol_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 500,
+      settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: 600,
+      settlementStrategyId: require('../../deployments/extras.json').w_pyth_settlement_strategy,
     });
   });
 

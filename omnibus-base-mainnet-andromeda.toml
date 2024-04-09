@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "9"
+version = "15"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -12,6 +12,7 @@ include = [
     "tomls/markets/perps-factory.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper
     "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
+    "tomls/permit-pdao-createMarket.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
@@ -27,6 +28,22 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/eth-invokes.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
+    # SNX
+    "tomls/omnibus-base-mainnet-andromeda/perps/snx-invokes.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/snx.toml",
+    # SOL
+    "tomls/omnibus-base-mainnet-andromeda/perps/sol-invokes.toml",
+    "tomls/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/sol.toml",
+    # WIF
+    "tomls/omnibus-base-mainnet-andromeda/perps/wif-invokes.toml",
+    "tomls/oracles/pyth-wif.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/wif.toml",
+    # W
+    "tomls/omnibus-base-mainnet-andromeda/perps/w-invokes.toml",
+    "tomls/oracles/pyth-w.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/w.toml",
 ]
 
 [setting.commitmentPriceDelay]
@@ -45,7 +62,7 @@ defaultValue = "op-gas-price-oracle:3.3.15"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.18"
+defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
@@ -70,6 +87,9 @@ defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.deployer]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.pdao]
+defaultValue = "0xbb63CA5554dc4CcaCa4EDd6ECC2837d5EFe83C82"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
