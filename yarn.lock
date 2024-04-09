@@ -1189,9 +1189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.12.0":
-  version: 2.12.0
-  resolution: "@usecannon/builder@npm:2.12.0"
+"@usecannon/builder@npm:2.12.1":
+  version: 2.12.1
+  resolution: "@usecannon/builder@npm:2.12.1"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1206,17 +1206,17 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.9.3"
     zod: "npm:^3.22.4"
-  checksum: 10/4d0895ad1668b9cdb062ba800d48b8619bf7cb91eb2500a5c2a9e89305f75264a242aec6322e69b5dc8d39a3c32a5c55fe9f6b502dba001f1c1770904e9b7073
+  checksum: 10/f5f44211e0cb18c866a1fadc6a128e8bc58afa0b4a48abf80b11bc2663134d5e60ecc5a08346186c6cb3e9dcc6f3209936bb0753115b44f156f20fc51c84c78a
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.12.0":
-  version: 2.12.0
-  resolution: "@usecannon/cli@npm:2.12.0"
+"@usecannon/cli@npm:2.12.1":
+  version: 2.12.1
+  resolution: "@usecannon/cli@npm:2.12.1"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.12.0"
+    "@usecannon/builder": "npm:2.12.1"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1225,7 +1225,6 @@ __metadata:
     fastq: "npm:^1.15.0"
     fs-extra: "npm:^10.1.0"
     lodash: "npm:^4.17.21"
-    promise-timeout: "npm:^1.3.0"
     prompts: "npm:^2.4.2"
     semver: "npm:^7.3.7"
     table: "npm:^6.8.0"
@@ -1236,7 +1235,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/e0a973ebef763d75dc227f338108bfaf821663b4ddc36aebc5ad157af8936b65cffbb10858b4e23dfd565ad4762f920c3e4fb48f8df78985b8565cca84e86dac
+  checksum: 10/a021550cd396b5ab7b5082b837e0b152299c720efbd609554420e7f1bc9d23f1896099bf2440017d55e2e2b6997281467280efb9d6e1225272257c3bccad470f
   languageName: node
   linkType: hard
 
@@ -4049,13 +4048,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"promise-timeout@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "promise-timeout@npm:1.3.0"
-  checksum: 10/4faa906ba2f4d966c9cb5d033030f2d0c5c96465650ee42a130497c70c6ddb1a202bff85ef877898ffa0cf2a4ba0ac52228ea2a03b2ddbf4091153294e87d016
-  languageName: node
-  linkType: hard
-
 "prompts@npm:^2.4.2":
   version: 2.4.2
   resolution: "prompts@npm:2.4.2"
@@ -4717,8 +4709,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.12.0"
-    "@usecannon/cli": "npm:2.12.0"
+    "@usecannon/builder": "npm:2.12.1"
+    "@usecannon/cli": "npm:2.12.1"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
