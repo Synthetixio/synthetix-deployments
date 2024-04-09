@@ -11,6 +11,7 @@ args = [
 ]
 extra.btc_pyth_oracle_id.event = "NodeRegistered"
 extra.btc_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythBtcFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupBtcOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.btc_lookup_oracle_id.event = "NodeRegistered"
 extra.btc_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythBtcFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerBtcOracleNode]
