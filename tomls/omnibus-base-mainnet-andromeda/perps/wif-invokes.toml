@@ -84,7 +84,7 @@ depends = [
     'setting.bigCapSettlementWindowDuration',
     'setting.pythWifFeedId',
     'setting.settlementReward',
-    'settings.commitmentPriceDelay',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsWifFundingParameters]
