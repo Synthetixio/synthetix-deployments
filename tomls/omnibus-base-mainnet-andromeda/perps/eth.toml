@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0005"
 
 [setting.perpsEthMaxMarketSize]
-defaultValue = "385" # approx $1m
+defaultValue = "2777" # approx $10m
 
 [setting.perpsEthMaxMarketValue]
 defaultValue = "0" # not enabled

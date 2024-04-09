@@ -80,14 +80,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set USDC balance to 100_000', async () => {
+  it('should set USDC balance to 10_000_000', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: 100_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
+    await setUSDCTokenBalance({ wallet, balance: 10_000_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 10_000_000);
   });
 
   it('should approve USDC spending for SpotMarket', async () => {
@@ -166,9 +166,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should wrap 10_000 USDC', async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 10_000 });
-    assert.equal(balance, 10_000);
+  it('should wrap 1_000_000 USDC', async () => {
+    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 1_000_000 });
+    assert.equal(balance, 1_000_000);
   });
 
   it('should create perps account', async () => {
@@ -184,14 +184,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should atomic swap 5_000 sUSDC to snxUSD to trade', async () => {
+  it('should atomic swap 1_000_000 sUSDC to snxUSD to trade', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
     await swapToSusd({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 5_000,
+      amount: 1_000_000,
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 5_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 1_000_000);
   });
 
   it('should approve snxUSD spending for PerpsMarketProxy', async () => {
@@ -219,16 +219,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 5_000 snxUSD to Perps', async () => {
+  it('should deposit 1_000_000 snxUSD to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
-    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 5_000 });
-    assert.equal(await getPerpsCollateral({ accountId }), 5_000);
+    await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 1_000_000 });
+    assert.equal(await getPerpsCollateral({ accountId }), 1_000_000);
   });
 
   it('should withdraw 100 snxUSD from Perps', async () => {
-    assert.equal(await getPerpsCollateral({ accountId }), 5_000);
+    assert.equal(await getPerpsCollateral({ accountId }), 1_000_000);
     await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -100 });
-    assert.equal(await getPerpsCollateral({ accountId }), 4_900);
+    assert.equal(await getPerpsCollateral({ accountId }), 999_900);
   });
 
   it('should open a short 0.01 BTC position', async () => {
