@@ -11,7 +11,6 @@ args = [
 ]
 extra.arb_pyth_oracle_id.event = "NodeRegistered"
 extra.arb_pyth_oracle_id.arg = 0
-depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythArbFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupArbOracleNode]
@@ -25,12 +24,6 @@ args = [
 ]
 extra.arb_lookup_oracle_id.event = "NodeRegistered"
 extra.arb_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pythArbFeedId',
-    'setting.bigCapDefaultStalenessTolerance',
-]
 
 # Staleness Node
 [invoke.registerArbOracleNode]

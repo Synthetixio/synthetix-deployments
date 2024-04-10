@@ -1,0 +1,119 @@
+include = [
+    # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+    # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+    "../../oracles/pyth-ordi.toml",
+    "../common/bigcap-settings.toml",
+]
+
+[setting.perpsOrdiMarketId]
+
+[setting.perpsOrdiSkewScale]
+
+[setting.perpsOrdiMaxFundingVelocity]
+
+[setting.perpsOrdiMakerFeeRatio]
+
+[setting.perpsOrdiTakerFeeRatio]
+
+[setting.perpsOrdiMaxMarketSize]
+
+[setting.perpsOrdiInitialMarginRatio]
+
+[setting.perpsOrdiMaintenanceMarginFraction]
+
+[setting.perpsOrdiFlagRewardRatioD18]
+
+[setting.perpsOrdiMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsOrdiMaxSecondsInLiquidationWindow]
+
+[setting.perpsOrdiMaxLiquidationPd]
+
+[setting.perpsOrdiEndorsedLiquidator]
+
+[setting.perpsOrdiMinimumPositionMargin]
+
+[setting.perpsOrdiLockedOiRatio]
+
+[invoke.createOrdiPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.perpsOrdiMarketId %>", "ORDI", "ORDI"]
+
+[invoke.setPerpsPriceOrdi]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.perpsOrdiMarketId %>",
+    "<%= extras.ordi_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.setPerpsOrdiSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.perpsOrdiMarketId %>",
+    "0",                                                                                                                                                                                                                                                                                                                                                                                                                                                                  # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythOrdiFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+]
+
+[invoke.setPerpsOrdiFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.perpsOrdiMarketId %>",
+    "<%= parseEther(settings.perpsOrdiSkewScale) %>",
+    "<%= parseEther(settings.perpsOrdiMaxFundingVelocity) %>",
+]
+
+[invoke.setPerpsOrdiOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.perpsOrdiMarketId %>",
+    "<%= parseEther(settings.perpsOrdiMakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsOrdiTakerFeeRatio) %>",
+]
+
+[invoke.setPerpsOrdiMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.perpsOrdiMarketId %>", "<%= parseEther(settings.perpsOrdiMaxMarketSize) %>"]
+
+[invoke.setPerpsOrdiMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.perpsOrdiMarketId %>",
+    "<%= parseEther(settings.perpsOrdiMaxLiquidationLimitAccumulationMultiplier) %>",
+    "<%= settings.perpsOrdiMaxSecondsInLiquidationWindow %>",
+    "<%= parseEther(settings.perpsOrdiMaxLiquidationPd) %>",
+    "<%= settings.perpsOrdiEndorsedLiquidator %>",
+]
+
+[invoke.setPerpsOrdiLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.perpsOrdiMarketId %>",
+    "<%= parseEther(settings.perpsOrdiInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsOrdiMinimumInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsOrdiMaintenanceMarginScalar) %>",
+    "<%= parseEther(settings.perpsOrdiFlagRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsOrdiMinimumPositionMargin) %>",
+]
+
+[invoke.setPerpsOrdiLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.perpsOrdiMarketId %>", "<%= parseEther(settings.perpsOrdiLockedOiRatio) %>"]

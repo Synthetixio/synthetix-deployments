@@ -1,0 +1,119 @@
+include = [
+    # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+    # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+    "../../oracles/pyth-ena.toml",
+    "../common/bigcap-settings.toml",
+]
+
+[setting.perpsEnaMarketId]
+
+[setting.perpsEnaSkewScale]
+
+[setting.perpsEnaMaxFundingVelocity]
+
+[setting.perpsEnaMakerFeeRatio]
+
+[setting.perpsEnaTakerFeeRatio]
+
+[setting.perpsEnaMaxMarketSize]
+
+[setting.perpsEnaInitialMarginRatio]
+
+[setting.perpsEnaMaintenanceMarginFraction]
+
+[setting.perpsEnaFlagRewardRatioD18]
+
+[setting.perpsEnaMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsEnaMaxSecondsInLiquidationWindow]
+
+[setting.perpsEnaMaxLiquidationPd]
+
+[setting.perpsEnaEndorsedLiquidator]
+
+[setting.perpsEnaMinimumPositionMargin]
+
+[setting.perpsEnaLockedOiRatio]
+
+[invoke.createEnaPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.perpsEnaMarketId %>", "Ethena", "ENA"]
+
+[invoke.setPerpsPriceEna]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.perpsEnaMarketId %>",
+    "<%= extras.ena_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.setPerpsEnaSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.perpsEnaMarketId %>",
+    "0",                                                                                                                                                                                                                                                                                                                                                                                                                                                                  # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEnaFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+]
+
+[invoke.setPerpsEnaFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.perpsEnaMarketId %>",
+    "<%= parseEther(settings.perpsEnaSkewScale) %>",
+    "<%= parseEther(settings.perpsEnaMaxFundingVelocity) %>",
+]
+
+[invoke.setPerpsEnaOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.perpsEnaMarketId %>",
+    "<%= parseEther(settings.perpsEnaMakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsEnaTakerFeeRatio) %>",
+]
+
+[invoke.setPerpsEnaMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.perpsEnaMarketId %>", "<%= parseEther(settings.perpsEnaMaxMarketSize) %>"]
+
+[invoke.setPerpsEnaMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.perpsEnaMarketId %>",
+    "<%= parseEther(settings.perpsEnaMaxLiquidationLimitAccumulationMultiplier) %>",
+    "<%= settings.perpsEnaMaxSecondsInLiquidationWindow %>",
+    "<%= parseEther(settings.perpsEnaMaxLiquidationPd) %>",
+    "<%= settings.perpsEnaEndorsedLiquidator %>",
+]
+
+[invoke.setPerpsEnaLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.perpsEnaMarketId %>",
+    "<%= parseEther(settings.perpsEnaInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsEnaMinimumInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsEnaMaintenanceMarginScalar) %>",
+    "<%= parseEther(settings.perpsEnaFlagRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsEnaMinimumPositionMargin) %>",
+]
+
+[invoke.setPerpsEnaLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.perpsEnaMarketId %>", "<%= parseEther(settings.perpsEnaLockedOiRatio) %>"]

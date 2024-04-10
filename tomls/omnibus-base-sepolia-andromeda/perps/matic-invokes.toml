@@ -1,0 +1,147 @@
+include = [
+    # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
+    # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
+    "../../oracles/pyth-matic.toml",
+    "../../markets/common/bigcap-settings.toml",
+]
+# NOTE: This toml will live until the setMaxMarketValue is on mainnet
+
+[setting.perpsMaticMarketId]
+
+[setting.perpsMaticSkewScale]
+
+[setting.perpsMaticMaxFundingVelocity]
+
+[setting.perpsMaticMakerFeeRatio]
+
+[setting.perpsMaticTakerFeeRatio]
+
+[setting.perpsMaticMaxMarketSize]
+
+[setting.perpsMaticInitialMarginRatio]
+
+[setting.perpsMaticMaintenanceMarginFraction]
+
+[setting.perpsMaticFlagRewardRatioD18]
+
+[setting.perpsMaticMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsMaticMaxSecondsInLiquidationWindow]
+
+[setting.perpsMaticMaxLiquidationPd]
+
+[setting.perpsMaticEndorsedLiquidator]
+
+[setting.perpsMaticMinimumPositionMargin]
+
+[setting.perpsMaticLockedOiRatio]
+
+[invoke.createMaticPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.perpsMaticMarketId %>", "Polygon", "MATIC"]
+
+[invoke.setPerpsPriceMatic]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    "<%= extras.matic_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+depends = ["invoke.createMaticPerpsMarket"]
+
+# Do not modify this step. Edit [invoke.setPerpsMaticSettlementStrategy] instead.
+[invoke.addPerpsMaticSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.matic_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.matic_pyth_settlement_strategy.arg = 2
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    "<%= extras.matic_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythMaticFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+]
+
+[invoke.setPerpsMaticFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    "<%= parseEther(settings.perpsMaticSkewScale) %>",
+    "<%= parseEther(settings.perpsMaticMaxFundingVelocity) %>",
+]
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    "<%= parseEther(settings.perpsMaticMakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsMaticTakerFeeRatio) %>",
+]
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.perpsMaticMarketId %>", "<%= parseEther(settings.perpsMaticMaxMarketSize) %>"]
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.perpsMaticMarketId %>", "<%= parseEther(settings.perpsMaticMaxMarketValue) %>"]
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    "<%= parseEther(settings.perpsMaticMaxLiquidationLimitAccumulationMultiplier) %>",
+    "<%= settings.perpsMaticMaxSecondsInLiquidationWindow %>",
+    "<%= parseEther(settings.perpsMaticMaxLiquidationPd) %>",
+    "<%= settings.perpsMaticEndorsedLiquidator %>",
+]
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.perpsMaticMarketId %>",
+    "<%= parseEther(settings.perpsMaticInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsMaticMinimumInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsMaticMaintenanceMarginScalar) %>",
+    "<%= parseEther(settings.perpsMaticFlagRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsMaticMinimumPositionMargin) %>",
+]
+depends = ["invoke.createMaticPerpsMarket"]
+
+[invoke.setPerpsMaticLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.perpsMaticMarketId %>", "<%= parseEther(settings.perpsMaticLockedOiRatio) %>"]
+depends = ["invoke.createMaticPerpsMarket"]
