@@ -84,6 +84,7 @@ depends = [
     'setting.bigCapSettlementWindowDuration',
     'setting.pythWFeedId',
     'setting.settlementReward',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsWFundingParameters]

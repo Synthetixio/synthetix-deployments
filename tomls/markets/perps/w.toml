@@ -63,12 +63,12 @@ args = [
 depends = [
     'provision.perpsFactory',
     'setting.perpsWMarketId',
-    'invoke.addPerpsWSettlementStrategy',
     'provision.pyth_erc7412_wrapper',
     'setting.bigCapSettlementDelay',
     'setting.bigCapSettlementWindowDuration',
     'setting.pythWFeedId',
     'setting.settlementReward',
+    'setting.commitmentPriceDelay',
 ]
 
 [invoke.setPerpsWFundingParameters]
