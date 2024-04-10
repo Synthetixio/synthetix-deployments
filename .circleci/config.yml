@@ -235,7 +235,10 @@ jobs:
     steps:
       - checkout
       - install-anvil
+      - install-ipfs
+      - run-ipfs
       - yarn-install
+      - wait-for-ipfs
 
       - run:
           name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
