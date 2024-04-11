@@ -75,7 +75,17 @@ args = [
     "<%= extras.rune_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythRuneFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
-
+depends = [
+    'provision.perpsFactory',
+    'setting.perpsRuneMarketId',
+    'invoke.addPerpsRuneSettlementStrategy',
+    'provision.pyth_erc7412_wrapper',
+    'setting.bigCapSettlementDelay',
+    'setting.bigCapSettlementWindowDuration',
+    'setting.pythRuneFeedId',
+    'setting.settlementReward',
+    'setting.commitmentPriceDelay',
+]
 [invoke.setPerpsRuneFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
