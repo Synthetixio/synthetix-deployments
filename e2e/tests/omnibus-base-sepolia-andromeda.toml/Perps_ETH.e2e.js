@@ -125,12 +125,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 800,
-      settlementStrategyId: require('../../deployments/settings.json').doge_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .doge_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 900,
-      settlementStrategyId: require('../../deployments/settings.json').avax_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .avax_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
@@ -140,22 +142,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 1100,
-      settlementStrategyId: require('../../deployments/settings.json').ordi_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .ordi_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1200,
-      settlementStrategyId: require('../../deployments/settings.json').pepe_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .pepe_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1300,
-      settlementStrategyId: require('../../deployments/settings.json').rune_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .rune_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1400,
-      settlementStrategyId: require('../../deployments/settings.json').bonk_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .bonk_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
@@ -170,7 +176,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 1700,
-      settlementStrategyId: require('../../deployments/settings.json').matic_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json')
+        .matic_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
