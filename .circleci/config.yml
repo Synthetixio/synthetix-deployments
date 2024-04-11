@@ -230,8 +230,12 @@ jobs:
         type: string
       preset:
         type: string
+      parallelism:
+        type: integer
+        default: 1
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    parallelism: << parameters.parallelism >>
     steps:
       - checkout
       - install-anvil
@@ -598,6 +602,7 @@ workflows:
 
       - fork-test:
           name: base-sepolia-andromeda
+          parallelism: 2
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -606,6 +611,7 @@ workflows:
 
       - fork-test:
           name: base-mainnet-andromeda
+          parallelism: 2
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
