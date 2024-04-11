@@ -20,9 +20,9 @@ async function unwrapCollateral({ wallet, symbol, amount }) {
   );
   const collateralDecimals = await CollateralToken.decimals();
 
-  const settings = require('../deployments/settings.json');
+  const extras = require('../deployments/extras.json');
   const SynthToken = new ethers.Contract(
-    settings.synth_usdc_token_address,
+    extras.synth_usdc_token_address,
     [
       'function symbol() view returns (string)',
       'function decimals() view returns (uint8)',
@@ -49,7 +49,7 @@ async function unwrapCollateral({ wallet, symbol, amount }) {
   );
 
   const args = [
-    settings.synth_usdc_market_id,
+    extras.synth_usdc_market_id,
     ethers.utils.parseUnits(`${amount}`), // Synth
     ethers.utils.parseUnits(`${amount}`, collateralDecimals), // Token, min received
   ];

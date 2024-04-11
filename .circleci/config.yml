@@ -446,7 +446,7 @@ jobs:
             mkdir -p ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>
             cp e2e/deployments/abi/*.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/meta.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
-            cp e2e/deployments/settings.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/extras.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr:
@@ -501,7 +501,7 @@ jobs:
             mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
             cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
-            cp e2e/deployments/settings.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr:
@@ -574,7 +574,7 @@ jobs:
             mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
             cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
-            cp e2e/deployments/settings.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr-allow-empty:
