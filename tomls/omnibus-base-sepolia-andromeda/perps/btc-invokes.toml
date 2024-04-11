@@ -1,5 +1,3 @@
-include = ["../../oracles/btc.toml", "../../markets/common/bigcap-settings.toml"]
-# NOTE: This toml will live until the setMaxMarketValue is on mainnet
 [setting.pythBtcFeedId]
 
 [setting.btcPerpsMarketId]

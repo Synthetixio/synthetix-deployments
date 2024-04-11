@@ -10,6 +10,7 @@ include = [
     "tomls/pools/spartan-council.toml",                             # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
     "tomls/omnibus-base-sepolia-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper, mock for USDC
     "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
