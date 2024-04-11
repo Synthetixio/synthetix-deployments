@@ -160,6 +160,8 @@ depends = [
 
 # seth spot synth
 
+# --- Configure bfp --- #
+
 # --- Configure bfp markets --- #
 
 # ethperp
