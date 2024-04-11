@@ -31,6 +31,7 @@ include = [
     # ARB
     "tomls/oracles/pyth-arb.toml",
     "tomls/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-sepolia-arbthetix/perps/arb.toml",
 ]
 
 [setting.commitmentPriceDelay]
