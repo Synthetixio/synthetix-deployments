@@ -142,8 +142,10 @@ async function run() {
   }
 
   // Extract all settings
-  Object.values(deployments?.state).forEach((step) =>
-    Object.assign(settings, step?.artifacts?.settings)
+  Object.values(deployments?.state).forEach((step) => {
+      Object.assign(settings, step?.artifacts?.settings);
+      Object.assign(settings, step?.artifacts?.extras);
+    }
   );
 
   // Extract synth markets
