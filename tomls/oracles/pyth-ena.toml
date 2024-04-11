@@ -11,6 +11,7 @@ args = [
 ]
 extra.ena_pyth_oracle_id.event = "NodeRegistered"
 extra.ena_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythEnaFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupEnaOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.ena_lookup_oracle_id.event = "NodeRegistered"
 extra.ena_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythEnaFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerEnaOracleNode]

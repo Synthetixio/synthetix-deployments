@@ -11,6 +11,7 @@ args = [
 ]
 extra.bonk_pyth_oracle_id.event = "NodeRegistered"
 extra.bonk_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythBonkFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupBonkOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.bonk_lookup_oracle_id.event = "NodeRegistered"
 extra.bonk_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythBonkFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerBonkOracleNode]

@@ -11,6 +11,7 @@ args = [
 ]
 extra.bnb_pyth_oracle_id.event = "NodeRegistered"
 extra.bnb_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythBnbFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupBnbOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.bnb_lookup_oracle_id.event = "NodeRegistered"
 extra.bnb_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythBnbFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerBnbOracleNode]

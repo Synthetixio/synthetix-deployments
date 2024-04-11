@@ -11,6 +11,7 @@ args = [
 ]
 extra.doge_pyth_oracle_id.event = "NodeRegistered"
 extra.doge_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythDogeFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupDogeOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.doge_lookup_oracle_id.event = "NodeRegistered"
 extra.doge_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythDogeFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerDogeOracleNode]

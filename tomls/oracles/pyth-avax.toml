@@ -11,6 +11,7 @@ args = [
 ]
 extra.avax_pyth_oracle_id.event = "NodeRegistered"
 extra.avax_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythAvaxFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupAvaxOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.avax_lookup_oracle_id.event = "NodeRegistered"
 extra.avax_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythAvaxFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerAvaxOracleNode]

@@ -11,6 +11,7 @@ args = [
 ]
 extra.matic_pyth_oracle_id.event = "NodeRegistered"
 extra.matic_pyth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythMaticFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupMaticOracleNode]
@@ -24,6 +25,12 @@ args = [
 ]
 extra.matic_lookup_oracle_id.event = "NodeRegistered"
 extra.matic_lookup_oracle_id.arg = 0
+depends = [
+    'provision.system',
+    'provision.pyth_erc7412_wrapper',
+    'setting.pythMaticFeedId',
+    'setting.bigCapDefaultStalenessTolerance',
+]
 
 # Staleness Node
 [invoke.registerMaticOracleNode]
