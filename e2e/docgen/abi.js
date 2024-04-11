@@ -78,7 +78,7 @@ async function abi() {
   table.push(`
     <tr>
       <td>Extra outputs</td>
-      <td><a href="./${chainId}-${preset}/extras.json"><code>extras.json</code></a></td>
+      <td><a href="./${chainId}-${preset}/settings.json"><code>settings.json</code></a></td>
     </tr>
   `);
   table.push(`

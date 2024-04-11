@@ -69,7 +69,7 @@ async function run() {
     timestamp: deployments.timestamp,
     miscUrl: deployments.miscUrl,
   };
-  const extras = {};
+  const settings = {};
   log('Generating deployments info for', meta);
 
   const system = deployments.state['provision.system'].artifacts.imports.system;
@@ -141,9 +141,9 @@ async function run() {
     contracts['SNXToken'] = { address: snx, abi: ERC20Abi };
   }
 
-  // Extract all extras
+  // Extract all settings
   Object.values(deployments?.state).forEach((step) =>
-    Object.assign(extras, step?.artifacts?.extras)
+    Object.assign(settings, step?.artifacts?.settings)
   );
 
   // Extract synth markets
@@ -152,12 +152,12 @@ async function run() {
       contracts[symbol] = { address, abi: ERC20Abi };
     }
   }
-  synthMarkets('SynthBTCToken', extras.synth_btc_token_address);
-  synthMarkets('SynthETHToken', extras.synth_eth_token_address);
-  synthMarkets('SynthSNXToken', extras.synth_snx_token_address);
-  synthMarkets('SynthUSDCToken', extras.synth_usdc_token_address);
-  synthMarkets('SynthOPToken', extras.synth_op_token_address);
-  synthMarkets('SynthLINKToken', extras.synth_link_token_address);
+  synthMarkets('SynthBTCToken', settings.synth_btc_token_address);
+  synthMarkets('SynthETHToken', settings.synth_eth_token_address);
+  synthMarkets('SynthSNXToken', settings.synth_snx_token_address);
+  synthMarkets('SynthUSDCToken', settings.synth_usdc_token_address);
+  synthMarkets('SynthOPToken', settings.synth_op_token_address);
+  synthMarkets('SynthLINKToken', settings.synth_link_token_address);
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
@@ -179,8 +179,8 @@ async function run() {
   log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
 
-  log('Writing', `deployments/extras.json`);
-  await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
+  log('Writing', `deployments/settings.json`);
+  await fs.writeFile(`${__dirname}/deployments/settings.json`, JSON.stringify(settings, null, 2));
 
   await fs.writeFile(
     `${__dirname}/deployments/cannon.json`,

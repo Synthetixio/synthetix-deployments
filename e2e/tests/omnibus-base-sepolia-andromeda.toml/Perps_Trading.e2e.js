@@ -126,103 +126,103 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdate({
       wallet,
       marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').eth_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').btc_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 300,
-      settlementStrategyId: require('../../deployments/extras.json').snx_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').snx_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 400,
-      settlementStrategyId: require('../../deployments/extras.json').sol_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').sol_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 500,
-      settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').wif_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 600,
-      settlementStrategyId: require('../../deployments/extras.json').w_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').w_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 700,
-      settlementStrategyId: require('../../deployments/extras.json').ena_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').ena_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 800,
-      settlementStrategyId: require('../../deployments/extras.json').doge_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').doge_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 900,
-      settlementStrategyId: require('../../deployments/extras.json').avax_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').avax_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1000,
-      settlementStrategyId: require('../../deployments/extras.json').op_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').op_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1100,
-      settlementStrategyId: require('../../deployments/extras.json').ordi_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').ordi_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1200,
-      settlementStrategyId: require('../../deployments/extras.json').pepe_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').pepe_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1300,
-      settlementStrategyId: require('../../deployments/extras.json').rune_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').rune_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1400,
-      settlementStrategyId: require('../../deployments/extras.json').bonk_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').bonk_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1500,
-      settlementStrategyId: require('../../deployments/extras.json').ftm_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').ftm_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1600,
-      settlementStrategyId: require('../../deployments/extras.json').arb_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').arb_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1700,
-      settlementStrategyId: require('../../deployments/extras.json').matic_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').matic_pyth_settlement_strategy,
     });
     await doPriceUpdate({
       wallet,
       marketId: 1800,
-      settlementStrategyId: require('../../deployments/extras.json').bnb_pyth_settlement_strategy,
+      settlementStrategyId: require('../../deployments/settings.json').bnb_pyth_settlement_strategy,
     });
   });
 
   it('should increase max collateral for the test to 1_000_000_000_000', async () => {
     await configureMaximumMarketCollateral({
-      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      marketId: require('../../deployments/settings.json').synth_usdc_market_id,
       symbol: 'fUSDC',
       targetAmount: String(1_000_000_000_000),
     });
     await setSpotWrapper({
-      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      marketId: require('../../deployments/settings.json').synth_usdc_market_id,
       symbol: 'fUSDC',
       targetAmount: String(1_000_000_000_000),
     });
@@ -250,7 +250,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
     await swapToSusd({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      marketId: require('../../deployments/settings.json').synth_usdc_market_id,
       amount: 1_000_000,
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 1_000_000);
@@ -296,7 +296,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should open a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId =
-      require('../../deployments/extras.json').btc_pyth_settlement_strategy;
+      require('../../deployments/settings.json').btc_pyth_settlement_strategy;
 
     // We must sync timestamp of the fork before making time-sensitive operations
     await syncTime();
@@ -325,7 +325,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should close a short 0.01 BTC position', async () => {
     const marketId = 200;
     const settlementStrategyId =
-      require('../../deployments/extras.json').btc_pyth_settlement_strategy;
+      require('../../deployments/settings.json').btc_pyth_settlement_strategy;
 
     // We must sync timestamp of the fork before making time-sensitive operations
     await syncTime();
@@ -354,7 +354,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should revert when trade > Max Market Size', async () => {
     const marketId = 200;
     const settlementStrategyId =
-      require('../../deployments/extras.json').btc_pyth_settlement_strategy;
+      require('../../deployments/settings.json').btc_pyth_settlement_strategy;
     const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
     log({ marketId, maxMarketSize });
     try {

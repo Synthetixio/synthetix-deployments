@@ -98,7 +98,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const currentMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(
-          require('../../deployments/extras.json').synth_usdc_market_id
+          require('../../deployments/settings.json').synth_usdc_market_id
         )
       )
     );
@@ -116,7 +116,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const newMarketCollateral = parseFloat(
       ethers.utils.formatUnits(
         await CoreProxy.getMarketCollateralValue(
-          require('../../deployments/extras.json').synth_usdc_market_id
+          require('../../deployments/settings.json').synth_usdc_market_id
         )
       )
     );
