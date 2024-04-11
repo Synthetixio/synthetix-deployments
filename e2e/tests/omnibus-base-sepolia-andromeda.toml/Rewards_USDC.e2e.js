@@ -297,6 +297,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       marketId: 1700,
       settlementStrategyId: require('../../deployments/extras.json').matic_pyth_settlement_strategy,
     });
+    await doPriceUpdate({
+      wallet,
+      marketId: 1800,
+      settlementStrategyId: require('../../deployments/extras.json').bnb_pyth_settlement_strategy,
+    });
   });
 
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {

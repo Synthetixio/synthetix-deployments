@@ -87,6 +87,10 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/matic-invokes.toml",
     "tomls/oracles/pyth-matic.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/matic.toml",
+    # BNB
+    "tomls/omnibus-base-sepolia-andromeda/perps/bnb-invokes.toml",
+    "tomls/oracles/pyth-bnb.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/bnb.toml",
 ]
 
 [setting.commitmentPriceDelay]
