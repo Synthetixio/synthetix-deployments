@@ -1,5 +1,3 @@
-include = ["../../oracles/btc.toml", "../common/bigcap-settings.toml"]
-
 [setting.pythBtcFeedId]
 
 [setting.btcPerpsMarketId]

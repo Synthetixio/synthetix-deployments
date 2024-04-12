@@ -230,8 +230,12 @@ jobs:
         type: string
       preset:
         type: string
+      parallelism:
+        type: integer
+        default: 1
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    parallelism: << parameters.parallelism >>
     steps:
       - checkout
       - install-anvil
@@ -598,6 +602,7 @@ workflows:
 
       - fork-test:
           name: base-sepolia-andromeda
+          parallelism: 4
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -606,6 +611,7 @@ workflows:
 
       - fork-test:
           name: base-mainnet-andromeda
+          parallelism: 4
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -636,13 +642,13 @@ workflows:
       #          chain-id: 11155111
       #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
-      - fork-test:
-          name: polygon-mumbai
-          toml: omnibus-polygon-mumbai.toml
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 80001
-          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
+      #      - fork-test:
+      #          name: polygon-mumbai
+      #          toml: omnibus-polygon-mumbai.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "main"
+      #          chain-id: 80001
+      #          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: arbthetix-mainnet
@@ -652,11 +658,11 @@ workflows:
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #- fork-test-new:
+      #- fork-test:
       #    name: arbthetix-sepolia
       #    toml: omnibus-arbitrum-sepolia-arbthetix.toml
-      #    #package: "synthetix-omnibus:latest"
-      #    #preset: "arbthetix"
+      #    package: "synthetix-omnibus:latest"
+      #    preset: "arbthetix"
       #    chain-id: 421614
       #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
 
@@ -704,6 +710,20 @@ workflows:
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
+      - deployment-info:
+          name: docs-arbitrum-mainnet-arbthetix
+          package: "synthetix-omnibus:latest"
+          preset: "arbthetix"
+          chain-id: 42161
+          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      #- deployment-info:
+      #    name: docs-arbitrum-sepolia-arbthetix
+      #    package: "synthetix-omnibus:latest"
+      #    preset: "arbthetix"
+      #    chain-id: 421614
+      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+
   npm-package:
     when:
       or:
@@ -747,6 +767,20 @@ workflows:
           preset: "main"
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-arbitrum-mainnet-arbthetix
+          package: "synthetix-omnibus:latest"
+          preset: "arbthetix"
+          chain-id: 42161
+          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      #- npm-package:
+      #    name: npm-arbitrum-sepolia-arbthetix
+      #    package: "synthetix-omnibus:latest"
+      #    preset: "arbthetix"
+      #    chain-id: 421614
+      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
 
   preview:
     when:
@@ -796,3 +830,19 @@ workflows:
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - preview:
+          name: preview-arbitrum-mainnet-arbthetix
+          toml: omnibus-arbitrum-mainnet-arbthetix.toml
+          package: "synthetix-omnibus:latest"
+          preset: "arbthetix"
+          chain-id: 42161
+          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      #- preview:
+      #    name: preview-arbitrum-sepolia-arbthetix
+      #    toml: omnibus-arbitrum-sepolia-arbthetix.toml
+      #    package: "synthetix-omnibus:latest"
+      #    preset: "arbthetix"
+      #    chain-id: 421614
+      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY

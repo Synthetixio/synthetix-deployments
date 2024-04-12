@@ -142,9 +142,10 @@ async function run() {
   }
 
   // Extract all extras
-  Object.values(deployments?.state).forEach((step) =>
-    Object.assign(extras, step?.artifacts?.extras)
-  );
+  Object.values(deployments?.state).forEach((step) => {
+    Object.assign(extras, step?.artifacts?.settings);
+    Object.assign(extras, step?.artifacts?.extras);
+  });
 
   // Extract synth markets
   function synthMarkets(symbol, address) {
