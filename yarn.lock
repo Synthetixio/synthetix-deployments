@@ -1189,9 +1189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.12.1":
-  version: 2.12.1
-  resolution: "@usecannon/builder@npm:2.12.1"
+"@usecannon/builder@npm:2.12.2":
+  version: 2.12.2
+  resolution: "@usecannon/builder@npm:2.12.2"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1206,17 +1206,17 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.9.3"
     zod: "npm:^3.22.4"
-  checksum: 10/f5f44211e0cb18c866a1fadc6a128e8bc58afa0b4a48abf80b11bc2663134d5e60ecc5a08346186c6cb3e9dcc6f3209936bb0753115b44f156f20fc51c84c78a
+  checksum: 10/75d8a247ea5ed13cec3cdd06f9745debe54b8f5bf743b7bb206f92cd0d293b7a6a0e03536d4a32993943e3899f279da5950bacf40b848d09ba6fd5ece021de42
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.12.1":
-  version: 2.12.1
-  resolution: "@usecannon/cli@npm:2.12.1"
+"@usecannon/cli@npm:2.12.2":
+  version: 2.12.2
+  resolution: "@usecannon/cli@npm:2.12.2"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.12.1"
+    "@usecannon/builder": "npm:2.12.2"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1235,7 +1235,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/a021550cd396b5ab7b5082b837e0b152299c720efbd609554420e7f1bc9d23f1896099bf2440017d55e2e2b6997281467280efb9d6e1225272257c3bccad470f
+  checksum: 10/79acccd4ec43f6b9a8205c7b665b3896aa779b994e3d73d1ffc966226cc3134d4138851a351dba7d8cc8fb5fad9a91adccb742b845b54760016fa834118380f1
   languageName: node
   linkType: hard
 
@@ -4709,8 +4709,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.12.1"
-    "@usecannon/cli": "npm:2.12.1"
+    "@usecannon/builder": "npm:2.12.2"
+    "@usecannon/cli": "npm:2.12.2"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
