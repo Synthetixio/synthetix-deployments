@@ -45,8 +45,13 @@ async function syncTime() {
   }
 
   if (oldTimes.blockTimestamp > oldTimes.now) {
+    const interval = setInterval(() => {
+      const now = Math.floor(Date.now() / 1000);
+      log({ leftToWait: oldTimes.blockTimestamp - now });
+    }, 10_000);
     // We pumped up so many transactions so fast that block timestamp is ahead now. Can only wait it out
     await wait((oldTimes.blockTimestamp - oldTimes.now) * 1000);
+    clearInterval(interval);
   }
 
   const newTimes = await getTimes();

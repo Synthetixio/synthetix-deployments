@@ -602,7 +602,7 @@ workflows:
 
       - fork-test:
           name: base-sepolia-andromeda
-          parallelism: 2
+          parallelism: 4
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -611,7 +611,7 @@ workflows:
 
       - fork-test:
           name: base-mainnet-andromeda
-          parallelism: 2
+          parallelism: 4
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"

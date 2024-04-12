@@ -52,7 +52,7 @@
     "supports-color": "^8.1.1"
   },
   "mocha": {
-    "timeout": "2m",
+    "timeout": "5m",
     "recursive": true,
     "bail": true,
     "async-only": true,
