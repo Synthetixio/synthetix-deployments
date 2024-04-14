@@ -5,7 +5,7 @@ defaultValue = "0xeff7446475e218517566ea99e72a4abec2e1bd8498b43b7d8331e29dcb0593
 defaultValue = "600"
 
 [setting.perpsWSkewScale]
-defaultValue = "8750000"
+defaultValue = "26250000"
 
 [setting.perpsWMaxFundingVelocity]
 defaultValue = "36"

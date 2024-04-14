@@ -12,7 +12,7 @@ defaultValue = "<%= String(50_000) %>"
 defaultValue = "9"
 
 [setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0000"
 
 [setting.perpsBtcTakerFeeRatio]
 defaultValue = "0.0005"
