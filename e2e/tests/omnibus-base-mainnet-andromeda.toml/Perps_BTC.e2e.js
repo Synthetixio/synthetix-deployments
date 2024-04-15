@@ -149,10 +149,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(ethers.utils.formatEther(maxSize), 149);
   });
 
-  it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
+  it('should have 0 Maker fee, 0.0005 Taker fee', async () => {
     const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0002);
+    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0);
     assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0005);
   });
 
