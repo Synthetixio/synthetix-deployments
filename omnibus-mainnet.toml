@@ -7,6 +7,7 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
+		"tomls/markets/legacy.toml",
     # "tomls/oracles/eth.toml",
     # "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
@@ -21,6 +22,9 @@ defaultValue = "synthetix-spot-market:3.3.5"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.5"
+
+[setting.legacy_market_package]
+defaultValue = "synthetix-legacy-market:3.3.18"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -63,3 +67,15 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 
 [setting.ccip_token_pool]
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.legacyMarket.extras.marketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]

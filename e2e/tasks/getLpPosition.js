@@ -20,9 +20,28 @@ async function getLpPosition({ accountId, poolId, symbol }) {
     poolId,
     config.tokenAddress
   );
-  log({ accountId, poolId, symbol, positionCollateral });
+  const positionDebt = await CoreProxy.callStatic.getPositionDebt(
+    accountId,
+    poolId,
+    config.tokenAddress
+  );
+  let positionCratio = 0;
+  try {
+    let positionCratio = await CoreProxy.callStatic.getPositionCollateralRatio(
+      accountId,
+      poolId,
+      config.tokenAddress
+    );
+  } catch (err) {
+    log('could not compute cratio for account');
+  }
+  log({ accountId, poolId, symbol, positionCollateral, positionCratio, positionDebt });
 
-  return parseFloat(ethers.utils.formatUnits(positionCollateral));
+  return {
+    collateral: parseFloat(ethers.utils.formatUnits(positionCollateral)),
+    debt: parseFloat(ethers.utils.formatUnits(positionDebt)),
+    positionCratio: parseFloat(ethers.utils.formatUnits(positionCratio)),
+  };
 }
 
 module.exports = {

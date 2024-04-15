@@ -75,6 +75,8 @@ async function run() {
   const system = deployments.state['provision.system'].artifacts.imports.system;
   const contracts = {};
 
+  contracts.LegacyMarketProxy =
+    deployments.state['provision.legacyMarket'].artifacts.imports.legacyMarket.contracts.Proxy;
   contracts.CoreProxy = system.contracts.CoreProxy;
   contracts.AccountProxy = system.contracts.AccountProxy;
   contracts.USDProxy = system.contracts.USDProxy;
