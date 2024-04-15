@@ -5,13 +5,13 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 defaultValue = "100"
 
 [setting.perpsEthSkewScale]
-defaultValue = "500000"
+defaultValue = "350000"
 
 [setting.perpsEthMaxFundingVelocity]
 defaultValue = "9"
 
 [setting.perpsEthMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0000"
 
 [setting.perpsEthTakerFeeRatio]
 defaultValue = "0.0005"
