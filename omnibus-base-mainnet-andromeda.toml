@@ -44,6 +44,54 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/w-invokes.toml",
     "tomls/oracles/pyth-w.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/w.toml",
+    # ENA
+    "tomls/omnibus-base-mainnet-andromeda/perps/ena-invokes.toml",
+    "tomls/oracles/pyth-ena.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ena.toml",
+    # DOGE
+    "tomls/omnibus-base-mainnet-andromeda/perps/doge-invokes.toml",
+    "tomls/oracles/pyth-doge.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/doge.toml",
+    # AVAX
+    "tomls/omnibus-base-mainnet-andromeda/perps/avax-invokes.toml",
+    "tomls/oracles/pyth-avax.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/avax.toml",
+    # OP
+    "tomls/omnibus-base-mainnet-andromeda/perps/op-invokes.toml",
+    "tomls/oracles/pyth-op.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/op.toml",
+    # ORDI
+    "tomls/omnibus-base-mainnet-andromeda/perps/ordi-invokes.toml",
+    "tomls/oracles/pyth-ordi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ordi.toml",
+    # PEPE
+    "tomls/omnibus-base-mainnet-andromeda/perps/pepe-invokes.toml",
+    "tomls/oracles/pyth-pepe.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/pepe.toml",
+    # RUNE
+    "tomls/omnibus-base-mainnet-andromeda/perps/rune-invokes.toml",
+    "tomls/oracles/pyth-rune.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/rune.toml",
+    # BONK
+    "tomls/omnibus-base-mainnet-andromeda/perps/bonk-invokes.toml",
+    "tomls/oracles/pyth-bonk.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bonk.toml",
+    # FTM
+    "tomls/omnibus-base-mainnet-andromeda/perps/ftm-invokes.toml",
+    "tomls/oracles/pyth-ftm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ftm.toml",
+    # ARB
+    "tomls/omnibus-base-mainnet-andromeda/perps/arb-invokes.toml",
+    "tomls/oracles/pyth-arb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/arb.toml",
+    # MATIC
+    "tomls/omnibus-base-mainnet-andromeda/perps/matic-invokes.toml",
+    "tomls/oracles/pyth-matic.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/matic.toml",
+    # BNB
+    "tomls/omnibus-base-mainnet-andromeda/perps/bnb-invokes.toml",
+    "tomls/oracles/pyth-bnb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bnb.toml",
 ]
 
 [setting.commitmentPriceDelay]
