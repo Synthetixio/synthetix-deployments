@@ -11,7 +11,7 @@ defaultValue = "50000"
 defaultValue = "9"
 
 [setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0000"
+defaultValue = "0.000001"
 
 [setting.perpsBtcTakerFeeRatio]
 defaultValue = "0.0005"

@@ -12,7 +12,7 @@ defaultValue = "350000"
 defaultValue = "9"
 
 [setting.perpsEthMakerFeeRatio]
-defaultValue = "0.0000"
+defaultValue = "0.000001"
 
 [setting.perpsEthTakerFeeRatio]
 defaultValue = "0.0005"
