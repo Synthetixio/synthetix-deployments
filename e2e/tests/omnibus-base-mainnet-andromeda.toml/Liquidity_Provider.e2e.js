@@ -21,7 +21,7 @@ const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
 const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
@@ -171,41 +171,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // We must sync timestamp of the fork before making price updates
-    await syncTime();
-
-    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-    // so we send off a price update just to be safe
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 300,
-      settlementStrategyId: require('../../deployments/extras.json').snx_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 400,
-      settlementStrategyId: require('../../deployments/extras.json').sol_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 500,
-      settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 600,
-      settlementStrategyId: require('../../deployments/extras.json').w_pyth_settlement_strategy,
-    });
+    await doAllPriceUpdates({ wallet });
   });
 
   it('should delegate 9_000 sUSDC into the Spartan Council pool', async () => {
