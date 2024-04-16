@@ -199,7 +199,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(marketId);
 
     log({ skewScale, maxFundingVelocity });
-    assert.equal(Number(ethers.utils.formatEther(skewScale)), 500_000, 'skewScale');
+    assert.equal(Number(ethers.utils.formatEther(skewScale)), 350_000, 'skewScale');
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
@@ -215,10 +215,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(ethers.utils.formatEther(maxMarketValue), 18_000_000);
   });
 
-  it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
+  it('should have 0 Maker fee, 0.0005 Taker fee', async () => {
     const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0002);
+    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0);
     assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0005);
   });
 
