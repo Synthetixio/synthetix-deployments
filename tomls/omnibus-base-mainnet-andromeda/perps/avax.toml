@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsAvaxMaxMarketSize]
-defaultValue = "0"
+defaultValue = "130000"
 
 [setting.perpsAvaxMaxMarketValue]
-defaultValue = "0"
+defaultValue = "500000"
 
 [setting.perpsAvaxInitialMarginRatio]
 defaultValue = "9.08"

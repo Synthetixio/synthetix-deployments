@@ -23,7 +23,7 @@ defaultValue = "0"
 defaultValue = "0"
 
 [setting.perpsRuneInitialMarginRatio]
-defaultValue = "11.71"
+defaultValue = "5.39"
 
 [setting.perpsRuneMinimumInitialMarginRatio]
 defaultValue = "0.05"
