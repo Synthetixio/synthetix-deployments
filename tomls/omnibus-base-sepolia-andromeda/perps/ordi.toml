@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsOrdiMaxMarketSize]
-defaultValue = "3700"
+defaultValue = "15000"
 
 [setting.perpsOrdiMaxMarketValue]
-defaultValue = "250000"
+defaultValue = "500000"
 
 [setting.perpsOrdiInitialMarginRatio]
 defaultValue = "3.02"

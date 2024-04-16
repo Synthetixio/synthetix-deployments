@@ -10,6 +10,8 @@
 
 [setting.perpsEthMaxMarketSize]
 
+[setting.perpsEthMaxMarketValue]
+
 [setting.perpsEthInitialMarginRatio]
 
 [setting.perpsEthMaintenanceMarginFraction]

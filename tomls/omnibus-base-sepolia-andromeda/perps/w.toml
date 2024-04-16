@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsWMaxMarketSize]
-defaultValue = "250000"
+defaultValue = "508000"
 
 [setting.perpsWMaxMarketValue]
-defaultValue = "250000"
+defaultValue = "500000"
 
 [setting.perpsWInitialMarginRatio]
 defaultValue = "15.39"

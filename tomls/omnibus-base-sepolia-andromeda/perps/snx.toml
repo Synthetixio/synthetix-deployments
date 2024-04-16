@@ -17,19 +17,19 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsSnxMaxMarketSize]
-defaultValue = "200000"
+defaultValue = "127000"
 
 [setting.perpsSnxMaxMarketValue]
-defaultValue = "1000000"
+defaultValue = "500000"
 
 [setting.perpsSnxInitialMarginRatio]
-defaultValue = "3.94"
+defaultValue = "2.82"
 
 [setting.perpsSnxMinimumInitialMarginRatio]
 defaultValue = "0.05"
 
 [setting.perpsSnxMaintenanceMarginScalar]
-defaultValue = "0.4"
+defaultValue = "0.39"
 
 [setting.perpsSnxFlagRewardRatioD18]
 defaultValue = "0.0003"
