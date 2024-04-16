@@ -19,6 +19,11 @@ const ERC7412_ABI = [
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
 async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
+  if (!settlementStrategyId) {
+    log({ message: 'SKIP', marketId, settlementStrategyId });
+    return;
+  }
+
   const { feedId, priceVerificationContract } = await getPerpsSettlementStrategy({
     marketId,
     settlementStrategyId,
