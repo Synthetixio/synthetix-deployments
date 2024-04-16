@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsAvaxMaxMarketSize]
-defaultValue = "130000"
+defaultValue = "19000"
 
 [setting.perpsAvaxMaxMarketValue]
 defaultValue = "500000"
