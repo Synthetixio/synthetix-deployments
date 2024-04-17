@@ -109,10 +109,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
-  it('should have 300 BTC Max Market Size', async () => {
+  it('should have 149 BTC Max Market Size', async () => {
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 300);
+    assert.equal(ethers.utils.formatEther(maxSize), 149);
   });
 
   it('should have 18M USD Max Market Value', async () => {
