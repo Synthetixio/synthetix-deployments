@@ -73,12 +73,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 300 BTC', async () => {
+  it('should have max open interest 149 BTC', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 300);
+    assert.equal(maxOpenInterest, 149);
   });
 
   it('should make a price update', async () => {
