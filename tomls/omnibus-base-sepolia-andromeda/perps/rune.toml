@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsRuneMaxMarketSize]
-defaultValue = "0"
+defaultValue = "94300"
 
 [setting.perpsRuneMaxMarketValue]
-defaultValue = "0"
+defaultValue = "500000"
 
 [setting.perpsRuneInitialMarginRatio]
 defaultValue = "5.39"
