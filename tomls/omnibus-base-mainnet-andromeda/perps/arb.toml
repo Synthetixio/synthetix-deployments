@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsArbMaxMarketSize]
-defaultValue = "0"
+defaultValue = "565000"
 
 [setting.perpsArbMaxMarketValue]
-defaultValue = "0"
+defaultValue = "500000"
 
 [setting.perpsArbInitialMarginRatio]
 defaultValue = "4.16"
