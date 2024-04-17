@@ -115,10 +115,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(ethers.utils.formatEther(maxSize), 149);
   });
 
-  it('should have 18M USD Max Market Value', async () => {
+  it('should have 5M USD Max Market Value', async () => {
     const maxMarketValue = await PerpsMarketProxy.getMaxMarketValue(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxMarketValue), 18_000_000);
+    assert.equal(ethers.utils.formatEther(maxMarketValue), 5_000_000);
   });
 
   it('should have 0.000001 Maker fee, 0.0005 Taker fee', async () => {
