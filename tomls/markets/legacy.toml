@@ -3,9 +3,9 @@
 [provision.legacyMarket]
 source = "<%= settings.legacy_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
-options.owner = "<%= settings.deployer %>"
-options.pool_owner = "<%= settings.deployer %>"
-options.v2x_package = "synthetix:2.100.0"
+options.owner = "<%= settings.pdao %>"
+options.pool_owner = "<%= settings.pdao %>"
+options.v2x_package = "synthetix:2.101.2"
 options.v3_package = "<%= settings.snx_package %>"
 options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
