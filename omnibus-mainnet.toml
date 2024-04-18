@@ -15,16 +15,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.5"
+defaultValue = "synthetix:3.3.15"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.5"
+defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.5"
+defaultValue = "synthetix-perps-market:3.3.15"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.3.18"
+defaultValue = "synthetix-legacy-market:3.3.4"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -76,6 +76,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= imports.legacyMarket.extras.marketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]

@@ -34,10 +34,11 @@ exports.run = function () {
       provider
     );
 
+    let accountId = 80800;
     for (const account of accounts) {
       log('migrate account', account);
       const wallet = provider.getSigner(await LegacyMarketProxy.owner());
-      await migrateLegacyMarket({ account, toAccountId, wallet });
+      await migrateLegacyMarket({ account, toAccountId: accountId++, wallet });
     }
   });
 
