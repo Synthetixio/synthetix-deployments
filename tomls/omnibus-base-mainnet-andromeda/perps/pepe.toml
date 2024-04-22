@@ -5,7 +5,7 @@ defaultValue = "0xd69731a2e74ac1ce884fc3890f7ee324b6deb66147055249568869ed700882
 defaultValue = "1200"
 
 [setting.perpsPepeSkewScale]
-defaultValue = "8400000000000"
+defaultValue = "<%= String(8_400_000_000_000) %>"
 
 [setting.perpsPepeMaxFundingVelocity]
 defaultValue = "36"
@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsPepeMaxMarketSize]
-defaultValue = "360000000000"
+defaultValue = "<%= String(360_000_000_000) %>"
 
 [setting.perpsPepeMaxMarketValue]
-defaultValue = "1500000"
+defaultValue = "<%= String(1_500_000) %>"
 
 [setting.perpsPepeInitialMarginRatio]
 defaultValue = "4.88"
