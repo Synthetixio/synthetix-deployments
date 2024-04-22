@@ -5,7 +5,7 @@ defaultValue = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c
 defaultValue = "1800"
 
 [setting.perpsBnbSkewScale]
-defaultValue = "250000"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsBnbMaxFundingVelocity]
 defaultValue = "36"
@@ -20,7 +20,7 @@ defaultValue = "0.0010"
 defaultValue = "1200"
 
 [setting.perpsBnbMaxMarketValue]
-defaultValue = "500000"
+defaultValue = "<%= String(500_000) %>"
 
 [setting.perpsBnbInitialMarginRatio]
 defaultValue = "10.72"
