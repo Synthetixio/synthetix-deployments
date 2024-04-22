@@ -5,7 +5,7 @@ defaultValue = "0xb7910ba7322db020416fcac28b48c01212fd9cc8fbcbaf7d30477ed8605f6b
 defaultValue = "700"
 
 [setting.perpsEnaSkewScale]
-defaultValue = "<%= String(25_500_000) %>"
+defaultValue = "25500000"
 
 [setting.perpsEnaMaxFundingVelocity]
 defaultValue = "36"
@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsEnaMaxMarketSize]
-defaultValue = "<%= String(676_000) %>"
+defaultValue = "676000"
 
 [setting.perpsEnaMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "500000"
 
 [setting.perpsEnaInitialMarginRatio]
 defaultValue = "3.46"

@@ -5,7 +5,7 @@ defaultValue = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61baacb
 defaultValue = "1300"
 
 [setting.perpsRuneSkewScale]
-defaultValue = "<%= String(2_000_000) %>"
+defaultValue = "2000000"
 
 [setting.perpsRuneMaxFundingVelocity]
 defaultValue = "36"
@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsRuneMaxMarketSize]
-defaultValue = "<%= String(94_300) %>"
+defaultValue = "94300"
 
 [setting.perpsRuneMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "500000"
 
 [setting.perpsRuneInitialMarginRatio]
 defaultValue = "5.39"

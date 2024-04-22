@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0008"
 
 [setting.perpsSolMaxMarketSize]
-defaultValue = "<%= String(5_000) %>"
+defaultValue = "5000"
 
 [setting.perpsSolMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "500000"
 
 [setting.perpsSolInitialMarginRatio]
 defaultValue = "24.39"
