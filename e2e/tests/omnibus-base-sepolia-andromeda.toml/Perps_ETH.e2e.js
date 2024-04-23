@@ -6,7 +6,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { doAllPriceUpdatesSepolia } = require('../../tasks/doAllPriceUpdatesSepolia');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdatesSepolia');
 const { syncTime } = require('../../tasks/syncTime');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
@@ -82,7 +82,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    await doAllPriceUpdatesSepolia({ wallet });
+    await doAllPriceUpdates({ wallet });
   });
 
   it('should get market summary with ERC7412', async () => {
