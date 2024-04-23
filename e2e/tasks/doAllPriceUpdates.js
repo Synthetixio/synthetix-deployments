@@ -100,6 +100,76 @@ async function doAllPriceUpdates({ wallet }) {
     marketId: 1800,
     settlementStrategyId: require('../deployments/extras.json').bnb_pyth_settlement_strategy,
   });
+  await doPriceUpdate({
+    wallet,
+    marketId: 1900,
+    settlementStrategyId: require('../deployments/extras.json').link_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2000,
+    settlementStrategyId: require('../deployments/extras.json').pendle_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2100,
+    settlementStrategyId: require('../deployments/extras.json').inj_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2200,
+    settlementStrategyId: require('../deployments/extras.json').gmx_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2300,
+    settlementStrategyId: require('../deployments/extras.json').tia_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2400,
+    settlementStrategyId: require('../deployments/extras.json').sui_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2500,
+    settlementStrategyId: require('../deployments/extras.json').ton_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2600,
+    settlementStrategyId: require('../deployments/extras.json').arkm_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2700,
+    settlementStrategyId: require('../deployments/extras.json').gala_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2800,
+    settlementStrategyId: require('../deployments/extras.json').tao_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 2900,
+    settlementStrategyId: require('../deployments/extras.json').bome_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 3000,
+    settlementStrategyId: require('../deployments/extras.json').ethfi_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 3100,
+    settlementStrategyId: require('../deployments/extras.json').stx_pyth_settlement_strategy,
+  });
+  await doPriceUpdate({
+    wallet,
+    marketId: 3200,
+    settlementStrategyId: require('../deployments/extras.json').axl_pyth_settlement_strategy,
+  });
 }
 
 module.exports = {

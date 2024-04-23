@@ -22,7 +22,7 @@ const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdatesSepolia');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {

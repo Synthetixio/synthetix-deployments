@@ -6,7 +6,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdatesSepolia');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {

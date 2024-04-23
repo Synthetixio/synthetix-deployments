@@ -22,7 +22,7 @@ const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdatesSepolia');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
