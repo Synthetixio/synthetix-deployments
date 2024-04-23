@@ -5,7 +5,7 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 defaultValue = "100"
 
 [setting.perpsEthSkewScale]
-defaultValue = "350000"
+defaultValue = "<%= String(350_000) %>"
 
 [setting.perpsEthMaxFundingVelocity]
 defaultValue = "9"
@@ -17,10 +17,10 @@ defaultValue = "0.000001"
 defaultValue = "0.0005"
 
 [setting.perpsEthMaxMarketSize]
-defaultValue = "2777"
+defaultValue = "<%= String(5_000) %>"
 
 [setting.perpsEthMaxMarketValue]
-defaultValue = "<%= String(7_000_000) %>"
+defaultValue = "<%= String(10_000_000) %>"
 
 [setting.perpsEthInitialMarginRatio]
 defaultValue = "8.92"
@@ -44,7 +44,7 @@ defaultValue = "30"
 defaultValue = "50"
 
 [setting.perpsEthLockedOiRatio]
-defaultValue = "0.5"
+defaultValue = "0.25"
 
 [setting.perpsEthSynthMaxCollateralAmount]
 defaultValue = "<%= MaxUint256 %>"
@@ -54,3 +54,4 @@ defaultValue = "0.0005"
 
 [setting.perpsEthEndorsedLiquidator]
 defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
