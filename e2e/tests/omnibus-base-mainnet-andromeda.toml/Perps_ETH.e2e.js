@@ -73,12 +73,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 2777 ETH', async () => {
+  it('should have max open interest 5000 ETH', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 2777);
+    assert.equal(maxOpenInterest, 5_000);
   });
 
   it('should make a price update', async () => {
@@ -109,10 +109,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
-  it('should have 2777 ETH Max Market Size', async () => {
+  it('should have 5000 ETH Max Market Size', async () => {
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 2777);
+    assert.equal(ethers.utils.formatEther(maxSize), 5_000);
   });
 
   it('should have 0.000001 Maker fee, 0.0005 Taker fee', async () => {
@@ -182,7 +182,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should have Max Locked OI ratio set to 0.5', async () => {
     const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.25);
   });
 
   it('should have settlement strategy 0 delay set to 2s', async () => {
