@@ -73,12 +73,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 2_777 ETH', async () => {
+  it('should have max open interest 5_000 ETH', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 2_777);
+    assert.equal(maxOpenInterest, 5_000);
   });
 
   it('should make a price update', async () => {
@@ -109,16 +109,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
-  it('should have 2_777 ETH Max Market Size', async () => {
+  it('should have 5_000 ETH Max Market Size', async () => {
     const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxMarketSize), 2_777);
+    assert.equal(ethers.utils.formatEther(maxMarketSize), 5_000);
   });
 
-  it('should have 7M USD Max Market Value', async () => {
+  it('should have 10M USD Max Market Value', async () => {
     const maxMarketValue = await PerpsMarketProxy.getMaxMarketValue(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxMarketValue), 7_000_000);
+    assert.equal(ethers.utils.formatEther(maxMarketValue), 10_000_000);
   });
 
   it('should have 0.000001 Maker fee, 0.0005 Taker fee', async () => {
@@ -185,10 +185,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should have Max Locked OI ratio set to 0.5', async () => {
+  it('should have Max Locked OI ratio set to 0.25', async () => {
     const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.25);
   });
 
   it('should have settlement strategy 0 delay set to 2s', async () => {
