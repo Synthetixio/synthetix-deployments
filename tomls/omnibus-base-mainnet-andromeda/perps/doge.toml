@@ -5,7 +5,7 @@ defaultValue = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d2
 defaultValue = "800"
 
 [setting.perpsDogeSkewScale]
-defaultValue = "789000000"
+defaultValue = "<%= String(789_000_000) %>"
 
 [setting.perpsDogeMaxFundingVelocity]
 defaultValue = "36"
@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsDogeMaxMarketSize]
-defaultValue = "4200000"
+defaultValue = "<%= String(4_200_000) %>"
 
 [setting.perpsDogeMaxMarketValue]
-defaultValue = "500000"
+defaultValue = "<%= String(500_000) %>"
 
 [setting.perpsDogeInitialMarginRatio]
 defaultValue = "6.9"
