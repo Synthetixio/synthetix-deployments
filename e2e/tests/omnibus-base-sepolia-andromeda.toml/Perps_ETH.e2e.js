@@ -185,10 +185,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should have Max Locked OI ratio set to 0.5', async () => {
+  it('should have Max Locked OI ratio set to 0.25', async () => {
     const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.25);
   });
 
   it('should have settlement strategy 0 delay set to 2s', async () => {
