@@ -22,7 +22,7 @@ const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { swapToSusd } = require('../../tasks/swapToSusd');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
+const { doAllPriceUpdatesSepoliaSepolia } = require('../../tasks/doAllPriceUpdatesSepoliaSepolia');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
@@ -194,7 +194,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    await doAllPriceUpdates({ wallet });
+    await doAllPriceUpdatesSepolia({ wallet });
   });
 
   it(`should delegate ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000} sUSDC into the Spartan Council pool`, async () => {
