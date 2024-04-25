@@ -23,7 +23,7 @@ defaultValue = "<%= String(60_000) %>"
 defaultValue = "<%= String(1_000_000) %>"
 
 [setting.perpsLinkInitialMarginRatio]
-defaultValue = "27.95"
+defaultValue = "6.73"
 
 [setting.perpsLinkMinimumInitialMarginRatio]
 defaultValue = "0.02"

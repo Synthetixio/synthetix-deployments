@@ -23,7 +23,7 @@ defaultValue = "<%= String(40_000) %>"
 defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsTonInitialMarginRatio]
-defaultValue = "12.36"
+defaultValue = "2.89"
 
 [setting.perpsTonMinimumInitialMarginRatio]
 defaultValue = "0.05"

@@ -23,7 +23,7 @@ defaultValue = "<%= String(60_000) %>"
 defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsEthfiInitialMarginRatio]
-defaultValue = "9.23"
+defaultValue = "2.12"
 
 [setting.perpsEthfiMinimumInitialMarginRatio]
 defaultValue = "0.05"
