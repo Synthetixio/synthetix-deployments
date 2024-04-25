@@ -23,7 +23,7 @@ defaultValue = "<%= String(5_000_000) %>"
 defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsGalaInitialMarginRatio]
-defaultValue = "5.5"
+defaultValue = "1.29"
 
 [setting.perpsGalaMinimumInitialMarginRatio]
 defaultValue = "0.05"

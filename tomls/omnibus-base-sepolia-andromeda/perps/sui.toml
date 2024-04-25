@@ -23,7 +23,7 @@ defaultValue = "<%= String(180_000) %>"
 defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsSuiInitialMarginRatio]
-defaultValue = "8.75"
+defaultValue = "1.96"
 
 [setting.perpsSuiMinimumInitialMarginRatio]
 defaultValue = "0.05"
