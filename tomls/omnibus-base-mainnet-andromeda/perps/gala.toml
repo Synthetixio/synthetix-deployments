@@ -17,13 +17,13 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsGalaMaxMarketSize]
-defaultValue = "0"
+defaultValue = "<%= String(5_000_000) %>"
 
 [setting.perpsGalaMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsGalaInitialMarginRatio]
-defaultValue = "5.5"
+defaultValue = "1.29"
 
 [setting.perpsGalaMinimumInitialMarginRatio]
 defaultValue = "0.05"

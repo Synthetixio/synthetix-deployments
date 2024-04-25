@@ -17,19 +17,19 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsTaoMaxMarketSize]
-defaultValue = "0"
+defaultValue = "500"
 
 [setting.perpsTaoMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsTaoInitialMarginRatio]
-defaultValue = "25.45"
+defaultValue = "2.89"
 
 [setting.perpsTaoMinimumInitialMarginRatio]
 defaultValue = "0.05"
 
 [setting.perpsTaoMaintenanceMarginScalar]
-defaultValue = "0.34"
+defaultValue = "0.37"
 
 [setting.perpsTaoFlagRewardRatioD18]
 defaultValue = "0.0003"

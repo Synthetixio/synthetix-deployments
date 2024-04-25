@@ -17,13 +17,13 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsArkmMaxMarketSize]
-defaultValue = "0"
+defaultValue = "<%= String(100_000) %>"
 
 [setting.perpsArkmMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsArkmInitialMarginRatio]
-defaultValue = "18.99"
+defaultValue = "4.43"
 
 [setting.perpsArkmMinimumInitialMarginRatio]
 defaultValue = "0.05"

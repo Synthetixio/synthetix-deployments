@@ -17,13 +17,13 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsStxMaxMarketSize]
-defaultValue = "0"
+defaultValue = "<%= String(80_000) %>"
 
 [setting.perpsStxMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsStxInitialMarginRatio]
-defaultValue = "11.67"
+defaultValue = "2.61"
 
 [setting.perpsStxMinimumInitialMarginRatio]
 defaultValue = "0.05"

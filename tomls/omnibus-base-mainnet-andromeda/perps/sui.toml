@@ -17,13 +17,13 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsSuiMaxMarketSize]
-defaultValue = "0"
+defaultValue = "<%= String(180_000) %>"
 
 [setting.perpsSuiMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsSuiInitialMarginRatio]
-defaultValue = "8.75"
+defaultValue = "1.96"
 
 [setting.perpsSuiMinimumInitialMarginRatio]
 defaultValue = "0.05"
