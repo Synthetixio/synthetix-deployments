@@ -20,7 +20,7 @@ defaultValue = "0.0010"
 defaultValue = "<%= String(20_000_000) %>"
 
 [setting.perpsBomeMaxMarketValue]
-defaultValue = "<%= String(250_000) %>"
+defaultValue = "<%= String(500_000) %>"
 
 [setting.perpsBomeInitialMarginRatio]
 defaultValue = "1.44"
