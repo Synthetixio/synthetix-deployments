@@ -17,13 +17,13 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsAxlMaxMarketSize]
-defaultValue = "0"
+defaultValue = "<%= String(200_000) %>"
 
 [setting.perpsAxlMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsAxlInitialMarginRatio]
-defaultValue = "12.95"
+defaultValue = "2.85"
 
 [setting.perpsAxlMinimumInitialMarginRatio]
 defaultValue = "0.05"

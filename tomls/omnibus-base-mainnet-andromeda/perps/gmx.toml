@@ -5,7 +5,7 @@ defaultValue = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9ed
 defaultValue = "2200"
 
 [setting.perpsGmxSkewScale]
-defaultValue = "<%= String(250_000) %>"
+defaultValue = "<%= String(125_000) %>"
 
 [setting.perpsGmxMaxFundingVelocity]
 defaultValue = "36"
@@ -17,13 +17,13 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsGmxMaxMarketSize]
-defaultValue = "0"
+defaultValue = "<%= String(10_000) %>"
 
 [setting.perpsGmxMaxMarketValue]
-defaultValue = "0"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsGmxInitialMarginRatio]
-defaultValue = "5.55"
+defaultValue = "1.27"
 
 [setting.perpsGmxMinimumInitialMarginRatio]
 defaultValue = "0.05"
