@@ -925,13 +925,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.33.0":
-  version: 1.33.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.33.0"
+"@pythnetwork/pyth-evm-js@npm:^1.44.0":
+  version: 1.44.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.44.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:*"
     buffer: "npm:^6.0.3"
-  checksum: 10/c2cbc8f5ea3a9f603eed74a8384a933989d7e1c71cafbd848b0bc83a3213d17c3a312697472f9efc8ed8c448dab94cae9bde93aaad0fdfe4c07b24a052f6e5a2
+  checksum: 10/58bb6808e4328ac9e6dccaa0117e9f1fb008b1e158158ed94442b6ca424db2a1149b4f5e0f46f64fdf701db15d86b242d56b5f005f9a60300e18e4aea6cb325b
   languageName: node
   linkType: hard
 
@@ -1189,9 +1189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.12.3":
-  version: 2.12.3
-  resolution: "@usecannon/builder@npm:2.12.3"
+"@usecannon/builder@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@usecannon/builder@npm:2.13.0"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1204,19 +1204,19 @@ __metadata:
     promise-events: "npm:^0.2.4"
     typedoc-plugin-markdown: "npm:^3.17.1"
     typestub-ipfs-only-hash: "npm:^4.0.0"
-    viem: "npm:^2.9.3"
+    viem: "npm:^2.9.26"
     zod: "npm:^3.22.4"
-  checksum: 10/1727ee9a269adc87def730453766d16234f9b07b95b1af5640757c2c27918cdfa2f06090c455132444457e965bd8c5b44437161515d712eabeb952f53abd5a3e
+  checksum: 10/7a73624009771e70856ca1b16977b0bf09a790ea1d997e1ef68c9ccdf8e8b3b878ecef60b0f9150189c1ee594174a30ca56548f06ab5a3e2917a04d7a82d8725
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.12.3":
-  version: 2.12.3
-  resolution: "@usecannon/cli@npm:2.12.3"
+"@usecannon/cli@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@usecannon/cli@npm:2.13.0"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
     "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.12.3"
+    "@usecannon/builder": "npm:2.13.0"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1230,12 +1230,12 @@ __metadata:
     table: "npm:^6.8.0"
     tildify: "npm:2.0.0"
     untildify: "npm:^4.0.0"
-    viem: "npm:^2.9.3"
+    viem: "npm:^2.9.26"
     znv: "npm:^0.4.0"
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/21e67d9019d3c9b814ef9d51dadeeb8795b7e10f482725c4670bae5a5594516a3609aa256b84edc93cb2e44c2f59f92e9e641ce967301c453a37c3aedfbbc31c
+  checksum: 10/6f56cd69e42b27213b213c069778bd0413197745128f9d775fab72a0a5db0d1e7014f6439f77d5c9c4721a875fe41c4135eaa2260cd10c2bcc8e1eec92623ddd
   languageName: node
   linkType: hard
 
@@ -3580,9 +3580,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mocha@npm:^10.0.0, mocha@npm:^10.3.0":
-  version: 10.3.0
-  resolution: "mocha@npm:10.3.0"
+"mocha@npm:^10.0.0, mocha@npm:^10.4.0":
+  version: 10.4.0
+  resolution: "mocha@npm:10.4.0"
   dependencies:
     ansi-colors: "npm:4.1.1"
     browser-stdout: "npm:1.3.1"
@@ -3607,7 +3607,7 @@ __metadata:
   bin:
     _mocha: bin/_mocha
     mocha: bin/mocha.js
-  checksum: 10/8b30b3fdb3f365fca7e069fce732e13db4192e1bf8f49e63ec67a3b7857c41cbcd162289ad22178db6ef405fb251b8a0dbb54e942d08c72abf45e1ec3fcdd052
+  checksum: 10/0147b2a86c8a3b134b3bda949006aa5f2b08db606b9394e38eb3fa0d97dd2f54f06eb4afb270d4ae08aa6fb7674282737ed556b9a8bc407f9b8488380852eca4
   languageName: node
   linkType: hard
 
@@ -3802,12 +3802,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"numbro@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "numbro@npm:2.4.0"
+"numbro@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "numbro@npm:2.5.0"
   dependencies:
     bignumber.js: "npm:^8 || ^9"
-  checksum: 10/4d7b6d00482d051aaf38947018ce20ac0c2c48ae74ce4dbf6dba7de344bf36289f20cf4cf1346fb8726ac1b7320418c219e788db036dbdf1105a2b8bdb9d7129
+  checksum: 10/50408c826dded5b5a2a5511ea8af204af4a426e9b89cac367dd115ead813c1da35448fb7b38b1c80b2edae762b59e7ca7d74414f6eb6d74685665e295f2c8f9a
   languageName: node
   linkType: hard
 
@@ -4708,14 +4708,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.33.0"
-    "@usecannon/builder": "npm:2.12.3"
-    "@usecannon/cli": "npm:2.12.3"
+    "@pythnetwork/pyth-evm-js": "npm:^1.44.0"
+    "@usecannon/builder": "npm:2.13.0"
+    "@usecannon/cli": "npm:2.13.0"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
-    mocha: "npm:^10.3.0"
-    numbro: "npm:^2.4.0"
+    mocha: "npm:^10.4.0"
+    numbro: "npm:^2.5.0"
     prettier: "npm:^3.2.5"
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
@@ -5040,9 +5040,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.9.3":
-  version: 2.9.6
-  resolution: "viem@npm:2.9.6"
+"viem@npm:^2.9.26":
+  version: 2.9.28
+  resolution: "viem@npm:2.9.28"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.0"
     "@noble/curves": "npm:1.2.0"
@@ -5057,7 +5057,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/e96f96c757a38dd6f61aa486592738fb8bff30cc30c9836ea9267fe76d0efc9bec828b3743d39e2c5593f4c5b99563787f7cfa9dfd308733ba9160ca67a4b847
+  checksum: 10/4fed278db6de4f938e42f6951a7202a8846362042dce3e947e4c739ec36632e096589f9413a4be63768c6be35ffd4d248c7dc84985ad88faf7f774efcf0aeb8b
   languageName: node
   linkType: hard
 
