@@ -460,6 +460,62 @@ jobs:
           branch_base: en
           commit_message: "Update deployment info for << parameters.chain-id >>-<< parameters.preset >>"
 
+  deployments-dashboard:
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+
+      - run: mkdir -p ./e2e/cannon
+
+      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 8453   --json > ./e2e/cannon/8453-andromeda.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 84532  --json > ./e2e/cannon/84532-andromeda.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 1      --json > ./e2e/cannon/1-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 10     --json > ./e2e/cannon/10-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@arbthetix   --chain-id 42161  --json > ./e2e/cannon/42161-arbthetix.json
+
+      - store_artifacts:
+          path: "./e2e/cannon"
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - run:
+          name: "Generate docs"
+          environment:
+            DEBUG: "e2e:*"
+          command: |
+            mkdir -p docs/for-developers
+            node e2e/dashboard > docs/for-developers/deployment-info.md
+
+      - store_artifacts:
+          path: "./docs"
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5ZmBzDxKOn7bPLBV59jNb++t6inHRCI9k0TwULJWYxA" # Synthetix-Gitbook-v3
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - run:
+          working_directory: ~/
+          name: "Checkout synthetix-gitbook-v3"
+          command: |
+            git clone git@github.com:Synthetixio/Synthetix-Gitbook-v3.git --verbose --depth 1 --no-tags --single-branch synthetix-gitbook-v3
+
+      - run:
+          name: "Update synthetix-gitbook-v3"
+          command: |
+            mkdir -p ~/synthetix-gitbook-v3/for-developers/deployment-info
+            cp docs/for-developers/deployment-info.md ~/synthetix-gitbook-v3/for-developers/deployment-info.md
+
+      - github-pr:
+          working_directory: "~/synthetix-gitbook-v3"
+          repo_slug: "Synthetixio/Synthetix-Gitbook-v3"
+          branch_head: "deployments-dashboard"
+          branch_base: en
+          commit_message: "Update deployments dashboard"
+
   npm-package:
     parameters:
       package:
@@ -594,7 +650,7 @@ workflows:
   tests:
     unless:
       or:
-        #- equal: ["docgen", << pipeline.git.branch >>]
+        - equal: ["docgen", << pipeline.git.branch >>]
         #- equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
         - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
     jobs:
@@ -675,6 +731,8 @@ workflows:
         - equal: ["docgen", << pipeline.git.branch >>]
 
     jobs:
+      - deployments-dashboard
+
       - deployment-info:
           name: docs-base-sepolia-andromeda
           package: "synthetix-omnibus:latest"
