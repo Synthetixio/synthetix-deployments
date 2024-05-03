@@ -1,0 +1,27 @@
+[setting.susdc_issuance_ratio]
+defaultValue = "<%= parseEther('1.2') %>"
+
+[setting.susdc_liquidation_ratio]
+defaultValue = "<%= parseEther('1.05') %>"
+
+[setting.susdc_liquidation_reward]
+defaultValue = "<%= parseEther('0.005') %>"
+
+[setting.susdc_min_delegation]
+defaultValue = "<%= parseEther('100') %>"
+
+[setting.usdc_address]
+
+[invoke.configure_susdc_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_susdc_collateral.args]]
+tokenAddress = "<%= extras.synth_usdc_token_address %>"
+oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= settings.susdc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.susdc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.susdc_liquidation_reward %>"
+minDelegationD18 = "<%= settings.susdc_min_delegation %>"
+depositingEnabled = true

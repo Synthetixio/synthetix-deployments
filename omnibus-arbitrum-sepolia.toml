@@ -1,0 +1,135 @@
+name = "synthetix-omnibus"
+version = "1"
+description = "Arbitrum deployment"
+preset = "main"
+include = [
+    "tomls/omnibus-arbitrum-mainnet/permissions.toml", # Deployment-specific permissions
+    "tomls/core.toml",                                 # Provision the core system
+    "tomls/settings.toml",                             # Apply minimum liquidity ratio and withdrawal timeout
+    "tomls/permissions.toml",                          # Allow deployer to create pools
+    "tomls/permit-deniers.toml",                       # Add feature flag deniers to perps and core systems
+    "tomls/pools/spartan-council.toml",                # Create Spartan Council Pool
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
+    #"tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
+    #"tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/referrers.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/global.toml",              # Global perps settings
+    "tomls/omnibus-arbitrum-sepolia/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/omnibus-arbitrum-sepolia/perps/feeCollector.toml",
+
+    # BTC
+    "tomls/omnibus-arbitrum-sepolia/perps/btc-invokes.toml",
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/btc.toml",
+    # ETH
+    "tomls/omnibus-arbitrum-sepolia/perps/eth-invokes.toml",
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/eth.toml",
+    # ARB
+    "tomls/oracles/pyth-arb.toml",
+    "tomls/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/arb.toml",
+]
+
+[setting.commitmentPriceDelay]
+defaultValue = "2"
+
+[setting.bigCapSettlementDelay]
+defaultValue = "2"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.15"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "arbitrum-gas-price-oracle:3.3.16"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.15"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.19"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.15" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
+
+[setting.pyth_price_verification_address]
+# https://docs.pyth.network/documentation/pythnet-price-feeds/evm
+defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.15"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('2.00') %>" # 200% min market collateralization
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400" # 1 day
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.weth_address]
+defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
+
+[setting.arb_address]
+defaultValue = "0xc275B23C035a9d4EC8867b47f55427E0bDCe14cB"
+
+[setting.usdc_address]
+defaultValue = "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+
+[setting.dai_address]
+defaultValue = "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+
+[setting.pythEthFeedId]
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.pythArbFeedId]
+defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.pythUsdcFeedId]
+defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.pythDaiFeedId]
+defaultValue = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+
+[invoke.setUsdTokenName]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "initOrUpgradeToken"
+args = [
+    "0x555344546f6b656e000000000000000000000000000000000000000000000000",
+    "DollarWifHat",
+    "USDh",
+    18,
+    "<%= imports.system.contracts.USDRouter.address %>",
+]
