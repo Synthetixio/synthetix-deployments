@@ -270,3 +270,25 @@ args = [
     "<%= extras.synth_usdc_token_address %>",
     "<%= imports.sccp_313_spartan_council_pool_usdc_rewards.contracts.RewardsDistributor.address %>",
 ]
+
+[provision.v2_spartan_council_pool_snx_rewards]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= settings.sc_pool_id %>"
+options.collateralType = "<%= extras.synth_usdc_token_address %>"
+options.payoutToken = "<%= settings.snx_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool SNX Rewards V2"
+
+[invoke.register_v2_spartan_council_pool_snx_rewards]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.v2_spartan_council_pool_snx_rewards.contracts.RewardsDistributor.address %>",
+]
