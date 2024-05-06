@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsTaoMaxMarketSize]
-defaultValue = "500"
+defaultValue = "<%= String(2_000) %>"
 
 [setting.perpsTaoMaxMarketValue]
 defaultValue = "<%= String(250_000) %>"
