@@ -23,7 +23,7 @@ defaultValue = "<%= String(5_000) %>"
 defaultValue = "<%= String(10_000_000) %>"
 
 [setting.perpsEthInitialMarginRatio]
-defaultValue = "8.92"
+defaultValue = "1.16"
 
 [setting.perpsEthMinimumInitialMarginRatio]
 defaultValue = "0.02"

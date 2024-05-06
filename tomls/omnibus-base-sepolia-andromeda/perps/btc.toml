@@ -23,7 +23,7 @@ defaultValue = "230"
 defaultValue = "<%= String(10_000_000) %>"
 
 [setting.perpsBtcInitialMarginRatio]
-defaultValue = "13.35"
+defaultValue = "1.54"
 
 [setting.perpsBtcMaintenanceMarginScalar]
 defaultValue = "0.28"
