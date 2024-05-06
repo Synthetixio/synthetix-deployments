@@ -1,0 +1,25 @@
+[setting.usdc_issuance_ratio]
+defaultValue = "<%= parseEther('1.2') %>"
+
+[setting.usdc_liquidation_ratio]
+defaultValue = "<%= parseEther('1.05') %>"
+
+[setting.usdc_liquidation_reward]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.usdc_min_delegation]
+defaultValue = "<%= parseEther('100') %>"
+
+[invoke.configure_usdc_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_usdc_collateral.args]]
+tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+oracleNodeId = "<%= extras.usdc_oracle_id %>"
+issuanceRatioD18 = "<%= settings.usdc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.usdc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.usdc_liquidation_reward %>"
+minDelegationD18 = "<%= settings.usdc_min_delegation %>"
+depositingEnabled = true

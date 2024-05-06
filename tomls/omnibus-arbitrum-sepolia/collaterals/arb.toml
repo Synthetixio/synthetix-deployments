@@ -1,0 +1,25 @@
+[setting.arb_issuance_ratio]
+defaultValue = "<%= parseEther('3.00') %>"
+
+[setting.arb_liquidation_ratio]
+defaultValue = "<%= parseEther('1.50') %>"
+
+[setting.arb_liquidation_reward]
+defaultValue = "<%= parseEther('0.5') %>"
+
+[setting.arb_min_delegation]
+defaultValue = "<%= parseEther('50') %>"
+
+[invoke.configure_arb_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_arb_collateral.args]]
+tokenAddress = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
+oracleNodeId = "<%= extras.arb_oracle_id %>"
+issuanceRatioD18 = "<%= settings.arb_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.arb_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.arb_liquidation_reward %>"
+minDelegationD18 = "<%= settings.arb_min_delegation %>"
+depositingEnabled = true

@@ -1,0 +1,25 @@
+[setting.dai_issuance_ratio]
+defaultValue = "<%= parseEther('1.2') %>"
+
+[setting.dai_liquidation_ratio]
+defaultValue = "<%= parseEther('1.05') %>"
+
+[setting.dai_liquidation_reward]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.dai_min_delegation]
+defaultValue = "<%= parseEther('100') %>"
+
+[invoke.configure_dai_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_dai_collateral.args]]
+tokenAddress = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
+oracleNodeId = "<%= extras.dai_oracle_id %>"
+issuanceRatioD18 = "<%= settings.dai_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.dai_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.dai_liquidation_reward %>"
+minDelegationD18 = "<%= settings.dai_min_delegation %>"
+depositingEnabled = true
