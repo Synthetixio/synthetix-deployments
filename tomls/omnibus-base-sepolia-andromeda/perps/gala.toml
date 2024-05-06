@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsGalaMaxMarketSize]
-defaultValue = "<%= String(5_000_000) %>"
+defaultValue = "<%= String(20_000_000) %>"
 
 [setting.perpsGalaMaxMarketValue]
 defaultValue = "<%= String(250_000) %>"

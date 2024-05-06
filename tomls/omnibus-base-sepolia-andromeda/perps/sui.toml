@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsSuiMaxMarketSize]
-defaultValue = "<%= String(180_000) %>"
+defaultValue = "<%= String(400_000) %>"
 
 [setting.perpsSuiMaxMarketValue]
 defaultValue = "<%= String(250_000) %>"

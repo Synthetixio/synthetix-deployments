@@ -23,7 +23,7 @@ defaultValue = "<%= String(30_000) %>"
 defaultValue = "<%= String(3_000_000) %>"
 
 [setting.perpsSolInitialMarginRatio]
-defaultValue = "24.39"
+defaultValue = "4.9"
 
 [setting.perpsSolMinimumInitialMarginRatio]
 defaultValue = "0.02"

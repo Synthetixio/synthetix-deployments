@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsTiaMaxMarketSize]
-defaultValue = "<%= String(20_000) %>"
+defaultValue = "<%= String(100_000) %>"
 
 [setting.perpsTiaMaxMarketValue]
 defaultValue = "<%= String(250_000) %>"

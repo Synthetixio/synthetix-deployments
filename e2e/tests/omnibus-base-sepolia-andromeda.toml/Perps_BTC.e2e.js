@@ -134,7 +134,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       Number(ethers.utils.formatEther(params.initialMarginRatioD18)),
-      13.35,
+      1.54,
       'initialMarginRatioD18'
     );
     assert.equal(
