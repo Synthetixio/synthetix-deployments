@@ -20,7 +20,7 @@ defaultValue = "0.0010"
 defaultValue = "<%= String(2_000) %>"
 
 [setting.perpsTaoMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsTaoInitialMarginRatio]
 defaultValue = "2.89"
