@@ -1,5 +1,5 @@
 function addrLink(chainId, address) {
-  switch (chainId) {
+  switch (Number(chainId)) {
     case 1:
       return `[${address}](https://etherscan.io/address/${address})`;
     case 11155111:
@@ -18,7 +18,7 @@ function addrLink(chainId, address) {
 }
 
 function addrHtmlLink(chainId, address) {
-  switch (chainId) {
+  switch (Number(chainId)) {
     case 1:
       return `<a href="https://etherscan.io/address/${address}"><code>${address}</code></a>`;
     case 11155111:
