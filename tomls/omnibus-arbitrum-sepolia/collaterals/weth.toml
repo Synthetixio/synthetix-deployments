@@ -16,7 +16,7 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_weth_collateral.args]]
-tokenAddress = "<%= imports.weth_mock_collateral.contracts.MintableToken.address %>"
+tokenAddress = "<%= settings.weth_address %>"
 oracleNodeId = "<%= extras.weth_oracle_id %>"
 issuanceRatioD18 = "<%= settings.weth_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.weth_liquidation_ratio %>"

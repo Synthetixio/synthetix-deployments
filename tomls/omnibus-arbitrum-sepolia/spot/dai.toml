@@ -1,9 +1,3 @@
-[setting.synthDaiMaxMarketCollateral]
-defaultValue = "<%= parseEther(String(500_000)) %>"
-
-[setting.spotStrictStalenessTolerance]
-defaultValue = "60"
-
 [invoke.createDaiSynth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
@@ -47,3 +41,40 @@ args = [
     "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
     "<%= settings.synthDaiMaxMarketCollateral %>",
 ]
+
+[invoke.addSynthSettlementStrategyDai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "0", priceDeviationTolerance = "0", disabled = false },
+]
+extra.synth_dai_settlement_strategy_id.event = "SettlementStrategyAdded"
+extra.synth_dai_settlement_strategy_id.arg = 1
+
+[invoke.setSynthSettlementStrategyDai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "setSettlementStrategy"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= extras.synth_dai_settlement_strategy_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pythDaiFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= settings.settlementMinimumUsdExchangeAmount %>", maxRoundingLoss = "<%= settings.settlementMaxRoundingLoss %>", priceDeviationTolerance = "<%= settings.priceDeviationTolerance %>", disabled = false },
+]
+
+[invoke.setSynthAsyncFixedFeeDai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "setAsyncFixedFee"
+args = ["<%= extras.synth_dai_market_id %>", "<%= settings.synthDaiAsyncFixedFee %>"]
+
+[invoke.setSynthSkewScaleDai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "setMarketSkewScale"
+args = ["<%= extras.synth_dai_market_id %>", "<%= settings.synthDaiSkewScale %>"]

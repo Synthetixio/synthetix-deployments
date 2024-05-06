@@ -130,15 +130,13 @@ async function run() {
   mintableToken('snx_mock_collateral');
   mintableToken('usdc_mock_collateral');
   mintableToken('mintableToken');
+  mintableToken('dai_mock_collateral');
+  mintableToken('arb_mock_collateral');
 
-  const usdc = deployments?.def?.setting?.usdc_address?.defaultValue;
-  if (usdc) {
-    contracts['USDCToken'] = { address: usdc, abi: ERC20Abi };
-  }
-
-  const snx = deployments?.def?.setting?.snx_address?.defaultValue;
-  if (snx) {
-    contracts['SNXToken'] = { address: snx, abi: ERC20Abi };
+  function erc20(contractName, address) {
+    if (address) {
+      contracts[contractName] = { address, abi: ERC20Abi };
+    }
   }
 
   // Extract all extras
@@ -147,18 +145,19 @@ async function run() {
     Object.assign(extras, step?.artifacts?.extras);
   });
 
-  // Extract synth markets
-  function synthMarkets(symbol, address) {
-    if (address) {
-      contracts[symbol] = { address, abi: ERC20Abi };
-    }
-  }
-  synthMarkets('SynthBTCToken', extras.synth_btc_token_address);
-  synthMarkets('SynthETHToken', extras.synth_eth_token_address);
-  synthMarkets('SynthSNXToken', extras.synth_snx_token_address);
-  synthMarkets('SynthUSDCToken', extras.synth_usdc_token_address);
-  synthMarkets('SynthOPToken', extras.synth_op_token_address);
-  synthMarkets('SynthLINKToken', extras.synth_link_token_address);
+  erc20('USDCToken', extras?.usdc_address);
+  erc20('SNXToken', extras?.snx_address);
+  erc20('ARBToken', extras?.arb_address);
+  erc20('DAIToken', extras?.dai_address);
+  erc20('WETHToken', extras?.weth_address);
+
+  erc20('SynthBTCToken', extras.synth_btc_token_address);
+  erc20('SynthETHToken', extras.synth_eth_token_address);
+  erc20('SynthSNXToken', extras.synth_snx_token_address);
+  erc20('SynthUSDCToken', extras.synth_usdc_token_address);
+  erc20('SynthOPToken', extras.synth_op_token_address);
+  erc20('SynthLINKToken', extras.synth_link_token_address);
+  erc20('SynthDAIToken', extras.synth_dai_token_address);
 
   Object.assign(meta, {
     contracts: Object.fromEntries(

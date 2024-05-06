@@ -44,11 +44,16 @@ defaultValue = "synthetix-spot-market:3.3.15"
 defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.buyback_snx_package]
-defaultValue = "buyback-snx:3.3.15" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
+defaultValue = "buyback-snx:3.3.15"
+description = "Do not update! This package isn't upgradeable. A version change will deploy a new contract."
 
 [setting.pyth_price_verification_address]
-# https://docs.pyth.network/documentation/pythnet-price-feeds/evm
 defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
+description = "https://docs.pyth.network/documentation/pythnet-price-feeds/evm"
+
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+description = "Pyth settlement strategy config"
 
 [provision.pyth_erc7412_wrapper]
 source = "pyth-erc7412-wrapper:3.3.15"
@@ -63,7 +68,8 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "<%= parseEther('2.00') %>" # 200% min market collateralization
+defaultValue = "<%= parseEther('2.00') %>"
+description = "200% min market collateralization"
 
 [setting.account_timeout_withdraw]
 defaultValue = "<%= String(1 * 24 * 3600) %>"
@@ -74,52 +80,75 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.settlementReward]
+defaultValue = "1"
+
+[setting.settlementMinimumUsdExchangeAmount]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.settlementMaxRoundingLoss]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.priceDeviationTolerance]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.spotStrictStalenessTolerance]
+defaultValue = "60"
+
 [setting.usdc_address]
-defaultValue = "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+defaultValue = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
+description = "https://developers.circle.com/stablecoins/docs/usdc-on-test-networks"
 
 [setting.pythUsdcFeedId]
 defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
+[setting.synthUsdcMaxMarketCollateral]
+defaultValue = "<%= parseEther(String(500_000)) %>"
+
+[setting.synthUsdcAsyncFixedFee]
+defaultValue = "<%= parseEther('0.1') %>" # FIXME
+
+[setting.synthUsdcSkewScale]
+defaultValue = "<%= parseEther(String(100_000)) %>" # FIXME
+
 [setting.dai_address]
-defaultValue = "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+defaultValue = "0x"
+description = "Using mock for testnet"
 
 [setting.pythDaiFeedId]
 defaultValue = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
+[setting.synthDaiMaxMarketCollateral]
+defaultValue = "<%= parseEther(String(500_000)) %>"
+
+[setting.synthDaiAsyncFixedFee]
+defaultValue = "<%= parseEther('0.1') %>" # FIXME
+
+[setting.synthDaiSkewScale]
+defaultValue = "<%= parseEther(String(100_000)) %>" # FIXME
+
 [setting.weth_address]
 defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
+description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
 
 [setting.pythEthFeedId]
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.arb_address]
-defaultValue = "0xc275B23C035a9d4EC8867b47f55427E0bDCe14cB"
+defaultValue = "0x"
+description = "Using mock for testnet"
 
 [setting.pythArbFeedId]
 defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[provision.usdc_mock_collateral]
-source = "mintable-token:1.8"
-options.name = "Fake USD Coin"
-options.symbol = "fUSDC"
-options.owner = "<%= settings.owner %>"
-options.decimals = "6"
-
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"
 options.name = "Fake DAI Coin"
 options.symbol = "fDAI"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
-[provision.weth_mock_collateral]
-source = "mintable-token:1.8"
-options.name = "Fake wETH Coin"
-options.symbol = "fwETH"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 

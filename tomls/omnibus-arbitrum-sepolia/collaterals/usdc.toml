@@ -16,7 +16,7 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_usdc_collateral.args]]
-tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+tokenAddress = "<%= settings.usdc_address %>"
 oracleNodeId = "<%= extras.usdc_oracle_id %>"
 issuanceRatioD18 = "<%= settings.usdc_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.usdc_liquidation_ratio %>"
