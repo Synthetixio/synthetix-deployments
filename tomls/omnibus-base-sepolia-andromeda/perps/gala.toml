@@ -20,7 +20,7 @@ defaultValue = "0.0010"
 defaultValue = "<%= String(20_000_000) %>"
 
 [setting.perpsGalaMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsGalaInitialMarginRatio]
 defaultValue = "1.29"

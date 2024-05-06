@@ -20,7 +20,7 @@ defaultValue = "0.0010"
 defaultValue = "<%= String(200_000) %>"
 
 [setting.perpsTonMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsTonInitialMarginRatio]
 defaultValue = "2.89"

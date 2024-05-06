@@ -20,7 +20,7 @@ defaultValue = "0.0010"
 defaultValue = "<%= String(100_000) %>"
 
 [setting.perpsTiaMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "<%= String(250_000) %>"
 
 [setting.perpsTiaInitialMarginRatio]
 defaultValue = "2.24"
