@@ -21,8 +21,8 @@ fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
 func = "updatePriceData"
 args = [
     "<%= extras.synth_usdc_market_id %>",
-    "<%= imports.system.extras.const_one_oracle_id %>",
-    "<%= imports.system.extras.const_one_oracle_id %>",
+    "<%= extras.usdc_oracle_id %>",
+    "<%= extras.usdc_oracle_id %>",
     "<%= settings.spotStrictStalenessTolerance %>",
 ]
 
@@ -47,24 +47,3 @@ args = [
     "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
     "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
-
-[invoke.configure_usdc_collateral]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral"  # "args" see below in the multiline block
-
-[[invoke.configure_usdc_collateral.args]]
-tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
-oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
-issuanceRatioD18 = "<%= MaxUint256 %>"
-liquidationRatioD18 = "<%= parseEther('1.05') %>"
-liquidationRewardD18 = "<%= parseEther('0.005') %>"
-minDelegationD18 = "<%= parseEther('100') %>"
-depositingEnabled = true
-
-[provision.usdc_mock_collateral]
-source = "mintable-token:1.8"
-options.name = "Fake USD Coin"
-options.symbol = "fUSDC"
-options.owner = "<%= settings.owner %>"
-options.decimals = "6"
