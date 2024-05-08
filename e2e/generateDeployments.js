@@ -145,8 +145,8 @@ async function run() {
     Object.assign(extras, step?.artifacts?.extras);
   });
 
-  erc20('USDCToken', extras?.usdc_address);
-  erc20('SNXToken', extras?.snx_address);
+  erc20('USDCToken', extras?.usdc_address ?? deployments?.def?.setting?.usdc_address?.defaultValue);
+  erc20('SNXToken', extras?.snx_address ?? deployments?.def?.setting?.snx_address?.defaultValue);
   erc20('ARBToken', extras?.arb_address);
   erc20('DAIToken', extras?.dai_address);
   erc20('WETHToken', extras?.weth_address);
