@@ -10,12 +10,12 @@ defaultValue = "<%= parseEther('1') %>"
 [setting.usdc_min_delegation]
 defaultValue = "<%= parseEther('100') %>"
 
-[invoke.configure_usdc_collateral]
+[invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.configure_usdc_collateral.args]]
+[[invoke.CoreProxy_configureCollateral_usdc.args]]
 tokenAddress = "<%= settings.usdc_address %>"
 oracleNodeId = "<%= extras.usdc_oracle_id %>"
 issuanceRatioD18 = "<%= settings.usdc_issuance_ratio %>"

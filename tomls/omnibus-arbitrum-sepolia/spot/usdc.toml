@@ -1,4 +1,4 @@
-[invoke.createUsdcSynth]
+[invoke.SpotMarketProxy_createSynth_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
@@ -8,7 +8,7 @@ extra.synth_usdc_market_id.arg = 0
 extra.synth_usdc_token_address.event = "SynthRegistered"
 extra.synth_usdc_token_address.arg = 1
 
-[invoke.setSynthPriceUsdc]
+[invoke.SpotMarketProxy_updatePriceData_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
@@ -17,10 +17,10 @@ args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= extras.usdc_oracle_id %>",
     "<%= extras.usdc_oracle_id %>",
-    "<%= settings.spotStrictStalenessTolerance %>",
+    "<%= settings.usdc_staleness_tolerance %>",
 ]
 
-[invoke.setSynthMaxMarketCollateralUsdc]
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
@@ -28,10 +28,10 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= settings.usdc_address %>",
-    "<%= settings.synthUsdcMaxMarketCollateral %>",
+    "<%= settings.synth_usdc_max_market_collateral %>",
 ]
 
-[invoke.configureSynthWrapperUsdc]
+[invoke.SpotMarketProxy_setWrapper_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
@@ -39,10 +39,10 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= settings.usdc_address %>",
-    "<%= settings.synthUsdcMaxMarketCollateral %>",
+    "<%= settings.synth_usdc_max_market_collateral %>",
 ]
 
-[invoke.addSynthSettlementStrategyUsdc]
+[invoke.SpotMarketProxy_addSettlementStrategy_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
@@ -54,7 +54,7 @@ args = [
 extra.synth_usdc_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_usdc_settlement_strategy_id.arg = 1
 
-[invoke.setSynthSettlementStrategyUsdc]
+[invoke.SpotMarketProxy_setSettlementStrategy_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
@@ -62,19 +62,5 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= extras.synth_usdc_settlement_strategy_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pythUsdcFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= settings.settlementMinimumUsdExchangeAmount %>", maxRoundingLoss = "<%= settings.settlementMaxRoundingLoss %>", priceDeviationTolerance = "<%= settings.priceDeviationTolerance %>", disabled = false },
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pyth_feed_id_usdc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
 ]
-
-[invoke.setSynthAsyncFixedFeeUsdc]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
-func = "setAsyncFixedFee"
-args = ["<%= extras.synth_usdc_market_id %>", "<%= settings.synthUsdcAsyncFixedFee %>"]
-
-[invoke.setSynthSkewScaleUsdc]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
-func = "setMarketSkewScale"
-args = ["<%= extras.synth_usdc_market_id %>", "<%= settings.synthUsdcSkewScale %>"]

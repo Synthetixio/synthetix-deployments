@@ -10,12 +10,12 @@ defaultValue = "<%= parseEther('0.5') %>"
 [setting.arb_min_delegation]
 defaultValue = "<%= parseEther('50') %>"
 
-[invoke.configure_arb_collateral]
+[invoke.CoreProxy_configureCollateral_arb]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.configure_arb_collateral.args]]
+[[invoke.CoreProxy_configureCollateral_arb.args]]
 tokenAddress = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
 oracleNodeId = "<%= extras.arb_oracle_id %>"
 issuanceRatioD18 = "<%= settings.arb_issuance_ratio %>"

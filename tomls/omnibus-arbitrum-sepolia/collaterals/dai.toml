@@ -10,12 +10,12 @@ defaultValue = "<%= parseEther('1') %>"
 [setting.dai_min_delegation]
 defaultValue = "<%= parseEther('100') %>"
 
-[invoke.configure_dai_collateral]
+[invoke.CoreProxy_configureCollateral_dai]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.configure_dai_collateral.args]]
+[[invoke.CoreProxy_configureCollateral_dai.args]]
 tokenAddress = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
 oracleNodeId = "<%= extras.dai_oracle_id %>"
 issuanceRatioD18 = "<%= settings.dai_issuance_ratio %>"

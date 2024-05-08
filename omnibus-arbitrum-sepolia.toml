@@ -3,16 +3,13 @@ version = "1"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
-    "tomls/omnibus-arbitrum-sepolia/permissions.toml",
-
     "tomls/core.toml",
-    "tomls/settings.toml",
-    "tomls/permissions.toml",
-    "tomls/permit-deniers.toml",
-    "tomls/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
-    "tomls/markets/common/bigcap-settings.toml",
+    "tomls/permit-deniers.toml",
+
+    "tomls/omnibus-arbitrum-sepolia/permissions.toml",
+    "tomls/omnibus-arbitrum-sepolia/pools/spartan-council.toml",
 
     # USDC
     "tomls/oracles/pyth-usdc.toml",
@@ -24,12 +21,6 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
 ]
-
-[setting.commitmentPriceDelay]
-defaultValue = "2"
-
-[setting.bigCapSettlementDelay]
-defaultValue = "2"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.15"
@@ -51,7 +42,7 @@ description = "Do not update! This package isn't upgradeable. A version change w
 defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
 description = "https://docs.pyth.network/documentation/pythnet-price-feeds/evm"
 
-[setting.pythFeedUrl]
+[setting.pyth_feed_url]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
 description = "Pyth settlement strategy config"
 
@@ -71,69 +62,86 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 defaultValue = "<%= parseEther('2.00') %>"
 description = "200% min market collateralization"
 
-[setting.account_timeout_withdraw]
-defaultValue = "<%= String(1 * 24 * 3600) %>"
+[invoke.CoreProxy_setMinLiquidityRatio]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setMinLiquidityRatio(uint256)"
+args = ["<%= settings.minimum_liquidity_ratio %>"]
 
-[setting.sc_pool_id]
+[setting.account_withdraw_timeout]
+defaultValue = "<%= hexZeroPad(hexlify(parseInt(1 * 24 * 3600)), 32) %>"
+
+[invoke.CoreProxy_setConfig_accountTimeoutWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= formatBytes32String('accountTimeoutWithdraw') %>",
+    "<%= settings.account_withdraw_timeout %>",
+]
+
+[setting.spartan_council_pool_id_setting]
 defaultValue = "1"
 
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[setting.settlementReward]
-defaultValue = "1"
+[setting.big_cap_default_staleness_tolerance]
+defaultValue = "3600"
 
-[setting.settlementMinimumUsdExchangeAmount]
+[setting.big_cap_settlement_window_duration]
+defaultValue = "60"
+
+[setting.big_cap_settlement_delay]
+defaultValue = "2"
+
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('0.5') %>"
+
+[setting.settlement_minimum_usd_exchange_amount]
 defaultValue = "<%= parseEther('0.000001') %>"
 
-[setting.settlementMaxRoundingLoss]
+[setting.settlement_max_rounding_loss]
 defaultValue = "<%= parseEther('0.000001') %>"
 
-[setting.priceDeviationTolerance]
+[setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.spotStrictStalenessTolerance]
-defaultValue = "60"
+[setting.usdc_staleness_tolerance]
+defaultValue = "<%= String(1 * 3600) %>"
+description = "1 hour"
+
+[setting.dai_staleness_tolerance]
+defaultValue = "<%= String(1 * 3600) %>"
+description = "1 hour"
 
 [setting.usdc_address]
 defaultValue = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
 description = "https://developers.circle.com/stablecoins/docs/usdc-on-test-networks"
 
-[setting.pythUsdcFeedId]
+[setting.pyth_feed_id_usdc]
 defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[setting.synthUsdcMaxMarketCollateral]
+[setting.synth_usdc_max_market_collateral]
 defaultValue = "<%= parseEther(String(500_000)) %>"
-
-[setting.synthUsdcAsyncFixedFee]
-defaultValue = "<%= parseEther('0.1') %>" # FIXME
-
-[setting.synthUsdcSkewScale]
-defaultValue = "<%= parseEther(String(100_000)) %>" # FIXME
 
 [setting.dai_address]
 defaultValue = "0x"
 description = "Using mock for testnet"
 
-[setting.pythDaiFeedId]
+[setting.pyth_feed_id_dai]
 defaultValue = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[setting.synthDaiMaxMarketCollateral]
+[setting.synth_dai_max_market_collateral]
 defaultValue = "<%= parseEther(String(500_000)) %>"
-
-[setting.synthDaiAsyncFixedFee]
-defaultValue = "<%= parseEther('0.1') %>" # FIXME
-
-[setting.synthDaiSkewScale]
-defaultValue = "<%= parseEther(String(100_000)) %>" # FIXME
 
 [setting.weth_address]
 defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
 description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
 
-[setting.pythEthFeedId]
+[setting.pyth_feed_id_eth]
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
@@ -141,7 +149,7 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 defaultValue = "0x"
 description = "Using mock for testnet"
 
-[setting.pythArbFeedId]
+[setting.pyth_feed_id_arb]
 defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
@@ -159,13 +167,13 @@ options.symbol = "fARB"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[invoke.setScPoolConfig]
+[invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "setPoolConfiguration"
 args = [
-    "<%= settings.sc_pool_id %>",
+    "<%= extras.spartan_council_pool_id %>",
     [
         { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
@@ -173,7 +181,7 @@ args = [
     ],
 ]
 
-[invoke.setUsdTokenName]
+[invoke.CoreProxy_initOrUpgradeToken_DollarWifHat]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "initOrUpgradeToken"

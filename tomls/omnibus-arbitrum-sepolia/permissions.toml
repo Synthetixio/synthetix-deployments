@@ -1,83 +1,89 @@
-[invoke.enable_feature_createAccount]
+[invoke.CoreProxy_setFeatureFlagAllowAll_createAccount]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('createAccount') %>", true]
 
-[invoke.enable_feature_deposit]
+[invoke.CoreProxy_setFeatureFlagAllowAll_deposit]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('deposit') %>", true]
 
-[invoke.enable_feature_withdraw]
+[invoke.CoreProxy_setFeatureFlagAllowAll_withdraw]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('withdraw') %>", true]
 
-[invoke.enable_feature_mintUsd]
+[invoke.CoreProxy_setFeatureFlagAllowAll_mintUsd]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('mintUsd') %>", true]
 
-[invoke.enable_feature_burnUsd]
+[invoke.CoreProxy_setFeatureFlagAllowAll_burnUsd]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('burnUsd') %>", true]
 
-[invoke.enable_feature_liquidate]
+[invoke.CoreProxy_setFeatureFlagAllowAll_liquidate]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('liquidate') %>", true]
 
-[invoke.enable_feature_liquidateVault]
+[invoke.CoreProxy_setFeatureFlagAllowAll_liquidateVault]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('liquidateVault') %>", true]
 
-[invoke.enable_feature_depositMarketCollateral]
+[invoke.CoreProxy_setFeatureFlagAllowAll_depositMarketCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('depositMarketCollateral') %>", false]
 
-[invoke.enable_feature_withdrawMarketCollateral]
+[invoke.CoreProxy_setFeatureFlagAllowAll_withdrawMarketCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", false]
 
-[invoke.enable_feature_depositMarketUsd]
+[invoke.CoreProxy_setFeatureFlagAllowAll_depositMarketUsd]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('depositMarketUsd') %>", false]
 
-[invoke.enable_feature_withdrawMarketUsd]
+[invoke.CoreProxy_setFeatureFlagAllowAll_withdrawMarketUsd]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('withdrawMarketUsd') %>", false]
 
-[invoke.enable_feature_claimRewards]
+[invoke.CoreProxy_setFeatureFlagAllowAll_claimRewards]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('claimRewards') %>", true]
 
-[invoke.enable_feature_delegateCollateral]
+[invoke.CoreProxy_setFeatureFlagAllowAll_delegateCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('delegateCollateral') %>", true]
 
-[invoke.enable_feature_perpsSystem]
+[invoke.CoreProxy_setFeatureFlagAllowAll_perpsSystem]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('perpsSystem') %>", false]
+
+[invoke.CoreProxy_addToFeatureFlagAllowlist_createPool_deployer]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createPool') %>", "<%= settings.deployer %>"]

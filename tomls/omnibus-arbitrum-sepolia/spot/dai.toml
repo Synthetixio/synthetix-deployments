@@ -1,4 +1,4 @@
-[invoke.createDaiSynth]
+[invoke.SpotMarketProxy_createSynth_dai]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
@@ -8,7 +8,7 @@ extra.synth_dai_market_id.arg = 0
 extra.synth_dai_token_address.event = "SynthRegistered"
 extra.synth_dai_token_address.arg = 1
 
-[invoke.setSynthPriceDai]
+[invoke.SpotMarketProxy_updatePriceData_dai]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_dai_market_id %>"]
@@ -17,10 +17,10 @@ args = [
     "<%= extras.synth_dai_market_id %>",
     "<%= extras.dai_oracle_id %>",
     "<%= extras.dai_oracle_id %>",
-    "<%= settings.spotStrictStalenessTolerance %>",
+    "<%= settings.dai_staleness_tolerance %>",
 ]
 
-[invoke.setSynthMaxMarketCollateralDai]
+[invoke.CoreProxy_configureMaximumMarketCollateral_dai]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
@@ -28,10 +28,10 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_dai_market_id %>",
     "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
-    "<%= settings.synthDaiMaxMarketCollateral %>",
+    "<%= settings.synth_dai_max_market_collateral %>",
 ]
 
-[invoke.configureSynthWrapperDai]
+[invoke.SpotMarketProxy_setWrapper_dai]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_dai_market_id %>"]
@@ -39,10 +39,10 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_dai_market_id %>",
     "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
-    "<%= settings.synthDaiMaxMarketCollateral %>",
+    "<%= settings.synth_dai_max_market_collateral %>",
 ]
 
-[invoke.addSynthSettlementStrategyDai]
+[invoke.SpotMarketProxy_addSettlementStrategy_dai]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_dai_market_id %>"]
@@ -54,7 +54,7 @@ args = [
 extra.synth_dai_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_dai_settlement_strategy_id.arg = 1
 
-[invoke.setSynthSettlementStrategyDai]
+[invoke.SpotMarketProxy_setSettlementStrategy_dai]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_dai_market_id %>"]
@@ -62,19 +62,5 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_dai_market_id %>",
     "<%= extras.synth_dai_settlement_strategy_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pythDaiFeedId %>", url = "<%= settings.pythFeedUrl %>", settlementReward = 0, minimumUsdExchangeAmount = "<%= settings.settlementMinimumUsdExchangeAmount %>", maxRoundingLoss = "<%= settings.settlementMaxRoundingLoss %>", priceDeviationTolerance = "<%= settings.priceDeviationTolerance %>", disabled = false },
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pyth_feed_id_dai %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
 ]
-
-[invoke.setSynthAsyncFixedFeeDai]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_dai_market_id %>"]
-func = "setAsyncFixedFee"
-args = ["<%= extras.synth_dai_market_id %>", "<%= settings.synthDaiAsyncFixedFee %>"]
-
-[invoke.setSynthSkewScaleDai]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_dai_market_id %>"]
-func = "setMarketSkewScale"
-args = ["<%= extras.synth_dai_market_id %>", "<%= settings.synthDaiSkewScale %>"]

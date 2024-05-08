@@ -10,12 +10,12 @@ defaultValue = "<%= parseEther('0.005') %>"
 [setting.weth_min_delegation]
 defaultValue = "<%= parseEther('0.01') %>"
 
-[invoke.configure_weth_collateral]
+[invoke.CoreProxy_configureCollateral_weth]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.configure_weth_collateral.args]]
+[[invoke.CoreProxy_configureCollateral_weth.args]]
 tokenAddress = "<%= settings.weth_address %>"
 oracleNodeId = "<%= extras.weth_oracle_id %>"
 issuanceRatioD18 = "<%= settings.weth_issuance_ratio %>"
