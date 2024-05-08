@@ -8,7 +8,7 @@ defaultValue = "<%= parseEther('1.05') %>"
 defaultValue = "<%= parseEther('1') %>"
 
 [setting.usdc_min_delegation]
-defaultValue = "<%= parseEther('100') %>"
+defaultValue = "<%= '100000000' %>"
 
 [invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]
