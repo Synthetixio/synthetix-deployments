@@ -1,0 +1,66 @@
+[invoke.SpotMarketProxy_createSynth_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic USD Coin", "sUSDC", "<%= settings.owner %>"]
+extra.synth_usdc_market_id.event = "SynthRegistered"
+extra.synth_usdc_market_id.arg = 0
+extra.synth_usdc_token_address.event = "SynthRegistered"
+extra.synth_usdc_token_address.arg = 1
+
+[invoke.SpotMarketProxy_updatePriceData_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= extras.usdc_oracle_id %>",
+    "<%= extras.usdc_oracle_id %>",
+    "<%= settings.usdc_staleness_tolerance %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= settings.usdc_address %>",
+    "<%= settings.synth_usdc_max_market_collateral %>",
+]
+
+[invoke.SpotMarketProxy_setWrapper_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= settings.usdc_address %>",
+    "<%= settings.synth_usdc_max_market_collateral %>",
+]
+
+[invoke.SpotMarketProxy_addSettlementStrategy_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = false },
+]
+extra.synth_usdc_settlement_strategy_id.event = "SettlementStrategyAdded"
+extra.synth_usdc_settlement_strategy_id.arg = 1
+
+[invoke.SpotMarketProxy_setSettlementStrategy_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
+func = "setSettlementStrategy"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= extras.synth_usdc_settlement_strategy_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pyth_feed_id_usdc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
+]

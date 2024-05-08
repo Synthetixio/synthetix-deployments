@@ -1,0 +1,66 @@
+[invoke.SpotMarketProxy_createSynth_dai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic DAI", "sDAI", "<%= settings.owner %>"]
+extra.synth_dai_market_id.event = "SynthRegistered"
+extra.synth_dai_market_id.arg = 0
+extra.synth_dai_token_address.event = "SynthRegistered"
+extra.synth_dai_token_address.arg = 1
+
+[invoke.SpotMarketProxy_updatePriceData_dai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= extras.dai_oracle_id %>",
+    "<%= extras.dai_oracle_id %>",
+    "<%= settings.dai_staleness_tolerance %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_dai]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.synth_dai_max_market_collateral %>",
+]
+
+[invoke.SpotMarketProxy_setWrapper_dai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.synth_dai_max_market_collateral %>",
+]
+
+[invoke.SpotMarketProxy_addSettlementStrategy_dai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = false },
+]
+extra.synth_dai_settlement_strategy_id.event = "SettlementStrategyAdded"
+extra.synth_dai_settlement_strategy_id.arg = 1
+
+[invoke.SpotMarketProxy_setSettlementStrategy_dai]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_dai_market_id %>"]
+func = "setSettlementStrategy"
+args = [
+    "<%= extras.synth_dai_market_id %>",
+    "<%= extras.synth_dai_settlement_strategy_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= settings.pyth_price_verification_address %>", feedId = "<%= settings.pyth_feed_id_dai %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
+]
