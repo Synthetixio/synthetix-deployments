@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { getCollateralConfig } = require('./getCollateralConfig');
-const { setTokenBalance } = require('e2e/tasks/setTokenBalance');
+const { setTokenBalance } = require('./setTokenBalance');
 
 async function setUSDCTokenBalance({ wallet, balance }) {
   const { tokenAddress } = await getCollateralConfig('USDC');
