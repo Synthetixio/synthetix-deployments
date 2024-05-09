@@ -131,7 +131,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 1000 USDC into the system', async () => {
+  it('should deposit 500 USDC into the system', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDC' }), {
       totalDeposited: 0,
@@ -149,7 +149,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should delegate 5 USDC into the Spartan Council pool', async () => {
+  it('should delegate 500 USDC into the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDC' }), {
       totalDeposited: 500,
       totalAssigned: 0,
