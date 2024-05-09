@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "1"
+version = "2"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -20,6 +20,14 @@ include = [
     "tomls/oracles/pyth-dai.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
+
+    # ARB
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
+
+    # WETH
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
 ]
 
 [setting.snx_package]

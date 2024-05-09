@@ -17,7 +17,7 @@ func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.CoreProxy_configureCollateral_weth.args]]
 tokenAddress = "<%= settings.weth_address %>"
-oracleNodeId = "<%= extras.weth_oracle_id %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
 issuanceRatioD18 = "<%= settings.weth_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.weth_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.weth_liquidation_reward %>"

@@ -5,10 +5,10 @@ defaultValue = "<%= parseEther('1.2') %>"
 defaultValue = "<%= parseEther('1.05') %>"
 
 [setting.usdc_liquidation_reward]
-defaultValue = "<%= parseEther('1') %>"
+defaultValue = "<%= parseUnits('1', 6) %>"
 
 [setting.usdc_min_delegation]
-defaultValue = "<%= parseEther('100') %>"
+defaultValue = "<%= parseUnits('100', 6) %>"
 
 [invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]

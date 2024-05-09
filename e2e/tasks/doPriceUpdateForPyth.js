@@ -117,7 +117,7 @@ async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract 
 }
 
 module.exports = {
-  doPriceUpdateForFeed: doPriceUpdateForPyth,
+  doPriceUpdateForPyth,
 };
 
 if (require.main === module) {

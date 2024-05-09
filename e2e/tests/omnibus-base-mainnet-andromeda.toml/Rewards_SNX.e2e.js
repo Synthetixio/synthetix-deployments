@@ -17,7 +17,7 @@ const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
-const { setMainnetTokenBalance } = require('../../tasks/setMainnetTokenBalance');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
@@ -126,7 +126,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setMainnetTokenBalance({
+    await setTokenBalance({
       wallet,
       balance: 1_000,
       tokenAddress,
@@ -251,7 +251,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should fund RewardDistributor with 1_000 SNX', async () => {
-    await setMainnetTokenBalance({
+    await setTokenBalance({
       wallet,
       balance: 1_000,
       tokenAddress: payoutToken,

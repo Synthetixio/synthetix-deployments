@@ -44,25 +44,25 @@ args = ["<%= formatBytes32String('liquidateVault') %>", true]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('depositMarketCollateral') %>", false]
+args = ["<%= formatBytes32String('depositMarketCollateral') %>", true]
 
 [invoke.CoreProxy_setFeatureFlagAllowAll_withdrawMarketCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", false]
+args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", true]
 
 [invoke.CoreProxy_setFeatureFlagAllowAll_depositMarketUsd]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('depositMarketUsd') %>", false]
+args = ["<%= formatBytes32String('depositMarketUsd') %>", true]
 
 [invoke.CoreProxy_setFeatureFlagAllowAll_withdrawMarketUsd]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('withdrawMarketUsd') %>", false]
+args = ["<%= formatBytes32String('withdrawMarketUsd') %>", true]
 
 [invoke.CoreProxy_setFeatureFlagAllowAll_claimRewards]
 target = ["system.CoreProxy"]

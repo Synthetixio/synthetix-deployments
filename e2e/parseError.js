@@ -127,19 +127,32 @@ function parseError(error) {
       ) {
         const oracleAddress = data?.args?.oracleContract;
         const oracleQueryRaw = data?.args?.oracleQuery;
-        const decoded = ethers.utils.defaultAbiCoder.decode(
+
+        let updateType, publishTime, stalenessTolerance, feedIds, priceId;
+        [updateType, publishTime, priceId] = ethers.utils.defaultAbiCoder.decode(
           ['uint8', 'uint64', 'bytes32'],
           oracleQueryRaw
         );
-        const [updateType, timestamp, priceId] = decoded;
+
+        if (updateType === 1) {
+          [updateType, stalenessTolerance, feedIds] = ethers.utils.defaultAbiCoder.decode(
+            ['uint8', 'uint64', 'bytes32[]'],
+            oracleQueryRaw
+          );
+          publishTime = undefined;
+        } else {
+          feedIds = [priceId];
+        }
+
         const err = {
           name: data.name,
           args: {
             oracleAddress,
             oracleQuery: {
               updateType,
-              timestamp: timestamp.toNumber(),
-              priceId,
+              publishTime: Number(publishTime),
+              stalenessTolerance: Number(stalenessTolerance),
+              feedIds,
             },
             oracleQueryRaw,
           },

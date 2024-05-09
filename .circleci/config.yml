@@ -658,7 +658,7 @@ workflows:
       - lint
 
       - fork-test:
-          name: base-sepolia-andromeda
+          name: test-base-sepolia-andromeda
           parallelism: 4
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
@@ -667,7 +667,7 @@ workflows:
           provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: base-mainnet-andromeda
+          name: test-base-mainnet-andromeda
           parallelism: 4
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
@@ -676,7 +676,7 @@ workflows:
           provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: mainnet
+          name: test-mainnet
           toml: omnibus-mainnet.toml
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -684,7 +684,7 @@ workflows:
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: optimism-mainnet
+          name: test-optimism-mainnet
           toml: omnibus-optimism-mainnet.toml
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -692,7 +692,7 @@ workflows:
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
       #      - fork-test:
-      #          name: sepolia
+      #          name: test-sepolia
       #          toml: omnibus-sepolia.toml
       #          package: "synthetix-omnibus:latest"
       #          preset: "main"
@@ -700,7 +700,7 @@ workflows:
       #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       #      - fork-test:
-      #          name: polygon-mumbai
+      #          name: test-polygon-mumbai
       #          toml: omnibus-polygon-mumbai.toml
       #          package: "synthetix-omnibus:latest"
       #          preset: "main"
@@ -708,20 +708,20 @@ workflows:
       #          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: arbthetix-mainnet
+          name: test-arbthetix-mainnet
           toml: omnibus-arbitrum-mainnet-arbthetix.toml
           package: "synthetix-omnibus:latest"
           preset: "arbthetix"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #- fork-test:
-      #    name: arbthetix-sepolia
-      #    toml: omnibus-arbitrum-sepolia-arbthetix.toml
-      #    package: "synthetix-omnibus:latest"
-      #    preset: "arbthetix"
-      #    chain-id: 421614
-      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+      - fork-test:
+          name: test-arbitrum-sepolia
+          toml: omnibus-arbitrum-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 421614
+          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
 
   deployment-info:
     when:
