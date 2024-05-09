@@ -54,6 +54,33 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
+  it('should make a price update', async () => {
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
+      priceVerificationContract: require('../../deployments/extras.json')
+        .pyth_price_verification_address,
+    });
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_arb,
+      priceVerificationContract: require('../../deployments/extras.json')
+        .pyth_price_verification_address,
+    });
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
+      priceVerificationContract: require('../../deployments/extras.json')
+        .pyth_price_verification_address,
+    });
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
+      priceVerificationContract: require('../../deployments/extras.json')
+        .pyth_price_verification_address,
+    });
+  });
+
   it('should create user account', async () => {
     assert.equal(
       await getAccountOwner({ accountId }),
@@ -104,7 +131,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 5 USDC into the system', async () => {
+  it('should deposit 1000 USDC into the system', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1000);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDC' }), {
       totalDeposited: 0,
@@ -119,33 +146,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
-    });
-  });
-
-  it('should make a price update', async () => {
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_arb,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
     });
   });
 
