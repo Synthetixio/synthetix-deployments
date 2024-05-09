@@ -7,7 +7,7 @@ const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-async function setMainnetTokenBalance({ wallet, balance, tokenAddress, friendlyWhale }) {
+async function setTokenBalance({ wallet, balance, tokenAddress, friendlyWhale }) {
   const Token = new ethers.Contract(
     tokenAddress,
     [
@@ -59,5 +59,5 @@ async function setMainnetTokenBalance({ wallet, balance, tokenAddress, friendlyW
 }
 
 module.exports = {
-  setMainnetTokenBalance,
+  setTokenBalance,
 };
