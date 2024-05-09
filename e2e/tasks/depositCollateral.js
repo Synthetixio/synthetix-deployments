@@ -25,7 +25,7 @@ async function depositCollateral({ privateKey, accountId, symbol, amount }) {
     config.tokenAddress,
     ethers.utils.parseEther(`${amount}`),
   ];
-  const gasLimit = await CoreProxy.estimateGas.deposit(...args);
+  const gasLimit = await CoreProxy.estimateGas.deposit(...args).catch(parseError);
   const tx = await CoreProxy.deposit(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   await tx
     .wait()
