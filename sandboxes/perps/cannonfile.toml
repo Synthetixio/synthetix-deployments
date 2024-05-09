@@ -38,6 +38,7 @@ source = "core-sandbox"
 #
 [provision.weth_token]
 source = "mintable-token"
+target = "synthetix-mock-tokens@weth"
 sourcePreset = "permissionless-mint"
 options.symbol = "WETH"
 options.name = "Wrapped Ethereum"

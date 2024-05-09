@@ -115,6 +115,7 @@ source = "synthetix-spot-market:<%= settings.version %>"
 #
 [provision.usdc_token]
 source = "mintable-token:latest@permissionless-mint"
+target = "synthetix-mock-tokens@usdc"
 options.symbol = "USDC"
 options.name = "Mintable USD Coin"
 
