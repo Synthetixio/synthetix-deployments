@@ -133,7 +133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/bignumber@npm:5.7.0, @ethersproject/bignumber@npm:^5.6.2, @ethersproject/bignumber@npm:^5.7.0":
+"@ethersproject/bignumber@npm:5.7.0, @ethersproject/bignumber@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/bignumber@npm:5.7.0"
   dependencies:
@@ -144,7 +144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/bytes@npm:5.7.0, @ethersproject/bytes@npm:^5.6.1, @ethersproject/bytes@npm:^5.7.0":
+"@ethersproject/bytes@npm:5.7.0, @ethersproject/bytes@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/bytes@npm:5.7.0"
   dependencies:
@@ -1080,17 +1080,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/wei@npm:^2.74.1":
-  version: 2.74.4
-  resolution: "@synthetixio/wei@npm:2.74.4"
-  dependencies:
-    "@ethersproject/bignumber": "npm:^5.6.2"
-    "@ethersproject/bytes": "npm:^5.6.1"
-    big.js: "npm:^6.1.1"
-  checksum: 10/84c7e8a3717682e50debacb6fabf887d74caa71d1d558426c26a6b787930ad601a256a7fee64664fe4501e2197b205a8dffb1867053213eaa2fa66a4bb7e309c
-  languageName: node
-  linkType: hard
-
 "@taplo/core@npm:^0.1.0":
   version: 0.1.1
   resolution: "@taplo/core@npm:0.1.1"
@@ -1189,9 +1178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.13.0":
-  version: 2.13.0
-  resolution: "@usecannon/builder@npm:2.13.0"
+"@usecannon/builder@npm:2.13.3":
+  version: 2.13.3
+  resolution: "@usecannon/builder@npm:2.13.3"
   dependencies:
     "@synthetixio/router": "npm:^3.3.7"
     axios: "npm:^1.6.7"
@@ -1206,17 +1195,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.9.26"
     zod: "npm:^3.22.4"
-  checksum: 10/7a73624009771e70856ca1b16977b0bf09a790ea1d997e1ef68c9ccdf8e8b3b878ecef60b0f9150189c1ee594174a30ca56548f06ab5a3e2917a04d7a82d8725
+  checksum: 10/36b1d6a08e18d671fa624a8d89105df21571e17ce5c4611b30c15abe02c5e092d46ceae66b7e880e412f3e4e99372ca4df6c7b8b609441561676ec6c22d26aca
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.13.0":
-  version: 2.13.0
-  resolution: "@usecannon/cli@npm:2.13.0"
+"@usecannon/cli@npm:2.13.3":
+  version: 2.13.3
+  resolution: "@usecannon/cli@npm:2.13.3"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@synthetixio/wei": "npm:^2.74.1"
-    "@usecannon/builder": "npm:2.13.0"
+    "@usecannon/builder": "npm:2.13.3"
     abitype: "npm:^1.0.0"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1235,7 +1223,7 @@ __metadata:
     zod: "npm:^3.22.4"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/6f56cd69e42b27213b213c069778bd0413197745128f9d775fab72a0a5db0d1e7014f6439f77d5c9c4721a875fe41c4135eaa2260cd10c2bcc8e1eec92623ddd
+  checksum: 10/15dfd1d9ef5bac33810c16ce3e8098364b15494cfaaa4546b9a0b2e5884d7cefd72b32e5cab2469ee89954f919d1c1e0781482ab7275bdb6bb9a0b42ff43f92c
   languageName: node
   linkType: hard
 
@@ -1498,13 +1486,6 @@ __metadata:
   version: 1.1.4
   resolution: "bech32@npm:1.1.4"
   checksum: 10/63ff37c0ce43be914c685ce89700bba1589c319af0dac1ea04f51b33d0e5ecfd40d14c24f527350b94f0a4e236385373bb9122ec276410f354ddcdbf29ca13f4
-  languageName: node
-  linkType: hard
-
-"big.js@npm:^6.1.1":
-  version: 6.2.1
-  resolution: "big.js@npm:6.2.1"
-  checksum: 10/1d4b621451de712cab20464a26f22b2eee5e7daf0ee88c49dfbfa76061ec37cff2257751e8c3fc183c231bcffac2f006e33af930d8f49b03c758890080b76ada
   languageName: node
   linkType: hard
 
@@ -4709,8 +4690,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.44.0"
-    "@usecannon/builder": "npm:2.13.0"
-    "@usecannon/cli": "npm:2.13.0"
+    "@usecannon/builder": "npm:2.13.3"
+    "@usecannon/cli": "npm:2.13.3"
     debug: "npm:^4.3.4"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
