@@ -28,11 +28,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   );
   const wallet = ethers.Wallet.createRandom().connect(provider);
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
-  //  const wallet = new ethers.Wallet(
-  //    '0xd9005200cfa5025553299e6f0d51361489781c375ec8aa207c61e42c0db65677',
-  //    provider
-  //  );
-  //  const accountId = 777;
 
   const address = wallet.address;
   const privateKey = wallet.privateKey;
