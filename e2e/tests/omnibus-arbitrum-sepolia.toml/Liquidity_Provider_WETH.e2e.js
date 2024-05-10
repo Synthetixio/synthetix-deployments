@@ -17,23 +17,26 @@ const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { setWETHTokenBalance } = require('../../tasks/setWETHTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
+const { borrowUsd } = require('../../tasks/borrowUsd');
+const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
+const { setConfigUint } = require('../../tasks/setConfigUint');
+const { getConfigUint } = require('../../tasks/getConfigUint');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = ethers.Wallet.createRandom().connect(provider);
+  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
+
   const address = wallet.address;
   const privateKey = wallet.privateKey;
 
   let snapshot;
-
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
     log('Create snapshot', { snapshot });
   });
-
   after('Restore snapshot', async () => {
     log('Restore snapshot', { snapshot });
     await provider.send('evm_revert', [snapshot]);
@@ -41,6 +44,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should sync time of the fork', async () => {
     await syncTime();
+  });
+
+  it('should disable withdrawal timeout', async () => {
+    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
+    assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
   });
 
   it('should create new random wallet', async () => {
@@ -162,5 +170,36 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalAssigned: 5,
       totalLocked: 0,
     });
+  });
+
+  it('should borrow 1000 USDh', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+      totalDeposited: 0,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+    await borrowUsd({
+      wallet,
+      accountId,
+      symbol: 'WETH',
+      amount: 1000,
+      poolId: 1,
+    });
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+      totalDeposited: 1000,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+  });
+
+  it('should withdraw borrowed 1000 USDh', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
+    await withdrawCollateral({
+      privateKey,
+      accountId,
+      amount: 1000,
+      symbol: 'USDh',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 1000);
   });
 });
