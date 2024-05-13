@@ -72,16 +72,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should create user account', async () => {
-    assert.equal(
-      await getAccountOwner({ accountId }),
-      ethers.constants.AddressZero,
-      'New wallet should not have an account yet'
-    );
-    await createAccount({ wallet, accountId });
-    assert.equal(await getAccountOwner({ accountId }), address);
-  });
-
   it('should set fDAI balance to 1000', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'fDAI' }),
@@ -150,12 +140,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it.skip('should approve USDh spending for CoreProxy', async () => {
+  it('should approve USDh spending for SpotProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
         symbol: 'USDh',
-        spenderAddress: require('../../deployments/CoreProxy.json').address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
       'New wallet has not allowed SpotMarket USDh spending'
@@ -163,29 +153,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await approveCollateral({
       privateKey,
       symbol: 'USDh',
-      spenderAddress: require('../../deployments/CoreProxy.json').address,
+      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
         symbol: 'USDh',
-        spenderAddress: require('../../deployments/CoreProxy.json').address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it.skip('should withdraw 400 USDh', async () => {
-    await withdrawCollateral({
-      privateKey,
-      accountId,
-      symbol: 'USDh',
-      amount: 400,
-    });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 400);
-  });
-
-  it.skip('should swap 400 USDh -> sDAI', async () => {
+  it('should swap 400 USDh -> sDAI', async () => {
     await spotBuy({
       wallet,
       marketId: require('../../deployments/extras.json').synth_dai_market_id,
@@ -193,7 +173,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       minAmountReceived: 300,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'sDAI' })) >= 500 + 300,
+      (await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: require('../../deployments/extras.json').synth_dai_token_address,
+      })) >=
+        500 + 300,
       `sDAI balance >= ${500 + 300}`
     );
   });
@@ -206,7 +190,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       synthMarketId: require('../../deployments/extras.json').synth_dai_market_id,
       amount: 500,
     });
-    assert.equal(synthBalance, 0);
+    assert.ok(synthBalance < 500);
     assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 500);
   });
 });
