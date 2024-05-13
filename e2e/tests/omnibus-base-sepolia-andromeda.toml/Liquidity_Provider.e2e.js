@@ -137,6 +137,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await wrapCollateral({
       wallet,
       symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: SYNTH_USDC_MAX_MARKET_COLLATERAL,
     });
     assert.equal(balance, SYNTH_USDC_MAX_MARKET_COLLATERAL);

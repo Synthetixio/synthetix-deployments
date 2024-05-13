@@ -107,7 +107,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const maxWrap = Math.floor(SYNTH_USDC_MAX_MARKET_COLLATERAL - currentMarketCollateral);
     log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: maxWrap });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: maxWrap,
+    });
     log({ balance });
     assert.equal(balance, maxWrap);
   });
@@ -124,13 +130,28 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       SYNTH_USDC_MAX_MARKET_COLLATERAL - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
-    await assert.rejects(async () => await wrapCollateral({ wallet, symbol: 'USDC', amount: 1 }));
+    await assert.rejects(
+      async () =>
+        await wrapCollateral({
+          wallet,
+          symbol: 'USDC',
+          synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+          synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+          amount: 1,
+        })
+    );
   });
 
   it('should unwrap all the sUSDC back to USDC and reduce market collateral', async () => {
     const sUsdcBalance = await getCollateralBalance({ address, symbol: 'sUSDC' });
     log({ sUsdcBalance });
-    const balance = await unwrapCollateral({ wallet, symbol: 'USDC', amount: sUsdcBalance });
+    const balance = await unwrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: sUsdcBalance,
+    });
     log({ balance });
     assert.equal(balance, 0);
     assert.equal(
