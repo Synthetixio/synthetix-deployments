@@ -206,6 +206,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: 50,
+      minUsdAmount: 50, // 0% slippage
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
   });

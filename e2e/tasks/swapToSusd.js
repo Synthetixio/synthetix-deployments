@@ -6,7 +6,7 @@ const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-async function swapToSusd({ wallet, marketId, amount }) {
+async function swapToSusd({ wallet, marketId, amount, minUsdAmount }) {
   log({ address: wallet.address, marketId, amount });
   const SpotMarketProxy = new ethers.Contract(
     require('../deployments/SpotMarketProxy.json').address,
@@ -17,7 +17,7 @@ async function swapToSusd({ wallet, marketId, amount }) {
   const args = [
     ethers.BigNumber.from(marketId), // uint128 marketId
     ethers.utils.parseEther(`${amount}`), // uint256 synthAmount
-    ethers.utils.parseEther(`${amount}`), // uint256 minUsdAmount (0% slippage!)
+    ethers.utils.parseEther(`${minUsdAmount}`), // uint256 minUsdAmount
     ethers.constants.AddressZero, // address referrer
   ];
   const gasLimit = await SpotMarketProxy.estimateGas.sell(...args).catch(parseError);
@@ -34,12 +34,12 @@ module.exports = {
 
 if (require.main === module) {
   require('../inspect');
-  const [privateKey, marketId, amount] = process.argv.slice(2);
+  const [privateKey, marketId, amount, minUsdAmount] = process.argv.slice(2);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(privateKey, provider);
-  swapToSusd({ wallet, marketId, amount }).then((data) =>
+  swapToSusd({ wallet, marketId, amount, minUsdAmount }).then((data) =>
     console.log(JSON.stringify(data, null, 2))
   );
 }
