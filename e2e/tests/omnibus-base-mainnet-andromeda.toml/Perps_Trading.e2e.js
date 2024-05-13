@@ -13,7 +13,7 @@ const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermi
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
-const { swapToSusd } = require('../../tasks/swapToSusd');
+const { spotSell } = require('../../tasks/spotSell');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
@@ -133,7 +133,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 1_000_000 USDC', async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 1_000_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 1_000_000,
+    });
     assert.equal(balance, 1_000_000);
   });
 
@@ -152,10 +158,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should atomic swap 1_000_000 sUSDC to snxUSD to trade', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({
+    await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 1_000_000,
+      synthAmount: 1_000_000,
+      minUsdAmount: 1_000_000, // 0% slippage
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 1_000_000);
   });

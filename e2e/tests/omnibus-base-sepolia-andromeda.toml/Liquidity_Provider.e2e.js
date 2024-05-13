@@ -20,7 +20,7 @@ const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { swapToSusd } = require('../../tasks/swapToSusd');
+const { spotSell } = require('../../tasks/spotSell');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
 const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
@@ -137,6 +137,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await wrapCollateral({
       wallet,
       symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: SYNTH_USDC_MAX_MARKET_COLLATERAL,
     });
     assert.equal(balance, SYNTH_USDC_MAX_MARKET_COLLATERAL);
@@ -219,10 +221,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should atomic swap 50 sUSDC to snxUSD to burn debt', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({
+    await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 50,
+      synthAmount: 50,
+      minUsdAmount: 50, // 0% slippage
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
   });
