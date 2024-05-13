@@ -24,6 +24,7 @@ const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
+const { spotSell } = require('../../tasks/spotSell');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -154,6 +155,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       1000
     );
   });
+
+  it('should swap 500 sDAI to USDh', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
+    await spotSell({
+      wallet,
+      marketId: require('../../deployments/extras.json').synth_dai_market_id,
+      synthAmount: 500,
+      minUsdAmount: 400,
+    });
+    assert.ok(
+      (await getCollateralBalance({ address, symbol: 'USDh' })) >= 400,
+      'USDh balance >= 400'
+    );
+  });
+
   //
   //  it('should approve fDAI spending for CoreProxy', async () => {
   //    assert.equal(
