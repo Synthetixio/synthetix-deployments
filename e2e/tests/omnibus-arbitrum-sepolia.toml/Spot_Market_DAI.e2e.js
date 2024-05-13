@@ -173,10 +173,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       minAmountReceived: 300,
     });
     assert.ok(
-      await getTokenBalance({
+      (await getTokenBalance({
         walletAddress: address,
         tokenAddress: require('../../deployments/extras.json').synth_dai_token_address,
-      }) >= 500 + 300,
+      })) >=
+        500 + 300,
       `sDAI balance >= ${500 + 300}`
     );
   });
