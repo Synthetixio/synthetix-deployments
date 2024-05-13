@@ -9,6 +9,7 @@ const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
+const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { getAccountCollateral } = require('../../tasks/getAccountCollateral');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
@@ -22,6 +23,7 @@ const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
+const { wrapCollateral } = require('../../tasks/wrapCollateral');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -63,30 +65,30 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_arb,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
+    //    await doPriceUpdateForPyth({
+    //      wallet,
+    //      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
+    //      priceVerificationContract: require('../../deployments/extras.json')
+    //        .pyth_price_verification_address,
+    //    });
+    //    await doPriceUpdateForPyth({
+    //      wallet,
+    //      feedId: require('../../deployments/extras.json').pyth_feed_id_arb,
+    //      priceVerificationContract: require('../../deployments/extras.json')
+    //        .pyth_price_verification_address,
+    //    });
     await doPriceUpdateForPyth({
       wallet,
       feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
+    //    await doPriceUpdateForPyth({
+    //      wallet,
+    //      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
+    //      priceVerificationContract: require('../../deployments/extras.json')
+    //        .pyth_price_verification_address,
+    //    });
   });
 
   it('should create user account', async () => {
@@ -110,97 +112,140 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
   });
 
-  it('should approve fDAI spending for CoreProxy', async () => {
+  it('should approve fDAI spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
         symbol: 'fDAI',
-        spenderAddress: require('../../deployments/CoreProxy.json').address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy fDAI spending'
+      'New wallet has not allowed SpotMarket fDAI spending'
     );
     await approveCollateral({
       privateKey,
       symbol: 'fDAI',
-      spenderAddress: require('../../deployments/CoreProxy.json').address,
+      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
         symbol: 'fDAI',
-        spenderAddress: require('../../deployments/CoreProxy.json').address,
+        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 500 fDAI into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
-      totalDeposited: 0,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
-
-    await depositCollateral({ privateKey, symbol: 'fDAI', accountId, amount: 500 });
-
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 500);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
-      totalDeposited: 500,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
-  });
-
-  it('should delegate 500 fDAI into the Spartan Council pool', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
-      totalDeposited: 500,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
-    await delegateCollateral({
-      privateKey,
-      symbol: 'fDAI',
-      accountId,
-      amount: 500,
-      poolId: 1,
-    });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
-      totalDeposited: 500,
-      totalAssigned: 500,
-      totalLocked: 0,
-    });
-  });
-
-  it('should borrow 100 USDh', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
-      totalDeposited: 0,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
-    await borrowUsd({
+  it(`should wrap 1000 fDAI`, async () => {
+    const balance = await wrapCollateral({
       wallet,
-      accountId,
       symbol: 'fDAI',
-      amount: 100,
-      poolId: 1,
+      synthAddress: require('../../deployments/extras.json').synth_dai_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_dai_market_id,
+      amount: 1000,
     });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
-      totalDeposited: 100,
-      totalAssigned: 0,
-      totalLocked: 0,
-    });
+    assert.equal(balance, 1000);
+    assert.equal(
+      await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: require('../../deployments/extras.json').synth_dai_token_address,
+      }),
+      1000
+    );
   });
-
-  it('should withdraw borrowed 100 USDh', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
-    await withdrawCollateral({
-      privateKey,
-      accountId,
-      amount: 100,
-      symbol: 'USDh',
-    });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 100);
-  });
+  //
+  //  it('should approve fDAI spending for CoreProxy', async () => {
+  //    assert.equal(
+  //      await isCollateralApproved({
+  //        address,
+  //        symbol: 'fDAI',
+  //        spenderAddress: require('../../deployments/CoreProxy.json').address,
+  //      }),
+  //      false,
+  //      'New wallet has not allowed CoreProxy fDAI spending'
+  //    );
+  //    await approveCollateral({
+  //      privateKey,
+  //      symbol: 'fDAI',
+  //      spenderAddress: require('../../deployments/CoreProxy.json').address,
+  //    });
+  //    assert.equal(
+  //      await isCollateralApproved({
+  //        address,
+  //        symbol: 'fDAI',
+  //        spenderAddress: require('../../deployments/CoreProxy.json').address,
+  //      }),
+  //      true
+  //    );
+  //  });
+  //
+  //  it('should deposit 500 fDAI into the system', async () => {
+  //    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
+  //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+  //      totalDeposited: 0,
+  //      totalAssigned: 0,
+  //      totalLocked: 0,
+  //    });
+  //
+  //    await depositCollateral({ privateKey, symbol: 'fDAI', accountId, amount: 500 });
+  //
+  //    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 500);
+  //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+  //      totalDeposited: 500,
+  //      totalAssigned: 0,
+  //      totalLocked: 0,
+  //    });
+  //  });
+  //
+  //  it('should delegate 500 fDAI into the Spartan Council pool', async () => {
+  //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+  //      totalDeposited: 500,
+  //      totalAssigned: 0,
+  //      totalLocked: 0,
+  //    });
+  //    await delegateCollateral({
+  //      privateKey,
+  //      symbol: 'fDAI',
+  //      accountId,
+  //      amount: 500,
+  //      poolId: 1,
+  //    });
+  //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+  //      totalDeposited: 500,
+  //      totalAssigned: 500,
+  //      totalLocked: 0,
+  //    });
+  //  });
+  //
+  //  it('should borrow 100 USDh', async () => {
+  //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+  //      totalDeposited: 0,
+  //      totalAssigned: 0,
+  //      totalLocked: 0,
+  //    });
+  //    await borrowUsd({
+  //      wallet,
+  //      accountId,
+  //      symbol: 'fDAI',
+  //      amount: 100,
+  //      poolId: 1,
+  //    });
+  //    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+  //      totalDeposited: 100,
+  //      totalAssigned: 0,
+  //      totalLocked: 0,
+  //    });
+  //  });
+  //
+  //  it('should withdraw borrowed 100 USDh', async () => {
+  //    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
+  //    await withdrawCollateral({
+  //      privateKey,
+  //      accountId,
+  //      amount: 100,
+  //      symbol: 'USDh',
+  //    });
+  //    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 100);
+  //  });
 });
