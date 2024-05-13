@@ -12,8 +12,7 @@ const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
@@ -66,7 +65,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should make a price update', async () => {
     await doPriceUpdateForPyth({
       wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });
@@ -82,65 +81,69 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fDAI balance to 1000', async () => {
+  it('should set USDC balance to 1000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fDAI' }),
+      await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
-      'New wallet has 0 fDAI balance'
+      'New wallet has 0 USDC balance'
     );
-    const { tokenAddress } = await getCollateralConfig('fDAI');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
+    await setTokenBalance({
+      wallet,
+      balance: 1000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0x6ed0c4addc308bb800096b8daa41de5ae219cd36',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1000);
   });
 
-  it('should approve fDAI spending for SpotMarket', async () => {
+  it('should approve USDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fDAI',
+        symbol: 'USDC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed SpotMarket fDAI spending'
+      'New wallet has not allowed SpotMarket USDC spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fDAI',
+      symbol: 'USDC',
       spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fDAI',
+        symbol: 'USDC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it(`should wrap 1000 fDAI -> sDAI`, async () => {
+  it(`should wrap 1000 USDC -> sUSDC`, async () => {
     const synthBalance = await wrapCollateral({
       wallet,
-      symbol: 'fDAI',
-      synthAddress: require('../../deployments/extras.json').synth_dai_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_dai_market_id,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: 1000,
     });
     assert.equal(synthBalance, 1000);
     assert.equal(
       await getTokenBalance({
         walletAddress: address,
-        tokenAddress: require('../../deployments/extras.json').synth_dai_token_address,
+        tokenAddress: require('../../deployments/extras.json').synth_usdc_token_address,
       }),
       1000
     );
   });
 
-  it('should swap 500 sDAI -> USDh', async () => {
+  it('should swap 500 sUSDC -> USDh', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
     await spotSell({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_dai_market_id,
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       synthAmount: 500,
       minUsdAmount: 400,
     });
@@ -185,28 +188,28 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 400);
   });
 
-  it.skip('should swap 400 USDh -> sDAI', async () => {
+  it.skip('should swap 400 USDh -> sUSDC', async () => {
     await spotBuy({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_dai_market_id,
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       usdAmount: 400,
       minAmountReceived: 300,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'sDAI' })) >= 500 + 300,
-      `sDAI balance >= ${500 + 300}`
+      (await getCollateralBalance({ address, symbol: 'sUSDC' })) >= 500 + 300,
+      `sUSDC balance >= ${500 + 300}`
     );
   });
 
-  it(`should unwrap 500 sDAI -> fDAI`, async () => {
+  it(`should unwrap 500 sUSDC -> USDC`, async () => {
     const synthBalance = await unwrapCollateral({
       wallet,
-      symbol: 'fDAI',
-      synthAddress: require('../../deployments/extras.json').synth_dai_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_dai_market_id,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: 500,
     });
     assert.equal(synthBalance, 0);
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 500);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 500);
   });
 });
