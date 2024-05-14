@@ -23,3 +23,13 @@ liquidationRatioD18 = "<%= settings.usdc_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.usdc_liquidation_reward %>"
 minDelegationD18 = "<%= settings.usdc_min_delegation %>"
 depositingEnabled = true
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.usdc_address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_usdc %>", issuanceRatioD18 = 0 },
+]
