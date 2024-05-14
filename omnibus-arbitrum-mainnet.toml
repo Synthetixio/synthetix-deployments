@@ -1,6 +1,6 @@
 name = "synthetix-omnibus"
 version = "1"
-description = "Arbitrum deployment"
+description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
     "tomls/core.toml",
@@ -29,6 +29,12 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
 ]
+
+[setting.target_preset]
+defaultValue = "main"
+
+[setting.salt]
+defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.15"
@@ -61,7 +67,7 @@ options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
 [setting.owner]
-defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
 [setting.deployer]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
@@ -171,20 +177,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.max_collateral_limit_arb]
 defaultValue = "<%= parseEther(String(100_000)) %>"
 
-[provision.dai_mock_collateral]
-source = "mintable-token:1.8"
-options.name = "Fake DAI Coin"
-options.symbol = "fDAI"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
-[provision.arb_mock_collateral]
-source = "mintable-token:1.8"
-options.name = "Fake ARB Coin"
-options.symbol = "fARB"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
@@ -199,12 +191,15 @@ args = [
     ],
 ]
 
-[invoke.CoreProxy_initOrUpgradeToken_DollarWifHat]
+[setting.usd_token_name]
+defaultValue = "<%= formatBytes32String('USDToken') %>"
+
+[invoke.CoreProxy_initOrUpgradeToken_USDToken]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "initOrUpgradeToken"
 args = [
-    "0x555344546f6b656e000000000000000000000000000000000000000000000000",
+    "<%= settings.usd_token_name %>",
     "DollarWifHat",
     "USDh",
     18,
