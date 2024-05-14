@@ -108,7 +108,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       balance: 1000,
       tokenAddress: require('../../deployments/extras.json').usdc_address,
-      friendlyWhale: '0x6ed0c4addc308bb800096b8daa41de5ae219cd36',
+      friendlyWhale: '0x2df1c51e09aecf9cacb7bc98cb1742757f163df7',
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1000);
   });

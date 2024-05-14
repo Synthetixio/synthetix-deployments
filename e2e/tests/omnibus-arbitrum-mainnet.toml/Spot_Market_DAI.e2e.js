@@ -6,17 +6,13 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { getAccountOwner } = require('../../tasks/getAccountOwner');
-const { createAccount } = require('../../tasks/createAccount');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
-const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
@@ -72,46 +68,50 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should set fDAI balance to 1000', async () => {
+  it('should set DAI balance to 1000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fDAI' }),
+      await getCollateralBalance({ address, symbol: 'DAI' }),
       0,
-      'New wallet has 0 fDAI balance'
+      'New wallet has 0 DAI balance'
     );
-    const { tokenAddress } = await getCollateralConfig('fDAI');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
+    await setTokenBalance({
+      wallet,
+      balance: 1000,
+      tokenAddress: require('../../deployments/extras.json').dai_address,
+      friendlyWhale: '0xd85e038593d7a098614721eae955ec2022b9b91b',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'DAI' }), 1000);
   });
 
-  it('should approve fDAI spending for SpotMarket', async () => {
+  it('should approve DAI spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fDAI',
+        symbol: 'DAI',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed SpotMarket fDAI spending'
+      'New wallet has not allowed SpotMarket DAI spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fDAI',
+      symbol: 'DAI',
       spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fDAI',
+        symbol: 'DAI',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it(`should wrap 1000 fDAI -> sDAI`, async () => {
+  it(`should wrap 1000 DAI -> sDAI`, async () => {
     const synthBalance = await wrapCollateral({
       wallet,
-      symbol: 'fDAI',
+      symbol: 'DAI',
       synthAddress: require('../../deployments/extras.json').synth_dai_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_dai_market_id,
       amount: 1000,
@@ -182,15 +182,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should unwrap 500 sDAI -> fDAI`, async () => {
+  it(`should unwrap 500 sDAI -> DAI`, async () => {
     const synthBalance = await unwrapCollateral({
       wallet,
-      symbol: 'fDAI',
+      symbol: 'DAI',
       synthAddress: require('../../deployments/extras.json').synth_dai_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_dai_market_id,
       amount: 500,
     });
     assert.ok(synthBalance < 500);
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 500);
+    assert.equal(await getCollateralBalance({ address, symbol: 'DAI' }), 500);
   });
 });

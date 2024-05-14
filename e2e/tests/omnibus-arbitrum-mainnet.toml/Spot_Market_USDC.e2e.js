@@ -6,8 +6,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { getAccountOwner } = require('../../tasks/getAccountOwner');
-const { createAccount } = require('../../tasks/createAccount');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
@@ -15,7 +13,6 @@ const { approveCollateral } = require('../../tasks/approveCollateral');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
-const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
@@ -81,7 +78,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       balance: 1000,
       tokenAddress: require('../../deployments/extras.json').usdc_address,
-      friendlyWhale: '0x6ed0c4addc308bb800096b8daa41de5ae219cd36',
+      friendlyWhale: '0x2df1c51e09aecf9cacb7bc98cb1742757f163df7',
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1000);
   });

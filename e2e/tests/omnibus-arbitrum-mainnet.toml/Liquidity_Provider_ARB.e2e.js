@@ -14,10 +14,9 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
@@ -33,12 +32,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   const privateKey = wallet.privateKey;
 
   let snapshot;
-
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
     log('Create snapshot', { snapshot });
   });
-
   after('Restore snapshot', async () => {
     log('Restore snapshot', { snapshot });
     await provider.send('evm_revert', [snapshot]);
@@ -101,74 +98,78 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fARB balance to 1000', async () => {
+  it('should set ARB balance to 1000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fARB' }),
+      await getCollateralBalance({ address, symbol: 'ARB' }),
       0,
-      'New wallet has 0 fARB balance'
+      'New wallet has 0 ARB balance'
     );
-    const { tokenAddress } = await getCollateralConfig('fARB');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fARB' }), 1000);
+    await setTokenBalance({
+      wallet,
+      balance: 1000,
+      tokenAddress: require('../../deployments/extras.json').arb_address,
+      friendlyWhale: '0xf3fc178157fb3c87548baa86f9d24ba38e649b58',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'ARB' }), 1000);
   });
 
-  it('should approve fARB spending for CoreProxy', async () => {
+  it('should approve ARB spending for CoreProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fARB',
+        symbol: 'ARB',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy fARB spending'
+      'New wallet has not allowed CoreProxy ARB spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fARB',
+      symbol: 'ARB',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fARB',
+        symbol: 'ARB',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 500 fARB into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'fARB' }), 1000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fARB' }), {
+  it('should deposit 500 ARB into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'ARB' }), 1000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'ARB' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'fARB', accountId, amount: 500 });
+    await depositCollateral({ privateKey, symbol: 'ARB', accountId, amount: 500 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'fARB' }), 500);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fARB' }), {
+    assert.equal(await getCollateralBalance({ address, symbol: 'ARB' }), 500);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'ARB' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
-  it('should delegate 500 fARB into the Spartan Council pool', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fARB' }), {
+  it('should delegate 500 ARB into the Spartan Council pool', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'ARB' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
     await delegateCollateral({
       privateKey,
-      symbol: 'fARB',
+      symbol: 'ARB',
       accountId,
       amount: 500,
       poolId: 1,
     });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fARB' }), {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'ARB' }), {
       totalDeposited: 500,
       totalAssigned: 500,
       totalLocked: 0,
@@ -184,7 +185,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await borrowUsd({
       wallet,
       accountId,
-      symbol: 'fARB',
+      symbol: 'ARB',
       amount: 100,
       poolId: 1,
     });

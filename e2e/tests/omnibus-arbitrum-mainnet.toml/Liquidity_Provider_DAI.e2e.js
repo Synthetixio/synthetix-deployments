@@ -14,10 +14,9 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
@@ -99,74 +98,78 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fDAI balance to 1000', async () => {
+  it('should set DAI balance to 1000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fDAI' }),
+      await getCollateralBalance({ address, symbol: 'DAI' }),
       0,
-      'New wallet has 0 fDAI balance'
+      'New wallet has 0 DAI balance'
     );
-    const { tokenAddress } = await getCollateralConfig('fDAI');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
+    await setTokenBalance({
+      wallet,
+      balance: 1000,
+      tokenAddress: require('../../deployments/extras.json').dai_address,
+      friendlyWhale: '0xd85e038593d7a098614721eae955ec2022b9b91b',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'DAI' }), 1000);
   });
 
-  it('should approve fDAI spending for CoreProxy', async () => {
+  it('should approve DAI spending for CoreProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fDAI',
+        symbol: 'DAI',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy fDAI spending'
+      'New wallet has not allowed CoreProxy DAI spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fDAI',
+      symbol: 'DAI',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fDAI',
+        symbol: 'DAI',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 500 fDAI into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 1000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+  it('should deposit 500 DAI into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'DAI' }), 1000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'DAI' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'fDAI', accountId, amount: 500 });
+    await depositCollateral({ privateKey, symbol: 'DAI', accountId, amount: 500 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'fDAI' }), 500);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+    assert.equal(await getCollateralBalance({ address, symbol: 'DAI' }), 500);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'DAI' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
-  it('should delegate 500 fDAI into the Spartan Council pool', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+  it('should delegate 500 DAI into the Spartan Council pool', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'DAI' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
     await delegateCollateral({
       privateKey,
-      symbol: 'fDAI',
+      symbol: 'DAI',
       accountId,
       amount: 500,
       poolId: 1,
     });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fDAI' }), {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'DAI' }), {
       totalDeposited: 500,
       totalAssigned: 500,
       totalLocked: 0,
@@ -182,7 +185,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await borrowUsd({
       wallet,
       accountId,
-      symbol: 'fDAI',
+      symbol: 'DAI',
       amount: 100,
       poolId: 1,
     });
