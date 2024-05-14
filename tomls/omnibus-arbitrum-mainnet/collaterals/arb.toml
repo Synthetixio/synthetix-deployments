@@ -26,7 +26,8 @@ depositingEnabled = true
 
 [invoke.CoreProxy_setPoolCollateralConfiguration_arb]
 target = ["system.CoreProxy"]
-fromCall.func = "owner"
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
