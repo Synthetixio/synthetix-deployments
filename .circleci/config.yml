@@ -674,14 +674,15 @@ workflows:
     jobs:
       - lint
 
-      - fork-test:
-          name: test-base-sepolia-andromeda
-          parallelism: 4
-          toml: omnibus-base-sepolia-andromeda.toml
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+      # TODO: re-enable when previous release is completely published
+      #- fork-test:
+      #    name: test-base-sepolia-andromeda
+      #    parallelism: 4
+      #    toml: omnibus-base-sepolia-andromeda.toml
+      #    package: "synthetix-omnibus:latest"
+      #    preset: "andromeda"
+      #    chain-id: 84532
+      #    provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-base-mainnet-andromeda
