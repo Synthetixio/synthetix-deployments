@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsArkmMaxMarketSize]
-defaultValue = "<%= String(100_000) %>"
+defaultValue = "<%= String(400_000) %>"
 
 [setting.perpsArkmMaxMarketValue]
 defaultValue = "<%= String(250_000) %>"
