@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsGmxMaxMarketSize]
-defaultValue = "<%= String(10_000) %>"
+defaultValue = "<%= String(35_000) %>"
 
 [setting.perpsGmxMaxMarketValue]
-defaultValue = "<%= String(250_000) %>"
+defaultValue = "<%= String(500_000) %>"
 
 [setting.perpsGmxInitialMarginRatio]
 defaultValue = "1.27"

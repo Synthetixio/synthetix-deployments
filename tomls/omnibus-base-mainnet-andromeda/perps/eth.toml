@@ -17,10 +17,10 @@ defaultValue = "0.000001"
 defaultValue = "0.0005"
 
 [setting.perpsEthMaxMarketSize]
-defaultValue = "<%= String(5_000) %>"
+defaultValue = "<%= String(10_000) %>"
 
 [setting.perpsEthMaxMarketValue]
-defaultValue = "<%= String(10_000_000) %>"
+defaultValue = "<%= String(15_000_000) %>"
 
 [setting.perpsEthInitialMarginRatio]
 defaultValue = "1.16"
@@ -54,3 +54,4 @@ defaultValue = "0.0005"
 
 [setting.perpsEthEndorsedLiquidator]
 defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
