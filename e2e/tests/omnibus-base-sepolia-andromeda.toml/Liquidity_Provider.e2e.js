@@ -29,7 +29,7 @@ const {
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 20_000_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 100_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
