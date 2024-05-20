@@ -17,10 +17,10 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsRuneMaxMarketSize]
-defaultValue = "<%= String(94_300) %>"
+defaultValue = "<%= String(300_000) %>"
 
 [setting.perpsRuneMaxMarketValue]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "<%= String(1_000_000) %>"
 
 [setting.perpsRuneInitialMarginRatio]
 defaultValue = "5.39"
