@@ -8,10 +8,13 @@ include = [
     "tomls/permissions.toml",
     "tomls/oracles/eth.toml",
     "tomls/collaterals/weth.toml",
+    "tomls/collaterals/snx.toml",
     "tomls/pools/spartan-council.toml",
 ]
 
 # --- pkg/import settings --- #
+#
+#
 
 [setting.salt]
 defaultValue = "carina"
@@ -20,18 +23,17 @@ defaultValue = "carina"
 defaultValue = "carina"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
-
-[setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:1.0.0-alpha.1"
+defaultValue = "synthetix-bfp-market:3.3.18"
 
-[setting.lido_wsteth_to_eth_ratio_oracle_package]
-defaultValue = "lido-wsteth-to-eth-ratio-oracle:3.3.17"
+[setting.wsteth_to_steth_ratio_oracle]
+defaultValue = "wsteth-to-steth-ratio-oracle:3.3.18"
 
 # --- Address settings --- #
+#
+#
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
@@ -39,21 +41,39 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.deployer]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.snx_address]
+defaultValue = "0x29Ba9b0C440CE9e7B0E46138B5Fda83c22467006"
+description = "https://github.com/Synthetixio/synthetix-docs/blob/master/content/addresses.md"
+
+[setting.snx_aggregator_address]
+defaultValue = "0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC"
+description = "https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1#sepolia-testnet"
+
+[setting.snx_chainlink_staleness_tolerance]
+defaultValue = "3600"
+
 [setting.weth_address]
 defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
 
-# @see: https://sepolia.etherscan.io/token/0xb82381a3fbd3fafa77b3a7be693342618240067b
 [setting.wsteth_address]
 defaultValue = "0xb82381a3fbd3fafa77b3a7be693342618240067b"
+description = "wstETH token address https://sepolia.etherscan.io/token/0xb82381a3fbd3fafa77b3a7be693342618240067b"
 
-# NOTE: `0x694AA1769357215DE4FAC081bf1f309aDC325306` is actually ETH/USD.
 [setting.steth_aggregator_address]
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+description = "https://docs.chain.link/data-feeds/price-feeds/addresses/?network=ethereum&page=1 is actually ETH/USD."
+
+[setting.pyth_address]
+defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
+description = "https://docs.pyth.network/price-feeds/contract-addresses/evm#testnets"
 
 # --- Synthetix pool settings -- #
+#
+#
 
 [setting.eth_aggregator_address]
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+description = "https://docs.chain.link/data-feeds/price-feeds/addresses/?network=ethereum&page=1"
 
 [setting.weth_liquidation_reward]
 defaultValue = "<%= parseEther('10') %>"
@@ -70,19 +90,24 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-# --- Provision spot market --- #
+# --- BFP configurations  -- #
+#
+#
+[setting.weth_max_collateral]
+defaultValue = "<%= parseEther('100000') %>"
 
-[provision.spot_market_factory]
-source = "<%= settings.spot_market_package %>"
-targetPreset = "<%= settings.target_preset %>"
-options.coreProxyOwner = "<%= settings.owner %>"
-options.owner = "<%= settings.owner %>"
-options.salt = "<%= settings.salt %>"
-options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
-options.synthetixPreset = "<%= settings.target_preset %>"
-depends = ["provision.system"]
+[setting.wsteth_max_collateral]
+defaultValue = "<%= parseEther('100000') %>"
+
+[setting.weth_skew_scale]
+defaultValue = "<%= parseEther('1000000') %>"
+
+[setting.wsteth_skew_scale]
+defaultValue = "<%= parseEther('1000000') %>"
 
 # --- Provision bfp market --- #
+#
+#
 
 [provision.bfp_market_factory]
 source = "<%= settings.bfp_market_package %>"
@@ -92,34 +117,37 @@ options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
-depends = ["provision.spot_market_factory"]
-
-# --- Configure oracles for markets --- #
-
-# wstETH/stETH oracle
-[provision.lido_wsteth_to_steth_ratio_oracle]
-source = "<%= settings.lido_wsteth_to_eth_ratio_oracle_package %>"
-targetPreset = "<%= settings.target_preset %>"
-options.wsteth = "<%= settings.wsteth_address %>"
 depends = ["provision.system"]
 
-[invoke.register_node_lido_wsteth_to_steth_ratio_oracle]
+# --- Configure oracles for markets --- #
+#
+#
+
+# wstETH/stETH oracle
+[provision.wsteth_to_steth_ratio_oracle]
+source = "<%= settings.wsteth_to_steth_ratio_oracle %>"
+targetPreset = "<%= settings.target_preset %>"
+options.wsteth = "<%= settings.wsteth_address %>"
+
+[invoke.register_node_wsteth_to_steth_ratio_oracle]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     # external node
     2,
     # contract
-    "<%= defaultAbiCoder.encode(['address'], [imports.lido_wsteth_to_steth_ratio_oracle.contracts.LidoWstEthToStEthRatioOracle.address]) %>",
+    "<%= defaultAbiCoder.encode(['address'], [imports.wsteth_to_steth_ratio_oracle.contracts.WstEthToStEthRatioOracle.address]) %>",
     [
     ],
 ]
-extra.lido_wsteth_to_steth_ratio_oracle_id.event = "NodeRegistered"
-extra.lido_wsteth_to_steth_ratio_oracle_id.arg = 0
+extra.wsteth_to_steth_ratio_oracle_id.event = "NodeRegistered"
+extra.wsteth_to_steth_ratio_oracle_id.arg = 0
+depends = ["provision.wsteth_to_steth_ratio_oracle"]
 
 # stETH/USD oracle
 #
-# https://etherscan.io/address/0x86392dC19c0b719886221c78AB11eb8Cf5c52812
+#
+#
 [invoke.register_node_steth_oracle_node]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
@@ -145,39 +173,264 @@ args = [
     # mulDecimal
     "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
     # stETH/USD, wstETH/stETH
-    ["<%= extras.steth_oracle_node_id %>", "<%= extras.lido_wsteth_to_steth_ratio_oracle_id %>"],
+    ["<%= extras.steth_oracle_node_id %>", "<%= extras.wsteth_to_steth_ratio_oracle_id %>"],
 ]
 extra.wsteth_oracle_node_id.event = "NodeRegistered"
 extra.wsteth_oracle_node_id.arg = 0
-depends = [
-    "invoke.register_node_steth_oracle_node",
-    "invoke.register_node_lido_wsteth_to_steth_ratio_oracle",
-]
-
-# --- Configure synths markets --- #
-
-# swsteth spot synth
-
-# seth spot synth
 
 # --- Configure bfp --- #
+#
+#
 
-# --- Configure bfp markets --- #
+# --- Set pyth --- #
+#
+#
+#
+[invoke.set_pyth]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setPyth"
+args = ["<%= settings.pyth_address %>"]
 
-# ethperp
+# --- Add Rewards distributors --- #
+#
+#
+
+[invoke.create_wsteth_rewards_distributor]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "createRewardDistributor"
+extra.wsteth_rewards_distributor.event = "RewardDistributorCreated"
+extra.wsteth_rewards_distributor.arg = 0
+
+[[invoke.create_wsteth_rewards_distributor.args]]
+poolId = "<%= settings.sc_pool_id %>"
+name = "wsteth RewardDistributor"
+token = "<%= settings.wsteth_address %>"
+collateralTypes = [
+    "<%= settings.wsteth_address %>",
+    "<%= settings.weth_address %>",
+    "<%= settings.snx_address %>",
+]
+
+[invoke.create_weth_rewards_distributor]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "createRewardDistributor"
+extra.weth_rewards_distributor.event = "RewardDistributorCreated"
+extra.weth_rewards_distributor.arg = 0
+
+[[invoke.create_weth_rewards_distributor.args]]
+poolId = "<%= settings.sc_pool_id %>"
+name = "weth RewardDistributor"
+token = "<%= settings.weth_address %>"
+collateralTypes = [
+    "<%= settings.wsteth_address %>",
+    "<%= settings.weth_address %>",
+    "<%= settings.snx_address %>",
+]
+
+# --- Global Market configuration --- #
+#
+#
+
+[invoke.set_global_market_configuration]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setMarketConfiguration"
+
+[[invoke.set_global_market_configuration.args]]
+pythPublishTimeMin = 12
+pythPublishTimeMax = 60
+minOrderAge = 12
+maxOrderAge = 60
+minKeeperFeeUsd = "<%= parseEther('15') %>"
+maxKeeperFeeUsd = "<%= parseEther('500') %>"
+keeperProfitMarginUsd = "<%= parseEther('20') %>"
+keeperProfitMarginPercent = "<%= parseEther('0.2') %>"
+keeperSettlementGasUnits = 1200000
+keeperCancellationGasUnits = 600000
+keeperFlagGasUnits = 1200000
+keeperLiquidateMarginGasUnits = 1200000
+keeperLiquidationGasUnits = 1200000
+keeperLiquidationFeeUsd = "<%= parseEther('5') %>"
+keeperLiquidationEndorsed = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" # TODO, this is currently owner, change to a keeper
+collateralDiscountScalar = "<%= parseEther('1') %>"
+minCollateralDiscount = "<%= parseEther('0.01') %>"
+maxCollateralDiscount = "<%= parseEther('0.05') %>"
+sellExactInMaxSlippagePercent = "<%= parseEther('0.05') %>"
+utilizationBreakpointPercent = "<%= parseEther('0.85') %>"
+lowUtilizationSlopePercent = "<%= parseEther('0.0003') %>"
+highUtilizationSlopePercent = "<%= parseEther('0.015') %>"
+
+# --- Set eth oracle node id --- #
+#
+#
+#
+[invoke.set_eth_oracle_node_id]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setEthOracleNodeId"
+args = ["<%= extras.eth_oracle_id %>"]
+
+# --- Create Market --- #
+#
+#
+#
+[invoke.create_market]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = [{ name = "<%= formatBytes32String('ETHPERP') %>" }]
+extra.eth_market_id.event = "MarketCreated"
+extra.eth_market_id.arg = 0
+
+# --- Set Specific Market Configuration --- #
+#
+#
+
+[invoke.set_market_configuration]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setMarketConfigurationById"
+
+[[invoke.set_market_configuration.args]]
+marketId = "<%= extras.eth_market_id %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
+pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+makerFee = "<%= parseEther('0.0002') %>"
+takerFee = "<%= parseEther('0.0006') %>"
+maxMarketSize = "<%= parseEther('27000') %>"
+maxFundingVelocity = "<%= parseEther('9') %>"
+skewScale = "<%= parseEther('1000000') %>"
+fundingVelocityClamp = "<%= parseEther('00001') %>"
+minCreditPercent = "<%= parseEther('1') %>"
+minMarginUsd = "<%= parseEther('500') %>"
+minMarginRatio = "<%= parseEther('0.05') %>"
+incrementalMarginScalar = "<%= parseEther('1') %>"
+maintenanceMarginScalar = "<%= parseEther('0.5') %>"
+maxInitialMarginRatio = "<%= parseEther('0.9') %>"
+liquidationRewardPercent = "<%= parseEther('0.00002') %>"
+liquidationLimitScalar = "<%= parseEther('1') %>"
+liquidationWindowDuration = 30
+liquidationMaxPd = "<%= parseEther('0.0016') %>"
+
+# --- Configure collateral for BFP --- #
+#
+#
+# TODO figure out how to get sUSD address
+[invoke.set_margin_collateral_configuration]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setMarginCollateralConfiguration"
+args = [
+    [ # collateral addresses
+        "<%= settings.weth_address %>",
+        "<%= settings.wsteth_address %>",
+    ],
+    [ # oracle node ids
+        "<%= extras.eth_oracle_id %>",
+        "<%= extras.wsteth_oracle_node_id %>",
+    ],
+    [ # maxAllowances
+        "<%= settings.weth_max_collateral %>",
+        "<%= settings.wsteth_max_collateral %>",
+    ],
+    [ # skewScales
+        "<%= settings.weth_skew_scale %>",
+        "<%= settings.wsteth_skew_scale %>",
+    ],
+    [ # rewardDistributors
+        "<%= extras.weth_rewards_distributor %>",
+        "<%= extras.wsteth_rewards_distributor %>",
+    ],
+]
+
+# --- Configure Core --- #
+#
+#
+
+# Add all perp market collateral as core collateral.
+# ETH and SNX have already been added from imports.
+#
+#
+#
+[invoke.configureWstethCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+
+[[invoke.configureWstethCollateral.args]]
+tokenAddress = "<%= settings.wsteth_address %>"
+oracleNodeId = "<%= extras.wsteth_oracle_node_id %>"
+issuanceRatioD18 = "<%= parseEther('3') %>"
+liquidationRatioD18 = "<%= parseEther('1.5') %>"
+liquidationRewardD18 = "<%= parseEther('0.01') %>"
+minDelegationD18 = "<%= parseEther('0.01') %>"
+depositingEnabled = false
+
+# --- Configure maximum market collateral in Core --- #
+#
+#
+
+[invoke.weth_maximum_market_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.eth_market_id %>",
+    "<%= settings.weth_address %>",
+    "<%= settings.weth_max_collateral %>",
+]
+
+[invoke.wsteth_maximum_market_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.eth_market_id %>",
+    "<%= settings.wsteth_address %>",
+    "<%= settings.wsteth_max_collateral %>",
+]
+
+# --- Register Reward Distributors with Core --- #
+#
+#
+
+[invoke.register_wsteth_rewards_distributor]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.wsteth_address %>",
+    "<%= extras.wsteth_rewards_distributor %>",
+]
+
+[invoke.register_weth_rewards_distributor]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.weth_address %>",
+    "<%= extras.weth_rewards_distributor %>",
+]
 
 # --- Configure SC pool after market creation--- #
+#
+#
 
-# [invoke.set_pool_configuration_sc]
-# target = ["system.CoreProxy"]
-# fromCall.func = "getPoolOwner"
-# fromCall.args = ["<%= settings.sc_pool_id %>"]
-# func = "setPoolConfiguration"
-# args = [
-#     "<%= settings.sc_pool_id %>",
-#     [
-#         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#         { marketId = "<%= extras.synth_wsteth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#         { marketId = "<%= extras.eth_perp_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#     ],
-# ]
+[invoke.set_pool_configuration_sc]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= extras.eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
