@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsAxlMaxMarketSize]
-defaultValue = "<%= String(400_000) %>"
+defaultValue = "<%= String(1_000_000) %>"
 
 [setting.perpsAxlMaxMarketValue]
 defaultValue = "<%= String(500_000) %>"
