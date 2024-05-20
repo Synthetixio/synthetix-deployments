@@ -8,12 +8,12 @@ const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
-const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 21_920_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 100_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -62,7 +62,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: SYNTH_USDC_MAX_MARKET_COLLATERAL });
+    await setTokenBalance({
+      wallet,
+      balance: SYNTH_USDC_MAX_MARKET_COLLATERAL,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
+    });
     assert.equal(
       await getCollateralBalance({ address, symbol: 'USDC' }),
       SYNTH_USDC_MAX_MARKET_COLLATERAL

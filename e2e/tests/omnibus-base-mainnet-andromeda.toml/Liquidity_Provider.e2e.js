@@ -20,7 +20,7 @@ const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { spotSell } = require('../../tasks/spotSell');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
-const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
@@ -80,7 +80,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: 100_000 });
+    await setTokenBalance({
+      wallet,
+      balance: 100_000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
+    });
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
   });
 

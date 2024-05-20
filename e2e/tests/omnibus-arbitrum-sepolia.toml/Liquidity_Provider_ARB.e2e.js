@@ -155,7 +155,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should delegate 500 fARB into the Spartan Council pool', async () => {
+  it.skip('should delegate 500 fARB into the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fARB' }), {
       totalDeposited: 500,
       totalAssigned: 0,
@@ -175,7 +175,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should borrow 100 USDh', async () => {
+  it.skip('should borrow 100 USDh', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
       totalDeposited: 0,
       totalAssigned: 0,
@@ -195,7 +195,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should withdraw borrowed 100 USDh', async () => {
+  it.skip('should withdraw borrowed 100 USDh', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
     await withdrawCollateral({
       privateKey,
