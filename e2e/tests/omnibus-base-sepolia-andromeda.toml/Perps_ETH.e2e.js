@@ -78,7 +78,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest,10_000);
+    assert.equal(maxOpenInterest, 10_000);
   });
 
   it('should make a price update', async () => {
