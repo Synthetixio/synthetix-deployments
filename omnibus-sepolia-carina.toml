@@ -93,11 +93,18 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 # --- BFP configurations  -- #
 #
 #
+
+[setting.susd_max_collateral]
+defaultValue = "<%= parseEther(String(100_000_000)) %>"
+
 [setting.weth_max_collateral]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.wsteth_max_collateral]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+[setting.susd_skew_scale]
+defaultValue = "0" # skew scale is not used for sUSD.
 
 [setting.weth_skew_scale]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
@@ -316,31 +323,32 @@ liquidationMaxPd = "<%= parseEther('0.0016') %>"
 # --- Configure collateral for BFP --- #
 #
 #
-# TODO figure out how to get sUSD address
+
 [invoke.set_margin_collateral_configuration]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarginCollateralConfiguration"
 args = [
     [ # collateral addresses
+        "<%= system.USDProxy.address %>",
         "<%= settings.weth_address %>",
         "<%= settings.wsteth_address %>",
     ],
     [ # oracle node ids
-        "<%= extras.eth_oracle_id %>",
-        "<%= extras.wsteth_oracle_node_id %>",
+        "<%= imports.system.settings.const_one_oracle_id %>",
     ],
     [ # maxAllowances
+        "<%= settings.susd_max_collateral %>",
         "<%= settings.weth_max_collateral %>",
         "<%= settings.wsteth_max_collateral %>",
     ],
     [ # skewScales
+        "<%= settings.susd_skew_scale %>",
         "<%= settings.weth_skew_scale %>",
         "<%= settings.wsteth_skew_scale %>",
     ],
     [ # rewardDistributors
-        "<%= extras.weth_rewards_distributor %>",
-        "<%= extras.wsteth_rewards_distributor %>",
+        "0x0000000000000000000000000000000000000000",
     ],
 ]
 
