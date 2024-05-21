@@ -26,7 +26,7 @@ defaultValue = "carina"
 defaultValue = "synthetix:3.3.18"
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.3.18"
+defaultValue = "synthetix-bfp-market:1.0.0-alpha.2"
 
 [setting.wsteth_to_steth_ratio_oracle]
 defaultValue = "wsteth-to-steth-ratio-oracle:3.3.18"
@@ -253,12 +253,10 @@ keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationFeeUsd = "<%= parseEther('5') %>"
 keeperLiquidationEndorsed = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" # TODO, this is currently owner, change to a keeper
 collateralDiscountScalar = "<%= parseEther('1') %>"
 minCollateralDiscount = "<%= parseEther('0.01') %>"
 maxCollateralDiscount = "<%= parseEther('0.05') %>"
-sellExactInMaxSlippagePercent = "<%= parseEther('0.05') %>"
 utilizationBreakpointPercent = "<%= parseEther('0.85') %>"
 lowUtilizationSlopePercent = "<%= parseEther('0.0003') %>"
 highUtilizationSlopePercent = "<%= parseEther('0.015') %>"
