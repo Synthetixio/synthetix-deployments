@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsOpMaxMarketSize]
-defaultValue = "<%= String(500_000) %>"
+defaultValue = "<%= String(750_000) %>"
 
 [setting.perpsOpMaxMarketValue]
 defaultValue = "<%= String(1_000_000) %>"
