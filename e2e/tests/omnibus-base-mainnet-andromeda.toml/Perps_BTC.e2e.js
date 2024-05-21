@@ -44,7 +44,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(wallet.address);
   });
 
-  it('should set BTC balance to 100', async () => {
+  it('should set ETH balance to 100', async () => {
     assert.equal(
       await getEthBalance({ address: wallet.address }),
       0,
