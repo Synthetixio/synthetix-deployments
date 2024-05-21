@@ -94,16 +94,16 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 #
 #
 [setting.weth_max_collateral]
-defaultValue = "<%= parseEther('100000') %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.wsteth_max_collateral]
-defaultValue = "<%= parseEther('100000') %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.weth_skew_scale]
-defaultValue = "<%= parseEther('1000000') %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.wsteth_skew_scale]
-defaultValue = "<%= parseEther('1000000') %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 # --- Provision bfp market --- #
 #
@@ -298,9 +298,9 @@ oracleNodeId = "<%= extras.eth_oracle_id %>"
 pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 makerFee = "<%= parseEther('0.0002') %>"
 takerFee = "<%= parseEther('0.0006') %>"
-maxMarketSize = "<%= parseEther('27000') %>"
+maxMarketSize = "<%= parseEther(String(27_000)) %>"
 maxFundingVelocity = "<%= parseEther('9') %>"
-skewScale = "<%= parseEther('1000000') %>"
+skewScale = "<%= parseEther(String(1_000_000)) %>"
 fundingVelocityClamp = "<%= parseEther('00001') %>"
 minCreditPercent = "<%= parseEther('1') %>"
 minMarginUsd = "<%= parseEther('500') %>"
