@@ -17,7 +17,7 @@ defaultValue = "0.0002"
 defaultValue = "0.0010"
 
 [setting.perpsBomeMaxMarketSize]
-defaultValue = "<%= String(80_000_000) %>"
+defaultValue = "<%= String(90_000_000) %>"
 
 [setting.perpsBomeMaxMarketValue]
 defaultValue = "<%= String(500_000) %>"
