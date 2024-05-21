@@ -180,7 +180,7 @@ args = [
     # mulDecimal
     "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
     # stETH/USD, wstETH/stETH
-    ["<%= extras.steth_oracle_node_id %>", "<%= extras.wsteth_to_steth_ratio_oracle_id %>"],
+    ["<%= settings.steth_oracle_node_id %>", "<%= settings.wsteth_to_steth_ratio_oracle_id %>"],
 ]
 extra.wsteth_oracle_node_id.event = "NodeRegistered"
 extra.wsteth_oracle_node_id.arg = 0
@@ -276,7 +276,7 @@ highUtilizationSlopePercent = "<%= parseEther('0.015') %>"
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setEthOracleNodeId"
-args = ["<%= extras.eth_oracle_id %>"]
+args = ["<%= settings.eth_oracle_id %>"]
 
 # --- Create Market --- #
 #
@@ -300,8 +300,8 @@ fromCall.func = "owner"
 func = "setMarketConfigurationById"
 
 [[invoke.set_market_configuration.args]]
-marketId = "<%= extras.eth_market_id %>"
-oracleNodeId = "<%= extras.eth_oracle_id %>"
+marketId = "<%= settings.eth_market_id %>"
+oracleNodeId = "<%= settings.eth_oracle_id %>"
 pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 makerFee = "<%= parseEther('0.0002') %>"
 takerFee = "<%= parseEther('0.0006') %>"
@@ -336,6 +336,8 @@ args = [
     ],
     [ # oracle node ids
         "<%= imports.system.settings.const_one_oracle_id %>",
+        "<%= settings.eth_oracle_id %>",
+        "<%= settings.wsteth_oracle_node_id %>",
     ],
     [ # maxAllowances
         "<%= settings.susd_max_collateral %>",
@@ -349,6 +351,8 @@ args = [
     ],
     [ # rewardDistributors
         "0x0000000000000000000000000000000000000000",
+        "<%= settings.weth_rewards_distributor %>",
+        "<%= settings.wsteth_rewards_distributor %>",
     ],
 ]
 
@@ -368,7 +372,7 @@ func = "configureCollateral"
 
 [[invoke.configureWstethCollateral.args]]
 tokenAddress = "<%= settings.wsteth_address %>"
-oracleNodeId = "<%= extras.wsteth_oracle_node_id %>"
+oracleNodeId = "<%= settings.wsteth_oracle_node_id %>"
 issuanceRatioD18 = "<%= parseEther('3') %>"
 liquidationRatioD18 = "<%= parseEther('1.5') %>"
 liquidationRewardD18 = "<%= parseEther('0.01') %>"
@@ -384,7 +388,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureMaximumMarketCollateral"
 args = [
-    "<%= extras.eth_market_id %>",
+    "<%= settings.eth_market_id %>",
     "<%= settings.weth_address %>",
     "<%= settings.weth_max_collateral %>",
 ]
@@ -394,7 +398,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureMaximumMarketCollateral"
 args = [
-    "<%= extras.eth_market_id %>",
+    "<%= settings.eth_market_id %>",
     "<%= settings.wsteth_address %>",
     "<%= settings.wsteth_max_collateral %>",
 ]
@@ -411,7 +415,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.wsteth_address %>",
-    "<%= extras.wsteth_rewards_distributor %>",
+    "<%= settings.wsteth_rewards_distributor %>",
 ]
 
 [invoke.register_weth_rewards_distributor]
@@ -422,7 +426,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.weth_address %>",
-    "<%= extras.weth_rewards_distributor %>",
+    "<%= settings.weth_rewards_distributor %>",
 ]
 
 # --- Configure SC pool after market creation--- #
@@ -437,6 +441,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= extras.eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= settings.eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
