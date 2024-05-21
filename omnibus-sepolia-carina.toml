@@ -90,10 +90,23 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.wstethIssuanceRatioD18]
+defaultValue = "<%= parseEther('3') %>"
+
+[setting.wstethLiquidationRatioD18]
+defaultValue = "<%= parseEther('1.5') %>"
+
+[setting.wstethLiquidationRewardD18]
+defaultValue = "<%= parseEther('0.01') %>"
+
+[setting.wstethLMinDelegationD18]
+defaultValue = "<%= parseEther('0.01') %>"
+
 # --- BFP configurations  -- #
 #
 #
 
+# Collaterals
 [setting.susd_max_collateral]
 defaultValue = "<%= parseEther(String(100_000_000)) %>"
 
@@ -111,6 +124,83 @@ defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.wsteth_skew_scale]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+# Global market configurations
+[setting.minKeeperFeeUsd]
+defaultValue = "<%= parseEther('15') %>"
+
+[setting.maxKeeperFeeUsd]
+defaultValue = "<%= parseEther('500') %>"
+
+[setting.keeperProfitMarginUsd]
+defaultValue = "<%= parseEther('20') %>"
+
+[setting.keeperProfitMarginPercent]
+defaultValue = "<%= parseEther('0.2') %>"
+
+[setting.collateralDiscountScalar]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.minCollateralDiscount]
+defaultValue = "<%= parseEther('0.01') %>"
+
+[setting.maxCollateralDiscount]
+defaultValue = "<%= parseEther('0.05') %>"
+
+[setting.utilizationBreakpointPercent]
+defaultValue = "<%= parseEther('0.85') %>"
+
+[setting.lowUtilizationSlopePercent]
+defaultValue = "<%= parseEther('0.0003') %>"
+
+[setting.highUtilizationSlopePercent]
+defaultValue = "<%= parseEther('0.015') %>"
+
+# ETH market configurations
+[setting.makerFee]
+defaultValue = "<%= parseEther('0.0002') %>"
+
+[setting.takerFee]
+defaultValue = "<%= parseEther('0.0006') %>"
+
+[setting.maxMarketSize]
+defaultValue = "<%= parseEther(String(27_000)) %>"
+
+[setting.maxFundingVelocity]
+defaultValue = "<%= parseEther('9') %>"
+
+[setting.skewScale]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+[setting.fundingVelocityClamp]
+defaultValue = "<%= parseEther('0.00001') %>"
+
+[setting.minCreditPercent]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.minMarginUsd]
+defaultValue = "<%= parseEther('500') %>"
+
+[setting.minMarginRatio]
+defaultValue = "<%= parseEther('0.05') %>"
+
+[setting.incrementalMarginScalar]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.maintenanceMarginScalar]
+defaultValue = "<%= parseEther('0.5') %>"
+
+[setting.maxInitialMarginRatio]
+defaultValue = "<%= parseEther('0.9') %>"
+
+[setting.liquidationRewardPercent]
+defaultValue = "<%= parseEther('0.00002') %>"
+
+[setting.liquidationLimitScalar]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.liquidationMaxPd]
+defaultValue = "<%= parseEther('0.0016') %>"
 
 # --- Provision bfp market --- #
 #
@@ -251,22 +341,22 @@ pythPublishTimeMin = 12
 pythPublishTimeMax = 60
 minOrderAge = 12
 maxOrderAge = 60
-minKeeperFeeUsd = "<%= parseEther('15') %>"
-maxKeeperFeeUsd = "<%= parseEther('500') %>"
-keeperProfitMarginUsd = "<%= parseEther('20') %>"
-keeperProfitMarginPercent = "<%= parseEther('0.2') %>"
+minKeeperFeeUsd = "<%= settings.minKeeperFeeUsd %>"
+maxKeeperFeeUsd = "<%= settings.maxKeeperFeeUsd %>"
+keeperProfitMarginUsd = "<%= settings.keeperProfitMarginUsd %>"
+keeperProfitMarginPercent = "<%= settings.keeperProfitMarginPercent %>"
 keeperSettlementGasUnits = 1200000
 keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" # TODO, this is currently owner, change to a keeper
-collateralDiscountScalar = "<%= parseEther('1') %>"
-minCollateralDiscount = "<%= parseEther('0.01') %>"
-maxCollateralDiscount = "<%= parseEther('0.05') %>"
-utilizationBreakpointPercent = "<%= parseEther('0.85') %>"
-lowUtilizationSlopePercent = "<%= parseEther('0.0003') %>"
-highUtilizationSlopePercent = "<%= parseEther('0.015') %>"
+keeperLiquidationEndorsed = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"      # TODO, this is currently owner, change to a keeper
+collateralDiscountScalar = "<%= settings.collateralDiscountScalar %>"
+minCollateralDiscount = "<%= settings.minCollateralDiscount %>"
+maxCollateralDiscount = "<%= settings.maxCollateralDiscount %>"
+utilizationBreakpointPercent = "<%= settings.utilizationBreakpointPercent %>"
+lowUtilizationSlopePercent = "<%= settings.lowUtilizationSlopePercent  %>"
+highUtilizationSlopePercent = "<%= settings.highUtilizationSlopePercent %>"
 
 # --- Set eth oracle node id --- #
 #
@@ -290,35 +380,35 @@ args = [{ name = "<%= formatBytes32String('ETHPERP') %>" }]
 extra.eth_market_id.event = "MarketCreated"
 extra.eth_market_id.arg = 0
 
-# --- Set Specific Market Configuration --- #
+# --- Set Specific BFP Market Configuration --- #
 #
 #
 
-[invoke.set_market_configuration]
+[invoke.set_eth_market_configuration]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfigurationById"
 
-[[invoke.set_market_configuration.args]]
+[[invoke.set_eth_market_configuration.args]]
 marketId = "<%= settings.eth_market_id %>"
 oracleNodeId = "<%= settings.eth_oracle_id %>"
 pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-makerFee = "<%= parseEther('0.0002') %>"
-takerFee = "<%= parseEther('0.0006') %>"
-maxMarketSize = "<%= parseEther(String(27_000)) %>"
-maxFundingVelocity = "<%= parseEther('9') %>"
-skewScale = "<%= parseEther(String(1_000_000)) %>"
-fundingVelocityClamp = "<%= parseEther('00001') %>"
-minCreditPercent = "<%= parseEther('1') %>"
-minMarginUsd = "<%= parseEther('500') %>"
-minMarginRatio = "<%= parseEther('0.05') %>"
-incrementalMarginScalar = "<%= parseEther('1') %>"
-maintenanceMarginScalar = "<%= parseEther('0.5') %>"
-maxInitialMarginRatio = "<%= parseEther('0.9') %>"
-liquidationRewardPercent = "<%= parseEther('0.00002') %>"
-liquidationLimitScalar = "<%= parseEther('1') %>"
+makerFee = "<%= settings.makerFee %>"
+takerFee = "<%= settings.takerFee %>"
+maxMarketSize = "<%= settings.maxMarketSize %>"
+maxFundingVelocity = "<%= settings.maxFundingVelocity %>"
+skewScale = "<%= settings.skewScale %>"
+fundingVelocityClamp = "<%= settings.fundingVelocityClamp %>"
+minCreditPercent = "<%= settings.minCreditPercent %>"
+minMarginUsd = "<%= settings.minMarginUsd %>"
+minMarginRatio = "<%= settings.minMarginRatio %>"
+incrementalMarginScalar = "<%= settings.incrementalMarginScalar %>"
+maintenanceMarginScalar = "<%= settings.maintenanceMarginScalar %>"
+maxInitialMarginRatio = "<%= settings.maxInitialMarginRatio %>"
+liquidationRewardPercent = "<%= settings.liquidationRewardPercent %>"
+liquidationLimitScalar = "<%= settings.liquidationLimitScalar %>"
 liquidationWindowDuration = 30
-liquidationMaxPd = "<%= parseEther('0.0016') %>"
+liquidationMaxPd = "<%= settings.liquidationMaxPd %>"
 
 # --- Configure collateral for BFP --- #
 #
@@ -365,18 +455,18 @@ args = [
 #
 #
 #
-[invoke.configureWstethCollateral]
+[invoke.configure_wsteth_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 
-[[invoke.configureWstethCollateral.args]]
+[[invoke.configure_wsteth_collateral.args]]
 tokenAddress = "<%= settings.wsteth_address %>"
 oracleNodeId = "<%= settings.wsteth_oracle_node_id %>"
-issuanceRatioD18 = "<%= parseEther('3') %>"
-liquidationRatioD18 = "<%= parseEther('1.5') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('0.01') %>"
+issuanceRatioD18 = "<%= settings.wstethIssuanceRatioD18 %>"
+liquidationRatioD18 = "<%= settings.wstethLiquidationRatioD18 %>"
+liquidationRewardD18 = "<%= settings.wstethLiquidationRewardD18 %>"
+minDelegationD18 = "<%= settings.wstethMinDelegationD18 %>"
 depositingEnabled = false
 
 # --- Configure maximum market collateral in Core --- #
