@@ -90,13 +90,13 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "<%= settings.owner %>"
 
-[setting.wstethIssuanceRatioD18]
+[setting.wsteth_issuance_ratio_d18]
 defaultValue = "<%= parseEther('3') %>"
 
-[setting.wstethLiquidationRatioD18]
+[setting.wsteth_liquidation_ratio_d18]
 defaultValue = "<%= parseEther('1.5') %>"
 
-[setting.wstethLiquidationRewardD18]
+[setting.wsteth_liquidation_reward_d18]
 defaultValue = "<%= parseEther('0.01') %>"
 
 [setting.wstethMinDelegationD18]
@@ -126,80 +126,80 @@ defaultValue = "<%= parseEther(String(1_000_000)) %>"
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 # Global market configurations
-[setting.minKeeperFeeUsd]
+[setting.min_keeper_fee_usd]
 defaultValue = "<%= parseEther('15') %>"
 
-[setting.maxKeeperFeeUsd]
+[setting.max_keeper_fee_usd]
 defaultValue = "<%= parseEther('500') %>"
 
-[setting.keeperProfitMarginUsd]
+[setting.keeper_profit_margin_usd]
 defaultValue = "<%= parseEther('20') %>"
 
-[setting.keeperProfitMarginPercent]
+[setting.keeper_profit_margin_percent]
 defaultValue = "<%= parseEther('0.2') %>"
 
-[setting.collateralDiscountScalar]
+[setting.collateral_discount_scalar]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.minCollateralDiscount]
+[setting.min_collateral_discount]
 defaultValue = "<%= parseEther('0.01') %>"
 
-[setting.maxCollateralDiscount]
+[setting.max_collateral_discount]
 defaultValue = "<%= parseEther('0.05') %>"
 
-[setting.utilizationBreakpointPercent]
+[setting.utilization_breakpoint_percent]
 defaultValue = "<%= parseEther('0.80') %>"
 
-[setting.lowUtilizationSlopePercent]
+[setting.low_utilization_slope_percent]
 defaultValue = "<%= parseEther('0.000025') %>"
 
-[setting.highUtilizationSlopePercent]
+[setting.high_utilization_slope_percent]
 defaultValue = "<%= parseEther('0.01') %>"
 
 # ETH market configurations
-[setting.makerFee]
+[setting.maker_fee]
 defaultValue = "<%= parseEther('0.0002') %>"
 
-[setting.takerFee]
+[setting.taker_fee]
 defaultValue = "<%= parseEther('0.0006') %>"
 
-[setting.maxMarketSize]
+[setting.max_market_size]
 defaultValue = "<%= parseEther(String(27_000)) %>"
 
-[setting.maxFundingVelocity]
+[setting.max_funding_velocity]
 defaultValue = "<%= parseEther('9') %>"
 
-[setting.skewScale]
+[setting.skew_scale]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
-[setting.fundingVelocityClamp]
+[setting.funding_velocity_clamp]
 defaultValue = "<%= parseEther('0.00001') %>"
 
-[setting.minCreditPercent]
+[setting.min_credit_percent]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.minMarginUsd]
+[setting.min_margin_usd]
 defaultValue = "<%= parseEther('500') %>"
 
-[setting.minMarginRatio]
+[setting.min_margin_ratio]
 defaultValue = "<%= parseEther('0.05') %>"
 
-[setting.incrementalMarginScalar]
+[setting.incremental_margin_scalar]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.maintenanceMarginScalar]
+[setting.maintenance_margin_scalar]
 defaultValue = "<%= parseEther('0.5') %>"
 
-[setting.maxInitialMarginRatio]
+[setting.max_initial_margin_ratio]
 defaultValue = "<%= parseEther('0.9') %>"
 
-[setting.liquidationRewardPercent]
+[setting.liquidation_reward_percent]
 defaultValue = "<%= parseEther('0.00002') %>"
 
-[setting.liquidationLimitScalar]
+[setting.liquidation_limit_scalar]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.liquidationMaxPd]
+[setting.liquidation_max_pd]
 defaultValue = "<%= parseEther('0.0016') %>"
 
 # --- Provision bfp market --- #
@@ -341,22 +341,22 @@ pythPublishTimeMin = 12
 pythPublishTimeMax = 60
 minOrderAge = 12
 maxOrderAge = 60
-minKeeperFeeUsd = "<%= settings.minKeeperFeeUsd %>"
-maxKeeperFeeUsd = "<%= settings.maxKeeperFeeUsd %>"
-keeperProfitMarginUsd = "<%= settings.keeperProfitMarginUsd %>"
-keeperProfitMarginPercent = "<%= settings.keeperProfitMarginPercent %>"
+minKeeperFeeUsd = "<%= settings.min_keeper_fee_usd %>"
+maxKeeperFeeUsd = "<%= settings.max_keeper_fee_usd %>"
+keeperProfitMarginUsd = "<%= settings.keeper_profit_margin_usd %>"
+keeperProfitMarginPercent = "<%= settings.keeper_profit_margin_percent %>"
 keeperSettlementGasUnits = 1200000
 keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "<%= settings.deployer %>"                        # TODO, this is currently owner, change to a keeper
-collateralDiscountScalar = "<%= settings.collateralDiscountScalar %>"
-minCollateralDiscount = "<%= settings.minCollateralDiscount %>"
-maxCollateralDiscount = "<%= settings.maxCollateralDiscount %>"
-utilizationBreakpointPercent = "<%= settings.utilizationBreakpointPercent %>"
-lowUtilizationSlopePercent = "<%= settings.lowUtilizationSlopePercent  %>"
-highUtilizationSlopePercent = "<%= settings.highUtilizationSlopePercent %>"
+keeperLiquidationEndorsed = "<%= settings.deployer %>"                          # TODO, this is currently owner, change to a keeper
+collateralDiscountScalar = "<%= settings.collateral_discount_scalar %>"
+minCollateralDiscount = "<%= settings.min_collateral_discount %>"
+maxCollateralDiscount = "<%= settings.max_collateral_discount %>"
+utilizationBreakpointPercent = "<%= settings.utilization_breakpoint_percent %>"
+lowUtilizationSlopePercent = "<%= settings.low_utilization_slope_percent  %>"
+highUtilizationSlopePercent = "<%= settings.high_utilization_slope_percent %>"
 
 # --- Set eth oracle node id --- #
 #
@@ -393,22 +393,22 @@ func = "setMarketConfigurationById"
 marketId = "<%= settings.eth_market_id %>"
 oracleNodeId = "<%= settings.eth_oracle_id %>"
 pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-makerFee = "<%= settings.makerFee %>"
-takerFee = "<%= settings.takerFee %>"
-maxMarketSize = "<%= settings.maxMarketSize %>"
-maxFundingVelocity = "<%= settings.maxFundingVelocity %>"
-skewScale = "<%= settings.skewScale %>"
-fundingVelocityClamp = "<%= settings.fundingVelocityClamp %>"
-minCreditPercent = "<%= settings.minCreditPercent %>"
-minMarginUsd = "<%= settings.minMarginUsd %>"
-minMarginRatio = "<%= settings.minMarginRatio %>"
-incrementalMarginScalar = "<%= settings.incrementalMarginScalar %>"
-maintenanceMarginScalar = "<%= settings.maintenanceMarginScalar %>"
-maxInitialMarginRatio = "<%= settings.maxInitialMarginRatio %>"
-liquidationRewardPercent = "<%= settings.liquidationRewardPercent %>"
-liquidationLimitScalar = "<%= settings.liquidationLimitScalar %>"
+makerFee = "<%= settings.maker_fee %>"
+takerFee = "<%= settings.taker_fee %>"
+maxMarketSize = "<%= settings.max_market_size %>"
+maxFundingVelocity = "<%= settings.max_funding_velocity %>"
+skewScale = "<%= settings.skew_scale %>"
+fundingVelocityClamp = "<%= settings.funding_velocity_clamp %>"
+minCreditPercent = "<%= settings.min_credit_percent %>"
+minMarginUsd = "<%= settings.min_margin_usd %>"
+minMarginRatio = "<%= settings.min_margin_ratio %>"
+incrementalMarginScalar = "<%= settings.incremental_margin_scalar %>"
+maintenanceMarginScalar = "<%= settings.maintenance_margin_scalar %>"
+maxInitialMarginRatio = "<%= settings.max_initial_margin_ratio %>"
+liquidationRewardPercent = "<%= settings.liquidation_reward_percent %>"
+liquidationLimitScalar = "<%= settings.liquidation_limit_scalar %>"
 liquidationWindowDuration = 30
-liquidationMaxPd = "<%= settings.liquidationMaxPd %>"
+liquidationMaxPd = "<%= settings.liquidation_max_pd %>"
 
 # --- Configure collateral for BFP --- #
 #
@@ -434,7 +434,7 @@ args = [
         "<%= settings.weth_max_collateral %>",
         "<%= settings.wsteth_max_collateral %>",
     ],
-    [ # skewScales
+    [ # skew_scales
         "<%= settings.susd_skew_scale %>",
         "<%= settings.weth_skew_scale %>",
         "<%= settings.wsteth_skew_scale %>",
@@ -463,9 +463,9 @@ func = "configureCollateral"
 [[invoke.configure_wsteth_collateral.args]]
 tokenAddress = "<%= settings.wsteth_address %>"
 oracleNodeId = "<%= settings.wsteth_oracle_node_id %>"
-issuanceRatioD18 = "<%= settings.wstethIssuanceRatioD18 %>"
-liquidationRatioD18 = "<%= settings.wstethLiquidationRatioD18 %>"
-liquidationRewardD18 = "<%= settings.wstethLiquidationRewardD18 %>"
+issuanceRatioD18 = "<%= settings.wsteth_issuance_ratio_d18 %>"
+liquidationRatioD18 = "<%= settings.wsteth_liquidation_ratio_d18 %>"
+liquidationRewardD18 = "<%= settings.wsteth_liquidation_reward_d18 %>"
 minDelegationD18 = "<%= settings.wstethMinDelegationD18 %>"
 depositingEnabled = false
 
