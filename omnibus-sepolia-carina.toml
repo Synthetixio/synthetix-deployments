@@ -99,7 +99,7 @@ defaultValue = "<%= parseEther('1.5') %>"
 [setting.wstethLiquidationRewardD18]
 defaultValue = "<%= parseEther('0.01') %>"
 
-[setting.wstethLMinDelegationD18]
+[setting.wstethMinDelegationD18]
 defaultValue = "<%= parseEther('0.01') %>"
 
 # --- BFP configurations  -- #
