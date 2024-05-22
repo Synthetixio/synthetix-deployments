@@ -237,7 +237,7 @@ options.owner = "<%= settings.owner %>"
 options.wsteth = "<%= settings.wsteth_address %>"
 options.salt = "<%= settings.salt %>"
 
-[invoke.register_node_wsteth_to_steth_ratio_oracle]
+[invoke.OracleManagerProxy_registerNode_WstEthToStEthRatioOracle]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -256,7 +256,7 @@ depends = ["provision.wsteth_to_steth_ratio_oracle"]
 #
 #
 #
-[invoke.register_node_steth_oracle_node]
+[invoke.OracleManagerProxy_registerNode_steth]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -272,7 +272,7 @@ extra.steth_oracle_node_id.arg = 0
 depends = ["provision.system"]
 
 # wstETH/USD
-[invoke.register_node_wsteth_oracle_node]
+[invoke.OracleManagerProxy_registerNode_wsteth]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -304,14 +304,14 @@ args = ["<%= settings.pyth_address %>"]
 #
 #
 
-[invoke.create_wsteth_rewards_distributor]
+[invoke.BfpMarketProxy_createRewardDistributor_wsteth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "createRewardDistributor"
 extra.wsteth_rewards_distributor.event = "RewardDistributorCreated"
 extra.wsteth_rewards_distributor.arg = 0
 
-[[invoke.create_wsteth_rewards_distributor.args]]
+[[invoke.BfpMarketProxy_createRewardDistributor_wsteth.args]]
 poolId = "<%= settings.sc_pool_id %>"
 name = "wsteth RewardDistributor"
 token = "<%= settings.wsteth_address %>"
@@ -321,14 +321,14 @@ collateralTypes = [
     "<%= settings.snx_address %>",
 ]
 
-[invoke.create_weth_rewards_distributor]
+[invoke.BfpMarketProxy_createRewardDistributor_weth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "createRewardDistributor"
 extra.weth_rewards_distributor.event = "RewardDistributorCreated"
 extra.weth_rewards_distributor.arg = 0
 
-[[invoke.create_weth_rewards_distributor.args]]
+[[invoke.BfpMarketProxy_createRewardDistributor_weth.args]]
 poolId = "<%= settings.sc_pool_id %>"
 name = "weth RewardDistributor"
 token = "<%= settings.weth_address %>"
@@ -342,12 +342,12 @@ collateralTypes = [
 #
 #
 
-[invoke.BfpMarketProxy_set_global_market_configuration]
+[invoke.BfpMarketProxy_setMarketConfiguration]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfiguration"
 
-[[invoke.set_global_market_configuration.args]]
+[[invoke.BfpMarketProxy_setMarketConfiguration.args]]
 pythPublishTimeMin = 12
 pythPublishTimeMax = 60
 minOrderAge = 12
@@ -373,7 +373,7 @@ highUtilizationSlopePercent = "<%= settings.high_utilization_slope_percent %>"
 #
 #
 
-[invoke.set_eth_oracle_node_id]
+[invoke.BfpMarketProxy_setEthOracleNodeId]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setEthOracleNodeId"
@@ -383,7 +383,7 @@ args = ["<%= settings.eth_oracle_id %>"]
 #
 #
 
-[invoke.create_market]
+[invoke.BfpMarketProxy_createMarket_eth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
@@ -395,12 +395,12 @@ extra.eth_market_id.arg = 0
 #
 #
 
-[invoke.set_eth_market_configuration]
+[invoke.BfpMarketProxy_setMarketConfigurationById_eth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfigurationById"
 
-[[invoke.set_eth_market_configuration.args]]
+[[invoke.BfpMarketProxy_setMarketConfigurationById_eth.args]]
 marketId = "<%= settings.eth_market_id %>"
 oracleNodeId = "<%= settings.eth_oracle_id %>"
 pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
@@ -425,7 +425,7 @@ liquidationMaxPd = "<%= settings.liquidation_max_pd %>"
 #
 #
 
-[invoke.set_margin_collateral_configuration]
+[invoke.BfpMarketProxy_setMarginCollateralConfiguration]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarginCollateralConfiguration"
@@ -466,12 +466,12 @@ args = [
 #
 #
 
-[invoke.configure_wsteth_collateral]
+[invoke.CoreProxy_configureCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 
-[[invoke.configure_wsteth_collateral.args]]
+[[invoke.CoreProxy_configureCollateral.args]]
 tokenAddress = "<%= settings.wsteth_address %>"
 oracleNodeId = "<%= settings.wsteth_oracle_node_id %>"
 issuanceRatioD18 = "<%= settings.wsteth_issuance_ratio_d18 %>"
@@ -484,7 +484,7 @@ depositingEnabled = false
 #
 #
 
-[invoke.weth_maximum_market_collateral]
+[invoke.CoreProxy_configureMaximumMarketCollateral_weth]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureMaximumMarketCollateral"
@@ -494,7 +494,7 @@ args = [
     "<%= settings.weth_max_pool_collateral %>",
 ]
 
-[invoke.wsteth_maximum_market_collateral]
+[invoke.CoreProxy_configureMaximumMarketCollateral_wsteth]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureMaximumMarketCollateral"
@@ -508,7 +508,7 @@ args = [
 #
 #
 
-[invoke.register_wsteth_rewards_distributor]
+[invoke.CoreProxy_registerRewardsDistributor_wsteth]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
@@ -519,7 +519,7 @@ args = [
     "<%= settings.wsteth_rewards_distributor %>",
 ]
 
-[invoke.register_weth_rewards_distributor]
+[invoke.CoreProxy_registerRewardsDistributor_weth]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
@@ -534,7 +534,7 @@ args = [
 #
 #
 
-[invoke.set_pool_configuration_sc]
+[invoke.CoreProxy_setPoolConfiguration]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
