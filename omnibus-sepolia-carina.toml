@@ -142,10 +142,10 @@ defaultValue = "<%= parseEther('0.2') %>"
 defaultValue = "<%= parseEther('1') %>"
 
 [setting.min_collateral_discount]
-defaultValue = "<%= parseEther('0.01') %>"
+defaultValue = "<%= parseEther('0.02') %>"
 
 [setting.max_collateral_discount]
-defaultValue = "<%= parseEther('0.05') %>"
+defaultValue = "<%= parseEther('0.2') %>"
 
 [setting.utilization_breakpoint_percent]
 defaultValue = "<%= parseEther('0.80') %>"
@@ -158,28 +158,28 @@ defaultValue = "<%= parseEther('0.01') %>"
 
 # ETH market configurations
 [setting.maker_fee]
-defaultValue = "<%= parseEther('0.0002') %>"
+defaultValue = "<%= parseEther('0.0001') %>"
 
 [setting.taker_fee]
 defaultValue = "<%= parseEther('0.0006') %>"
 
 [setting.max_market_size]
-defaultValue = "<%= parseEther(String(27_000)) %>"
+defaultValue = "<%= parseEther(String(1000)) %>"
 
 [setting.max_funding_velocity]
-defaultValue = "<%= parseEther('9') %>"
+defaultValue = "<%= parseEther('3') %>"
 
 [setting.skew_scale]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.funding_velocity_clamp]
-defaultValue = "<%= parseEther('0.00001') %>"
+defaultValue = "<%= parseEther('0.0003') %>"
 
 [setting.min_credit_percent]
-defaultValue = "<%= parseEther('1') %>"
+defaultValue = "<%= parseEther('0.25') %>"
 
 [setting.min_margin_usd]
-defaultValue = "<%= parseEther('500') %>"
+defaultValue = "<%= parseEther('1000') %>"
 
 [setting.min_margin_ratio]
 defaultValue = "<%= parseEther('0.05') %>"
@@ -194,13 +194,16 @@ defaultValue = "<%= parseEther('0.5') %>"
 defaultValue = "<%= parseEther('0.9') %>"
 
 [setting.liquidation_reward_percent]
-defaultValue = "<%= parseEther('0.00002') %>"
+defaultValue = "<%= parseEther('0.0001') %>"
 
 [setting.liquidation_limit_scalar]
 defaultValue = "<%= parseEther('1') %>"
 
 [setting.liquidation_max_pd]
-defaultValue = "<%= parseEther('0.0016') %>"
+defaultValue = "<%= parseEther('0.0006') %>"
+
+[setting.liquidation_window_duration]
+defaultValue = "36"
 
 # --- Provision bfp market --- #
 #
@@ -361,7 +364,7 @@ highUtilizationSlopePercent = "<%= settings.high_utilization_slope_percent %>"
 # --- Set eth oracle node id --- #
 #
 #
-#
+
 [invoke.set_eth_oracle_node_id]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
@@ -371,7 +374,7 @@ args = ["<%= settings.eth_oracle_id %>"]
 # --- Create Market --- #
 #
 #
-#
+
 [invoke.create_market]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
@@ -407,7 +410,7 @@ maintenanceMarginScalar = "<%= settings.maintenance_margin_scalar %>"
 maxInitialMarginRatio = "<%= settings.max_initial_margin_ratio %>"
 liquidationRewardPercent = "<%= settings.liquidation_reward_percent %>"
 liquidationLimitScalar = "<%= settings.liquidation_limit_scalar %>"
-liquidationWindowDuration = 30
+liquidationWindowDuration = "<%= settings.liquidation_window_duration %>"
 liquidationMaxPd = "<%= settings.liquidation_max_pd %>"
 
 # --- Configure collateral for BFP --- #
@@ -454,7 +457,7 @@ args = [
 # ETH and SNX have already been added from imports.
 #
 #
-#
+
 [invoke.configure_wsteth_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
