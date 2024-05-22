@@ -76,7 +76,7 @@ defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 description = "https://docs.chain.link/data-feeds/price-feeds/addresses/?network=ethereum&page=1"
 
 [setting.weth_liquidation_reward]
-defaultValue = "<%= parseEther('10') %>"
+defaultValue = "<%= parseEther('0.005') %>"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('2') %>"
@@ -99,8 +99,14 @@ defaultValue = "<%= parseEther('1.5') %>"
 [setting.wsteth_liquidation_reward_d18]
 defaultValue = "<%= parseEther('0.01') %>"
 
-[setting.wstethMinDelegationD18]
+[setting.wsteth_min_delegation_d18]
 defaultValue = "<%= parseEther('0.01') %>"
+
+[setting.weth_max_pool_collateral]
+defaultValue = "<%= parseEther(String(20_000)) %>"
+
+[setting.wsteth_max_pool_collateral]
+defaultValue = "<%= parseEther(String(20_000)) %>"
 
 # --- BFP configurations  -- #
 #
@@ -111,10 +117,10 @@ defaultValue = "<%= parseEther('0.01') %>"
 defaultValue = "<%= parseEther(String(100_000_000)) %>"
 
 [setting.weth_max_collateral]
-defaultValue = "<%= parseEther(String(1_000_000)) %>"
+defaultValue = "<%= parseEther(String(10_000)) %>"
 
 [setting.wsteth_max_collateral]
-defaultValue = "<%= parseEther(String(1_000_000)) %>"
+defaultValue = "<%= parseEther(String(10_000)) %>"
 
 [setting.susd_skew_scale]
 defaultValue = "0" # skew scale is not used for sUSD.
@@ -227,7 +233,9 @@ depends = ["provision.system"]
 [provision.wsteth_to_steth_ratio_oracle]
 source = "<%= settings.wsteth_to_steth_ratio_oracle %>"
 targetPreset = "<%= settings.target_preset %>"
+options.owner = "<%= settings.owner %>"
 options.wsteth = "<%= settings.wsteth_address %>"
+options.salt = "<%= settings.salt %>"
 
 [invoke.register_node_wsteth_to_steth_ratio_oracle]
 target = ["system.oracle_manager.Proxy"]
@@ -469,7 +477,7 @@ oracleNodeId = "<%= settings.wsteth_oracle_node_id %>"
 issuanceRatioD18 = "<%= settings.wsteth_issuance_ratio_d18 %>"
 liquidationRatioD18 = "<%= settings.wsteth_liquidation_ratio_d18 %>"
 liquidationRewardD18 = "<%= settings.wsteth_liquidation_reward_d18 %>"
-minDelegationD18 = "<%= settings.wstethMinDelegationD18 %>"
+minDelegationD18 = "<%= settings.wsteth_min_delegation_d18 %>"
 depositingEnabled = false
 
 # --- Configure maximum market collateral in Core --- #
@@ -483,7 +491,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= settings.eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= settings.weth_max_collateral %>",
+    "<%= settings.weth_max_pool_collateral %>",
 ]
 
 [invoke.wsteth_maximum_market_collateral]
@@ -493,7 +501,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= settings.eth_market_id %>",
     "<%= settings.wsteth_address %>",
-    "<%= settings.wsteth_max_collateral %>",
+    "<%= settings.wsteth_max_pool_collateral %>",
 ]
 
 # --- Register Reward Distributors with Core --- #
