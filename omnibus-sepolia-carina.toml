@@ -148,13 +148,13 @@ defaultValue = "<%= parseEther('0.01') %>"
 defaultValue = "<%= parseEther('0.05') %>"
 
 [setting.utilizationBreakpointPercent]
-defaultValue = "<%= parseEther('0.85') %>"
+defaultValue = "<%= parseEther('0.80') %>"
 
 [setting.lowUtilizationSlopePercent]
-defaultValue = "<%= parseEther('0.0003') %>"
+defaultValue = "<%= parseEther('0.000025') %>"
 
 [setting.highUtilizationSlopePercent]
-defaultValue = "<%= parseEther('0.015') %>"
+defaultValue = "<%= parseEther('0.01') %>"
 
 # ETH market configurations
 [setting.makerFee]
