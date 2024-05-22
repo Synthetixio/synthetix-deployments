@@ -294,7 +294,7 @@ extra.wsteth_oracle_node_id.arg = 0
 #
 #
 #
-[invoke.set_pyth]
+[invoke.BfpMarketProxy_setPyth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setPyth"
@@ -342,7 +342,7 @@ collateralTypes = [
 #
 #
 
-[invoke.set_global_market_configuration]
+[invoke.BfpMarketProxy_set_global_market_configuration]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfiguration"
@@ -361,7 +361,7 @@ keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "<%= settings.deployer %>"                          # TODO, this is currently owner, change to a keeper
+keeperLiquidationEndorsed = "<%= settings.deployer %>"                          # TODO, this is currently deployer, change to a keeper
 collateralDiscountScalar = "<%= settings.collateral_discount_scalar %>"
 minCollateralDiscount = "<%= settings.min_collateral_discount %>"
 maxCollateralDiscount = "<%= settings.max_collateral_discount %>"
