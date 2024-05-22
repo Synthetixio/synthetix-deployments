@@ -36,10 +36,10 @@ defaultValue = "wsteth-to-steth-ratio-oracle:3.3.18"
 #
 
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x431D454Bd4d352A0b1f45AE11EF1182bBEec6a7B"
 
 [setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "<%= settings.owner %>"
 
 [setting.snx_address]
 defaultValue = "0x29Ba9b0C440CE9e7B0E46138B5Fda83c22467006"
@@ -88,7 +88,7 @@ defaultValue = "86400"
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "<%= settings.owner %>"
 
 [setting.wstethIssuanceRatioD18]
 defaultValue = "<%= parseEther('3') %>"
@@ -350,7 +350,7 @@ keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"      # TODO, this is currently owner, change to a keeper
+keeperLiquidationEndorsed = "<%= settings.deployer %>"                        # TODO, this is currently owner, change to a keeper
 collateralDiscountScalar = "<%= settings.collateralDiscountScalar %>"
 minCollateralDiscount = "<%= settings.minCollateralDiscount %>"
 maxCollateralDiscount = "<%= settings.maxCollateralDiscount %>"
