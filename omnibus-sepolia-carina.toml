@@ -255,7 +255,7 @@ depends = ["provision.wsteth_to_steth_ratio_oracle"]
 # stETH/USD oracle
 #
 #
-#
+
 [invoke.OracleManagerProxy_registerNode_steth]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
@@ -293,7 +293,7 @@ extra.wsteth_oracle_node_id.arg = 0
 # --- Set pyth --- #
 #
 #
-#
+
 [invoke.BfpMarketProxy_setPyth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
