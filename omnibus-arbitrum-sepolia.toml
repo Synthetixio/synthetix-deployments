@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "5"
+version = "6"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -31,7 +31,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
