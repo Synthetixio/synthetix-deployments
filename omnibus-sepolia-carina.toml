@@ -221,7 +221,7 @@ depends = ["provision.system"]
 # Create a mintable fake ETH for collateral
 [provision.weth_mock_collateral]
 source = "mintable-token:1.8"
-options.name = "Fake wETH"
+options.name = "Fake WETH"
 options.symbol = "fWETH"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
