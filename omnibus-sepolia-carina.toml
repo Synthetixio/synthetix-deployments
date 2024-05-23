@@ -52,13 +52,6 @@ description = "https://docs.chain.link/data-feeds/price-feeds/addresses?network=
 [setting.snx_chainlink_staleness_tolerance]
 defaultValue = "3600"
 
-[setting.weth_address]
-defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
-
-[setting.wsteth_address]
-defaultValue = "0xb82381a3fbd3fafa77b3a7be693342618240067b"
-description = "wstETH token address https://sepolia.etherscan.io/token/0xb82381a3fbd3fafa77b3a7be693342618240067b"
-
 [setting.steth_aggregator_address]
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 description = "https://docs.chain.link/data-feeds/price-feeds/addresses/?network=ethereum&page=1 is actually ETH/USD."
@@ -224,6 +217,32 @@ options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
 depends = ["provision.system"]
+
+# --- Provision fake collaterals --- #
+#
+#
+# Create a mintable fake ETH for collateral
+[provision.weth_mock_collateral]
+source = "mintable-token:1.8"
+options.name = "Fake wETH Coin"
+options.symbol = "fWETH"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+# Set weth_address so that Core is configured with the fake wETH.
+[setting.weth_address]
+defaultValue = "<%= weth_mock_collateral.MintableToken.address %>"
+
+# Create a mintable fake wstETH for collateral
+[provision.wsteth_mock_collateral]
+source = "mintable-token:1.8"
+options.name = "Fake fWSTETH Coin"
+options.symbol = "fWSTEth"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+[setting.wsteth_address]
+defaultValue = "<%= wsteth_mock_collateral.MintableToken.address %>"
 
 # --- Configure oracles for markets --- #
 #
