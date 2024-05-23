@@ -226,7 +226,7 @@ options.symbol = "fWETH"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-# Set weth_address so that Core is configured with the fake wETH.
+# Set weth_address so that Core is configured with the fake WETH.
 [setting.weth_address]
 defaultValue = "<%= weth_mock_collateral.MintableToken.address %>"
 
