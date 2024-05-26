@@ -486,12 +486,14 @@ jobs:
 
       - run: mkdir -p ./e2e/cannon
 
-      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 8453   --json > ./e2e/cannon/8453-andromeda.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 84532  --json > ./e2e/cannon/84532-andromeda.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 1      --json > ./e2e/cannon/1-main.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 10     --json > ./e2e/cannon/10-main.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@arbthetix   --chain-id 42161  --json > ./e2e/cannon/42161-arbthetix.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614 --json > ./e2e/cannon/421614-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 8453        --json > ./e2e/cannon/8453-andromeda.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 84532       --json > ./e2e/cannon/84532-andromeda.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 1           --json > ./e2e/cannon/1-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 10          --json > ./e2e/cannon/10-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@arbthetix   --chain-id 42161       --json > ./e2e/cannon/42161-arbthetix.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@carina      --chain-id 11155111    --json > ./e2e/cannon/11155111-carina.json
 
       - store_artifacts:
           path: "./e2e/cannon"
