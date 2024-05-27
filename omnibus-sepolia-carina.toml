@@ -1,6 +1,6 @@
 name = "synthetix-omnibus"
 preset = "carina"
-version = "1"
+version = "2"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
