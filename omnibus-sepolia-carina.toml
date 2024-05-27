@@ -427,6 +427,15 @@ args = [
     ],
 ]
 
+# --- Enable all BFP features --- #
+#
+#
+
+[invoke.BfpMarketProxy_enableAllFeatures]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "enableAllFeatures"
+
 # --- Configure Core --- #
 #
 #
