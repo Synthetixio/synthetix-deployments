@@ -28,6 +28,10 @@ include = [
     # WETH
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
+
+    # sUSDCe
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDCe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDCe.toml",
 ]
 
 [setting.target_preset]
@@ -159,6 +163,7 @@ defaultValue = "<%= parseEther(String(10_000_000)) %>"
 #
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@dai"
 options.name = "Fake DAI Coin"
 options.symbol = "fDAI"
 options.owner = "<%= settings.owner %>"
@@ -221,6 +226,35 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.max_collateral_limit_arb]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
+#
+#
+#
+# sUSDCe
+#
+#
+#
+[provision.sUSDCe_mock_collateral]
+source = "mintable-token:1.8"
+options.name = "Fake sUSDCe Coin"
+options.symbol = "fsUSDCe"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+[setting.sUSDCe_address]
+defaultValue = "<%= imports.sUSDCe_mock_collateral.contracts.MintableToken.address %>"
+description = "Using mock for testnet sUSDCe"
+
+[setting.pyth_feed_id_sUSDCe]
+defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.max_collateral_limit_sUSDCe]
+defaultValue = "<%= parseEther(String(50_000_000)) %>"
+
+[setting.arb_address]
+defaultValue = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
+description = "Using mock for testnet"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]

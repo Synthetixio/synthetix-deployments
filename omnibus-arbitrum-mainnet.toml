@@ -22,6 +22,10 @@ include = [
     # WETH
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
+
+    # sUSDCe
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sUSDCe.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/sUSDCe.toml",
 ]
 
 [setting.target_preset]
@@ -168,6 +172,24 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.max_collateral_limit_arb]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
+#
+#
+#
+# sUSDCe
+#
+#
+#
+[setting.sUSDCe_address]
+defaultValue = "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
+description = "https://coinmarketcap.com/currencies/ethena-staked-usde/"
+
+[setting.pyth_feed_id_sUSDCe]
+defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.max_collateral_limit_sUSDCe]
+defaultValue = "<%= parseEther(String(50_000_000)) %>"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
