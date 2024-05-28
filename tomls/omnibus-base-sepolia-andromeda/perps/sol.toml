@@ -11,7 +11,7 @@ defaultValue = "1406250"
 defaultValue = "36"
 
 [setting.perpsSolMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.000001"
 
 [setting.perpsSolTakerFeeRatio]
 defaultValue = "0.0008"
