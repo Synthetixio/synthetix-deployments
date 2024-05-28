@@ -1,0 +1,89 @@
+[invoke.CoreProxy_setFeatureFlagAllowAll_createAccount]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('createAccount') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_deposit]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('deposit') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_withdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdraw') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_mintUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('mintUsd') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_burnUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('burnUsd') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_liquidate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidate') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_liquidateVault]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidateVault') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_depositMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketCollateral') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_withdrawMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_depositMarketUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketUsd') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_withdrawMarketUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketUsd') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_claimRewards]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('claimRewards') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_delegateCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('delegateCollateral') %>", true]
+
+[invoke.CoreProxy_setFeatureFlagAllowAll_perpsSystem]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('perpsSystem') %>", false]
+
+[invoke.CoreProxy_addToFeatureFlagAllowlist_createPool_deployer]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createPool') %>", "<%= settings.deployer %>"]

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3"
+version = "6"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -31,7 +31,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
@@ -134,6 +134,9 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.synth_usdc_max_market_collateral]
 defaultValue = "<%= parseEther(String(500_000)) %>"
 
+[setting.max_collateral_limit_usdc]
+defaultValue = "<%= parseEther(String(500_000)) %>"
+
 [setting.dai_address]
 defaultValue = "0x"
 description = "Using mock for testnet"
@@ -145,6 +148,9 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.synth_dai_max_market_collateral]
 defaultValue = "<%= parseEther(String(500_000)) %>"
 
+[setting.max_collateral_limit_dai]
+defaultValue = "<%= parseEther(String(500_000)) %>"
+
 [setting.weth_address]
 defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
 description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
@@ -153,6 +159,9 @@ description = "https://docs.arbitrum.io/build-decentralized-apps/reference/usefu
 defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
+[setting.max_collateral_limit_weth]
+defaultValue = "<%= parseEther(String(125_000)) %>"
+
 [setting.arb_address]
 defaultValue = "0x"
 description = "Using mock for testnet"
@@ -160,6 +169,9 @@ description = "Using mock for testnet"
 [setting.pyth_feed_id_arb]
 defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.max_collateral_limit_arb]
+defaultValue = "<%= parseEther(String(100_000)) %>"
 
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"

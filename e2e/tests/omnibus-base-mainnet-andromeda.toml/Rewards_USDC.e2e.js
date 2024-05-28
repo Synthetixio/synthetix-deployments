@@ -6,7 +6,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
@@ -42,6 +41,7 @@ const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -122,9 +122,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({
+    await setTokenBalance({
       wallet,
       balance: 1_000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1_000);
   });
@@ -168,7 +170,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it(`should wrap 1_000 USDC`, async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 1_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 1_000,
+    });
     assert.equal(balance, 1_000);
   });
 
@@ -245,7 +253,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should fund RewardDistributor with 1_000 USDC', async () => {
-    await setUSDCTokenBalance({ wallet, balance: 1_000 });
+    await setTokenBalance({
+      wallet,
+      balance: 1_000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
+    });
 
     await transferToken({
       privateKey,

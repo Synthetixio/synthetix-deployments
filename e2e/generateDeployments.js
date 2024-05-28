@@ -118,6 +118,21 @@ async function run() {
       usdcRewards.contracts.RewardsDistributor;
   }
 
+  const bfp_market_factory =
+    deployments?.state?.['provision.bfp_market_factory']?.artifacts?.imports?.bfp_market_factory;
+  if (bfp_market_factory) {
+    contracts.BfpMarketProxy = bfp_market_factory.contracts.BfpMarketProxy;
+    contracts.PerpAccountProxy = bfp_market_factory.contracts.PerpAccountProxy;
+    contracts.PerpRewardDistributor = bfp_market_factory.contracts.PerpRewardDistributor;
+  }
+
+  const pyth_erc7412_wrapper =
+    deployments?.state?.['provision.pyth_erc7412_wrapper']?.artifacts?.imports
+      ?.pyth_erc7412_wrapper;
+  if (pyth_erc7412_wrapper) {
+    contracts.PythERC7412Wrapper = pyth_erc7412_wrapper.contracts.PythERC7412Wrapper;
+  }
+
   function mintableToken(provisionStep) {
     const fakeCollateral =
       deployments?.state?.[`provision.${provisionStep}`]?.artifacts?.imports?.[provisionStep];
@@ -132,6 +147,8 @@ async function run() {
   mintableToken('mintableToken');
   mintableToken('dai_mock_collateral');
   mintableToken('arb_mock_collateral');
+  mintableToken('weth_mock_collateral');
+  mintableToken('wbtc_mock_collateral');
 
   function erc20(contractName, address) {
     if (address) {
@@ -150,6 +167,7 @@ async function run() {
   erc20('ARBToken', extras?.arb_address);
   erc20('DAIToken', extras?.dai_address);
   erc20('WETHToken', extras?.weth_address);
+  erc20('WBTCToken', extras?.wbtc_address);
 
   erc20('SynthBTCToken', extras.synth_btc_token_address);
   erc20('SynthETHToken', extras.synth_eth_token_address);
@@ -189,6 +207,9 @@ async function run() {
       (key, value) => {
         if (key === 'abi' && Array.isArray(value)) {
           return readableAbi(value);
+        }
+        if (key === 'depends' && Array.isArray(value)) {
+          return Array.from(new Set(value)).sort();
         }
         return value;
       },

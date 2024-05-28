@@ -8,12 +8,12 @@ const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
-const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 21_920_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 100_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -62,7 +62,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: SYNTH_USDC_MAX_MARKET_COLLATERAL });
+    await setTokenBalance({
+      wallet,
+      balance: SYNTH_USDC_MAX_MARKET_COLLATERAL,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
+    });
     assert.equal(
       await getCollateralBalance({ address, symbol: 'USDC' }),
       SYNTH_USDC_MAX_MARKET_COLLATERAL
@@ -107,7 +112,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const maxWrap = Math.floor(SYNTH_USDC_MAX_MARKET_COLLATERAL - currentMarketCollateral);
     log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 USDC');
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: maxWrap });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: maxWrap,
+    });
     log({ balance });
     assert.equal(balance, maxWrap);
   });
@@ -124,13 +135,28 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       SYNTH_USDC_MAX_MARKET_COLLATERAL - newMarketCollateral < 1,
       'Less than 1 USDC left before reaching max collateral limit'
     );
-    await assert.rejects(async () => await wrapCollateral({ wallet, symbol: 'USDC', amount: 1 }));
+    await assert.rejects(
+      async () =>
+        await wrapCollateral({
+          wallet,
+          symbol: 'USDC',
+          synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+          synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+          amount: 1,
+        })
+    );
   });
 
   it('should unwrap all the sUSDC back to USDC and reduce market collateral', async () => {
     const sUsdcBalance = await getCollateralBalance({ address, symbol: 'sUSDC' });
     log({ sUsdcBalance });
-    const balance = await unwrapCollateral({ wallet, symbol: 'USDC', amount: sUsdcBalance });
+    const balance = await unwrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: sUsdcBalance,
+    });
     log({ balance });
     assert.equal(balance, 0);
     assert.equal(

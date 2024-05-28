@@ -18,9 +18,9 @@ const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { swapToSusd } = require('../../tasks/swapToSusd');
+const { spotSell } = require('../../tasks/spotSell');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
-const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
@@ -80,7 +80,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({ wallet, balance: 100_000 });
+    await setTokenBalance({
+      wallet,
+      balance: 100_000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
+    });
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 100_000);
   });
 
@@ -123,7 +128,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 10_000 USDC', async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 10_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 10_000,
+    });
     assert.equal(balance, 10_000);
   });
 
@@ -196,10 +207,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should atomic swap 50 sUSDC to snxUSD to burn debt', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({
+    await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 50,
+      synthAmount: 50,
+      minUsdAmount: 50, // 0% slippage
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
   });

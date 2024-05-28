@@ -154,7 +154,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it(`should wrap 1_000 fUSDC`, async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 1_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 1_000,
+    });
     assert.equal(balance, 1_000);
   });
 

@@ -7,7 +7,7 @@ const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-async function wrapCollateral({ wallet, symbol, amount }) {
+async function wrapCollateral({ wallet, symbol, synthAddress, synthMarketId, amount }) {
   const config = await getCollateralConfig(symbol);
 
   const CollateralToken = new ethers.Contract(
@@ -23,7 +23,7 @@ async function wrapCollateral({ wallet, symbol, amount }) {
 
   const extras = require('../deployments/extras.json');
   const SynthToken = new ethers.Contract(
-    extras.synth_usdc_token_address,
+    synthAddress,
     [
       'function symbol() view returns (string)',
       'function decimals() view returns (uint8)',
@@ -50,7 +50,7 @@ async function wrapCollateral({ wallet, symbol, amount }) {
   );
 
   const args = [
-    extras.synth_usdc_market_id,
+    synthMarketId,
     ethers.utils.parseUnits(`${amount}`, collateralDecimals), // Token
     ethers.utils.parseUnits(`${amount}`), // Synth, min received
   ];
@@ -77,12 +77,12 @@ module.exports = {
 
 if (require.main === module) {
   require('../inspect');
-  const [pk, symbol, amount] = process.argv.slice(2);
+  const [pk, symbol, synthAddress, synthMarketId, amount] = process.argv.slice(2);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = new ethers.Wallet(pk, provider);
-  wrapCollateral({ wallet, symbol, amount }).then((data) =>
+  wrapCollateral({ wallet, symbol, synthAddress, synthMarketId, amount }).then((data) =>
     console.log(JSON.stringify(data, null, 2))
   );
 }

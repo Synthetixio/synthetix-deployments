@@ -11,16 +11,16 @@ defaultValue = "1406250"
 defaultValue = "36"
 
 [setting.perpsSolMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.000001"
 
 [setting.perpsSolTakerFeeRatio]
 defaultValue = "0.0008"
 
 [setting.perpsSolMaxMarketSize]
-defaultValue = "<%= String(30_000) %>"
+defaultValue = "<%= String(60_000) %>"
 
 [setting.perpsSolMaxMarketValue]
-defaultValue = "<%= String(3_000_000) %>"
+defaultValue = "<%= String(5_000_000) %>"
 
 [setting.perpsSolInitialMarginRatio]
 defaultValue = "4.9"

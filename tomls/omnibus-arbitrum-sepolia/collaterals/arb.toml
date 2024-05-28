@@ -23,3 +23,13 @@ liquidationRatioD18 = "<%= settings.arb_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.arb_liquidation_reward %>"
 minDelegationD18 = "<%= settings.arb_min_delegation %>"
 depositingEnabled = true
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_arb]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_arb %>", issuanceRatioD18 = 0 },
+]

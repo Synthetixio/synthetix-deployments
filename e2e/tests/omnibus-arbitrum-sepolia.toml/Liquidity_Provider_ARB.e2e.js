@@ -18,13 +18,20 @@ const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
+const { borrowUsd } = require('../../tasks/borrowUsd');
+const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
+const { setConfigUint } = require('../../tasks/setConfigUint');
+const { getConfigUint } = require('../../tasks/getConfigUint');
+const { setPoolCollateralConfiguration } = require('../../tasks/setPoolCollateralConfiguration');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
+  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const wallet = ethers.Wallet.createRandom().connect(provider);
+  // const wallet = new ethers.Wallet('0xab', provider);
+  // const accountId = 1337;
   const address = wallet.address;
   const privateKey = wallet.privateKey;
 
@@ -42,6 +49,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should sync time of the fork', async () => {
     await syncTime();
+  });
+
+  it('should disable withdrawal timeout', async () => {
+    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
+    assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
+  });
+
+  it(`should increase max pool collateral for the test`, async () => {
+    const { tokenAddress } = await getCollateralConfig('fARB');
+    await setPoolCollateralConfiguration({
+      poolId: require('../../deployments/extras.json').spartan_council_pool_id,
+      tokenAddress,
+      collateralLimit:
+        parseFloat(
+          ethers.utils.formatEther(
+            require('../../deployments/extras.json').max_collateral_limit_arb
+          )
+        ) * 10,
+      issuanceRatio: 0,
+    });
   });
 
   it('should create new random wallet', async () => {
@@ -164,5 +191,36 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalAssigned: 500,
       totalLocked: 0,
     });
+  });
+
+  it('should borrow 100 USDh', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+      totalDeposited: 0,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+    await borrowUsd({
+      wallet,
+      accountId,
+      symbol: 'fARB',
+      amount: 100,
+      poolId: 1,
+    });
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+      totalDeposited: 100,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+  });
+
+  it('should withdraw borrowed 100 USDh', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
+    await withdrawCollateral({
+      privateKey,
+      accountId,
+      amount: 100,
+      symbol: 'USDh',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 100);
   });
 });
