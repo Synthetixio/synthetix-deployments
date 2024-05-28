@@ -29,7 +29,7 @@ args = [
     "<%= extras.synth_stata_usdc_market_id %>",
     "<%= imports.system.extras.erc_4626_to_assets_ratio_oracle_id %>",
     "<%= imports.system.extras.erc_4626_to_assets_ratio_oracle_id %>",
-    "<%= settings.spotStrictStalenessTolerance %>",     # Effectively unused, as this oracle node will never return something stale
+    "<%= settings.spotStrictStalenessTolerance %>",                    # Effectively unused, as this oracle node will never return something stale
 ]
 
 [invoke.setSynthMaxMarketCollateralStataUsdc]
