@@ -7,7 +7,7 @@ func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_sstatausdc_collateral.args]]
 tokenAddress = "<%= extras.synth_usdc_token_address %>"
-oracleNodeId = "<%= imports.system.extras.erc_4626_to_assets_ratio_oracle_id %>"
+oracleNodeId = "<%= extras.erc_4626_to_assets_ratio_oracle_id %>"
 issuanceRatioD18 = "<%= settings.sstatausdc_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.sstatausdc_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.sstatausdc_liquidation_reward %>"
