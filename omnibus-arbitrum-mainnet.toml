@@ -129,6 +129,13 @@ description = "1 hour"
 defaultValue = "<%= String(1 * 3600) %>"
 description = "1 hour"
 
+#
+#
+#
+# USDC
+#
+#
+#
 [setting.usdc_address]
 defaultValue = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
 description = "https://developers.circle.com/stablecoins/docs/usdc-on-main-networks"
@@ -167,6 +174,13 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.max_collateral_limit_weth]
 defaultValue = "<%= parseEther(String(125_000)) %>"
 
+#
+#
+#
+# ARB
+#
+#
+#
 [setting.arb_address]
 defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
 

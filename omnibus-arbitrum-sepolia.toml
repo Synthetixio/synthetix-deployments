@@ -30,6 +30,12 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
 ]
 
+[setting.target_preset]
+defaultValue = "main"
+
+[setting.salt]
+defaultValue = "snax"
+
 [setting.snx_package]
 defaultValue = "synthetix:3.3.18"
 
@@ -48,7 +54,7 @@ description = "Do not update! This package isn't upgradeable. A version change w
 
 [setting.pyth_price_verification_address]
 defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
-description = "https://docs.pyth.network/documentation/pythnet-price-feeds/evm"
+description = "https://docs.pyth.network/price-feeds/contract-addresses/evm#testnets"
 
 [setting.pyth_feed_url]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
@@ -123,6 +129,13 @@ description = "1 hour"
 defaultValue = "<%= String(1 * 3600) %>"
 description = "1 hour"
 
+#
+#
+#
+# USDC
+#
+#
+#
 [setting.usdc_address]
 defaultValue = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
 description = "https://developers.circle.com/stablecoins/docs/usdc-on-test-networks"
@@ -137,8 +150,22 @@ defaultValue = "<%= parseEther(String(500_000)) %>"
 [setting.max_collateral_limit_usdc]
 defaultValue = "<%= parseEther(String(500_000)) %>"
 
+#
+#
+#
+# DAI
+#
+#
+#
+[provision.dai_mock_collateral]
+source = "mintable-token:1.8"
+options.name = "Fake DAI Coin"
+options.symbol = "fDAI"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
 [setting.dai_address]
-defaultValue = "0x"
+defaultValue = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
 description = "Using mock for testnet"
 
 [setting.pyth_feed_id_dai]
@@ -151,6 +178,13 @@ defaultValue = "<%= parseEther(String(500_000)) %>"
 [setting.max_collateral_limit_dai]
 defaultValue = "<%= parseEther(String(500_000)) %>"
 
+#
+#
+#
+# WETH
+#
+#
+#
 [setting.weth_address]
 defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
 description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
@@ -162,8 +196,23 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.max_collateral_limit_weth]
 defaultValue = "<%= parseEther(String(125_000)) %>"
 
+#
+#
+#
+# ARB
+#
+#
+#
+[provision.arb_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@arb"
+options.name = "Fake ARB Coin"
+options.symbol = "fARB"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
 [setting.arb_address]
-defaultValue = "0x"
+defaultValue = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
 description = "Using mock for testnet"
 
 [setting.pyth_feed_id_arb]
@@ -172,22 +221,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.max_collateral_limit_arb]
 defaultValue = "<%= parseEther(String(100_000)) %>"
-
-[provision.dai_mock_collateral]
-source = "mintable-token:1.8"
-target = "synthetix-mock-tokens:1.8@dai"
-options.name = "Fake DAI Coin"
-options.symbol = "fDAI"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
-[provision.arb_mock_collateral]
-source = "mintable-token:1.8"
-target = "synthetix-mock-tokens:1.8@arb"
-options.name = "Fake ARB Coin"
-options.symbol = "fARB"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
