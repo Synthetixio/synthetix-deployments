@@ -4,15 +4,14 @@ This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/s
 
 ## Deployment Guide
 
-- Run `yarn cannon setup` and ensure you have a reliable IPFS url for publishing.
+- Run `yarn` to install the latest dependencies
+- Run `yarn cannon setup` and ensure you’ve set the IPFS endpoint for publishing to the Synthetix cluster.
 
 ### Specify Upgrade
 
 - After [publishing any new versions of the provisioned packages](https://github.com/synthetixio/synthetix-v3#deployment-guide) (`oracle-manager`, `synthetix` and `spot-market`), bump the versions throughout the cannonfiles to match.
 - Add new settings and invoke actions as necessary.
-- Increment the version number and update the values in the network-specific omnibus cannonfiles as desired. The main version should match synthetix version, and if it a configuration change on the same version use a dash.
-  Version: 3.3.5
-  Version with config changes: 3.3.5-1
+- Increment the version number and update the values in the network-specific omnibus cannonfiles as desired.
 
 ### Execute Upgrade
 
@@ -53,16 +52,15 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 - If you've updated the provisioned packages, verify your new contracts on Etherscan:
 
   ```sh
-    yarn cannon verify synthetix-omnibus:6@andromeda --chain-id 84531 --api-key $ETHERSCAN_API_KEY
+    yarn cannon verify synthetix-omnibus:<VERSION_NUMBER>@andromeda --chain-id 84532 --api-key $ETHERSCAN_API_KEY
   ```
 
 - Publish your new packages on the Cannon registry:
 
   ```sh
-  yarn cannon publish synthetix-omnibus:6@andromeda \
-      --chain-id 84531 \
-      --private-key $MAINNET_DEPLOYER_PRIVATE_KEY \
-      --include-provisioned
+  yarn cannon publish synthetix-omnibus:<VERSION_NUMBER>@andromeda \
+      --chain-id 84532 \
+      --private-key $MAINNET_DEPLOYER_PRIVATE_KEY
   ```
 
   If you use frame:
