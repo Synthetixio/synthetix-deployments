@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
 const { parseError } = require('../parseError');
 const { gasLog } = require('../gasLog');
+const { getPythVaa } = require('../getPythVaa');
 const { getPerpsSettlementStrategy } = require('./getPerpsSettlementStrategy');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
-
-const PYTH_MAINNET_ENDPOINT = 'https://hermes.pyth.network';
 
 const ERC7412_ABI = [
   'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
@@ -16,12 +14,6 @@ const ERC7412_ABI = [
   'function oracleId() view external returns (bytes32)',
   'function fulfillOracleQuery(bytes calldata signedOffchainData) payable external',
 ];
-const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
-
-function base64ToHex(str) {
-  const raw = Buffer.from(str, 'base64');
-  return '0x' + raw.toString('hex');
-}
 
 async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime }) {
   const { feedId, priceVerificationContract, commitmentPriceDelay } =
@@ -38,12 +30,12 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
     now: new Date(),
   });
 
-  const [offchainData] = await priceService.getVaa(feedId, timestamp);
+  const offchainData = await getPythVaa(feedId, timestamp);
 
   const UPDATE_TYPE = 2;
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
     ['uint8', 'uint64', 'bytes32[]', 'bytes[]'],
-    [UPDATE_TYPE, timestamp, [feedId], [base64ToHex(offchainData)]]
+    [UPDATE_TYPE, timestamp, [feedId], [offchainData]]
   );
 
   const PriceVerificationContract = new ethers.Contract(
