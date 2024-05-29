@@ -142,21 +142,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it.skip('enable all bfp features', async () => {
-    const owner = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'owner',
-    });
-    log({ owner });
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'enableAllFeatures',
-      impersonate: owner,
-    });
-  });
-
   it('should create bfp account', async () => {
     const oldAccountOwner = await contractRead({
       wallet,
