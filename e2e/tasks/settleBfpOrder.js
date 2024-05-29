@@ -26,7 +26,8 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
   const marketConfig = await getBfpMarketConfig({ marketId });
   const { minOrderAge } = await getBfpGlobalConfig();
 
-  await wait(minOrderAge * 1000);
+  const bufferSeconds = 2; // We add this to make sure there's a price update available from pyth.
+  await wait((minOrderAge + bufferSeconds) * 1000);
 
   const orderDigest = await BfpMarketProxy.getOrderDigest(accountId, marketId);
   log({ orderIsReady: orderDigest.isReady });
@@ -61,6 +62,7 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
 
   const newPosition = await getBfpPosition({ accountId, marketId });
   log({ newPosition });
+  return newPosition;
 }
 
 module.exports = {

@@ -12,7 +12,7 @@ async function getBfpPosition({ accountId, marketId }) {
     provider
   );
 
-  const [pnl, accruedFunding, size] = await BfpMarketProxy.getPositionDigest(accountId, marketId);
+  const { pnl, accruedFunding, size } = await BfpMarketProxy.getPositionDigest(accountId, marketId);
 
   return {
     pnl: parseFloat(ethers.utils.formatUnits(pnl)),
