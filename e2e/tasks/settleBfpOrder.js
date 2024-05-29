@@ -5,7 +5,7 @@ const { ethers } = require('ethers');
 const { parseError } = require('../parseError');
 const { gasLog } = require('../gasLog');
 const { wait } = require('../wait');
-const { getPythVaa } = require('../ getPythVaa');
+const { getPythVaa } = require('../getPythVaa');
 
 const { getBfpPosition } = require('./getBfpPosition');
 const { getBfpMarketConfig } = require('./getBfpMarketConfig');
