@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { ethers } = require('ethers');
 const crypto = require('crypto');
+const { wait } = require('../../wait');
 require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -27,15 +28,6 @@ const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
-
-const wait = (ms) =>
-  new Promise((resolve) => {
-    require('debug')(`e2e:wait`)('Start', { ms });
-    setTimeout(() => {
-      require('debug')(`e2e:wait`)('Finish', { ms });
-      resolve();
-    }, ms);
-  });
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
