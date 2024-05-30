@@ -175,6 +175,7 @@ defaultValue = "<%= parseEther(String(100_000)) %>"
 
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@dai"
 options.name = "Fake DAI Coin"
 options.symbol = "fDAI"
 options.owner = "<%= settings.owner %>"
@@ -182,6 +183,7 @@ options.decimals = "18"
 
 [provision.arb_mock_collateral]
 source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@arb"
 options.name = "Fake ARB Coin"
 options.symbol = "fARB"
 options.owner = "<%= settings.owner %>"
