@@ -91,7 +91,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    or
 
    ```sh
-   yarn build:andromeda
+   yarn build:base-sepolia
    ```
 
 2. Fetch deployments and store as JSON files
@@ -115,7 +115,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    or
 
    ```sh
-   yarn start:andromeda
+   yarn start:base-sepolia
    ```
 
 4. Execute tests
