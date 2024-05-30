@@ -4,6 +4,8 @@ const { ethers } = require('ethers');
 require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
+const { wait } = require('../../wait');
+
 const { syncTime } = require('../../tasks/syncTime');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
@@ -19,6 +21,9 @@ const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance
 const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { contractRead } = require('../../tasks/contractRead');
 const { contractWrite } = require('../../tasks/contractWrite');
+const { commitBfpOrder } = require('../../tasks/commitBfpOrder');
+const { settleBfpOrder } = require('../../tasks/settleBfpOrder');
+const { getBfpPosition } = require('../../tasks/getBfpPosition');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -251,5 +256,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     log({ newDepositedWeth });
 
     assert.equal(parseFloat(ethers.utils.formatEther(newDepositedWeth.available)), 500);
+  });
+  it('should open a short', async () => {
+    const marketId = require('../../deployments/extras.json').eth_market_id;
+    const currentPosition = await getBfpPosition({ accountId, marketId });
+
+    assert.equal(currentPosition.positionSize, 0);
+
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+
+    await wait(1000);
+    await commitBfpOrder({
+      wallet,
+      accountId,
+      marketId,
+      sizeDelta: -0.01,
+    });
+
+    const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
+
+    assert.equal(newPosition.positionSize, -0.01);
   });
 });
