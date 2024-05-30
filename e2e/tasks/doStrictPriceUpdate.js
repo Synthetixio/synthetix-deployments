@@ -30,7 +30,7 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
     now: new Date(),
   });
 
-  const offchainData = await getPythVaa(feedId, timestamp);
+  const offchainData = await getPythVaa({ pythPriceFeedId: feedId, timestamp });
 
   const UPDATE_TYPE = 2;
   const offchainDataEncoded = ethers.utils.defaultAbiCoder.encode(
