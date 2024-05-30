@@ -20,29 +20,19 @@ Conduct the following process for each network:
 - Perform a dry-run and confirm that the actions that would be executed by Cannon are expected:
 
   ```sh
-  yarn cannon build omnibus-base-sepolia-andromeda.toml \
-    --dry-run \
-    --upgrade-from synthetix-omnibus:latest@andromeda \
-    --chain-id 84532 \
-    --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+  yarn cannon build omnibus-base-sepolia-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
 - Remove the dry-run option to execute the upgrade:
 
   ```sh
-  yarn cannon build omnibus-base-sepolia-andromeda.toml \
-    --upgrade-from synthetix-omnibus:latest@andromeda \
-    --private-key $TESTNET_DEPLOYER_PRIVATE_KEY \
-    --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+  yarn cannon build omnibus-base-sepolia-andromeda.toml --upgrade-from synthetix-omnibus:latest@andromeda --private-key $TESTNET_DEPLOYER_PRIVATE_KEY --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
 - After this you can run the dry-run command again (without upgrade-from), and should see no changes
 
   ```sh
-  yarn cannon build omnibus-base-sepolia-andromeda.toml \
-    --dry-run \
-    --chain-id 84532 \
-    --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+  yarn cannon build omnibus-base-sepolia-andromeda.toml --dry-run --chain-id 84532 --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY
   ```
 
 _The --provider-url and --private-key parameters are unnecessary if using [Frame](https://frame.sh/)_
@@ -58,9 +48,7 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 - Publish your new packages on the Cannon registry:
 
   ```sh
-  yarn cannon publish synthetix-omnibus:<VERSION_NUMBER>@andromeda \
-      --chain-id 84532 \
-      --private-key $MAINNET_DEPLOYER_PRIVATE_KEY
+  yarn cannon publish synthetix-omnibus:<VERSION_NUMBER>@andromeda --chain-id 84532 --private-key $MAINNET_DEPLOYER_PRIVATE_KEY
   ```
 
   If you use frame:
@@ -78,12 +66,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
 1. Build locally with --dry-run
 
    ```sh
-   yarn cannon build omnibus-base-sepolia-andromeda.toml \
-     --dry-run \
-     --upgrade-from synthetix-omnibus:latest@andromeda \
-     --chain-id 84532 \
-     --provider-url https://sepolia.base.org \
-       | tee ./e2e/cannon-build.log
+   yarn cannon build omnibus-base-sepolia-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log
    ```
 
    or
@@ -101,13 +84,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
 3. Run local Anvil node for the required network.
 
    ```sh
-   yarn cannon build omnibus-base-sepolia-andromeda.toml \
-      --port 8545 \
-      --keep-alive \
-      --dry-run \
-      --upgrade-from synthetix-omnibus:latest@andromeda \
-      --chain-id 84532 \
-      --provider-url https://sepolia.base.org
+   yarn cannon build omnibus-base-sepolia-andromeda.toml --port 8545 --keep-alive --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org
    ```
 
    or
