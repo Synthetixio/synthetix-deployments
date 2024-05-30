@@ -2,10 +2,9 @@
 
 const { ethers } = require('ethers');
 const { getPythPrice } = require('./getPythPrice');
-const { parseError } = require('../parseError');
-const { gasLog } = require('../gasLog');
 const { getBfpPosition } = require('./getBfpPosition');
 const { getBfpMarketConfig } = require('./getBfpMarketConfig');
+const { contractWrite } = require('./contractWrite');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -18,12 +17,6 @@ async function commitBfpOrder({
   hooks = [],
 }) {
   log({ address: wallet.address, accountId, marketId, sizeDelta, hooks });
-
-  const PerpsMarketProxy = new ethers.Contract(
-    require('../deployments/BfpMarketProxy.json').address,
-    require('../deployments/BfpMarketProxy.json').abi,
-    wallet
-  );
 
   const oldOpenPosition = await getBfpPosition({ accountId, marketId });
   log({ oldOpenPosition });
@@ -42,16 +35,12 @@ async function commitBfpOrder({
     keeperFeeBufferUsd: keeperFeeBufferUsd,
     hooks: hooks,
   };
-  const gasLimit = await PerpsMarketProxy.estimateGas
-    .commitOrder(...Object.values(params))
-    .catch(parseError);
-  const tx = await PerpsMarketProxy.commitOrder(...Object.values(params), {
-    gasLimit: gasLimit.mul(2),
-  }).catch(parseError);
-  const commitReceipt = await tx
-    .wait()
-    .then((txn) => log(txn.events) || txn, parseError)
-    .then(gasLog({ action: 'BfpMarketProxy.commitOrder', log }));
+  const commitReceipt = await contractWrite({
+    wallet,
+    contract: 'BfpMarketProxy',
+    func: 'commitOrder',
+    args: Object.values(params),
+  });
 
   const block = await wallet.provider.getBlock(commitReceipt.blockNumber);
   const commitmentTime = block.timestamp;
