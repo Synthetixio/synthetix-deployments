@@ -173,10 +173,10 @@ defaultValue = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dab
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.synth_dai_max_market_collateral]
-defaultValue = "<%= parseEther(String(500_000)) %>"
+defaultValue = "<%= parseEther(String(0)) %>"
 
 [setting.max_collateral_limit_dai]
-defaultValue = "<%= parseEther(String(500_000)) %>"
+defaultValue = "<%= parseEther(String(0)) %>"
 
 #
 #
@@ -230,7 +230,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     [
-        { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= imports.perpsFactory.settings.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],

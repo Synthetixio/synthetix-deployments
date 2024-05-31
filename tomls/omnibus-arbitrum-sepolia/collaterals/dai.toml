@@ -22,7 +22,7 @@ issuanceRatioD18 = "<%= settings.dai_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.dai_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.dai_liquidation_reward %>"
 minDelegationD18 = "<%= settings.dai_min_delegation %>"
-depositingEnabled = true
+depositingEnabled = false
 
 [invoke.CoreProxy_setPoolCollateralConfiguration_dai]
 target = ["system.CoreProxy"]
