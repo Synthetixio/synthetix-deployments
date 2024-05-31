@@ -172,8 +172,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should borrow 1000 USDh', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+  it('should borrow 1000 USDx', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDx' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
@@ -185,21 +185,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       amount: 1000,
       poolId: 1,
     });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDh' }), {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDx' }), {
       totalDeposited: 1000,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
-  it('should withdraw borrowed 1000 USDh', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
+  it('should withdraw borrowed 1000 USDx', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await withdrawCollateral({
       privateKey,
       accountId,
       amount: 1000,
-      symbol: 'USDh',
+      symbol: 'USDx',
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 1000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 1000);
   });
 });

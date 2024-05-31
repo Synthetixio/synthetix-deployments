@@ -200,8 +200,8 @@ fromCall.func = "owner"
 func = "initOrUpgradeToken"
 args = [
     "<%= settings.usd_token_name %>",
-    "DollarWifHat",
-    "USDh",
+    "Synthetix USD",
+    "USDx",
     18,
     "<%= imports.system.contracts.USDRouter.address %>",
 ]

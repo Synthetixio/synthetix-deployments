@@ -126,8 +126,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 500 sDAI -> USDh', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDh' }), 0);
+  it('should swap 500 sDAI -> USDx', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_dai_market_id,
@@ -135,37 +135,37 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       minUsdAmount: 400,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'USDh' })) >= 400,
-      'USDh balance >= 400'
+      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 400,
+      'USDx balance >= 400'
     );
   });
 
-  it('should approve USDh spending for SpotProxy', async () => {
+  it('should approve USDx spending for SpotProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'USDh',
+        symbol: 'USDx',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed SpotMarket USDh spending'
+      'New wallet has not allowed SpotMarket USDx spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'USDh',
+      symbol: 'USDx',
       spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'USDh',
+        symbol: 'USDx',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it('should swap 400 USDh -> sDAI', async () => {
+  it('should swap 400 USDx -> sDAI', async () => {
     await spotBuy({
       wallet,
       marketId: require('../../deployments/extras.json').synth_dai_market_id,
