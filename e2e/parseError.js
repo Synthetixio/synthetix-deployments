@@ -179,6 +179,7 @@ function parseError(error) {
       )
     : {};
   error.message = `${errorParsed?.name}, ${errorParsed?.sighash} (${util.inspect(args)})`;
+  log(error);
   throw error;
 }
 
