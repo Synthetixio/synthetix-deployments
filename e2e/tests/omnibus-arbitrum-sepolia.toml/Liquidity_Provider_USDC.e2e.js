@@ -23,11 +23,13 @@ const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
+  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const wallet = ethers.Wallet.createRandom().connect(provider);
+  // const wallet = new ethers.Wallet('0xab', provider);
+  // const accountId = 1337;
   const address = wallet.address;
   const privateKey = wallet.privateKey;
 
@@ -71,6 +73,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doPriceUpdateForPyth({
       wallet,
       feedId: require('../../deployments/extras.json').pyth_feed_id_arb,
+      priceVerificationContract: require('../../deployments/extras.json')
+        .pyth_price_verification_address,
+    });
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });
