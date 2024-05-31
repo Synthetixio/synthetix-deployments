@@ -16,11 +16,6 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/spot/usdc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
 
-    # DAI
-    "tomls/oracles/pyth-dai.toml",
-    "tomls/omnibus-arbitrum-mainnet/spot/dai.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/dai.toml",
-
     # ARB
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/arb.toml",
@@ -125,10 +120,6 @@ defaultValue = "<%= parseEther('1') %>"
 defaultValue = "<%= String(1 * 3600) %>"
 description = "1 hour"
 
-[setting.dai_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
 #
 #
 #
@@ -150,19 +141,13 @@ defaultValue = "<%= parseEther(String(500_000)) %>"
 [setting.max_collateral_limit_usdc]
 defaultValue = "<%= parseEther(String(500_000)) %>"
 
-[setting.dai_address]
-defaultValue = "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
-
-[setting.pyth_feed_id_dai]
-defaultValue = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-[setting.synth_dai_max_market_collateral]
-defaultValue = "<%= parseEther(String(500_000)) %>"
-
-[setting.max_collateral_limit_dai]
-defaultValue = "<%= parseEther(String(500_000)) %>"
-
+#
+#
+#
+# WETH
+#
+#
+#
 [setting.weth_address]
 defaultValue = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
 description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
@@ -199,7 +184,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     [
-        { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= imports.perpsFactory.settings.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
