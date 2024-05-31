@@ -97,12 +97,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     await doPriceUpdateForPyth({
       wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
       feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
