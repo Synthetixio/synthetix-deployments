@@ -59,7 +59,10 @@ defaultValue = "2000000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.pdao]
+defaultValue = "0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C"
 
 [setting.sc_pool_id]
 defaultValue = "1"
