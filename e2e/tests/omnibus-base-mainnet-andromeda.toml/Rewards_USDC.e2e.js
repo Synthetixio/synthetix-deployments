@@ -6,7 +6,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { setUSDCTokenBalance } = require('../../tasks/setUSDCTokenBalance');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
@@ -16,7 +15,7 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
@@ -42,6 +41,7 @@ const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -122,9 +122,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setUSDCTokenBalance({
+    await setTokenBalance({
       wallet,
       balance: 1_000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1_000);
   });
@@ -168,7 +170,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it(`should wrap 1_000 USDC`, async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 1_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 1_000,
+    });
     assert.equal(balance, 1_000);
   });
 
@@ -221,41 +229,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // We must sync timestamp of the fork before making price updates
-    await syncTime();
-
-    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-    // so we send off a price update just to be safe
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 300,
-      settlementStrategyId: require('../../deployments/extras.json').snx_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 400,
-      settlementStrategyId: require('../../deployments/extras.json').sol_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 500,
-      settlementStrategyId: require('../../deployments/extras.json').wif_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 600,
-      settlementStrategyId: require('../../deployments/extras.json').w_pyth_settlement_strategy,
-    });
+    await doAllPriceUpdates({ wallet });
   });
 
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {
@@ -279,7 +253,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should fund RewardDistributor with 1_000 USDC', async () => {
-    await setUSDCTokenBalance({ wallet, balance: 1_000 });
+    await setTokenBalance({
+      wallet,
+      balance: 1_000,
+      tokenAddress: require('../../deployments/extras.json').usdc_address,
+      friendlyWhale: '0xd5c41fd4a31eaaf5559ffcc60ec051fcb8ecc375',
+    });
 
     await transferToken({
       privateKey,

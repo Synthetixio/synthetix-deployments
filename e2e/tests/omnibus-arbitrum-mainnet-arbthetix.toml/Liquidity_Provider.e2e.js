@@ -98,7 +98,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 5 WETH into the system', async () => {
+  it.skip('should deposit 5 WETH into the system', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 10);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'WETH' }), {
       totalDeposited: 0,
@@ -116,7 +116,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should delegate 5 WETH into the Spartan Council pool', async () => {
+  it.skip('should delegate 5 WETH into the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'WETH' }), {
       totalDeposited: 5,
       totalAssigned: 0,

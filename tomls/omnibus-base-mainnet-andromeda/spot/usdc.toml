@@ -1,5 +1,5 @@
 [setting.synthUsdcMaxMarketCollateral]
-defaultValue = "<%= parseEther(String(21_920_000)) %>" # $21.92m USDC LP cap
+defaultValue = "<%= parseEther(String(100_000_000)) %>"
 
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
@@ -37,6 +37,8 @@ args = [
     "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
 
+# We allow USDC as collateral with depositingEnabled = false so the spot market can deposit it, but it can't be LPed
+# Users deposit/delegate sUSDC
 [invoke.configureSynthWrapperUsdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"

@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: "18.18.0"
+    default: "20.13.1"
 
 commands:
   yarn-install:
@@ -329,6 +329,8 @@ jobs:
         type: string
       chain-id:
         type: integer
+      preset:
+        type: string
       provider-url:
         type: string
     docker:
@@ -381,12 +383,27 @@ jobs:
           path: "./e2e/deployments"
 
       - run:
+          name: "Debug logs"
+          background: true
+          command: |
+            touch "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+            tail -f "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+
+      - run:
           name: "Run tests"
           environment:
             DEBUG: "e2e:*"
+            DEBUG_TARGET: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+            GAS_REPORT: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
           command: |
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
             echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
+
+      - store_artifacts:
+          path: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+
+      - store_artifacts:
+          path: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
 
   deployment-info:
     parameters:
@@ -459,6 +476,65 @@ jobs:
           branch_head: "deployment-info-<< parameters.chain-id >>-<< parameters.preset >>"
           branch_base: en
           commit_message: "Update deployment info for << parameters.chain-id >>-<< parameters.preset >>"
+
+  deployments-dashboard:
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+    steps:
+      - checkout
+      - yarn-install
+
+      - run: mkdir -p ./e2e/cannon
+
+      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 8453        --json > ./e2e/cannon/8453-andromeda.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 84532       --json > ./e2e/cannon/84532-andromeda.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 1           --json > ./e2e/cannon/1-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 10          --json > ./e2e/cannon/10-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@arbthetix   --chain-id 42161       --json > ./e2e/cannon/42161-arbthetix.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@carina      --chain-id 11155111    --json > ./e2e/cannon/11155111-carina.json
+
+      - store_artifacts:
+          path: "./e2e/cannon"
+
+      - store_artifacts:
+          path: "./e2e/deployments"
+
+      - run:
+          name: "Generate docs"
+          environment:
+            DEBUG: "e2e:*"
+          command: |
+            mkdir -p docs/for-developers
+            node e2e/dashboard > docs/for-developers/deployment-info.md
+
+      - store_artifacts:
+          path: "./docs"
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5ZmBzDxKOn7bPLBV59jNb++t6inHRCI9k0TwULJWYxA" # Synthetix-Gitbook-v3
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - run:
+          working_directory: ~/
+          name: "Checkout synthetix-gitbook-v3"
+          command: |
+            git clone git@github.com:Synthetixio/Synthetix-Gitbook-v3.git --verbose --depth 1 --no-tags --single-branch synthetix-gitbook-v3
+
+      - run:
+          name: "Update synthetix-gitbook-v3"
+          command: |
+            mkdir -p ~/synthetix-gitbook-v3/for-developers/deployment-info
+            cp docs/for-developers/deployment-info.md ~/synthetix-gitbook-v3/for-developers/deployment-info.md
+
+      - github-pr:
+          working_directory: "~/synthetix-gitbook-v3"
+          repo_slug: "Synthetixio/Synthetix-Gitbook-v3"
+          branch_head: "deployments-dashboard"
+          branch_base: en
+          commit_message: "Update deployments dashboard"
 
   npm-package:
     parameters:
@@ -594,23 +670,24 @@ workflows:
   tests:
     unless:
       or:
-        #- equal: ["docgen", << pipeline.git.branch >>]
+        - equal: ["docgen", << pipeline.git.branch >>]
         #- equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
         - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
     jobs:
       - lint
 
-      - fork-test:
-          name: base-sepolia-andromeda
-          parallelism: 4
-          toml: omnibus-base-sepolia-andromeda.toml
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+      # TODO: re-enable when previous release is completely published
+      #- fork-test:
+      #    name: test-base-sepolia-andromeda
+      #    parallelism: 4
+      #    toml: omnibus-base-sepolia-andromeda.toml
+      #    package: "synthetix-omnibus:latest"
+      #    preset: "andromeda"
+      #    chain-id: 84532
+      #    provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: base-mainnet-andromeda
+          name: test-base-mainnet-andromeda
           parallelism: 4
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
@@ -619,7 +696,7 @@ workflows:
           provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: mainnet
+          name: test-mainnet
           toml: omnibus-mainnet.toml
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -627,7 +704,7 @@ workflows:
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: optimism-mainnet
+          name: test-optimism-mainnet
           toml: omnibus-optimism-mainnet.toml
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -635,7 +712,7 @@ workflows:
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
       #      - fork-test:
-      #          name: sepolia
+      #          name: test-sepolia
       #          toml: omnibus-sepolia.toml
       #          package: "synthetix-omnibus:latest"
       #          preset: "main"
@@ -643,7 +720,7 @@ workflows:
       #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       #      - fork-test:
-      #          name: polygon-mumbai
+      #          name: test-polygon-mumbai
       #          toml: omnibus-polygon-mumbai.toml
       #          package: "synthetix-omnibus:latest"
       #          preset: "main"
@@ -651,20 +728,35 @@ workflows:
       #          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
 
       - fork-test:
-          name: arbthetix-mainnet
+          name: test-arbthetix-mainnet
           toml: omnibus-arbitrum-mainnet-arbthetix.toml
           package: "synthetix-omnibus:latest"
           preset: "arbthetix"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #- fork-test:
-      #    name: arbthetix-sepolia
-      #    toml: omnibus-arbitrum-sepolia-arbthetix.toml
-      #    package: "synthetix-omnibus:latest"
-      #    preset: "arbthetix"
-      #    chain-id: 421614
-      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+      - fork-test:
+          name: test-arbitrum-sepolia
+          toml: omnibus-arbitrum-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 421614
+          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - fork-test-new:
+          name: test-arbitrum-mainnet
+          toml: omnibus-arbitrum-mainnet.toml
+          preset: "main"
+          chain-id: 42161
+          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - fork-test:
+          name: test-sepolia-carina
+          toml: omnibus-sepolia-carina.toml
+          package: "synthetix-omnibus:latest"
+          preset: "carina"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
   deployment-info:
     when:
@@ -675,6 +767,8 @@ workflows:
         - equal: ["docgen", << pipeline.git.branch >>]
 
     jobs:
+      - deployments-dashboard
+
       - deployment-info:
           name: docs-base-sepolia-andromeda
           package: "synthetix-omnibus:latest"
@@ -717,12 +811,19 @@ workflows:
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #- deployment-info:
-      #    name: docs-arbitrum-sepolia-arbthetix
-      #    package: "synthetix-omnibus:latest"
-      #    preset: "arbthetix"
-      #    chain-id: 421614
-      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+      - deployment-info:
+          name: docs-arbitrum-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 421614
+          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - deployment-info:
+          name: docs-sepolia-carina
+          package: "synthetix-omnibus:latest"
+          preset: "carina"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
   npm-package:
     when:
@@ -775,12 +876,19 @@ workflows:
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #- npm-package:
-      #    name: npm-arbitrum-sepolia-arbthetix
-      #    package: "synthetix-omnibus:latest"
-      #    preset: "arbthetix"
-      #    chain-id: 421614
-      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+      - npm-package:
+          name: npm-arbitrum-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 421614
+          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-sepolia-carina
+          package: "synthetix-omnibus:latest"
+          preset: "carina"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
   preview:
     when:
@@ -839,10 +947,18 @@ workflows:
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #- preview:
-      #    name: preview-arbitrum-sepolia-arbthetix
-      #    toml: omnibus-arbitrum-sepolia-arbthetix.toml
-      #    package: "synthetix-omnibus:latest"
-      #    preset: "arbthetix"
-      #    chain-id: 421614
-      #    provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+      - preview:
+          name: preview-arbitrum-sepolia
+          toml: omnibus-arbitrum-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 421614
+          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - preview:
+          name: preview-sepolia-carina
+          toml: omnibus-sepolia-carina.toml
+          package: "synthetix-omnibus:latest"
+          preset: "carina"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY

@@ -14,7 +14,7 @@ const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 20_000_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 100_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -113,7 +113,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const maxWrap = Math.floor(SYNTH_USDC_MAX_MARKET_COLLATERAL - currentMarketCollateral);
     log({ maxWrap });
     assert.notEqual(maxWrap, 0, 'check that we can wrap more than 0 fUSDC');
-    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: maxWrap });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: maxWrap,
+    });
     log({ balance });
     assert.equal(balance, maxWrap);
   });
@@ -130,13 +136,28 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       SYNTH_USDC_MAX_MARKET_COLLATERAL - newMarketCollateral < 1,
       'Less than 1 fUSDC left before reaching max collateral limit'
     );
-    await assert.rejects(async () => await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 1 }));
+    await assert.rejects(
+      async () =>
+        await wrapCollateral({
+          wallet,
+          symbol: 'fUSDC',
+          synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+          synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+          amount: 1,
+        })
+    );
   });
 
   it('should unwrap all the sUSDC back to fUSDC and reduce market collateral', async () => {
     const sUsdcBalance = await getCollateralBalance({ address, symbol: 'sUSDC' });
     log({ sUsdcBalance });
-    const balance = await unwrapCollateral({ wallet, symbol: 'fUSDC', amount: sUsdcBalance });
+    const balance = await unwrapCollateral({
+      wallet,
+      symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: sUsdcBalance,
+    });
     log({ balance });
     assert.equal(balance, 0);
     assert.equal(

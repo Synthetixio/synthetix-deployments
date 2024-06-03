@@ -8,13 +8,13 @@ args = ["<%= formatBytes32String('createAccount') %>", true]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('deposit') %>", true]
+args = ["<%= formatBytes32String('deposit') %>", false]
 
 [invoke.enable_feature_withdraw]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('withdraw') %>", false]
+args = ["<%= formatBytes32String('withdraw') %>", true]
 
 [invoke.enable_feature_mintUsd]
 target = ["system.CoreProxy"]

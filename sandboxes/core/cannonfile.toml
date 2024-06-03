@@ -48,6 +48,7 @@ source = "synthetix-spot-market:dev"
 #
 [provision.box_token]
 source = "mintable-token"
+target = "synthetix-mock-tokens@box"
 sourcePreset = "permissionless-mint"
 options.symbol = "BOX"
 options.name = "Sandbox"

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "18"
+version = "31"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -12,14 +12,18 @@ include = [
     "tomls/markets/perps-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
     "tomls/omnibus-base-sepolia-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper, mock for USDC
+    "tomls/omnibus-base-sepolia-andromeda/spot/statausdc.toml",     # sStataUSDC spot market/wrapper, mock for aUSDC/stataUSDC from erc-4626-to-assets-ratio-oracle
     "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/global.toml",       # Global perps settings
     "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
+    "tomls/oracles/statausdc-usdc.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/feeCollector.toml",
     # Collaterals
     "tomls/omnibus-base-sepolia-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
+    "tomls/omnibus-base-sepolia-andromeda/collaterals/sstatausdc.toml",
+    "tomls/collaterals/sstatausdc.toml",
     # BTC
     "tomls/omnibus-base-sepolia-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -92,6 +96,63 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/bnb-invokes.toml",
     "tomls/oracles/pyth-bnb.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/bnb.toml",
+
+    # LINK
+    "tomls/omnibus-base-sepolia-andromeda/perps/link-invokes.toml",
+    "tomls/oracles/pyth-link.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/link.toml",
+    # PENDLE
+    "tomls/omnibus-base-sepolia-andromeda/perps/pendle-invokes.toml",
+    "tomls/oracles/pyth-pendle.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/pendle.toml",
+    # INJ
+    "tomls/omnibus-base-sepolia-andromeda/perps/inj-invokes.toml",
+    "tomls/oracles/pyth-inj.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/inj.toml",
+    # GMX
+    "tomls/omnibus-base-sepolia-andromeda/perps/gmx-invokes.toml",
+    "tomls/oracles/pyth-gmx.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/gmx.toml",
+    # TIA
+    "tomls/omnibus-base-sepolia-andromeda/perps/tia-invokes.toml",
+    "tomls/oracles/pyth-tia.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/tia.toml",
+    # SUI
+    "tomls/omnibus-base-sepolia-andromeda/perps/sui-invokes.toml",
+    "tomls/oracles/pyth-sui.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/sui.toml",
+    # TON
+    "tomls/omnibus-base-sepolia-andromeda/perps/ton-invokes.toml",
+    "tomls/oracles/pyth-ton.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ton.toml",
+    # ARKM
+    "tomls/omnibus-base-sepolia-andromeda/perps/arkm-invokes.toml",
+    "tomls/oracles/pyth-arkm.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/arkm.toml",
+    # GALA
+    "tomls/omnibus-base-sepolia-andromeda/perps/gala-invokes.toml",
+    "tomls/oracles/pyth-gala.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/gala.toml",
+    # TAO
+    "tomls/omnibus-base-sepolia-andromeda/perps/tao-invokes.toml",
+    "tomls/oracles/pyth-tao.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/tao.toml",
+    # BOME
+    "tomls/omnibus-base-sepolia-andromeda/perps/bome-invokes.toml",
+    "tomls/oracles/pyth-bome.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/bome.toml",
+    # ETHFI
+    "tomls/omnibus-base-sepolia-andromeda/perps/ethfi-invokes.toml",
+    "tomls/oracles/pyth-ethfi.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ethfi.toml",
+    # STX
+    "tomls/omnibus-base-sepolia-andromeda/perps/stx-invokes.toml",
+    "tomls/oracles/pyth-stx.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/stx.toml",
+    # AXL
+    "tomls/omnibus-base-sepolia-andromeda/perps/axl-invokes.toml",
+    "tomls/oracles/pyth-axl.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/axl.toml",
 ]
 
 [setting.commitmentPriceDelay]
@@ -101,7 +162,7 @@ defaultValue = "2"
 defaultValue = "2"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.3.15"

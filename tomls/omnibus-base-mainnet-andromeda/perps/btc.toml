@@ -5,25 +5,25 @@ defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b
 defaultValue = "200"
 
 [setting.perpsBtcSkewScale]
-defaultValue = "50000"
+defaultValue = "<%= String(35_000) %>"
 
 [setting.perpsBtcMaxFundingVelocity]
 defaultValue = "9"
 
 [setting.perpsBtcMakerFeeRatio]
-defaultValue = "0.0000"
+defaultValue = "0.000001"
 
 [setting.perpsBtcTakerFeeRatio]
 defaultValue = "0.0005"
 
 [setting.perpsBtcMaxMarketSize]
-defaultValue = "149" #approx $10m
+defaultValue = "400"
 
 [setting.perpsBtcMaxMarketValue]
-defaultValue = "0" # not enabled
+defaultValue = "<%= String(15_000_000) %>"
 
 [setting.perpsBtcInitialMarginRatio]
-defaultValue = "13.35"
+defaultValue = "1.54"
 
 [setting.perpsBtcMaintenanceMarginScalar]
 defaultValue = "0.28"
@@ -44,7 +44,7 @@ defaultValue = "30"
 defaultValue = "50"
 
 [setting.perpsBtcLockedOiRatio]
-defaultValue = "0.5"
+defaultValue = "0.25"
 
 [setting.perpsBtcSynthMaxCollateralAmount]
 defaultValue = "<%= MaxUint256 %>"

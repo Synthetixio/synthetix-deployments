@@ -1,11 +1,3 @@
-include = [
-    # TODO: this is a funny necessary dependency because the oracle manager is registering the same node twice
-    # however, it will not emit "NodeRegistered" the second time because its an unnecessary call
-    "../../oracles/pyth-sol.toml",
-    "../../markets/common/bigcap-settings.toml",
-]
-# NOTE: This toml will live until the setMaxMarketValue is on mainnet
-
 [setting.perpsSolMarketId]
 
 [setting.perpsSolSkewScale]
