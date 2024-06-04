@@ -16,7 +16,7 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.CoreProxy_configureCollateral_arb.args]]
-tokenAddress = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
+tokenAddress = "<%= settings.arb_address %>"
 oracleNodeId = "<%= extras.arb_oracle_id %>"
 issuanceRatioD18 = "<%= settings.arb_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.arb_liquidation_ratio %>"
@@ -26,10 +26,11 @@ depositingEnabled = true
 
 [invoke.CoreProxy_setPoolCollateralConfiguration_arb]
 target = ["system.CoreProxy"]
-fromCall.func = "owner"
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.arb_address %>",
     { collateralLimitD18 = "<%= settings.max_collateral_limit_arb %>", issuanceRatioD18 = 0 },
 ]
