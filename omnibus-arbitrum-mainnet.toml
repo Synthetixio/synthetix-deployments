@@ -65,7 +65,7 @@ options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
 [setting.deployer]
-defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('2.00') %>"
@@ -93,7 +93,7 @@ args = [
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
 
 [setting.big_cap_default_staleness_tolerance]
 defaultValue = "3600"
