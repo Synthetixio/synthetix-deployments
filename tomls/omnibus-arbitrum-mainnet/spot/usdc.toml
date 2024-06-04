@@ -2,7 +2,11 @@
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic USD Coin", "sUSDC", "<%= settings.owner %>"]
+args = [
+    "Synthetic USD Coin",
+    "sUSDC",
+    "<%= settings.owner %>",
+] # should have been `settings.deployer`!
 extra.synth_usdc_market_id.event = "SynthRegistered"
 extra.synth_usdc_market_id.arg = 0
 extra.synth_usdc_token_address.event = "SynthRegistered"
