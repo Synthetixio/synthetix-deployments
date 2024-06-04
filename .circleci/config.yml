@@ -743,20 +743,21 @@ workflows:
           chain-id: 421614
           provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
 
-      - fork-test-new:
-          name: test-arbitrum-mainnet
-          toml: omnibus-arbitrum-mainnet.toml
-          preset: "main"
-          chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+  # TODO: change to fork-test and re-enable, partially deployed build cannot be redeployed from scratch
+  #      - fork-test-new:
+  #          name: test-arbitrum-mainnet
+  #          toml: omnibus-arbitrum-mainnet.toml
+  #          preset: "main"
+  #          chain-id: 42161
+  #          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      - fork-test:
-          name: test-sepolia-carina
-          toml: omnibus-sepolia-carina.toml
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+  #      - fork-test:
+  #          name: test-sepolia-carina
+  #          toml: omnibus-sepolia-carina.toml
+  #          package: "synthetix-omnibus:latest"
+  #          preset: "carina"
+  #          chain-id: 11155111
+  #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
   deployment-info:
     when:
