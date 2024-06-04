@@ -93,6 +93,3 @@ target = ["spotFactory.SpotMarketProxy"]
 func = "addToFeatureFlagAllowlist"
 fromCall.func = "owner"
 args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.deployer %>"]
-depends = [
-    "invoke.addCreateSynthToFeatureFlag", # Allow deployer to create synths, override synthetix-v3 invoke
-]
