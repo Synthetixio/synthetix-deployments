@@ -11,11 +11,7 @@ args = [
 ]
 extra.pendle_pyth_oracle_id.event = "NodeRegistered"
 extra.pendle_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pythPendleFeedId',
-]
+depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythPendleFeedId']
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupPendleOracleNode]

@@ -104,20 +104,14 @@ depends = ["invoke.createPendlePerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = [
-    "<%= settings.perpsPendleMarketId %>",
-    "<%= parseEther(settings.perpsPendleMaxMarketSize) %>",
-]
+args = ["<%= settings.perpsPendleMarketId %>", "<%= parseEther(settings.perpsPendleMaxMarketSize) %>"]
 depends = ["invoke.createPendlePerpsMarket"]
 
 [invoke.setPerpsPendleMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = [
-    "<%= settings.perpsPendleMarketId %>",
-    "<%= parseEther(settings.perpsPendleMaxMarketValue) %>",
-]
+args = ["<%= settings.perpsPendleMarketId %>", "<%= parseEther(settings.perpsPendleMaxMarketValue) %>"]
 depends = ["invoke.createPendlePerpsMarket"]
 
 [invoke.setPerpsPendleMaxLiquidationParameters]
@@ -151,8 +145,5 @@ depends = ["invoke.createPendlePerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = [
-    "<%= settings.perpsPendleMarketId %>",
-    "<%= parseEther(settings.perpsPendleLockedOiRatio) %>",
-]
+args = ["<%= settings.perpsPendleMarketId %>", "<%= parseEther(settings.perpsPendleLockedOiRatio) %>"]
 depends = ["invoke.createPendlePerpsMarket"]
