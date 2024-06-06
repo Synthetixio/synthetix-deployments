@@ -1,8 +1,7 @@
 # This initializes a sStataUSDC synth per SIP-377 and SCCP-330 for testnet
 # It wraps/unwraps stataUSDC to sStataUSDC 1:1 and buys/sells to sUSD based on the stataUSDC/USDC ratio (because this deployment is denominated in USDC)
 # All exchanges are atomic. The stataUSDC/USDC ratio can be determined via the Erc4626ToAssetsRatioOracle, which calls convertToAssets per ERC-4626
-# On testnet, we use imports.erc_4626_to_assets_ratio_oracle.contracts.ERC20Mock.address as aUSDC and
-# imports.erc_4626_to_assets_ratio_oracle.contracts.ERC4626Mock.address as stataUSDC
+# On testnet, we use imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address as stataUSDC
 
 [setting.synthStataUsdcMaxMarketCollateral]
 defaultValue = "<%= parseEther(String(5_000_000)) %>"
@@ -51,7 +50,7 @@ fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_stata_usdc_market_id %>",
-    "<%= imports.erc_4626_to_assets_ratio_oracle.contracts.ERC4626Mock.address %>",
+    "<%= imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address %>",
     "<%= settings.synthStataUsdcMaxMarketCollateral %>",
 ]
 
@@ -62,7 +61,7 @@ fromCall.args = ["<%= extras.synth_stata_usdc_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_stata_usdc_market_id %>",
-    "<%= imports.erc_4626_to_assets_ratio_oracle.contracts.ERC4626Mock.address %>",
+    "<%= imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address %>",
     "<%= settings.synthStataUsdcMaxMarketCollateral %>",
 ]
 
@@ -74,7 +73,7 @@ func = "configureCollateral"  # "args" see below in the multiline block
 # We allow stataUSDC as collateral with depositingEnabled = false so the spot market can deposit it, but it can't be LPed
 # Users deposit/delegate sStataUSDC
 [[invoke.CoreProxy_configureCollateral_stataUSDC.args]]
-tokenAddress = "<%= imports.erc_4626_to_assets_ratio_oracle.contracts.ERC4626Mock.address %>"
+tokenAddress = "<%= imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address %>"
 oracleNodeId = "<%= extras.erc_4626_to_assets_ratio_oracle_id %>"
 issuanceRatioD18 = "<%= settings.sstatausdc_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.sstatausdc_liquidation_ratio %>"
