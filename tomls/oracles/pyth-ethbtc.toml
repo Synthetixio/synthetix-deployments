@@ -11,7 +11,11 @@ args = [
 ]
 extra.ethbtc_pyth_oracle_id.event = "NodeRegistered"
 extra.ethbtc_pyth_oracle_id.arg = 0
-depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythEthbtcFeedId']
+depends = [
+    'provision.system',
+    'setting.pyth_price_verification_address',
+    'setting.pythEthbtcFeedId',
+]
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupEthbtcOracleNode]

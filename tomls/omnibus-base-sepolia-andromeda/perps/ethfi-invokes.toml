@@ -111,7 +111,10 @@ depends = ["invoke.createEthfiPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = ["<%= settings.perpsEthfiMarketId %>", "<%= parseEther(settings.perpsEthfiMaxMarketValue) %>"]
+args = [
+    "<%= settings.perpsEthfiMarketId %>",
+    "<%= parseEther(settings.perpsEthfiMaxMarketValue) %>",
+]
 depends = ["invoke.createEthfiPerpsMarket"]
 
 [invoke.setPerpsEthfiMaxLiquidationParameters]
