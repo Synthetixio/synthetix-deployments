@@ -25,6 +25,7 @@ include = [
     "tomls/collaterals/susdc.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/sstatausdc.toml",
     "tomls/collaterals/sstatausdc.toml",
+    # First super market for high mcap assets
     # BTC
     "tomls/omnibus-base-sepolia-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -154,12 +155,11 @@ include = [
     "tomls/oracles/pyth-axl.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/axl.toml",
 
-    # Second super market for low cap assets
+    # Second super market for low mcap assets
     # AAVE
     "tomls/omnibus-base-sepolia-andromeda/perps/aave-invokes.toml",
     "tomls/oracles/pyth-aave.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/aave.toml",
-
     # ADA
     "tomls/omnibus-base-sepolia-andromeda/perps/ada-invokes.toml",
     "tomls/oracles/pyth-ada.toml",
@@ -224,7 +224,6 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/fil-invokes.toml",
     "tomls/oracles/pyth-fil.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/fil.toml",
-
     # FLOW
     "tomls/omnibus-base-sepolia-andromeda/perps/flow-invokes.toml",
     "tomls/oracles/pyth-flow.toml",
@@ -241,7 +240,6 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/icp-invokes.toml",
     "tomls/oracles/pyth-icp.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/icp.toml",
-
     # IMX
     "tomls/omnibus-base-sepolia-andromeda/perps/imx-invokes.toml",
     "tomls/oracles/pyth-imx.toml",
