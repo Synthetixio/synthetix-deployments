@@ -12,6 +12,7 @@ include = [
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper
+    "tomls/omnibus-base-mainnet-andromeda/spot/statausdc.toml",     # sStataUSDC spot market/wrapper
     "tomls/permit-all-perps-perpsHighcapSystem.toml",               # Enable perps market
     "tomls/permit-pdao-createMarket.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
@@ -21,6 +22,8 @@ include = [
     # Collaterals
     "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstatausdc.toml",
+    "tomls/collaterals/sstatausdc.toml",
     # BTC
     "tomls/omnibus-base-mainnet-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -223,6 +226,9 @@ args = [
 
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+
+[setting.stata_usdc_address]
+defaultValue = "0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 
 [setting.snx_address]
 defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"

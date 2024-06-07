@@ -1,0 +1,77 @@
+[setting.synthStataUsdcMaxMarketCollateral]
+defaultValue = "<%= parseEther(String(5_000_000)) %>"
+
+[setting.spotStrictStalenessTolerance]
+defaultValue = "60"
+
+[setting.sstatausdc_issuance_ratio]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.sstatausdc_liquidation_ratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
+[setting.sstatausdc_liquidation_reward]
+defaultValue = "<%= parseEther('0.005') %>"
+
+[setting.sstatausdc_min_delegation]
+defaultValue = "<%= parseEther('100') %>"
+
+[invoke.SpotMarketProxy_createSynth_stataUSDC]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic Static aUSDC", "sStataUSDC", "<%= settings.owner %>"]
+extra.synth_stata_usdc_market_id.event = "SynthRegistered"
+extra.synth_stata_usdc_market_id.arg = 0
+extra.synth_stata_usdc_token_address.event = "SynthRegistered"
+extra.synth_stata_usdc_token_address.arg = 1
+
+[invoke.SpotMarketProxy_updatePriceData_stataUSDC]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_stata_usdc_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_stata_usdc_market_id %>",
+    "<%= extras.erc_4626_to_assets_ratio_oracle_id %>",
+    "<%= extras.erc_4626_to_assets_ratio_oracle_id %>",
+    "<%= settings.spotStrictStalenessTolerance %>",     # Effectively unused, as this oracle node will never return something stale
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_stataUSDC]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_stata_usdc_market_id %>",
+    "<%= imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address %>",
+    "<%= settings.synthStataUsdcMaxMarketCollateral %>",
+]
+
+[invoke.SpotMarketProxy_setWrapper_stataUSDC]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_stata_usdc_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_stata_usdc_market_id %>",
+    "<%= imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address %>",
+    "<%= settings.synthStataUsdcMaxMarketCollateral %>",
+]
+
+[invoke.CoreProxy_configureCollateral_stataUSDC]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+# We allow stataUSDC as collateral with depositingEnabled = false so the spot market can deposit it, but it can't be LPed
+# Users deposit/delegate sStataUSDC
+[[invoke.CoreProxy_configureCollateral_stataUSDC.args]]
+tokenAddress = "<%= imports.erc_4626_to_assets_ratio_oracle.imports.statausdc_token_mock.contracts.Token.address %>"
+oracleNodeId = "<%= extras.erc_4626_to_assets_ratio_oracle_id %>"
+issuanceRatioD18 = "<%= settings.sstatausdc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.sstatausdc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.sstatausdc_liquidation_reward  %>"
+minDelegationD18 = "<%= settings.sstatausdc_min_delegation %>"
+depositingEnabled = false
