@@ -220,7 +220,7 @@ args = [
 
 [provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_ARB_lp]
 source = "synthetix-rewards-distributor:0.0.2"
-targetPreset = "<%= settings.target_preset %>"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_ARB_lp"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
@@ -242,7 +242,7 @@ args = [
 
 [provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDC_lp]
 source = "synthetix-rewards-distributor:0.0.2"
-targetPreset = "<%= settings.target_preset %>"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_USDC_lp"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
@@ -264,7 +264,7 @@ args = [
 
 [provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp]
 source = "synthetix-rewards-distributor:0.0.2"
-targetPreset = "<%= settings.target_preset %>"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_WETH_lp"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
@@ -282,4 +282,26 @@ args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.weth_address %>",
     "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp.contracts.RewardsDistributor.address %>",
+]
+
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp]
+source = "synthetix-rewards-distributor:0.0.2"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_sUSDCe_lp"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= settings.sUSDCe_address %>"
+options.payoutToken = "<%= settings.arb_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool ARB Rewards for sUSDCe LP"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.sUSDCe_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp.contracts.RewardsDistributor.address %>",
 ]
