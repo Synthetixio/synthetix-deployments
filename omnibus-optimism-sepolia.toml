@@ -1,18 +1,22 @@
 name = "synthetix-omnibus"
-version = "5"
+version = "1"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
-    "tomls/ccip-mainnet.toml",
+    "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/collaterals/snx.toml",
+    "tomls/oracles/eth.toml",
+    "tomls/collaterals/weth.toml",
     "tomls/markets/legacy.toml",
-    # "tomls/oracles/eth.toml",
-    # "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
+    "tomls/permit-all-createPool.toml",
+    "tomls/permit-all-registerMarket.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
+
+[setting.salt]
+defaultValue = "snaxtest"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.15"
@@ -27,24 +31,15 @@ defaultValue = "synthetix-perps-market:3.3.15"
 defaultValue = "synthetix-legacy-market:3.3.4"
 
 [setting.owner]
-defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[setting.salt]
-defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
+[setting.weth_address]
+defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
 
-[setting.bundleSalt]
-defaultValue = "snax"
+[setting.eth_aggregator_address]
+defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 
-[setting.snx_address]
-defaultValue = "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f"
-
-[setting.snx_aggregator_address]
-defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
-
-[setting.snx_chainlink_staleness_tolerance]
-defaultValue = "129600"
-
-[setting.snx_liquidation_reward]
+[setting.weth_liquidation_reward]
 defaultValue = "10000000000000000000"
 
 [setting.minimum_liquidity_ratio]
@@ -54,22 +49,22 @@ defaultValue = "2000000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.pdao]
-defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.sc_pool_id]
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [setting.ccip_router]
-defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
+defaultValue = "0xd0daae2231e9cb96b94c8512223533293c3693bf"
 
 [setting.ccip_token_pool]
-defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
+defaultValue = "0x9b65749b38278060c5787cce0391ac7f1094c8e8"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
