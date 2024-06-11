@@ -16,20 +16,21 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.CoreProxy_configureCollateral_dai.args]]
-tokenAddress = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
+tokenAddress = "<%= settings.dai_address %>"
 oracleNodeId = "<%= extras.dai_oracle_id %>"
 issuanceRatioD18 = "<%= settings.dai_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.dai_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.dai_liquidation_reward %>"
 minDelegationD18 = "<%= settings.dai_min_delegation %>"
-depositingEnabled = true
+depositingEnabled = false
 
 [invoke.CoreProxy_setPoolCollateralConfiguration_dai]
 target = ["system.CoreProxy"]
-fromCall.func = "owner"
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.dai_address %>",
     { collateralLimitD18 = "<%= settings.max_collateral_limit_dai %>", issuanceRatioD18 = 0 },
 ]

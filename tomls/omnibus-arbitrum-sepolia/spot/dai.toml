@@ -27,7 +27,7 @@ fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_dai_market_id %>",
-    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.dai_address %>",
     "<%= settings.synth_dai_max_market_collateral %>",
 ]
 
@@ -38,7 +38,7 @@ fromCall.args = ["<%= extras.synth_dai_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_dai_market_id %>",
-    "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>",
+    "<%= settings.dai_address %>",
     "<%= settings.synth_dai_max_market_collateral %>",
 ]
 
