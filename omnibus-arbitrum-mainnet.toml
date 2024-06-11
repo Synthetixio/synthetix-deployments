@@ -5,7 +5,7 @@ preset = "main"
 include = [
     "tomls/core.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-factory.toml",
+    "tomls/markets/perps-highcap-factory.toml",
     "tomls/permit-deniers.toml",
 
     "tomls/omnibus-arbitrum-mainnet/permissions.toml",
