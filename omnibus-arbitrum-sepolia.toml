@@ -252,10 +252,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.max_collateral_limit_sUSDCe]
 defaultValue = "<%= parseEther(String(50_000_000)) %>"
 
-[setting.arb_address]
-defaultValue = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet"
-
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
