@@ -16,8 +16,8 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
-const { setMainnetTokenBalance } = require('../../tasks/setMainnetTokenBalance');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
@@ -29,6 +29,10 @@ const {
 } = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
 const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
 const { claimRewards } = require('../../tasks/claimRewards');
+const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
+const {
+  configureMaximumMarketCollateral,
+} = require('../../tasks/configureMaximumMarketCollateral');
 
 const {
   contracts: {
@@ -122,7 +126,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       0,
       'New wallet has 0 USDC balance'
     );
-    await setMainnetTokenBalance({
+    await setTokenBalance({
       wallet,
       balance: 1_000,
       tokenAddress,
@@ -156,8 +160,27 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
+  it('should increase max collateral for the test to 1_000_000_000_000', async () => {
+    await configureMaximumMarketCollateral({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
+    await setSpotWrapper({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
+  });
+
   it(`should wrap 1_000 USDC`, async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'USDC', amount: 1_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'USDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 1_000,
+    });
     assert.equal(balance, 1_000);
   });
 
@@ -210,21 +233,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // We must sync timestamp of the fork before making price updates
-    await syncTime();
-
-    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-    // so we send off a price update just to be safe
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
-    });
+    await doAllPriceUpdates({ wallet });
   });
 
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {
@@ -248,7 +257,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should fund RewardDistributor with 1_000 SNX', async () => {
-    await setMainnetTokenBalance({
+    await setTokenBalance({
       wallet,
       balance: 1_000,
       tokenAddress: payoutToken,
@@ -275,6 +284,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const poolId = 1;
     const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
+    await setEthBalance({ address: poolOwner, balance: 100 });
 
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);

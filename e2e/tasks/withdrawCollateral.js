@@ -21,18 +21,21 @@ async function withdrawCollateral({ privateKey, accountId, symbol, amount }) {
     wallet
   );
 
-  const tx = await CoreProxy.withdraw(
-    ethers.BigNumber.from(accountId),
+  const args = [
+    //
+    accountId,
     config.tokenAddress,
     ethers.utils.parseEther(`${amount}`),
-    { gasLimit: 10_000_000 }
-  ).catch(parseError);
+  ];
+  const gasLimit = await CoreProxy.estimateGas
+    .withdraw(...args)
+    .catch(parseError)
+    .catch(() => ethers.BigNumber.from(10_000_000));
+  const tx = await CoreProxy.withdraw(...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   await tx
     .wait()
     .then((txn) => log(txn.events) || txn, parseError)
     .then(gasLog({ action: 'CoreProxy.withdraw', log }));
-
-  return accountId;
 }
 
 module.exports = {

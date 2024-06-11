@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "7"
+version = "30"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -10,8 +10,10 @@ include = [
     "tomls/pools/spartan-council.toml",                             # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper
     "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
+    "tomls/permit-pdao-createMarket.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
@@ -20,13 +22,134 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
     # BTC
-    "tomls/markets/perps/btc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/btc.toml",
     # ETH
-    "tomls/markets/perps/eth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/eth-invokes.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
+    # SNX
+    "tomls/omnibus-base-mainnet-andromeda/perps/snx-invokes.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/snx.toml",
+    # SOL
+    "tomls/omnibus-base-mainnet-andromeda/perps/sol-invokes.toml",
+    "tomls/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/sol.toml",
+    # WIF
+    "tomls/omnibus-base-mainnet-andromeda/perps/wif-invokes.toml",
+    "tomls/oracles/pyth-wif.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/wif.toml",
+    # W
+    "tomls/omnibus-base-mainnet-andromeda/perps/w-invokes.toml",
+    "tomls/oracles/pyth-w.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/w.toml",
+    # ENA
+    "tomls/omnibus-base-mainnet-andromeda/perps/ena-invokes.toml",
+    "tomls/oracles/pyth-ena.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ena.toml",
+    # DOGE
+    "tomls/omnibus-base-mainnet-andromeda/perps/doge-invokes.toml",
+    "tomls/oracles/pyth-doge.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/doge.toml",
+    # AVAX
+    "tomls/omnibus-base-mainnet-andromeda/perps/avax-invokes.toml",
+    "tomls/oracles/pyth-avax.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/avax.toml",
+    # OP
+    "tomls/omnibus-base-mainnet-andromeda/perps/op-invokes.toml",
+    "tomls/oracles/pyth-op.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/op.toml",
+    # ORDI
+    "tomls/omnibus-base-mainnet-andromeda/perps/ordi-invokes.toml",
+    "tomls/oracles/pyth-ordi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ordi.toml",
+    # PEPE
+    "tomls/omnibus-base-mainnet-andromeda/perps/pepe-invokes.toml",
+    "tomls/oracles/pyth-pepe.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/pepe.toml",
+    # RUNE
+    "tomls/omnibus-base-mainnet-andromeda/perps/rune-invokes.toml",
+    "tomls/oracles/pyth-rune.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/rune.toml",
+    # BONK
+    "tomls/omnibus-base-mainnet-andromeda/perps/bonk-invokes.toml",
+    "tomls/oracles/pyth-bonk.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bonk.toml",
+    # FTM
+    "tomls/omnibus-base-mainnet-andromeda/perps/ftm-invokes.toml",
+    "tomls/oracles/pyth-ftm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ftm.toml",
+    # ARB
+    "tomls/omnibus-base-mainnet-andromeda/perps/arb-invokes.toml",
+    "tomls/oracles/pyth-arb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/arb.toml",
+    # MATIC
+    "tomls/omnibus-base-mainnet-andromeda/perps/matic-invokes.toml",
+    "tomls/oracles/pyth-matic.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/matic.toml",
+    # BNB
+    "tomls/omnibus-base-mainnet-andromeda/perps/bnb-invokes.toml",
+    "tomls/oracles/pyth-bnb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bnb.toml",
+
+    # LINK
+    "tomls/omnibus-base-mainnet-andromeda/perps/link-invokes.toml",
+    "tomls/oracles/pyth-link.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/link.toml",
+    # PENDLE
+    "tomls/omnibus-base-mainnet-andromeda/perps/pendle-invokes.toml",
+    "tomls/oracles/pyth-pendle.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/pendle.toml",
+    # INJ
+    "tomls/omnibus-base-mainnet-andromeda/perps/inj-invokes.toml",
+    "tomls/oracles/pyth-inj.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/inj.toml",
+    # GMX
+    "tomls/omnibus-base-mainnet-andromeda/perps/gmx-invokes.toml",
+    "tomls/oracles/pyth-gmx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/gmx.toml",
+    # TIA
+    "tomls/omnibus-base-mainnet-andromeda/perps/tia-invokes.toml",
+    "tomls/oracles/pyth-tia.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/tia.toml",
+    # SUI
+    "tomls/omnibus-base-mainnet-andromeda/perps/sui-invokes.toml",
+    "tomls/oracles/pyth-sui.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/sui.toml",
+    # TON
+    "tomls/omnibus-base-mainnet-andromeda/perps/ton-invokes.toml",
+    "tomls/oracles/pyth-ton.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ton.toml",
+    # ARKM
+    "tomls/omnibus-base-mainnet-andromeda/perps/arkm-invokes.toml",
+    "tomls/oracles/pyth-arkm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/arkm.toml",
+    # GALA
+    "tomls/omnibus-base-mainnet-andromeda/perps/gala-invokes.toml",
+    "tomls/oracles/pyth-gala.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/gala.toml",
+    # TAO
+    "tomls/omnibus-base-mainnet-andromeda/perps/tao-invokes.toml",
+    "tomls/oracles/pyth-tao.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/tao.toml",
+    # BOME
+    "tomls/omnibus-base-mainnet-andromeda/perps/bome-invokes.toml",
+    "tomls/oracles/pyth-bome.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bome.toml",
+    # ETHFI
+    "tomls/omnibus-base-mainnet-andromeda/perps/ethfi-invokes.toml",
+    "tomls/oracles/pyth-ethfi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ethfi.toml",
+    # STX
+    "tomls/omnibus-base-mainnet-andromeda/perps/stx-invokes.toml",
+    "tomls/oracles/pyth-stx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/stx.toml",
+    # AXL
+    "tomls/omnibus-base-mainnet-andromeda/perps/axl-invokes.toml",
+    "tomls/oracles/pyth-axl.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/axl.toml",
 ]
 
 [setting.commitmentPriceDelay]
@@ -36,16 +159,16 @@ defaultValue = "2"
 defaultValue = "2"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.5"
+defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.3.15"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.5"
+defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.5"
+defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
@@ -60,7 +183,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.5"
+source = "pyth-erc7412-wrapper:3.3.15"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
@@ -70,6 +193,9 @@ defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.deployer]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.pdao]
+defaultValue = "0xbb63CA5554dc4CcaCa4EDd6ECC2837d5EFe83C82"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization

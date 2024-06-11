@@ -1,0 +1,272 @@
+name = "synthetix-omnibus"
+version = "2"
+description = "Includes the full synthetix system with configurations applied"
+preset = "main"
+include = [
+    "tomls/core.toml",
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-factory.toml",
+    "tomls/permit-deniers.toml",
+
+    "tomls/omnibus-arbitrum-mainnet/permissions.toml",
+    "tomls/omnibus-arbitrum-mainnet/pools/spartan-council.toml",
+
+    # USDC
+    "tomls/oracles/pyth-usdc.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/usdc.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
+
+    # ARB
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/arb.toml",
+
+    # WETH
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
+]
+
+[setting.target_preset]
+defaultValue = "main"
+
+[setting.salt]
+defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.18"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "arbitrum-gas-price-oracle:3.3.16"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.15"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.19"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.15"
+description = "Do not update! This package isn't upgradeable. A version change will deploy a new contract."
+
+[setting.pyth_price_verification_address]
+defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
+description = "https://docs.pyth.network/price-feeds/contract-addresses/evm"
+
+[setting.pyth_feed_url]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+description = "Pyth settlement strategy config"
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.15"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[setting.owner]
+defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
+
+[setting.deployer]
+defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('2.00') %>"
+description = "200% min market collateralization"
+
+[invoke.CoreProxy_setMinLiquidityRatio]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setMinLiquidityRatio(uint256)"
+args = ["<%= settings.minimum_liquidity_ratio %>"]
+
+[setting.account_withdraw_timeout]
+defaultValue = "<%= hexZeroPad(hexlify(parseInt(1 * 24 * 3600)), 32) %>"
+
+[invoke.CoreProxy_setConfig_accountTimeoutWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= formatBytes32String('accountTimeoutWithdraw') %>",
+    "<%= settings.account_withdraw_timeout %>",
+]
+
+[setting.spartan_council_pool_id_setting]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
+
+[setting.big_cap_default_staleness_tolerance]
+defaultValue = "3600"
+
+[setting.big_cap_settlement_window_duration]
+defaultValue = "60"
+
+[setting.big_cap_settlement_delay]
+defaultValue = "2"
+
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('0.5') %>"
+
+[setting.settlement_minimum_usd_exchange_amount]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.settlement_max_rounding_loss]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.price_deviation_tolerance]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.usdc_staleness_tolerance]
+defaultValue = "<%= String(1 * 3600) %>"
+description = "1 hour"
+
+#
+#
+#
+# USDC
+#
+#
+#
+[setting.usdc_address]
+defaultValue = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+description = "https://developers.circle.com/stablecoins/docs/usdc-on-main-networks"
+
+[setting.pyth_feed_id_usdc]
+defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.synth_usdc_max_market_collateral]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
+[setting.max_collateral_limit_usdc]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
+#
+#
+#
+# WETH
+#
+#
+#
+[setting.weth_address]
+defaultValue = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
+
+[setting.pyth_feed_id_eth]
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.max_collateral_limit_weth]
+defaultValue = "<%= parseEther(String(2_700)) %>"
+
+#
+#
+#
+# ARB
+#
+#
+#
+[setting.arb_address]
+defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
+
+[setting.pyth_feed_id_arb]
+defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.max_collateral_limit_arb]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
+[invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    [
+        # must be supplied in strictly ascending order
+        { marketId = "<%= imports.perpsFactory.settings.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+
+[setting.usd_token_name]
+defaultValue = "<%= formatBytes32String('USDToken') %>"
+
+[invoke.CoreProxy_initOrUpgradeToken_USDToken]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "initOrUpgradeToken"
+args = [
+    "<%= settings.usd_token_name %>",
+    "Synthetix USD",
+    "USDx",
+    18,
+    "<%= imports.system.contracts.USDRouter.address %>",
+]
+
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_ARB_lp]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= settings.arb_address %>"
+options.payoutToken = "<%= settings.arb_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool ARB Rewards for ARB LP"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_ARB_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.arb_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_ARB_lp.contracts.RewardsDistributor.address %>",
+]
+
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDC_lp]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= settings.usdc_address %>"
+options.payoutToken = "<%= settings.arb_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool ARB Rewards for USDC LP"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDC_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.usdc_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDC_lp.contracts.RewardsDistributor.address %>",
+]
+
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= settings.weth_address %>"
+options.payoutToken = "<%= settings.arb_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool ARB Rewards for WETH LP"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.weth_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp.contracts.RewardsDistributor.address %>",
+]

@@ -17,7 +17,7 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
@@ -154,7 +154,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it(`should wrap 1_000 fUSDC`, async () => {
-    const balance = await wrapCollateral({ wallet, symbol: 'fUSDC', amount: 1_000 });
+    const balance = await wrapCollateral({
+      wallet,
+      symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      amount: 1_000,
+    });
     assert.equal(balance, 1_000);
   });
 
@@ -207,21 +213,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // We must sync timestamp of the fork before making price updates
-    await syncTime();
-
-    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-    // so we send off a price update just to be safe
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
-    });
+    await doAllPriceUpdates({ wallet });
   });
 
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {

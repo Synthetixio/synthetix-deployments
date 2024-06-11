@@ -6,7 +6,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const { getPerpsSettlementStrategy } = require('../../tasks/getPerpsSettlementStrategy');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
@@ -73,30 +73,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(market.marketId, marketId);
   });
 
-  it('should have max open interest 385 ETH', async () => {
+  it('should have max open interest 10_000 ETH', async () => {
     const maxOpenInterest = parseFloat(
       ethers.utils.formatEther(await PerpsMarketProxy.maxOpenInterest(marketId))
     );
     log({ maxOpenInterest });
-    assert.equal(maxOpenInterest, 385);
+    assert.equal(maxOpenInterest, 10_000);
   });
 
   it('should make a price update', async () => {
-    // We must sync timestamp of the fork before making price updates
-    await syncTime();
-
-    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-    // so we send off a price update just to be safe
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
-    });
+    await doAllPriceUpdates({ wallet });
   });
 
   it('should get market summary with ERC7412', async () => {
@@ -119,20 +105,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const { skewScale, maxFundingVelocity } = await PerpsMarketProxy.getFundingParameters(marketId);
 
     log({ skewScale, maxFundingVelocity });
-    assert.equal(Number(ethers.utils.formatEther(skewScale)), 1_000_000, 'skewScale');
+    assert.equal(Number(ethers.utils.formatEther(skewScale)), 350_000, 'skewScale');
     assert.equal(Number(ethers.utils.formatEther(maxFundingVelocity)), 9, 'maxFundingVelocity');
   });
 
-  it('should have 385 ETH Max Market Size', async () => {
+  it('should have 10_000 ETH Max Market Size', async () => {
     const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
 
-    assert.equal(ethers.utils.formatEther(maxSize), 385);
+    assert.equal(ethers.utils.formatEther(maxSize), 10_000);
   });
 
-  it('should have 0.0002 Maker fee, 0.0005 Taker fee', async () => {
+  it('should have 0.000001 Maker fee, 0.0005 Taker fee', async () => {
     const { makerFee, takerFee } = await PerpsMarketProxy.getOrderFees(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.0002);
+    assert.equal(Number(ethers.utils.formatEther(makerFee)), 0.000001);
     assert.equal(Number(ethers.utils.formatEther(takerFee)), 0.0005);
   });
 
@@ -142,7 +128,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       Number(ethers.utils.formatEther(params.initialMarginRatioD18)),
-      8.92,
+      1.16,
       'initialMarginRatioD18'
     );
     assert.equal(
@@ -196,7 +182,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should have Max Locked OI ratio set to 0.5', async () => {
     const maxLockedRatio = await PerpsMarketProxy.getLockedOiRatio(marketId);
 
-    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.5);
+    assert.equal(Number(ethers.utils.formatEther(maxLockedRatio)), 0.25);
   });
 
   it('should have settlement strategy 0 delay set to 2s', async () => {

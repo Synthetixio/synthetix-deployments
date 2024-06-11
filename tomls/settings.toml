@@ -16,3 +16,4 @@ args = [
     "<%= formatBytes32String('accountTimeoutWithdraw') %>",
     "<%= hexZeroPad(hexlify(parseInt(settings.account_timeout_withdraw)), 32) %>",
 ]
+depends = ['provision.system', 'setting.account_timeout_withdraw']

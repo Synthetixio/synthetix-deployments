@@ -20,16 +20,16 @@ const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { swapToSusd } = require('../../tasks/swapToSusd');
+const { spotSell } = require('../../tasks/spotSell');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 
-const SYNTH_USDC_MAX_MARKET_COLLATERAL = 10_000_000;
+const SYNTH_USDC_MAX_MARKET_COLLATERAL = 100_000_000;
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -137,6 +137,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await wrapCollateral({
       wallet,
       symbol: 'fUSDC',
+      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: SYNTH_USDC_MAX_MARKET_COLLATERAL,
     });
     assert.equal(balance, SYNTH_USDC_MAX_MARKET_COLLATERAL);
@@ -194,21 +196,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should make a price update', async () => {
-    // We must sync timestamp of the fork before making price updates
-    await syncTime();
-
-    // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-    // so we send off a price update just to be safe
-    await doPriceUpdate({
-      wallet,
-      marketId: 100,
-      settlementStrategyId: require('../../deployments/extras.json').eth_pyth_settlement_strategy,
-    });
-    await doPriceUpdate({
-      wallet,
-      marketId: 200,
-      settlementStrategyId: require('../../deployments/extras.json').btc_pyth_settlement_strategy,
-    });
+    await doAllPriceUpdates({ wallet });
   });
 
   it(`should delegate ${SYNTH_USDC_MAX_MARKET_COLLATERAL - 200_000} sUSDC into the Spartan Council pool`, async () => {
@@ -233,10 +221,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should atomic swap 50 sUSDC to snxUSD to burn debt', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
-    await swapToSusd({
+    await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 50,
+      synthAmount: 50,
+      minUsdAmount: 50, // 0% slippage
     });
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
   });

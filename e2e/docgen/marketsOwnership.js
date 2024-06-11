@@ -45,9 +45,11 @@ async function marketsOwnership() {
       const [name, owner, nominatedOwner] = await Promise.all([
         SpotMarketProxy.name(marketId),
         SpotMarketProxy.getMarketOwner(marketId),
-        // TODO: enable when we have contract view function
-        // SpotMarketProxy.getNominatedMarketOwner(marketId),
-        Promise.resolve(ethers.constants.AddressZero),
+        SpotMarketProxy.getNominatedMarketOwner(marketId).catch(
+          (error) =>
+            log({ call: `SpotMarketProxy.getNominatedMarketOwner(${marketId})`, error }) ||
+            ethers.constants.AddressZero
+        ),
       ]);
       return { marketId, name, owner, nominatedOwner };
     })

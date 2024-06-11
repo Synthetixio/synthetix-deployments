@@ -1,5 +1,5 @@
 [setting.synthUsdcMaxMarketCollateral]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
+defaultValue = "<%= parseEther(String(100_000_000)) %>"
 
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
@@ -48,6 +48,8 @@ args = [
     "<%= settings.synthUsdcMaxMarketCollateral %>",
 ]
 
+# We allow USDC as collateral with depositingEnabled = false so the spot market can deposit it, but it can't be LPed
+# Users deposit/delegate sUSDC
 [invoke.configure_usdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
@@ -64,6 +66,8 @@ depositingEnabled = false
 
 [provision.usdc_mock_collateral]
 source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@usdc"
+options.salt = "<%= settings.salt %>"
 options.name = "Fake USD Coin"
 options.symbol = "fUSDC"
 options.owner = "<%= settings.owner %>"

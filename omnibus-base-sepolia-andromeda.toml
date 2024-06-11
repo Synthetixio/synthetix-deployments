@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "8"
+version = "32"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -10,15 +10,20 @@ include = [
     "tomls/pools/spartan-council.toml",                             # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
     "tomls/omnibus-base-sepolia-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper, mock for USDC
+    "tomls/omnibus-base-sepolia-andromeda/spot/statausdc.toml",     # sStataUSDC spot market/wrapper, mock for aUSDC/stataUSDC from erc-4626-to-assets-ratio-oracle
     "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/global.toml",       # Global perps settings
     "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
+    "tomls/oracles/statausdc-usdc.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/feeCollector.toml",
     # Collaterals
     "tomls/omnibus-base-sepolia-andromeda/collaterals/susdc.toml",
     "tomls/collaterals/susdc.toml",
+    "tomls/omnibus-base-sepolia-andromeda/collaterals/sstatausdc.toml",
+    "tomls/collaterals/sstatausdc.toml",
     # BTC
     "tomls/omnibus-base-sepolia-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -27,6 +32,127 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/eth-invokes.toml",
     "tomls/oracles/pyth-eth.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/eth.toml",
+    # SNX
+    "tomls/omnibus-base-sepolia-andromeda/perps/snx-invokes.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/snx.toml",
+    # SOL
+    "tomls/omnibus-base-sepolia-andromeda/perps/sol-invokes.toml",
+    "tomls/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/sol.toml",
+    # WIF
+    "tomls/omnibus-base-sepolia-andromeda/perps/wif-invokes.toml",
+    "tomls/oracles/pyth-wif.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/wif.toml",
+    # W
+    "tomls/omnibus-base-sepolia-andromeda/perps/w-invokes.toml",
+    "tomls/oracles/pyth-w.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/w.toml",
+    # ENA
+    "tomls/omnibus-base-sepolia-andromeda/perps/ena-invokes.toml",
+    "tomls/oracles/pyth-ena.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ena.toml",
+    # DOGE
+    "tomls/omnibus-base-sepolia-andromeda/perps/doge-invokes.toml",
+    "tomls/oracles/pyth-doge.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/doge.toml",
+    # AVAX
+    "tomls/omnibus-base-sepolia-andromeda/perps/avax-invokes.toml",
+    "tomls/oracles/pyth-avax.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/avax.toml",
+    # OP
+    "tomls/omnibus-base-sepolia-andromeda/perps/op-invokes.toml",
+    "tomls/oracles/pyth-op.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/op.toml",
+    # ORDI
+    "tomls/omnibus-base-sepolia-andromeda/perps/ordi-invokes.toml",
+    "tomls/oracles/pyth-ordi.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ordi.toml",
+    # PEPE
+    "tomls/omnibus-base-sepolia-andromeda/perps/pepe-invokes.toml",
+    "tomls/oracles/pyth-pepe.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/pepe.toml",
+    # RUNE
+    "tomls/omnibus-base-sepolia-andromeda/perps/rune-invokes.toml",
+    "tomls/oracles/pyth-rune.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/rune.toml",
+    # BONK
+    "tomls/omnibus-base-sepolia-andromeda/perps/bonk-invokes.toml",
+    "tomls/oracles/pyth-bonk.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/bonk.toml",
+    # FTM
+    "tomls/omnibus-base-sepolia-andromeda/perps/ftm-invokes.toml",
+    "tomls/oracles/pyth-ftm.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ftm.toml",
+    # ARB
+    "tomls/omnibus-base-sepolia-andromeda/perps/arb-invokes.toml",
+    "tomls/oracles/pyth-arb.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/arb.toml",
+    # MATIC
+    "tomls/omnibus-base-sepolia-andromeda/perps/matic-invokes.toml",
+    "tomls/oracles/pyth-matic.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/matic.toml",
+    # BNB
+    "tomls/omnibus-base-sepolia-andromeda/perps/bnb-invokes.toml",
+    "tomls/oracles/pyth-bnb.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/bnb.toml",
+
+    # LINK
+    "tomls/omnibus-base-sepolia-andromeda/perps/link-invokes.toml",
+    "tomls/oracles/pyth-link.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/link.toml",
+    # PENDLE
+    "tomls/omnibus-base-sepolia-andromeda/perps/pendle-invokes.toml",
+    "tomls/oracles/pyth-pendle.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/pendle.toml",
+    # INJ
+    "tomls/omnibus-base-sepolia-andromeda/perps/inj-invokes.toml",
+    "tomls/oracles/pyth-inj.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/inj.toml",
+    # GMX
+    "tomls/omnibus-base-sepolia-andromeda/perps/gmx-invokes.toml",
+    "tomls/oracles/pyth-gmx.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/gmx.toml",
+    # TIA
+    "tomls/omnibus-base-sepolia-andromeda/perps/tia-invokes.toml",
+    "tomls/oracles/pyth-tia.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/tia.toml",
+    # SUI
+    "tomls/omnibus-base-sepolia-andromeda/perps/sui-invokes.toml",
+    "tomls/oracles/pyth-sui.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/sui.toml",
+    # TON
+    "tomls/omnibus-base-sepolia-andromeda/perps/ton-invokes.toml",
+    "tomls/oracles/pyth-ton.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ton.toml",
+    # ARKM
+    "tomls/omnibus-base-sepolia-andromeda/perps/arkm-invokes.toml",
+    "tomls/oracles/pyth-arkm.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/arkm.toml",
+    # GALA
+    "tomls/omnibus-base-sepolia-andromeda/perps/gala-invokes.toml",
+    "tomls/oracles/pyth-gala.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/gala.toml",
+    # TAO
+    "tomls/omnibus-base-sepolia-andromeda/perps/tao-invokes.toml",
+    "tomls/oracles/pyth-tao.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/tao.toml",
+    # BOME
+    "tomls/omnibus-base-sepolia-andromeda/perps/bome-invokes.toml",
+    "tomls/oracles/pyth-bome.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/bome.toml",
+    # ETHFI
+    "tomls/omnibus-base-sepolia-andromeda/perps/ethfi-invokes.toml",
+    "tomls/oracles/pyth-ethfi.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/ethfi.toml",
+    # STX
+    "tomls/omnibus-base-sepolia-andromeda/perps/stx-invokes.toml",
+    "tomls/oracles/pyth-stx.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/stx.toml",
+    # AXL
+    "tomls/omnibus-base-sepolia-andromeda/perps/axl-invokes.toml",
+    "tomls/oracles/pyth-axl.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/axl.toml",
 ]
 
 [setting.commitmentPriceDelay]
@@ -36,7 +162,7 @@ defaultValue = "2"
 defaultValue = "2"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.3.15"
@@ -45,13 +171,13 @@ defaultValue = "op-gas-price-oracle:3.3.15"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.17"
+defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
 
 [setting.salt]
-defaultValue = "andromeda-dev"
+defaultValue = "andromeda-dev-2"
 
 [setting.target_preset]
 defaultValue = "andromeda" # Preset assigned to provisioned packages
