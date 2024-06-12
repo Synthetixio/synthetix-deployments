@@ -1,7 +1,7 @@
 const assert = require('assert');
-const { migrateLegacyMarket } = require('../tasks/migrateLegacyMarket');
-const { getLpPosition } = require('../tasks/getLpPosition');
-const { getAccountCollateral } = require('../tasks/getAccountCollateral');
+const { migrateLegacyMarket } = require('../../tasks/migrateLegacyMarket');
+const { getLpPosition } = require('../../tasks/getLpPosition');
+const { getAccountCollateral } = require('../../tasks/getAccountCollateral');
 const { ethers } = require('ethers');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
