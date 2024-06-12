@@ -23,9 +23,9 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
 
-    # sUSDCe
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sUSDCe.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/sUSDCe.toml",
+    # sUSDe
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sUSDe.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/sUSDe.toml",
 ]
 
 [setting.target_preset]
@@ -176,19 +176,19 @@ defaultValue = "<%= parseEther(String(10_000_000)) %>"
 #
 #
 #
-# sUSDCe
+# sUSDe
 #
 #
 #
-[setting.sUSDCe_address]
+[setting.sUSDe_address]
 defaultValue = "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
 description = "https://coinmarketcap.com/currencies/ethena-staked-usde/"
 
-[setting.pyth_feed_id_sUSDCe]
+[setting.pyth_feed_id_sUSDe]
 defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[setting.max_collateral_limit_sUSDCe]
+[setting.max_collateral_limit_sUSDe]
 defaultValue = "<%= parseEther(String(50_000_000)) %>"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
@@ -284,24 +284,24 @@ args = [
     "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp.contracts.RewardsDistributor.address %>",
 ]
 
-[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp]
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp]
 source = "synthetix-rewards-distributor:0.0.2"
-target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_sUSDCe_lp"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_sUSDe_lp"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.sUSDCe_address %>"
+options.collateralType = "<%= settings.sUSDe_address %>"
 options.payoutToken = "<%= settings.arb_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Spartan Council Pool ARB Rewards for sUSDCe LP"
+options.name = "Spartan Council Pool ARB Rewards for sUSDe LP"
 
-[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp]
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.sUSDCe_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp.contracts.RewardsDistributor.address %>",
+    "<%= settings.sUSDe_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp.contracts.RewardsDistributor.address %>",
 ]

@@ -14,34 +14,28 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
-const { setPoolCollateralConfiguration } = require('../../tasks/setPoolCollateralConfiguration');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
+  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
-  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const wallet = ethers.Wallet.createRandom().connect(provider);
-  // const wallet = new ethers.Wallet('0xab', provider);
-  // const accountId = 1337;
   const address = wallet.address;
   const privateKey = wallet.privateKey;
 
   let snapshot;
-
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
     log('Create snapshot', { snapshot });
   });
-
   after('Restore snapshot', async () => {
     log('Restore snapshot', { snapshot });
     await provider.send('evm_revert', [snapshot]);
@@ -54,21 +48,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should disable withdrawal timeout', async () => {
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
-  });
-
-  it(`should increase max pool collateral for the test`, async () => {
-    const { tokenAddress } = await getCollateralConfig('fsUSDCe');
-    await setPoolCollateralConfiguration({
-      poolId: require('../../deployments/extras.json').spartan_council_pool_id,
-      tokenAddress,
-      collateralLimit:
-        parseFloat(
-          ethers.utils.formatEther(
-            require('../../deployments/extras.json').max_collateral_limit_sUSDCe
-          )
-        ) * 10,
-      issuanceRatio: 0,
-    });
   });
 
   it('should create new random wallet', async () => {
@@ -91,7 +70,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     await doPriceUpdateForPyth({
       wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_sUSDCe,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_susdc,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });
@@ -119,74 +98,78 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fsUSDCe balance to 1000', async () => {
+  it('should set sUSDe balance to 1000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fsUSDCe' }),
+      await getCollateralBalance({ address, symbol: 'sUSDe' }),
       0,
-      'New wallet has 0 fsUSDCe balance'
+      'New wallet has 0 sUSDe balance'
     );
-    const { tokenAddress } = await getCollateralConfig('fsUSDCe');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fsUSDCe' }), 1000);
+    await setTokenBalance({
+      wallet,
+      balance: 1000,
+      tokenAddress: require('../../deployments/extras.json').susdc_address,
+      friendlyWhale: '0xf3fc178157fb3c87548baa86f9d24ba38e649b58',
+    });
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 1000);
   });
 
-  it('should approve fsUSDCe spending for CoreProxy', async () => {
+  it('should approve sUSDe spending for CoreProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fsUSDCe',
+        symbol: 'sUSDe',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy fsUSDCe spending'
+      'New wallet has not allowed CoreProxy sUSDe spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fsUSDCe',
+      symbol: 'sUSDe',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fsUSDCe',
+        symbol: 'sUSDe',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 500 fsUSDCe into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'fsUSDCe' }), 1000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fsUSDCe' }), {
+  it('should deposit 500 sUSDe into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 1000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'fsUSDCe', accountId, amount: 500 });
+    await depositCollateral({ privateKey, symbol: 'sUSDe', accountId, amount: 500 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'fsUSDCe' }), 500);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fsUSDCe' }), {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 500);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
-  it('should delegate 500 fsUSDCe into the Spartan Council pool', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fsUSDCe' }), {
+  it('should delegate 500 sUSDe into the Spartan Council pool', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
     await delegateCollateral({
       privateKey,
-      symbol: 'fsUSDCe',
+      symbol: 'sUSDe',
       accountId,
       amount: 500,
       poolId: 1,
     });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fsUSDCe' }), {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 500,
       totalAssigned: 500,
       totalLocked: 0,
@@ -202,7 +185,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await borrowUsd({
       wallet,
       accountId,
-      symbol: 'fsUSDCe',
+      symbol: 'sUSDe',
       amount: 100,
       poolId: 1,
     });

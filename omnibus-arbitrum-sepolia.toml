@@ -29,9 +29,9 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
 
-    # sUSDCe
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDCe.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDCe.toml",
+    # sUSDe
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
 ]
 
 [setting.target_preset]
@@ -230,27 +230,27 @@ defaultValue = "<%= parseEther(String(10_000_000)) %>"
 #
 #
 #
-# sUSDCe
+# sUSDe
 #
 #
 #
-[provision.sUSDCe_mock_collateral]
+[provision.sUSDe_mock_collateral]
 source = "mintable-token:1.8"
-target = "synthetix-mock-tokens:1.8@sUSDCe"
-options.name = "Fake sUSDCe Coin"
-options.symbol = "fsUSDCe"
+target = "synthetix-mock-tokens:1.8@sUSDe"
+options.name = "Fake sUSDe Coin"
+options.symbol = "fsUSDe"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.sUSDCe_address]
-defaultValue = "<%= imports.sUSDCe_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet sUSDCe"
+[setting.sUSDe_address]
+defaultValue = "<%= imports.sUSDe_mock_collateral.contracts.MintableToken.address %>"
+description = "Using mock for testnet sUSDe"
 
-[setting.pyth_feed_id_sUSDCe]
+[setting.pyth_feed_id_sUSDe]
 defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[setting.max_collateral_limit_sUSDCe]
+[setting.max_collateral_limit_sUSDe]
 defaultValue = "<%= parseEther(String(50_000_000)) %>"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
@@ -348,24 +348,24 @@ args = [
     "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp.contracts.RewardsDistributor.address %>",
 ]
 
-[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp]
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp]
 source = "synthetix-rewards-distributor:0.0.2"
-target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_sUSDCe_lp"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_sUSDe_lp"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.sUSDCe_address %>"
+options.collateralType = "<%= settings.sUSDe_address %>"
 options.payoutToken = "<%= settings.arb_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Spartan Council Pool ARB Rewards for sUSDCe LP"
+options.name = "Spartan Council Pool ARB Rewards for sUSDe LP"
 
-[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp]
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.sUSDCe_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDCe_lp.contracts.RewardsDistributor.address %>",
+    "<%= settings.sUSDe_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp.contracts.RewardsDistributor.address %>",
 ]
