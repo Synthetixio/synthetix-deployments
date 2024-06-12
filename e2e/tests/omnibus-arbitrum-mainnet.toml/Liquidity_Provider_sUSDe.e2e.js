@@ -15,7 +15,6 @@ const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { syncTime } = require('../../tasks/syncTime');
-const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
@@ -61,33 +60,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should make a price update', async () => {
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_susdc,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-  });
-
   it('should create user account', async () => {
     assert.equal(
       await getAccountOwner({ accountId }),
@@ -98,7 +70,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set sUSDe balance to 1000', async () => {
+  it('should set sUSDe balance to 600', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'sUSDe' }),
       0,
@@ -106,11 +78,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await setTokenBalance({
       wallet,
-      balance: 1000,
-      tokenAddress: require('../../deployments/extras.json').susdc_address,
-      friendlyWhale: '0xf3fc178157fb3c87548baa86f9d24ba38e649b58',
+      balance: 600,
+      tokenAddress: require('../../deployments/extras.json').sUSDe_address,
+      friendlyWhale: '0xba12222222228d8ba445958a75a0704d566bf2c8',
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 1000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 600);
   });
 
   it('should approve sUSDe spending for CoreProxy', async () => {
@@ -139,7 +111,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should deposit 500 sUSDe into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 1000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 600);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 0,
       totalAssigned: 0,
@@ -148,7 +120,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await depositCollateral({ privateKey, symbol: 'sUSDe', accountId, amount: 500 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 500);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 100);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 500,
       totalAssigned: 0,
