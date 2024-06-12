@@ -29,20 +29,20 @@ const run = function () {
   );
 
   LegacyMarketProxy = new ethers.Contract(
-    require('../deployments/LegacyMarketProxy.json').address,
-    require('../deployments/LegacyMarketProxy.json').abi,
+    require('../../deployments/LegacyMarketProxy.json').address,
+    require('../../deployments/LegacyMarketProxy.json').abi,
     provider
   );
 
   CoreProxy = new ethers.Contract(
-    require('../deployments/CoreProxy.json').address,
-    require('../deployments/CoreProxy.json').abi,
+    require('../../deployments/CoreProxy.json').address,
+    require('../../deployments/CoreProxy.json').abi,
     provider
   );
 
   V2xSnx = new ethers.Contract(
-    require('../deployments/V2xSnx.json').address,
-    require('../deployments/V2xSnx.json').abi,
+    require('../../deployments/V2xSnx.json').address,
+    require('../../deployments/V2xSnx.json').abi,
     provider
   );
 
