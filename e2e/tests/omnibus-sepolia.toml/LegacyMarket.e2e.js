@@ -6,7 +6,7 @@ const { ethers } = require('ethers');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-exports.run = function () {
+const run = function () {
   let LegacyMarketProxy;
   let CoreProxy;
   let V2xSnx;
