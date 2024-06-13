@@ -1,0 +1,16 @@
+[pull.wsteth]
+source = "wsteth-token"
+
+[invoke.configureWstethCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configureWstethCollateral.args]]
+tokenAddress = "<%= imports.wsteth.contracts.Token.address %>"
+oracleNodeId = "<%= extras.wsteth_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('1.5') %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('0.01') %>"
+minDelegationD18 = "<%= parseEther('0.01') %>"
+depositingEnabled = true

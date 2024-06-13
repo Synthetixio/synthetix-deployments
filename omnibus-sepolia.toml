@@ -6,8 +6,12 @@ include = [
     "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/oracles/eth.toml",
-    "tomls/collaterals/weth.toml",
+    "tomls/oracles/wsteth.toml",
+		"tomls/oracles/susde.toml",
+		"tomls/oracles/snx.toml",
+    "tomls/collaterals/wsteth.toml",
+    "tomls/collaterals/susde.toml",
+    "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",
@@ -33,11 +37,19 @@ defaultValue = "synthetix-legacy-market:3.3.4"
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
-[setting.weth_address]
-defaultValue = "0x7b79995e5f793a07bc00c21412e50ecae098e7f9"
+[setting.snx_address]
+defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
-[setting.eth_aggregator_address]
+[setting.wsteth_aggregator_address]
+# NOTE: below aggregator is actually plain ETH
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+
+[setting.susde_aggregator_address]
+# NOTE: below aggregator is actually USDC
+defaultValue = "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E"
+
+[setting.snx_aggregator_address]
+defaultValue = "0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC"
 
 [setting.weth_liquidation_reward]
 defaultValue = "10000000000000000000"

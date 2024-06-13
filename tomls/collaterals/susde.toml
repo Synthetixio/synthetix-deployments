@@ -1,0 +1,16 @@
+[pull.susde]
+source = "susde-token"
+
+[invoke.configureSusdeCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configureSusdeCollateral.args]]
+tokenAddress = "<%= imports.susde.contracts.Token.address %>"
+oracleNodeId = "<%= extras.susde_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRatioD18 = "<%= parseEther('1.01') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
+minDelegationD18 = "<%= parseEther('1') %>"
+depositingEnabled = true
