@@ -63,7 +63,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       collateralLimit:
         parseFloat(
           ethers.utils.formatEther(
-            require('../../deployments/extras.json').max_collateral_limit_sUSDe
+            require('../../deployments/extras.json').sUSDe_max_collateral_limit
           )
         ) * 10,
       issuanceRatio: 0,

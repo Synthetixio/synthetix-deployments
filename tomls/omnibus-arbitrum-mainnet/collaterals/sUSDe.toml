@@ -1,5 +1,8 @@
+[setting.sUSDe_max_collateral_limit]
+defaultValue = "<%= parseEther(String(50_000_000)) %>"
+
 [setting.sUSDe_issuance_ratio]
-defaultValue = "<%= parseEther('1.25') %>"
+defaultValue = "<%= parseEther('2.00') %>"
 
 [setting.sUSDe_liquidation_ratio]
 defaultValue = "<%= parseEther('1.05') %>"
@@ -32,5 +35,5 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.sUSDe_address %>",
-    { collateralLimitD18 = "<%= settings.max_collateral_limit_sUSDe %>", issuanceRatioD18 = 0 },
+    { collateralLimitD18 = "<%= settings.sUSDe_max_collateral_limit %>", issuanceRatioD18 = 0 },
 ]
