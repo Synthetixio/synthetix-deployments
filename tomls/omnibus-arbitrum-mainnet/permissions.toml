@@ -76,12 +76,6 @@ fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('delegateCollateral') %>", true]
 
-[invoke.CoreProxy_setFeatureFlagAllowAll_perpsSystem]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('perpsSystem') %>", false]
-
 [invoke.CoreProxy_addToFeatureFlagAllowlist_createPool_deployer]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"

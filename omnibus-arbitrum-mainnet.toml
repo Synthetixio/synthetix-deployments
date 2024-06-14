@@ -5,8 +5,7 @@ preset = "main"
 include = [
     "tomls/core.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-factory.toml",
-    "tomls/permit-deniers.toml",
+    "tomls/omnibus-arbitrum-mainnet/permit-deniers.toml",
 
     "tomls/omnibus-arbitrum-mainnet/permissions.toml",
     "tomls/omnibus-arbitrum-mainnet/pools/spartan-council.toml",
@@ -34,14 +33,8 @@ defaultValue = "0x33303637343430323300000000000000000000000000000000000000000000
 [setting.snx_package]
 defaultValue = "synthetix:3.3.18"
 
-[setting.perps_keeper_cost_package]
-defaultValue = "arbitrum-gas-price-oracle:3.3.16"
-
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
-
-[setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
@@ -184,8 +177,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     [
-        # must be supplied in strictly ascending order
-        { marketId = "<%= imports.perpsFactory.settings.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
