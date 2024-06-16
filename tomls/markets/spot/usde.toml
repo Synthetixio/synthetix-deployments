@@ -29,8 +29,8 @@ args = [
 		"<%= settings.spotStrictStalenessTolerance %>",
 ]
 
-# Do not modify this step. Edit [invoke.setPerpsUsdeSettlementStrategy] instead.
-[invoke.addPerpsUsdeSettlementStrategy]
+# Do not modify this step. Edit [invoke.setSpotUsdeSettlementStrategy] instead.
+[invoke.addSpotUsdeSettlementStrategy]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"

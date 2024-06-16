@@ -103,6 +103,25 @@ defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c
 [setting.pythPriceVerificationAddress]
 defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
 
+[setting.synth_usde_max_market_collateral]
+defaultValue = "<%= parseEther('100000000') %>"
+
+# we want to enable the spot market wrapper for usde
+[import.usde]
+source = "usde-token"
+
+[invoke.SpotMarketProxy_setWrapper_usde]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_usde_market_id %>",
+    "<%= imports.usde.contracts.Token.address %>",
+    "<%= settings.synth_usde_max_market_collateral %>",
+]
+
+
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
