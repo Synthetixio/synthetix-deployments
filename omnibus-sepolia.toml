@@ -7,14 +7,14 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/oracles/wsteth.toml",
-		"tomls/oracles/susde.toml",
-		"tomls/oracles/snx.toml",
+    "tomls/oracles/susde.toml",
+    "tomls/oracles/snx.toml",
     "tomls/collaterals/wsteth.toml",
     "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
-		"tomls/markets/spot-factory.toml",
-		"tomls/markets/spot/usde.toml",
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/spot/usde.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
@@ -120,7 +120,6 @@ args = [
     "<%= imports.usde.contracts.Token.address %>",
     "<%= settings.synth_usde_max_market_collateral %>",
 ]
-
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]

@@ -26,7 +26,7 @@ args = [
     "<%= extras.synth_usde_market_id %>",
     "<%= extras.usde_oracle_id %>",
     "<%= extras.usde_oracle_id %>",
-		"<%= settings.spotStrictStalenessTolerance %>",
+    "<%= settings.spotStrictStalenessTolerance %>",
 ]
 
 # Do not modify this step. Edit [invoke.setSpotUsdeSettlementStrategy] instead.
@@ -40,7 +40,6 @@ args = [
 ]
 extra.usde_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.usde_pyth_settlement_strategy.arg = 2
-
 
 [invoke.setSynthSettlementStrategyUsde]
 target = ["spotFactory.SpotMarketProxy"]
