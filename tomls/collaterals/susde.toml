@@ -1,5 +1,5 @@
 [pull.susde]
-source = "susde-token"
+source = "<%= settings.susde_package %>"
 
 [invoke.configureSusdeCollateral]
 target = ["system.CoreProxy"]

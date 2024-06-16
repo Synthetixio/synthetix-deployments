@@ -13,6 +13,8 @@ include = [
     "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
+		"tomls/markets/spot-factory.toml",
+		"tomls/markets/spot/usde.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-createPool.toml",
     "tomls/permit-all-registerMarket.toml",
@@ -34,6 +36,10 @@ defaultValue = "synthetix-perps-market:3.3.15"
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.3.4"
 
+# the susde token doesn't appear to be deployed on sepolia
+[setting.susde_package]
+defaultValue = "usde-token"
+
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
@@ -45,6 +51,10 @@ defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.ad
 defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 
 [setting.susde_aggregator_address]
+# NOTE: below aggregator is actually USDC
+defaultValue = "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E"
+
+[setting.usde_aggregator_address]
 # NOTE: below aggregator is actually USDC
 defaultValue = "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E"
 
@@ -78,6 +88,21 @@ defaultValue = "0xd0daae2231e9cb96b94c8512223533293c3693bf"
 [setting.ccip_token_pool]
 defaultValue = "0x9b65749b38278060c5787cce0391ac7f1094c8e8"
 
+[setting.synthUsdeAsyncFixedFee]
+defaultValue = "0"
+
+[setting.synthUsdeSkewScale]
+defaultValue = "0"
+
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythUsdeFeedId]
+defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
+
+[setting.pythPriceVerificationAddress]
+defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
+
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
@@ -86,6 +111,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 99, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= settings.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
