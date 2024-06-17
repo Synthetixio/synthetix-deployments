@@ -7,7 +7,6 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/collaterals/snx.toml",
-    "tomls/markets/legacy.toml",
     # "tomls/oracles/eth.toml",
     # "tomls/collaterals/weth.toml",
     "tomls/pools/spartan-council.toml",
@@ -15,16 +14,13 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.5"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.3.5"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.15"
-
-[setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.3.4"
+defaultValue = "synthetix-perps-market:3.3.5"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -54,10 +50,7 @@ defaultValue = "2000000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
-
-[setting.pdao]
-defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
 [setting.sc_pool_id]
 defaultValue = "1"
@@ -70,15 +63,3 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 
 [setting.ccip_token_pool]
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
-
-[invoke.setScPoolConfig]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
