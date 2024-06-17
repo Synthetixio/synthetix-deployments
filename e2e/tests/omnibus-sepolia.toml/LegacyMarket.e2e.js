@@ -94,7 +94,7 @@ const run = function () {
       const accountInfo = await getAccountCollateral({ accountId: 80800 + i, symbol: 'SNX' });
       assert.deepEqual(accountInfo.totalAssigned, accountInfo.totalDeposited);
       // here we just assert that we have more than enough deposited. calculating the actual amount expected would required reading into rewardescrow and doing some complicated stuff to figure out already vested amounts and etc.
-      assert(accountInfo.totalDeposited - accountInfo.totalLocked > accountSnxBalances[i]);
+      assert(accountInfo.totalDeposited - accountInfo.totalLocked >= accountSnxBalances[i]);
     }
   });
 

@@ -15,7 +15,11 @@ args = [
 ]
 extra.wsteth_pyth_oracle_id.event = "NodeRegistered"
 extra.wsteth_pyth_oracle_id.arg = 0
-depends = ['provision.system', 'setting.pyth_price_verification_address', 'setting.pythWstEthFeedId']
+depends = [
+    'provision.system',
+    'setting.pyth_price_verification_address',
+    'setting.pythWstEthFeedId',
+]
 
 # Pyth Off-chain Lookup
 [invoke.registerLookupWstEthOracleNode]
