@@ -754,7 +754,6 @@ workflows:
       - fork-test-new:
           name: test-sepolia
           toml: omnibus-sepolia.toml
-          package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
