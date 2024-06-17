@@ -1,12 +1,11 @@
 name = "synthetix-omnibus"
-version = "9"
+version = "10"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
     "tomls/core.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-highcap-factory.toml",
-    "tomls/permit-deniers.toml",
+    "tomls/omnibus-arbitrum-sepolia/permit-deniers.toml",
 
     "tomls/omnibus-arbitrum-sepolia/permissions.toml",
     "tomls/omnibus-arbitrum-sepolia/pools/spartan-council.toml",
@@ -32,6 +31,10 @@ include = [
     # sUSDe
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
+
+    # USDe
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
 ]
 
 [setting.target_preset]
@@ -250,6 +253,29 @@ description = "Using mock for testnet sUSDe"
 defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
+#
+#
+#
+# USDe
+#
+#
+#
+[provision.USDe_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@USDe"
+options.name = "Fake USDe Coin"
+options.symbol = "fUSDe"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+[setting.USDe_address]
+defaultValue = "<%= imports.USDe_mock_collateral.contracts.MintableToken.address %>"
+description = "Using mock for testnet USDe"
+
+[setting.pyth_feed_id_USDe]
+defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
@@ -260,7 +286,6 @@ args = [
     [
         { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= imports.perpsFactory.settings.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 
@@ -365,4 +390,26 @@ args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.sUSDe_address %>",
     "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp.contracts.RewardsDistributor.address %>",
+]
+
+[provision.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDe_lp]
+source = "synthetix-rewards-distributor:0.0.2"
+target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_USDe_lp"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= settings.USDe_address %>"
+options.payoutToken = "<%= settings.arb_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool ARB Rewards for USDe LP"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDe_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.USDe_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDe_lp.contracts.RewardsDistributor.address %>",
 ]
