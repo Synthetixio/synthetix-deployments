@@ -751,6 +751,13 @@ workflows:
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
+      - fork-test-new:
+          name: test-sepolia
+          toml: omnibus-sepolia.toml
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
   #      - fork-test:
   #          name: test-sepolia-carina
   #          toml: omnibus-sepolia-carina.toml
@@ -833,6 +840,13 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
+      - deployment-info:
+          name: docs-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
   npm-package:
     when:
       or:
@@ -905,6 +919,13 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
+      - npm-package:
+          name: npm-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
   preview:
     when:
       or:
@@ -921,15 +942,6 @@ workflows:
           preset: "main"
           chain-id: 1
           provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
-
-      #      - preview:
-      #          name: preview-sepolia
-      #          toml: omnibus-sepolia.toml
-      #          package: "synthetix-omnibus:latest"
-      #          preset: "main"
-      #          chain-id: 11155111
-      #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
       - preview:
           name: preview-optimism-mainnet
           toml: omnibus-optimism-mainnet.toml
@@ -985,3 +997,20 @@ workflows:
           preset: "carina"
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - preview:
+          name: preview-sepolia
+          toml: omnibus-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
+      # oracles are not ready so skip for now
+      #- preview:
+      #name: preview-optimism-sepolia
+      #toml: omnibus-optimism-sepolia.toml
+      #package: "synthetix-omnibus:latest"
+      #preset: "main"
+      #chain-id: 11155420
+      #provider-url: https://optimism-sepolia.infura.io/v3/$INFURA_API_KEY

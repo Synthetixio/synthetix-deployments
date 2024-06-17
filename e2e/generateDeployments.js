@@ -74,11 +74,19 @@ async function run() {
 
   const system = deployments.state['provision.system'].artifacts.imports.system;
   const contracts = {};
-
   contracts.CoreProxy = system.contracts.CoreProxy;
   contracts.AccountProxy = system.contracts.AccountProxy;
   contracts.USDProxy = system.contracts.USDProxy;
   contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
+
+  if (deployments.state['provision.legacyMarket']) {
+    contracts.LegacyMarketProxy =
+      deployments.state['provision.legacyMarket'].artifacts.imports.legacyMarket.contracts.Proxy;
+    contracts.V2x =
+      deployments.state[
+        'provision.legacyMarket'
+      ].artifacts.imports.legacyMarket.imports.v2x.contracts.Synthetix;
+  }
 
   const trustedMulticallForwarder = system?.imports?.trusted_multicall_forwarder;
   if (trustedMulticallForwarder) {

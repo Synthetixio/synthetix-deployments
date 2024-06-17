@@ -1,4 +1,8 @@
 # This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
+
+[setting.pythSnxFeedId]
+defaultValue = '0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3'
+
 # Latest Pyth Price
 [invoke.registerPythSnxOracleNode]
 target = ["system.oracle_manager.Proxy"]

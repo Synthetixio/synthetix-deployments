@@ -6,6 +6,7 @@ include = [
     "tomls/ccip-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
+    "tomls/oracles/snx.toml",
     "tomls/collaterals/snx.toml",
     # eth collateral is not enabled/set up on v3
     #"tomls/oracles/eth.toml",
