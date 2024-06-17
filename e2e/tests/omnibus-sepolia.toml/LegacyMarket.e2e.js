@@ -9,7 +9,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 const run = function () {
   let LegacyMarketProxy;
   let CoreProxy;
-  let V2xSnx;
+  let V2x;
 
   // some big wallets
   // https://etherscan.io/token/0x89FCb32F29e509cc42d0C8b6f058C993013A843F#balances
@@ -40,9 +40,9 @@ const run = function () {
     provider
   );
 
-  V2xSnx = new ethers.Contract(
-    require('../../deployments/V2xSnx.json').address,
-    require('../../deployments/V2xSnx.json').abi,
+  V2x = new ethers.Contract(
+    require('../../deployments/V2x.json').address,
+    require('../../deployments/V2x.json').abi,
     provider
   );
 
@@ -51,13 +51,11 @@ const run = function () {
   before('record before debts', async () => {
     for (const account of accounts) {
       log('read before balances');
-      accountSnxBalances.push(
-        parseFloat(ethers.utils.formatEther(await V2xSnx.balanceOf(account)))
-      );
+      accountSnxBalances.push(parseFloat(ethers.utils.formatEther(await V2x.balanceOf(account))));
       accountDebtBalances.push(
         parseFloat(
           ethers.utils.formatEther(
-            await V2xSnx.debtBalanceOf(account, ethers.utils.formatBytes32String('sUSD'))
+            await V2x.debtBalanceOf(account, ethers.utils.formatBytes32String('sUSD'))
           )
         )
       );
@@ -76,11 +74,11 @@ const run = function () {
 
   it('should have nothing left on v2x', async () => {
     for (const account of accounts) {
-      assert.equal(parseFloat(ethers.utils.formatEther(await V2xSnx.balanceOf(account))), 0);
+      assert.equal(parseFloat(ethers.utils.formatEther(await V2x.balanceOf(account))), 0);
       assert.equal(
         parseFloat(
           ethers.utils.formatEther(
-            await V2xSnx.debtBalanceOf(account, ethers.utils.formatBytes32String('sUSD'))
+            await V2x.debtBalanceOf(account, ethers.utils.formatBytes32String('sUSD'))
           )
         ),
         0

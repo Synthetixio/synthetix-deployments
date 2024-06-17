@@ -82,7 +82,7 @@ async function run() {
   if (deployments.state['provision.legacyMarket']) {
     contracts.LegacyMarketProxy =
       deployments.state['provision.legacyMarket'].artifacts.imports.legacyMarket.contracts.Proxy;
-    contracts.V2xSnx =
+    contracts.V2x =
       deployments.state[
         'provision.legacyMarket'
       ].artifacts.imports.legacyMarket.imports.v2x.contracts.Synthetix;
