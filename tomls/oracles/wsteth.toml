@@ -1,0 +1,16 @@
+[setting.wsteth_aggregator_address]
+
+[invoke.registerWstethOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.wsteth_aggregator_address, 0, 8]) %>",
+    [
+    ],
+]
+extra.wsteth_oracle_id.event = "NodeRegistered"
+extra.wsteth_oracle_id.arg = 0
+depends = ['provision.system', 'setting.wsteth_aggregator_address']

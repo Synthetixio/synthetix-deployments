@@ -14,6 +14,7 @@ const { getEthBalance } = require('../tasks/getEthBalance');
 const { setConfigUint } = require('../tasks/setConfigUint');
 const { setEthBalance } = require('../tasks/setEthBalance');
 const { setSnxBalance } = require('../tasks/setSnxBalance');
+const { setAllPoolsMinDelegationTimeZero } = require('../tasks/setAllPoolsMinDelegationTimeZero');
 const { withdrawCollateral } = require('../tasks/withdrawCollateral');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
@@ -132,6 +133,11 @@ exports.run = function () {
       totalAssigned: 300,
       totalLocked: 0,
     });
+
+    await setAllPoolsMinDelegationTimeZero({
+      poolId: 1,
+    });
+
     await delegateCollateral({
       privateKey,
       symbol: 'SNX',
