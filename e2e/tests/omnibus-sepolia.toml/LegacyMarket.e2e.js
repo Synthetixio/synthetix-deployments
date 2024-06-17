@@ -13,13 +13,7 @@ const run = function () {
 
   // some big wallets
   // https://etherscan.io/token/0x89FCb32F29e509cc42d0C8b6f058C993013A843F#balances
-  const accounts = [
-    '0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92',
-    '0x8cA24021E3Ee3B5c241BBfcee0712554D7Dc38a1',
-    '0x27Cc4d6bc95b55a3a981BF1F1c7261CDa7bB0931',
-    '0xcb68110C43C97b6051FEd5e2Bacc2814aDaD1688',
-    '0x722f0a6F970F8B144F5e92aB3f3BeaFA280b282f',
-  ];
+  const accounts = ['0x87B56A29C8406E2D9847e17e9Ced5aaD483a438c'];
 
   const accountDebtBalances = [];
   const accountSnxBalances = [];
