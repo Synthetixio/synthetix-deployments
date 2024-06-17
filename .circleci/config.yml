@@ -751,6 +751,14 @@ workflows:
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
+      - fork-test-new:
+          name: test-sepolia
+          toml: omnibus-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
   #      - fork-test:
   #          name: test-sepolia-carina
   #          toml: omnibus-sepolia-carina.toml
@@ -833,6 +841,13 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
+      - deployment-info:
+          name: docs-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
   npm-package:
     when:
       or:
@@ -902,6 +917,13 @@ workflows:
           name: npm-sepolia-carina
           package: "synthetix-omnibus:latest"
           preset: "carina"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+
+      - npm-package:
+          name: npm-sepolia
+          package: "synthetix-omnibus:latest"
+          preset: "main"
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
