@@ -1,5 +1,3 @@
-include = ["../oracles/snx.toml"]
-
 [setting.snx_address]
 
 [setting.snx_liquidation_reward]

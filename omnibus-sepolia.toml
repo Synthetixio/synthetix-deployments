@@ -6,9 +6,9 @@ include = [
     "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/oracles/wsteth.toml",
-    "tomls/oracles/susde.toml",
-    "tomls/oracles/snx.toml",
+    "tomls/oracles/pyth-wsteth.toml",
+    "tomls/oracles/pyth-susde.toml",
+    "tomls/oracles/pyth-snx.toml",
     "tomls/collaterals/wsteth.toml",
     "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
@@ -97,7 +97,7 @@ defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={dat
 [setting.pythUsdeFeedId]
 defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 
-[setting.pythPriceVerificationAddress]
+[setting.pyth_price_verification_address]
 defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
 
 [setting.synth_usde_max_market_collateral]
@@ -117,6 +117,12 @@ args = [
     "<%= imports.usde.contracts.Token.address %>",
     "<%= settings.synth_usde_max_market_collateral %>",
 ]
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.15"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
