@@ -4,6 +4,16 @@ const { ethers } = require('ethers');
 const { doPriceUpdateForPyth } = require('./doPriceUpdateForPyth');
 const { syncTime } = require('./syncTime');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
+const splitIntoChunks = (array, chunkSize) => {
+  let chunks = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
+  }
+  return chunks;
+};
+
 async function doAllPriceUpdates({ wallet }) {
   const extras = require('../deployments/extras.json');
 
@@ -12,15 +22,17 @@ async function doAllPriceUpdates({ wallet }) {
 
   const priceVerificationContract =
     require('../deployments/extras.json').pyth_price_verification_address;
-  const pythFeedIds = Object.entries(extras)
+  const feedIds = Object.entries(extras)
     .filter(
       ([key]) =>
         key.startsWith('pyth_feed_id_') || (key.startsWith('pyth') && key.endsWith('FeedId'))
     )
     .map(([_key, value]) => value);
+  log({ feeds: feedIds.length, feedIds });
+  const batches = splitIntoChunks(feedIds, 50);
 
-  for (const feedId of pythFeedIds) {
-    await doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract });
+  for (const batch of batches) {
+    await doPriceUpdateForPyth({ wallet, feedId: batch, priceVerificationContract });
   }
 }
 
