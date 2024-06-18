@@ -21,7 +21,6 @@ const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { spotSell } = require('../../tasks/spotSell');
 const { undelegateCollateral } = require('../../tasks/undelegateCollateral');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
@@ -179,10 +178,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalAssigned: 0,
       totalLocked: 0,
     });
-  });
-
-  it('should make a price update', async () => {
-    await doAllPriceUpdates({ wallet });
   });
 
   it('should delegate 9_000 sUSDC into the Spartan Council pool', async () => {

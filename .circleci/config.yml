@@ -236,6 +236,8 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     parallelism: << parameters.parallelism >>
+    environment:
+      DEBUG: "e2e:*"
     steps:
       - checkout
       - install-anvil
@@ -303,6 +305,10 @@ jobs:
 
       - store_artifacts:
           path: "./e2e/deployments"
+
+      - run:
+          name: "Update all prices"
+          command: node e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 
       - run:
           name: "Debug logs"
@@ -683,7 +689,6 @@ workflows:
 
       - fork-test:
           name: test-base-sepolia-andromeda
-          parallelism: 4
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -692,7 +697,6 @@ workflows:
 
       - fork-test:
           name: test-base-mainnet-andromeda
-          parallelism: 4
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"

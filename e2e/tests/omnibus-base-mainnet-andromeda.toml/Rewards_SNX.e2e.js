@@ -16,7 +16,6 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
@@ -230,10 +229,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalAssigned: 0,
       totalLocked: 0,
     });
-  });
-
-  it('should make a price update', async () => {
-    await doAllPriceUpdates({ wallet });
   });
 
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {
