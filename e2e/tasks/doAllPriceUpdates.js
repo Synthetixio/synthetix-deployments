@@ -1,175 +1,39 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const { doPriceUpdate } = require('./doPriceUpdate');
+const { doPriceUpdateForPyth } = require('./doPriceUpdateForPyth');
 const { syncTime } = require('./syncTime');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
+const splitIntoChunks = (array, chunkSize) => {
+  let chunks = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
+  }
+  return chunks;
+};
+
 async function doAllPriceUpdates({ wallet }) {
+  const extras = require('../deployments/extras.json');
+
   // We must sync timestamp of the fork before making price updates
   await syncTime();
 
-  // delegating collateral and views requiring price will fail if there's no price update within the last hour,
-  // so we send off a price update just to be safe
-  await doPriceUpdate({
-    wallet,
-    marketId: 100,
-    settlementStrategyId: require('../deployments/extras.json').eth_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 200,
-    settlementStrategyId: require('../deployments/extras.json').btc_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 300,
-    settlementStrategyId: require('../deployments/extras.json').snx_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 400,
-    settlementStrategyId: require('../deployments/extras.json').sol_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 500,
-    settlementStrategyId: require('../deployments/extras.json').wif_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 600,
-    settlementStrategyId: require('../deployments/extras.json').w_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 700,
-    settlementStrategyId: require('../deployments/extras.json').ena_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 800,
-    settlementStrategyId: require('../deployments/extras.json').doge_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 900,
-    settlementStrategyId: require('../deployments/extras.json').avax_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1000,
-    settlementStrategyId: require('../deployments/extras.json').op_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1100,
-    settlementStrategyId: require('../deployments/extras.json').ordi_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1200,
-    settlementStrategyId: require('../deployments/extras.json').pepe_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1300,
-    settlementStrategyId: require('../deployments/extras.json').rune_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1400,
-    settlementStrategyId: require('../deployments/extras.json').bonk_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1500,
-    settlementStrategyId: require('../deployments/extras.json').ftm_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1600,
-    settlementStrategyId: require('../deployments/extras.json').arb_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1700,
-    settlementStrategyId: require('../deployments/extras.json').matic_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1800,
-    settlementStrategyId: require('../deployments/extras.json').bnb_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 1900,
-    settlementStrategyId: require('../deployments/extras.json').link_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2000,
-    settlementStrategyId: require('../deployments/extras.json').pendle_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2100,
-    settlementStrategyId: require('../deployments/extras.json').inj_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2200,
-    settlementStrategyId: require('../deployments/extras.json').gmx_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2300,
-    settlementStrategyId: require('../deployments/extras.json').tia_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2400,
-    settlementStrategyId: require('../deployments/extras.json').sui_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2500,
-    settlementStrategyId: require('../deployments/extras.json').ton_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2600,
-    settlementStrategyId: require('../deployments/extras.json').arkm_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2700,
-    settlementStrategyId: require('../deployments/extras.json').gala_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2800,
-    settlementStrategyId: require('../deployments/extras.json').tao_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 2900,
-    settlementStrategyId: require('../deployments/extras.json').bome_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 3000,
-    settlementStrategyId: require('../deployments/extras.json').ethfi_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 3100,
-    settlementStrategyId: require('../deployments/extras.json').stx_pyth_settlement_strategy,
-  });
-  await doPriceUpdate({
-    wallet,
-    marketId: 3200,
-    settlementStrategyId: require('../deployments/extras.json').axl_pyth_settlement_strategy,
-  });
+  const priceVerificationContract =
+    extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
+  const feedIds = Object.entries(extras)
+    .filter(
+      ([key]) =>
+        key.startsWith('pyth_feed_id_') || (key.startsWith('pyth') && key.endsWith('FeedId'))
+    )
+    .map(([_key, value]) => value);
+  log({ feeds: feedIds.length, feedIds });
+  const batches = splitIntoChunks(feedIds, 50);
+
+  for (const batch of batches) {
+    await doPriceUpdateForPyth({ wallet, feedId: batch, priceVerificationContract });
+  }
 }
 
 module.exports = {

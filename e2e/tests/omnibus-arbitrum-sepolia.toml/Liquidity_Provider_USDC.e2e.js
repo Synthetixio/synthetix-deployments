@@ -15,7 +15,6 @@ const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { syncTime } = require('../../tasks/syncTime');
-const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
@@ -61,33 +60,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
-  });
-
-  it('should make a price update', async () => {
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_eth,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_arb,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_dai,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
   });
 
   it('should create user account', async () => {

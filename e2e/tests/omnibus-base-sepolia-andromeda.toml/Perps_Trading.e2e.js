@@ -23,7 +23,6 @@ const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
@@ -107,10 +106,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
-  });
-
-  it('should make a price update', async () => {
-    await doAllPriceUpdates({ wallet });
   });
 
   it('should increase max collateral for the test to 1_000_000_000_000', async () => {

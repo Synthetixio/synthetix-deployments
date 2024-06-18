@@ -903,9 +903,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/price-service-client@npm:*":
-  version: 1.8.2
-  resolution: "@pythnetwork/price-service-client@npm:1.8.2"
+"@pythnetwork/price-service-client@npm:1.9.0":
+  version: 1.9.0
+  resolution: "@pythnetwork/price-service-client@npm:1.9.0"
   dependencies:
     "@pythnetwork/price-service-sdk": "npm:*"
     "@types/ws": "npm:^8.5.3"
@@ -914,7 +914,7 @@ __metadata:
     isomorphic-ws: "npm:^4.0.1"
     ts-log: "npm:^2.2.4"
     ws: "npm:^8.6.0"
-  checksum: 10/7b20a4a1096ae001748ef61fb03d81386c456d83f78d31c006626c8d8fbf62c9c04ed4fd867c511f96322958bc97b35cc54843e76d826511aa1cfaa45b3dec70
+  checksum: 10/1d8840175317676eaea7f396ca9c3e6d211342b3f5b8d58d98e1ab88cbf08df71f97a7592ae126036ea4d14f21827dd5e0f43b7683a15b645f58a6e20470b59f
   languageName: node
   linkType: hard
 
@@ -925,13 +925,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.44.0":
-  version: 1.44.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.44.0"
+"@pythnetwork/pyth-evm-js@npm:^1.55.0":
+  version: 1.55.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.55.0"
   dependencies:
-    "@pythnetwork/price-service-client": "npm:*"
+    "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/58bb6808e4328ac9e6dccaa0117e9f1fb008b1e158158ed94442b6ca424db2a1149b4f5e0f46f64fdf701db15d86b242d56b5f005f9a60300e18e4aea6cb325b
+  checksum: 10/ab9888aed9ed1c9d13138404894449fbbb0ee838c26be53ee3c64902fde3aabc91dd1750d93722e301ac948e828b82290956274f2eb1d6012a1ae5c65e82d56d
   languageName: node
   linkType: hard
 
@@ -1178,9 +1178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.15.0":
-  version: 2.15.0
-  resolution: "@usecannon/builder@npm:2.15.0"
+"@usecannon/builder@npm:2.15.1":
+  version: 2.15.1
+  resolution: "@usecannon/builder@npm:2.15.1"
   dependencies:
     "@synthetixio/router": "npm:^3.4.0"
     axios: "npm:^1.6.8"
@@ -1195,16 +1195,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.9.31"
     zod: "npm:^3.23.6"
-  checksum: 10/d605181f8cc7be34a728fdcbdb54ca850160995b5ef14c8deb7a65d1a3138df91cda79725a359e2819bfd72235fa770d360dbe5af198d768b3bfff6f73b71f94
+  checksum: 10/25f587f50d2038529fffda97ab7df9048f33686938862e9dcb01e55e5a9c3bbec2d414739620c0fffdcaf67ceb463a13162166128e74a9ac498ae23eaff90d87
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.15.0":
-  version: 2.15.0
-  resolution: "@usecannon/cli@npm:2.15.0"
+"@usecannon/cli@npm:2.15.1":
+  version: 2.15.1
+  resolution: "@usecannon/cli@npm:2.15.1"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.15.0"
+    "@usecannon/builder": "npm:2.15.1"
     abitype: "npm:^1.0.2"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1223,7 +1223,7 @@ __metadata:
     zod: "npm:^3.23.6"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/13a0565620414c7cea1d99a62f1c1e88a195a48825af77370c3e3fe8d03ad86c1288721a583341505bb1983598aa0f133ec272fb43222227efd2bf9c054777c3
+  checksum: 10/6bcd58e3ebd4a96f34801f8898fd97490da6c91ccfcc57f8949fdc7483e2b5f801e831ccb51f4e8a6d12e3d0ed2e6955658d68d4788174606f262f0bbe45cad3
   languageName: node
   linkType: hard
 
@@ -1939,7 +1939,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.3.4, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.4":
+"debug@npm:4, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.4, debug@npm:^4.3.5":
+  version: 4.3.5
+  resolution: "debug@npm:4.3.5"
+  dependencies:
+    ms: "npm:2.1.2"
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 10/cb6eab424c410e07813ca1392888589972ce9a32b8829c6508f5e1f25f3c3e70a76731610ae55b4bbe58d1a2fffa1424b30e97fa8d394e49cd2656a9643aedd2
+  languageName: node
+  linkType: hard
+
+"debug@npm:4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -3971,12 +3983,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.2.5":
-  version: 3.2.5
-  resolution: "prettier@npm:3.2.5"
+"prettier@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "prettier@npm:3.3.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/d509f9da0b70e8cacc561a1911c0d99ec75117faed27b95cc8534cb2349667dee6351b0ca83fa9d5703f14127faa52b798de40f5705f02d843da133fc3aa416a
+  checksum: 10/83214e154afa5aa9b664c2506640212323eb1376b13379b2413dc351b7de0687629dca3f00ff2ec895ebd7e3a2adb7d7e231b6c77606e2358137f2150807405b
   languageName: node
   linkType: hard
 
@@ -4662,20 +4674,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.44.0"
-    "@usecannon/builder": "npm:2.15.0"
-    "@usecannon/cli": "npm:2.15.0"
-    debug: "npm:^4.3.4"
+    "@pythnetwork/pyth-evm-js": "npm:^1.55.0"
+    "@usecannon/builder": "npm:2.15.1"
+    "@usecannon/cli": "npm:2.15.1"
+    debug: "npm:^4.3.5"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.21.0"
     mocha: "npm:^10.4.0"
     numbro: "npm:^2.5.0"
     pako: "npm:^2.1.0"
-    prettier: "npm:^3.2.5"
+    prettier: "npm:^3.3.2"
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.9.28"
+    viem: "npm:^2.15.1"
   languageName: unknown
   linkType: soft
 
@@ -4976,9 +4988,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.9.28, viem@npm:^2.9.31":
-  version: 2.13.1
-  resolution: "viem@npm:2.13.1"
+"viem@npm:^2.15.1, viem@npm:^2.9.31":
+  version: 2.15.1
+  resolution: "viem@npm:2.15.1"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.0"
     "@noble/curves": "npm:1.2.0"
@@ -4987,13 +4999,13 @@ __metadata:
     "@scure/bip39": "npm:1.2.1"
     abitype: "npm:1.0.0"
     isows: "npm:1.0.4"
-    ws: "npm:8.13.0"
+    ws: "npm:8.17.1"
   peerDependencies:
     typescript: ">=5.0.4"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/bfddca57e09d30810eaaa8ea01b281b8b1bcdb6da698404bc0f2b1d0a01a57051d70e911da0f480d9cdd8ec22c04ea88de0f09e29de5b4f1459e93c16d712952
+  checksum: 10/36cd10b1f73e4314e9028dbc792b28e38aa4336b576f136048074a6f4d1671221ac9c6f025f10fc918ff5fd1d6f70efb8916ff07bd5edb5c7cf8eca66e0a7141
   languageName: node
   linkType: hard
 
@@ -5096,9 +5108,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.13.0":
-  version: 8.13.0
-  resolution: "ws@npm:8.13.0"
+"ws@npm:8.17.1, ws@npm:^8.6.0":
+  version: 8.17.1
+  resolution: "ws@npm:8.17.1"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -5107,7 +5119,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10/1769532b6fdab9ff659f0b17810e7501831d34ecca23fd179ee64091dd93a51f42c59f6c7bb4c7a384b6c229aca8076fb312aa35626257c18081511ef62a161d
+  checksum: 10/4264ae92c0b3e59c7e309001e93079b26937aab181835fb7af79f906b22cd33b6196d96556dafb4e985742dd401e99139572242e9847661fdbc96556b9e6902d
   languageName: node
   linkType: hard
 
@@ -5138,21 +5150,6 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10/171e35012934bd8788150a7f46f963e50bac43a4dc524ee714c20f258693ac4d3ba2abadb00838fdac42a47af9e958c7ae7e6f4bc56db047ba897b8a2268cf7c
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.6.0":
-  version: 8.14.2
-  resolution: "ws@npm:8.14.2"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10/815ff01d9bc20a249b2228825d9739268a03a4408c2e0b14d49b0e2ae89d7f10847e813b587ba26992bdc33e9d03bed131e4cae73ff996baf789d53e99c31186
   languageName: node
   linkType: hard
 

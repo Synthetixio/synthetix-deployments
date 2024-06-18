@@ -61,18 +61,16 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 
 Example based on `omnibus-base-sepolia-andromeda.toml`
 
-**IMPORTANT** Restart Anvil node and apply upgrades after each full test suite execution because of the global system state change, which affects things like global collateral limits
-
-1. Build locally with --dry-run
+1. Run local Anvil node for the required network.
 
    ```sh
-   yarn cannon build omnibus-base-sepolia-andromeda.toml --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log
+   yarn cannon build omnibus-base-sepolia-andromeda.toml --port 8545 --keep-alive --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log
    ```
 
    or
 
    ```sh
-   yarn build:base-sepolia
+   yarn start:base-sepolia
    ```
 
 2. Fetch deployments and store as JSON files
@@ -81,16 +79,17 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    yarn fetch-deployments
    ```
 
-3. Run local Anvil node for the required network.
+3. Update all prices
+   You may need to run this once an hour while fork is running
 
    ```sh
-   yarn cannon build omnibus-base-sepolia-andromeda.toml --port 8545 --keep-alive --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org
+   node ./e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
    ```
 
    or
 
    ```sh
-   yarn start:base-sepolia
+   yarn update-prices
    ```
 
 4. Execute tests

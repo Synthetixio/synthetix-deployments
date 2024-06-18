@@ -17,7 +17,6 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { depositCollateral } = require('../../tasks/depositCollateral');
 const { delegateCollateral } = require('../../tasks/delegateCollateral');
-const { doAllPriceUpdates } = require('../../tasks/doAllPriceUpdates');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
@@ -212,10 +211,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should make a price update', async () => {
-    await doAllPriceUpdates({ wallet });
-  });
-
   it(`should delegate 1_000 sUSDC into the Spartan Council pool`, async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDC' }), {
       totalDeposited: 1_000,
@@ -256,6 +251,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should distribute 1_000 fwSNX rewards', async () => {
+    await syncTime();
+
     const poolId = 1;
     const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
