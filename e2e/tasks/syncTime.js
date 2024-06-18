@@ -40,18 +40,22 @@ async function syncTime() {
 
   if (oldTimes.blockTimestamp < oldTimes.now) {
     // We restored from snapshot, or working with an old fork, so block timestamp is out of date
-    await provider.send('evm_setNextBlockTimestamp', [oldTimes.now]);
+    await provider.send('anvil_setTime', [oldTimes.now - 1]);
     await provider.send('evm_mine', []);
+    //    await provider.send('evm_setNextBlockTimestamp', [oldTimes.now]);
+    //    await provider.send('evm_mine', []);
   }
 
   if (oldTimes.blockTimestamp > oldTimes.now) {
-    const interval = setInterval(() => {
-      const now = Math.floor(Date.now() / 1000);
-      log({ leftToWait: oldTimes.blockTimestamp - now });
-    }, 10_000);
-    // We pumped up so many transactions so fast that block timestamp is ahead now. Can only wait it out
-    await wait((oldTimes.blockTimestamp - oldTimes.now) * 1000);
-    clearInterval(interval);
+    await provider.send('anvil_setTime', [oldTimes.now - 1]);
+    await provider.send('evm_mine', []);
+    //    const interval = setInterval(() => {
+    //      const now = Math.floor(Date.now() / 1000);
+    //      log({ leftToWait: oldTimes.blockTimestamp - now });
+    //    }, 10_000);
+    //    // We pumped up so many transactions so fast that block timestamp is ahead now. Can only wait it out
+    //    await wait((oldTimes.blockTimestamp - oldTimes.now) * 1000);
+    //    clearInterval(interval);
   }
 
   const newTimes = await getTimes();
