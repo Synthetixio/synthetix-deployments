@@ -289,10 +289,6 @@ jobs:
             done
 
       - run:
-          name: "Sync time with fork's block height"
-          command: node e2e/tasks/syncTime.js
-
-      - run:
           name: "Extract cannon state"
           command: node e2e/extractCannonState ./cannon-build.log > ./cannon-state.json
 
