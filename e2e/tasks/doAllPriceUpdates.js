@@ -21,7 +21,7 @@ async function doAllPriceUpdates({ wallet }) {
   await syncTime();
 
   const priceVerificationContract =
-    require('../deployments/extras.json').pyth_price_verification_address;
+    extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
   const feedIds = Object.entries(extras)
     .filter(
       ([key]) =>
