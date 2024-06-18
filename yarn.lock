@@ -903,9 +903,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/price-service-client@npm:*":
-  version: 1.8.2
-  resolution: "@pythnetwork/price-service-client@npm:1.8.2"
+"@pythnetwork/price-service-client@npm:1.9.0":
+  version: 1.9.0
+  resolution: "@pythnetwork/price-service-client@npm:1.9.0"
   dependencies:
     "@pythnetwork/price-service-sdk": "npm:*"
     "@types/ws": "npm:^8.5.3"
@@ -914,7 +914,7 @@ __metadata:
     isomorphic-ws: "npm:^4.0.1"
     ts-log: "npm:^2.2.4"
     ws: "npm:^8.6.0"
-  checksum: 10/7b20a4a1096ae001748ef61fb03d81386c456d83f78d31c006626c8d8fbf62c9c04ed4fd867c511f96322958bc97b35cc54843e76d826511aa1cfaa45b3dec70
+  checksum: 10/1d8840175317676eaea7f396ca9c3e6d211342b3f5b8d58d98e1ab88cbf08df71f97a7592ae126036ea4d14f21827dd5e0f43b7683a15b645f58a6e20470b59f
   languageName: node
   linkType: hard
 
@@ -925,13 +925,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.44.0":
-  version: 1.44.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.44.0"
+"@pythnetwork/pyth-evm-js@npm:^1.55.0":
+  version: 1.55.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.55.0"
   dependencies:
-    "@pythnetwork/price-service-client": "npm:*"
+    "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/58bb6808e4328ac9e6dccaa0117e9f1fb008b1e158158ed94442b6ca424db2a1149b4f5e0f46f64fdf701db15d86b242d56b5f005f9a60300e18e4aea6cb325b
+  checksum: 10/ab9888aed9ed1c9d13138404894449fbbb0ee838c26be53ee3c64902fde3aabc91dd1750d93722e301ac948e828b82290956274f2eb1d6012a1ae5c65e82d56d
   languageName: node
   linkType: hard
 
@@ -4662,7 +4662,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.44.0"
+    "@pythnetwork/pyth-evm-js": "npm:^1.55.0"
     "@usecannon/builder": "npm:2.15.0"
     "@usecannon/cli": "npm:2.15.0"
     debug: "npm:^4.3.4"

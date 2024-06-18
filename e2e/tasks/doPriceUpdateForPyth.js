@@ -88,8 +88,10 @@ const PYTH_ABI = [
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
 async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract }) {
-  const [offchainData] = await priceService.getPriceFeedsUpdateData([feedId]);
-  log({ feedId, priceVerificationContract, offchainData });
+  const feedIds = Array.isArray(feedId) ? feedId : [feedId];
+
+  const [offchainData] = await priceService.getPriceFeedsUpdateData(feedIds);
+  log({ feedIds, priceVerificationContract, offchainData });
 
   const PriceVerificationContract = new ethers.Contract(
     priceVerificationContract,
@@ -97,18 +99,23 @@ async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract 
     wallet
   );
 
+  const fee = feedIds.length * 4;
+
   const args = [
     //
     [offchainData],
   ];
 
   const gasLimit = await PriceVerificationContract.estimateGas
-    .updatePriceFeeds(...args)
+    .updatePriceFeeds(...args, {
+      value: ethers.BigNumber.from(fee),
+    })
     .catch(parseError)
     .catch(() => ethers.BigNumber.from(10_000_000));
+
   const tx = await PriceVerificationContract.updatePriceFeeds(...args, {
     gasLimit: gasLimit.mul(2),
-    value: ethers.BigNumber.from(1), // 1 wei,
+    value: ethers.BigNumber.from(fee),
   });
   await tx
     .wait()
