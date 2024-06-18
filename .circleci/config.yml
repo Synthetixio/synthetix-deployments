@@ -247,7 +247,7 @@ jobs:
           name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
           background: true
           command: |
-            yarn cannon build << parameters.toml >> \
+            NODE_OPTIONS=--max_old_space_size=8192 yarn cannon build << parameters.toml >> \
               --keep-alive \
               --port 8545 \
               --dry-run \

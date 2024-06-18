@@ -12,11 +12,11 @@ include = [
     "tomls/permit-deniers.toml",                 # Add feature flag deniers to perps and core systems
     "tomls/pools/spartan-council.toml",          # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-factory.toml",
+    "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
     #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/usdc.toml",
     #"tomls/omnibus-arbitrum-mainnet-arbthetix/spot/dai.toml",
-    "tomls/permit-all-perps-perpsSystem.toml",                                 # Enable perps market
+    "tomls/permit-all-perps-perpsHighcapSystem.toml",                          # Enable perps market
     "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/referrers.toml",
     "tomls/omnibus-arbitrum-mainnet-arbthetix/perps/global.toml",              # Global perps settings
     "tomls/omnibus-arbitrum-mainnet-arbthetix/oracles/perps-keeper-cost.toml", # Add gas oracle for keeper fees

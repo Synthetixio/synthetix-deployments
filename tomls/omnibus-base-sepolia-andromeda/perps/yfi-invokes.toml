@@ -1,0 +1,149 @@
+[setting.perpsYfiMarketId]
+
+[setting.perpsYfiSkewScale]
+
+[setting.perpsYfiMaxFundingVelocity]
+
+[setting.perpsYfiMakerFeeRatio]
+
+[setting.perpsYfiTakerFeeRatio]
+
+[setting.perpsYfiMaxMarketSize]
+
+[setting.perpsYfiInitialMarginRatio]
+
+[setting.perpsYfiMaintenanceMarginFraction]
+
+[setting.perpsYfiFlagRewardRatioD18]
+
+[setting.perpsYfiMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsYfiMaxSecondsInLiquidationWindow]
+
+[setting.perpsYfiMaxLiquidationPd]
+
+[setting.perpsYfiEndorsedLiquidator]
+
+[setting.perpsYfiMinimumPositionMargin]
+
+[setting.perpsYfiLockedOiRatio]
+
+[invoke.createYfiPerpsMarket]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.perpsYfiMarketId %>", "Yearn Finance", "YFI"]
+
+[invoke.setPerpsPriceYfi]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    "<%= extras.yfi_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+depends = ["invoke.createYfiPerpsMarket"]
+
+# Do not modify this step. Edit [invoke.setPerpsYfiSettlementStrategy] instead.
+[invoke.addPerpsYfiSettlementStrategy]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.yfi_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.yfi_pyth_settlement_strategy.arg = 2
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiSettlementStrategy]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    "<%= extras.yfi_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythYfiFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+]
+depends = [
+    'provision.perpsLowCapFactory',
+    'setting.perpsYfiMarketId',
+    'invoke.addPerpsYfiSettlementStrategy',
+    'provision.pyth_erc7412_wrapper',
+    'setting.bigCapSettlementDelay',
+    'setting.bigCapSettlementWindowDuration',
+    'setting.pythYfiFeedId',
+    'setting.settlementReward',
+    'setting.commitmentPriceDelay',
+]
+[invoke.setPerpsYfiFundingParameters]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    "<%= parseEther(settings.perpsYfiSkewScale) %>",
+    "<%= parseEther(settings.perpsYfiMaxFundingVelocity) %>",
+]
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiOrderFees]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    "<%= parseEther(settings.perpsYfiMakerFeeRatio) %>",
+    "<%= parseEther(settings.perpsYfiTakerFeeRatio) %>",
+]
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiMaxMarketSize]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.perpsYfiMarketId %>", "<%= parseEther(settings.perpsYfiMaxMarketSize) %>"]
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiMaxMarketValue]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.perpsYfiMarketId %>", "<%= parseEther(settings.perpsYfiMaxMarketValue) %>"]
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiMaxLiquidationParameters]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    "<%= parseEther(settings.perpsYfiMaxLiquidationLimitAccumulationMultiplier) %>",
+    "<%= settings.perpsYfiMaxSecondsInLiquidationWindow %>",
+    "<%= parseEther(settings.perpsYfiMaxLiquidationPd) %>",
+    "<%= settings.perpsYfiEndorsedLiquidator %>",
+]
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiLiquidationParameters]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.perpsYfiMarketId %>",
+    "<%= parseEther(settings.perpsYfiInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsYfiMinimumInitialMarginRatio) %>",
+    "<%= parseEther(settings.perpsYfiMaintenanceMarginScalar) %>",
+    "<%= parseEther(settings.perpsYfiFlagRewardRatioD18) %>",
+    "<%= parseEther(settings.perpsYfiMinimumPositionMargin) %>",
+]
+depends = ["invoke.createYfiPerpsMarket"]
+
+[invoke.setPerpsYfiLockedOiRatio]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.perpsYfiMarketId %>", "<%= parseEther(settings.perpsYfiLockedOiRatio) %>"]
+depends = ["invoke.createYfiPerpsMarket"]

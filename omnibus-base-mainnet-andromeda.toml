@@ -9,10 +9,10 @@ include = [
     "tomls/permit-deniers.toml",                                    # Add feature flag deniers to perps and core systems
     "tomls/pools/spartan-council.toml",                             # Create Spartan Council Pool
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-factory.toml",
+    "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper
-    "tomls/permit-all-perps-perpsSystem.toml",                      # Enable perps market
+    "tomls/permit-all-perps-perpsHighcapSystem.toml",               # Enable perps market
     "tomls/permit-pdao-createMarket.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",

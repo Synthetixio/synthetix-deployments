@@ -1,0 +1,22 @@
+[setting.perps_market_package]
+
+[setting.perps_lowcap_super_market_name]
+defaultValue = "Low MCap"
+
+# Since multiple of these can be created, should be moved to a High MCap Perps Folder
+[provision.perpsLowCapFactory]
+source = "<%= settings.perps_market_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.coreProxyOwner = "<%= settings.owner %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.spotMarketPackage = "<%= settings.spot_market_package %>@<%= settings.target_preset %>"
+
+depends = ["provision.spotFactory"]
+
+[invoke.setLowCapPerpsMarketName]
+target = ["perpsLowCapFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setPerpsMarketName"
+args = ["<%= settings.perps_lowcap_super_market_name %>"]
