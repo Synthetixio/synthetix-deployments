@@ -12,7 +12,6 @@ const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { approveCollateral } = require('../../tasks/approveCollateral');
 const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { syncTime } = require('../../tasks/syncTime');
-const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
@@ -21,7 +20,6 @@ const { spotSell } = require('../../tasks/spotSell');
 const { spotBuy } = require('../../tasks/spotBuy');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
-  const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -57,15 +55,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
-  });
-
-  it('should make a price update', async () => {
-    await doPriceUpdateForPyth({
-      wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
-      priceVerificationContract: require('../../deployments/extras.json')
-        .pyth_price_verification_address,
-    });
   });
 
   it('should set USDC balance to 1000', async () => {

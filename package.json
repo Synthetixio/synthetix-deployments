@@ -43,23 +43,24 @@
     "test:sepolia-carina": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-sepolia-carina.toml/**/*.js",
     "pretty": "prettier . '**/*.toml' --write",
     "pretty:check": "prettier . '**/*.toml' --check",
+    "update-prices": "DEBUG='e2e:*' node ./e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
     "cannon": "cannon"
   },
   "devDependencies": {
     "@pythnetwork/pyth-evm-js": "^1.55.0",
-    "@usecannon/builder": "2.15.0",
-    "@usecannon/cli": "2.15.0",
-    "debug": "^4.3.4",
+    "@usecannon/builder": "2.15.1",
+    "@usecannon/cli": "2.15.1",
+    "debug": "^4.3.5",
     "ethers": "^5.7.2",
     "hardhat": "^2.21.0",
     "mocha": "^10.4.0",
     "numbro": "^2.5.0",
     "pako": "^2.1.0",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.2",
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.9.28"
+    "viem": "^2.15.1"
   },
   "mocha": {
     "timeout": "5m",

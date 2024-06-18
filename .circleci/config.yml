@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: "20.13.1"
+    default: "20.14.0"
 
 commands:
   yarn-install:
@@ -236,13 +236,12 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     parallelism: << parameters.parallelism >>
+    environment:
+      DEBUG: "e2e:*"
     steps:
       - checkout
       - install-anvil
-      - install-ipfs
-      - run-ipfs
       - yarn-install
-      - wait-for-ipfs
 
       - run:
           name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
@@ -305,6 +304,14 @@ jobs:
           path: "./e2e/deployments"
 
       - run:
+          name: "Sync time with fork's block height"
+          command: node e2e/tasks/syncTime.js
+
+      - run:
+          name: "Update all prices"
+          command: node e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+
+      - run:
           name: "Debug logs"
           background: true
           command: |
@@ -339,6 +346,8 @@ jobs:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      DEBUG: "e2e:*"
     steps:
       - checkout
       - install-anvil
@@ -385,6 +394,14 @@ jobs:
 
       - store_artifacts:
           path: "./e2e/deployments"
+
+      - run:
+          name: "Sync time with fork's block height"
+          command: node e2e/tasks/syncTime.js
+
+      - run:
+          name: "Update all prices"
+          command: node e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 
       - run:
           name: "Debug logs"
@@ -683,7 +700,6 @@ workflows:
 
       - fork-test:
           name: test-base-sepolia-andromeda
-          parallelism: 4
           toml: omnibus-base-sepolia-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
@@ -692,7 +708,6 @@ workflows:
 
       - fork-test:
           name: test-base-mainnet-andromeda
-          parallelism: 4
           toml: omnibus-base-mainnet-andromeda.toml
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
