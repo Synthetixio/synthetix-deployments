@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
-const { doPriceUpdate } = require('./doPriceUpdate');
+const { doPriceUpdateForPyth } = require('./doPriceUpdateForPyth');
 const { syncTime } = require('./syncTime');
 
 async function doAllPriceUpdates({ wallet }) {
@@ -10,25 +10,17 @@ async function doAllPriceUpdates({ wallet }) {
   // We must sync timestamp of the fork before making price updates
   await syncTime();
 
-  // pull all the market ids and settlement strategies from extras.json
-  const settlementStrategyKeys = Object.keys(extras).filter((key) =>
-    key.endsWith('_pyth_settlement_strategy')
-  );
+  const priceVerificationContract =
+    require('../deployments/extras.json').pyth_price_verification_address;
+  const pythFeedIds = Object.entries(extras)
+    .filter(
+      ([key]) =>
+        key.startsWith('pyth_feed_id_') || (key.startsWith('pyth') && key.endsWith('FeedId'))
+    )
+    .map(([_key, value]) => value);
 
-  // iterate over all the markets and update their prices
-  for (const settlementStrategyKey of settlementStrategyKeys) {
-    const marketKey = settlementStrategyKey.replace('_pyth_settlement_strategy', '');
-    const marketKeyCapitalized = marketKey.charAt(0).toUpperCase() + marketKey.slice(1);
-
-    // get the market id and settlement strategy id from extras.json, there are two different naming conventions
-    const marketId =
-      extras[`${marketKey}PerpsMarketId`] || extras[`perps${marketKeyCapitalized}MarketId`];
-
-    await doPriceUpdate({
-      wallet,
-      marketId,
-      settlementStrategyId: extras[settlementStrategyKey],
-    });
+  for (const feedId of pythFeedIds) {
+    await doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract });
   }
 }
 

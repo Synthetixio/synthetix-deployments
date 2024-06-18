@@ -103,9 +103,12 @@ async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract 
   ];
 
   const gasLimit = await PriceVerificationContract.estimateGas
-    .updatePriceFeeds(...args)
+    .updatePriceFeeds(...args, {
+      value: ethers.BigNumber.from(1), // 1 wei,
+    })
     .catch(parseError)
     .catch(() => ethers.BigNumber.from(10_000_000));
+
   const tx = await PriceVerificationContract.updatePriceFeeds(...args, {
     gasLimit: gasLimit.mul(2),
     value: ethers.BigNumber.from(1), // 1 wei,
