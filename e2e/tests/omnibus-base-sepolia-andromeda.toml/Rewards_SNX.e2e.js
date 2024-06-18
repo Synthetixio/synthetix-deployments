@@ -251,6 +251,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should distribute 1_000 fwSNX rewards', async () => {
+    await syncTime();
+
     const poolId = 1;
     const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
