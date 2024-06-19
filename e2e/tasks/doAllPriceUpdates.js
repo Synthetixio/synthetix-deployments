@@ -2,7 +2,6 @@
 
 const { ethers } = require('ethers');
 const { doPriceUpdateForPyth } = require('./doPriceUpdateForPyth');
-const { syncTime } = require('./syncTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -16,9 +15,6 @@ const splitIntoChunks = (array, chunkSize) => {
 
 async function doAllPriceUpdates({ wallet }) {
   const extras = require('../deployments/extras.json');
-
-  // We must sync timestamp of the fork before making price updates
-  await syncTime();
 
   const priceVerificationContract =
     extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
