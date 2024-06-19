@@ -91,7 +91,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set sUSDe balance to 600', async () => {
+  it('should set sUSDe balance to 200', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'sUSDe' }),
       0,
@@ -99,11 +99,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await setTokenBalance({
       wallet,
-      balance: 600,
+      balance: 200,
       tokenAddress: require('../../deployments/extras.json').sUSDe_address,
       friendlyWhale: '0xba12222222228d8ba445958a75a0704d566bf2c8',
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 600);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 200);
   });
 
   it('should approve sUSDe spending for CoreProxy', async () => {
@@ -131,27 +131,27 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 500 sUSDe into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 600);
+  it('should deposit 110 sUSDe into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 200);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'sUSDe', accountId, amount: 500 });
+    await depositCollateral({ privateKey, symbol: 'sUSDe', accountId, amount: 110 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 100);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSDe' }), 90);
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
-      totalDeposited: 500,
+      totalDeposited: 110,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
-  it('should delegate 500 sUSDe into the Spartan Council pool', async () => {
+  it('should delegate 110 sUSDe into the Spartan Council pool', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
-      totalDeposited: 500,
+      totalDeposited: 110,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -159,17 +159,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       symbol: 'sUSDe',
       accountId,
-      amount: 500,
+      amount: 110,
       poolId: 1,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSDe' }), {
-      totalDeposited: 500,
-      totalAssigned: 500,
+      totalDeposited: 110,
+      totalAssigned: 110,
       totalLocked: 0,
     });
   });
 
-  it('should borrow 100 USDx', async () => {
+  it('should borrow 15 USDx', async () => {
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDx' }), {
       totalDeposited: 0,
       totalAssigned: 0,
@@ -179,11 +179,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       symbol: 'sUSDe',
-      amount: 100,
+      amount: 15,
       poolId: 1,
     });
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDx' }), {
-      totalDeposited: 100,
+      totalDeposited: 15,
       totalAssigned: 0,
       totalLocked: 0,
     });
@@ -194,9 +194,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await withdrawCollateral({
       privateKey,
       accountId,
-      amount: 100,
+      amount: 15,
       symbol: 'USDx',
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 100);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 15);
   });
 });
