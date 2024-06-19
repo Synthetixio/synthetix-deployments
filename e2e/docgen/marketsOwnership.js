@@ -2,7 +2,7 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { getSynthMarketIds } = require('./lib/getSynthMarketIds');
+const { extractSynthMarkets } = require('./lib/extractSynthMarkets');
 
 async function marketsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -12,9 +12,9 @@ async function marketsOwnership() {
   const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
-  const synthMarketIds = await getSynthMarketIds();
+  const synthMarketIds = Object.values(await extractSynthMarkets());
   log({ synthMarketIds });
-  if (synthMarketIds.length < 1) {
+  if (Object.values(synthMarketIds).length < 1) {
     return '';
   }
 
@@ -45,11 +45,13 @@ async function marketsOwnership() {
       const [name, owner, nominatedOwner] = await Promise.all([
         SpotMarketProxy.name(marketId),
         SpotMarketProxy.getMarketOwner(marketId),
-        SpotMarketProxy.getNominatedMarketOwner(marketId).catch(
-          (error) =>
-            log({ call: `SpotMarketProxy.getNominatedMarketOwner(${marketId})`, error }) ||
-            ethers.constants.AddressZero
-        ),
+        'getNominatedMarketOwner' in SpotMarketProxy
+          ? SpotMarketProxy.getNominatedMarketOwner(marketId).catch(
+              (error) =>
+                log({ call: `SpotMarketProxy.getNominatedMarketOwner(${marketId})`, error }) ||
+                ethers.constants.AddressZero
+            )
+          : Promise.resolve(ethers.constants.AddressZero),
       ]);
       return { marketId, name, owner, nominatedOwner };
     })

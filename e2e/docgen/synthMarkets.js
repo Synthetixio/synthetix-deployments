@@ -3,7 +3,8 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
-const { getSynthMarketIds, getSettlementStrategyId } = require('./lib/getSynthMarketIds');
+const { extractSynthMarkets } = require('./lib/extractSynthMarkets');
+const { extractSettlementStrategies } = require('./lib/extractSettlementStrategies');
 
 function catcher(value = undefined) {
   return (error) => {
@@ -21,9 +22,9 @@ async function synthMarkets() {
   const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
-  const synthMarketIds = await getSynthMarketIds();
-  log({ synthMarketIds });
-  if (synthMarketIds.length < 1) {
+  const synthMarkets = await extractSynthMarkets();
+  log({ synthMarkets });
+  if (Object.values(synthMarkets).length < 1) {
     return '';
   }
 
@@ -36,7 +37,7 @@ async function synthMarkets() {
     provider
   );
 
-  for (const synthMarketId of synthMarketIds) {
+  for (const [symbol, synthMarketId] of Object.entries(synthMarkets)) {
     const name = await SpotMarketProxy.name(synthMarketId).catch(catcher());
     log({ synthMarketId, name });
 
@@ -71,6 +72,7 @@ async function synthMarkets() {
     `);
 
     const synthAddress = await SpotMarketProxy.getSynth(synthMarketId).catch(catcher());
+
     const contract = new ethers.Contract(
       synthAddress,
       [
@@ -226,17 +228,19 @@ async function synthMarkets() {
       </table>
     `);
 
-    const settlementStrategyId = getSettlementStrategyId(synthMarketId) || 0;
-    if (settlementStrategyId !== undefined && settlementStrategyId !== null) {
-      const { getSpotSettlementStrategy } = require('../tasks/getSpotSettlementStrategy');
-      const settlementStrategy = await getSpotSettlementStrategy({
-        synthMarketId,
-        settlementStrategyId,
-      }).catch(catcher());
-      log({ settlementStrategy });
+    const settlementStrategies = extractSettlementStrategies();
+    log({ settlementStrategies });
+    const settlementStrategyId = symbol in settlementStrategies ? settlementStrategies[symbol] : 0;
 
-      if (settlementStrategy) {
-        table.push(`
+    const { getSpotSettlementStrategy } = require('../tasks/getSpotSettlementStrategy');
+    const settlementStrategy = await getSpotSettlementStrategy({
+      synthMarketId,
+      settlementStrategyId,
+    }).catch(catcher());
+    log({ settlementStrategy });
+
+    if (settlementStrategy) {
+      table.push(`
           <table data-full-width="true">
             <thead>
               <tr>
@@ -248,14 +252,14 @@ async function synthMarkets() {
             <tbody>
         `);
 
-        table.push(`
+      table.push(`
           <tr>
             <td>settlementStrategyId</td>
             <td>${readableNumber(settlementStrategyId)}</td>
             <td>${rawValue(settlementStrategyId)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>strategyType</td>
             <td>${
@@ -267,82 +271,82 @@ async function synthMarkets() {
             <td>${rawValue(settlementStrategy.strategyType)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>settlementDelay</td>
             <td>${readableNumber(settlementStrategy.settlementDelay)}</td>
             <td>${rawValue(settlementStrategy.settlementDelay)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>settlementWindowDuration</td>
             <td>${readableNumber(settlementStrategy.settlementWindowDuration)}</td>
             <td>${rawValue(settlementStrategy.settlementWindowDuration)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>priceVerificationContract</td>
             <td></td>
             <td>${addrHtmlLink(chainId, settlementStrategy.priceVerificationContract)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>feedId</td>
             <td></td>
             <td>${rawValue(settlementStrategy.feedId)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>url</td>
             <td></td>
             <td>${rawValue(settlementStrategy.url)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>settlementReward</td>
             <td>${readableWei(settlementStrategy.settlementReward)}</td>
             <td>${rawValue(settlementStrategy.settlementReward)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>priceDeviationTolerance</td>
             <td>${readableWei(settlementStrategy.priceDeviationTolerance)}</td>
             <td>${rawValue(settlementStrategy.priceDeviationTolerance)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>minimumUsdExchangeAmount</td>
             <td>${readableWei(settlementStrategy.minimumUsdExchangeAmount)}</td>
             <td>${rawValue(settlementStrategy.minimumUsdExchangeAmount)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>maxRoundingLoss</td>
             <td>${readableWei(settlementStrategy.maxRoundingLoss)}</td>
             <td>${rawValue(settlementStrategy.maxRoundingLoss)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
           <tr>
             <td>disabled</td>
             <td>${settlementStrategy.disabled === true ? '🚫 Disabled' : settlementStrategy.disabled === false ? '✅ Enabled' : 'n/a'}</td>
             <td>${rawValue(settlementStrategy.disabled)}</td>
           </tr>
         `);
-        table.push(`
+      table.push(`
             </tbody>
           </table>
         `);
-      }
     }
+
     out.push(await prettyHtml(table.join('\n')));
   }
 
