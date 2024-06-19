@@ -3,7 +3,8 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 const { addrHtmlLink } = require('./lib/addrLink');
 const { txHtmlLink } = require('./lib/txLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
+const { renderToken } = require('./lib/renderToken');
+const { rawValue } = require('./lib/numbers');
 const { extractRewardsDistributors } = require('./lib/extractRewardsDistributors');
 
 async function rewardsDistributors() {
@@ -81,7 +82,7 @@ async function rewardsDistributors() {
     table.push(`
       <tr>
         <td>collateralType</td>
-        <td></td>
+        <td>${await renderToken(rewardsDistributor.collateralType)}</td>
         <td>${addrHtmlLink(chainId, rewardsDistributor.collateralType)}</td>
       </tr>
     `);
@@ -89,16 +90,8 @@ async function rewardsDistributors() {
     table.push(`
       <tr>
         <td>payoutToken</td>
-        <td></td>
+        <td>${await renderToken(rewardsDistributor.payoutToken)}</td>
         <td>${addrHtmlLink(chainId, rewardsDistributor.payoutToken)}</td>
-      </tr>
-    `);
-
-    table.push(`
-      <tr>
-        <td>payoutTokenDecimals</td>
-        <td>${rewardsDistributor.payoutTokenDecimals}</td>
-        <td>${rawValue(rewardsDistributor.payoutTokenDecimals)}</td>
       </tr>
     `);
 
