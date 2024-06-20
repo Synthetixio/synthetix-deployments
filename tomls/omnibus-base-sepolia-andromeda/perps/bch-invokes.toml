@@ -29,13 +29,13 @@
 [setting.perpsBchLockedOiRatio]
 
 [invoke.createBchPerpsMarket]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.perpsBchMarketId %>", "Bitcoin Cash", "BCH"]
 
 [invoke.setPerpsPriceBch]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
 args = [
@@ -47,7 +47,7 @@ depends = ["invoke.createBchPerpsMarket"]
 
 # Do not modify this step. Edit [invoke.setPerpsBchSettlementStrategy] instead.
 [invoke.addPerpsBchSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
@@ -59,7 +59,7 @@ extra.bch_pyth_settlement_strategy.arg = 2
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
@@ -68,7 +68,7 @@ args = [
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBchFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [
-    'provision.perpsLowCapFactory',
+    'provision.perpsFactory',
     'setting.perpsBchMarketId',
     'invoke.addPerpsBchSettlementStrategy',
     'provision.pyth_erc7412_wrapper',
@@ -79,7 +79,7 @@ depends = [
     'setting.commitmentPriceDelay',
 ]
 [invoke.setPerpsBchFundingParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
@@ -90,7 +90,7 @@ args = [
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchOrderFees]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
 args = [
@@ -101,21 +101,21 @@ args = [
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchMaxMarketSize]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.perpsBchMarketId %>", "<%= parseEther(settings.perpsBchMaxMarketSize) %>"]
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchMaxMarketValue]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
 args = ["<%= settings.perpsBchMarketId %>", "<%= parseEther(settings.perpsBchMaxMarketValue) %>"]
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchMaxLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
 args = [
@@ -128,7 +128,7 @@ args = [
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
@@ -142,7 +142,7 @@ args = [
 depends = ["invoke.createBchPerpsMarket"]
 
 [invoke.setPerpsBchLockedOiRatio]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.perpsBchMarketId %>", "<%= parseEther(settings.perpsBchLockedOiRatio) %>"]

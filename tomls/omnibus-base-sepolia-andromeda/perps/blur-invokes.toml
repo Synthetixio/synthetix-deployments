@@ -29,13 +29,13 @@
 [setting.perpsBlurLockedOiRatio]
 
 [invoke.createBlurPerpsMarket]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.perpsBlurMarketId %>", "Blur", "BLUR"]
 
 [invoke.setPerpsPriceBlur]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
 args = [
@@ -47,7 +47,7 @@ depends = ["invoke.createBlurPerpsMarket"]
 
 # Do not modify this step. Edit [invoke.setPerpsBlurSettlementStrategy] instead.
 [invoke.addPerpsBlurSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
@@ -59,7 +59,7 @@ extra.blur_pyth_settlement_strategy.arg = 2
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
@@ -68,7 +68,7 @@ args = [
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythBlurFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [
-    'provision.perpsLowCapFactory',
+    'provision.perpsFactory',
     'setting.perpsBlurMarketId',
     'invoke.addPerpsBlurSettlementStrategy',
     'provision.pyth_erc7412_wrapper',
@@ -79,7 +79,7 @@ depends = [
     'setting.commitmentPriceDelay',
 ]
 [invoke.setPerpsBlurFundingParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
@@ -90,7 +90,7 @@ args = [
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurOrderFees]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
 args = [
@@ -101,21 +101,21 @@ args = [
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurMaxMarketSize]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.perpsBlurMarketId %>", "<%= parseEther(settings.perpsBlurMaxMarketSize) %>"]
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurMaxMarketValue]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
 args = ["<%= settings.perpsBlurMarketId %>", "<%= parseEther(settings.perpsBlurMaxMarketValue) %>"]
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurMaxLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
 args = [
@@ -128,7 +128,7 @@ args = [
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
@@ -142,7 +142,7 @@ args = [
 depends = ["invoke.createBlurPerpsMarket"]
 
 [invoke.setPerpsBlurLockedOiRatio]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.perpsBlurMarketId %>", "<%= parseEther(settings.perpsBlurLockedOiRatio) %>"]

@@ -29,13 +29,13 @@
 [setting.perpsAdaLockedOiRatio]
 
 [invoke.createAdaPerpsMarket]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.perpsAdaMarketId %>", "Cardano", "ADA"]
 
 [invoke.setPerpsPriceAda]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
 args = [
@@ -47,7 +47,7 @@ depends = ["invoke.createAdaPerpsMarket"]
 
 # Do not modify this step. Edit [invoke.setPerpsAdaSettlementStrategy] instead.
 [invoke.addPerpsAdaSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
@@ -59,7 +59,7 @@ extra.ada_pyth_settlement_strategy.arg = 2
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
@@ -68,7 +68,7 @@ args = [
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythAdaFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [
-    'provision.perpsLowCapFactory',
+    'provision.perpsFactory',
     'setting.perpsAdaMarketId',
     'invoke.addPerpsAdaSettlementStrategy',
     'provision.pyth_erc7412_wrapper',
@@ -79,7 +79,7 @@ depends = [
     'setting.commitmentPriceDelay',
 ]
 [invoke.setPerpsAdaFundingParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
@@ -90,7 +90,7 @@ args = [
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaOrderFees]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
 args = [
@@ -101,21 +101,21 @@ args = [
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaMaxMarketSize]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.perpsAdaMarketId %>", "<%= parseEther(settings.perpsAdaMaxMarketSize) %>"]
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaMaxMarketValue]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
 args = ["<%= settings.perpsAdaMarketId %>", "<%= parseEther(settings.perpsAdaMaxMarketValue) %>"]
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaMaxLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
 args = [
@@ -128,7 +128,7 @@ args = [
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
@@ -142,7 +142,7 @@ args = [
 depends = ["invoke.createAdaPerpsMarket"]
 
 [invoke.setPerpsAdaLockedOiRatio]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.perpsAdaMarketId %>", "<%= parseEther(settings.perpsAdaLockedOiRatio) %>"]

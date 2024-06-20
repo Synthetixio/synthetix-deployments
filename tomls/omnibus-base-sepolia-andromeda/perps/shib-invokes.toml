@@ -29,13 +29,13 @@
 [setting.perpsShibLockedOiRatio]
 
 [invoke.createShibPerpsMarket]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.perpsShibMarketId %>", "Shiba Inu", "SHIB"]
 
 [invoke.setPerpsPriceShib]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
 args = [
@@ -47,7 +47,7 @@ depends = ["invoke.createShibPerpsMarket"]
 
 # Do not modify this step. Edit [invoke.setPerpsShibSettlementStrategy] instead.
 [invoke.addPerpsShibSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
@@ -59,7 +59,7 @@ extra.shib_pyth_settlement_strategy.arg = 2
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibSettlementStrategy]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
@@ -68,7 +68,7 @@ args = [
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythShibFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [
-    'provision.perpsLowCapFactory',
+    'provision.perpsFactory',
     'setting.perpsShibMarketId',
     'invoke.addPerpsShibSettlementStrategy',
     'provision.pyth_erc7412_wrapper',
@@ -79,7 +79,7 @@ depends = [
     'setting.commitmentPriceDelay',
 ]
 [invoke.setPerpsShibFundingParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
@@ -90,7 +90,7 @@ args = [
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibOrderFees]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
 args = [
@@ -101,21 +101,21 @@ args = [
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibMaxMarketSize]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.perpsShibMarketId %>", "<%= parseEther(settings.perpsShibMaxMarketSize) %>"]
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibMaxMarketValue]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
 args = ["<%= settings.perpsShibMarketId %>", "<%= parseEther(settings.perpsShibMaxMarketValue) %>"]
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibMaxLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
 args = [
@@ -128,7 +128,7 @@ args = [
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibLiquidationParameters]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
@@ -142,7 +142,7 @@ args = [
 depends = ["invoke.createShibPerpsMarket"]
 
 [invoke.setPerpsShibLockedOiRatio]
-target = ["perpsLowCapFactory.PerpsMarketProxy"]
+target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.perpsShibMarketId %>", "<%= parseEther(settings.perpsShibLockedOiRatio) %>"]
