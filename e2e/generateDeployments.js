@@ -59,8 +59,9 @@ async function fetchTokenInfo(address) {
 }
 
 async function extractRewardsDistributors(deployments) {
-  const rewardsDistributors = [];
-  const rewardsDistributorsContracts = {};
+  const items = [];
+  const contracts = {};
+  const duplicates = {};
   for (const [key, value] of Object.entries(deployments?.state || {})) {
     if (key.startsWith('provision.')) {
       const [, artifactName] = key.split('.');
@@ -80,11 +81,15 @@ async function extractRewardsDistributors(deployments) {
         const collateralType = await fetchTokenInfo(collateralTypeAddress);
         const payoutToken = await fetchTokenInfo(payoutTokenAddress);
 
-        rewardsDistributorsContracts[
-          `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`
-        ] = rewardsDistributor;
+        const contractName = `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`;
+        if (contractName in contracts) {
+          duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
+          contracts[`${contractName}__${duplicates[contractName]}`] = rewardsDistributor;
+        } else {
+          contracts[`${contractName}`] = rewardsDistributor;
+        }
 
-        rewardsDistributors.push({
+        items.push({
           address: rewardsDistributor.address,
           name,
           poolId,
@@ -106,7 +111,7 @@ async function extractRewardsDistributors(deployments) {
         // can only have one RewardsDistributorRegistered event
         log({ RewardsDistributorRegistered: events[0] });
         const [poolId, collateralType, address] = events[0].args;
-        for (const rewardDistributor of rewardsDistributors) {
+        for (const rewardDistributor of items) {
           if (
             `${rewardDistributor.poolId}` === `${poolId}` &&
             `${rewardDistributor.collateralType.address}`.toLowerCase() ===
@@ -119,12 +124,16 @@ async function extractRewardsDistributors(deployments) {
       }
     }
   }
-  return { rewardsDistributors, rewardsDistributorsContracts };
+  return {
+    items,
+    contracts,
+  };
 }
 
 async function extractSynths(deployments) {
-  const synths = [];
-  const synthsContracts = {};
+  const items = [];
+  const contracts = {};
+  const duplicates = {};
   for (const [key, value] of Object.entries(deployments?.state || {})) {
     if (key.startsWith('invoke.')) {
       const [, artifactName] = key.split('.');
@@ -134,20 +143,33 @@ async function extractSynths(deployments) {
         log({ SynthRegistered: events[0] });
         const [synthMarketId, address] = events[0].args;
         const token = await fetchTokenInfo(address);
-        synths.push({ synthMarketId, ...token });
-        synthsContracts[`SynthToken_${token.symbol}`] = {
-          address,
-          abi: require('./SynthTokenModule.json'),
-        };
+        items.push({ synthMarketId, ...token });
+        const contractName = `SynthToken_${token.symbol}`;
+        if (contractName in contracts) {
+          duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
+          contracts[`${contractName}__${duplicates[contractName]}`] = {
+            address,
+            abi: require('./SynthTokenModule.json'),
+          };
+        } else {
+          contracts[`${contractName}`] = {
+            address,
+            abi: require('./SynthTokenModule.json'),
+          };
+        }
       }
     }
   }
-  return { synths, synthsContracts };
+  return {
+    items,
+    contracts,
+  };
 }
 
 async function extractMintableTokens(deployments) {
-  const mintableTokens = [];
-  const mintableTokensContracts = {};
+  const items = [];
+  const contracts = {};
+  const duplicates = {};
   for (const [key, value] of Object.entries(deployments?.state || {})) {
     if (key.startsWith('provision.')) {
       const [, artifactName] = key.split('.');
@@ -161,15 +183,81 @@ async function extractMintableTokens(deployments) {
           },
         });
         const token = await fetchTokenInfo(mintableToken.address);
-        mintableTokensContracts[`MintableToken_${token.symbol}`] = mintableToken;
-        mintableTokens.push(token);
+
+        const contractName = `MintableToken_${token.symbol}`;
+        if (contractName in contracts) {
+          duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
+          contracts[`${contractName}__${duplicates[contractName]}`] = mintableToken;
+        } else {
+          contracts[`${contractName}`] = mintableToken;
+        }
+
+        items.push(token);
       }
     }
   }
 
   return {
-    mintableTokens,
-    mintableTokensContracts,
+    items,
+    contracts,
+  };
+}
+
+async function extractCollaterals(deployments) {
+  const items = [];
+  const contracts = {};
+  const duplicates = {};
+  for (const [key, value] of Object.entries(deployments?.state || {})) {
+    if (key.startsWith('invoke.')) {
+      const [, artifactName] = key.split('.');
+      const events = value?.artifacts?.txns?.[artifactName]?.events?.CollateralConfigured;
+      if (events && events.length === 1) {
+        // can only have one CollateralConfigured event
+        log({ CollateralConfigured: events[0] });
+        const [
+          address,
+          {
+            depositingEnabled,
+            issuanceRatioD18,
+            liquidationRatioD18,
+            liquidationRewardD18,
+            oracleNodeId,
+            tokenAddress,
+            minDelegationD18,
+          },
+        ] = events[0].args;
+        const token = await fetchTokenInfo(address);
+
+        const contractName = `CollateralToken_${token.symbol}`;
+        if (contractName in contracts) {
+          duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
+          contracts[`${contractName}__${duplicates[contractName]}`] = {
+            address,
+            abi: require('./ERC20.json'),
+          };
+        } else {
+          contracts[`${contractName}`] = {
+            address,
+            abi: require('./ERC20.json'),
+          };
+        }
+
+        items.push({
+          ...token,
+          depositingEnabled,
+          issuanceRatioD18,
+          liquidationRatioD18,
+          liquidationRewardD18,
+          oracleNodeId,
+          tokenAddress,
+          minDelegationD18,
+        });
+      }
+    }
+  }
+  return {
+    items,
+    contracts,
   };
 }
 
@@ -243,13 +331,23 @@ async function run() {
     contracts.PythERC7412Wrapper = pyth_erc7412_wrapper.contracts.PythERC7412Wrapper;
   }
 
-  const { mintableTokens, mintableTokensContracts } = await extractMintableTokens(deployments);
+  const { items: mintableTokens, contracts: mintableTokenContracts } =
+    await extractMintableTokens(deployments);
   log('Writing', `deployments/mintableTokens.json`);
   await fs.writeFile(
     `${__dirname}/deployments/mintableTokens.json`,
     JSON.stringify(mintableTokens, null, 2)
   );
-  Object.assign(contracts, mintableTokensContracts);
+  Object.assign(contracts, mintableTokenContracts);
+
+  const { items: collateralTokens, contracts: collateralTokenContracts } =
+    await extractCollaterals(deployments);
+  log('Writing', `deployments/collateralTokens.json`);
+  await fs.writeFile(
+    `${__dirname}/deployments/collateralTokens.json`,
+    JSON.stringify(collateralTokens, null, 2)
+  );
+  Object.assign(contracts, collateralTokenContracts);
 
   // Extract all extras
   Object.values(deployments?.state).forEach((step) => {
@@ -263,10 +361,13 @@ async function run() {
     snx_address: extras?.snx_address ?? deployments?.def?.setting?.snx_address?.defaultValue,
   });
 
-  const { synths, synthsContracts } = await extractSynths(deployments);
+  const { items: synthTokens, contracts: synthTokenContracts } = await extractSynths(deployments);
   log('Writing', `deployments/synthTokens.json`);
-  await fs.writeFile(`${__dirname}/deployments/synthTokens.json`, JSON.stringify(synths, null, 2));
-  Object.assign(contracts, synthsContracts);
+  await fs.writeFile(
+    `${__dirname}/deployments/synthTokens.json`,
+    JSON.stringify(synthTokens, null, 2)
+  );
+  Object.assign(contracts, synthTokenContracts);
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
@@ -285,14 +386,14 @@ async function run() {
     ).map((item) => JSON.parse(item)),
   };
 
-  const { rewardsDistributors, rewardsDistributorsContracts } =
+  const { items: rewardsDistributors, contracts: rewardsDistributorContracts } =
     await extractRewardsDistributors(deployments);
   log('Writing', `deployments/rewardsDistributors.json`);
   await fs.writeFile(
     `${__dirname}/deployments/rewardsDistributors.json`,
     JSON.stringify(rewardsDistributors, null, 2)
   );
-  Object.assign(contracts, rewardsDistributorsContracts);
+  Object.assign(contracts, rewardsDistributorContracts);
 
   log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
