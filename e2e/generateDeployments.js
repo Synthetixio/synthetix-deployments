@@ -130,6 +130,22 @@ async function extractRewardsDistributors(deployments) {
   };
 }
 
+async function getSynth(deployments, { synthMarketId }) {
+  const spotFactory =
+    deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
+  if (spotFactory) {
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.RPC_URL || 'http://127.0.0.1:8545'
+    );
+    const SpotMarketProxy = new ethers.Contract(
+      spotFactory.contracts.SpotMarketProxy.address,
+      spotFactory.contracts.SpotMarketProxy.abi,
+      provider
+    );
+    return await SpotMarketProxy.getSynth(synthMarketId);
+  }
+}
+
 async function extractSynths(deployments) {
   const items = [];
   const contracts = {};
@@ -141,21 +157,33 @@ async function extractSynths(deployments) {
       if (events && events.length === 1) {
         // can only have one SynthRegistered event
         log({ SynthRegistered: events[0] });
-        const [synthMarketId, address] = events[0].args;
-        const token = await fetchTokenInfo(address);
-        items.push({ synthMarketId, ...token });
-        const contractName = `SynthToken_${token.symbol}`;
-        if (contractName in contracts) {
-          duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
-          contracts[`${contractName}__${duplicates[contractName]}`] = {
-            address,
-            abi: require('./SynthTokenModule.json'),
-          };
-        } else {
-          contracts[`${contractName}`] = {
-            address,
-            abi: require('./SynthTokenModule.json'),
-          };
+        let [synthMarketId, address] = events[0].args;
+        if (!address) {
+          // For old spot market we did not emit token address and need to get it dynamically
+          // TODO: remove after optimism-mainnet upgraded
+          address = await getSynth(deployments, { synthMarketId }).catch((e) => log(e));
+        }
+        if (address) {
+          const token = await fetchTokenInfo(address);
+          items.push({
+            // TODO: cleanup BigNumber decode after optimism-mainnet upgraded
+            synthMarketId: ethers.BigNumber.from(synthMarketId).toString(),
+            ...token,
+          });
+          const contractName = `SynthToken_${token.symbol}`;
+          if (contractName in contracts) {
+            duplicates[contractName] =
+              contractName in duplicates ? duplicates[contractName] + 1 : 1;
+            contracts[`${contractName}__${duplicates[contractName]}`] = {
+              address,
+              abi: require('./SynthTokenModule.json'),
+            };
+          } else {
+            contracts[`${contractName}`] = {
+              address,
+              abi: require('./SynthTokenModule.json'),
+            };
+          }
         }
       }
     }
@@ -214,9 +242,19 @@ async function extractCollaterals(deployments) {
       if (events && events.length === 1) {
         // can only have one CollateralConfigured event
         log({ CollateralConfigured: events[0] });
-        const [
-          address,
-          {
+        const [address, params] = events[0].args;
+        const token = await fetchTokenInfo(address);
+
+        let depositingEnabled,
+          issuanceRatioD18,
+          liquidationRatioD18,
+          liquidationRewardD18,
+          oracleNodeId,
+          tokenAddress,
+          minDelegationD18;
+        if (Array.isArray(params)) {
+          // TODO: cleanup after optimism-mainnet upgraded
+          [
             depositingEnabled,
             issuanceRatioD18,
             liquidationRatioD18,
@@ -224,9 +262,22 @@ async function extractCollaterals(deployments) {
             oracleNodeId,
             tokenAddress,
             minDelegationD18,
-          },
-        ] = events[0].args;
-        const token = await fetchTokenInfo(address);
+          ] = params;
+          issuanceRatioD18 = ethers.BigNumber.from(issuanceRatioD18).toString();
+          liquidationRatioD18 = ethers.BigNumber.from(liquidationRatioD18).toString();
+          liquidationRewardD18 = ethers.BigNumber.from(liquidationRewardD18).toString();
+          minDelegationD18 = ethers.BigNumber.from(minDelegationD18).toString();
+        } else {
+          ({
+            depositingEnabled,
+            issuanceRatioD18,
+            liquidationRatioD18,
+            liquidationRewardD18,
+            oracleNodeId,
+            tokenAddress,
+            minDelegationD18,
+          } = params);
+        }
 
         const contractName = `CollateralToken_${token.symbol}`;
         if (contractName in contracts) {
@@ -267,6 +318,24 @@ async function run() {
   await fs.rm(`${__dirname}/deployments`, { recursive: true, force: true });
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
   await fs.mkdir(`${__dirname}/deployments/abi`, { recursive: true });
+
+  log('Writing', `deployments/cannon.json`);
+  await fs.writeFile(
+    `${__dirname}/deployments/cannon.json`,
+    JSON.stringify(
+      deployments,
+      (key, value) => {
+        if (key === 'abi' && Array.isArray(value)) {
+          return readableAbi(value);
+        }
+        if (key === 'depends' && Array.isArray(value)) {
+          return Array.from(new Set(value)).sort();
+        }
+        return value;
+      },
+      2
+    )
+  );
 
   const meta = {
     chainId: deployments.chainId,
@@ -400,23 +469,6 @@ async function run() {
 
   log('Writing', `deployments/extras.json`);
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
-
-  await fs.writeFile(
-    `${__dirname}/deployments/cannon.json`,
-    JSON.stringify(
-      deployments,
-      (key, value) => {
-        if (key === 'abi' && Array.isArray(value)) {
-          return readableAbi(value);
-        }
-        if (key === 'depends' && Array.isArray(value)) {
-          return Array.from(new Set(value)).sort();
-        }
-        return value;
-      },
-      2
-    )
-  );
 
   for (const [name, { address, abi }] of Object.entries(contracts)) {
     log('Writing', `deployments/${name}.json`, { address });
