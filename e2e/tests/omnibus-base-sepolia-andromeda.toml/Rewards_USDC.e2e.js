@@ -30,14 +30,17 @@ const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
 const { claimRewards } = require('../../tasks/claimRewards');
 
 const {
-  contracts: {
-    RewardsDistributorForSpartanCouncilPoolUSDC: distributorAddress,
-    FakeCollateralfUSDC: payoutToken,
+  address: distributorAddress,
+} = require('../../deployments/RewardsDistributor_1_sUSDC_fUSDC.json');
+const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
+const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
+log({ rewardsDistributor });
 
-    CoreProxy: rewardManager,
-    SynthUSDCToken: collateralType,
-  },
-} = require('../../deployments/meta.json');
+const payoutToken = rewardsDistributor.payoutToken.address;
+const rewardManager = rewardsDistributor.rewardManager;
+const collateralType = rewardsDistributor.collateralType.address;
+
+log({ distributorAddress, payoutToken, rewardManager, collateralType });
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);

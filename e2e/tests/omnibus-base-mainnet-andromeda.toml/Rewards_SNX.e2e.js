@@ -34,13 +34,15 @@ const {
 } = require('../../tasks/configureMaximumMarketCollateral');
 
 const {
-  contracts: {
-    RewardsDistributorForSpartanCouncilPoolSNX: distributorAddress,
-    SNXToken: payoutToken,
-    CoreProxy: rewardManager,
-    SynthUSDCToken: collateralType,
-  },
-} = require('../../deployments/meta.json');
+  address: distributorAddress,
+} = require('../../deployments/RewardsDistributor_1_sUSDC_SNX.json');
+const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
+const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
+log({ rewardsDistributor });
+
+const payoutToken = rewardsDistributor.payoutToken.address;
+const rewardManager = rewardsDistributor.rewardManager;
+const collateralType = rewardsDistributor.collateralType.address;
 
 log({ distributorAddress, payoutToken, rewardManager, collateralType });
 
