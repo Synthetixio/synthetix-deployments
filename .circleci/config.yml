@@ -483,6 +483,10 @@ jobs:
 
             mkdir -p ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>
             cp e2e/deployments/abi/*.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/collateralTokens.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/mintableTokens.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/rewardsDistributors.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/synthTokens.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/meta.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/extras.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
@@ -601,6 +605,10 @@ jobs:
           command: |
             mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
             cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/collateralTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/mintableTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/rewardsDistributors.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/synthTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
@@ -673,7 +681,10 @@ jobs:
           name: "Update v3-contracts"
           command: |
             mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
-            cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/collateralTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/mintableTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/rewardsDistributors.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/synthTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
@@ -791,6 +802,7 @@ workflows:
             - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
             - equal: ["deployment-info", << pipeline.schedule.name >>]
         - equal: ["docgen", << pipeline.git.branch >>]
+        - equal: ["fix-docgen", << pipeline.git.branch >>]
 
     jobs:
       - deployments-dashboard
@@ -872,6 +884,7 @@ workflows:
             - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
             - equal: ["npm-package", << pipeline.schedule.name >>]
         - equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
+        - equal: ["fix-docgen", << pipeline.git.branch >>]
 
     jobs:
       - npm-package:
@@ -951,6 +964,7 @@ workflows:
             - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
             - equal: ["preview", << pipeline.schedule.name >>]
         - equal: ["v3-contracts-preview", << pipeline.git.branch >>]
+        - equal: ["fix-docgen", << pipeline.git.branch >>]
 
     jobs:
       - preview:
