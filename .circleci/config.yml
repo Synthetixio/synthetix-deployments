@@ -434,6 +434,8 @@ jobs:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      DEBUG: "e2e:*"
     steps:
       - checkout
       - install-anvil
@@ -455,8 +457,6 @@ jobs:
 
       - run:
           name: "Generate docs"
-          environment:
-            DEBUG: "e2e:*"
           command: |
             mkdir -p docs
             node e2e/docgen > docs/<< parameters.chain-id >>-<< parameters.preset >>.md
@@ -501,6 +501,8 @@ jobs:
   deployments-dashboard:
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      DEBUG: "e2e:*"
     steps:
       - checkout
       - yarn-install
@@ -525,8 +527,6 @@ jobs:
 
       - run:
           name: "Generate docs"
-          environment:
-            DEBUG: "e2e:*"
           command: |
             mkdir -p docs/for-developers
             node e2e/dashboard > docs/for-developers/deployment-info.md
@@ -572,11 +572,13 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
-      RPC_URL: "<< parameters.provider-url >>"
     steps:
       - checkout
       - install-anvil
+      - run-anvil:
+          provider-url: << parameters.provider-url >>
       - yarn-install
+      - wait-for-anvil
 
       - run:
           name: "Extract cannon state"
@@ -634,6 +636,8 @@ jobs:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      DEBUG: "e2e:*"
     steps:
       - checkout
       - install-anvil
@@ -641,13 +645,30 @@ jobs:
 
       - run:
           name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >>"
+          background: true
           command: |
             yarn cannon build << parameters.toml >> \
+              --keep-alive \
+              --port 8545 \
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
                 | tee ./cannon-build.log
+
+      - run:
+          name: "Wait for cannon to complete the build"
+          command: |
+            touch ./cannon-build.log
+            # If the information wasn't found, start tailing the log
+            if ! grep -q 'Built package RPC URL available' ./cannon-build.log; then
+                while IFS= read -r line
+                do
+                    if [[ $line == *"Built package RPC URL available"* ]]; then
+                        break
+                    fi
+                done < <(tail -f -n0 ./cannon-build.log)
+            fi
 
       - store_artifacts:
           path: "./cannon-build.log"
