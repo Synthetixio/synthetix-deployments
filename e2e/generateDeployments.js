@@ -75,8 +75,14 @@ async function extractRewardsDistributors(deployments) {
             deployTxnHash: rewardsDistributor.deployTxnHash,
           },
         });
-        const [rewardManager, poolId, collateralTypeAddress, payoutTokenAddress, name] =
-          rewardsDistributor.constructorArgs;
+        const [
+          rewardManager,
+          poolId,
+          collateralTypeAddress,
+          payoutTokenAddress,
+          _payoutTokenDecimals,
+          name,
+        ] = rewardsDistributor.constructorArgs;
 
         const collateralType = await fetchTokenInfo(collateralTypeAddress);
         const payoutToken = await fetchTokenInfo(payoutTokenAddress);
@@ -438,6 +444,15 @@ async function run() {
   );
   Object.assign(contracts, synthTokenContracts);
 
+  const { items: rewardsDistributors, contracts: rewardsDistributorContracts } =
+    await extractRewardsDistributors(deployments);
+  log('Writing', `deployments/rewardsDistributors.json`);
+  await fs.writeFile(
+    `${__dirname}/deployments/rewardsDistributors.json`,
+    JSON.stringify(rewardsDistributors, null, 2)
+  );
+  Object.assign(contracts, rewardsDistributorContracts);
+
   Object.assign(meta, {
     contracts: Object.fromEntries(
       Object.entries(contracts).map(([name, { address }]) => [name, address])
@@ -454,15 +469,6 @@ async function run() {
       )
     ).map((item) => JSON.parse(item)),
   };
-
-  const { items: rewardsDistributors, contracts: rewardsDistributorContracts } =
-    await extractRewardsDistributors(deployments);
-  log('Writing', `deployments/rewardsDistributors.json`);
-  await fs.writeFile(
-    `${__dirname}/deployments/rewardsDistributors.json`,
-    JSON.stringify(rewardsDistributors, null, 2)
-  );
-  Object.assign(contracts, rewardsDistributorContracts);
 
   log('Writing', `deployments/meta.json`);
   await fs.writeFile(`${__dirname}/deployments/meta.json`, JSON.stringify(meta, null, 2));
