@@ -15,7 +15,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/spot/usdc.toml",          # sUSDC spot market/wrapper, mock for USDC
     "tomls/omnibus-base-sepolia-andromeda/spot/statausdc.toml",     # sStataUSDC spot market/wrapper, mock for aUSDC/stataUSDC from erc-4626-to-assets-ratio-oracle
     "tomls/permit-all-perps-perpsHighcapSystem.toml",               # Enable perps market
-    "tomls/revoke-permit-all-perps-perpsLowcapSystem.toml",         # Enable perps market
+    "tomls/permit-revoke-all-perps-perpsLowcapSystem.toml",         # Enable perps market
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/global.toml",       # Global perps settings
     "tomls/oracles/perps-keeper-cost.toml",                         # Add gas oracle for keeper fees
