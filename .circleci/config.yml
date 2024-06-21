@@ -566,6 +566,9 @@ jobs:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
+    environment:
+      DEBUG: "e2e:*"
+      RPC_URL: "<< parameters.provider-url >>"
     steps:
       - checkout
       - install-anvil
