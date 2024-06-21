@@ -154,7 +154,6 @@ include = [
     "tomls/oracles/pyth-axl.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/axl.toml",
 
-    # Second super market for low mcap assets
     # AAVE
     "tomls/omnibus-base-sepolia-andromeda/perps/aave-invokes.toml",
     "tomls/oracles/pyth-aave.toml",
