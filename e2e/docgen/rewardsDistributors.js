@@ -5,7 +5,6 @@ const { txHtmlLink } = require('./lib/txLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { renderToken } = require('./lib/renderToken');
 const { rawValue } = require('./lib/numbers');
-const { extractRewardsDistributors } = require('./lib/extractRewardsDistributors');
 
 async function rewardsDistributors() {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -15,7 +14,7 @@ async function rewardsDistributors() {
   const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
-  const rewardsDistributors = extractRewardsDistributors();
+  const rewardsDistributors = require('../deployments/rewardsDistributors.json');
   log({ rewardsDistributors });
   if (Object.values(rewardsDistributors).length < 1) {
     return '';
