@@ -1,5 +1,5 @@
-[invoke.allowAllPerpsLowCapSystem]
+[invoke.revokeAllPerpsLowCapSystem]
 target = ["perpsLowCapFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('perpsSystem') %>", true]
+args = ["<%= formatBytes32String('perpsSystem') %>", false]
