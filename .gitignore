@@ -2,7 +2,7 @@
 .vscode
 .idea
 *.log
-
+.env
 /tmp
 
 # Yarn v3
