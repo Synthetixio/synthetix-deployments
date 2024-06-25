@@ -1,0 +1,20 @@
+updates:
+  - package-ecosystem: "yarn"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      cannon:
+        patterns:
+          - "@usecannon*"
+          - "*cannon*"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
+    open-pull-requests-limit: 1
+    #    ignore:
+    #      - dependency-name: "*"
+    reviewers:
+      - "noisekit"
+    target-branch: "update-cannon"
