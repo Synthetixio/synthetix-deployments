@@ -228,8 +228,9 @@ args = [
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
 
-[setting.stata_usdc_address]
+[setting.stataBasUSDC_address]
 defaultValue = "0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
+description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 
 [setting.snx_address]
 defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
