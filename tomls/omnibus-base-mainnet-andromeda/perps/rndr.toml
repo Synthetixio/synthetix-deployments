@@ -1,0 +1,56 @@
+[setting.pythRndrFeedId]
+defaultValue = "0xab7347771135fc733f8f38db462ba085ed3309955f42554a14fa13e855ac0e2f"
+
+[setting.perpsRndrMarketId]
+defaultValue = "6300"
+
+[setting.perpsRndrSkewScale]
+defaultValue = "<%= String(3_750_000) %>"
+
+[setting.perpsRndrMaxFundingVelocity]
+defaultValue = "36"
+
+[setting.perpsRndrMakerFeeRatio]
+defaultValue = "0.0002"
+
+[setting.perpsRndrTakerFeeRatio]
+defaultValue = "0.0010"
+
+[setting.perpsRndrMaxMarketSize]
+defaultValue = "<%= String(9_701) %>"
+
+[setting.perpsRndrMaxMarketValue]
+defaultValue = "<%= String(50_000) %>"
+
+[setting.perpsRndrInitialMarginRatio]
+defaultValue = "5.09"
+
+[setting.perpsRndrMinimumInitialMarginRatio]
+defaultValue = "0.05"
+
+[setting.perpsRndrMaintenanceMarginScalar]
+defaultValue = "0.37"
+
+[setting.perpsRndrFlagRewardRatioD18]
+defaultValue = "0.0003"
+
+[setting.perpsRndrMaxLiquidationLimitAccumulationMultiplier]
+defaultValue = "1.5"
+
+[setting.perpsRndrMaxSecondsInLiquidationWindow]
+defaultValue = "30"
+
+[setting.perpsRndrMinimumPositionMargin]
+defaultValue = "50"
+
+[setting.perpsRndrLockedOiRatio]
+defaultValue = "0.5"
+
+[setting.perpsRndrSynthMaxCollateralAmount]
+defaultValue = "<%= MaxUint256 %>"
+
+[setting.perpsRndrMaxLiquidationPd]
+defaultValue = "0.0005"
+
+[setting.perpsRndrEndorsedLiquidator]
+defaultValue = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
