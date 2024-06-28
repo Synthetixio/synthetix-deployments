@@ -111,7 +111,10 @@ depends = ["invoke.createSushiPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = ["<%= settings.perpsSushiMarketId %>", "<%= parseEther(settings.perpsSushiMaxMarketValue) %>"]
+args = [
+    "<%= settings.perpsSushiMarketId %>",
+    "<%= parseEther(settings.perpsSushiMaxMarketValue) %>",
+]
 depends = ["invoke.createSushiPerpsMarket"]
 
 [invoke.setPerpsSushiMaxLiquidationParameters]

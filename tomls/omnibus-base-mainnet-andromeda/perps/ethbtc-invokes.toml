@@ -104,14 +104,20 @@ depends = ["invoke.createEthbtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = ["<%= settings.perpsEthbtcMarketId %>", "<%= parseEther(settings.perpsEthbtcMaxMarketSize) %>"]
+args = [
+    "<%= settings.perpsEthbtcMarketId %>",
+    "<%= parseEther(settings.perpsEthbtcMaxMarketSize) %>",
+]
 depends = ["invoke.createEthbtcPerpsMarket"]
 
 [invoke.setPerpsEthbtcMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = ["<%= settings.perpsEthbtcMarketId %>", "<%= parseEther(settings.perpsEthbtcMaxMarketValue) %>"]
+args = [
+    "<%= settings.perpsEthbtcMarketId %>",
+    "<%= parseEther(settings.perpsEthbtcMaxMarketValue) %>",
+]
 depends = ["invoke.createEthbtcPerpsMarket"]
 
 [invoke.setPerpsEthbtcMaxLiquidationParameters]
@@ -145,5 +151,8 @@ depends = ["invoke.createEthbtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = ["<%= settings.perpsEthbtcMarketId %>", "<%= parseEther(settings.perpsEthbtcLockedOiRatio) %>"]
+args = [
+    "<%= settings.perpsEthbtcMarketId %>",
+    "<%= parseEther(settings.perpsEthbtcLockedOiRatio) %>",
+]
 depends = ["invoke.createEthbtcPerpsMarket"]
