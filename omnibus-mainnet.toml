@@ -6,22 +6,30 @@ include = [
     "tomls/ccip-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/oracles/snx.toml",
+		"tomls/oracles/wsteth.toml",
+		"tomls/oracles/susde.toml",
+		"tomls/oracles/snx.toml",
+		"tomls/collaterals/wsteth.toml",
+		"tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
-    # "tomls/oracles/eth.toml",
-    # "tomls/collaterals/weth.toml",
+    "tomls/markets/legacy.toml",
+		"tomls/markets/spot-factory.toml",
+		"tomls/markets/spot/usde.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.5"
+defaultValue = "synthetix:3.3.15"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.5"
+defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.5"
+defaultValue = "synthetix-perps-market:3.3.15"
+
+[setting.legacy_market_package]
+defaultValue = "synthetix-legacy-market:3.3.5"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -33,7 +41,16 @@ defaultValue = "0x33303637343430323300000000000000000000000000000000000000000000
 defaultValue = "snax"
 
 [setting.snx_address]
-defaultValue = "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f"
+defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
+
+[setting.wsteth_aggregator_address]
+defaultValue = ""
+
+[setting.susde_aggregator_address]
+defaultValue = "0xFF3BC18cCBd5999CE63E788A1c250a88626aD099"
+
+[setting.usde_aggregator_address]
+defaultValue = "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
 
 [setting.snx_aggregator_address]
 defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
@@ -51,7 +68,10 @@ defaultValue = "2000000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+
+[setting.pdao]
+defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 
 [setting.sc_pool_id]
 defaultValue = "1"
@@ -64,3 +84,40 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 
 [setting.ccip_token_pool]
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
+
+[setting.synthUsdeAsyncFixedFee]
+defaultValue = "0"
+
+[setting.synthUsdeSkewScale]
+defaultValue = "0"
+
+[setting.synth_usde_max_market_collateral]
+defaultValue = "<%= parseEther('100000000') %>"
+
++# we want to enable the spot market wrapper for usde
+[import.usde]
+source = "usde-token"
+
+[invoke.SpotMarketProxy_setWrapper_usde]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_usde_market_id %>",
+    "<%= imports.usde.contracts.Token.address %>",
+    "<%= settings.synth_usde_max_market_collateral %>",
+]
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 99, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+				{ marketId = "<%= settings.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]

@@ -1,14 +1,14 @@
 name = "synthetix-omnibus"
-version = "1"
+version = "2"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
     "tomls/ccip-testnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/oracles/pyth-wsteth.toml",
-    "tomls/oracles/pyth-susde.toml",
-    "tomls/oracles/pyth-snx.toml",
+    "tomls/oracles/wsteth.toml",
+    "tomls/oracles/susde.toml",
+    "tomls/oracles/snx.toml",
     "tomls/collaterals/wsteth.toml",
     "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
@@ -31,7 +31,7 @@ defaultValue = "synthetix:3.3.15"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.3.4"
+defaultValue = "synthetix-legacy-market:3.3.5"
 
 # the susde token doesn't appear to be deployed on sepolia
 [setting.susde_package]
