@@ -1,0 +1,23 @@
+[var.eth_settings]
+eth_max_collateral_amount = "10000"
+eth_upper_limit_discount = "0.1"
+eth_lower_limit_discount = "0.025"
+eth_discount_scalar = "1"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_eth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= settings.eth_max_collateral_amount %>",
+    "<%= settings.eth_upper_limit_discount %>",
+    "<%= settings.eth_lower_limit_discount %>",
+    "<%= settings.eth_discount_scalar %>",
+]
+
+[invoke.PerpsMarketProxy_registerDistributor_eth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = ["<%= extras.synth_eth_token_address %>"]
