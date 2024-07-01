@@ -1,20 +1,14 @@
-[var.eth_settings]
-eth_max_collateral_amount = "10000"
-eth_upper_limit_discount = "0.1"
-eth_lower_limit_discount = "0.025"
-eth_discount_scalar = "1"
-
 [provision.RewardsDistributor_PerpsCollateral_ETH_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
 target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Collateral_Perps_Liquidation_Rewards"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.synth_eth_token_address %>"
-options.payoutToken = "<%= settings.synth_eth_token_address %>"
+options.collateralType = "<%= extras.synth_eth_token_address %>"
+options.payoutToken = "<%= extras.synth_eth_token_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Perps Collateral Liquidation Rewards for ETH (as ETH)"
-options.authorizedExternalDistributor = "<%= settings.perps_market_package %>@<%= settings.target_preset %>"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_setCollateralConfiguration_eth]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -22,7 +16,7 @@ fromCall.func = "owner"
 func = "setCollateralConfiguration"
 args = [
     "<%= extras.synth_eth_market_id %>",
-    "<%= settings.eth_max_collateral_amount %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
     "<%= settings.eth_upper_limit_discount %>",
     "<%= settings.eth_lower_limit_discount %>",
     "<%= settings.eth_discount_scalar %>",
@@ -32,15 +26,12 @@ args = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "registerDistributor"
-args = ["<%= extras.synth_eth_token_address %>"]
-
-[invoke.PerpsMarketProxy_registerDistributor_eth]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "registerDistributor"
 args = [
     "<%= settings.synth_eth_token_address %>",
     "<%= imports.RewardsDistributor_PerpsCollateral_ETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
-    "<%= settings.synth_eth_token_address %>",
-    "[<%= settings.synth_btc_token_address %>, <%= settings.synth_eth_token_address %>]",
+    "<%= settings.synth_eth_market_id %>",
+    [
+        "<%= settings.usdc_address %>",
+        "<%= settings.weth_address %>",
+    ],
 ]

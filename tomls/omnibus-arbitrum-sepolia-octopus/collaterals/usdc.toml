@@ -10,6 +10,13 @@ defaultValue = "<%= parseEther('1') %>"
 [setting.usdc_min_delegation]
 defaultValue = "<%= parseEther('100') %>"
 
+[setting.max_collateral_limit_usdc]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
+[setting.usdc_address]
+defaultValue = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
+description = "https://developers.circle.com/stablecoins/docs/usdc-on-test-networks"
+
 [invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
