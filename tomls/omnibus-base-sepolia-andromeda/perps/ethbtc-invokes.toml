@@ -64,7 +64,7 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.perpsEthbtcMarketId %>",
-    "<%= extras.ethbtc_pyth_settlement_strategy %>",  # Settlement Strategy ID
+    "<%= extras.ethbtc_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythEthbtcFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [
@@ -104,14 +104,20 @@ depends = ["invoke.createEthbtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = ["<%= settings.perpsEthbtcMarketId %>", "<%= parseEther(settings.perpsEthbtcMaxMarketSize) %>"]
+args = [
+    "<%= settings.perpsEthbtcMarketId %>",
+    "<%= parseEther(settings.perpsEthbtcMaxMarketSize) %>",
+]
 depends = ["invoke.createEthbtcPerpsMarket"]
 
 [invoke.setPerpsEthbtcMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = ["<%= settings.perpsEthbtcMarketId %>", "<%= parseEther(settings.perpsEthbtcMaxMarketValue) %>"]
+args = [
+    "<%= settings.perpsEthbtcMarketId %>",
+    "<%= parseEther(settings.perpsEthbtcMaxMarketValue) %>",
+]
 depends = ["invoke.createEthbtcPerpsMarket"]
 
 [invoke.setPerpsEthbtcMaxLiquidationParameters]
@@ -145,5 +151,8 @@ depends = ["invoke.createEthbtcPerpsMarket"]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = ["<%= settings.perpsEthbtcMarketId %>", "<%= parseEther(settings.perpsEthbtcLockedOiRatio) %>"]
+args = [
+    "<%= settings.perpsEthbtcMarketId %>",
+    "<%= parseEther(settings.perpsEthbtcLockedOiRatio) %>",
+]
 depends = ["invoke.createEthbtcPerpsMarket"]
