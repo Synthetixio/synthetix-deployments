@@ -10,6 +10,13 @@ defaultValue = "<%= parseEther('0.005') %>"
 [setting.weth_min_delegation]
 defaultValue = "<%= parseEther('0.01') %>"
 
+[setting.max_collateral_limit_weth]
+defaultValue = "<%= parseEther(String(2_700)) %>"
+
+[setting.weth_address]
+defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
+description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
+
 [invoke.CoreProxy_configureCollateral_weth]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
