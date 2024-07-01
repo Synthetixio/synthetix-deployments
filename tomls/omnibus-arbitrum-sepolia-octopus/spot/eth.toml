@@ -1,0 +1,22 @@
+[setting.synthEthAsyncFixedFee]
+defaultValue = "0.001"
+
+[setting.synthEthMaxMarketCollateral]
+defaultValue = "1000"
+
+[setting.synthEthSkewScale]
+defaultValue = "100000"
+
+# [setting.synthEthWrapFee]
+# defaultValue = "0.0001"
+
+# [setting.synthEthUnwrapFee]
+# defaultValue = "0.0001"
+
+[invoke.configuresETHCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= extras.synth_eth_token_address %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false },
+]
