@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsFlowTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsFlowMaxMarketSize]
-defaultValue = "<%= String(109_950) %>"
+defaultValue = "<%=String(159_395) %>"
 
 [setting.perpsFlowMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsFlowInitialMarginRatio]
 defaultValue = "9.28"

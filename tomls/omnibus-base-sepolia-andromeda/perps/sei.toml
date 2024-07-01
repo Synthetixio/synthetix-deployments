@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsSeiTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsSeiMaxMarketSize]
-defaultValue = "<%= String(192_641) %>"
+defaultValue = "<%=String(293_317) %>"
 
 [setting.perpsSeiMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsSeiInitialMarginRatio]
 defaultValue = "5.13"

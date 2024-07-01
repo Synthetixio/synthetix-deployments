@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsImxTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsImxMaxMarketSize]
-defaultValue = "<%= String(43_322) %>"
+defaultValue = "<%=String(63_418) %>"
 
 [setting.perpsImxMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsImxInitialMarginRatio]
 defaultValue = "1.95"

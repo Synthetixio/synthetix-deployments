@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsIcpTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsIcpMaxMarketSize]
-defaultValue = "<%= String(8_183) %>"
+defaultValue = "<%=String(12_122) %>"
 
 [setting.perpsIcpMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsIcpInitialMarginRatio]
 defaultValue = "1.86"

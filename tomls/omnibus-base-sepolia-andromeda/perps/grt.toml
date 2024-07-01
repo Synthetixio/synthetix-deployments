@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsGrtTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsGrtMaxMarketSize]
-defaultValue = "<%= String(332_170) %>"
+defaultValue = "<%=String(472_043) %>"
 
 [setting.perpsGrtMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsGrtInitialMarginRatio]
 defaultValue = "4.22"

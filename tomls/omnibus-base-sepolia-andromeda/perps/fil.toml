@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsFilTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsFilMaxMarketSize]
-defaultValue = "<%= String(16_763) %>"
+defaultValue = "<%=String(22_379) %>"
 
 [setting.perpsFilMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsFilInitialMarginRatio]
 defaultValue = "1.81"

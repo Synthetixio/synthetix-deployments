@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsYfiTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsYfiMaxMarketSize]
-defaultValue = "<%= String(14) %>"
+defaultValue = "<%=String(15) %>"
 
 [setting.perpsYfiMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsYfiInitialMarginRatio]
 defaultValue = "1.49"

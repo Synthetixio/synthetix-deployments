@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsAaveTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsAaveMaxMarketSize]
-defaultValue = "<%= String(973) %>"
+defaultValue = "<%=String(2_022) %>"
 
 [setting.perpsAaveMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(100_000) %>"
 
 [setting.perpsAaveInitialMarginRatio]
 defaultValue = "3.38"

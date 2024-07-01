@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsShibTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsShibMaxMarketSize]
-defaultValue = "<%= String(4_100_461_301) %>"
+defaultValue = "<%=String(5_813_953_488) %>"
 
 [setting.perpsShibMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsShibInitialMarginRatio]
 defaultValue = "2.2"

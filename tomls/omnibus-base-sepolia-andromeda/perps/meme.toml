@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsMemeTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsMemeMaxMarketSize]
-defaultValue = "<%= String(3_446_410) %>"
+defaultValue = "<%=String(5_336_179) %>"
 
 [setting.perpsMemeMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsMemeInitialMarginRatio]
 defaultValue = "1.32"

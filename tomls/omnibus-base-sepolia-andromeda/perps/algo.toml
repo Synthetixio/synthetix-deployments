@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsAlgoTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsAlgoMaxMarketSize]
-defaultValue = "<%= String(536_900) %>"
+defaultValue = "<%=String(1_360_068) %>"
 
 [setting.perpsAlgoMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(100_000) %>"
 
 [setting.perpsAlgoInitialMarginRatio]
 defaultValue = "5.19"

@@ -64,7 +64,7 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.perpsImxMarketId %>",
-    "<%= extras.imx_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
+    "<%= extras.imx_pyth_settlement_strategy %>",  # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythImxFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [

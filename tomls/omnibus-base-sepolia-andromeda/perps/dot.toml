@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsDotTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsDotMaxMarketSize]
-defaultValue = "<%= String(13_851) %>"
+defaultValue = "<%=String(15_793) %>"
 
 [setting.perpsDotMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsDotInitialMarginRatio]
 defaultValue = "2.09"

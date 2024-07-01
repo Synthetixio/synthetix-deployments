@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsNearTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsNearMaxMarketSize]
-defaultValue = "<%= String(13_494) %>"
+defaultValue = "<%=String(18_900) %>"
 
 [setting.perpsNearMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsNearInitialMarginRatio]
 defaultValue = "3.35"

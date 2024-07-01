@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsTrxTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsTrxMaxMarketSize]
-defaultValue = "<%= String(874_565) %>"
+defaultValue = "<%=String(796_481) %>"
 
 [setting.perpsTrxMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsTrxInitialMarginRatio]
 defaultValue = "1.88"

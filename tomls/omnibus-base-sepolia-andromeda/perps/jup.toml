@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsJupTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsJupMaxMarketSize]
-defaultValue = "<%= String(88_666) %>"
+defaultValue = "<%=String(121_567) %>"
 
 [setting.perpsJupMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsJupInitialMarginRatio]
 defaultValue = "3.35"

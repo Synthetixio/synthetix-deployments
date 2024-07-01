@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsLtcTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsLtcMaxMarketSize]
-defaultValue = "<%= String(1_197) %>"
+defaultValue = "<%=String(1_330) %>"
 
 [setting.perpsLtcMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsLtcInitialMarginRatio]
 defaultValue = "0.005"

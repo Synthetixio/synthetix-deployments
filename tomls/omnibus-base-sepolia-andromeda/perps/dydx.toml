@@ -5,7 +5,7 @@ defaultValue = "0x6489800bb8974169adfe35937bf6736507097d13c190d760c557108c7e93a8
 defaultValue = "4500"
 
 [setting.perpsDydxSkewScale]
-defaultValue = "<%=String(9_000_000) %>"
+defaultValue = "<%=String(18_000_000) %>"
 
 [setting.perpsDydxMaxFundingVelocity]
 defaultValue = "36"
@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsDydxTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsDydxMaxMarketSize]
-defaultValue = "<%= String(48_888) %>"
+defaultValue = "<%=String(72_860) %>"
 
 [setting.perpsDydxMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsDydxInitialMarginRatio]
 defaultValue = "1.45"

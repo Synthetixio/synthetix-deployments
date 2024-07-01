@@ -14,16 +14,16 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsAptTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsAptMaxMarketSize]
-defaultValue = "<%= String(10_946) %>"
+defaultValue = "<%=String(14_055) %>"
 
 [setting.perpsAptMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsAptInitialMarginRatio]
-defaultValue = "1"
+defaultValue = "1.0"
 
 [setting.perpsAptMinimumInitialMarginRatio]
 defaultValue = "0.05"

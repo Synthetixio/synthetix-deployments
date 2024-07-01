@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsRndrTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsRndrMaxMarketSize]
-defaultValue = "<%= String(9_701) %>"
+defaultValue = "<%=String(65_023) %>"
 
 [setting.perpsRndrMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(250_000) %>"
 
 [setting.perpsRndrInitialMarginRatio]
 defaultValue = "5.09"

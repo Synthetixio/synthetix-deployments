@@ -14,13 +14,13 @@ defaultValue = "36"
 defaultValue = "0.0002"
 
 [setting.perpsPythTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.001"
 
 [setting.perpsPythMaxMarketSize]
-defaultValue = "<%= String(224_807) %>"
+defaultValue = "<%=String(617_717) %>"
 
 [setting.perpsPythMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(100_000) %>"
 
 [setting.perpsPythInitialMarginRatio]
 defaultValue = "0.84"
