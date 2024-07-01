@@ -10,10 +10,11 @@ target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@BTC_Collateral_Perps_Li
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.usdc_address %>"
+options.collateralType = "<%= settings.synth_btc_token_address %>"
 options.payoutToken = "<%= settings.synth_btc_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Spartan Council Pool ARB Rewards for ARB LP"
+options.name = "Perps Collateral Liquidation Rewards for BTC (as BTC)"
+options.authorizedExternalDistributor = "<%= settings.perps_market_package %>@<%= settings.target_preset %>"
 
 [invoke.PerpsMarketProxy_setCollateralConfiguration_btc]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -31,4 +32,9 @@ args = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "registerDistributor"
-args = ["0"]
+args = [
+    "<%= settings.synth_btc_token_address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_BTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= settings.synth_btc_token_address %>",
+    "[<%= settings.synth_btc_token_address %>, <%= settings.synth_eth_token_address %>]",
+]
