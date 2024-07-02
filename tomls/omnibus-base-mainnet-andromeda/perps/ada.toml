@@ -5,22 +5,22 @@ defaultValue = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a
 defaultValue = "3400"
 
 [setting.perpsAdaSkewScale]
-defaultValue = "<%= String(150_000_000) %>"
+defaultValue = "<%=String(150_000_000) %>"
 
 [setting.perpsAdaMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsAdaMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsAdaTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsAdaMaxMarketSize]
-defaultValue = "<%= String(216_704) %>"
+defaultValue = "<%=String(499_984) %>"
 
 [setting.perpsAdaMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(100_000) %>"
 
 [setting.perpsAdaInitialMarginRatio]
 defaultValue = "4.35"

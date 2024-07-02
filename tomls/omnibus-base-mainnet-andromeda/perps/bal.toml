@@ -5,22 +5,22 @@ defaultValue = "0x07ad7b4a7662d19a6bc675f6b467172d2f3947fa653ca97555a9b202364066
 defaultValue = "3900"
 
 [setting.perpsBalSkewScale]
-defaultValue = "<%= String(1_125_000) %>"
+defaultValue = "<%=String(1_125_000) %>"
 
 [setting.perpsBalMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsBalMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsBalTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsBalMaxMarketSize]
-defaultValue = "<%= String(24_706) %>"
+defaultValue = "<%=String(33_624) %>"
 
 [setting.perpsBalMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsBalInitialMarginRatio]
 defaultValue = "3.94"

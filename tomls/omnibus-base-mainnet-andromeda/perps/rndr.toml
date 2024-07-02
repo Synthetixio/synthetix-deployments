@@ -5,22 +5,22 @@ defaultValue = "0xab7347771135fc733f8f38db462ba085ed3309955f42554a14fa13e855ac0e
 defaultValue = "6300"
 
 [setting.perpsRndrSkewScale]
-defaultValue = "<%= String(3_750_000) %>"
+defaultValue = "<%=String(3_750_000) %>"
 
 [setting.perpsRndrMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsRndrMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsRndrTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsRndrMaxMarketSize]
-defaultValue = "<%= String(9_701) %>"
+defaultValue = "<%=String(65_023) %>"
 
 [setting.perpsRndrMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(250_000) %>"
 
 [setting.perpsRndrInitialMarginRatio]
 defaultValue = "5.09"

@@ -5,22 +5,22 @@ defaultValue = "0xb00b60f88b03a6a625a8d1c048c3f66653edf217439983d037e7222c4e6128
 defaultValue = "3700"
 
 [setting.perpsAtomSkewScale]
-defaultValue = "<%= String(5_625_000) %>"
+defaultValue = "<%=String(5_625_000) %>"
 
 [setting.perpsAtomMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsAtomMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsAtomTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsAtomMaxMarketSize]
-defaultValue = "<%= String(11_736) %>"
+defaultValue = "<%=String(14_718) %>"
 
 [setting.perpsAtomMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsAtomInitialMarginRatio]
 defaultValue = "2.49"

@@ -5,22 +5,22 @@ defaultValue = "0x26e4f737fde0263a9eea10ae63ac36dcedab2aaf629261a994e1eeb6ee0afe
 defaultValue = "6700"
 
 [setting.perpsSushiSkewScale]
-defaultValue = "<%= String(7_875_000) %>"
+defaultValue = "<%=String(8_000_000) %>"
 
 [setting.perpsSushiMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsSushiMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsSushiTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsSushiMaxMarketSize]
-defaultValue = "<%= String(84_779) %>"
+defaultValue = "<%=String(117_960) %>"
 
 [setting.perpsSushiMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsSushiInitialMarginRatio]
 defaultValue = "1.37"

@@ -5,22 +5,22 @@ defaultValue = "0xca3eed9b267293f6595901c734c7525ce8ef49adafe8284606ceb307afa2ca
 defaultValue = "4400"
 
 [setting.perpsDotSkewScale]
-defaultValue = "<%= String(7_500_000) %>"
+defaultValue = "<%=String(7_500_000) %>"
 
 [setting.perpsDotMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsDotMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsDotTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsDotMaxMarketSize]
-defaultValue = "<%= String(13_851) %>"
+defaultValue = "<%=String(15_793) %>"
 
 [setting.perpsDotMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsDotInitialMarginRatio]
 defaultValue = "2.09"
