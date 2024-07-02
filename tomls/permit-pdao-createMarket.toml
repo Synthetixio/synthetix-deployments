@@ -9,3 +9,15 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "removeFromFeatureFlagAllowlist"
 args = ["<%= formatBytes32String('createMarket') %>", "<%= settings.deployer %>"]
+
+[invoke.allowPdaoToCreateSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.pdao %>"]
+
+[invoke.removeDeployerFromCreateSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "removeFromFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.deployer %>"]

@@ -1,5 +1,3 @@
-[setting.stata_usdc_address]
-
 [invoke.configure_sstatausdc_collateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
