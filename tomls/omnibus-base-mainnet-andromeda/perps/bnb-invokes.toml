@@ -1,33 +1,3 @@
-[setting.perpsBnbMarketId]
-
-[setting.perpsBnbSkewScale]
-
-[setting.perpsBnbMaxFundingVelocity]
-
-[setting.perpsBnbMakerFeeRatio]
-
-[setting.perpsBnbTakerFeeRatio]
-
-[setting.perpsBnbMaxMarketSize]
-
-[setting.perpsBnbInitialMarginRatio]
-
-[setting.perpsBnbMaintenanceMarginFraction]
-
-[setting.perpsBnbFlagRewardRatioD18]
-
-[setting.perpsBnbMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsBnbMaxSecondsInLiquidationWindow]
-
-[setting.perpsBnbMaxLiquidationPd]
-
-[setting.perpsBnbEndorsedLiquidator]
-
-[setting.perpsBnbMinimumPositionMargin]
-
-[setting.perpsBnbLockedOiRatio]
-
 [invoke.createBnbPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

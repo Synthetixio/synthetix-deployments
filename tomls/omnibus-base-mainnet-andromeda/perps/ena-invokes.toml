@@ -1,33 +1,3 @@
-[setting.perpsEnaMarketId]
-
-[setting.perpsEnaSkewScale]
-
-[setting.perpsEnaMaxFundingVelocity]
-
-[setting.perpsEnaMakerFeeRatio]
-
-[setting.perpsEnaTakerFeeRatio]
-
-[setting.perpsEnaMaxMarketSize]
-
-[setting.perpsEnaInitialMarginRatio]
-
-[setting.perpsEnaMaintenanceMarginFraction]
-
-[setting.perpsEnaFlagRewardRatioD18]
-
-[setting.perpsEnaMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsEnaMaxSecondsInLiquidationWindow]
-
-[setting.perpsEnaMaxLiquidationPd]
-
-[setting.perpsEnaEndorsedLiquidator]
-
-[setting.perpsEnaMinimumPositionMargin]
-
-[setting.perpsEnaLockedOiRatio]
-
 [invoke.createEnaPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

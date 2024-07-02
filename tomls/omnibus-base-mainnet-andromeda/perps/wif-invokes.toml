@@ -1,33 +1,3 @@
-[setting.perpsWifMarketId]
-
-[setting.perpsWifSkewScale]
-
-[setting.perpsWifMaxFundingVelocity]
-
-[setting.perpsWifMakerFeeRatio]
-
-[setting.perpsWifTakerFeeRatio]
-
-[setting.perpsWifMaxMarketSize]
-
-[setting.perpsWifInitialMarginRatio]
-
-[setting.perpsWifMaintenanceMarginFraction]
-
-[setting.perpsWifFlagRewardRatioD18]
-
-[setting.perpsWifMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsWifMaxSecondsInLiquidationWindow]
-
-[setting.perpsWifMaxLiquidationPd]
-
-[setting.perpsWifEndorsedLiquidator]
-
-[setting.perpsWifMinimumPositionMargin]
-
-[setting.perpsWifLockedOiRatio]
-
 [invoke.createWifPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
