@@ -5,22 +5,22 @@ defaultValue = "0xc63e2a7f37a04e5e614c07238bedb25dcc38927fba8fe890597a593c0b2fa4
 defaultValue = "5700"
 
 [setting.perpsLdoSkewScale]
-defaultValue = "<%=String(7_125_000) %>"
+defaultValue = "<%=String(14_000_000) %>"
 
 [setting.perpsLdoMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsLdoMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsLdoTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsLdoMaxMarketSize]
-defaultValue = "<%= String(42_909) %>"
+defaultValue = "<%=String(200_340) %>"
 
 [setting.perpsLdoMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(200_000) %>"
 
 [setting.perpsLdoInitialMarginRatio]
 defaultValue = "1.25"

@@ -11,16 +11,16 @@ defaultValue = "<%=String(2_250_000) %>"
 defaultValue = "36"
 
 [setting.perpsUniMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsUniTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsUniMaxMarketSize]
-defaultValue = "<%= String(8_753) %>"
+defaultValue = "<%=String(21_419) %>"
 
 [setting.perpsUniMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(100_000) %>"
 
 [setting.perpsUniInitialMarginRatio]
 defaultValue = "0.77"

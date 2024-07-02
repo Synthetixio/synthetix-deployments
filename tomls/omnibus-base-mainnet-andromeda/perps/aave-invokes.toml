@@ -1,33 +1,3 @@
-[setting.perpsAaveMarketId]
-
-[setting.perpsAaveSkewScale]
-
-[setting.perpsAaveMaxFundingVelocity]
-
-[setting.perpsAaveMakerFeeRatio]
-
-[setting.perpsAaveTakerFeeRatio]
-
-[setting.perpsAaveMaxMarketSize]
-
-[setting.perpsAaveInitialMarginRatio]
-
-[setting.perpsAaveMaintenanceMarginFraction]
-
-[setting.perpsAaveFlagRewardRatioD18]
-
-[setting.perpsAaveMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsAaveMaxSecondsInLiquidationWindow]
-
-[setting.perpsAaveMaxLiquidationPd]
-
-[setting.perpsAaveEndorsedLiquidator]
-
-[setting.perpsAaveMinimumPositionMargin]
-
-[setting.perpsAaveLockedOiRatio]
-
 [invoke.createAavePerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

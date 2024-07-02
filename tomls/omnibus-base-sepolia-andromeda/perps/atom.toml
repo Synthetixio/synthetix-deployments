@@ -11,16 +11,16 @@ defaultValue = "<%=String(5_625_000) %>"
 defaultValue = "36"
 
 [setting.perpsAtomMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsAtomTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsAtomMaxMarketSize]
-defaultValue = "<%= String(11_736) %>"
+defaultValue = "<%=String(14_718) %>"
 
 [setting.perpsAtomMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsAtomInitialMarginRatio]
 defaultValue = "2.49"
