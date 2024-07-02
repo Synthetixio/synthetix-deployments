@@ -11,16 +11,16 @@ defaultValue = "<%=String(166_500_000) %>"
 defaultValue = "36"
 
 [setting.perpsXlmMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsXlmTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsXlmMaxMarketSize]
-defaultValue = "<%= String(936_746) %>"
+defaultValue = "<%=String(1_090_425) %>"
 
 [setting.perpsXlmMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsXlmInitialMarginRatio]
 defaultValue = "1.4"
