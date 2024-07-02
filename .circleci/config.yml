@@ -522,7 +522,6 @@ jobs:
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 42161       --json > ./e2e/cannon/42161-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@carina      --chain-id 11155111    --json > ./e2e/cannon/11155111-carina.json
 
       - store_artifacts:
           path: "./e2e/cannon"
@@ -817,14 +816,6 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
-  #      - fork-test:
-  #          name: test-sepolia-carina
-  #          toml: omnibus-sepolia-carina.toml
-  #          package: "synthetix-omnibus:latest"
-  #          preset: "carina"
-  #          chain-id: 11155111
-  #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
   deployment-info:
     when:
       or:
@@ -892,13 +883,6 @@ workflows:
           preset: "main"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - deployment-info:
-          name: docs-sepolia-carina
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-sepolia
@@ -974,13 +958,6 @@ workflows:
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - npm-package:
-          name: npm-sepolia-carina
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
-      - npm-package:
           name: npm-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -1051,14 +1028,6 @@ workflows:
           preset: "main"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - preview:
-          name: preview-sepolia-carina
-          toml: omnibus-sepolia-carina.toml
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-sepolia
