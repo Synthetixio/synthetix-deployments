@@ -1,33 +1,3 @@
-[setting.perpsSushiMarketId]
-
-[setting.perpsSushiSkewScale]
-
-[setting.perpsSushiMaxFundingVelocity]
-
-[setting.perpsSushiMakerFeeRatio]
-
-[setting.perpsSushiTakerFeeRatio]
-
-[setting.perpsSushiMaxMarketSize]
-
-[setting.perpsSushiInitialMarginRatio]
-
-[setting.perpsSushiMaintenanceMarginFraction]
-
-[setting.perpsSushiFlagRewardRatioD18]
-
-[setting.perpsSushiMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsSushiMaxSecondsInLiquidationWindow]
-
-[setting.perpsSushiMaxLiquidationPd]
-
-[setting.perpsSushiEndorsedLiquidator]
-
-[setting.perpsSushiMinimumPositionMargin]
-
-[setting.perpsSushiLockedOiRatio]
-
 [invoke.createSushiPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

@@ -1,33 +1,3 @@
-[setting.perpsAtomMarketId]
-
-[setting.perpsAtomSkewScale]
-
-[setting.perpsAtomMaxFundingVelocity]
-
-[setting.perpsAtomMakerFeeRatio]
-
-[setting.perpsAtomTakerFeeRatio]
-
-[setting.perpsAtomMaxMarketSize]
-
-[setting.perpsAtomInitialMarginRatio]
-
-[setting.perpsAtomMaintenanceMarginFraction]
-
-[setting.perpsAtomFlagRewardRatioD18]
-
-[setting.perpsAtomMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsAtomMaxSecondsInLiquidationWindow]
-
-[setting.perpsAtomMaxLiquidationPd]
-
-[setting.perpsAtomEndorsedLiquidator]
-
-[setting.perpsAtomMinimumPositionMargin]
-
-[setting.perpsAtomLockedOiRatio]
-
 [invoke.createAtomPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

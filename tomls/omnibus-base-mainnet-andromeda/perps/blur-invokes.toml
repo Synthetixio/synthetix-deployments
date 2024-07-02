@@ -1,33 +1,3 @@
-[setting.perpsBlurMarketId]
-
-[setting.perpsBlurSkewScale]
-
-[setting.perpsBlurMaxFundingVelocity]
-
-[setting.perpsBlurMakerFeeRatio]
-
-[setting.perpsBlurTakerFeeRatio]
-
-[setting.perpsBlurMaxMarketSize]
-
-[setting.perpsBlurInitialMarginRatio]
-
-[setting.perpsBlurMaintenanceMarginFraction]
-
-[setting.perpsBlurFlagRewardRatioD18]
-
-[setting.perpsBlurMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsBlurMaxSecondsInLiquidationWindow]
-
-[setting.perpsBlurMaxLiquidationPd]
-
-[setting.perpsBlurEndorsedLiquidator]
-
-[setting.perpsBlurMinimumPositionMargin]
-
-[setting.perpsBlurLockedOiRatio]
-
 [invoke.createBlurPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

@@ -1,33 +1,3 @@
-[setting.perpsMemeMarketId]
-
-[setting.perpsMemeSkewScale]
-
-[setting.perpsMemeMaxFundingVelocity]
-
-[setting.perpsMemeMakerFeeRatio]
-
-[setting.perpsMemeTakerFeeRatio]
-
-[setting.perpsMemeMaxMarketSize]
-
-[setting.perpsMemeInitialMarginRatio]
-
-[setting.perpsMemeMaintenanceMarginFraction]
-
-[setting.perpsMemeFlagRewardRatioD18]
-
-[setting.perpsMemeMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsMemeMaxSecondsInLiquidationWindow]
-
-[setting.perpsMemeMaxLiquidationPd]
-
-[setting.perpsMemeEndorsedLiquidator]
-
-[setting.perpsMemeMinimumPositionMargin]
-
-[setting.perpsMemeLockedOiRatio]
-
 [invoke.createMemePerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

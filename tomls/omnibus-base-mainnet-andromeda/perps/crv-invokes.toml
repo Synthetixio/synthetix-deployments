@@ -1,33 +1,3 @@
-[setting.perpsCrvMarketId]
-
-[setting.perpsCrvSkewScale]
-
-[setting.perpsCrvMaxFundingVelocity]
-
-[setting.perpsCrvMakerFeeRatio]
-
-[setting.perpsCrvTakerFeeRatio]
-
-[setting.perpsCrvMaxMarketSize]
-
-[setting.perpsCrvInitialMarginRatio]
-
-[setting.perpsCrvMaintenanceMarginFraction]
-
-[setting.perpsCrvFlagRewardRatioD18]
-
-[setting.perpsCrvMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsCrvMaxSecondsInLiquidationWindow]
-
-[setting.perpsCrvMaxLiquidationPd]
-
-[setting.perpsCrvEndorsedLiquidator]
-
-[setting.perpsCrvMinimumPositionMargin]
-
-[setting.perpsCrvLockedOiRatio]
-
 [invoke.createCrvPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

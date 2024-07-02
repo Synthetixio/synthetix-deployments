@@ -1,33 +1,3 @@
-[setting.perpsAlgoMarketId]
-
-[setting.perpsAlgoSkewScale]
-
-[setting.perpsAlgoMaxFundingVelocity]
-
-[setting.perpsAlgoMakerFeeRatio]
-
-[setting.perpsAlgoTakerFeeRatio]
-
-[setting.perpsAlgoMaxMarketSize]
-
-[setting.perpsAlgoInitialMarginRatio]
-
-[setting.perpsAlgoMaintenanceMarginFraction]
-
-[setting.perpsAlgoFlagRewardRatioD18]
-
-[setting.perpsAlgoMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsAlgoMaxSecondsInLiquidationWindow]
-
-[setting.perpsAlgoMaxLiquidationPd]
-
-[setting.perpsAlgoEndorsedLiquidator]
-
-[setting.perpsAlgoMinimumPositionMargin]
-
-[setting.perpsAlgoLockedOiRatio]
-
 [invoke.createAlgoPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
