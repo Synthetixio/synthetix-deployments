@@ -5,7 +5,7 @@ defaultValue = "0x26e4f737fde0263a9eea10ae63ac36dcedab2aaf629261a994e1eeb6ee0afe
 defaultValue = "6700"
 
 [setting.perpsSushiSkewScale]
-defaultValue = "<%=String(20_000_000) %>"
+defaultValue = "<%=String(8_000_000) %>"
 
 [setting.perpsSushiMaxFundingVelocity]
 defaultValue = "36"
