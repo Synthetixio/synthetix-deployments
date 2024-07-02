@@ -5,7 +5,7 @@ defaultValue = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fca
 defaultValue = "4300"
 
 [setting.perpsCrvSkewScale]
-defaultValue = "<%=String(60_000_000) %>"
+defaultValue = "<%=String(120_000_000) %>"
 
 [setting.perpsCrvMaxFundingVelocity]
 defaultValue = "36"
@@ -17,10 +17,10 @@ defaultValue = "0.0002000000"
 defaultValue = "0.0010000000"
 
 [setting.perpsCrvMaxMarketSize]
-defaultValue = "<%=String(1_759_165) %>"
+defaultValue = "<%=String(3_000_000) %>"
 
 [setting.perpsCrvMaxMarketValue]
-defaultValue = "<%=String(250_000) %>"
+defaultValue = "<%=String(500_000) %>"
 
 [setting.perpsCrvInitialMarginRatio]
 defaultValue = "4.56"
