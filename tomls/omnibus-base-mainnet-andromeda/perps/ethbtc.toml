@@ -5,22 +5,22 @@ defaultValue = "0xc96458d393fe9deb7a7d63a0ac41e2898a67a7750dbd166673279e06c868df
 defaultValue = "4800"
 
 [setting.perpsEthbtcSkewScale]
-defaultValue = "<%= String(850_000_000) %>"
+defaultValue = "<%=String(1_700_000_000) %>"
 
 [setting.perpsEthbtcMaxFundingVelocity]
-defaultValue = "36"
+defaultValue = "9"
 
 [setting.perpsEthbtcMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0000001000"
 
 [setting.perpsEthbtcTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0005000000"
 
 [setting.perpsEthbtcMaxMarketSize]
-defaultValue = "<%= String(100_000) %>"
+defaultValue = "<%=String(72_226_506) %>"
 
 [setting.perpsEthbtcMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(2_000_000) %>"
 
 [setting.perpsEthbtcInitialMarginRatio]
 defaultValue = "1.39"

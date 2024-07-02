@@ -5,22 +5,22 @@ defaultValue = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d
 defaultValue = "6500"
 
 [setting.perpsShibSkewScale]
-defaultValue = "<%= String(1_875_000_000_000) %>"
+defaultValue = "<%=String(1_875_000_000_000) %>"
 
 [setting.perpsShibMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsShibMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsShibTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsShibMaxMarketSize]
-defaultValue = "<%= String(4_100_461_301) %>"
+defaultValue = "<%=String(5_813_953_488) %>"
 
 [setting.perpsShibMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsShibInitialMarginRatio]
 defaultValue = "2.2"

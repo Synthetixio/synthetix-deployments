@@ -5,22 +5,22 @@ defaultValue = "0x67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c
 defaultValue = "6800"
 
 [setting.perpsTrxSkewScale]
-defaultValue = "<%= String(322_500_000) %>"
+defaultValue = "<%=String(322_500_000) %>"
 
 [setting.perpsTrxMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsTrxMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsTrxTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsTrxMaxMarketSize]
-defaultValue = "<%= String(874_565) %>"
+defaultValue = "<%=String(796_481) %>"
 
 [setting.perpsTrxMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsTrxInitialMarginRatio]
 defaultValue = "1.88"

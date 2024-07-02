@@ -5,22 +5,22 @@ defaultValue = "0x941320a8989414874de5aa2fc340a75d5ed91fdff1613dd55f83844d52ea63
 defaultValue = "5400"
 
 [setting.perpsImxSkewScale]
-defaultValue = "<%= String(5_600_000) %>"
+defaultValue = "<%=String(5_600_000) %>"
 
 [setting.perpsImxMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsImxMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsImxTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsImxMaxMarketSize]
-defaultValue = "<%= String(43_322) %>"
+defaultValue = "<%=String(63_418) %>"
 
 [setting.perpsImxMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsImxInitialMarginRatio]
 defaultValue = "1.95"

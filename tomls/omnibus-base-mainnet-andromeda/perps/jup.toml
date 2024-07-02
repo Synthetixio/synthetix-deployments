@@ -5,22 +5,22 @@ defaultValue = "0x0a0408d619e9380abad35060f9192039ed5042fa6f82301d0e48bb52be8309
 defaultValue = "5600"
 
 [setting.perpsJupSkewScale]
-defaultValue = "<%= String(22_500_000) %>"
+defaultValue = "<%=String(22_500_000) %>"
 
 [setting.perpsJupMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsJupMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsJupTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsJupMaxMarketSize]
-defaultValue = "<%= String(88_666) %>"
+defaultValue = "<%=String(121_567) %>"
 
 [setting.perpsJupMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsJupInitialMarginRatio]
 defaultValue = "3.35"

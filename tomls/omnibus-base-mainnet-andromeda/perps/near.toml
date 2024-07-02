@@ -5,22 +5,22 @@ defaultValue = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e2267
 defaultValue = "6100"
 
 [setting.perpsNearSkewScale]
-defaultValue = "<%= String(9_375_000) %>"
+defaultValue = "<%=String(9_375_000) %>"
 
 [setting.perpsNearMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsNearMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsNearTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsNearMaxMarketSize]
-defaultValue = "<%= String(13_494) %>"
+defaultValue = "<%=String(18_900) %>"
 
 [setting.perpsNearMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsNearInitialMarginRatio]
 defaultValue = "3.35"

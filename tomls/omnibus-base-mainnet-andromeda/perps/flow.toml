@@ -5,22 +5,22 @@ defaultValue = "0x2fb245b9a84554a0f15aa123cbb5f64cd263b59e9a87d80148cbffab50c69f
 defaultValue = "5000"
 
 [setting.perpsFlowSkewScale]
-defaultValue = "<%= String(15_000_000) %>"
+defaultValue = "<%=String(15_000_000) %>"
 
 [setting.perpsFlowMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsFlowMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsFlowTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsFlowMaxMarketSize]
-defaultValue = "<%= String(109_950) %>"
+defaultValue = "<%=String(159_395) %>"
 
 [setting.perpsFlowMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsFlowInitialMarginRatio]
 defaultValue = "9.28"

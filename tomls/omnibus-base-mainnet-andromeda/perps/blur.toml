@@ -5,22 +5,22 @@ defaultValue = "0x856aac602516addee497edf6f50d39e8c95ae5fb0da1ed434a8c2ab9c3e877
 defaultValue = "4100"
 
 [setting.perpsBlurSkewScale]
-defaultValue = "<%= String(25_000_000) %>"
+defaultValue = "<%=String(50_000_000) %>"
 
 [setting.perpsBlurMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsBlurMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsBlurTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsBlurMaxMarketSize]
-defaultValue = "<%= String(247_028) %>"
+defaultValue = "<%=String(496_684) %>"
 
 [setting.perpsBlurMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsBlurInitialMarginRatio]
 defaultValue = "1.49"
