@@ -47,7 +47,7 @@ fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
-    "<%= settings.synth_eth_token_address %>",
+    "<%= settings.weth_address %>",
     "<%= settings.synth_eth_max_collateral_amount %>",
 ]
 

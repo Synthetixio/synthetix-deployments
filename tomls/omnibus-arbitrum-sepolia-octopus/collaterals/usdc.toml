@@ -1,3 +1,11 @@
+[provision.usdc_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@usdc"
+options.name = "Fake USDC Coin"
+options.symbol = "fUSDC"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
 [setting.usdc_issuance_ratio]
 defaultValue = "<%= parseEther('1.2') %>"
 
@@ -14,8 +22,8 @@ defaultValue = "<%= parseEther('100') %>"
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
 
 [setting.usdc_address]
-defaultValue = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
-description = "https://developers.circle.com/stablecoins/docs/usdc-on-test-networks"
+defaultValue = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+description = "Mock usdc address"
 
 [invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]

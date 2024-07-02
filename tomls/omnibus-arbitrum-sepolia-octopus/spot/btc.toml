@@ -1,3 +1,15 @@
+[provision.btc_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@btc"
+options.name = "Fake BTC Coin"
+options.symbol = "fBTC"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+[setting.btc_address]
+defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
+description = "Mock usdc address"
+
 [setting.synthBtcAsyncFixedFee]
 defaultValue = "0.0005"
 
@@ -47,7 +59,7 @@ fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_btc_market_id %>",
-    "<%= settings.synth_btc_token_address %>",
+    "<%= settings.btc_address %>",
     "<%= settings.btc_synth_max_collateral_amount %>",
 ]
 

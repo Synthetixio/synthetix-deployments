@@ -11,7 +11,8 @@ include = [
     "tomls/omnibus-arbitrum-sepolia-octopus/pools/spartan-council.toml",
 
     # Oracles
-    "tomls/omnibus-arbitrum-sepolia-octopus/feeds.toml", # all feed ids
+    "tomls/omnibus-arbitrum-sepolia-octopus/feeds.toml",                   # all feed ids
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/perps-keeper-cost.toml", # Perps keeper cost
     "tomls/oracles/pyth-eth.toml",
     "tomls/oracles/pyth-btc.toml",
     "tomls/oracles/pyth-snx.toml",
@@ -35,6 +36,8 @@ include = [
     "tomls/omnibus-arbitrum-sepolia-octopus/spot/btc.toml",
 
     # Perps Markets
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/referrers.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/global.toml",
     # BTC
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/btc-invokes.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/btc.toml",
@@ -54,7 +57,7 @@ include = [
 defaultValue = "octopus"
 
 [setting.salt]
-defaultValue = "multi-collateral-perps"
+defaultValue = "multi-collateral-perps-1"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.18"
@@ -98,12 +101,6 @@ description = "200% min market collateralization"
 
 [setting.account_timeout_withdraw]
 defaultValue = "<%= hexZeroPad(hexlify(parseInt(1 * 24 * 3600)), 32) %>"
-
-[invoke.PerpsMarketProxy_setCollateralLiquidationRatio_btc]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setCollateralLiquidateRewardRatio"
-args = ["<%= parseEther('0.005') %>"]
 
 [setting.spartan_council_pool_id_setting]
 defaultValue = "1"
