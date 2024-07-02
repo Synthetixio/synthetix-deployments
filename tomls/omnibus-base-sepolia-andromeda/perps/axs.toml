@@ -11,10 +11,10 @@ defaultValue = "<%=String(2_109_375) %>"
 defaultValue = "36"
 
 [setting.perpsAxsMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsAxsTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsAxsMaxMarketSize]
 defaultValue = "<%=String(16_488) %>"

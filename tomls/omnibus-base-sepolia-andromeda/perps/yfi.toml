@@ -5,16 +5,16 @@ defaultValue = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb21384602
 defaultValue = "7200"
 
 [setting.perpsYfiSkewScale]
-defaultValue = "<%=String(1_125) %>"
+defaultValue = "<%=String(2_125) %>"
 
 [setting.perpsYfiMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsYfiMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsYfiTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsYfiMaxMarketSize]
 defaultValue = "<%=String(15) %>"

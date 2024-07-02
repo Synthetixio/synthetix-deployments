@@ -11,10 +11,10 @@ defaultValue = "<%=String(120_938) %>"
 defaultValue = "36"
 
 [setting.perpsCompMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsCompTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsCompMaxMarketSize]
 defaultValue = "<%=String(2_003) %>"

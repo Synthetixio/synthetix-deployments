@@ -11,10 +11,10 @@ defaultValue = "<%=String(51_937_500) %>"
 defaultValue = "36"
 
 [setting.perpsAlgoMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsAlgoTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsAlgoMaxMarketSize]
 defaultValue = "<%=String(1_360_068) %>"

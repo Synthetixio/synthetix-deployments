@@ -11,10 +11,10 @@ defaultValue = "<%=String(22_500_000) %>"
 defaultValue = "36"
 
 [setting.perpsJupMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsJupTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsJupMaxMarketSize]
 defaultValue = "<%=String(121_567) %>"

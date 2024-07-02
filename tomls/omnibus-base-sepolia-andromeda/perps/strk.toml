@@ -5,16 +5,16 @@ defaultValue = "0x6a182399ff70ccf3e06024898942028204125a819e519a335ffa4579e66cd8
 defaultValue = "6600"
 
 [setting.perpsStrkSkewScale]
-defaultValue = "<%=String(100_000_000) %>"
+defaultValue = "<%=String(200_000_000) %>"
 
 [setting.perpsStrkMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsStrkMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsStrkTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsStrkMaxMarketSize]
 defaultValue = "<%=String(144_743) %>"

@@ -11,10 +11,10 @@ defaultValue = "<%=String(15_000_000) %>"
 defaultValue = "36"
 
 [setting.perpsFlowMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsFlowTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsFlowMaxMarketSize]
 defaultValue = "<%=String(159_395) %>"

@@ -11,10 +11,10 @@ defaultValue = "<%=String(850_000_000) %>"
 defaultValue = "9"
 
 [setting.perpsEthbtcMakerFeeRatio]
-defaultValue = "1e-07"
+defaultValue = "0.0000001000"
 
 [setting.perpsEthbtcTakerFeeRatio]
-defaultValue = "0.0005"
+defaultValue = "0.0005000000"
 
 [setting.perpsEthbtcMaxMarketSize]
 defaultValue = "<%=String(72_226_506) %>"

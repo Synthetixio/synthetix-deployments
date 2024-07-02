@@ -11,10 +11,10 @@ defaultValue = "<%=String(60_000_000) %>"
 defaultValue = "36"
 
 [setting.perpsCrvMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsCrvTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsCrvMaxMarketSize]
 defaultValue = "<%=String(1_759_165) %>"

@@ -11,10 +11,10 @@ defaultValue = "<%=String(9_375_000) %>"
 defaultValue = "36"
 
 [setting.perpsNearMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsNearTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsNearMaxMarketSize]
 defaultValue = "<%=String(18_900) %>"

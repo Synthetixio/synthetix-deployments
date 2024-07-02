@@ -11,10 +11,10 @@ defaultValue = "<%=String(35_500_000) %>"
 defaultValue = "36"
 
 [setting.perpsSeiMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsSeiTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsSeiMaxMarketSize]
 defaultValue = "<%=String(293_317) %>"

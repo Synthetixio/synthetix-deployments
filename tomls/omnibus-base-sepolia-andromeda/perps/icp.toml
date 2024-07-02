@@ -5,16 +5,16 @@ defaultValue = "0xc9907d786c5821547777780a1e4f89484f3417cb14dd244f2b0a34ea7a554d
 defaultValue = "5300"
 
 [setting.perpsIcpSkewScale]
-defaultValue = "<%=String(1_000_000) %>"
+defaultValue = "<%=String(2_000_000) %>"
 
 [setting.perpsIcpMaxFundingVelocity]
 defaultValue = "36"
 
 [setting.perpsIcpMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsIcpTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsIcpMaxMarketSize]
 defaultValue = "<%=String(12_122) %>"

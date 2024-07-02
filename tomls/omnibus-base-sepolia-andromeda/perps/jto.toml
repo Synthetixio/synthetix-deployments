@@ -11,10 +11,10 @@ defaultValue = "<%=String(4_000_000) %>"
 defaultValue = "36"
 
 [setting.perpsJtoMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsJtoTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsJtoMaxMarketSize]
 defaultValue = "<%=String(41_441) %>"

@@ -11,10 +11,10 @@ defaultValue = "<%=String(7_500_000) %>"
 defaultValue = "36"
 
 [setting.perpsDotMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsDotTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsDotMaxMarketSize]
 defaultValue = "<%=String(15_793) %>"

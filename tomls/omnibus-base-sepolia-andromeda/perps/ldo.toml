@@ -11,10 +11,10 @@ defaultValue = "<%=String(14_000_000) %>"
 defaultValue = "36"
 
 [setting.perpsLdoMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsLdoTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsLdoMaxMarketSize]
 defaultValue = "<%=String(200_340) %>"

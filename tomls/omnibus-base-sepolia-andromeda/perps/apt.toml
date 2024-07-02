@@ -11,10 +11,10 @@ defaultValue = "<%=String(3_037_500) %>"
 defaultValue = "36"
 
 [setting.perpsAptMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsAptTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsAptMaxMarketSize]
 defaultValue = "<%=String(14_055) %>"

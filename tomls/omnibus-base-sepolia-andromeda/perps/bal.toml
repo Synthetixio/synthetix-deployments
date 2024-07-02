@@ -11,10 +11,10 @@ defaultValue = "<%=String(1_125_000) %>"
 defaultValue = "36"
 
 [setting.perpsBalMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsBalTakerFeeRatio]
-defaultValue = "0.001"
+defaultValue = "0.0010000000"
 
 [setting.perpsBalMaxMarketSize]
 defaultValue = "<%=String(33_624) %>"
