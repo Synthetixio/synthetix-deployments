@@ -11,16 +11,16 @@ defaultValue = "<%=String(48_000_000) %>"
 defaultValue = "36"
 
 [setting.perpsEosMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsEosTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsEosMaxMarketSize]
-defaultValue = "<%= String(123_193) %>"
+defaultValue = "<%=String(172_851) %>"
 
 [setting.perpsEosMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsEosInitialMarginRatio]
 defaultValue = "2.47"

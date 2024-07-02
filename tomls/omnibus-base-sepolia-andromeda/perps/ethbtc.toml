@@ -8,19 +8,19 @@ defaultValue = "4800"
 defaultValue = "<%=String(850_000_000) %>"
 
 [setting.perpsEthbtcMaxFundingVelocity]
-defaultValue = "36"
+defaultValue = "9"
 
 [setting.perpsEthbtcMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0000001000"
 
 [setting.perpsEthbtcTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0005000000"
 
 [setting.perpsEthbtcMaxMarketSize]
-defaultValue = "<%= String(100_000) %>"
+defaultValue = "<%=String(72_226_506) %>"
 
 [setting.perpsEthbtcMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(2_000_000) %>"
 
 [setting.perpsEthbtcInitialMarginRatio]
 defaultValue = "1.39"
