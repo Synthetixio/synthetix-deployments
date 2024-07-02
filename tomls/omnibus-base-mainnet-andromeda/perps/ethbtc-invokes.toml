@@ -1,33 +1,3 @@
-[setting.perpsEthbtcMarketId]
-
-[setting.perpsEthbtcSkewScale]
-
-[setting.perpsEthbtcMaxFundingVelocity]
-
-[setting.perpsEthbtcMakerFeeRatio]
-
-[setting.perpsEthbtcTakerFeeRatio]
-
-[setting.perpsEthbtcMaxMarketSize]
-
-[setting.perpsEthbtcInitialMarginRatio]
-
-[setting.perpsEthbtcMaintenanceMarginFraction]
-
-[setting.perpsEthbtcFlagRewardRatioD18]
-
-[setting.perpsEthbtcMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsEthbtcMaxSecondsInLiquidationWindow]
-
-[setting.perpsEthbtcMaxLiquidationPd]
-
-[setting.perpsEthbtcEndorsedLiquidator]
-
-[setting.perpsEthbtcMinimumPositionMargin]
-
-[setting.perpsEthbtcLockedOiRatio]
-
 [invoke.createEthbtcPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

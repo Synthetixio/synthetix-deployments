@@ -1,33 +1,3 @@
-[setting.perpsLtcMarketId]
-
-[setting.perpsLtcSkewScale]
-
-[setting.perpsLtcMaxFundingVelocity]
-
-[setting.perpsLtcMakerFeeRatio]
-
-[setting.perpsLtcTakerFeeRatio]
-
-[setting.perpsLtcMaxMarketSize]
-
-[setting.perpsLtcInitialMarginRatio]
-
-[setting.perpsLtcMaintenanceMarginFraction]
-
-[setting.perpsLtcFlagRewardRatioD18]
-
-[setting.perpsLtcMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsLtcMaxSecondsInLiquidationWindow]
-
-[setting.perpsLtcMaxLiquidationPd]
-
-[setting.perpsLtcEndorsedLiquidator]
-
-[setting.perpsLtcMinimumPositionMargin]
-
-[setting.perpsLtcLockedOiRatio]
-
 [invoke.createLtcPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

@@ -1,33 +1,3 @@
-[setting.perpsUniMarketId]
-
-[setting.perpsUniSkewScale]
-
-[setting.perpsUniMaxFundingVelocity]
-
-[setting.perpsUniMakerFeeRatio]
-
-[setting.perpsUniTakerFeeRatio]
-
-[setting.perpsUniMaxMarketSize]
-
-[setting.perpsUniInitialMarginRatio]
-
-[setting.perpsUniMaintenanceMarginFraction]
-
-[setting.perpsUniFlagRewardRatioD18]
-
-[setting.perpsUniMaxLiquidationLimitAccumulationMultiplier]
-
-[setting.perpsUniMaxSecondsInLiquidationWindow]
-
-[setting.perpsUniMaxLiquidationPd]
-
-[setting.perpsUniEndorsedLiquidator]
-
-[setting.perpsUniMinimumPositionMargin]
-
-[setting.perpsUniLockedOiRatio]
-
 [invoke.createUniPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
