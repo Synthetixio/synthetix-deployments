@@ -238,6 +238,7 @@ jobs:
     parallelism: << parameters.parallelism >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -247,7 +248,7 @@ jobs:
           name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
           background: true
           command: |
-            NODE_OPTIONS=--max_old_space_size=8192 yarn cannon build << parameters.toml >> \
+            yarn cannon build << parameters.toml >> \
               --keep-alive \
               --port 8545 \
               --dry-run \
@@ -344,6 +345,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -436,6 +438,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -504,6 +507,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - yarn-install
@@ -573,6 +577,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -640,6 +645,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
