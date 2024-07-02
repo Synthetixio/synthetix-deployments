@@ -1,0 +1,12 @@
+[setting.pythBtcFeedId]
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43" # Using mainnet feed IDs
+
+[setting.pythEthFeedId]
+defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # Using mainnet feed IDs
+
+[setting.pythSnxFeedId]
+defaultValue = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
+
+[setting.pyth_feed_id_usdc]
+defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"

@@ -1,0 +1,188 @@
+name = "synthetix-omnibus"
+version = "1"
+description = "Arbitrum sepolia - Multi collateral perps"
+preset = "octopus"
+include = [
+    "tomls/core.toml",
+    "tomls/settings.toml",
+    "tomls/markets/common/settlement-settings.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/permit-deniers.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/permissions.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/pools/spartan-council.toml",
+
+    # Oracles
+    "tomls/omnibus-arbitrum-sepolia-octopus/feeds.toml", # all feed ids
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/oracles/pyth-btc.toml",
+    "tomls/oracles/pyth-snx.toml",
+    "tomls/oracles/pyth-usdc.toml",
+
+    # LP Collateral
+    "tomls/omnibus-arbitrum-sepolia-octopus/collaterals/usdc.toml", # USDC
+    "tomls/omnibus-arbitrum-sepolia-octopus/collaterals/weth.toml", # WETH
+
+    # Market Factories
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-highcap-factory.toml",
+    "tomls/permit-all-perps-perpsHighcapSystem.toml",
+    "tomls/markets/common/bigcap-settings.toml",
+
+    # Spot Markets
+    # WETH
+    "tomls/omnibus-arbitrum-sepolia-octopus/spot/eth.toml",
+
+    # BTC
+    "tomls/omnibus-arbitrum-sepolia-octopus/spot/btc.toml",
+
+    # Perps Markets
+    # BTC
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/btc-invokes.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/btc.toml",
+    # ETH
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/eth-invokes.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/eth.toml",
+    # SNX
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/snx-invokes.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/snx.toml",
+
+    # Margin Collateral (Synths)
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/eth.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/btc.toml",
+]
+
+[setting.target_preset]
+defaultValue = "octopus"
+
+[setting.salt]
+defaultValue = "multi-collateral-perps"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.18"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "arbitrum-gas-price-oracle:3.3.16"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.21-dev.fd4c5628"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.3.21-dev.56f66e4c"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.15"
+description = "Do not update! This package isn't upgradeable. A version change will deploy a new contract."
+
+[setting.pyth_price_verification_address]
+defaultValue = "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF"
+description = "https://docs.pyth.network/price-feeds/contract-addresses/evm#testnets"
+
+[setting.pyth_feed_url]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+description = "Pyth settlement strategy config"
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.15"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('2.00') %>"
+description = "200% min market collateralization"
+
+[setting.account_timeout_withdraw]
+defaultValue = "<%= hexZeroPad(hexlify(parseInt(1 * 24 * 3600)), 32) %>"
+
+[invoke.PerpsMarketProxy_setCollateralLiquidationRatio_btc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralLiquidateRewardRatio"
+args = ["<%= parseEther('0.005') %>"]
+
+[setting.spartan_council_pool_id_setting]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.big_cap_default_staleness_tolerance]
+defaultValue = "3600"
+
+[setting.big_cap_settlement_window_duration]
+defaultValue = "60"
+
+[setting.big_cap_settlement_delay]
+defaultValue = "2"
+
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('0.5') %>"
+
+[setting.settlement_minimum_usd_exchange_amount]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.settlement_max_rounding_loss]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.price_deviation_tolerance]
+defaultValue = "<%= parseEther('1') %>"
+
+#
+#
+#
+# BTC Synth
+#
+#
+#
+[var.btc_synth_settings]
+btc_synth_max_collateral_amount = "<%= parseEther('100') %>"
+btc_upper_limit_discount = "<%= parseEther('0.075') %>"
+btc_lower_limit_discount = "<%= parseEther('0.010') %>"
+btc_discount_scalar = "<%= parseEther('1') %>"
+
+#
+#
+#
+# ETH Synth
+#
+#
+#
+[var.eth_synth_settings]
+eth_synth_max_collateral_amount = "<%= parseEther('10000') %>"
+eth_upper_limit_discount = "<%= parseEther('0.1') %>"
+eth_lower_limit_discount = "<%= parseEther('0.025') %>"
+eth_discount_scalar = "<%= parseEther('1') %>"
+
+[invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    [
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+
+[setting.usd_token_name]
+defaultValue = "<%= formatBytes32String('USDToken') %>"
+
+[invoke.CoreProxy_initOrUpgradeToken_USDToken]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "initOrUpgradeToken"
+args = [
+    "<%= settings.usd_token_name %>",
+    "Synthetix USD",
+    "USDx",
+    18,
+    "<%= imports.system.contracts.USDRouter.address %>",
+]

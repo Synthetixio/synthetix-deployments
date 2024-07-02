@@ -1,0 +1,37 @@
+[provision.RewardsDistributor_PerpsCollateral_BTC_liquidation_rewards]
+source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
+target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@BTC_Collateral_Perps_Liquidation_Rewards"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= extras.synth_btc_token_address %>"
+options.payoutToken = "<%= extras.synth_btc_token_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Perps Collateral Liquidation Rewards for BTC (as BTC)"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_btc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= settings.btc_max_collateral_amount %>",
+    "<%= settings.btc_upper_limit_discount %>",
+    "<%= settings.btc_lower_limit_discount %>",
+    "<%= settings.btc_discount_scalar %>",
+]
+
+[invoke.PerpsMarketProxy_registerDistributor_btc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = [
+    "<%= extras.synth_btc_token_address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_BTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= extras.synth_btc_market_id %>",
+    [
+        "<%= settings.usdc_address %>",
+        "<%= settings.weth_address %>",
+    ],
+]
