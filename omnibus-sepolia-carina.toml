@@ -8,6 +8,7 @@ include = [
     "tomls/permissions.toml",
     "tomls/oracles/eth.toml",
     "tomls/collaterals/weth.toml",
+    "tomls/oracles/snx.toml",
     "tomls/collaterals/snx.toml",
     "tomls/pools/spartan-council.toml",
 ]
@@ -56,6 +57,9 @@ description = "https://docs.chain.link/data-feeds/price-feeds/addresses/?network
 [setting.pyth_address]
 defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
 description = "https://docs.pyth.network/price-feeds/contract-addresses/evm#testnets"
+
+[setting.snx_liquidation_reward]
+defaultValue = "10000000000000000000"
 
 # --- Synthetix pool settings -- #
 #

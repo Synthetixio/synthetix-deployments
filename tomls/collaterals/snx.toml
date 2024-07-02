@@ -1,11 +1,13 @@
-[setting.snx_address]
-
-[setting.snx_liquidation_reward]
-
 [invoke.configureSnxCollateral]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= settings.snx_address %>", oracleNodeId = "<%= extras.snx_oracle_id %>", issuanceRatioD18 = "<%= parseEther('4') %>", liquidationRatioD18 = "<%= parseEther('1.5') %>", liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>", minDelegationD18 = "<%= settings.snx_liquidation_reward %>", depositingEnabled = true },
-]
+
+[[invoke.configureSnxCollateral.args]]
+tokenAddress = "<%= settings.snx_address %>"
+oracleNodeId = "<%= extras.snx_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('4') %>"
+liquidationRatioD18 = "<%= parseEther('1.5') %>"
+liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>"
+minDelegationD18 = "<%= settings.snx_liquidation_reward %>"
+depositingEnabled = true
