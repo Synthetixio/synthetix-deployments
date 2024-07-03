@@ -4,7 +4,7 @@ target = "synthetix-mock-tokens:1.8@usdc"
 options.name = "Fake USDC Coin"
 options.symbol = "fUSDC"
 options.owner = "<%= settings.owner %>"
-options.decimals = "18"
+options.decimals = "6"
 
 [setting.usdc_issuance_ratio]
 defaultValue = "<%= parseEther('1.2') %>"
