@@ -11,16 +11,16 @@ defaultValue = "<%=String(1_687_500) %>"
 defaultValue = "36"
 
 [setting.perpsLtcMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsLtcTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsLtcMaxMarketSize]
-defaultValue = "<%= String(1_197) %>"
+defaultValue = "<%=String(1_330) %>"
 
 [setting.perpsLtcMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsLtcInitialMarginRatio]
 defaultValue = "0.005"

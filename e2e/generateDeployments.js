@@ -406,6 +406,13 @@ async function run() {
     contracts.PythERC7412Wrapper = pyth_erc7412_wrapper.contracts.PythERC7412Wrapper;
   }
 
+  const systemToken = await fetchTokenInfo(contracts.USDProxy.address);
+  log('Writing', `deployments/systemToken.json`);
+  await fs.writeFile(
+    `${__dirname}/deployments/systemToken.json`,
+    JSON.stringify(systemToken, null, 2)
+  );
+
   const { items: mintableTokens, contracts: mintableTokenContracts } =
     await extractMintableTokens(deployments);
   log('Writing', `deployments/mintableTokens.json`);

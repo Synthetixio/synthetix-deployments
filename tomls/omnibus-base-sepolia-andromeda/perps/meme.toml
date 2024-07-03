@@ -11,16 +11,16 @@ defaultValue = "<%=String(325_000_000) %>"
 defaultValue = "36"
 
 [setting.perpsMemeMakerFeeRatio]
-defaultValue = "0.0002"
+defaultValue = "0.0002000000"
 
 [setting.perpsMemeTakerFeeRatio]
-defaultValue = "0.0010"
+defaultValue = "0.0010000000"
 
 [setting.perpsMemeMaxMarketSize]
-defaultValue = "<%= String(3_446_410) %>"
+defaultValue = "<%=String(5_336_179) %>"
 
 [setting.perpsMemeMaxMarketValue]
-defaultValue = "<%= String(50_000) %>"
+defaultValue = "<%=String(50_000) %>"
 
 [setting.perpsMemeInitialMarginRatio]
 defaultValue = "1.32"
