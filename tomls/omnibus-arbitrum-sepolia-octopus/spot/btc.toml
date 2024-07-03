@@ -58,7 +58,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= settings.btc_address %>",
-    "<%= settings.synth_btc_max_collateral_amount %>",
+    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
 ]
 depends = ['var.btc_spot_settings']
 
@@ -101,7 +101,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= settings.btc_address %>",
-    "<%= settings.synth_btc_max_collateral_amount %>",
+    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
 ]
 
 [invoke.CoreProxy_configureCollateral_sBTC]
@@ -120,5 +120,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= settings.synth_btc_token_address %>",
-    "<%= settings.synth_btc_max_collateral_amount %>",
+    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
 ]

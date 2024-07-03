@@ -40,7 +40,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= settings.synth_eth_max_market_collateral %>",
+    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
 ]
 
 [invoke.SpotMarketProxy_addSettlementStrategy_eth]
@@ -82,7 +82,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.synth_eth_token_address %>",
-    "<%= settings.synth_eth_max_market_collateral %>",
+    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
 ]
 
 # WETH is already configured but we will set the max market collateral
