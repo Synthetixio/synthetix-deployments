@@ -94,5 +94,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= settings.synth_eth_max_collateral_amount %>",
+    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
 ]

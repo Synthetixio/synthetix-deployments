@@ -49,6 +49,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/snx.toml",
 
     # Margin Collateral (Synths)
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/btc.toml",
 ]
