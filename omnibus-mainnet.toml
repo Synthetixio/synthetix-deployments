@@ -26,7 +26,7 @@ defaultValue = "synthetix:3.3.18"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.15"
+defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.3.5"
