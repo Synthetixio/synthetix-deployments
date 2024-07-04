@@ -33,9 +33,15 @@ defaultValue = "synthetix-spot-market:3.3.15"
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.3.5"
 
-# the susde token doesn't appear to be deployed on sepolia
 [setting.susde_package]
-defaultValue = "usde-token"
+defaultValue = "fake-susde-token"
+
+depends = ["clone.susde_deploy"]
+
+[setting.wsteth_package]
+defaultValue = "fake-wsteth-token"
+
+depends = ["clone.wsteth_deploy"]
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
@@ -102,8 +108,26 @@ defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
 defaultValue = "<%= parseEther('100000000') %>"
 
 # we want to enable the spot market wrapper for usde
-[import.usde]
-source = "usde-token"
+[clone.usde]
+source = "mintable-token:2.0"
+target = "fake-usde-token"
+options.name = "Ethena USD (fake)"
+options.symbol = "USDe"
+options.owner = "<%= settings.deployer %>"
+
+[clone.susde_deploy]
+source = "mintable-token:2.0"
+target = "fake-susde-token"
+options.name = "Ethena Staked USD (fake)"
+options.symbol = "sUSDe"
+options.owner = "<%= settings.deployer %>"
+
+[clone.wsteth_deploy]
+source = "mintable-token:2.0"
+target = "fake-wsteth-token"
+options.name = "Lido Wrapped Staked ETH (fake)"
+options.symbol = "WstETH"
+options.owner = "<%= settings.deployer %>"
 
 [invoke.SpotMarketProxy_setWrapper_usde]
 target = ["spotFactory.SpotMarketProxy"]
