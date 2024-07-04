@@ -31,6 +31,9 @@ defaultValue = "synthetix-perps-market:3.3.19"
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.3.5"
 
+[setting.susde_package]
+defaultValue = 'susde-token'
+
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
@@ -93,6 +96,15 @@ defaultValue = "0"
 
 [setting.synth_usde_max_market_collateral]
 defaultValue = "<%= parseEther('100000000') %>"
+
+[setting.pyth_price_verification_address]
+defaultValue = "0x4305FB66699C3B2702D4d05CF36551390A4c69C6"
+
+[setting.pythFeedUrl]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+
+[setting.pythUsdeFeedId]
+defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 
 # we want to enable the spot market wrapper for usde
 [import.usde]
