@@ -1,3 +1,33 @@
+[setting.perpsTaoMarketId]
+
+[setting.perpsTaoSkewScale]
+
+[setting.perpsTaoMaxFundingVelocity]
+
+[setting.perpsTaoMakerFeeRatio]
+
+[setting.perpsTaoTakerFeeRatio]
+
+[setting.perpsTaoMaxMarketSize]
+
+[setting.perpsTaoInitialMarginRatio]
+
+[setting.perpsTaoMaintenanceMarginFraction]
+
+[setting.perpsTaoFlagRewardRatioD18]
+
+[setting.perpsTaoMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsTaoMaxSecondsInLiquidationWindow]
+
+[setting.perpsTaoMaxLiquidationPd]
+
+[setting.perpsTaoEndorsedLiquidator]
+
+[setting.perpsTaoMinimumPositionMargin]
+
+[setting.perpsTaoLockedOiRatio]
+
 [invoke.createTaoPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

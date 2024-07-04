@@ -1,3 +1,33 @@
+[setting.perpsPendleMarketId]
+
+[setting.perpsPendleSkewScale]
+
+[setting.perpsPendleMaxFundingVelocity]
+
+[setting.perpsPendleMakerFeeRatio]
+
+[setting.perpsPendleTakerFeeRatio]
+
+[setting.perpsPendleMaxMarketSize]
+
+[setting.perpsPendleInitialMarginRatio]
+
+[setting.perpsPendleMaintenanceMarginFraction]
+
+[setting.perpsPendleFlagRewardRatioD18]
+
+[setting.perpsPendleMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsPendleMaxSecondsInLiquidationWindow]
+
+[setting.perpsPendleMaxLiquidationPd]
+
+[setting.perpsPendleEndorsedLiquidator]
+
+[setting.perpsPendleMinimumPositionMargin]
+
+[setting.perpsPendleLockedOiRatio]
+
 [invoke.createPendlePerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"

@@ -1,3 +1,31 @@
+[setting.pythBtcFeedId]
+
+[setting.btcPerpsMarketId]
+
+[setting.perpsBtcSkewScale]
+
+[setting.perpsBtcMaxFundingVelocity]
+
+[setting.perpsBtcMakerFeeRatio]
+
+[setting.perpsBtcTakerFeeRatio]
+
+[setting.perpsBtcMaxMarketSize]
+
+[setting.perpsBtcInitialMarginRatio]
+
+[setting.perpsBtcMaintenanceMarginFraction]
+
+[setting.perpsBtcFlagRewardRatioD18]
+
+[setting.perpsBtcMaxLiquidationLimitAccumulationMultiplier]
+
+[setting.perpsBtcMaxSecondsInLiquidationWindow]
+
+[setting.perpsBtcMinimumPositionMargin]
+
+[setting.perpsBtcLockedOiRatio]
+
 [invoke.createBtcPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
