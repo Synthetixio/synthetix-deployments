@@ -238,6 +238,7 @@ jobs:
     parallelism: << parameters.parallelism >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -247,7 +248,7 @@ jobs:
           name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
           background: true
           command: |
-            NODE_OPTIONS=--max_old_space_size=8192 yarn cannon build << parameters.toml >> \
+            yarn cannon build << parameters.toml >> \
               --keep-alive \
               --port 8545 \
               --dry-run \
@@ -344,6 +345,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -436,6 +438,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -490,6 +493,7 @@ jobs:
             cp e2e/deployments/meta.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/extras.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/systemToken.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr:
           working_directory: "~/synthetix-gitbook-v3"
@@ -503,6 +507,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - yarn-install
@@ -517,7 +522,6 @@ jobs:
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 42161       --json > ./e2e/cannon/42161-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@carina      --chain-id 11155111    --json > ./e2e/cannon/11155111-carina.json
 
       - store_artifacts:
           path: "./e2e/cannon"
@@ -572,6 +576,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -614,6 +619,7 @@ jobs:
             cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/systemToken.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr:
           working_directory: "~/v3-contracts"
@@ -638,6 +644,7 @@ jobs:
       - image: cimg/node:<< pipeline.parameters.node-version >>
     environment:
       DEBUG: "e2e:*"
+      NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
       - install-anvil
@@ -709,6 +716,7 @@ jobs:
             cp e2e/deployments/meta.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/extras.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/systemToken.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr-allow-empty:
           working_directory: "~/v3-contracts"
@@ -808,14 +816,6 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
-  #      - fork-test:
-  #          name: test-sepolia-carina
-  #          toml: omnibus-sepolia-carina.toml
-  #          package: "synthetix-omnibus:latest"
-  #          preset: "carina"
-  #          chain-id: 11155111
-  #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
   deployment-info:
     when:
       or:
@@ -823,7 +823,7 @@ workflows:
             - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
             - equal: ["deployment-info", << pipeline.schedule.name >>]
         - equal: ["docgen", << pipeline.git.branch >>]
-        - equal: ["fix-docgen", << pipeline.git.branch >>]
+        - equal: ["system-token", << pipeline.git.branch >>]
 
     jobs:
       - deployments-dashboard
@@ -885,13 +885,6 @@ workflows:
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          name: docs-sepolia-carina
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
-      - deployment-info:
           name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -905,7 +898,7 @@ workflows:
             - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
             - equal: ["npm-package", << pipeline.schedule.name >>]
         - equal: ["v3-contracts-npm-package", << pipeline.git.branch >>]
-        - equal: ["fix-docgen", << pipeline.git.branch >>]
+        - equal: ["system-token", << pipeline.git.branch >>]
 
     jobs:
       - npm-package:
@@ -965,13 +958,6 @@ workflows:
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - npm-package:
-          name: npm-sepolia-carina
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
-      - npm-package:
           name: npm-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -985,7 +971,7 @@ workflows:
             - equal: ["scheduled_pipeline", << pipeline.trigger_source >>]
             - equal: ["preview", << pipeline.schedule.name >>]
         - equal: ["v3-contracts-preview", << pipeline.git.branch >>]
-        - equal: ["fix-docgen", << pipeline.git.branch >>]
+        - equal: ["system-token", << pipeline.git.branch >>]
 
     jobs:
       - preview:
@@ -1042,14 +1028,6 @@ workflows:
           preset: "main"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - preview:
-          name: preview-sepolia-carina
-          toml: omnibus-sepolia-carina.toml
-          package: "synthetix-omnibus:latest"
-          preset: "carina"
-          chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-sepolia
