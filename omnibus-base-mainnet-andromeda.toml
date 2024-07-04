@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "38"
+version = "39"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -190,6 +190,42 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/comp-invokes.toml",
     "tomls/oracles/pyth-comp.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/comp.toml",
+    # CRV
+    "tomls/omnibus-base-mainnet-andromeda/perps/crv-invokes.toml",
+    "tomls/oracles/pyth-crv.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/crv.toml",
+    # DOT
+    "tomls/omnibus-base-mainnet-andromeda/perps/dot-invokes.toml",
+    "tomls/oracles/pyth-dot.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/dot.toml",
+    # DYDX
+    "tomls/omnibus-base-mainnet-andromeda/perps/dydx-invokes.toml",
+    "tomls/oracles/pyth-dydx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/dydx.toml",
+    # EOS
+    "tomls/omnibus-base-mainnet-andromeda/perps/eos-invokes.toml",
+    "tomls/oracles/pyth-eos.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/eos.toml",
+    # ETC
+    "tomls/omnibus-base-mainnet-andromeda/perps/etc-invokes.toml",
+    "tomls/oracles/pyth-etc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/etc.toml",
+    # ETHBTC
+    "tomls/omnibus-base-mainnet-andromeda/perps/ethbtc-invokes.toml",
+    "tomls/oracles/pyth-ethbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ethbtc.toml",
+    # FIL
+    "tomls/omnibus-base-mainnet-andromeda/perps/fil-invokes.toml",
+    "tomls/oracles/pyth-fil.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/fil.toml",
+    # FLOW
+    "tomls/omnibus-base-mainnet-andromeda/perps/flow-invokes.toml",
+    "tomls/oracles/pyth-flow.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/flow.toml",
+    # FXS
+    "tomls/omnibus-base-mainnet-andromeda/perps/fxs-invokes.toml",
+    "tomls/oracles/pyth-fxs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/fxs.toml",
 ]
 
 [setting.commitmentPriceDelay]
