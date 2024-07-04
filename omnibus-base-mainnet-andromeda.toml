@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "34"
+version = "38"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -150,7 +150,46 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/axl-invokes.toml",
     "tomls/oracles/pyth-axl.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/axl.toml",
-]
+    # AAVE
+    "tomls/omnibus-base-mainnet-andromeda/perps/aave-invokes.toml",
+    "tomls/oracles/pyth-aave.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/aave.toml",
+    # ADA
+    "tomls/omnibus-base-mainnet-andromeda/perps/ada-invokes.toml",
+    "tomls/oracles/pyth-ada.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ada.toml",
+    # ALGO
+    "tomls/omnibus-base-mainnet-andromeda/perps/algo-invokes.toml",
+    "tomls/oracles/pyth-algo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/algo.toml",
+    # APT
+    "tomls/omnibus-base-mainnet-andromeda/perps/apt-invokes.toml",
+    "tomls/oracles/pyth-apt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/apt.toml",
+    # ATOM
+    "tomls/omnibus-base-mainnet-andromeda/perps/atom-invokes.toml",
+    "tomls/oracles/pyth-atom.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/atom.toml",
+    # AXS
+    "tomls/omnibus-base-mainnet-andromeda/perps/axs-invokes.toml",
+    "tomls/oracles/pyth-axs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/axs.toml",
+    # BAL
+    "tomls/omnibus-base-mainnet-andromeda/perps/bal-invokes.toml",
+    "tomls/oracles/pyth-bal.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bal.toml",
+    # BCH
+    "tomls/omnibus-base-mainnet-andromeda/perps/bch-invokes.toml",
+    "tomls/oracles/pyth-bch.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bch.toml",
+    # BLUR
+    "tomls/omnibus-base-mainnet-andromeda/perps/blur-invokes.toml",
+    "tomls/oracles/pyth-blur.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/blur.toml",
+    # COMP
+    "tomls/omnibus-base-mainnet-andromeda/perps/comp-invokes.toml",
+    "tomls/oracles/pyth-comp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/comp.toml"]
 
 [setting.commitmentPriceDelay]
 defaultValue = "2"
