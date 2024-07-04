@@ -189,7 +189,8 @@ include = [
     # COMP
     "tomls/omnibus-base-mainnet-andromeda/perps/comp-invokes.toml",
     "tomls/oracles/pyth-comp.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/comp.toml"]
+    "tomls/omnibus-base-mainnet-andromeda/perps/comp.toml",
+]
 
 [setting.commitmentPriceDelay]
 defaultValue = "2"
