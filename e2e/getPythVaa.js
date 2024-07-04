@@ -1,7 +1,9 @@
 const { EvmPriceServiceConnection } = require('@pythnetwork/pyth-evm-js');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
-const PYTH_MAINNET_ENDPOINT = 'https://hermes.pyth.network';
+
+const PYTH_MAINNET_ENDPOINT = process.env.PYTH_MAINNET_ENDPOINT || 'https://hermes.pyth.network';
+
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
 function base64ToHex(str) {
