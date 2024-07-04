@@ -1,5 +1,5 @@
 [provision.snx_mock_collateral]
-source = "mintable-token@permissionless-mint"
+source = "mintable-token:1.8@permissionless-mint"
 target = "synthetix-mock-tokens@snx"
 options.salt = "<%= settings.salt %>"
 options.name = "Fake Wrapped SNX"
