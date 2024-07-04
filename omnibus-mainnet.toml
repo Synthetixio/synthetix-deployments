@@ -44,7 +44,7 @@ defaultValue = "snax"
 defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
 [setting.wsteth_aggregator_address]
-defaultValue = ""
+defaultValue = "0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8"
 
 [setting.susde_aggregator_address]
 defaultValue = "0xFF3BC18cCBd5999CE63E788A1c250a88626aD099"
