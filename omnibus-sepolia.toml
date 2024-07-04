@@ -25,7 +25,7 @@ include = [
 defaultValue = "snaxtest"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
@@ -44,16 +44,14 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
 [setting.wsteth_aggregator_address]
-# NOTE: below aggregator is actually plain ETH
-defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+defaultValue = "0xaaabb530434B0EeAAc9A42E25dbC6A22D7bE218E"
 
 [setting.susde_aggregator_address]
-# NOTE: below aggregator is actually USDC
-defaultValue = "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E"
+defaultValue = "0x6f7be09227d98Ce1Df812d5Bc745c0c775507E92"
 
 [setting.usde_aggregator_address]
 # NOTE: below aggregator is actually USDC
-defaultValue = "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E"
+defaultValue = "0x55ec7c3ed0d7CB5DF4d3d8bfEd2ecaf28b4638fb"
 
 [setting.snx_aggregator_address]
 defaultValue = "0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC"

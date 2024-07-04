@@ -94,7 +94,7 @@ defaultValue = "0"
 [setting.synth_usde_max_market_collateral]
 defaultValue = "<%= parseEther('100000000') %>"
 
-+# we want to enable the spot market wrapper for usde
+# we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
 
