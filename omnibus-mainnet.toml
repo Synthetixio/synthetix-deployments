@@ -20,7 +20,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.15"
+defaultValue = "synthetix:3.3.18"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
