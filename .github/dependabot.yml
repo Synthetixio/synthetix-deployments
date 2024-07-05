@@ -1,0 +1,8 @@
+updates:
+  - package-ecosystem: "yarn"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 1
+    reviewers:
+      - "noisekit"

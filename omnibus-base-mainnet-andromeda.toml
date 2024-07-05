@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "34"
+version = "40"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -154,6 +154,134 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/axl-invokes.toml",
     "tomls/oracles/pyth-axl.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/axl.toml",
+    # AAVE
+    "tomls/omnibus-base-mainnet-andromeda/perps/aave-invokes.toml",
+    "tomls/oracles/pyth-aave.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/aave.toml",
+    # ADA
+    "tomls/omnibus-base-mainnet-andromeda/perps/ada-invokes.toml",
+    "tomls/oracles/pyth-ada.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ada.toml",
+    # ALGO
+    "tomls/omnibus-base-mainnet-andromeda/perps/algo-invokes.toml",
+    "tomls/oracles/pyth-algo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/algo.toml",
+    # APT
+    "tomls/omnibus-base-mainnet-andromeda/perps/apt-invokes.toml",
+    "tomls/oracles/pyth-apt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/apt.toml",
+    # ATOM
+    "tomls/omnibus-base-mainnet-andromeda/perps/atom-invokes.toml",
+    "tomls/oracles/pyth-atom.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/atom.toml",
+    # AXS
+    "tomls/omnibus-base-mainnet-andromeda/perps/axs-invokes.toml",
+    "tomls/oracles/pyth-axs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/axs.toml",
+    # BAL
+    "tomls/omnibus-base-mainnet-andromeda/perps/bal-invokes.toml",
+    "tomls/oracles/pyth-bal.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bal.toml",
+    # BCH
+    "tomls/omnibus-base-mainnet-andromeda/perps/bch-invokes.toml",
+    "tomls/oracles/pyth-bch.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/bch.toml",
+    # BLUR
+    "tomls/omnibus-base-mainnet-andromeda/perps/blur-invokes.toml",
+    "tomls/oracles/pyth-blur.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/blur.toml",
+    # COMP
+    "tomls/omnibus-base-mainnet-andromeda/perps/comp-invokes.toml",
+    "tomls/oracles/pyth-comp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/comp.toml",
+    # CRV
+    "tomls/omnibus-base-mainnet-andromeda/perps/crv-invokes.toml",
+    "tomls/oracles/pyth-crv.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/crv.toml",
+    # DOT
+    "tomls/omnibus-base-mainnet-andromeda/perps/dot-invokes.toml",
+    "tomls/oracles/pyth-dot.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/dot.toml",
+    # DYDX
+    "tomls/omnibus-base-mainnet-andromeda/perps/dydx-invokes.toml",
+    "tomls/oracles/pyth-dydx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/dydx.toml",
+    # EOS
+    "tomls/omnibus-base-mainnet-andromeda/perps/eos-invokes.toml",
+    "tomls/oracles/pyth-eos.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/eos.toml",
+    # ETC
+    "tomls/omnibus-base-mainnet-andromeda/perps/etc-invokes.toml",
+    "tomls/oracles/pyth-etc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/etc.toml",
+    # ETHBTC
+    "tomls/omnibus-base-mainnet-andromeda/perps/ethbtc-invokes.toml",
+    "tomls/oracles/pyth-ethbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ethbtc.toml",
+    # FIL
+    "tomls/omnibus-base-mainnet-andromeda/perps/fil-invokes.toml",
+    "tomls/oracles/pyth-fil.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/fil.toml",
+    # FLOW
+    "tomls/omnibus-base-mainnet-andromeda/perps/flow-invokes.toml",
+    "tomls/oracles/pyth-flow.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/flow.toml",
+    # FXS
+    "tomls/omnibus-base-mainnet-andromeda/perps/fxs-invokes.toml",
+    "tomls/oracles/pyth-fxs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/fxs.toml",
+    # GRT
+    "tomls/omnibus-base-mainnet-andromeda/perps/grt-invokes.toml",
+    "tomls/oracles/pyth-grt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/grt.toml",
+    # ICP
+    "tomls/omnibus-base-mainnet-andromeda/perps/icp-invokes.toml",
+    "tomls/oracles/pyth-icp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/icp.toml",
+    # IMX
+    "tomls/omnibus-base-mainnet-andromeda/perps/imx-invokes.toml",
+    "tomls/oracles/pyth-imx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/imx.toml",
+    # JTO
+    "tomls/omnibus-base-mainnet-andromeda/perps/jto-invokes.toml",
+    "tomls/oracles/pyth-jto.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/jto.toml",
+    # JUP
+    "tomls/omnibus-base-mainnet-andromeda/perps/jup-invokes.toml",
+    "tomls/oracles/pyth-jup.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/jup.toml",
+    # LDO
+    "tomls/omnibus-base-mainnet-andromeda/perps/ldo-invokes.toml",
+    "tomls/oracles/pyth-ldo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ldo.toml",
+    # LTC
+    "tomls/omnibus-base-mainnet-andromeda/perps/ltc-invokes.toml",
+    "tomls/oracles/pyth-ltc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/ltc.toml",
+    # MEME
+    "tomls/omnibus-base-mainnet-andromeda/perps/meme-invokes.toml",
+    "tomls/oracles/pyth-meme.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/meme.toml",
+    # NEAR
+    "tomls/omnibus-base-mainnet-andromeda/perps/near-invokes.toml",
+    "tomls/oracles/pyth-near.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/near.toml",
+    # PYTH
+    "tomls/omnibus-base-mainnet-andromeda/perps/pyth-invokes.toml",
+    "tomls/oracles/pyth-pyth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/pyth.toml",
+    # RNDR
+    "tomls/omnibus-base-mainnet-andromeda/perps/rndr-invokes.toml",
+    "tomls/oracles/pyth-rndr.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/rndr.toml",
+    # SEI
+    "tomls/omnibus-base-mainnet-andromeda/perps/sei-invokes.toml",
+    "tomls/oracles/pyth-sei.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/sei.toml",
+    # SHIB
+    "tomls/omnibus-base-mainnet-andromeda/perps/shib-invokes.toml",
+    "tomls/oracles/pyth-shib.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/shib.toml",
 ]
 
 [setting.commitmentPriceDelay]
