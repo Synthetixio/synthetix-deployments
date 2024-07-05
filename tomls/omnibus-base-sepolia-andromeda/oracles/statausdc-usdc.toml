@@ -1,6 +1,6 @@
 [clone.erc_4626_to_assets_ratio_oracle]
-source = "erc-4626-to-assets-ratio-oracle:1.0.0"
-target = "erc-4626-to-assets-ratio-oracle:1.0.0@stataBasUSDC_USDC"
+source = "erc-4626-to-assets-ratio-oracle:3.3.19"
+target = "erc-4626-to-assets-ratio-oracle:3.3.19@stataBasUSDC_USDC"
 # On testnet, we provide no vault here and use the mocks deployed by this package
 
 [invoke.register_erc_4626_to_assets_ratio_oracle_node]
