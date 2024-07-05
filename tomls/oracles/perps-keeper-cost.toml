@@ -24,7 +24,7 @@ depends = [
     'setting.perps_keeper_l1_cost_flag_gas_units',
     'setting.perps_keeper_l2_cost_flag_gas_units',
     'setting.perps_keeper_l1_cost_liquidate_gas_units',
-    'setting.perps_keeper_l2_cost_liquidate_gas_units',
+    'setting.perps_keeper_l2_cost_liquidate_gas_units',    
     'setting.perps_keeper_settle_tx_size',
     'setting.perps_keeper_flag_tx_size',
     'setting.perps_keeper_liquidate_tx_size',
