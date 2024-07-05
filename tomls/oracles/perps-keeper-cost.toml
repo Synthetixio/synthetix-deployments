@@ -10,7 +10,7 @@ args = [
     # 2 = external node
     2,
     # 7 parameters: 1 is the external node contract address, 2 to 7 gas units
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [imports.perps_gas_oracle_node.contracts.OpGasPriceOracle.address, settings.perps_keeper_l1_cost_settle_gas_units, settings.perps_keeper_l2_cost_settle_gas_units, settings.perps_keeper_l1_cost_flag_gas_units, settings.perps_keeper_l2_cost_flag_gas_units, settings.perps_keeper_l1_cost_liquidate_gas_units, settings.perps_keeper_l2_cost_liquidate_gas_units]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [imports.perps_gas_oracle_node.contracts.OpGasPriceOracle.address, settings.perps_keeper_l1_cost_settle_gas_units, settings.perps_keeper_l2_cost_settle_gas_units, settings.perps_keeper_l1_cost_flag_gas_units, settings.perps_keeper_l2_cost_flag_gas_units, settings.perps_keeper_l1_cost_liquidate_gas_units, settings.perps_keeper_l2_cost_liquidate_gas_units, settings.perps_keeper_settle_tx_size, settings.perps_keeper_flag_tx_size, settings.perps_keeper_liquidate_tx_size]) %>",
     [
     ],
 ]
@@ -24,7 +24,9 @@ depends = [
     'setting.perps_keeper_l1_cost_flag_gas_units',
     'setting.perps_keeper_l2_cost_flag_gas_units',
     'setting.perps_keeper_l1_cost_liquidate_gas_units',
-    'setting.perps_keeper_l2_cost_liquidate_gas_units',
+    'setting.perps_keeper_settle_tx_size',
+    'setting.perps_keeper_flag_tx_size',
+    'setting.perps_keeper_liquidate_tx_size',
 ]
 
 [invoke.registerPerps_KeeperCostUsdOracleNode]
