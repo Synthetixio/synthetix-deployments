@@ -262,10 +262,10 @@ jobs:
           command: |
             touch ./cannon-build.log
             # If the information wasn't found, start tailing the log
-            if ! grep -q 'Built package RPC URL available' ./cannon-build.log; then
+            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
                 while IFS= read -r line
                 do
-                    if [[ $line == *"Built package RPC URL available"* ]]; then
+                    if [[ $line == *"The local node will continue running at"* ]]; then
                         break
                     fi
                 done < <(tail -f -n0 ./cannon-build.log)
@@ -368,10 +368,10 @@ jobs:
           command: |
             touch ./cannon-build.log
             # If the information wasn't found, start tailing the log
-            if ! grep -q 'Built package RPC URL available' ./cannon-build.log; then
+            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
                 while IFS= read -r line
                 do
-                    if [[ $line == *"Built package RPC URL available"* ]]; then
+                    if [[ $line == *"The local node will continue running at"* ]]; then
                         break
                     fi
                 done < <(tail -f -n0 ./cannon-build.log)
@@ -668,10 +668,10 @@ jobs:
           command: |
             touch ./cannon-build.log
             # If the information wasn't found, start tailing the log
-            if ! grep -q 'Built package RPC URL available' ./cannon-build.log; then
+            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
                 while IFS= read -r line
                 do
-                    if [[ $line == *"Built package RPC URL available"* ]]; then
+                    if [[ $line == *"The local node will continue running at"* ]]; then
                         break
                     fi
                 done < <(tail -f -n0 ./cannon-build.log)
