@@ -1,5 +1,5 @@
 [var.eth_spot_settings]
-synth_eth_max_market_collateral = "1000"
+synth_eth_max_market_collateral = "10000"
 synth_eth_skew_scale = "100000"
 
 [invoke.SpotMarketProxy_createSynth_eth]
