@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "38"
+version = "41"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -150,7 +150,6 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/axl-invokes.toml",
     "tomls/oracles/pyth-axl.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/axl.toml",
-
     # AAVE
     "tomls/omnibus-base-mainnet-andromeda/perps/aave-invokes.toml",
     "tomls/oracles/pyth-aave.toml",
