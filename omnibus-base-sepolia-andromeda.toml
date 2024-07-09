@@ -12,20 +12,21 @@ include = [
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/perps-lowcap-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
-    "tomls/omnibus-base-sepolia-andromeda/spot/usdc.toml",
-    "tomls/omnibus-base-sepolia-andromeda/spot/statausdc.toml",
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/global.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/perps-keeper-cost.toml",
-    "tomls/omnibus-base-sepolia-andromeda/oracles/statausdc-usdc.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/feeCollector.toml",
-    # Collaterals
-    "tomls/omnibus-base-sepolia-andromeda/collaterals/susdc.toml",
-    "tomls/collaterals/susdc.toml",
-    "tomls/omnibus-base-sepolia-andromeda/collaterals/sstatausdc.toml",
-    "tomls/collaterals/sstatausdc.toml",
-    # First super market for high mcap assets
+
+    # USDC
+    "tomls/omnibus-base-sepolia-andromeda/collaterals/sUSDC.toml",
+    "tomls/omnibus-base-sepolia-andromeda/spot/USDC.toml",
+
+    # stataUSDC
+    "tomls/omnibus-base-sepolia-andromeda/collaterals/sstataUSDC.toml",
+    "tomls/omnibus-base-sepolia-andromeda/spot/stataUSDC.toml",
+    "tomls/omnibus-base-sepolia-andromeda/oracles/stataUSDC-USDC.toml",
+
     # BTC
     "tomls/omnibus-base-sepolia-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",

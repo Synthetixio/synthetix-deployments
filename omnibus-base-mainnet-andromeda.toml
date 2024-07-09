@@ -11,20 +11,22 @@ include = [
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
-    "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",
-    "tomls/omnibus-base-mainnet-andromeda/spot/statausdc.toml",
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
     "tomls/permit-pdao-createMarket.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/perps-keeper-cost.toml",
-    "tomls/omnibus-base-mainnet-andromeda/oracles/statausdc-usdc.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml",
-    # Collaterals
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
-    "tomls/collaterals/susdc.toml",
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstatausdc.toml",
-    "tomls/collaterals/sstatausdc.toml",
+
+    # USDC
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/USDC.toml",
+
+    # stataUSDC
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstataUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/stataUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
+
     # BTC
     "tomls/omnibus-base-mainnet-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
