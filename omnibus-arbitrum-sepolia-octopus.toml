@@ -35,17 +35,12 @@ include = [
     # BTC
     "tomls/omnibus-arbitrum-sepolia-octopus/spot/btc.toml",
 
-    # Perps Markets
-    "tomls/omnibus-arbitrum-sepolia-octopus/perps/referrers.toml",
+    # Perps Settings
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/global.toml",
-    # BTC
-    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/btc-invokes.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/referrers.toml",
+    # Perps Markets
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/btc.toml",
-    # ETH
-    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/eth-invokes.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/eth.toml",
-    # SNX
-    "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/snx-invokes.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/markets/snx.toml",
 
     # Margin Collateral (Synths)
@@ -103,58 +98,17 @@ description = "200% min market collateralization"
 [setting.account_timeout_withdraw]
 defaultValue = "<%= hexZeroPad(hexlify(parseInt(1 * 24 * 3600)), 32) %>"
 
-[setting.spartan_council_pool_id_setting]
-defaultValue = "1"
-
-[setting.pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
 [setting.big_cap_default_staleness_tolerance]
 defaultValue = "3600"
 
-[setting.big_cap_settlement_window_duration]
-defaultValue = "60"
-
-[setting.big_cap_settlement_delay]
-defaultValue = "2"
-
-[setting.settlement_reward]
-defaultValue = "<%= parseEther('0.5') %>"
-
-[setting.settlement_minimum_usd_exchange_amount]
-defaultValue = "<%= parseEther('0.000001') %>"
-
-[setting.settlement_max_rounding_loss]
-defaultValue = "<%= parseEther('0.000001') %>"
-
-[setting.price_deviation_tolerance]
-defaultValue = "<%= parseEther('1') %>"
-
-#
-#
-#
-# BTC Synth
-#
-#
-#
-[var.btc_synth_settings]
-btc_synth_max_collateral_amount = "<%= parseEther('100') %>"
-btc_upper_limit_discount = "<%= parseEther('0.075') %>"
-btc_lower_limit_discount = "<%= parseEther('0.010') %>"
-btc_discount_scalar = "<%= parseEther('1') %>"
-
-#
-#
-#
-# ETH Synth
-#
-#
-#
-[var.eth_synth_settings]
-eth_synth_max_collateral_amount = "<%= parseEther('10000') %>"
-eth_upper_limit_discount = "<%= parseEther('0.1') %>"
-eth_lower_limit_discount = "<%= parseEther('0.025') %>"
-eth_discount_scalar = "<%= parseEther('1') %>"
+# synth settings
+[var.synth_settings]
+big_cap_settlement_window_duration = "60"
+big_cap_settlement_delay = "2"
+settlement_reward = "<%= parseEther('0.5') %>"
+settlement_minimum_usd_exchange_amount = "<%= parseEther('0.000001') %>"
+settlement_max_rounding_loss = "<%= parseEther('0.000001') %>"
+price_deviation_tolerance = "<%= parseEther('1') %>"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]

@@ -1,3 +1,8 @@
+[var.perps_collateral_sBTC_settings]
+btc_upper_limit_discount = "<%= parseEther('0.075') %>"
+btc_lower_limit_discount = "<%= parseEther('0.010') %>"
+btc_discount_scalar = "<%= parseEther('1') %>"
+
 [provision.RewardsDistributor_PerpsCollateral_BTC_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
 target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@BTC_Perps_Rewards"
@@ -16,11 +21,12 @@ fromCall.func = "owner"
 func = "setCollateralConfiguration"
 args = [
     "<%= extras.synth_btc_market_id %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>", # from spot/btc.toml
     "<%= settings.btc_upper_limit_discount %>",
     "<%= settings.btc_lower_limit_discount %>",
     "<%= settings.btc_discount_scalar %>",
 ]
+depends = ["var.perps_collateral_sBTC_settings"]
 
 [invoke.PerpsMarketProxy_registerDistributor_btc]
 target = ["perpsFactory.PerpsMarketProxy"]

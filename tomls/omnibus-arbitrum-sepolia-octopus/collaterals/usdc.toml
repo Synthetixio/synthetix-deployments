@@ -6,29 +6,22 @@ options.symbol = "fUSDC"
 options.owner = "<%= settings.owner %>"
 options.decimals = "6"
 
-[setting.usdc_issuance_ratio]
-defaultValue = "<%= parseEther('1.2') %>"
-
-[setting.usdc_liquidation_ratio]
-defaultValue = "<%= parseEther('1.05') %>"
-
-[setting.usdc_liquidation_reward]
-defaultValue = "<%= parseEther('1') %>"
-
-[setting.usdc_min_delegation]
-defaultValue = "<%= parseEther('100') %>"
-
-[setting.max_collateral_limit_usdc]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-
 [setting.usdc_address]
 defaultValue = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
 description = "Mock usdc address"
 
+[var.lp_usdc_settings]
+usdc_issuance_ratio = "<%= parseEther('1.2') %>"
+usdc_liquidation_ratio = "<%= parseEther('1.05') %>"
+usdc_liquidation_reward = "<%= parseEther('1') %>"
+usdc_min_delegation = "<%= parseEther('100') %>"
+max_collateral_limit_usdc = "<%= parseEther(String(10_000_000)) %>"
+
 [invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"  # "args" see below in the multiline block
+func = "configureCollateral"       # "args" see below in the multiline block
+depends = ["var.lp_usdc_settings"]
 
 [[invoke.CoreProxy_configureCollateral_usdc.args]]
 tokenAddress = "<%= settings.usdc_address %>"
@@ -49,3 +42,4 @@ args = [
     "<%= settings.usdc_address %>",
     { collateralLimitD18 = "<%= settings.max_collateral_limit_usdc %>", issuanceRatioD18 = 0 },
 ]
+depends = ["var.lp_usdc_settings"]
