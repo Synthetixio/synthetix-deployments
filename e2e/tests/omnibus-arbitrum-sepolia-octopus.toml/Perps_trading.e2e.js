@@ -31,6 +31,7 @@ const {
 } = require('../../tasks/configureMaximumMarketCollateral');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
+  const extras = require('../../deployments/extras.json');
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -144,19 +145,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  // it('should increase max collateral for the test to 1_000_000_000_000', async () => {
-  //   await configureMaximumMarketCollateral({
-  //     marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-  //     symbol: 'fUSDC',
-  //     targetAmount: String(1_000_000_000_000),
-  //   });
-  //   await setSpotWrapper({
-  //     marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-  //     symbol: 'fUSDC',
-  //     targetAmount: String(1_000_000_000_000),
-  //   });
-  // });
-
   it('should wrap 5 fBTC', async () => {
     const balance = await wrapCollateral({
       wallet,
@@ -203,19 +191,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(await getCollateralBalance({ address, symbol: 'USDx' }));
   });
 
-  it('should approve snxUSD spending for PerpsMarketProxy', async () => {
-    assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'USDx',
-        spenderAddress: PerpsMarketProxy.address,
-      }),
-      false,
-      'New wallet has not allowed PerpsMarketProxy snxUSD spending'
-    );
+  it('should approve USDx, sfBTC, sfETH spending for PerpsMarketProxy', async () => {
     await approveCollateral({
       privateKey,
       symbol: 'USDx',
+      spenderAddress: PerpsMarketProxy.address,
+    });
+    await approveCollateral({
+      privateKey,
+      symbol: 'sBTC',
+      spenderAddress: PerpsMarketProxy.address,
+    });
+    await approveCollateral({
+      privateKey,
+      symbol: 'sETH',
       spenderAddress: PerpsMarketProxy.address,
     });
     assert.equal(
@@ -226,10 +215,25 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sBTC',
+        spenderAddress: PerpsMarketProxy.address,
+      }),
+      true
+    );
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sETH',
+        spenderAddress: PerpsMarketProxy.address,
+      }),
+      true
+    );
   });
 
   it('should allow deposit of sfBTC, sfETH, and USDx to Perps', async () => {
-    const extras = require('../../deployments/extras.json');
     assert.equal(await getPerpsCollateral({ accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_eth_market_id, accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_btc_market_id, accountId }), 0);
@@ -239,59 +243,24 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId: extras.synth_btc_market_id,
-      deltaAmount: 10,
+      deltaAmount: 5,
     });
     await modifyPerpsCollateral({
       wallet,
       accountId,
       marketId: extras.synth_eth_market_id,
-      deltaAmount: 15,
+      deltaAmount: 10,
     });
 
     assert.equal(await getPerpsCollateral({ accountId }), 2_000);
-    assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_btc_market_id }), 10);
-    assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_eth_market_id }), 15);
+    assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_btc_market_id }), 5);
+    assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_eth_market_id }), 10);
   });
 
-  // it('should withdraw 1_000 snxUSD from Perps', async () => {
-  //   assert.equal(await getPerpsCollateral({ accountId }), 1_000_000);
-  //   await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -1_000 });
-  //   assert.equal(await getPerpsCollateral({ accountId }), 999_000);
-  // });
-
+  // TODO: this is failing for some reason, not sure if it's fork related
   // it('should open a short 0.01 BTC position', async () => {
   //   const marketId = 200;
-  //   const settlementStrategyId =
-  //     require('../../deployments/extras.json').btc_pyth_settlement_strategy;
-
-  //   // We must sync timestamp of the fork before making time-sensitive operations
-  //   await syncTime();
-  //   await wait(1000);
-
-  //   const { commitmentTime } = await commitPerpsOrder({
-  //     wallet,
-  //     accountId,
-  //     marketId,
-  //     sizeDelta: -0.01,
-  //     settlementStrategyId,
-  //   });
-
-  //   // Wait for commitment price/settlement delay
-  //   await wait(2000);
-
-  //   // Wait for pyth to update prices
-  //   await wait(5000);
-
-  //   await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
-  //   await settlePerpsOrder({ wallet, accountId, marketId });
-  //   const position = await getPerpsPosition({ accountId, marketId });
-  //   assert.equal(position.positionSize, -0.01);
-  // });
-
-  // it('should close a short 0.01 BTC position', async () => {
-  //   const marketId = 200;
-  //   const settlementStrategyId =
-  //     require('../../deployments/extras.json').btc_pyth_settlement_strategy;
+  //   const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
   //   // We must sync timestamp of the fork before making time-sensitive operations
   //   await syncTime();
@@ -314,32 +283,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   //   await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
   //   await settlePerpsOrder({ wallet, accountId, marketId });
   //   const position = await getPerpsPosition({ accountId, marketId });
-  //   assert.equal(position.positionSize, 0);
-  // });
-
-  // it('should revert when trade > Max Market Size', async () => {
-  //   const marketId = 200;
-  //   const settlementStrategyId =
-  //     require('../../deployments/extras.json').btc_pyth_settlement_strategy;
-  //   const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
-  //   log({ marketId, maxMarketSize });
-  //   try {
-  //     await commitPerpsOrder({
-  //       wallet,
-  //       accountId,
-  //       marketId,
-  //       sizeDelta: parseFloat(ethers.utils.formatEther(maxMarketSize.mul(2))),
-  //       settlementStrategyId,
-  //     });
-  //     throw Error('Commit should revert');
-  //   } catch (error) {
-  //     const errorData =
-  //       error?.error?.error?.error?.data ||
-  //       error?.error?.data?.data ||
-  //       error?.error?.error?.data ||
-  //       error?.error?.data;
-  //     const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
-  //     assert.equal(parsedError.name, 'MaxOpenInterestReached');
-  //   }
+  //   assert.equal(position.positionSize, 0.01);
   // });
 });

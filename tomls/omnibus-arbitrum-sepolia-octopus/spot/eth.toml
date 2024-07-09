@@ -80,8 +80,8 @@ fromCall.func = "owner"
 fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
-    "<%= extras.synth_eth_market_id %>",
-    "<%= settings.synth_eth_token_address %>",
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_eth_token_address %>",
     "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
 ]
 
