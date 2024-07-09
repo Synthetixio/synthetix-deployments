@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "38"
+version = "43"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -17,7 +17,7 @@ include = [
     "tomls/permit-all-perps-perpsHighcapSystem.toml",                   # Enable perps market"tomls/permit-revoke-all-perps-perpsLowcapSystem.toml",             # Disable LowCaps perps market
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/global.toml",           # Global perps settings
-    "tomls/oracles/perps-keeper-cost.toml",                             # Add gas oracle for keeper fees
+    "tomls/omnibus-base-sepolia-andromeda/perps/perps-keeper-cost.toml",                             # Add gas oracle for keeper fees
     "tomls/omnibus-base-sepolia-andromeda/oracles/statausdc-usdc.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/feeCollector.toml",
     # Collaterals
@@ -327,7 +327,7 @@ defaultValue = "2"
 defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
-defaultValue = "op-gas-price-oracle:3.3.15"
+defaultValue = "op-gas-price-oracle:3.4.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
