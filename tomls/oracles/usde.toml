@@ -11,7 +11,19 @@ args = [
     [
     ],
 ]
+extra.usde_oracle_id_raw.event = "NodeRegistered"
+extra.usde_oracle_id_raw.arg = 0
+depends = ['provision.system', 'setting.usde_aggregator_address']
+
+[invoke.registerUsdeWithStaleness]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.usde_chainlink_staleness_tolerance]) %>",
+    [
+        "<%= extras.usde_oracle_id_raw %>",
+    ],
+]
 extra.usde_oracle_id.event = "NodeRegistered"
 extra.usde_oracle_id.arg = 0
-
-depends = ['provision.system', 'setting.usde_aggregator_address']
