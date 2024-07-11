@@ -24,6 +24,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     provider
   );
 
+  const AccountProxy = new ethers.Contract(
+    require('../../deployments/AccountProxy.json').address,
+    require('../../deployments/AccountProxy.json').abi,
+    provider
+  );
+
   const V2x = new ethers.Contract(
     require('../../deployments/V2x.json').address,
     require('../../deployments/V2x.json').abi,
@@ -144,5 +150,35 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
 
     assert.equal(newUsdBalanceAfter, migratedBalance);
+  });
+
+  it('should liquidate an account below c-ratio', async () => {
+    const liqableAccount = '0x3ad921041f2b53ab819e6c87a7f186f1b7b4d0ac';
+
+    const owner = await LegacyMarketProxy.owner();
+    await provider.send('anvil_impersonateAccount', [owner]);
+    const wallet = provider.getSigner(owner);
+
+    log('migrate to liquidate', { liqableAccount });
+
+    await contractWrite({
+      wallet,
+      contract: 'LegacyMarketProxy',
+      func: 'migrateOnBehalf',
+      args: [liqableAccount, 818182],
+    });
+    await provider.send('anvil_stopImpersonatingAccount', [owner]);
+
+    const liqAccountBalance = parseFloat(
+      ethers.utils.formatEther(await V2x.balanceOf(liqableAccount))
+    );
+
+    assert.equal(liqAccountBalance, 0);
+
+    try {
+      await AccountProxy.ownerOf(818182);
+    } catch (err) {
+      assert(err.toString().includes('TokenDoesNotExist'));
+    }
   });
 });
