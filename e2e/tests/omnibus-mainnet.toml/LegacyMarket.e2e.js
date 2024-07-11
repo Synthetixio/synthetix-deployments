@@ -18,9 +18,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     provider
   );
 
+  const USDProxy = new ethers.Contract(
+    require('../../deployments/USDProxy.json').address,
+    require('../../deployments/USDProxy.json').abi,
+    provider
+  );
+
   const V2x = new ethers.Contract(
     require('../../deployments/V2x.json').address,
     require('../../deployments/V2x.json').abi,
+    provider
+  );
+
+  const V2xUsd = new ethers.Contract(
+    require('../../deployments/V2xUsd.json').address,
+    require('../../deployments/V2xUsd.json').abi,
     provider
   );
 
@@ -86,5 +98,51 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.deepEqual(accountInfo.totalAssigned, accountInfo.totalDeposited);
     // here we just assert that we have more than enough deposited. calculating the actual amount expected would required reading into reward escrow and doing some complicated stuff to figure out already vested amounts and etc.
     assert(accountInfo.totalDeposited - accountInfo.totalLocked >= snxBalance);
+  });
+
+  // note: this test effectively has to run after the test above
+  it('should allow conversion of sUSD tokens', async () => {
+    const walletAddress = '0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92'; // pdao address (for now)
+    const oldUsdBalance =
+      parseFloat(ethers.utils.formatEther(await V2xUsd.balanceOf(walletAddress))) - 1;
+    log({ oldUsdBalance, oldUsdBalance });
+
+    const migratedBalance = oldUsdBalance / 10;
+
+    if (!oldUsdBalance) {
+      return;
+    }
+
+    await provider.send('anvil_impersonateAccount', [walletAddress]);
+    const wallet = provider.getSigner(walletAddress);
+
+    log('mint newusd', { walletAddress, oldUsdBalance });
+
+    await contractWrite({
+      wallet,
+      contract: 'V2xUsd',
+      func: 'approve',
+      args: [LegacyMarketProxy.address, ethers.utils.parseEther(migratedBalance.toString())],
+    });
+
+    await contractWrite({
+      wallet,
+      contract: 'LegacyMarketProxy',
+      func: 'convertUSD',
+      args: [ethers.utils.parseEther(migratedBalance.toString())],
+    });
+    await provider.send('anvil_stopImpersonatingAccount', [walletAddress]);
+
+    const oldUsdBalanceAfter = parseFloat(
+      ethers.utils.formatEther(await V2xUsd.balanceOf(walletAddress))
+    );
+
+    assert(oldUsdBalanceAfter < oldUsdBalance);
+
+    const newUsdBalanceAfter = parseFloat(
+      ethers.utils.formatEther(await USDProxy.balanceOf(walletAddress))
+    );
+
+    assert.equal(newUsdBalanceAfter, migratedBalance);
   });
 });

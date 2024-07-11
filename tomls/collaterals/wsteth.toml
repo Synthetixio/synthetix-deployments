@@ -1,5 +1,5 @@
 [pull.wsteth]
-source = "wsteth-token"
+source = "<%= settings.wsteth_package %>"
 
 [invoke.configureWstethCollateral]
 target = ["system.CoreProxy"]

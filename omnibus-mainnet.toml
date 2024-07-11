@@ -34,6 +34,9 @@ defaultValue = "synthetix-legacy-market:3.3.5"
 [setting.susde_package]
 defaultValue = 'susde-token'
 
+[setting.wsteth_package]
+defaultValue = 'wsteth-token'
+
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
