@@ -155,9 +155,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should liquidate an account below c-ratio', async () => {
     const liqableAccount = '0x3ad921041f2b53ab819e6c87a7f186f1b7b4d0ac';
 
-    const owner = await LegacyMarketProxy.owner();
-    await provider.send('anvil_impersonateAccount', [owner]);
-    const wallet = provider.getSigner(owner);
+    const liquidator = '0x42f9134E9d3Bf7eEE1f8A5Ac2a4328B059E7468c';
+    await provider.send('anvil_impersonateAccount', [liquidator]);
+    const wallet = provider.getSigner(liquidator);
 
     log('migrate to liquidate', { liqableAccount });
 
@@ -167,7 +167,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       func: 'migrateOnBehalf',
       args: [liqableAccount, 818182],
     });
-    await provider.send('anvil_stopImpersonatingAccount', [owner]);
+    await provider.send('anvil_stopImpersonatingAccount', [liquidator]);
 
     const liqAccountBalance = parseFloat(
       ethers.utils.formatEther(await V2x.balanceOf(liqableAccount))
