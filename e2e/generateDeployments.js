@@ -473,13 +473,7 @@ async function run() {
 
   contracts.AllErrors = {
     address: ethers.constants.AddressZero,
-    abi: Array.from(
-      new Set(
-        Object.values(contracts)
-          .flatMap(({ abi }) => abi.filter((item) => item.type === 'error'))
-          .map((item) => JSON.stringify(item))
-      )
-    ).map((item) => JSON.parse(item)),
+    abi: Object.values(contracts).flatMap(({ abi }) => abi.filter((item) => item.type === 'error')),
   };
 
   log('Writing', `deployments/meta.json`);
@@ -489,23 +483,21 @@ async function run() {
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
 
   for (const [name, { address, abi }] of Object.entries(contracts)) {
+    const dedupedAbi = Array.from(new Set(readableAbi(abi)));
     log('Writing', `deployments/${name}.json`, { address });
     await fs.writeFile(
       `${__dirname}/deployments/${name}.json`,
-      JSON.stringify({ address, abi: readableAbi(abi) }, null, 2)
+      JSON.stringify({ address, abi: dedupedAbi }, null, 2)
     );
-  }
-
-  for (const [name, { abi }] of Object.entries(contracts)) {
     log('Writing', `deployments/abi/${name}.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.json`,
-      JSON.stringify(jsonAbi(abi), null, 2)
+      JSON.stringify(jsonAbi(dedupedAbi), null, 2)
     );
     log('Writing', `deployments/abi/${name}.readable.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.readable.json`,
-      JSON.stringify(readableAbi(abi), null, 2)
+      JSON.stringify(dedupedAbi, null, 2)
     );
   }
 }
