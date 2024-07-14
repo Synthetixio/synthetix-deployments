@@ -1,26 +1,32 @@
 name = "synthetix-omnibus"
-version = "42"
+version = "44"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
-    "tomls/core.toml",                                                   # Provision the core system
-    "tomls/settings.toml",                                               # Apply minimum liquidity ratio and withdrawal timeout
-    "tomls/permissions.toml",                                            # Allow deployer to create pools
-    "tomls/permit-deniers.toml",                                         # Add feature flag deniers to perps and core systems
-    "tomls/pools/spartan-council.toml",                                  # Create Spartan Council Pool
+    "tomls/core.toml",
+    "tomls/settings.toml",
+    "tomls/permissions.toml",
+    "tomls/permit-deniers.toml",
+    "tomls/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/common/bigcap-settings.toml",
-    "tomls/omnibus-base-mainnet-andromeda/spot/usdc.toml",               # sUSDC spot market/wrapper
-    "tomls/permit-all-perps-perpsHighcapSystem.toml",                    # Enable perps market
+    "tomls/permit-all-perps-perpsHighcapSystem.toml",
     "tomls/permit-pdao-createMarket.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/perps-keeper-cost.toml", # Add gas oracle for keeper fees
+    "tomls/omnibus-base-mainnet-andromeda/perps/perps-keeper-cost.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml",
-    # Collaterals
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/susdc.toml",
-    "tomls/collaterals/susdc.toml",
+
+    # USDC
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/USDC.toml",
+
+    # stataUSDC
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstataUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/stataUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
+
     # BTC
     "tomls/omnibus-base-mainnet-andromeda/perps/btc-invokes.toml",
     "tomls/oracles/pyth-btc.toml",
@@ -379,6 +385,10 @@ args = [
 
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+
+[setting.stataBasUSDC_address]
+defaultValue = "0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
+description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 
 [setting.snx_address]
 defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
