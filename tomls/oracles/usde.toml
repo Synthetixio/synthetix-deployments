@@ -2,7 +2,7 @@
 
 [setting.usde_chainlink_staleness_tolerance]
 
-[invoke.register_usde_oracle_node]
+[invoke.registerUsdeOracleManagerNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -15,7 +15,6 @@ args = [
 ]
 extra.usde_oracle_id_raw.event = "NodeRegistered"
 extra.usde_oracle_id_raw.arg = 0
-
 depends = ['provision.system', 'setting.usde_aggregator_address']
 
 [invoke.registerUsdeWithStaleness]
@@ -30,4 +29,3 @@ args = [
 ]
 extra.usde_oracle_id.event = "NodeRegistered"
 extra.usde_oracle_id.arg = 0
-

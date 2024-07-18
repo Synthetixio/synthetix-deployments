@@ -2,7 +2,7 @@
 
 [setting.susde_chainlink_staleness_tolerance]
 
-[invoke.register_susde_oracle_node]
+[invoke.registerSusdeOracleManagerNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -15,7 +15,6 @@ args = [
 ]
 extra.susde_oracle_id_raw.event = "NodeRegistered"
 extra.susde_oracle_id_raw.arg = 0
-
 depends = ['provision.system', 'setting.susde_aggregator_address']
 
 [invoke.registerSusdeWithStaleness]

@@ -7,10 +7,10 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     #"tomls/oracles/wsteth.toml",
-    "tomls/oracles/susde.toml",
+    #"tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
     #"tomls/collaterals/wsteth.toml",
-    "tomls/collaterals/susde.toml",
+    #"tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
     "tomls/markets/spot-factory.toml",
@@ -111,16 +111,16 @@ defaultValue = "0"
 [import.usde]
 source = "usde-token"
 
-[invoke.SpotMarketProxy_setWrapper_usde]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usde_market_id %>"]
-func = "setWrapper"
-args = [
-    "<%= extras.synth_usde_market_id %>",
-    "<%= imports.usde.contracts.Token.address %>",
-    "<%= settings.synth_usde_max_market_collateral %>",
-]
+#[invoke.SpotMarketProxy_setWrapper_usde]
+#target = ["spotFactory.SpotMarketProxy"]
+#fromCall.func = "getMarketOwner"
+#fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+#func = "setWrapper"
+#args = [
+    #"<%= extras.synth_usde_market_id %>",
+    #"<%= imports.usde.contracts.Token.address %>",
+    #"<%= settings.synth_usde_max_market_collateral %>",
+#]
 
 [invoke.setScPoolConfig]
 target = ["system.CoreProxy"]
