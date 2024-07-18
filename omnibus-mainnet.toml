@@ -117,9 +117,9 @@ source = "usde-token"
 #fromCall.args = ["<%= extras.synth_usde_market_id %>"]
 #func = "setWrapper"
 #args = [
-    #"<%= extras.synth_usde_market_id %>",
-    #"<%= imports.usde.contracts.Token.address %>",
-    #"<%= settings.synth_usde_max_market_collateral %>",
+#"<%= extras.synth_usde_market_id %>",
+#"<%= imports.usde.contracts.Token.address %>",
+#"<%= settings.synth_usde_max_market_collateral %>",
 #]
 
 [invoke.setScPoolConfig]
@@ -133,3 +133,9 @@ args = [
         { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 100, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
+
+[invoke.pauseLMMigration]
+target = ["legacyMarket.Proxy"]
+fromCall.func = "owner"
+func = "setPauseMigration"
+args = [true]
