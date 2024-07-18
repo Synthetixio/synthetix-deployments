@@ -6,10 +6,10 @@ include = [
     "tomls/ccip-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    "tomls/oracles/wsteth.toml",
+    #"tomls/oracles/wsteth.toml",
     "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
-    "tomls/collaterals/wsteth.toml",
+    #"tomls/collaterals/wsteth.toml",
     "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
@@ -49,8 +49,9 @@ defaultValue = "snax"
 [setting.snx_address]
 defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
-[setting.wsteth_aggregator_address]
-defaultValue = "0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8"
+# update to actual wstETH oracle address when becomes available
+#[setting.wsteth_aggregator_address]
+#defaultValue = ""
 
 [setting.susde_aggregator_address]
 defaultValue = "0xFF3BC18cCBd5999CE63E788A1c250a88626aD099"
@@ -61,14 +62,20 @@ defaultValue = "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
 [setting.snx_aggregator_address]
 defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
 
+[setting.susde_chainlink_staleness_tolerance]
+defaultValue = "129600"
+
+[setting.usde_chainlink_staleness_tolerance]
+defaultValue = "129600"
+
 [setting.snx_chainlink_staleness_tolerance]
 defaultValue = "129600"
 
 [setting.snx_liquidation_reward]
-defaultValue = "10000000000000000000"
+defaultValue = "50000000000000000000"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "2000000000000000000"
+defaultValue = "1500000000000000000"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"
@@ -98,16 +105,7 @@ defaultValue = "0"
 defaultValue = "0"
 
 [setting.synth_usde_max_market_collateral]
-defaultValue = "<%= parseEther('100000000') %>"
-
-[setting.pyth_price_verification_address]
-defaultValue = "0x4305FB66699C3B2702D4d05CF36551390A4c69C6"
-
-[setting.pythFeedUrl]
-defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
-
-[setting.pythUsdeFeedId]
-defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
+defaultValue = "0"
 
 # we want to enable the spot market wrapper for usde
 [import.usde]
@@ -132,7 +130,6 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 99, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= settings.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 100, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
