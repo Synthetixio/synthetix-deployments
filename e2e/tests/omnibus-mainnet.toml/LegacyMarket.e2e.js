@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { getLpPosition } = require('../../tasks/getLpPosition');
 const { getAccountCollateral } = require('../../tasks/getAccountCollateral');
+const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { ethers } = require('ethers');
 const { syncTime } = require('../../tasks/syncTime');
 const { contractWrite } = require('../../tasks/contractWrite');
@@ -94,7 +95,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
 
     log('the account should have the same debt as before');
-    const newDebt = (await getLpPosition({ accountId, poolId: 1, symbol: 'SNX' })).debt;
+    const lpPosition = await getLpPosition({ accountId, poolId: 1, symbol: 'SNX' });
+    const newDebt = lpPosition.debt;
     log({ newDebt });
     assert.deepEqual(newDebt, debt);
 
@@ -104,6 +106,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.deepEqual(accountInfo.totalAssigned, accountInfo.totalDeposited);
     // here we just assert that we have more than enough deposited. calculating the actual amount expected would required reading into reward escrow and doing some complicated stuff to figure out already vested amounts and etc.
     assert(accountInfo.totalDeposited - accountInfo.totalLocked >= snxBalance);
+
+    log('the account should not be in liquidatable state');
+    const liquidationRatio = parseFloat(
+      ethers.utils.formatUnits((await getCollateralConfig('SNX')).liquidationRatioD18)
+    );
+
+    log({
+      liquidationRatio,
+      accountRatio: lpPosition.positionCratio,
+      vaultRatio: lpPosition.vaultCratio,
+    });
+
+    // the account should still be healthy after migration (massive sanity check)
+    assert(lpPosition.positionCratio >= liquidationRatio);
+    assert(lpPosition.vaultCratio >= liquidationRatio);
   });
 
   // note: this test effectively has to run after the test above
