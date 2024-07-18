@@ -73,6 +73,9 @@ defaultValue = "0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC"
 [setting.snx_chainlink_staleness_tolerance]
 defaultValue = "86400"
 
+[setting.snx_liquidation_reward]
+defaultValue = "50000000000000000000"
+
 [setting.weth_liquidation_reward]
 defaultValue = "10000000000000000000"
 
