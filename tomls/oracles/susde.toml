@@ -1,6 +1,8 @@
 [setting.susde_aggregator_address]
 
-[invoke.register_susde_oracle_node]
+[setting.susde_chainlink_staleness_tolerance]
+
+[invoke.registerSusdeOracleManagerNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -11,7 +13,19 @@ args = [
     [
     ],
 ]
+extra.susde_oracle_id_raw.event = "NodeRegistered"
+extra.susde_oracle_id_raw.arg = 0
+depends = ['provision.system', 'setting.susde_aggregator_address']
+
+[invoke.registerSusdeWithStaleness]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.susde_chainlink_staleness_tolerance]) %>",
+    [
+        "<%= extras.susde_oracle_id_raw %>",
+    ],
+]
 extra.susde_oracle_id.event = "NodeRegistered"
 extra.susde_oracle_id.arg = 0
-
-depends = ['provision.system', 'setting.susde_aggregator_address']

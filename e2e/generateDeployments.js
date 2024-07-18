@@ -369,6 +369,11 @@ async function run() {
       deployments.state[
         'provision.legacyMarket'
       ].artifacts.imports.legacyMarket.imports.v2x.contracts.Synthetix;
+
+    contracts.V2xUsd =
+      deployments.state[
+        'provision.legacyMarket'
+      ].artifacts.imports.legacyMarket.imports.v2x.contracts.SynthsUSD;
   }
 
   const trustedMulticallForwarder = system?.imports?.trusted_multicall_forwarder;
