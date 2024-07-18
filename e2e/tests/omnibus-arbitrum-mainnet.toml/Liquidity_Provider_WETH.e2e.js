@@ -20,6 +20,8 @@ const { borrowUsd } = require('../../tasks/borrowUsd');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { getConfigUint } = require('../../tasks/getConfigUint');
+const { setPoolCollateralConfiguration } = require('../../tasks/setPoolCollateralConfiguration');
+const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -48,6 +50,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should disable withdrawal timeout', async () => {
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
+  });
+
+  it('should increase max collateral for the test', async () => {
+    const { tokenAddress } = await getCollateralConfig('WETH');
+    await setPoolCollateralConfiguration({
+      poolId: require('../../deployments/extras.json').spartan_council_pool_id,
+      tokenAddress,
+      collateralLimit:
+        parseFloat(
+          ethers.utils.formatEther(
+            require('../../deployments/extras.json').max_collateral_limit_weth
+          )
+        ) * 10,
+      issuanceRatio: 0,
+    });
   });
 
   it('should create new random wallet', async () => {
