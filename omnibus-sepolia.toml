@@ -193,7 +193,7 @@ defaultValue = "synthetix-bfp-market:1.0.0-alpha.2"
 # Collaterals configurations
 #
 [setting.snxusd_max_market_collateral]
-defaultValue = "<%= parseEther('100000000') %>"
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.weth_max_collateral]
 defaultValue = "<%= parseEther(String(10_000)) %>"
@@ -231,28 +231,28 @@ defaultValue = "<%= parseEther('0.25') %>"
 defaultValue = "<%= parseEther('1000') %>"
 
 [setting.min_margin_ratio]
-defaultValue = "<%= parseEther('0.05') %>"
+defaultValue = "<%= parseEther('0.02') %>"
 
 [setting.incremental_margin_scalar]
 defaultValue = "<%= parseEther('1') %>"
 
 [setting.maintenance_margin_scalar]
-defaultValue = "<%= parseEther('0.5') %>"
+defaultValue = "<%= parseEther('0.3') %>"
 
 [setting.max_initial_margin_ratio]
 defaultValue = "<%= parseEther('0.9') %>"
 
 [setting.liquidation_reward_percent]
-defaultValue = "<%= parseEther('0.0001') %>"
+defaultValue = "<%= parseEther('0.0005') %>"
 
 [setting.liquidation_limit_scalar]
 defaultValue = "<%= parseEther('1') %>"
 
 [setting.liquidation_max_pd]
-defaultValue = "<%= parseEther('0.0006') %>"
+defaultValue = "<%= parseEther('0.0012') %>"
 
 [setting.liquidation_window_duration]
-defaultValue = "36"
+defaultValue = "90"
 
 # --- Provision bfp market --- #
 #
@@ -342,11 +342,11 @@ keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "<%= settings.deployer %>"                          # TODO, this is currently deployer, change to a keeper
-collateralDiscountScalar = "<%= settings.collateral_discount_scalar %>"
+keeperLiquidationEndorsed = "<%= settings.deployer %>"                         # TODO, this is currently deployer, change to a keeper
+collateralDiscountScalar = 1
 minCollateralDiscount = "<%= settings.min_collateral_discount %>"
-maxCollateralDiscount = "<%= settings.max_collateral_discount %>"
-utilizationBreakpointPercent = "<%= settings.utilization_breakpoint_percent %>"
+maxCollateralDiscount = 0.1
+utilizationBreakpointPercent = 0.025
 lowUtilizationSlopePercent = "<%= settings.low_utilization_slope_percent  %>"
 highUtilizationSlopePercent = "<%= settings.high_utilization_slope_percent %>"
 
