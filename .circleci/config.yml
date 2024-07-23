@@ -110,6 +110,26 @@ commands:
           name: "Wait for IPFS daemon to start"
           command: wget --output-document - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
 
+  wait-for-cannon-build:
+    steps:
+      - run:
+          name: "Wait for cannon to complete the build"
+          command: |
+            touch ./cannon-build.log
+            # If the information wasn't found, start tailing the log
+            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
+                while IFS= read -r line
+                do
+                    echo $line
+                    if [[ $line == *"The local node will continue running at"* ]]; then
+                        break
+                    fi
+                    if [[ $line == *"An error occured during build"* ]]; then
+                        exit 1
+                    fi
+                done < <(tail -f -n0 ./cannon-build.log)
+            fi
+
   github-pr:
     parameters:
       working_directory:
@@ -255,21 +275,9 @@ jobs:
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-                | tee ./cannon-build.log
+                2>&1 | tee ./cannon-build.log
 
-      - run:
-          name: "Wait for cannon to complete the build"
-          command: |
-            touch ./cannon-build.log
-            # If the information wasn't found, start tailing the log
-            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
-                while IFS= read -r line
-                do
-                    if [[ $line == *"The local node will continue running at"* ]]; then
-                        break
-                    fi
-                done < <(tail -f -n0 ./cannon-build.log)
-            fi
+      - wait-for-cannon-build
 
       - store_artifacts:
           path: "./cannon-build.log"
@@ -361,21 +369,9 @@ jobs:
               --dry-run \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-                | tee ./cannon-build.log
+                2>&1 | tee ./cannon-build.log
 
-      - run:
-          name: "Wait for cannon to complete the build"
-          command: |
-            touch ./cannon-build.log
-            # If the information wasn't found, start tailing the log
-            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
-                while IFS= read -r line
-                do
-                    if [[ $line == *"The local node will continue running at"* ]]; then
-                        break
-                    fi
-                done < <(tail -f -n0 ./cannon-build.log)
-            fi
+      - wait-for-cannon-build
 
       - store_artifacts:
           path: "./cannon-build.log"
@@ -661,21 +657,9 @@ jobs:
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-                | tee ./cannon-build.log
+                2>&1 | tee ./cannon-build.log
 
-      - run:
-          name: "Wait for cannon to complete the build"
-          command: |
-            touch ./cannon-build.log
-            # If the information wasn't found, start tailing the log
-            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
-                while IFS= read -r line
-                do
-                    if [[ $line == *"The local node will continue running at"* ]]; then
-                        break
-                    fi
-                done < <(tail -f -n0 ./cannon-build.log)
-            fi
+      - wait-for-cannon-build
 
       - store_artifacts:
           path: "./cannon-build.log"
