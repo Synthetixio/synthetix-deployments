@@ -16,7 +16,7 @@ defaultValue = "<%= MaxUint256 %>"
 defaultValue = "<%= parseEther('1.1') %>"
 
 [setting.statausdc_liquidation_reward]
-defaultValue = "<%= parseEther('0.005') %>"
+defaultValue = "<%= parseEther('1') %>"
 
 [setting.statausdc_min_delegation]
 defaultValue = "<%= parseEther('100') %>"
