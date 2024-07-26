@@ -60,7 +60,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should migrate account', async () => {
     const accountId = 80800;
-    const walletAddress = '0x8cA24021E3Ee3B5c241BBfcee0712554D7Dc38a1'; // random rich person's wallet
+    const walletAddress = '0xb452111A71C9D8E01bE7246Db51E9F25f2430471'; // random rich person's wallet
     const snxBalance = parseFloat(ethers.utils.formatEther(await V2x.balanceOf(walletAddress)));
     const debt = parseFloat(
       ethers.utils.formatEther(
