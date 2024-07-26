@@ -60,7 +60,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should migrate account', async () => {
     const accountId = 80800;
-    const walletAddress = '0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92'; // pdao address (for now)
+    const walletAddress = '0x8cA24021E3Ee3B5c241BBfcee0712554D7Dc38a1'; // random rich person's wallet
     const snxBalance = parseFloat(ethers.utils.formatEther(await V2x.balanceOf(walletAddress)));
     const debt = parseFloat(
       ethers.utils.formatEther(
@@ -170,7 +170,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should liquidate an account below c-ratio', async () => {
-    const liqableAccount = '0x3ad921041f2b53ab819e6c87a7f186f1b7b4d0ac';
+    const liqableAccount = '0xb452111A71C9D8E01bE7246Db51E9F25f2430471';
 
     const liquidator = '0x42f9134E9d3Bf7eEE1f8A5Ac2a4328B059E7468c';
     await provider.send('anvil_impersonateAccount', [liquidator]);
