@@ -16,4 +16,3 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "addToFeatureFlagAllowlist"
 args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.pdao %>"]
-
