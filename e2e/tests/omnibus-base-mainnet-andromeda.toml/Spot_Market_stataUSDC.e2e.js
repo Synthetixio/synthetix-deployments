@@ -57,7 +57,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set stataBasUSDC balance to 1000', async () => {
+  it('should set stataBasUSDC balance to 100', async () => {
     assert.equal(
       await getCollateralBalance({ address, symbol: 'stataBasUSDC' }),
       0,
@@ -65,11 +65,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await setTokenBalance({
       wallet,
-      balance: 1000,
+      balance: 100,
       tokenAddress: require('../../deployments/extras.json').stataBasUSDC_address,
       friendlyWhale: '0xBA12222222228d8Ba445958a75a0704d566BF2C8',
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'stataBasUSDC' }), 1000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'stataBasUSDC' }), 100);
   });
 
   it('should approve stataBasUSDC spending for SpotMarket', async () => {
@@ -97,21 +97,21 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should wrap 1000 stataBasUSDC -> sStataUSDC', async () => {
+  it('should wrap 100 stataBasUSDC -> sStataUSDC', async () => {
     const synthBalance = await wrapCollateral({
       wallet,
       symbol: 'stataBasUSDC',
       synthAddress: require('../../deployments/extras.json').synth_stata_usdc_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_stata_usdc_market_id,
-      amount: 1000,
+      amount: 100,
     });
-    assert.equal(synthBalance, 1000);
+    assert.equal(synthBalance, 100);
     assert.equal(
       await getTokenBalance({
         walletAddress: address,
         tokenAddress: require('../../deployments/extras.json').synth_stata_usdc_token_address,
       }),
-      1000
+      100
     );
   });
 
@@ -120,12 +120,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_stata_usdc_market_id,
-      synthAmount: 500,
-      minUsdAmount: 400,
+      synthAmount: 50,
+      minUsdAmount: 40,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'snxUSD' })) >= 400,
-      'snxUSD balance >= 400'
+      (await getCollateralBalance({ address, symbol: 'snxUSD' })) >= 40,
+      'snxUSD balance >= 40'
     );
   });
 
@@ -154,32 +154,32 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 400 snxUSD -> sStataUSDC', async () => {
+  it('should swap 40 snxUSD -> sStataUSDC', async () => {
     await spotBuy({
       wallet,
       marketId: require('../../deployments/extras.json').synth_stata_usdc_market_id,
-      usdAmount: 400,
-      minAmountReceived: 300,
+      usdAmount: 40,
+      minAmountReceived: 30,
     });
     assert.ok(
       (await getTokenBalance({
         walletAddress: address,
         tokenAddress: require('../../deployments/extras.json').synth_stata_usdc_token_address,
       })) >=
-        500 + 300,
-      `sStataUSDC balance >= ${500 + 300}`
+        50 + 30,
+      `sStataUSDC balance >= ${50 + 30}`
     );
   });
 
-  it('should unwrap 500 sStataUSDC -> stataBasUSDC', async () => {
+  it('should unwrap 50 sStataUSDC -> stataBasUSDC', async () => {
     const synthBalance = await unwrapCollateral({
       wallet,
       symbol: 'stataBasUSDC',
       synthAddress: require('../../deployments/extras.json').synth_stata_usdc_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_stata_usdc_market_id,
-      amount: 500,
+      amount: 50,
     });
-    assert.ok(synthBalance < 500);
-    assert.equal(await getCollateralBalance({ address, symbol: 'stataBasUSDC' }), 500);
+    assert.ok(synthBalance < 50);
+    assert.equal(await getCollateralBalance({ address, symbol: 'stataBasUSDC' }), 50);
   });
 });
