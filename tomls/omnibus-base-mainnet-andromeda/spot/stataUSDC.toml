@@ -20,7 +20,7 @@ defaultValue = "<%= parseEther('100') %>"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Static aUSDC", "sStataUSDC", "<%= settings.owner %>"]
+args = ["Synthetic Static aUSDC", "sStataUSDC", "<%= settings.pdao %>"]
 extra.synth_stata_usdc_market_id.event = "SynthRegistered"
 extra.synth_stata_usdc_market_id.arg = 0
 extra.synth_stata_usdc_token_address.event = "SynthRegistered"
