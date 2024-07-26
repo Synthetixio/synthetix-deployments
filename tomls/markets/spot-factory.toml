@@ -9,3 +9,11 @@ options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
 depends = ["provision.system"]
+
+# ensure that, in any case, the pdao can create synths
+[invoke.allowPdaoToCreateSynth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.pdao %>"]
+
