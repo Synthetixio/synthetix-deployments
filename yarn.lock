@@ -1881,6 +1881,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"debug@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "debug@npm:4.3.6"
+  dependencies:
+    ms: "npm:2.1.2"
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 10/d3adb9af7d57a9e809a68f404490cf776122acca16e6359a2702c0f462e510e91f9765c07f707b8ab0d91e03bad57328f3256f5082631cefb5393d0394d50fb7
+  languageName: node
+  linkType: hard
+
 "decamelize-keys@npm:^1.1.0":
   version: 1.1.1
   resolution: "decamelize-keys@npm:1.1.1"
@@ -4529,7 +4541,7 @@ __metadata:
     "@pythnetwork/pyth-evm-js": "npm:^1.56.1"
     "@usecannon/builder": "npm:2.15.8"
     "@usecannon/cli": "npm:2.15.8"
-    debug: "npm:^4.3.5"
+    debug: "npm:^4.3.6"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.6"
     mocha: "npm:^10.7.0"
