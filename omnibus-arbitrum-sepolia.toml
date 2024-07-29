@@ -1,10 +1,11 @@
 name = "synthetix-omnibus"
-version = "12"
+version = "13"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
     "tomls/core.toml",
     "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-highcap-factory.toml",
     "tomls/omnibus-arbitrum-sepolia/permit-deniers.toml",
 
     "tomls/omnibus-arbitrum-sepolia/permissions.toml",
@@ -40,6 +41,13 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
+
+    #
+    # Perps
+    #
+
+    # ETH
+    "tomls/omnibus-arbitrum-sepolia/perps/eth.toml",
 ]
 
 [setting.target_preset]
@@ -112,8 +120,14 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.commitment_price_delay]
+defaultValue = "2"
+
 [setting.big_cap_default_staleness_tolerance]
 defaultValue = "3600"
+
+[setting.big_cap_strict_staleness_tolerance]
+defaultValue = "60"
 
 [setting.big_cap_settlement_window_duration]
 defaultValue = "60"
@@ -291,6 +305,7 @@ args = [
     [
         { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 
