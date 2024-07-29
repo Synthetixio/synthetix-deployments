@@ -4,16 +4,16 @@ defaultValue = "<%= parseEther(String(5_000_000)) %>"
 [setting.spotStrictStalenessTolerance]
 defaultValue = "60"
 
-[setting.sstatausdc_issuance_ratio]
+[setting.statausdc_issuance_ratio]
 defaultValue = "<%= MaxUint256 %>"
 
-[setting.sstatausdc_liquidation_ratio]
+[setting.statausdc_liquidation_ratio]
 defaultValue = "<%= parseEther('1.1') %>"
 
-[setting.sstatausdc_liquidation_reward]
-defaultValue = "<%= parseEther('0.005') %>"
+[setting.statausdc_liquidation_reward]
+defaultValue = "<%= parseEther('1') %>"
 
-[setting.sstatausdc_min_delegation]
+[setting.statausdc_min_delegation]
 defaultValue = "<%= parseEther('100') %>"
 
 [invoke.SpotMarketProxy_createSynth_stataUSDC]
@@ -71,8 +71,8 @@ func = "configureCollateral"  # "args" see below in the multiline block
 [[invoke.CoreProxy_configureCollateral_stataUSDC.args]]
 tokenAddress = "<%= settings.stataBasUSDC_address %>"
 oracleNodeId = "<%= extras.erc_4626_to_assets_ratio_oracle_id %>"
-issuanceRatioD18 = "<%= settings.sstatausdc_issuance_ratio %>"
-liquidationRatioD18 = "<%= settings.sstatausdc_liquidation_ratio %>"
-liquidationRewardD18 = "<%= settings.sstatausdc_liquidation_reward  %>"
-minDelegationD18 = "<%= settings.sstatausdc_min_delegation %>"
+issuanceRatioD18 = "<%= settings.statausdc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.statausdc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.statausdc_liquidation_reward  %>"
+minDelegationD18 = "<%= settings.statausdc_min_delegation %>"
 depositingEnabled = false
