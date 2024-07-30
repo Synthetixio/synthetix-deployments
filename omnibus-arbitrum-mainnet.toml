@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "6"
+version = "7"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -158,7 +158,7 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.max_collateral_limit_weth]
-defaultValue = "<%= parseEther(String(2_700)) %>"
+defaultValue = "<%= parseEther(String(5_400)) %>"
 
 #
 #
