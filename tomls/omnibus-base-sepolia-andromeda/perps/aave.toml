@@ -17,10 +17,10 @@ defaultValue = "0.0002000000"
 defaultValue = "0.0010000000"
 
 [setting.perpsAaveMaxMarketSize]
-defaultValue = "<%=String(2_022) %>"
+defaultValue = "<%=String(15_000) %>"
 
 [setting.perpsAaveMaxMarketValue]
-defaultValue = "<%=String(100_000) %>"
+defaultValue = "<%=String(1_000_000) %>"
 
 [setting.perpsAaveInitialMarginRatio]
 defaultValue = "3.38"
