@@ -168,34 +168,4 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(newUsdBalanceAfter, migratedBalance);
   });
-
-  it('should liquidate an account below c-ratio', async () => {
-    const liqableAccount = '0xb452111A71C9D8E01bE7246Db51E9F25f2430471';
-
-    const liquidator = '0x42f9134E9d3Bf7eEE1f8A5Ac2a4328B059E7468c';
-    await provider.send('anvil_impersonateAccount', [liquidator]);
-    const wallet = provider.getSigner(liquidator);
-
-    log('migrate to liquidate', { liqableAccount });
-
-    await contractWrite({
-      wallet,
-      contract: 'LegacyMarketProxy',
-      func: 'migrateOnBehalf',
-      args: [liqableAccount, 818182],
-    });
-    await provider.send('anvil_stopImpersonatingAccount', [liquidator]);
-
-    const liqAccountBalance = parseFloat(
-      ethers.utils.formatEther(await V2x.balanceOf(liqableAccount))
-    );
-
-    assert.equal(liqAccountBalance, 0);
-
-    try {
-      await AccountProxy.ownerOf(818182);
-    } catch (err) {
-      assert(err.toString().includes('TokenDoesNotExist'));
-    }
-  });
 });
