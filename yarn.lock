@@ -883,13 +883,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.56.1":
-  version: 1.56.1
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.56.1"
+"@pythnetwork/pyth-evm-js@npm:^1.61.0":
+  version: 1.61.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.61.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/88bf2ad673e598f90fd5fae597308a39ba6cb9cc9e855fae98d2e8aa37cdb07c09b36931438e9afb181efe3ad71c0d00160970b7d4b0ee21cbc718eb98b43275
+  checksum: 10/4e0f054ef3de3f8961ae108713d24b5936e837faadb32d84267c130c6b82a09030cf3f41b979a32bb595d46f92a062e0fc98a2331259d61570ee48035df9b8c7
   languageName: node
   linkType: hard
 
@@ -4526,7 +4526,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.56.1"
+    "@pythnetwork/pyth-evm-js": "npm:^1.61.0"
     "@usecannon/builder": "npm:2.15.8"
     "@usecannon/cli": "npm:2.15.8"
     debug: "npm:^4.3.6"
