@@ -14,12 +14,6 @@ options.decimals = "18"
 defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
 description = "Mock usdc address"
 
-[setting.synthBtcMaxMarketCollateral]
-defaultValue = "100"
-
-[setting.synthBtcSkewScale]
-defaultValue = "100000"
-
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"

@@ -29,11 +29,9 @@ include = [
     "tomls/markets/common/bigcap-settings.toml",
 
     # Spot Markets
-    # WETH
     "tomls/omnibus-arbitrum-sepolia-octopus/spot/eth.toml",
-
-    # BTC
     "tomls/omnibus-arbitrum-sepolia-octopus/spot/btc.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/spot/usdc.toml",
 
     # Perps Settings
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/global.toml",
@@ -47,6 +45,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/btc.toml",
+    "tomls/omnibus-arbitrum-sepolia-octopus/perps/collaterals/usdc.toml",
 ]
 
 [setting.target_preset]
@@ -120,6 +119,7 @@ args = [
     [
         { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
