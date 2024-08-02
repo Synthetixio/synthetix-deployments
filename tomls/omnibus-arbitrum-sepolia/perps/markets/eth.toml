@@ -22,7 +22,11 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.eth_perps_market_id %>", "Ethereum", "ETH"]
-depends = ["var.perps_eth_market_settings"]
+depends = [
+    "var.perps_eth_market_settings",
+    "invoke.PerpsMarketProxy_setFeatureFlagAllowAll_perpsSystem",
+    "invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_deployer",
+]
 
 [invoke.setPerpsPriceEth]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -46,7 +50,7 @@ args = [
 ]
 extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.eth_pyth_settlement_strategy.arg = 2
-depends = ["invoke.createEthPerpsMarket"]
+depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]

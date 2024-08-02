@@ -31,11 +31,11 @@ args = [
     "<%= settings.perps_max_collaterals_per_account %>",
 ]
 
-[invoke.setPerpsMarketKeeperCostNodeId]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "updateKeeperCostNodeId"
-args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
+# [invoke.setPerpsMarketKeeperCostNodeId]
+# target = ["perpsFactory.PerpsMarketProxy"]
+# fromCall.func = "owner"
+# func = "updateKeeperCostNodeId"
+# args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
 
 [invoke.setInterestRateParams]
 target = ["perpsFactory.PerpsMarketProxy"]
