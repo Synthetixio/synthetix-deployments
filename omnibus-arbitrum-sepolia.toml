@@ -5,7 +5,7 @@ preset = "main"
 include = [
     "tomls/core.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-highcap-factory.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps-highcap-factory.toml",
     "tomls/omnibus-arbitrum-sepolia/permit-deniers.toml",
 
     "tomls/omnibus-arbitrum-sepolia/permissions.toml",
@@ -55,7 +55,7 @@ include = [
     #
 
     # Perps Settings
-    # "tomls/omnibus-arbitrum-sepolia/perps/perps-keeper-cost.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/perps-keeper-cost.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/global.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/referrers.toml",
     # Perps Markets
@@ -358,9 +358,9 @@ args = [
     [
         { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 
