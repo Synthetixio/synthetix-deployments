@@ -32,7 +32,7 @@
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.perpsRndrMarketId %>", "Render", "RNDR"]
+args = ["<%= settings.perpsRndrMarketId %>", "Render", "RENDER"]
 
 [invoke.setPerpsPriceRndr]
 target = ["perpsFactory.PerpsMarketProxy"]
