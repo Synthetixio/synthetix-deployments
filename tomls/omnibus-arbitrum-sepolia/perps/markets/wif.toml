@@ -1,0 +1,144 @@
+[var.perps_wif_market_settings]
+wif_perps_market_id = "400"
+wif_perps_market_skew_scale = "<%= String(15_000_000) %>"
+wif_perps_market_max_funding_velocity = "36"
+wif_perps_maker_fee_ratio = "0"
+wif_perps_taker_fee_ratio = "0.0010"
+wif_perps_max_market_size = "<%= String(2_500_000) %>"
+wif_perps_max_market_value = "<%= String(3_000_000) %>"
+wif_perps_initial_margin_ratio = "1"
+wif_perps_maintenance_margin_scalar = "0.5"
+wif_perps_minimum_initial_margin_ratio = "0.04"
+wif_perps_flag_reward_ratio_d18 = "0.0003"
+wif_perps_max_liquidation_limit_accumulation_multiplier = "1.5"
+wif_perps_max_seconds_in_liquidation_window = "30"
+wif_perps_minimum_position_margin = "50"
+wif_perps_locked_oi_ratio = "0.50"
+wif_perps_max_liquidation_pd = "0.0005"
+wif_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
+
+[invoke.createWifPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.wif_perps_market_id %>", "dogwifhat", "Wif"]
+depends = ["var.perps_wif_market_settings"]
+
+[invoke.setPerpsPriceWif]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= extras.wif_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+# DO NOT MODIFY THIS STEP!. Edit [invoke.setPerpsWifSettlementStrategy] instead.
+[invoke.addPerpsWifSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.wif_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.wif_pyth_settlement_strategy.arg = 2
+depends = ["invoke.createWifPerpsMarket"]
+
+[invoke.setPerpsWifSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= extras.wif_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                   # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythWifFeedId %>", settlementReward = "<%= parseEther(settings.settlement_reward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+depends = [
+    'provision.perpsFactory',
+    'var.perps_wif_market_settings',
+    'invoke.addPerpsWifSettlementStrategy',
+    'provision.pyth_erc7412_wrapper',
+]
+
+[invoke.setPerpsWifFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_market_skew_scale) %>",
+    "<%= parseEther(settings.wif_perps_market_max_funding_velocity) %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+[invoke.setPerpsWifOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_maker_fee_ratio) %>",
+    "<%= parseEther(settings.wif_perps_taker_fee_ratio) %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+[invoke.setPerpsWifMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_max_market_size) %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+[invoke.setPerpsWifMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_max_market_value) %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+[invoke.setPerpsWifMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_max_liquidation_limit_accumulation_multiplier) %>",
+    "<%= settings.wif_perps_max_seconds_in_liquidation_window %>",
+    "<%= parseEther(settings.wif_perps_max_liquidation_pd) %>",
+    "<%= settings.wif_perps_endorsed_liquidator %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+[invoke.setPerpsWifLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_initial_margin_ratio) %>",
+    "<%= parseEther(settings.wif_perps_minimum_initial_margin_ratio) %>",
+    "<%= parseEther(settings.wif_perps_maintenance_margin_scalar) %>",
+    "<%= parseEther(settings.wif_perps_flag_reward_ratio_d18) %>",
+    "<%= parseEther(settings.wif_perps_minimum_position_margin) %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
+
+[invoke.setPerpsWifLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = [
+    "<%= settings.wif_perps_market_id %>",
+    "<%= parseEther(settings.wif_perps_locked_oi_ratio) %>",
+]
+depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
