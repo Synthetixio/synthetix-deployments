@@ -1,0 +1,45 @@
+[provision.usdc_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@usdc"
+options.name = "Fake USDC Coin"
+options.symbol = "fUSDC"
+options.owner = "<%= settings.owner %>"
+options.decimals = "6"
+
+[setting.usdc_address]
+defaultValue = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+description = "Mock usdc address"
+
+[var.lp_usdc_settings]
+usdc_issuance_ratio = "<%= parseEther('1.2') %>"
+usdc_liquidation_ratio = "<%= parseEther('1.05') %>"
+usdc_liquidation_reward = "<%= parseEther('1') %>"
+usdc_min_delegation = "<%= parseEther('100') %>"
+max_collateral_limit_usdc = "<%= parseEther(String(10_000_000)) %>"
+
+[invoke.CoreProxy_configureCollateral_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"       # "args" see below in the multiline block
+depends = ["var.lp_usdc_settings"]
+
+[[invoke.CoreProxy_configureCollateral_usdc.args]]
+tokenAddress = "<%= settings.usdc_address %>"
+oracleNodeId = "<%= extras.usdc_oracle_id %>"
+issuanceRatioD18 = "<%= settings.usdc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.usdc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.usdc_liquidation_reward %>"
+minDelegationD18 = "<%= settings.usdc_min_delegation %>"
+depositingEnabled = true
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.usdc_address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_usdc %>", issuanceRatioD18 = 0 },
+]
+depends = ["var.lp_usdc_settings"]
