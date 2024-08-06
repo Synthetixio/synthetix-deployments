@@ -2,8 +2,8 @@
 
 const { ethers } = require('ethers');
 
-async function getPerpsCollateral({ accountId }) {
-  const sUSDMarketId = 0;
+async function getPerpsCollateral({ accountId, marketId }) {
+  marketId = marketId || 0;
 
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -15,7 +15,7 @@ async function getPerpsCollateral({ accountId }) {
   );
 
   return parseFloat(
-    ethers.utils.formatUnits(await PerpsMarketProxy.getCollateralAmount(accountId, sUSDMarketId))
+    ethers.utils.formatUnits(await PerpsMarketProxy.getCollateralAmount(accountId, marketId))
   );
 }
 

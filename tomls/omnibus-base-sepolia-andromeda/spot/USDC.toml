@@ -60,7 +60,7 @@ tokenAddress = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address
 oracleNodeId = "<%= imports.system.extras.const_one_oracle_id %>"
 issuanceRatioD18 = "<%= MaxUint256 %>"
 liquidationRatioD18 = "<%= parseEther('1.005') %>"
-liquidationRewardD18 = "<%= parseEther('0.005') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
 minDelegationD18 = "<%= parseEther('100') %>"
 depositingEnabled = false
 

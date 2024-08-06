@@ -7,9 +7,8 @@ const { gasLog } = require('../gasLog');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-async function modifyPerpsCollateral({ wallet, accountId, deltaAmount }) {
-  const sUSDMarketId = 0;
-
+async function modifyPerpsCollateral({ wallet, accountId, deltaAmount, marketId }) {
+  marketId = marketId || 0;
   const oldAmount = await getPerpsCollateral({ accountId });
 
   log({ address: wallet.address, accountId, deltaAmount, oldAmount });
@@ -23,7 +22,7 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount }) {
   const args = [
     //
     accountId,
-    sUSDMarketId,
+    marketId,
     ethers.utils.parseEther(`${deltaAmount}`),
   ];
   const gasLimit = await PerpsMarketProxy.estimateGas.modifyCollateral(...args).catch(parseError);
