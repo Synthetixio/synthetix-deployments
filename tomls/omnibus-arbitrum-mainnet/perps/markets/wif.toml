@@ -31,7 +31,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.wif_perps_market_id %>",
     "<%= extras.wif_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 

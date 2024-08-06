@@ -31,7 +31,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.sol_perps_market_id %>",
     "<%= extras.sol_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 depends = ["invoke.createSolPerpsMarket", "var.perps_sol_market_settings"]
 
