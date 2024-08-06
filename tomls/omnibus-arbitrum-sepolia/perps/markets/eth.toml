@@ -35,7 +35,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.eth_perps_market_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
