@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.eth_oracle_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
 [invoke.SpotMarketProxy_setMarketSkewScale_eth]
