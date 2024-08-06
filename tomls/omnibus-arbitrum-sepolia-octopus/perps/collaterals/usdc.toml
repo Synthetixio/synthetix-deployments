@@ -1,0 +1,42 @@
+[var.perps_collateral_sUSDC_settings]
+usdc_upper_limit_discount = "0"
+usdc_lower_limit_discount = "0"
+usdc_discount_scalar = "0"
+
+[provision.RewardsDistributor_PerpsCollateral_sUSDC_liquidation_rewards]
+source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
+target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.collateralType = "<%= settings.synth_usdc_token_address %>"
+options.payoutToken = "<%= extras.synth_usdc_token_address %>"
+options.payoutTokenDecimals = "6"
+options.name = "Perps Collateral Liquidation Rewards for USDC (as sUSDC)"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_usdc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_usdc_market_id %>",
+    "<%= parseEther(settings.synth_usdc_max_market_collateral) %>",
+    "<%= settings.usdc_upper_limit_discount %>",
+    "<%= settings.usdc_lower_limit_discount %>",
+    "<%= settings.usdc_discount_scalar %>",
+]
+
+[invoke.PerpsMarketProxy_registerDistributor_usdc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = [
+    "<%= settings.synth_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_ETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= settings.synth_usdc_market_id %>",
+    [
+        "<%= settings.usdc_address %>",
+        "<%= settings.weth_address %>",
+    ],
+]

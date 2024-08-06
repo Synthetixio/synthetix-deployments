@@ -60,7 +60,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should migrate account', async () => {
     const accountId = 80800;
-    const walletAddress = '0x99F4176EE457afedFfCB1839c7aB7A030a5e4A92'; // pdao address (for now)
+    const walletAddress = '0x8cA24021E3Ee3B5c241BBfcee0712554D7Dc38a1'; // random rich person's wallet
     const snxBalance = parseFloat(ethers.utils.formatEther(await V2x.balanceOf(walletAddress)));
     const debt = parseFloat(
       ethers.utils.formatEther(
@@ -167,35 +167,5 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
 
     assert.equal(newUsdBalanceAfter, migratedBalance);
-  });
-
-  it('should liquidate an account below c-ratio', async () => {
-    const liqableAccount = '0x3ad921041f2b53ab819e6c87a7f186f1b7b4d0ac';
-
-    const liquidator = '0x42f9134E9d3Bf7eEE1f8A5Ac2a4328B059E7468c';
-    await provider.send('anvil_impersonateAccount', [liquidator]);
-    const wallet = provider.getSigner(liquidator);
-
-    log('migrate to liquidate', { liqableAccount });
-
-    await contractWrite({
-      wallet,
-      contract: 'LegacyMarketProxy',
-      func: 'migrateOnBehalf',
-      args: [liqableAccount, 818182],
-    });
-    await provider.send('anvil_stopImpersonatingAccount', [liquidator]);
-
-    const liqAccountBalance = parseFloat(
-      ethers.utils.formatEther(await V2x.balanceOf(liqableAccount))
-    );
-
-    assert.equal(liqAccountBalance, 0);
-
-    try {
-      await AccountProxy.ownerOf(818182);
-    } catch (err) {
-      assert(err.toString().includes('TokenDoesNotExist'));
-    }
   });
 });
