@@ -4,7 +4,7 @@ synth_btc_skew_scale = "3500"
 
 [setting.btc_address]
 defaultValue = "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f" # TODO fix it wbtc
-description = "Mock usdc address" # TODO fix it
+description = "Mock usdc address"                           # TODO fix it
 
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -15,7 +15,10 @@ extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
 extra.synth_btc_token_address.arg = 1
-depends = ['invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_deployer', 'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_owner']
+depends = [
+    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_deployer',
+    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_owner',
+]
 
 [invoke.SpotMarketProxy_updatePriceData_btc]
 target = ["spotFactory.SpotMarketProxy"]
