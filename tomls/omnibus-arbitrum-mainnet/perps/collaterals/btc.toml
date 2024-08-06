@@ -33,7 +33,7 @@ fromCall.func = "owner"
 func = "registerDistributor"
 args = [
     "<%= settings.synth_btc_token_address %>",
-    "<%= imports.RewardsDistributor_PerpsCollateral_sBTC_USDC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_sBTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= settings.synth_btc_market_id %>",
     [
         "<%= settings.usdc_address %>",
