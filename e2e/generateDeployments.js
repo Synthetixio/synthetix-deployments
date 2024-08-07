@@ -75,19 +75,38 @@ async function extractRewardsDistributors(deployments) {
             deployTxnHash: rewardsDistributor.deployTxnHash,
           },
         });
-        const [
-          rewardManager,
+
+        let rewardManager,
           poolId,
           collateralTypeAddress,
           payoutTokenAddress,
           _payoutTokenDecimals,
-          name,
-        ] = rewardsDistributor.constructorArgs;
+          name;
+        if (rewardsDistributor.constructorArgs.length === 6) {
+          [
+            rewardManager,
+            poolId,
+            collateralTypeAddress,
+            payoutTokenAddress,
+            _payoutTokenDecimals,
+            name,
+          ] = rewardsDistributor.constructorArgs;
+        } else {
+          [rewardManager, poolId, payoutTokenAddress, _payoutTokenDecimals, name] =
+            rewardsDistributor.constructorArgs;
 
-        const collateralType = await fetchTokenInfo(collateralTypeAddress);
+          collateralTypeAddress = null;
+        }
+
+        let collateralType = collateralTypeAddress
+          ? await fetchTokenInfo(collateralTypeAddress)
+          : null;
+
         const payoutToken = await fetchTokenInfo(payoutTokenAddress);
 
-        const contractName = `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`;
+        const contractName = collateralType
+          ? `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`
+          : `RewardsDistributor_${poolId}_${payoutToken.symbol}`;
         if (contractName in contracts) {
           duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
           contracts[`${contractName}__${duplicates[contractName]}`] = rewardsDistributor;
@@ -99,7 +118,6 @@ async function extractRewardsDistributors(deployments) {
           address: rewardsDistributor.address,
           name,
           poolId,
-          collateralType,
           payoutToken,
           rewardManager,
           isRegistered: false,
@@ -120,8 +138,6 @@ async function extractRewardsDistributors(deployments) {
         for (const rewardDistributor of items) {
           if (
             `${rewardDistributor.poolId}` === `${poolId}` &&
-            `${rewardDistributor.collateralType.address}`.toLowerCase() ===
-              `${collateralType}`.toLowerCase() &&
             `${rewardDistributor.address}`.toLowerCase() === `${address}`.toLowerCase()
           ) {
             rewardDistributor.isRegistered = true;
