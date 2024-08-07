@@ -6,7 +6,7 @@ btc_perps_maker_fee_ratio = "0"
 btc_perps_taker_fee_ratio = "0.0005"
 btc_perps_max_market_size = "1200"
 btc_perps_max_market_value = "<%= String(50_000_000) %>"
-btc_perps_initial_margin_ratio = "0.744"
+btc_perps_initial_margin_ratio = "1.07"
 btc_perps_maintenance_margin_scalar = "0.333"
 btc_perps_minimum_initial_margin_ratio = "0.02"
 btc_perps_flag_reward_ratio_d18 = "0.0003"
@@ -31,7 +31,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.btc_perps_market_id %>",
     "<%= extras.btc_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
@@ -54,8 +54,8 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.btc_perps_market_id %>",
-    "<%= extras.btc_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                      # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", settlementReward = "<%= parseEther(settings.settlement_reward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+    "<%= extras.btc_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                          # Settlement Strategy ID
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 depends = [
     'provision.perpsFactory',
