@@ -40,6 +40,11 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
+
+    # Governance
+    "tomls/governance/councils-satellite.toml",
+    "tomls/governance/snapshot-contract-mock.toml",
+    "tomls/governance/wormhole.toml",
 ]
 
 [setting.target_preset]
@@ -308,3 +313,13 @@ args = [
     18,
     "<%= imports.system.contracts.USDRouter.address %>",
 ]
+
+# Governance Councils Configuration
+[setting.governance_snapshot_record_package]
+defaultValue = "synthetix-snapshot-record-mock:3.0.0"
+
+[setting.governance_package]
+defaultValue = "synthetix-governance:3.0.3"
+
+[setting.governance_salt]
+defaultValue = "synthetix-council"
