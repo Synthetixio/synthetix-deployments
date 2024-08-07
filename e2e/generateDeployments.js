@@ -118,6 +118,7 @@ async function extractRewardsDistributors(deployments) {
           address: rewardsDistributor.address,
           name,
           poolId,
+          collateralType,
           payoutToken,
           rewardManager,
           isRegistered: false,
