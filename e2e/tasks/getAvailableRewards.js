@@ -15,7 +15,7 @@ async function getAvailableRewards({ distributorAddress, accountId, poolId, coll
     provider
   );
 
-  const availableRewards = await CoreProxy.getAvailableRewards(
+  const availableRewards = await CoreProxy.callStatic.getAvailableRewards(
     accountId,
     poolId,
     collateralType,
