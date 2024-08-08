@@ -38,7 +38,7 @@ include = [
     # rewards ARB for all vaults and pool
     "tomls/omnibus-arbitrum-sepolia/rewards/sc-arb.toml",
 
-		# Pyth oracles
+    # Pyth oracles
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
