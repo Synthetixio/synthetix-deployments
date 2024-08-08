@@ -10,18 +10,6 @@ options.v3_package = "<%= settings.snx_package %>"
 options.salt = "<%= settings.salt %>"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.synthetixPreset = "<%= settings.target_preset %>"
+options.market_id = "1"
 
 depends = ["provision.system"]
-
-[invoke.registerRewardsDistributor]
-target = ["system.CoreProxy"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= settings.sc_pool_id %>",
-    "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>",
-    "<%= imports.legacyMarket.contracts.SNXDistributor.address %>",
-]
-
-fromCall.func = "owner"
-
-depends = ["invoke.createScPool"]
