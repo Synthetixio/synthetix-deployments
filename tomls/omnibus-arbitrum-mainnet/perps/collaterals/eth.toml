@@ -39,7 +39,6 @@ args = [
     [
         "<%= settings.usdc_address %>",
         "<%= settings.arb_address %>",
-        "<%= settings.dai_address %>",
         "<%= settings.USDe_address %>",
         "<%= settings.weth_address %>",
     ],
