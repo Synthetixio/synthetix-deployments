@@ -345,8 +345,8 @@ keeperLiquidationGasUnits = 1200000
 keeperLiquidationEndorsed = "<%= settings.deployer %>"                         # TODO, this is currently deployer, change to a keeper
 collateralDiscountScalar = 1
 minCollateralDiscount = "<%= settings.min_collateral_discount %>"
-maxCollateralDiscount = 0.1
-utilizationBreakpointPercent = 0.025
+maxCollateralDiscount = "<%= parseEther('0.1') %>"
+utilizationBreakpointPercent = "<%= parseEther('0.025') %>"
 lowUtilizationSlopePercent = "<%= settings.low_utilization_slope_percent  %>"
 highUtilizationSlopePercent = "<%= settings.high_utilization_slope_percent %>"
 
