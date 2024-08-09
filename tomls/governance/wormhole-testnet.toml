@@ -1,0 +1,40 @@
+# Configure wormhole networks, values taken from:
+# https://docs.wormhole.com/wormhole/reference/constants#chain-ids
+[invoke.governance_set_registered_emitters]
+target = [
+    "imports.governance_ambassador_council.GovernanceProxy",
+    "imports.governance_spartan_council.GovernanceProxy",
+    "imports.governance_treasury_council.GovernanceProxy",
+]
+from = "<%= settings.owner %>"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "10002", # sepolia
+        "10003", # arbitrum_sepolia
+    ],
+    [
+        "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470", # sepolia
+        "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470", # arbitrum_sepolia
+    ],
+]
+
+[invoke.governance_set_gas_limit]
+target = [
+    "imports.governance_ambassador_council.GovernanceProxy",
+    "imports.governance_spartan_council.GovernanceProxy",
+    "imports.governance_treasury_council.GovernanceProxy",
+]
+from = "<%= settings.owner %>"
+func = "setGasLimit"
+args = ["1000000"]
+
+[invoke.set_snapshot_record]
+target = [
+    "imports.governance_ambassador_council.GovernanceProxy",
+    "imports.governance_spartan_council.GovernanceProxy",
+    "imports.governance_treasury_council.GovernanceProxy",
+]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
