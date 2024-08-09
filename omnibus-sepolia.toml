@@ -27,7 +27,7 @@ include = [
 defaultValue = "snaxtest"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.18"
+defaultValue = "synthetix:3.5.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
@@ -164,7 +164,7 @@ args = [
 ]
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.15"
+source = "pyth-erc7412-wrapper:3.5.0"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
@@ -188,7 +188,7 @@ args = [
 #
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:1.0.0-alpha.2"
+defaultValue = "synthetix-bfp-market:3.5.0"
 
 # Collaterals configurations
 #
