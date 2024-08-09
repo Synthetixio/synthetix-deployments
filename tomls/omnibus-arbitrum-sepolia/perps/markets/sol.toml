@@ -54,7 +54,7 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.sol_perps_market_id %>",
-    "<%= extras.sol_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                          # Settlement Strategy ID
+    "<%= extras.sol_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                      # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_sol %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 depends = [
