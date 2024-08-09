@@ -28,13 +28,3 @@ target = [
 from = "<%= settings.owner %>"
 func = "setGasLimit"
 args = ["1000000"]
-
-[invoke.set_snapshot_record]
-target = [
-    "imports.governance_ambassador_council.GovernanceProxy",
-    "imports.governance_spartan_council.GovernanceProxy",
-    "imports.governance_treasury_council.GovernanceProxy",
-]
-from = "<%= settings.owner %>"
-func = "setSnapshotContract"
-args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]

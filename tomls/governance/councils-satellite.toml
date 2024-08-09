@@ -1,44 +1,56 @@
-[provision.ambassador_council]
+[clone.governance_ambassador_council]
 source = "<%= settings.governance_package %>"
 options.salt = "<%= settings.governance_salt %>-ambassador"
 options.owner = "<%= settings.owner %>"
-options.wormhole_core = "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35"
-options.wormhole_relayer = "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470"
-options.council_token_name = "Synthetix Ambassador Council Token"
-options.council_token_symbol = "SNXAMB"
-options.initial_council_member = "<%= settings.owner %>"
+options.wormhole_core = "<%= settings.governance_wormhole_core %>"
+options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
+options.initial_council_member = "<%= settings.governance_initial_council_member %>"
 options.initial_epoch_index = "<%= settings.governance_initial_epoch_index %>"
 options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_date %>"
 options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
 options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
 options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
 
-[provision.spartan_council]
+[clone.governance_spartan_council]
 source = "<%= settings.governance_package %>"
 options.salt = "<%= settings.governance_salt %>-spartan"
 options.owner = "<%= settings.owner %>"
-options.wormhole_core = "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35"
-options.wormhole_relayer = "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470"
-options.council_token_name = "Synthetix Spartan Council Token"
-options.council_token_symbol = "SNXSPR"
-options.initial_council_member = "<%= settings.owner %>"
+options.wormhole_core = "<%= settings.governance_wormhole_core %>"
+options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
+options.initial_council_member = "<%= settings.governance_initial_council_member %>"
 options.initial_epoch_index = "<%= settings.governance_initial_epoch_index %>"
 options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_date %>"
 options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
 options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
 options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
 
-[provision.treasury_council]
+[clone.governance_treasury_council]
 source = "<%= settings.governance_package %>"
 options.salt = "<%= settings.governance_salt %>-treasury"
 options.owner = "<%= settings.owner %>"
-options.wormhole_core = "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35"
-options.wormhole_relayer = "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470"
-options.council_token_name = "Synthetix Treasury Council Token"
-options.council_token_symbol = "SNXTRY"
-options.initial_council_member = "<%= settings.owner %>"
+options.wormhole_core = "<%= settings.governance_wormhole_core %>"
+options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
+options.initial_council_member = "<%= settings.governance_initial_council_member %>"
 options.initial_epoch_index = "<%= settings.governance_initial_epoch_index %>"
 options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_date %>"
 options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
 options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
 options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
+
+# TODO: add synthetix-snapshot-rewards package and update this values:
+# [invoke.governance_set_snapshot_record]
+# target = [
+#     "imports.governance_ambassador_council.GovernanceProxy",
+#     "imports.governance_spartan_council.GovernanceProxy",
+# ]
+# from = "<%= settings.owner %>"
+# func = "setSnapshotContract"
+# args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
+
+# [invoke.governance_set_snapshot_record_treasury]
+# target = [
+#     "imports.governance_treasury_council.GovernanceProxy",
+# ]
+# from = "<%= settings.owner %>"
+# func = "setSnapshotContract"
+# args = ["<%= contracts.SnapshotRecordMock.address %>", 1, true] # Treasury council uses different counting strategy
