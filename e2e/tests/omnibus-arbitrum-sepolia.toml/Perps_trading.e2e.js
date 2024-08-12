@@ -30,7 +30,7 @@ const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 
-describe.only(require('path').basename(__filename, '.e2e.js'), function () {
+describe(require('path').basename(__filename, '.e2e.js'), function () {
   const extras = require('../../deployments/extras.json');
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
