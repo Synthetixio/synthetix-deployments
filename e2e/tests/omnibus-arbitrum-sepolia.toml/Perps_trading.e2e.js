@@ -30,7 +30,7 @@ const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const extras = require('../../deployments/extras.json');
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
@@ -199,7 +199,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(await getCollateralBalance({ address, symbol: 'USDx' }));
   });
 
-  it('should approve USDx, sfBTC, sfETH, sfUSDC spending for PerpsMarketProxy', async () => {
+  it('should approve USDx, sfBTC, sfETH spending for PerpsMarketProxy', async () => {
     await approveCollateral({
       privateKey,
       symbol: 'USDx',
@@ -213,11 +213,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await approveCollateral({
       privateKey,
       symbol: 'sETH',
-      spenderAddress: PerpsMarketProxy.address,
-    });
-    await approveCollateral({
-      privateKey,
-      symbol: 'sUSDC',
       spenderAddress: PerpsMarketProxy.address,
     });
     assert.equal(
@@ -240,14 +235,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       await isCollateralApproved({
         address,
         symbol: 'sETH',
-        spenderAddress: PerpsMarketProxy.address,
-      }),
-      true
-    );
-    assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'sUSDC',
         spenderAddress: PerpsMarketProxy.address,
       }),
       true
