@@ -22,7 +22,7 @@ include = [
 
     # Governance
     "tomls/governance/councils-mothership.toml",
-    "tomls/governance/wormhole.toml",
+    "tomls/governance/wormhole-testnet.toml",
 ]
 
 [setting.salt]

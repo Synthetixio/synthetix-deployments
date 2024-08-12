@@ -43,7 +43,7 @@ include = [
 
     # Governance
     "tomls/governance/councils-satellite.toml",
-    "tomls/governance/wormhole.toml",
+    "tomls/governance/wormhole-testnet.toml",
 ]
 
 [setting.target_preset]
