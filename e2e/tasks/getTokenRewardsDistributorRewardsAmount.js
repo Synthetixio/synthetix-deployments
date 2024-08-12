@@ -13,12 +13,14 @@ async function getTokenRewardsDistributorRewardsAmount({ distributorAddress }) {
     [
       'function payoutToken() view returns (address)',
       'function rewardsAmount() view returns (uint256)',
+      'function rewardedAmount() view returns (uint256)',
     ],
     provider
   );
-  const [payoutToken, rewardsAmount] = await Promise.all([
+  const [payoutToken, rewardsAmount, rewardedAmount] = await Promise.all([
     RewardsDistributor.payoutToken().catch(() => null),
     RewardsDistributor.rewardsAmount().catch(() => null),
+    RewardsDistributor.rewardedAmount().catch(() => null),
   ]);
 
   const Token = new ethers.Contract(
@@ -28,7 +30,7 @@ async function getTokenRewardsDistributorRewardsAmount({ distributorAddress }) {
   );
   const decimals = await Token.decimals().catch(() => null);
 
-  return parseFloat(ethers.utils.formatUnits(rewardsAmount, decimals));
+  return parseFloat(ethers.utils.formatUnits(rewardsAmount || rewardedAmount, decimals));
 }
 
 module.exports = {
