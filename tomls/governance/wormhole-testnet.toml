@@ -21,9 +21,9 @@ args = [
 
 [invoke.governance_set_gas_limit]
 target = [
-    "imports.governance_ambassador_council.GovernanceProxy",
-    "imports.governance_spartan_council.GovernanceProxy",
-    "imports.governance_treasury_council.GovernanceProxy",
+    "governance_ambassador_council.GovernanceProxy",
+    "governance_spartan_council.GovernanceProxy",
+    "governance_treasury_council.GovernanceProxy",
 ]
 from = "<%= settings.owner %>"
 func = "setGasLimit"
