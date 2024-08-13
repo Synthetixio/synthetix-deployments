@@ -154,15 +154,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should wrap 5 fBTC', async () => {
+  it('should wrap 10 fBTC', async () => {
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sBTC',
       synthAddress: require('../../deployments/extras.json').synth_btc_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_btc_market_id,
-      amount: 5,
+      amount: 10,
     });
-    assert.equal(balance, 5);
+    assert.equal(balance, 10);
   });
 
   it('should wrap 15 fETH', async () => {
@@ -252,7 +252,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId: extras.synth_btc_market_id,
-      deltaAmount: 5,
+      deltaAmount: 10,
     });
     await modifyPerpsCollateral({
       wallet,
@@ -262,7 +262,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     assert.equal(await getPerpsCollateral({ accountId }), 2_000);
-    assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_btc_market_id }), 5);
+    assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_btc_market_id }), 10);
     assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_eth_market_id }), 10);
   });
 
