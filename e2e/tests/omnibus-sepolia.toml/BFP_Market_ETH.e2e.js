@@ -287,6 +287,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(parseFloat(ethers.utils.formatEther(newDepositedWeth.available)), 500);
   });
+
   it('should open a short', async () => {
     const marketId = require('../../deployments/extras.json').eth_market_id;
     const currentPosition = await getBfpPosition({ accountId, marketId });
