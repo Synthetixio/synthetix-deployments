@@ -2,77 +2,17 @@
 btc_upper_limit_discount = "<%= parseEther('0.075') %>"
 btc_lower_limit_discount = "<%= parseEther('0.010') %>"
 btc_discount_scalar = "<%= parseEther('1') %>"
+btc_target = "BTC_Perps_rewards"
 
-[provision.RewardsDistributor_PerpsCollateral_sBTC_ARB_liquidation_rewards]
-source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
-target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
+[provision.RewardsDistributor_PerpsCollateral_sBTC_liquidation_rewards]
+source = "<%= settings.rewards_distributor_external_package %>"
+target = "<%= settings.rewards_distributor_external_package %>@<%= settings.btc_target %>"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.arb_address %>"
 options.payoutToken = "<%= extras.synth_btc_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for ARB (as sBTC)"
-options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
-
-[provision.RewardsDistributor_PerpsCollateral_sBTC_DAI_liquidation_rewards]
-source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
-target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.dai_address %>"
-options.payoutToken = "<%= extras.synth_btc_token_address %>"
-options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for DAI (as sBTC)"
-options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
-
-[provision.RewardsDistributor_PerpsCollateral_sBTC_USDC_liquidation_rewards]
-source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
-target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.usdc_address %>"
-options.payoutToken = "<%= extras.synth_btc_token_address %>"
-options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for USDC (as sBTC)"
-options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
-
-[provision.RewardsDistributor_PerpsCollateral_sBTC_USDe_liquidation_rewards]
-source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
-target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.USDe_address %>"
-options.payoutToken = "<%= extras.synth_btc_token_address %>"
-options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for USDe (as sBTC)"
-options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
-
-[provision.RewardsDistributor_PerpsCollateral_sBTC_sUSDE_liquidation_rewards]
-source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
-target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.sUSDe_address %>"
-options.payoutToken = "<%= extras.synth_btc_token_address %>"
-options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for sUSDE (as sBTC)"
-options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
-
-[provision.RewardsDistributor_PerpsCollateral_sBTC_wETH_liquidation_rewards]
-source = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
-target = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628@ETH_Perps_rewards"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.weth_address %>"
-options.payoutToken = "<%= extras.synth_btc_token_address %>"
-options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for wETH (as sBTC)"
+options.name = "Perps Collateral Liquidation Rewards for sBTC"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_setCollateralConfiguration_btc]
@@ -94,9 +34,14 @@ fromCall.func = "owner"
 func = "registerDistributor"
 args = [
     "<%= settings.synth_btc_token_address %>",
-    "<%= imports.RewardsDistributor_PerpsCollateral_sBTC_USDC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_sBTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= settings.synth_btc_market_id %>",
     [
+        "<%= settings.arb_address %>",
+        "<%= settings.dai_address %>",
         "<%= settings.usdc_address %>",
+        "<%= settings.USDe_address %>",
+        "<%= settings.sUSDe_address %>",
+        "<%= settings.weth_address %>",
     ],
 ]

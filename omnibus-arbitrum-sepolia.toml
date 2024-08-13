@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "20"
+version = "21"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -87,10 +87,13 @@ defaultValue = "synthetix:3.5.0"
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.21-dev.fd4c5628"
+defaultValue = "synthetix-spot-market:3.5.0" # TODO use the right version once the Multi-Collateral release is out
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.4.1"
+defaultValue = "synthetix-perps-market:3.5.0" # TODO use the right version once the Multi-Collateral release is out
+
+[setting.rewards_distributor_external_package]
+defaultValue = "synthetix-rewards-dist-ext:3.5.0"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
