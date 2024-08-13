@@ -12,9 +12,7 @@ async function getDebt({ accountId }) {
     provider
   );
 
-  return parseFloat(
-    ethers.utils.formatUnits(await PerpsMarketProxy.debt(accountId))
-  );
+  return parseFloat(ethers.utils.formatUnits(await PerpsMarketProxy.debt(accountId)));
 }
 
 module.exports = {
