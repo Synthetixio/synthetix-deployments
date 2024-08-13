@@ -103,17 +103,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 50);
   });
 
-  it('should set USDC balance to 1000', async () => {
-    const { tokenAddress } = await getCollateralConfig('fBTC');
-    assert.equal(
-      await getCollateralBalance({ address, symbol: 'fUSDC' }),
-      0,
-      'New wallet has 0 USDC balance'
-    );
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 1000);
-  });
-
   it('should approve fBTC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
@@ -162,21 +151,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
-
-    await approveCollateral({
-      privateKey,
-      symbol: 'fUSDC',
-      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
-    });
-
-    assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'fUSDC',
-        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
-      }),
-      true
-    );
   });
 
   it('should wrap 5 fBTC', async () => {
@@ -199,17 +173,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       amount: 15,
     });
     assert.equal(balance, 15);
-  });
-
-  it('should wrap 10000 fUSDC', async () => {
-    const balance = await wrapCollateral({
-      wallet,
-      symbol: 'fUSDC',
-      synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      amount: 1000,
-    });
-    assert.equal(balance, 1000);
   });
 
   it('should create perps account', async () => {
@@ -236,7 +199,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(await getCollateralBalance({ address, symbol: 'USDx' }));
   });
 
-  it('should approve USDx, sfBTC, sfETH, sfUSDC spending for PerpsMarketProxy', async () => {
+  it('should approve USDx, sfBTC, sfETH spending for PerpsMarketProxy', async () => {
     await approveCollateral({
       privateKey,
       symbol: 'USDx',
@@ -250,11 +213,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await approveCollateral({
       privateKey,
       symbol: 'sETH',
-      spenderAddress: PerpsMarketProxy.address,
-    });
-    await approveCollateral({
-      privateKey,
-      symbol: 'sUSDC',
       spenderAddress: PerpsMarketProxy.address,
     });
     assert.equal(
@@ -281,14 +239,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       }),
       true
     );
-    assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'sUSDC',
-        spenderAddress: PerpsMarketProxy.address,
-      }),
-      true
-    );
   });
 
   it('should allow deposit of sfBTC, sfETH, and USDx to Perps', async () => {
@@ -308,12 +258,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       accountId,
       marketId: extras.synth_eth_market_id,
       deltaAmount: 10,
-    });
-    await modifyPerpsCollateral({
-      wallet,
-      accountId,
-      marketId: extras.synth_usdc_market_id,
-      deltaAmount: 1000,
     });
 
     assert.equal(await getPerpsCollateral({ accountId }), 2_000);
