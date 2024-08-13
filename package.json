@@ -33,7 +33,6 @@
     "build:base-sepolia": "cannon build omnibus-base-sepolia-andromeda.toml --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://base-sepolia.infura.io/v3/$INFURA_KEY | tee ./e2e/cannon-build.log",
     "build:arbitrum": "cannon build omnibus-arbitrum-mainnet.toml --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 42161 --provider-url https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
     "build:arbitrum-sepolia": "cannon build omnibus-arbitrum-sepolia.toml --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 421614 --provider-url https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
-    "build:sepolia-carina": "cannon build omnibus-sepolia-carina.toml --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@carina --chain-id 11155111 --provider-url https://sepolia.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
     "test:mainnet": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-mainnet.toml/**/*.e2e.js",
     "test:sepolia": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-sepolia.toml/**/*.e2e.js",
     "test:optimism": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-optimism-mainnet.toml/**/*.e2e.js",
