@@ -18,6 +18,7 @@ const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance
 const { spotSell } = require('../../tasks/spotSell');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
+const { getDebt } = require('../../tasks/getDebt');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
@@ -265,32 +266,33 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_eth_market_id }), 10);
   });
 
-  // TODO: this is failing for some reason, not sure if it's fork related
-  // it('should open a short 0.01 BTC position', async () => {
-  //   const marketId = 200;
-  //   const settlementStrategyId = extras.btc_pyth_settlement_strategy;
+  it('should open a short 0.01 BTC position', async () => {
+    const marketId = 200;
+    const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
-  //   // We must sync timestamp of the fork before making time-sensitive operations
-  //   await syncTime();
-  //   await wait(1000);
+    // We must sync timestamp of the fork before making time-sensitive operations
+    await syncTime();
+    await wait(1000);
 
-  //   const { commitmentTime } = await commitPerpsOrder({
-  //     wallet,
-  //     accountId,
-  //     marketId,
-  //     sizeDelta: 0.01,
-  //     settlementStrategyId,
-  //   });
+    const { commitmentTime } = await commitPerpsOrder({
+      wallet,
+      accountId,
+      marketId,
+      sizeDelta: 0.01,
+      settlementStrategyId,
+    });
 
-  //   // Wait for commitment price/settlement delay
-  //   await wait(2000);
+    // Wait for commitment price/settlement delay
+    await wait(2000);
 
-  //   // Wait for pyth to update prices
-  //   await wait(5000);
+    // Wait for pyth to update prices
+    await wait(5000);
 
-  //   await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
-  //   await settlePerpsOrder({ wallet, accountId, marketId });
-  //   const position = await getPerpsPosition({ accountId, marketId });
-  //   assert.equal(position.positionSize, 0.01);
-  // });
+    await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
+    await settlePerpsOrder({ wallet, accountId, marketId });
+    const position = await getPerpsPosition({ accountId, marketId });
+    assert.equal(position.positionSize, 0.01);
+    const debt = await getDebt({ accountId });
+    assert.equal(debt, 0);
+  });
 });
