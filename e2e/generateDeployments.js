@@ -75,19 +75,38 @@ async function extractRewardsDistributors(deployments) {
             deployTxnHash: rewardsDistributor.deployTxnHash,
           },
         });
-        const [
-          rewardManager,
+
+        let rewardManager,
           poolId,
           collateralTypeAddress,
           payoutTokenAddress,
           _payoutTokenDecimals,
-          name,
-        ] = rewardsDistributor.constructorArgs;
+          name;
+        if (rewardsDistributor.constructorArgs.length === 6) {
+          [
+            rewardManager,
+            poolId,
+            collateralTypeAddress,
+            payoutTokenAddress,
+            _payoutTokenDecimals,
+            name,
+          ] = rewardsDistributor.constructorArgs;
+        } else {
+          [rewardManager, poolId, payoutTokenAddress, _payoutTokenDecimals, name] =
+            rewardsDistributor.constructorArgs;
 
-        const collateralType = await fetchTokenInfo(collateralTypeAddress);
+          collateralTypeAddress = null;
+        }
+
+        let collateralType = collateralTypeAddress
+          ? await fetchTokenInfo(collateralTypeAddress)
+          : null;
+
         const payoutToken = await fetchTokenInfo(payoutTokenAddress);
 
-        const contractName = `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`;
+        const contractName = collateralType
+          ? `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`
+          : `RewardsDistributor_${poolId}_${payoutToken.symbol}`;
         if (contractName in contracts) {
           duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
           contracts[`${contractName}__${duplicates[contractName]}`] = rewardsDistributor;
@@ -120,8 +139,6 @@ async function extractRewardsDistributors(deployments) {
         for (const rewardDistributor of items) {
           if (
             `${rewardDistributor.poolId}` === `${poolId}` &&
-            `${rewardDistributor.collateralType.address}`.toLowerCase() ===
-              `${collateralType}`.toLowerCase() &&
             `${rewardDistributor.address}`.toLowerCase() === `${address}`.toLowerCase()
           ) {
             rewardDistributor.isRegistered = true;
@@ -473,13 +490,7 @@ async function run() {
 
   contracts.AllErrors = {
     address: ethers.constants.AddressZero,
-    abi: Array.from(
-      new Set(
-        Object.values(contracts)
-          .flatMap(({ abi }) => abi.filter((item) => item.type === 'error'))
-          .map((item) => JSON.stringify(item))
-      )
-    ).map((item) => JSON.parse(item)),
+    abi: Object.values(contracts).flatMap(({ abi }) => abi.filter((item) => item.type === 'error')),
   };
 
   log('Writing', `deployments/meta.json`);
@@ -489,23 +500,21 @@ async function run() {
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
 
   for (const [name, { address, abi }] of Object.entries(contracts)) {
+    const dedupedAbi = Array.from(new Set(readableAbi(abi)));
     log('Writing', `deployments/${name}.json`, { address });
     await fs.writeFile(
       `${__dirname}/deployments/${name}.json`,
-      JSON.stringify({ address, abi: readableAbi(abi) }, null, 2)
+      JSON.stringify({ address, abi: dedupedAbi }, null, 2)
     );
-  }
-
-  for (const [name, { abi }] of Object.entries(contracts)) {
     log('Writing', `deployments/abi/${name}.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.json`,
-      JSON.stringify(jsonAbi(abi), null, 2)
+      JSON.stringify(jsonAbi(dedupedAbi), null, 2)
     );
     log('Writing', `deployments/abi/${name}.readable.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.readable.json`,
-      JSON.stringify(readableAbi(abi), null, 2)
+      JSON.stringify(dedupedAbi, null, 2)
     );
   }
 }

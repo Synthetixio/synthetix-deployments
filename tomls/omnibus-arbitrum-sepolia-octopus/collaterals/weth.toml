@@ -1,0 +1,34 @@
+[var.lp_weth_settings]
+weth_issuance_ratio = "<%= parseEther('2.00') %>"
+weth_liquidation_ratio = "<%= parseEther('1.25') %>"
+weth_liquidation_reward = "<%= parseEther('0.005') %>"
+weth_min_delegation = "<%= parseEther('0.01') %>"
+weth_max_collateral_limit = "<%= parseEther(String(2_700)) %>"
+weth_address = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"    # https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1
+
+[invoke.CoreProxy_configureCollateral_weth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"       # "args" see below in the multiline block
+depends = ["var.lp_weth_settings"]
+
+[[invoke.CoreProxy_configureCollateral_weth.args]]
+tokenAddress = "<%= settings.weth_address %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
+issuanceRatioD18 = "<%= settings.weth_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.weth_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.weth_liquidation_reward %>"
+minDelegationD18 = "<%= settings.weth_min_delegation %>"
+depositingEnabled = true
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_weth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.weth_address %>",
+    { collateralLimitD18 = "<%= settings.weth_max_collateral_limit %>", issuanceRatioD18 = 0 },
+]
+depends = ["var.lp_weth_settings"]

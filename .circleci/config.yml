@@ -110,6 +110,26 @@ commands:
           name: "Wait for IPFS daemon to start"
           command: wget --output-document - --retry-connrefused --waitretry=20 --read-timeout=20 --timeout=15 -t 10 --post-data '' "http://localhost:5001/api/v0/version"
 
+  wait-for-cannon-build:
+    steps:
+      - run:
+          name: "Wait for cannon to complete the build"
+          command: |
+            touch ./cannon-build.log
+            # If the information wasn't found, start tailing the log
+            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
+                while IFS= read -r line
+                do
+                    echo $line
+                    if [[ $line == *"The local node will continue running at"* ]]; then
+                        break
+                    fi
+                    if [[ $line == *"An error occured during build"* ]]; then
+                        exit 1
+                    fi
+                done < <(tail -f -n0 ./cannon-build.log)
+            fi
+
   github-pr:
     parameters:
       working_directory:
@@ -255,21 +275,9 @@ jobs:
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-                | tee ./cannon-build.log
+                2>&1 | tee ./cannon-build.log
 
-      - run:
-          name: "Wait for cannon to complete the build"
-          command: |
-            touch ./cannon-build.log
-            # If the information wasn't found, start tailing the log
-            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
-                while IFS= read -r line
-                do
-                    if [[ $line == *"The local node will continue running at"* ]]; then
-                        break
-                    fi
-                done < <(tail -f -n0 ./cannon-build.log)
-            fi
+      - wait-for-cannon-build
 
       - store_artifacts:
           path: "./cannon-build.log"
@@ -361,21 +369,9 @@ jobs:
               --dry-run \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-                | tee ./cannon-build.log
+                2>&1 | tee ./cannon-build.log
 
-      - run:
-          name: "Wait for cannon to complete the build"
-          command: |
-            touch ./cannon-build.log
-            # If the information wasn't found, start tailing the log
-            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
-                while IFS= read -r line
-                do
-                    if [[ $line == *"The local node will continue running at"* ]]; then
-                        break
-                    fi
-                done < <(tail -f -n0 ./cannon-build.log)
-            fi
+      - wait-for-cannon-build
 
       - store_artifacts:
           path: "./cannon-build.log"
@@ -518,7 +514,6 @@ jobs:
       - run: yarn cannon inspect synthetix-omnibus:latest@andromeda   --chain-id 84532       --json > ./e2e/cannon/84532-andromeda.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 1           --json > ./e2e/cannon/1-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 10          --json > ./e2e/cannon/10-main.json
-      - run: yarn cannon inspect synthetix-omnibus:latest@arbthetix   --chain-id 42161       --json > ./e2e/cannon/42161-arbthetix.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 42161       --json > ./e2e/cannon/42161-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
@@ -661,21 +656,9 @@ jobs:
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --provider-url << parameters.provider-url >> \
-                | tee ./cannon-build.log
+                2>&1 | tee ./cannon-build.log
 
-      - run:
-          name: "Wait for cannon to complete the build"
-          command: |
-            touch ./cannon-build.log
-            # If the information wasn't found, start tailing the log
-            if ! grep -q 'The local node will continue running at' ./cannon-build.log; then
-                while IFS= read -r line
-                do
-                    if [[ $line == *"The local node will continue running at"* ]]; then
-                        break
-                    fi
-                done < <(tail -f -n0 ./cannon-build.log)
-            fi
+      - wait-for-cannon-build
 
       - store_artifacts:
           path: "./cannon-build.log"
@@ -769,30 +752,6 @@ workflows:
           chain-id: 10
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
-      #      - fork-test:
-      #          name: test-sepolia
-      #          toml: omnibus-sepolia.toml
-      #          package: "synthetix-omnibus:latest"
-      #          preset: "main"
-      #          chain-id: 11155111
-      #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
-      #      - fork-test:
-      #          name: test-polygon-mumbai
-      #          toml: omnibus-polygon-mumbai.toml
-      #          package: "synthetix-omnibus:latest"
-      #          preset: "main"
-      #          chain-id: 80001
-      #          provider-url: https://polygon-mumbai.infura.io/v3/$INFURA_API_KEY
-
-      - fork-test:
-          name: test-arbthetix-mainnet
-          toml: omnibus-arbitrum-mainnet-arbthetix.toml
-          package: "synthetix-omnibus:latest"
-          preset: "arbthetix"
-          chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
-
       - fork-test:
           name: test-arbitrum-sepolia
           toml: omnibus-arbitrum-sepolia.toml
@@ -865,13 +824,6 @@ workflows:
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - deployment-info:
-          name: docs-arbitrum-mainnet-arbthetix
-          package: "synthetix-omnibus:latest"
-          preset: "arbthetix"
-          chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - deployment-info:
           name: docs-arbitrum-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -938,13 +890,6 @@ workflows:
           provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - npm-package:
-          name: npm-arbitrum-mainnet-arbthetix
-          package: "synthetix-omnibus:latest"
-          preset: "arbthetix"
-          chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
-
-      - npm-package:
           name: npm-arbitrum-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
@@ -1005,14 +950,6 @@ workflows:
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
-
-      - preview:
-          name: preview-arbitrum-mainnet-arbthetix
-          toml: omnibus-arbitrum-mainnet-arbthetix.toml
-          package: "synthetix-omnibus:latest"
-          preset: "arbthetix"
-          chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-arbitrum-sepolia

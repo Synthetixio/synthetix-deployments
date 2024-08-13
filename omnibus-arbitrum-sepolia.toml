@@ -1,10 +1,11 @@
 name = "synthetix-omnibus"
-version = "12"
+version = "20"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
     "tomls/core.toml",
     "tomls/markets/spot-factory.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps-highcap-factory.toml",
     "tomls/omnibus-arbitrum-sepolia/permit-deniers.toml",
 
     "tomls/omnibus-arbitrum-sepolia/permissions.toml",
@@ -12,29 +13,23 @@ include = [
 
     # USDC
     "tomls/oracles/pyth-usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
 
     # DAI
     "tomls/oracles/pyth-dai.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
 
     # ARB
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
 
     # WETH
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
 
     # sUSDe
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
 
     # USDe
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
@@ -44,6 +39,39 @@ include = [
     # Governance
     "tomls/governance/councils-satellite.toml",
     "tomls/governance/wormhole-testnet.toml",
+
+    # rewards ARB for all vaults and pool
+    "tomls/omnibus-arbitrum-sepolia/rewards/sc-arb.toml",
+
+    # Pyth oracles
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
+
+    # Spot Markets
+    "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
+
+    #
+    # Perps
+    #
+
+    # Perps Settings
+    "tomls/omnibus-arbitrum-sepolia/perps/perps-keeper-cost.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/global.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/referrers.toml",
+    # Perps Markets
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/wif.toml",
+
+    # Margin Collateral (Synths)
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/btc.toml",
 ]
 
 [setting.target_preset]
@@ -53,16 +81,16 @@ defaultValue = "main"
 defaultValue = "snax"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.18"
+defaultValue = "synthetix:3.5.0"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.3.21-dev.fd4c5628"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.19"
+defaultValue = "synthetix-perps-market:3.4.1"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
@@ -116,8 +144,14 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
+[setting.commitment_price_delay]
+defaultValue = "2"
+
 [setting.big_cap_default_staleness_tolerance]
 defaultValue = "3600"
+
+[setting.big_cap_strict_staleness_tolerance]
+defaultValue = "60"
 
 [setting.big_cap_settlement_window_duration]
 defaultValue = "60"
@@ -211,7 +245,7 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.max_collateral_limit_weth]
-defaultValue = "<%= parseEther(String(2_700)) %>"
+defaultValue = "<%= parseEther(String(5_400)) %>"
 
 #
 #
@@ -285,6 +319,39 @@ description = "Using mock for testnet USDe"
 defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
+#
+#
+#
+# SOL
+#
+#
+#
+[setting.pyth_feed_id_sol]
+defaultValue = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+#
+#
+#
+# WIF
+#
+#
+#
+[setting.pyth_feed_id_wif]
+defaultValue = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+#
+#
+#
+# BTC
+#
+#
+#
+[setting.pyth_feed_id_btc]
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
@@ -295,6 +362,9 @@ args = [
     [
         { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 

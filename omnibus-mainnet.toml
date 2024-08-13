@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "7"
+version = "9"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -20,7 +20,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.18"
+defaultValue = "synthetix:3.5.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
@@ -29,7 +29,7 @@ defaultValue = "synthetix-spot-market:3.3.15"
 defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.3.6"
+defaultValue = "synthetix-legacy-market:3.5.0"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
