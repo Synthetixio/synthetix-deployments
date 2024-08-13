@@ -2,9 +2,9 @@
 # https://docs.wormhole.com/wormhole/reference/constants#chain-ids
 [invoke.governance_set_registered_emitters]
 target = [
-    "imports.governance_ambassador_council.GovernanceProxy",
-    "imports.governance_spartan_council.GovernanceProxy",
-    "imports.governance_treasury_council.GovernanceProxy",
+    "governance_ambassador_council.GovernanceProxy",
+    "governance_spartan_council.GovernanceProxy",
+    "governance_treasury_council.GovernanceProxy",
 ]
 from = "<%= settings.owner %>"
 func = "setRegisteredEmitters"
