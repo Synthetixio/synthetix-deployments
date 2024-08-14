@@ -19,6 +19,11 @@ const { spotSell } = require('../../tasks/spotSell');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { getDebt } = require('../../tasks/getDebt');
+const { getCanLiquidate } = require('../../tasks/getCanLiquidate');
+const { getAvailableMargin } = require('../../tasks/getAvailableMargin');
+const { liquidate } = require('../../tasks/liquidate');
+const { setLiquidationParameters } = require('../../tasks/setLiquidationParameters');
+const { getLiquidationParameters } = require('../../tasks/getLiquidationParameters');
 const { modifyPerpsCollateral } = require('../../tasks/modifyPerpsCollateral');
 const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
@@ -26,12 +31,8 @@ const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { setWETHTokenBalance } = require('../../tasks/setWETHTokenBalance');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
-const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
-const {
-  configureMaximumMarketCollateral,
-} = require('../../tasks/configureMaximumMarketCollateral');
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const extras = require('../../deployments/extras.json');
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
@@ -266,8 +267,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_eth_market_id }), 10);
   });
 
-  it('should open a short 0.01 BTC position', async () => {
-    const marketId = 200;
+  it('should open a 1 BTC long position', async () => {
+    const marketId = extras.btc_perps_market_id;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
     // We must sync timestamp of the fork before making time-sensitive operations
@@ -278,7 +279,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId,
-      sizeDelta: 0.01,
+      sizeDelta: 1,
       settlementStrategyId,
     });
 
@@ -291,8 +292,35 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
-    assert.equal(position.positionSize, 0.01);
+    assert.equal(position.positionSize, 1);
     const debt = await getDebt({ accountId });
     assert.equal(debt, 0);
+  });
+
+  it('should liquidate the account when the margin requirements increase past the account margin', async () => {
+    const newInitialMarginFraction = ethers.BigNumber.from(10).pow(18);
+    const newMinimumPositionMargin = ethers.BigNumber.from(10).pow(26);
+    const newMaintenanceMarginScalar = ethers.BigNumber.from(10).pow(18);
+    const newMinimumInitialMarginRatio = ethers.BigNumber.from(10).pow(18);
+    const newLiquidationRewardRatio = ethers.BigNumber.from(10).pow(18);
+    const initialCanLiquidate = await getCanLiquidate({ accountId });
+    const initialAvailableMargin = await getAvailableMargin({ accountId });
+    assert.ok(initialAvailableMargin > 0);
+    assert.ok(!initialCanLiquidate);
+    await setLiquidationParameters({
+      marketId: extras.btc_perps_market_id,
+      newInitialMarginFraction,
+      newMaintenanceMarginScalar,
+      newMinimumInitialMarginRatio,
+      newLiquidationRewardRatio,
+      newMinimumPositionMargin,
+    });
+    const postParameterUpdateCanLiquidate = await getCanLiquidate({ accountId });
+    assert.ok(postParameterUpdateCanLiquidate);
+    await liquidate({ accountId });
+    const postLiquidateCanLiquidate = await getCanLiquidate({ accountId });
+    assert.ok(!postLiquidateCanLiquidate);
+    const postAvailableMargin = await getAvailableMargin({ accountId });
+    assert.equal(postAvailableMargin, 0);
   });
 });
