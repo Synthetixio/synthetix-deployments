@@ -28,6 +28,7 @@ const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { setWETHTokenBalance } = require('../../tasks/setWETHTokenBalance');
+const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
 
@@ -81,6 +82,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
+  });
+
+  it('should update the ETH and BTC prices', async () => {
+    await doPriceUpdate({
+      wallet,
+      marketId: extras.btc_perps_market_id,
+      settlementStrategyId: extras.btc_pyth_settlement_strategy,
+    });
+    await doPriceUpdate({
+      wallet,
+      marketId: extras.eth_perps_market_id,
+      settlementStrategyId: extras.eth_pyth_settlement_strategy,
+    });
   });
 
   it('should set fBTC balance to 25', async () => {
