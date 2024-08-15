@@ -6,7 +6,7 @@ synth_eth_skew_scale = "350000"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Ether", "sETH", "<%= settings.owner %>"]
+args = ["Synthetic Wrapped Ether", "swETH", "<%= settings.owner %>"]
 extra.synth_eth_market_id.event = "SynthRegistered"
 extra.synth_eth_market_id.arg = 0
 extra.synth_eth_token_address.event = "SynthRegistered"
@@ -50,7 +50,7 @@ fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_eth_market_id %>",
-    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = false },
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = true },
 ]
 extra.synth_eth_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_eth_settlement_strategy_id.arg = 1
@@ -63,10 +63,10 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.synth_eth_settlement_strategy_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = true },
 ]
 
-[invoke.CoreProxy_configureCollateral_sETH]
+[invoke.CoreProxy_configureCollateral_swETH]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
