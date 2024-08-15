@@ -87,13 +87,13 @@ defaultValue = "synthetix:3.5.0"
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.5.0" # TODO use the right version once the Multi-Collateral release is out
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.5.0" # TODO use the right version once the Multi-Collateral release is out
+defaultValue = "synthetix-perps-market:3.6.0"
 
 [setting.rewards_distributor_external_package]
-defaultValue = "synthetix-rewards-dist-ext:3.5.0"
+defaultValue = "synthetix-rewards-dist-ext:3.6.0"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
@@ -352,7 +352,7 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 #
 [setting.pyth_feed_id_btc]
-defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"  #note this is the wBTC feed id not the pure BTC feed Id 
+defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33" #note this is the wBTC feed id not the pure BTC feed Id 
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
