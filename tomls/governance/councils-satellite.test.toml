@@ -1,0 +1,55 @@
+[clone.governance_ambassador_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-ambassador"
+options.owner = "<%= settings.owner %>"
+options.wormhole_core = "<%= settings.governance_wormhole_core %>"
+options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
+options.initial_council_member = "<%= settings.governance_initial_council_member %>"
+options.initial_epoch_index = "<%= settings.governance_initial_epoch_index %>"
+options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_date %>"
+options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
+options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
+options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
+
+[clone.governance_spartan_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-spartan"
+options.owner = "<%= settings.owner %>"
+options.wormhole_core = "<%= settings.governance_wormhole_core %>"
+options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
+options.initial_council_member = "<%= settings.governance_initial_council_member %>"
+options.initial_epoch_index = "<%= settings.governance_initial_epoch_index %>"
+options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_date %>"
+options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
+options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
+options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
+
+[clone.governance_treasury_council]
+source = "<%= settings.governance_package %>"
+options.salt = "<%= settings.governance_salt %>-treasury"
+options.owner = "<%= settings.owner %>"
+options.wormhole_core = "<%= settings.governance_wormhole_core %>"
+options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
+options.initial_council_member = "<%= settings.governance_initial_council_member %>"
+options.initial_epoch_index = "<%= settings.governance_initial_epoch_index %>"
+options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_date %>"
+options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
+options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
+options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
+
+# [invoke.governance_set_snapshot_record]
+# target = [
+#     "imports.governance_ambassador_council.GovernanceProxy",
+#     "imports.governance_spartan_council.GovernanceProxy",
+# ]
+# from = "<%= settings.owner %>"
+# func = "setSnapshotContract"
+# args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
+
+# [invoke.governance_set_snapshot_record_treasury]
+# target = [
+#     "imports.governance_treasury_council.GovernanceProxy",
+# ]
+# from = "<%= settings.owner %>"
+# func = "setSnapshotContract"
+# args = ["<%= contracts.SnapshotRecordMock.address %>", 1, true] # Treasury council uses different counting strategy

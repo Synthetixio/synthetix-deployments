@@ -17,6 +17,10 @@ include = [
     "tomls/markets/spot/usde.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
+
+    # Governance
+    "tomls/governance/councils-satellite.toml",
+    "tomls/governance/wormhole.toml",
 ]
 
 [setting.snx_package]
@@ -139,3 +143,22 @@ target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseMigration"
 args = [true]
+
+# Governance Councils Configuration
+[var.governance]
+governance_package = "synthetix-governance-satellite:3.0.5"
+governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
+governance_salt = "synthetix-governance"
+# Wormhole
+governance_wormhole_core = ""    # TODO: add wh core and relayer addresses
+governance_wormhole_relayer = "" # TODO: add wh core and relayer addresses
+# Snapshot
+snapshot_record = 0x89FCb32F29e509cc42d0C8b6f058C993013A843F # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/1-main/interact/synthetix/SynthetixDebtShare/0x89FCb32F29e509cc42d0C8b6f058C993013A843F
+# Proxy Config
+governance_initial_council_member = "<%= settings.owner %>"
+# TODO: set this values from mothership deployment
+governance_initial_epoch_index = "0"
+governance_initial_epoch_start_date = "0"
+governance_initial_nomination_period_start_date = "0"
+governance_initial_voting_period_start_date = "0"
+governance_initial_epoch_end_date = "0"
