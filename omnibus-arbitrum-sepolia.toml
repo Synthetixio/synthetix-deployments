@@ -63,7 +63,6 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/perps-keeper-cost.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/global.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/referrers.toml",
-
     # Perps Markets
     "tomls/omnibus-arbitrum-sepolia/perps/markets/btc.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/eth.toml",
