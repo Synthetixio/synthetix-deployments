@@ -347,7 +347,7 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 #
 [setting.pyth_feed_id_btc]
-defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"  #note this is the wBTC feed id not the pure BTC feed Id 
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
