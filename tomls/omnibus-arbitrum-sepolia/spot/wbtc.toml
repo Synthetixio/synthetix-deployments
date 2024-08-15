@@ -41,7 +41,10 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setMarketSkewScale"
-args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synth_btc_skew_scale) %>"]
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= parseEther(settings.synth_btc_skew_scale) %>",
+]
 depends = ['var.btc_spot_settings']
 
 [invoke.SpotMarketProxy_setWrapper_btc]
@@ -56,6 +59,7 @@ args = [
 ]
 depends = ['var.btc_spot_settings']
 
+# NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -63,7 +67,7 @@ fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_btc_market_id %>",
-    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = true },
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = false },
 ]
 extra.synth_btc_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_btc_settlement_strategy_id.arg = 1

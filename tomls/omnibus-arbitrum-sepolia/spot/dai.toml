@@ -42,6 +42,7 @@ args = [
     "<%= settings.synth_dai_max_market_collateral %>",
 ]
 
+# NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_dai]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -49,7 +50,7 @@ fromCall.args = ["<%= extras.synth_dai_market_id %>"]
 func = "addSettlementStrategy"
 args = [
     "<%= extras.synth_dai_market_id %>",
-    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = true },
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = false },
 ]
 extra.synth_dai_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_dai_settlement_strategy_id.arg = 1
