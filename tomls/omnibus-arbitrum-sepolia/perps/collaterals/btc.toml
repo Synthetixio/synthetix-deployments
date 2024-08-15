@@ -1,10 +1,10 @@
-[var.perps_collateral_sBTC_settings]
+[var.perps_collateral_swBTC_settings]
 btc_upper_limit_discount = "<%= parseEther('0.075') %>"
 btc_lower_limit_discount = "<%= parseEther('0.010') %>"
 btc_discount_scalar = "<%= parseEther('1') %>"
 btc_target = "BTC_Perps_rewards"
 
-[provision.RewardsDistributor_PerpsCollateral_sBTC_liquidation_rewards]
+[provision.RewardsDistributor_PerpsCollateral_swBTC_liquidation_rewards]
 source = "<%= settings.rewards_distributor_external_package %>"
 target = "<%= settings.rewards_distributor_external_package %>@<%= settings.btc_target %>"
 options.salt = "<%= settings.salt %>"
@@ -12,7 +12,7 @@ options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= extras.synth_btc_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for sBTC"
+options.name = "Perps Collateral Liquidation Rewards for swBTC"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_setCollateralConfiguration_btc]
@@ -26,7 +26,7 @@ args = [
     "<%= settings.btc_lower_limit_discount %>",
     "<%= settings.btc_discount_scalar %>",
 ]
-depends = ["var.perps_collateral_sBTC_settings"]
+depends = ["var.perps_collateral_swBTC_settings"]
 
 [invoke.PerpsMarketProxy_registerDistributor_btc_usdc]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -34,7 +34,7 @@ fromCall.func = "owner"
 func = "registerDistributor"
 args = [
     "<%= settings.synth_btc_token_address %>",
-    "<%= imports.RewardsDistributor_PerpsCollateral_sBTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_swBTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= settings.synth_btc_market_id %>",
     [
         "<%= settings.arb_address %>",

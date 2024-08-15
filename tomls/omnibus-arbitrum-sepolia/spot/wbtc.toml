@@ -12,13 +12,13 @@ options.decimals = "18"
 
 [setting.btc_address]
 defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
-description = "Mock usdc address"
+description = "Mock btc address"
 
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Bitcoin", "sBTC", "<%= settings.owner %>"]
+args = ["Synthetic Wrapped Bitcoin", "swBTC", "<%= settings.owner %>"]
 extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
@@ -39,7 +39,7 @@ args = [
 [invoke.SpotMarketProxy_setMarketSkewScale_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setMarketSkewScale"
 args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synth_btc_skew_scale) %>"]
 depends = ['var.btc_spot_settings']
@@ -56,6 +56,7 @@ args = [
 ]
 depends = ['var.btc_spot_settings']
 
+# NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -68,7 +69,7 @@ args = [
 extra.synth_btc_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_btc_settlement_strategy_id.arg = 1
 
-[invoke.SpotMarketProxy_setSettlementStrategy_sBTC]
+[invoke.SpotMarketProxy_setSettlementStrategy_swBTC]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
@@ -76,7 +77,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= extras.synth_btc_settlement_strategy_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = true },
 ]
 
 [invoke.CoreProxy_configureCollateral_wBTC]
@@ -98,7 +99,7 @@ args = [
     "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
 ]
 
-[invoke.CoreProxy_configureCollateral_sBTC]
+[invoke.CoreProxy_configureCollateral_swBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
@@ -106,7 +107,7 @@ args = [
     { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
 ]
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_sBTC]
+[invoke.CoreProxy_configureMaximumMarketCollateral_swBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
