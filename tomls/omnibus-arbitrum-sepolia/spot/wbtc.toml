@@ -41,10 +41,7 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setMarketSkewScale"
-args = [
-    "<%= extras.synth_btc_market_id %>",
-    "<%= parseEther(settings.synth_btc_skew_scale) %>",
-]
+args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synth_btc_skew_scale) %>"]
 depends = ['var.btc_spot_settings']
 
 [invoke.SpotMarketProxy_setWrapper_btc]
