@@ -192,13 +192,13 @@ defaultValue = "synthetix-bfp-market:3.5.0"
 
 # Collaterals configurations
 #
-[setting.snxusd_max_market_collateral]
+[setting.susd_max_collateral]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.weth_max_collateral]
 defaultValue = "<%= parseEther(String(10_000)) %>"
 
-[setting.snxusd_skew_scale]
+[setting.susd_skew_scale]
 defaultValue = "0" # skew scale is not used for sUSD.
 
 [setting.weth_skew_scale]

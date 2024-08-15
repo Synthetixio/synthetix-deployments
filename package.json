@@ -35,6 +35,7 @@
     "build:arbitrum-sepolia": "cannon build omnibus-arbitrum-sepolia.toml --dry-run --port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 421614 --provider-url https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
     "test:mainnet": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-mainnet.toml/**/*.e2e.js",
     "test:sepolia": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-sepolia.toml/**/*.e2e.js",
+    "test:sepolia-bfp": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-sepolia.toml/**/BFP_Market_ETH.e2e.js",
     "test:optimism": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-optimism-mainnet.toml/**/*.e2e.js",
     "test:base": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-mainnet-andromeda.toml/**/*.e2e.js",
     "test:base-sepolia": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-sepolia-andromeda.toml/**/*.e2e.js",

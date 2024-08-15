@@ -8,7 +8,7 @@ func = "configureCollateral"  # "args" see below in the multiline block
 [[invoke.configureWethCollateral.args]]
 tokenAddress = "<%= settings.weth_address %>"
 oracleNodeId = "<%= extras.eth_oracle_id %>"
-issuanceRatioD18 = "<%= MaxUint256 %>"
+issuanceRatioD18 = "<%= parseEther('2') %>"
 liquidationRatioD18 = "<%= parseEther('1.5') %>"
 liquidationRewardD18 = "<%= parseEther('0.01') %>"
 minDelegationD18 = "<%= parseEther('0.01') %>"
