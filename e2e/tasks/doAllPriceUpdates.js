@@ -18,12 +18,15 @@ async function doAllPriceUpdates({ wallet }) {
 
   const priceVerificationContract =
     extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
-  const feedIds = Object.entries(extras)
+
+  const possiblyDuplicateFeedIds = Object.entries(extras)
     .filter(
       ([key]) =>
         key.startsWith('pyth_feed_id_') || (key.startsWith('pyth') && key.endsWith('FeedId'))
     )
     .map(([_key, value]) => value);
+  const feedIds = Array.from(new Set(possiblyDuplicateFeedIds));
+
   log({ feeds: feedIds.length, feedIds });
   const batches = splitIntoChunks(feedIds, 50);
 
