@@ -30,7 +30,7 @@ defaultValue = "snaxtest"
 defaultValue = "synthetix:3.5.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.5.0"
@@ -188,7 +188,7 @@ args = [
 #
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.5.0"
+defaultValue = "synthetix-bfp-market:3.6.0"
 
 # Collaterals configurations
 #
@@ -276,7 +276,7 @@ depends = ["provision.system"]
 #
 
 [provision.weth_mock_collateral]
-source = "mintable-token:1.8"
+source = "mintable-token:2.0"
 options.name = "Fake WETH"
 options.symbol = "fWETH"
 options.owner = "<%= settings.owner %>"
@@ -285,7 +285,7 @@ options.decimals = "18"
 # Set weth_address so that Core is configured with the fake WETH.
 #
 [setting.weth_address]
-defaultValue = "<%= console.log('weth_mock_collateral',weth_mock_collateral) || weth_mock_collateral.MintableToken.address %>"
+defaultValue = "<%= console.log('weth_mock_collateral',weth_mock_collateral) || weth_mock_collateral.Token.address %>"
 
 # --- Configure bfp --- #
 #

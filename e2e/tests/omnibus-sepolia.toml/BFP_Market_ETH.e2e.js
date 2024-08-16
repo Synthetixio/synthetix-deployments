@@ -258,6 +258,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       (c) => c.collateralAddress === collateralAddress
     );
     log({ oldDepositedWeth });
+    log(collateralAddress);
 
     assert.equal(
       parseFloat(ethers.utils.formatEther(oldDepositedWeth.available)),
