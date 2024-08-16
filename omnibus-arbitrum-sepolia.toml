@@ -50,8 +50,8 @@ include = [
 
     # Spot Markets
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/btc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
 
     #
