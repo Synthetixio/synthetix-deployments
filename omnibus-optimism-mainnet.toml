@@ -131,7 +131,7 @@ governance_salt = "synthetix-governance"
 governance_wormhole_core = ""    # TODO: add wh core and relayer addresses
 governance_wormhole_relayer = "" # TODO: add wh core and relayer addresses
 # Snapshot
-snapshot_record = 0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79 # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/10-main/interact/synthetix/SynthetixDebtShare/0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79
+snapshot_record = "0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79" # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/10-main/interact/synthetix/SynthetixDebtShare/0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79
 # Proxy Config
 governance_initial_council_member = "<%= settings.owner %>"
 # TODO: set this values from mothership deployment
