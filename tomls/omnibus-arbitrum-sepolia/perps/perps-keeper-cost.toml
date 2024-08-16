@@ -18,7 +18,7 @@ args = [
     # 2 = external node
     2,
     # 7 parameters: 1 is the external node contract address, 2 to 7 gas units
-    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], ['0x469980b51244C8649DD62162748700591d768125', settings.perps_keeper_l1_cost_settle_gas_units, settings.perps_keeper_l2_cost_settle_gas_units, settings.perps_keeper_l1_cost_flag_gas_units, settings.perps_keeper_l2_cost_flag_gas_units, settings.perps_keeper_l1_cost_liquidate_gas_units, settings.perps_keeper_l2_cost_liquidate_gas_units]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256'], [0x469980b51244C8649DD62162748700591d768125, settings.perps_keeper_l1_cost_settle_gas_units, settings.perps_keeper_l2_cost_settle_gas_units, settings.perps_keeper_l1_cost_flag_gas_units, settings.perps_keeper_l2_cost_flag_gas_units, settings.perps_keeper_l1_cost_liquidate_gas_units, settings.perps_keeper_l2_cost_liquidate_gas_units]) %>",
     [
     ],
 ]
