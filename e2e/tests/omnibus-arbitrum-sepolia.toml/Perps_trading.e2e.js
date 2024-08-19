@@ -175,7 +175,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should wrap 5 fBTC', async () => {
     const balance = await wrapCollateral({
       wallet,
-      symbol: 'sBTC',
+      symbol: 'swBTC',
       synthAddress: require('../../deployments/extras.json').synth_btc_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_btc_market_id,
       amount: 5,
@@ -186,7 +186,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should wrap 15 fETH', async () => {
     const balance = await wrapCollateral({
       wallet,
-      symbol: 'sETH',
+      symbol: 'swETH',
       synthAddress: require('../../deployments/extras.json').synth_eth_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_eth_market_id,
       amount: 15,
@@ -226,12 +226,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     await approveCollateral({
       privateKey,
-      symbol: 'sBTC',
+      symbol: 'swBTC',
       spenderAddress: PerpsMarketProxy.address,
     });
     await approveCollateral({
       privateKey,
-      symbol: 'sETH',
+      symbol: 'swETH',
       spenderAddress: PerpsMarketProxy.address,
     });
     assert.equal(
@@ -245,7 +245,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'sBTC',
+        symbol: 'swBTC',
         spenderAddress: PerpsMarketProxy.address,
       }),
       true
@@ -253,7 +253,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'sETH',
+        symbol: 'swETH',
         spenderAddress: PerpsMarketProxy.address,
       }),
       true
