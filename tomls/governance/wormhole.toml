@@ -1,11 +1,7 @@
 # Configure wormhole networks, values taken from:
 # https://docs.wormhole.com/wormhole/reference/constants#chain-ids
-[invoke.governance_set_registered_emitters]
-target = [
-    "governance_ambassador_council.GovernanceProxy",
-    "governance_spartan_council.GovernanceProxy",
-    "governance_treasury_council.GovernanceProxy",
-]
+[invoke.governance_set_registered_emitters_ambassador]
+target = ["governance_ambassador_council.GovernanceProxy"]
 from = "<%= settings.owner %>"
 func = "setRegisteredEmitters"
 args = [
@@ -15,9 +11,41 @@ args = [
         "24",   # optimism
     ],
     [
-        "", # TODO replace with gov proxy address
-        "", # TODO replace with gov proxy address
-        "", # TODO replace with gov proxy address
+        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+[invoke.governance_set_registered_emitters_spartan]
+target = ["governance_spartan_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "2192", # snaxchain
+        "2",    # ethereum
+        "24",   # optimism
+    ],
+    [
+        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+[invoke.governance_set_registered_emitters_treasury]
+target = ["governance_treasury_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "2192", # snaxchain
+        "2",    # ethereum
+        "24",   # optimism
+    ],
+    [
+        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
     ],
 ]
 
