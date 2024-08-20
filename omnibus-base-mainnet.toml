@@ -104,18 +104,6 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 # https://docs.pyth.network/documentation/pythnet-price-feeds/evm
 defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
 
-[invoke.configure_spartan_council_pool]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
-
 [invoke.configure_weth_collateral_for_spartan_council_pool]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"

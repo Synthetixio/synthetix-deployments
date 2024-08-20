@@ -122,18 +122,6 @@ source = "usde-token"
 #"<%= settings.synth_usde_max_market_collateral %>",
 #]
 
-[invoke.setScPoolConfig]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 100, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
-
 [invoke.pauseLMMigration]
 target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"

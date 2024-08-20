@@ -112,18 +112,6 @@ defaultValue = "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
 [setting.snx_address]
 # defaultValue = "0x"
 
-[invoke.setScPoolConfig]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
-
 [invoke.allowAllPerpsSystem_revert]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
