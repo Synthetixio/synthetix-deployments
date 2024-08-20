@@ -36,8 +36,6 @@ args = [
     "<%= imports.RewardsDistributor_PerpsCollateral_swETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= settings.synth_eth_market_id %>",
     [
-        "<%= settings.usdc_address %>",
-        "<%= settings.USDe_address %>",
         "<%= settings.weth_address %>",
     ],
 ]
