@@ -37,7 +37,6 @@ args = [
     "<%= imports.RewardsDistributor_PerpsCollateral_swBTC_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= settings.synth_btc_market_id %>",
     [
-        "<%= settings.dai_address %>",
         "<%= settings.usdc_address %>",
         "<%= settings.USDe_address %>",
         "<%= settings.weth_address %>",
