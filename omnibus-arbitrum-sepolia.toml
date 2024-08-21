@@ -34,7 +34,6 @@ include = [
     # USDe
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
 
     # rewards ARB for all vaults and pool
     "tomls/omnibus-arbitrum-sepolia/rewards/sc-arb.toml",
