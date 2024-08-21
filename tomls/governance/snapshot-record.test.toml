@@ -1,0 +1,17 @@
+[invoke.governance_set_snapshot_record]
+target = ["imports.governance_ambassador_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
+
+[invoke.governance_set_snapshot_record]
+target = ["imports.governance_spartan_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
+
+[invoke.governance_set_snapshot_record_treasury]
+target = ["imports.governance_treasury_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]

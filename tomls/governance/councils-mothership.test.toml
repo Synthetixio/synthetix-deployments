@@ -42,20 +42,3 @@ options.initial_nomination_period_start_date = "<%= settings.governance_initial_
 options.administration_period_duration = "<%= settings.governance_administration_period_duration %>"
 options.nomination_period_duration = "<%= settings.governance_nomination_period_duration %>"
 options.voting_period_duration = "<%= settings.governance_voting_period_duration %>"
-
-# [invoke.governance_set_snapshot_record]
-# target = [
-#     "imports.governance_ambassador_council.GovernanceProxy",
-#     "imports.governance_spartan_council.GovernanceProxy",
-# ]
-# from = "<%= settings.owner %>"
-# func = "setSnapshotContract"
-# args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
-
-# [invoke.governance_set_snapshot_record_treasury]
-# target = [
-#     "imports.governance_treasury_council.GovernanceProxy",
-# ]
-# from = "<%= settings.owner %>"
-# func = "setSnapshotContract"
-# args = ["<%= contracts.SnapshotRecordMock.address %>", 1, true] # Treasury council uses different counting strategy

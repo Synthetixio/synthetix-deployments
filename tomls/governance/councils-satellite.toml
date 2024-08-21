@@ -36,21 +36,3 @@ options.initial_epoch_start_date = "<%= settings.governance_initial_epoch_start_
 options.initial_nomination_period_start_date = "<%= settings.governance_initial_nomination_period_start_date %>"
 options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
 options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
-
-# TODO: add synthetix-snapshot-rewards package and update this values:
-# [invoke.governance_set_snapshot_record]
-# target = [
-#     "imports.governance_ambassador_council.GovernanceProxy",
-#     "imports.governance_spartan_council.GovernanceProxy",
-# ]
-# from = "<%= settings.owner %>"
-# func = "setSnapshotContract"
-# args = ["<%= contracts.SnapshotRecordMock.address %>", 0, true]
-
-# [invoke.governance_set_snapshot_record_treasury]
-# target = [
-#     "imports.governance_treasury_council.GovernanceProxy",
-# ]
-# from = "<%= settings.owner %>"
-# func = "setSnapshotContract"
-# args = ["<%= contracts.SnapshotRecordMock.address %>", 1, true] # Treasury council uses different counting strategy

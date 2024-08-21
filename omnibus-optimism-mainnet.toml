@@ -19,6 +19,7 @@ include = [
     # Governance
     "tomls/governance/councils-satellite.toml",
     "tomls/governance/wormhole.toml",
+    "tomls/governance/snapshot-record.toml",
 ]
 
 [setting.snx_package]
@@ -132,6 +133,9 @@ governance_wormhole_core = "0xEe91C335eab126dF5fDB3797EA9d6aD93aeC9722"    # htt
 governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # https://docs.wormhole.com/wormhole/reference/constants#standard-relayer
 # Snapshot
 snapshot_record = "0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79" # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/10-main/interact/synthetix/SynthetixDebtShare/0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79
+ambassador_weight = 0
+spartan_weight = 0
+treasury_weight = 1
 # Proxy Config
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
