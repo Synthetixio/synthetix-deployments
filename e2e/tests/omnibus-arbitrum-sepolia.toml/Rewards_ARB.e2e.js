@@ -87,7 +87,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
     console.log('got back info', info);
-    assert.equal(info.name, 'Spartan Council Pool ARB Rewards', 'name');
+    assert.equal(info.name, 'Spartan Council Pool ARB Rewards for ARB LP', 'name');
     assert.equal(info.poolId, 1, 'poolId');
     //assert.equal(info.collateralType, collateralType, 'collateralType');
     assert.equal(
