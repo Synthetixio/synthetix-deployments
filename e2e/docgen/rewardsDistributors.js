@@ -77,13 +77,23 @@ async function rewardsDistributors() {
       </tr>
     `);
 
-    table.push(`
-      <tr>
-        <td>collateralType</td>
-        <td>${rewardsDistributor.collateralType.symbol} ${rawValue(rewardsDistributor.collateralType.decimals)}</td>
-        <td>${addrHtmlLink(chainId, rewardsDistributor.collateralType.address)}</td>
-      </tr>
-    `);
+    if (rewardsDistributor.collateralType) {
+      table.push(`
+        <tr>
+          <td>collateralType</td>
+          <td>${rewardsDistributor.collateralType.symbol} ${rawValue(rewardsDistributor.collateralType.decimals)}</td>
+          <td>${addrHtmlLink(chainId, rewardsDistributor.collateralType.address)}</td>
+        </tr>
+      `);
+    } else {
+      table.push(`
+        <tr>
+          <td>collateralType</td>
+          <td>n/a</td>
+          <td>n/a</td>
+        </tr>
+      `);
+    }
 
     table.push(`
       <tr>
