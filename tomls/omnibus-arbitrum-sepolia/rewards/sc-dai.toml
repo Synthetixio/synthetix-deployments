@@ -7,7 +7,7 @@ options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= settings.dai_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Spartan Council Pool DAI Rewards"
-options.authorizedExternalDistributor = "<%= perpsFactory.PerpsMarketProxy %>"
+options.authorizedExternalDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_DAI_rewards_for_ARB_lp]
 target = ["system.CoreProxy"]
