@@ -21,7 +21,7 @@ include = [
     "tomls/permit-all-transferCrossChain.toml",
 
     # Governance
-    "tomls/governance/councils-mothership.toml",
+    "tomls/governance/councils-satellite.toml",
     "tomls/governance/wormhole-testnet.toml",
 ]
 
@@ -188,7 +188,8 @@ governance_wormhole_relayer = "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470" # htt
 # Proxy Config
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
-governance_initial_nomination_period_start_date = "0"       # defaults to "block.timestamp + administration_period_duration" when given "0"
-governance_administration_period_duration = "90"            # days
-governance_nomination_period_duration = "15"                # days
-governance_voting_period_duration = "15"                    # days
+governance_initial_epoch_index = "0"
+governance_initial_epoch_start_date = "0"
+governance_initial_nomination_period_start_date = "0"
+governance_initial_voting_period_start_date = "0"
+governance_initial_epoch_end_date = "0"

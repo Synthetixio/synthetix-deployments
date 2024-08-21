@@ -156,7 +156,7 @@ governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # htt
 snapshot_record = "0x89FCb32F29e509cc42d0C8b6f058C993013A843F" # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/1-main/interact/synthetix/SynthetixDebtShare/0x89FCb32F29e509cc42d0C8b6f058C993013A843F
 # Proxy Config
 governance_initial_council_member = "<%= settings.owner %>"
-# TODO: set this values from mothership deployment
+governance_minimum_active_members = "1"
 governance_initial_epoch_index = "0"
 governance_initial_epoch_start_date = "0"
 governance_initial_nomination_period_start_date = "0"
