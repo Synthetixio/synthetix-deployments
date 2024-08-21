@@ -98,7 +98,7 @@ defaultValue = "synthetix-spot-market:3.6.0"
 defaultValue = "synthetix-perps-market:3.6.0"
 
 [setting.rewards_distributor_external_package]
-defaultValue = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
+defaultValue = "synthetix-rewards-dist-ext:3.6.0"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
