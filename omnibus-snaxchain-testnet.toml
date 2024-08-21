@@ -1,0 +1,26 @@
+name = "synthetix-omnibus"
+version = "1"
+description = "Snaxchain Testnet deployment"
+include = [
+    # Governance
+    "tomls/governance/councils-mothership.test.toml",
+    "tomls/governance/wormhole-testnet.toml",
+]
+
+[setting.owner]
+defaultValue = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" # TODO: confirm owner address
+
+# Governance Councils Configuration
+[var.governance]
+governance_package = "synthetix-governance:3.0.5"
+governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
+governance_salt = "synthetix-governance"
+# Wormhole
+governance_wormhole_core = "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd"    # https://testnet-explorer.snaxchain.io/address/0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd
+governance_wormhole_relayer = "0xe1ECA712d327ed8e0E762A303c95c19b7b4659EE" # Mock relayer https://usecannon.com/packages/synthetix-governance/8/13001-test
+# Proxy Config
+governance_initial_council_member = "<%= settings.owner %>"
+governance_minimum_active_members = "1"
+governance_administration_period_duration = "90"            # days
+governance_nomination_period_duration = "15"                # days
+governance_voting_period_duration = "15"                    # days
