@@ -4563,7 +4563,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.19.6"
+    viem: "npm:^2.17.1"
   languageName: unknown
   linkType: soft
 
@@ -4864,7 +4864,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.16.5, viem@npm:^2.19.6":
+"viem@npm:^2.16.5, viem@npm:^2.17.1":
   version: 2.19.6
   resolution: "viem@npm:2.19.6"
   dependencies:
