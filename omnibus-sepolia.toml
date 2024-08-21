@@ -168,7 +168,7 @@ func = "setPoolConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     [
-        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 99, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 99, maxDebtShareValueD18 = "<%= parseEther('3') %>" },
         { marketId = "<%= settings.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
