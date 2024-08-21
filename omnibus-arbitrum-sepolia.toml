@@ -98,7 +98,7 @@ defaultValue = "synthetix-spot-market:3.6.0"
 defaultValue = "synthetix-perps-market:3.6.0"
 
 [setting.rewards_distributor_external_package]
-defaultValue = "synthetix-rewards-dist-ext:3.6.0"
+defaultValue = "synthetix-rewards-dist-ext:3.3.21-dev.fd4c5628"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
@@ -208,6 +208,9 @@ defaultValue = "<%= parseEther(String(10_000_000)) %>"
 [setting.max_collateral_limit_usdc]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
 
+[setting.usdc_target]
+defaultValue = "sc-usdc"
+
 #
 #
 #
@@ -237,6 +240,9 @@ defaultValue = "<%= parseEther(String(0)) %>"
 [setting.max_collateral_limit_dai]
 defaultValue = "<%= parseEther(String(0)) %>"
 
+[setting.dai_target]
+defaultValue = "sc-dai"
+
 #
 #
 #
@@ -254,6 +260,9 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.max_collateral_limit_weth]
 defaultValue = "<%= parseEther(String(5_400)) %>"
+
+[setting.weth_target]
+defaultValue = "sc-weth"
 
 #
 #
@@ -281,6 +290,9 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 [setting.max_collateral_limit_arb]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
 
+[setting.arb_target]
+defaultValue = "sc-arb"
+
 #
 #
 #
@@ -304,6 +316,9 @@ description = "Using mock for testnet sUSDe"
 defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
+[setting.sUSDe_target]
+defaultValue = "sc-sUSDe"
+
 #
 #
 #
@@ -326,6 +341,9 @@ description = "Using mock for testnet USDe"
 [setting.pyth_feed_id_USDe]
 defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+[setting.USDe_target]
+defaultValue = "sc-USDe"
 
 #
 #
@@ -360,21 +378,21 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33" #note this is the wBTC feed id not the pure BTC feed Id 
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= extras.spartan_council_pool_id %>",
-    [
-        { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
+# [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
+# target = ["system.CoreProxy"]
+# fromCall.func = "getPoolOwner"
+# fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+# func = "setPoolConfiguration"
+# args = [
+#     "<%= extras.spartan_council_pool_id %>",
+#     [
+#         { marketId = "<%= extras.synth_dai_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#         { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 98, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#         { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+#     ],
+# ]
 
 [setting.usd_token_name]
 defaultValue = "<%= formatBytes32String('USDToken') %>"

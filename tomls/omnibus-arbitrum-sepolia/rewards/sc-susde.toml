@@ -1,13 +1,13 @@
 [provision.RewardsDistributor_SpartanCouncilPool_SUSDE]
-source = "synthetix-rewards-distributor:3.5.0"
-target = "synthetix-rewards-distributor:3.5.0@sc-pool"
+source = "<%= settings.rewards_distributor_external_package %>"
+target = "<%= settings.rewards_distributor_external_package %><%= settings.sUSDe_target %>"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.sUSDe_address %>"
 options.payoutToken = "<%= settings.sUSDe_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Spartan Council Pool sUSDe Rewards"
+options.authorizedExternalDistributor = "<%= perpsFactory.PerpsMarketProxy %>"
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_SUSDE_rewards_for_ARB_lp]
 target = ["system.CoreProxy"]
