@@ -1,10 +1,10 @@
-[var.perps_collateral_swETH_settings]
+[var.perps_collateral_sETH_settings]
 eth_upper_limit_discount = "<%= parseEther('0.1') %>"
 eth_lower_limit_discount = "<%= parseEther('0.01') %>"
 eth_discount_scalar = "<%= parseEther('1') %>"
 eth_target = "ETH_Perps_rewards"
 
-[provision.RewardsDistributor_PerpsCollateral_swETH_liquidation_rewards]
+[provision.RewardsDistributor_PerpsCollateral_sETH_liquidation_rewards]
 source = "<%= settings.rewards_distributor_external_package %>"
 target = "<%= settings.rewards_distributor_external_package %>@<%= settings.eth_target %>"
 options.salt = "<%= settings.salt %>"
@@ -12,7 +12,7 @@ options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= extras.synth_eth_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Perps Collateral Liquidation Rewards for swETH"
+options.name = "Perps Collateral Liquidation Rewards for sETH"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_setCollateralConfiguration_eth]
@@ -33,7 +33,7 @@ fromCall.func = "owner"
 func = "registerDistributor"
 args = [
     "<%= settings.synth_eth_token_address %>",
-    "<%= imports.RewardsDistributor_PerpsCollateral_swETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_PerpsCollateral_sETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= settings.synth_eth_market_id %>",
     [
         "<%= settings.usdc_address %>",
