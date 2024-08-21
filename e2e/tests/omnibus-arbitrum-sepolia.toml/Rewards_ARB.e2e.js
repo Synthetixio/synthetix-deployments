@@ -29,7 +29,7 @@ const {
 const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
 const { claimRewards } = require('../../tasks/claimRewards');
 
-const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB.json');
+const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB_fARB.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
 const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
 log({ rewardsDistributor });

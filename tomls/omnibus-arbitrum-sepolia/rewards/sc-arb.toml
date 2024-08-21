@@ -17,7 +17,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.arb_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_DAI_lp]
@@ -28,7 +28,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.dai_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp]
@@ -39,7 +39,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.sUSDe_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDC_lp]
@@ -50,7 +50,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.usdc_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDe_lp]
@@ -61,7 +61,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.USDe_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_WETH_lp]
@@ -72,7 +72,7 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.weth_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
 # for distribution to the pool level as well
@@ -84,5 +84,5 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= AddressZero %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
