@@ -5,7 +5,7 @@ include = [
     # Governance
     "tomls/governance/councils-mothership.test.toml",
     "tomls/governance/wormhole-testnet.toml",
-    "tomls/governance/snapshot_record.test.toml",
+    "tomls/governance/snapshot-record.test.toml",
 ]
 
 [setting.owner]
