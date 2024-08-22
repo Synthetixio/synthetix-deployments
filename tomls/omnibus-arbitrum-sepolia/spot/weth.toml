@@ -39,7 +39,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= settings.synth_eth_max_market_collateral %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
 ]
 
 # NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
@@ -82,7 +82,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_eth_token_address %>",
-    "<%= settings.synth_eth_max_market_collateral %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
 ]
 
 # WETH is already configured but we will set the max market collateral
@@ -94,5 +94,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= settings.synth_eth_max_market_collateral %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
 ]
