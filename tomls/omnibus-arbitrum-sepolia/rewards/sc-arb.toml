@@ -20,17 +20,6 @@ args = [
     "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_DAI_lp]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.dai_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributorExternal.address %>",
-]
-
 [invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_sUSDe_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"

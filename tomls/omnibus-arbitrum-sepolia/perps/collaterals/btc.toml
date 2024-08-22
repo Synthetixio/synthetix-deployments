@@ -38,7 +38,6 @@ args = [
     "<%= settings.synth_btc_market_id %>",
     [
         "<%= settings.arb_address %>",
-        "<%= settings.dai_address %>",
         "<%= settings.usdc_address %>",
         "<%= settings.USDe_address %>",
         "<%= settings.sUSDe_address %>",
