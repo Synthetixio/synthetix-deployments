@@ -1,6 +1,6 @@
 [provision.RewardsDistributor_SpartanCouncilPool_USDC]
 source = "<%= settings.rewards_distributor_external_package %>"
-target = "<%= settings.rewards_distributor_external_package %><%= settings.usdc_target %>"
+target = "<%= settings.rewards_distributor_external_package %>@<%= settings.usdc_target %>"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
