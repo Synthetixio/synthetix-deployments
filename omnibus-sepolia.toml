@@ -192,13 +192,13 @@ defaultValue = "synthetix-bfp-market:3.6.0"
 
 # Collaterals configurations
 #
-[setting.susd_max_collateral]
+[setting.snxusd_max_collateral]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.weth_max_collateral]
 defaultValue = "<%= parseEther(String(10_000)) %>"
 
-[setting.susd_skew_scale]
+[setting.snxusd_skew_scale]
 defaultValue = "0" # skew scale is not used for sUSD.
 
 [setting.weth_skew_scale]
@@ -276,7 +276,7 @@ depends = ["provision.system"]
 #
 
 [provision.weth_mock_collateral]
-source = "mintable-token:2.0"
+source = "mintable-token:1.8"
 options.name = "Fake WETH"
 options.symbol = "fWETH"
 options.owner = "<%= settings.owner %>"
@@ -285,7 +285,7 @@ options.decimals = "18"
 # Set weth_address so that Core is configured with the fake WETH.
 #
 [setting.weth_address]
-defaultValue = "<%= console.log('weth_mock_collateral',weth_mock_collateral) || weth_mock_collateral.Token.address %>"
+defaultValue = "<%= console.log('weth_mock_collateral',weth_mock_collateral) || weth_mock_collateral.MintableToken.address %>"
 
 # --- Configure bfp --- #
 #
@@ -416,11 +416,11 @@ args = [
         "<%= settings.eth_oracle_id %>",
     ],
     [ # maxAllowances
-        "<%= settings.susd_max_collateral %>",
+        "<%= settings.snxusd_max_collateral %>",
         "<%= settings.weth_max_collateral %>",
     ],
     [ # skew_scales
-        "<%= settings.susd_skew_scale %>",
+        "<%= settings.snxusd_skew_scale %>",
         "<%= settings.weth_skew_scale %>",
     ],
     [ # rewardDistributors
