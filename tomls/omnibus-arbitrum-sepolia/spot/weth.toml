@@ -6,7 +6,7 @@ synth_eth_skew_scale = "<%= parseEther(String(350_000)) %>"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Wrapped Ether", "swETH", "<%= settings.owner %>"]
+args = ["Synthetic Ether", "sETH", "<%= settings.owner %>"]
 extra.synth_eth_market_id.event = "SynthRegistered"
 extra.synth_eth_market_id.arg = 0
 extra.synth_eth_token_address.event = "SynthRegistered"

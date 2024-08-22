@@ -18,7 +18,7 @@ description = "Mock btc address"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Wrapped Bitcoin", "swBTC", "<%= settings.owner %>"]
+args = ["Synthetic Bitcoin", "sBTC", "<%= settings.owner %>"]
 extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
