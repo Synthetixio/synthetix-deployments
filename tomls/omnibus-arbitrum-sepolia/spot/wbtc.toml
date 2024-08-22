@@ -1,6 +1,6 @@
 [var.btc_spot_settings]
-synth_btc_max_collateral_amount = "75"
-synth_btc_skew_scale = "3500"
+synth_btc_max_collateral_amount = "<%= parseEther(String(75)) %>"
+synth_btc_skew_scale = "<%= parseEther(String(3_500)) %>"
 
 [provision.btc_mock_collateral]
 source = "mintable-token:1.8"
@@ -41,8 +41,7 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setMarketSkewScale"
-args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synth_btc_skew_scale) %>"]
-depends = ['var.btc_spot_settings']
+args = ["<%= extras.synth_btc_market_id %>", "<%= settings.synth_btc_skew_scale %>"]
 
 [invoke.SpotMarketProxy_setWrapper_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -52,9 +51,8 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= settings.btc_address %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
 ]
-depends = ['var.btc_spot_settings']
 
 # NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_btc]
@@ -96,7 +94,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= settings.btc_address %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
 ]
 
 [invoke.CoreProxy_configureCollateral_swBTC]
@@ -115,5 +113,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_btc_token_address %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
 ]

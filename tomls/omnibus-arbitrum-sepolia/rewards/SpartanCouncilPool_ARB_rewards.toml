@@ -1,0 +1,20 @@
+[provision.RewardsDistributor_SpartanCouncilPool_ARB]
+source = "synthetix-rewards-distributor:3.6.0"
+target = "synthetix-rewards-distributor:3.6.0@ARB-lp"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.payoutToken = "<%= settings.arb_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool ARB Rewards"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= AddressZero %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB.contracts.RewardsDistributor.address %>",
+]

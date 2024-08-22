@@ -1,0 +1,34 @@
+[provision.RewardsDistributor_SpartanCouncilPool_swBTC_liquidations]
+source = "synthetix-rewards-dist-ext:3.6.0"
+target = "synthetix-rewards-dist-ext:3.6.0@swBTC-perps"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.payoutToken = "<%= extras.synth_btc_token_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Perps Collateral Liquidation Rewards for swBTC"
+options.authorizedExternalDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+
+[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_swBTC_liquidations]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= AddressZero %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_swBTC_liquidations.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.PerpsMarketProxy_registerDistributor_swBTC_liquidations]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = [
+    "<%= extras.synth_btc_token_address %>",
+    "<%= imports.RewardsDistributor_SpartanCouncilPool_swBTC_liquidations.contracts.RewardsDistributorExternal.address %>",
+    "<%= extras.synth_btc_market_id %>",
+    [
+        "<%= AddressZero %>",
+    ],
+]

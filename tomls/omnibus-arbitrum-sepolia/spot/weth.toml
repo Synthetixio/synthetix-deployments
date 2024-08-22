@@ -1,6 +1,6 @@
 [var.eth_spot_settings]
-synth_eth_max_market_collateral = "1000"
-synth_eth_skew_scale = "350000"
+synth_eth_max_collateral_amount = "<%= parseEther(String(1_000)) %>"
+synth_eth_skew_scale = "<%= parseEther(String(350_000)) %>"
 
 [invoke.SpotMarketProxy_createSynth_eth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -29,8 +29,7 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "setMarketSkewScale"
-args = ["<%= extras.synth_eth_market_id %>", "<%= parseEther(settings.synth_eth_skew_scale) %>"]
-depends = ['var.eth_spot_settings']
+args = ["<%= extras.synth_eth_market_id %>", "<%= settings.synth_eth_skew_scale %>"]
 
 [invoke.SpotMarketProxy_setWrapper_eth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -40,7 +39,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
+    "<%= settings.synth_eth_max_market_collateral %>",
 ]
 
 # NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
@@ -83,7 +82,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_eth_token_address %>",
-    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
+    "<%= settings.synth_eth_max_market_collateral %>",
 ]
 
 # WETH is already configured but we will set the max market collateral
@@ -95,5 +94,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
+    "<%= settings.synth_eth_max_market_collateral %>",
 ]
