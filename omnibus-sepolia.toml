@@ -168,5 +168,5 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.snx_address %>",
-    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = 0 }
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = 0 },
 ]
