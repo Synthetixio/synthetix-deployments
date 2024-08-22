@@ -183,6 +183,8 @@ args = [
 governance_package = "synthetix-governance:3.0.5"
 governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
 governance_salt = "synthetix-governance"
+# Snapshot Record Mock
+snapshot_record_mock = "" # TODO deploy to sepolia
 # Wormhole
 governance_wormhole_core = "0x4a8bc80Ed5a4067f1CCf107057b8270E0cC11A78"    # https://docs.wormhole.com/wormhole/reference/constants
 governance_wormhole_relayer = "0x7B1bD7a6b4E61c2a123AC6BC2cbfC614437D0470" # https://docs.wormhole.com/wormhole/reference/constants
