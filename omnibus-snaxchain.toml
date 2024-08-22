@@ -8,7 +8,7 @@ include = [
 ]
 
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" # TODO: confirm owner address
+defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 
 # Governance Councils Configuration
 [var.governance]
@@ -21,13 +21,7 @@ governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # htt
 # Proxy Config
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
-governance_administration_period_duration = "90"            # days
-governance_nomination_period_duration = "5"                 # days
-governance_voting_period_duration = "10"                    # days
-
-# For satellite
-# governance_initial_epoch_index = "0"
-# governance_initial_epoch_start_date = "0"                      # TODO: what should this value be
-# governance_initial_nomination_period_start_date = "1725058498"
-# governance_initial_voting_period_start_date = "1725575826"
-# governance_initial_epoch_end_date = "1726439826"
+governance_initial_nomination_period_start_date = "1725072898"
+governance_administration_period_duration = "90"               # days
+governance_nomination_period_duration = "6"                    # days
+governance_voting_period_duration = "10"                       # days

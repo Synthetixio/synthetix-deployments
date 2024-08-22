@@ -23,7 +23,7 @@ from = "<%= settings.owner %>"
 func = "setRegisteredEmitters"
 args = [
     [
-        "13001", # snaxchain testnet
+        "43",    # snaxchain testnet
         "10002", # sepolia
         "10003", # arbitrum_sepolia
     ],

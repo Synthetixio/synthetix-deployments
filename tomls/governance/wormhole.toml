@@ -22,9 +22,9 @@ from = "<%= settings.owner %>"
 func = "setRegisteredEmitters"
 args = [
     [
-        "2192", # snaxchain
-        "2",    # ethereum
-        "24",   # optimism
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
     ],
     [
         "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness

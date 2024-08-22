@@ -9,7 +9,7 @@ include = [
 ]
 
 [setting.owner]
-defaultValue = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" # TODO: confirm owner address
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 # Governance Councils Configuration
 [var.governance]
