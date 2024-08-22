@@ -21,6 +21,14 @@ depends = ["invoke.createScPool"]
 
 [invoke.setPreferredPool]
 target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolCollateralDisabledByDefault"
+args = ["<%= settings.sc_pool_id %>", true]
+depends = ["invoke.createScPool"]
+
+[invoke.setPreferredPool]
+target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setPreferredPool"
 args = ["<%= settings.sc_pool_id %>"]
