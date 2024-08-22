@@ -892,13 +892,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.61.0":
-  version: 1.61.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.61.0"
+"@pythnetwork/pyth-evm-js@npm:^1.63.0":
+  version: 1.63.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.63.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/4e0f054ef3de3f8961ae108713d24b5936e837faadb32d84267c130c6b82a09030cf3f41b979a32bb595d46f92a062e0fc98a2331259d61570ee48035df9b8c7
+  checksum: 10/11ecaa2fa72cd0a7e446ea6f5c615f3e2842d8fd48795b936ad7fa6ddd6dbafc61e6dbb30942540fdce1a6b732b6c6a299e7f431be711d8b5a46d81d9d2412c8
   languageName: node
   linkType: hard
 
@@ -2482,9 +2482,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.22.8":
-  version: 2.22.8
-  resolution: "hardhat@npm:2.22.8"
+"hardhat@npm:^2.22.9":
+  version: 2.22.9
+  resolution: "hardhat@npm:2.22.9"
   dependencies:
     "@ethersproject/abi": "npm:^5.1.2"
     "@metamask/eth-sig-util": "npm:^4.0.0"
@@ -2539,7 +2539,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/bootstrap.js
-  checksum: 10/a8bf2f817f6ccad6ad400668756ac8e15d4d24c3b11ba3f566cc1062c32866cf678f4d8955ae0687422b7f871ca60e8f257d2192a726c2125d7aef82a6320bb3
+  checksum: 10/16a169e2d74f1cf8ce3c84462d168a3545cd9846f4799051b0149af5af746749e5422c055350fc73fe192aa94af79dd40abc94102ddcfce183cf2be0ce9afe26
   languageName: node
   linkType: hard
 
@@ -4550,12 +4550,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.61.0"
+    "@pythnetwork/pyth-evm-js": "npm:^1.63.0"
     "@usecannon/builder": "npm:2.16.3"
     "@usecannon/cli": "npm:2.16.3"
     debug: "npm:^4.3.6"
     ethers: "npm:^5.7.2"
-    hardhat: "npm:^2.22.8"
+    hardhat: "npm:^2.22.9"
     mocha: "npm:^10.7.3"
     numbro: "npm:^2.5.0"
     pako: "npm:^2.1.0"
