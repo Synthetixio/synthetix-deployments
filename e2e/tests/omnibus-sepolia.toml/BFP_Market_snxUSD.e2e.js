@@ -28,7 +28,7 @@ const { getBfpDebt } = require('../../tasks/getBfpDebt');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { getConfigUint } = require("../../tasks/getConfigUint");
+const { getConfigUint } = require('../../tasks/getConfigUint');
 
 describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -122,7 +122,6 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000);
-
   });
 
   it('should approve snxUSD spending for CoreProxy', async () => {
