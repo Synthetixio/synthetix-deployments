@@ -24,6 +24,17 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
+[invoke.CoreProxy_configureMaximumMarketCollateral_btc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= settings.weth_address %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
+]
+
 [invoke.SpotMarketProxy_setMarketSkewScale_eth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"

@@ -36,6 +36,17 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
+[invoke.CoreProxy_configureMaximumMarketCollateral_btc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= settings.btc_address %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
+]
+
 [invoke.SpotMarketProxy_setMarketSkewScale_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
@@ -67,7 +78,7 @@ args = [
 extra.synth_btc_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_btc_settlement_strategy_id.arg = 1
 
-[invoke.SpotMarketProxy_setSettlementStrategy_sBTC]
+[invoke.SpotMarketProxy_setSettlementStrategy_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
