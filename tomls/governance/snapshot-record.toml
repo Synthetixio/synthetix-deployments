@@ -1,17 +1,17 @@
 [invoke.governance_set_snapshot_record_ambassador]
-target = ["imports.governance_ambassador_council.GovernanceProxy"]
+target = ["governance_ambassador_council.GovernanceProxy"]
 from = "<%= settings.owner %>"
 func = "setSnapshotContract"
 args = ["<%= settings.snapshot_record %>", "<%= settings.ambassador_weight %>", true]
 
 [invoke.governance_set_snapshot_record_spartan]
-target = ["imports.governance_spartan_council.GovernanceProxy"]
+target = ["governance_spartan_council.GovernanceProxy"]
 from = "<%= settings.owner %>"
 func = "setSnapshotContract"
 args = ["<%= settings.snapshot_record %>", "<%= settings.spartan_weight%>", true]
 
 [invoke.governance_set_snapshot_record_treasury]
-target = ["imports.governance_treasury_council.GovernanceProxy"]
+target = ["governance_treasury_council.GovernanceProxy"]
 from = "<%= settings.owner %>"
 func = "setSnapshotContract"
 args = ["<%= settings.snapshot_record %>", "<%= settings.treasury_weight %>", true]

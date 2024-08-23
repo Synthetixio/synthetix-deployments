@@ -140,7 +140,8 @@ treasury_weight = 1
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
 governance_initial_epoch_index = "0"
-governance_initial_epoch_start_date = "0"
-governance_initial_nomination_period_start_date = "0"
-governance_initial_voting_period_start_date = "0"
-governance_initial_epoch_end_date = "0"
+# TODO update these values after deploying the mothership and getting epoch data
+governance_initial_epoch_start_date = "1724362122"
+governance_initial_nomination_period_start_date = "1725072898"
+governance_initial_voting_period_start_date = "1725590226"
+governance_initial_epoch_end_date = "1726454226"

@@ -155,14 +155,15 @@ governance_wormhole_core = "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"    # htt
 governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # https://docs.wormhole.com/wormhole/reference/constants#standard-relayer
 # Snapshot
 snapshot_record = "0x89FCb32F29e509cc42d0C8b6f058C993013A843F" # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/1-main/interact/synthetix/SynthetixDebtShare/0x89FCb32F29e509cc42d0C8b6f058C993013A843F
-ambassador_weight = 0
-spartan_weight = 0
-treasury_weight = 1
+ambassador_weight = "0"
+spartan_weight = "0"
+treasury_weight = "1"
 # Proxy Config
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
 governance_initial_epoch_index = "0"
-governance_initial_epoch_start_date = "0"
-governance_initial_nomination_period_start_date = "0"
-governance_initial_voting_period_start_date = "0"
-governance_initial_epoch_end_date = "0"
+# TODO update these values after deploying the mothership and getting epoch data
+governance_initial_epoch_start_date = "1724362122"
+governance_initial_nomination_period_start_date = "1725072898"
+governance_initial_voting_period_start_date = "1725590226"
+governance_initial_epoch_end_date = "1726454226"
