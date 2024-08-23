@@ -29,9 +29,7 @@ const {
 const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
 const { claimRewards } = require('../../tasks/claimRewards');
 
-const {
-  address: distributorAddress,
-} = require('../../deployments/RewardsDistributor_1_fARB_fARB.json');
+const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
 const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
 log({ rewardsDistributor });
@@ -89,7 +87,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     console.log('got back info', info);
     assert.equal(info.name, 'Spartan Council Pool ARB Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
-    //assert.equal(info.collateralType, collateralType, 'collateralType');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),
       `${payoutToken}`.toLowerCase(),
@@ -237,16 +234,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const amount = ethers.utils.parseUnits(`${1_000}`, 18);
     const start = Math.floor(Date.now() / 1_000);
     const duration = 10;
-
-    await distributeRewards({
-      wallet: signer,
-      distributorAddress,
-      poolId,
-      collateralType,
-      amount,
-      start,
-      duration,
-    });
 
     await distributeRewards({
       wallet: signer,
