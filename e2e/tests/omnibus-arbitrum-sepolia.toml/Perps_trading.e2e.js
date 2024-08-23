@@ -97,7 +97,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         settlementStrategyId: extras.eth_pyth_settlement_strategy,
       });
     } catch (e) {
-      console.log('a failed price update may mean the prices are already up to date', e);
+      log({ msg: 'a failed price update may mean the prices are already up to date', e });
     }
   });
 
@@ -315,29 +315,41 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should liquidate the account when the margin requirements increase past the account margin', async () => {
-    const newInitialMarginFraction = ethers.BigNumber.from(10).pow(18);
-    const newMinimumPositionMargin = ethers.BigNumber.from(10).pow(26);
-    const newMaintenanceMarginScalar = ethers.BigNumber.from(10).pow(18);
-    const newMinimumInitialMarginRatio = ethers.BigNumber.from(10).pow(18);
-    const newLiquidationRewardRatio = ethers.BigNumber.from(10).pow(18);
+    const marketId = extras.btc_perps_market_id;
+    const newInitialMarginRatioD18 = ethers.utils.parseEther('1');
+    const newMinimumInitialMarginRatioD18 = ethers.utils.parseEther('1');
+    const newMaintenanceMarginScalarD18 = ethers.utils.parseEther('1');
+    const newFlagRewardRatioD18 = ethers.utils.parseEther('1');
+    const newMinimumPositionMargin = ethers.utils.parseEther(String(100_000_000));
+
     const initialCanLiquidate = await getCanLiquidate({ accountId });
-    const initialAvailableMargin = await getAvailableMargin({ accountId });
-    assert.ok(initialAvailableMargin > 0);
+    log({ initialCanLiquidate });
     assert.ok(!initialCanLiquidate);
+
+    const initialAvailableMargin = await getAvailableMargin({ accountId });
+    log({ initialAvailableMargin });
+    assert.ok(initialAvailableMargin > 0);
+
     await setLiquidationParameters({
-      marketId: extras.btc_perps_market_id,
-      newInitialMarginFraction,
-      newMaintenanceMarginScalar,
-      newMinimumInitialMarginRatio,
-      newLiquidationRewardRatio,
+      marketId,
+      newInitialMarginRatioD18,
+      newMinimumInitialMarginRatioD18,
+      newMaintenanceMarginScalarD18,
+      newFlagRewardRatioD18,
       newMinimumPositionMargin,
     });
+
     const postParameterUpdateCanLiquidate = await getCanLiquidate({ accountId });
+    log({ postParameterUpdateCanLiquidate });
     assert.ok(postParameterUpdateCanLiquidate);
+
     await liquidate({ accountId });
     const postLiquidateCanLiquidate = await getCanLiquidate({ accountId });
+    log({ postLiquidateCanLiquidate });
     assert.ok(!postLiquidateCanLiquidate);
+
     const postAvailableMargin = await getAvailableMargin({ accountId });
+    log({ postAvailableMargin });
     assert.equal(postAvailableMargin, 0);
   });
 });
