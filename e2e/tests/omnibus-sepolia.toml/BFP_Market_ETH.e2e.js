@@ -292,6 +292,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should open a short', async () => {
     const marketId = require('../../deployments/extras.json').eth_market_id;
     const currentPosition = await getBfpPosition({ accountId, marketId });
+    const collateralAddress = require('../../deployments/extras.json').weth_address;
 
     assert.equal(currentPosition.positionSize, 0);
 
@@ -299,6 +300,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await syncTime();
 
     await wait(1000);
+
+    const newDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ newDigest });
+
+    const newDepositedWeth = newDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ newDepositedWeth });
+
     await commitBfpOrder({
       wallet,
       accountId,
