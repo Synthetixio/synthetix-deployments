@@ -330,6 +330,7 @@ jobs:
             DEBUG_TARGET: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
             GAS_REPORT: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
           command: |
+            node e2e/tasks/syncTime.js
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
             echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
 
