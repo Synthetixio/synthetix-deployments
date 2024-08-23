@@ -290,6 +290,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should claim fwSNX rewards', async () => {
     const poolId = 1;
 
+    // mine a few blocks
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
+
     const availableRewards = await getAvailableRewards({
       accountId,
       poolId,
