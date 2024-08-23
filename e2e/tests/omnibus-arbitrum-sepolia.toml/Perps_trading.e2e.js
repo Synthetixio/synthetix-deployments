@@ -28,7 +28,7 @@ const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { setWETHTokenBalance } = require('../../tasks/setWETHTokenBalance');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
 
@@ -82,23 +82,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
-  });
-
-  it('should attempt to update the ETH and BTC prices', async () => {
-    try {
-      await doPriceUpdate({
-        wallet,
-        marketId: extras.btc_perps_market_id,
-        settlementStrategyId: extras.btc_pyth_settlement_strategy,
-      });
-      await doPriceUpdate({
-        wallet,
-        marketId: extras.eth_perps_market_id,
-        settlementStrategyId: extras.eth_pyth_settlement_strategy,
-      });
-    } catch (e) {
-      log({ msg: 'a failed price update may mean the prices are already up to date', e });
-    }
   });
 
   it('should set fBTC balance to 25', async () => {
@@ -173,6 +156,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 5 fBTC', async () => {
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: extras.pyth_feed_id_btc,
+      priceVerificationContract: extras.pyth_price_verification_address,
+    });
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sBTC',
@@ -184,6 +172,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 15 fETH', async () => {
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: extras.pyth_feed_id_eth,
+      priceVerificationContract: extras.pyth_price_verification_address,
+    });
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sETH',
@@ -260,7 +253,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should allow deposit of sBTC, sETH, and USDx to Perps', async () => {
+  it('should make sBTC, sETH, and USDx deposit to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_eth_market_id, accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_btc_market_id, accountId }), 0);
@@ -343,7 +336,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     log({ postParameterUpdateCanLiquidate });
     assert.ok(postParameterUpdateCanLiquidate);
 
-    await liquidate({ accountId });
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: extras.pyth_feed_id_eth,
+      priceVerificationContract: extras.pyth_price_verification_address,
+    });
+
+    await liquidate({ wallet, accountId });
+
     const postLiquidateCanLiquidate = await getCanLiquidate({ accountId });
     log({ postLiquidateCanLiquidate });
     assert.ok(!postLiquidateCanLiquidate);
