@@ -40,10 +40,10 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
 
-    # rewards ARB for all vaults and pool
-    "tomls/omnibus-arbitrum-sepolia/rewards/SpartanCouncilPool_ARB_rewards.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/SpartanCouncilPool_swBTC_perps_liquidations.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/SpartanCouncilPool_swETH_perps_liquidations.toml",
+    # rewards
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_pool.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/sBTC_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/sETH_perps_liquidations_rewards.toml",
 
     # Pyth oracles
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
@@ -92,7 +92,7 @@ defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.6.1-dev.50efa589"
+defaultValue = "synthetix-perps-market:3.6.0"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"

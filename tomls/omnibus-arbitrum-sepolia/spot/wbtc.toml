@@ -67,7 +67,7 @@ args = [
 extra.synth_btc_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_btc_settlement_strategy_id.arg = 1
 
-[invoke.SpotMarketProxy_setSettlementStrategy_swBTC]
+[invoke.SpotMarketProxy_setSettlementStrategy_sBTC]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
@@ -97,7 +97,7 @@ args = [
     "<%= settings.synth_btc_max_collateral_amount %>",
 ]
 
-[invoke.CoreProxy_configureCollateral_swBTC]
+[invoke.CoreProxy_configureCollateral_sBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
@@ -105,7 +105,7 @@ args = [
     { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
 ]
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_swBTC]
+[invoke.CoreProxy_configureMaximumMarketCollateral_sBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []

@@ -1,4 +1,4 @@
-[var.perps_collateral_swETH_settings]
+[var.perps_collateral_sETH_settings]
 eth_upper_limit_discount = "<%= parseEther('0.1') %>"
 eth_lower_limit_discount = "<%= parseEther('0.01') %>"
 eth_discount_scalar = "<%= parseEther('1') %>"
