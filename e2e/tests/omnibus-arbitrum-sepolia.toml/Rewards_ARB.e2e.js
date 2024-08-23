@@ -7,7 +7,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
-const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
 const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
@@ -26,8 +25,8 @@ const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsD
 const {
   getTokenRewardsDistributorRewardsAmount,
 } = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
-const { getAvailablePoolRewards } = require('../../tasks/getAvailablePoolRewards');
-const { claimPoolRewards } = require('../../tasks/claimPoolRewards');
+const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
+const { claimRewards } = require('../../tasks/claimRewards');
 
 const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
@@ -36,7 +35,6 @@ log({ rewardsDistributor });
 
 const payoutToken = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
-//const collateralType = rewardsDistributor.collateralType.address;
 
 log({ distributorAddress, payoutToken, rewardManager });
 
@@ -233,13 +231,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const amount = ethers.utils.parseUnits(`${1_000}`, 18);
     const start = Math.floor(Date.now() / 1_000);
-    const duration = 0;
+    const duration = 10;
 
     await distributeRewards({
       wallet: signer,
       distributorAddress,
       poolId,
-      collateralType: ethers.constants.AddressZero,
+      collateralType,
       amount,
       start,
       duration,
@@ -267,7 +265,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should claim fARB rewards', async () => {
     const poolId = 1;
 
-    const availableRewards = await getAvailablePoolRewards({
+    const availableRewards = await getAvailableRewards({
       accountId,
       poolId,
       collateralType,
@@ -282,7 +280,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       'Wallet has 0 fARB balance BEFORE claim'
     );
 
-    await claimPoolRewards({
+    await claimRewards({
       wallet,
       accountId,
       poolId,
