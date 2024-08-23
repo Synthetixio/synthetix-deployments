@@ -26,7 +26,7 @@ const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsD
 const {
   getTokenRewardsDistributorRewardsAmount,
 } = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
-const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
+const { getAvailablePoolRewards } = require('../../tasks/getAvailablePoolRewards');
 const { claimRewards } = require('../../tasks/claimRewards');
 
 const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB.json');
@@ -84,7 +84,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
-    console.log('got back info', info);
+    log(info);
     assert.equal(info.name, 'Spartan Council Pool ARB Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
     assert.equal(
@@ -267,7 +267,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should claim fARB rewards', async () => {
     const poolId = 1;
 
-    const availableRewards = await getAvailableRewards({
+    const availableRewards = await getAvailablePoolRewards({
       accountId,
       poolId,
       collateralType,
