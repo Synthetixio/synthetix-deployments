@@ -78,32 +78,19 @@ args = [
     { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = true },
 ]
 
-[invoke.CoreProxy_configureCollateral_wBTC]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= settings.btc_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
-]
-
-[invoke.CoreProxy_configureMaximumMarketCollateral_wBTC]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-fromCall.args = []
-func = "configureMaximumMarketCollateral"
-args = [
-    "<%= extras.synth_btc_market_id %>",
-    "<%= settings.btc_address %>",
-    "<%= settings.synth_btc_max_collateral_amount %>",
-]
-
 [invoke.CoreProxy_configureCollateral_sBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
-]
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_sBTC.args]]
+tokenAddress = "<%= extras.synth_btc_token_address %>"
+oracleNodeId = "<%= extras.btc_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('2') %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('0.5') %>"
+minDelegationD18 = "<%= parseEther('0.5') %>"
+depositingEnabled = false
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_sBTC]
 target = ["system.CoreProxy"]

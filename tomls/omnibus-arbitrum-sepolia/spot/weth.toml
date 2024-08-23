@@ -55,7 +55,7 @@ args = [
 extra.synth_eth_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_eth_settlement_strategy_id.arg = 1
 
-[invoke.SpotMarketProxy_setSettlementStrategy_eth]
+[invoke.SpotMarketProxy_setSettlementStrategy_sETH]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
@@ -69,12 +69,18 @@ args = [
 [invoke.CoreProxy_configureCollateral_sETH]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= extras.synth_eth_token_address %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false },
-]
+func = "configureCollateral"  # "args" see below in the multiline block
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_eth]
+[[invoke.CoreProxy_configureCollateral_sETH.args]]
+tokenAddress = "<%= extras.synth_eth_token_address %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('2') %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
+minDelegationD18 = "<%= parseEther('1') %>"
+depositingEnabled = false
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_sETH]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
@@ -82,17 +88,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_eth_token_address %>",
-    "<%= settings.synth_eth_max_collateral_amount %>",
-]
-
-# WETH is already configured but we will set the max market collateral
-[invoke.CoreProxy_configureMaximumMarketCollateral_WETH]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-fromCall.args = []
-func = "configureMaximumMarketCollateral"
-args = [
-    "<%= extras.synth_eth_market_id %>",
-    "<%= settings.weth_address %>",
     "<%= settings.synth_eth_max_collateral_amount %>",
 ]
