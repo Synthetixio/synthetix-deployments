@@ -27,7 +27,7 @@ const {
   getTokenRewardsDistributorRewardsAmount,
 } = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
 const { getAvailablePoolRewards } = require('../../tasks/getAvailablePoolRewards');
-const { claimRewards } = require('../../tasks/claimRewards');
+const { claimPoolRewards } = require('../../tasks/claimPoolRewards');
 
 const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
@@ -282,7 +282,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       'Wallet has 0 fARB balance BEFORE claim'
     );
 
-    await claimRewards({
+    await claimPoolRewards({
       wallet,
       accountId,
       poolId,
