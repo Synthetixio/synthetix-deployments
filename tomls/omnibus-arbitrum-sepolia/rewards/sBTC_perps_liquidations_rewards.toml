@@ -7,7 +7,7 @@ options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= extras.synth_btc_token_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Perps sBTC Liquidation Rewards"
-options.authorizedExternalDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_registerDistributor_sBTC_liquidations]
 target = ["perpsFactory.PerpsMarketProxy"]
