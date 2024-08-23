@@ -14,6 +14,7 @@ include = [
     # USDC
     "tomls/oracles/pyth-usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/usdc.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
 
     # DAI
     "tomls/oracles/pyth-dai.toml",
@@ -22,18 +23,22 @@ include = [
     # ARB
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
 
     # WETH
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
 
     # sUSDe
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
 
     # USDe
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
 
     # rewards ARB for all vaults and pool
     "tomls/omnibus-arbitrum-sepolia/rewards/sc-arb.toml",
