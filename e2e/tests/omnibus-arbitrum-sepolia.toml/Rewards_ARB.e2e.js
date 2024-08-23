@@ -233,7 +233,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const amount = ethers.utils.parseUnits(`${1_000}`, 18);
     const start = Math.floor(Date.now() / 1_000);
-    const duration = 10;
+    const duration = 0;
+
+    await distributeRewards({
+      wallet: signer,
+      distributorAddress,
+      poolId,
+      collateralType: ethers.constants.AddressZero,
+      amount,
+      start,
+      duration,
+    });
 
     await distributeRewards({
       wallet: signer,
