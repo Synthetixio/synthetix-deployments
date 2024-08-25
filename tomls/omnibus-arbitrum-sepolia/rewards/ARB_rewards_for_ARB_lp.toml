@@ -8,14 +8,3 @@ options.collateralType = "<%= settings.arb_address %>"
 options.payoutToken = "<%= settings.arb_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Spartan Council Pool ARB Rewards for ARB LP"
-
-[invoke.CoreProxy_registerRewardsDistributor_SpartanCouncilPool_ARB_rewards_for_ARB_lp]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.arb_address %>",
-    "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_ARB_lp.contracts.RewardsDistributor.address %>",
-]

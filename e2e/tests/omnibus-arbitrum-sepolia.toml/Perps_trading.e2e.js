@@ -28,7 +28,7 @@ const { commitPerpsOrder } = require('../../tasks/commitPerpsOrder');
 const { settlePerpsOrder } = require('../../tasks/settlePerpsOrder');
 const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { setWETHTokenBalance } = require('../../tasks/setWETHTokenBalance');
-const { doPriceUpdate } = require('../../tasks/doPriceUpdate');
+const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
 
@@ -82,23 +82,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
-  });
-
-  it('should attempt to update the ETH and BTC prices', async () => {
-    try {
-      await doPriceUpdate({
-        wallet,
-        marketId: extras.btc_perps_market_id,
-        settlementStrategyId: extras.btc_pyth_settlement_strategy,
-      });
-      await doPriceUpdate({
-        wallet,
-        marketId: extras.eth_perps_market_id,
-        settlementStrategyId: extras.eth_pyth_settlement_strategy,
-      });
-    } catch (e) {
-      console.log('a failed price update may mean the prices are already up to date', e);
-    }
   });
 
   it('should set fBTC balance to 25', async () => {
@@ -173,6 +156,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 5 fBTC', async () => {
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: extras.pyth_feed_id_btc,
+      priceVerificationContract: extras.pyth_price_verification_address,
+    });
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sBTC',
@@ -184,6 +172,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should wrap 15 fETH', async () => {
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: extras.pyth_feed_id_eth,
+      priceVerificationContract: extras.pyth_price_verification_address,
+    });
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sETH',
@@ -207,7 +200,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should atomic swap 5 sfETH to USDx to trade', async () => {
+  it('should atomic swap 5 sETH to USDx to trade', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await spotSell({
       wallet,
@@ -218,7 +211,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(await getCollateralBalance({ address, symbol: 'USDx' }));
   });
 
-  it('should approve USDx, sfBTC, sfETH spending for PerpsMarketProxy', async () => {
+  it('should approve USDx, sBTC, sETH spending for PerpsMarketProxy', async () => {
     await approveCollateral({
       privateKey,
       symbol: 'USDx',
@@ -260,7 +253,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should allow deposit of sfBTC, sfETH, and USDx to Perps', async () => {
+  it('should make sBTC, sETH, and USDx deposit to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_eth_market_id, accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_btc_market_id, accountId }), 0);
@@ -315,29 +308,48 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should liquidate the account when the margin requirements increase past the account margin', async () => {
-    const newInitialMarginFraction = ethers.BigNumber.from(10).pow(18);
-    const newMinimumPositionMargin = ethers.BigNumber.from(10).pow(26);
-    const newMaintenanceMarginScalar = ethers.BigNumber.from(10).pow(18);
-    const newMinimumInitialMarginRatio = ethers.BigNumber.from(10).pow(18);
-    const newLiquidationRewardRatio = ethers.BigNumber.from(10).pow(18);
+    const marketId = extras.btc_perps_market_id;
+    const newInitialMarginRatioD18 = ethers.utils.parseEther('1');
+    const newMinimumInitialMarginRatioD18 = ethers.utils.parseEther('1');
+    const newMaintenanceMarginScalarD18 = ethers.utils.parseEther('1');
+    const newFlagRewardRatioD18 = ethers.utils.parseEther('1');
+    const newMinimumPositionMargin = ethers.utils.parseEther(String(100_000_000));
+
     const initialCanLiquidate = await getCanLiquidate({ accountId });
-    const initialAvailableMargin = await getAvailableMargin({ accountId });
-    assert.ok(initialAvailableMargin > 0);
+    log({ initialCanLiquidate });
     assert.ok(!initialCanLiquidate);
+
+    const initialAvailableMargin = await getAvailableMargin({ accountId });
+    log({ initialAvailableMargin });
+    assert.ok(initialAvailableMargin > 0);
+
     await setLiquidationParameters({
-      marketId: extras.btc_perps_market_id,
-      newInitialMarginFraction,
-      newMaintenanceMarginScalar,
-      newMinimumInitialMarginRatio,
-      newLiquidationRewardRatio,
+      marketId,
+      newInitialMarginRatioD18,
+      newMinimumInitialMarginRatioD18,
+      newMaintenanceMarginScalarD18,
+      newFlagRewardRatioD18,
       newMinimumPositionMargin,
     });
+
     const postParameterUpdateCanLiquidate = await getCanLiquidate({ accountId });
+    log({ postParameterUpdateCanLiquidate });
     assert.ok(postParameterUpdateCanLiquidate);
-    await liquidate({ accountId });
+
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: extras.pyth_feed_id_eth,
+      priceVerificationContract: extras.pyth_price_verification_address,
+    });
+
+    await liquidate({ wallet, accountId });
+
     const postLiquidateCanLiquidate = await getCanLiquidate({ accountId });
+    log({ postLiquidateCanLiquidate });
     assert.ok(!postLiquidateCanLiquidate);
+
     const postAvailableMargin = await getAvailableMargin({ accountId });
+    log({ postAvailableMargin });
     assert.equal(postAvailableMargin, 0);
   });
 });
