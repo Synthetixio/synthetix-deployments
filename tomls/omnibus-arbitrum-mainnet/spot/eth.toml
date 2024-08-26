@@ -1,6 +1,6 @@
 [var.eth_spot_settings]
-synth_eth_max_market_collateral = "1000"
-synth_eth_skew_scale = "350000"
+synth_eth_max_collateral_amount = "<%= parseEther(String(1_000)) %>"
+synth_eth_skew_scale = "<%= parseEther(String(350_000)) %>"
 
 [invoke.SpotMarketProxy_createSynth_eth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -11,10 +11,6 @@ extra.synth_eth_market_id.event = "SynthRegistered"
 extra.synth_eth_market_id.arg = 0
 extra.synth_eth_token_address.event = "SynthRegistered"
 extra.synth_eth_token_address.arg = 1
-depends = [
-    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_deployer',
-    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_owner',
-]
 
 [invoke.SpotMarketProxy_updatePriceData_eth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -28,13 +24,24 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
+# NOTE not sure what to put here
+[invoke.CoreProxy_configureMaximumMarketCollateral_eth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_eth_token_address %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
+]
+
 [invoke.SpotMarketProxy_setMarketSkewScale_eth]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "setMarketSkewScale"
-args = ["<%= extras.synth_eth_market_id %>", "<%= parseEther(settings.synth_eth_skew_scale) %>"]
-depends = ['var.eth_spot_settings']
+args = ["<%= extras.synth_eth_market_id %>", "<%= settings.synth_eth_skew_scale %>"]
 
 [invoke.SpotMarketProxy_setWrapper_eth]
 target = ["spotFactory.SpotMarketProxy"]
@@ -44,7 +51,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
 ]
 
 [invoke.SpotMarketProxy_addSettlementStrategy_eth]
@@ -67,27 +74,22 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.synth_eth_settlement_strategy_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = true },
 ]
 
 [invoke.CoreProxy_configureCollateral_sETH]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= extras.synth_eth_token_address %>", oracleNodeId = "<%= extras.eth_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('1') %>", minDelegationD18 = "<%= parseEther('1') %>", depositingEnabled = false },
-]
+func = "configureCollateral"  # "args" see below in the multiline block
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_eth]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-fromCall.args = []
-func = "configureMaximumMarketCollateral"
-args = [
-    "<%= imports.perpsFactory.extras.superMarketId %>",
-    "<%= extras.synth_eth_token_address %>",
-    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
-]
+[[invoke.CoreProxy_configureCollateral_sETH.args]]
+tokenAddress = "<%= extras.synth_eth_token_address %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('2') %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
+minDelegationD18 = "<%= parseEther('1') %>"
+depositingEnabled = false
 
 # WETH is already configured but we will set the max market collateral
 [invoke.CoreProxy_configureMaximumMarketCollateral_WETH]
@@ -98,5 +100,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= settings.weth_address %>",
-    "<%= parseEther(settings.synth_eth_max_market_collateral) %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
 ]

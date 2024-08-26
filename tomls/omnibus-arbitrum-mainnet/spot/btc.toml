@@ -1,10 +1,10 @@
 [var.btc_spot_settings]
-synth_btc_max_collateral_amount = "75"
-synth_btc_skew_scale = "3500"
+synth_btc_max_collateral_amount = "<%= parseEther(String(75)) %>"
+synth_btc_skew_scale = "<%= parseEther(String(3_500)) %>"
 
-[setting.btc_address]
-defaultValue = "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f" # TODO fix it wbtc
-description = "Mock usdc address"                           # TODO fix it
+[setting.tbtc_address]
+defaultValue = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+description = "tBTC address"
 
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -15,10 +15,6 @@ extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
 extra.synth_btc_token_address.arg = 1
-depends = [
-    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_deployer',
-    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_owner',
-]
 
 [invoke.SpotMarketProxy_updatePriceData_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -32,13 +28,23 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
+[invoke.CoreProxy_configureMaximumMarketCollateral_tBTC]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= settings.tbtc_address %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
+]
+
 [invoke.SpotMarketProxy_setMarketSkewScale_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_eth_market_id %>"]
 func = "setMarketSkewScale"
-args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(settings.synth_btc_skew_scale) %>"]
-depends = ['var.btc_spot_settings']
+args = ["<%= extras.synth_btc_market_id %>", "<%= settings.synth_btc_skew_scale %>"]
 
 [invoke.SpotMarketProxy_setWrapper_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -47,10 +53,9 @@ fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_btc_market_id %>",
-    "<%= settings.btc_address %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    "<%= settings.tbtc_address %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
 ]
-depends = ['var.btc_spot_settings']
 
 [invoke.SpotMarketProxy_addSettlementStrategy_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -72,35 +77,30 @@ func = "setSettlementStrategy"
 args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= extras.synth_btc_settlement_strategy_id %>",
-    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = false },
+    { strategyType = "1", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = true },
 ]
 
-[invoke.CoreProxy_configureCollateral_wBTC]
+[invoke.CoreProxy_configureCollateral_tBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
 args = [
-    { tokenAddress = "<%= settings.btc_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
-]
-
-[invoke.CoreProxy_configureMaximumMarketCollateral_wBTC]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-fromCall.args = []
-func = "configureMaximumMarketCollateral"
-args = [
-    "<%= extras.synth_btc_market_id %>",
-    "<%= settings.btc_address %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    { tokenAddress = "<%= settings.tbtc_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
 ]
 
 [invoke.CoreProxy_configureCollateral_sBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
-func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= extras.synth_btc_token_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
-]
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_sBTC.args]]
+tokenAddress = "<%= extras.synth_btc_token_address %>"
+oracleNodeId = "<%= extras.btc_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('2') %>"
+liquidationRatioD18 = "<%= parseEther('1.1') %>"
+liquidationRewardD18 = "<%= parseEther('0.5') %>"
+minDelegationD18 = "<%= parseEther('0.5') %>"
+depositingEnabled = false
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_sBTC]
 target = ["system.CoreProxy"]
@@ -110,5 +110,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_btc_token_address %>",
-    "<%= parseEther(settings.synth_btc_max_collateral_amount) %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
 ]

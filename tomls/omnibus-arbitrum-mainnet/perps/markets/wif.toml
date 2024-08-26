@@ -22,7 +22,6 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.wif_perps_market_id %>", "dogwifhat", "WIF"]
-depends = ["var.perps_wif_market_settings"]
 
 [invoke.setPerpsPriceWif]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -33,7 +32,6 @@ args = [
     "<%= extras.wif_oracle_id %>",
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 # DO NOT MODIFY THIS STEP!. Edit [invoke.setPerpsWifSettlementStrategy] instead.
 [invoke.addPerpsWifSettlementStrategy]
@@ -46,7 +44,6 @@ args = [
 ]
 extra.wif_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.wif_pyth_settlement_strategy.arg = 2
-depends = ["invoke.createWifPerpsMarket"]
 
 [invoke.setPerpsWifSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -56,12 +53,6 @@ args = [
     "<%= settings.wif_perps_market_id %>",
     "<%= extras.wif_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                      # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_wif %>", settlementReward = "<%= parseEther(settings.settlement_reward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
-]
-depends = [
-    'provision.perpsFactory',
-    'var.perps_wif_market_settings',
-    'invoke.addPerpsWifSettlementStrategy',
-    'provision.pyth_erc7412_wrapper',
 ]
 
 [invoke.setPerpsWifFundingParameters]
@@ -73,7 +64,6 @@ args = [
     "<%= parseEther(settings.wif_perps_market_skew_scale) %>",
     "<%= parseEther(settings.wif_perps_market_max_funding_velocity) %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 [invoke.setPerpsWifOrderFees]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -84,7 +74,6 @@ args = [
     "<%= parseEther(settings.wif_perps_maker_fee_ratio) %>",
     "<%= parseEther(settings.wif_perps_taker_fee_ratio) %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 [invoke.setPerpsWifMaxMarketSize]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -94,7 +83,6 @@ args = [
     "<%= settings.wif_perps_market_id %>",
     "<%= parseEther(settings.wif_perps_max_market_size) %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 [invoke.setPerpsWifMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -104,7 +92,6 @@ args = [
     "<%= settings.wif_perps_market_id %>",
     "<%= parseEther(settings.wif_perps_max_market_value) %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 [invoke.setPerpsWifMaxLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -117,7 +104,6 @@ args = [
     "<%= parseEther(settings.wif_perps_max_liquidation_pd) %>",
     "<%= settings.wif_perps_endorsed_liquidator %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 [invoke.setPerpsWifLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -131,7 +117,6 @@ args = [
     "<%= parseEther(settings.wif_perps_flag_reward_ratio_d18) %>",
     "<%= parseEther(settings.wif_perps_minimum_position_margin) %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]
 
 [invoke.setPerpsWifLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -141,4 +126,3 @@ args = [
     "<%= settings.wif_perps_market_id %>",
     "<%= parseEther(settings.wif_perps_locked_oi_ratio) %>",
 ]
-depends = ["invoke.createWifPerpsMarket", "var.perps_wif_market_settings"]

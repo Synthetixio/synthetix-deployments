@@ -6,7 +6,7 @@ btc_perps_maker_fee_ratio = "0"
 btc_perps_taker_fee_ratio = "0.0005"
 btc_perps_max_market_size = "1200"
 btc_perps_max_market_value = "<%= String(50_000_000) %>"
-btc_perps_initial_margin_ratio = "0.744"
+btc_perps_initial_margin_ratio = "1.07"
 btc_perps_maintenance_margin_scalar = "0.333"
 btc_perps_minimum_initial_margin_ratio = "0.02"
 btc_perps_flag_reward_ratio_d18 = "0.0003"
@@ -22,7 +22,6 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.btc_perps_market_id %>", "Bitcoin", "BTC"]
-depends = ["var.perps_btc_market_settings"]
 
 [invoke.setPerpsPriceBtc]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -33,7 +32,6 @@ args = [
     "<%= extras.btc_oracle_id %>",
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 # DO NOT MODIFY THIS STEP!. Edit [invoke.setPerpsBtcSettlementStrategy] instead.
 [invoke.addPerpsBtcSettlementStrategy]
@@ -46,7 +44,6 @@ args = [
 ]
 extra.btc_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.btc_pyth_settlement_strategy.arg = 2
-depends = ["invoke.createBtcPerpsMarket"]
 
 [invoke.setPerpsBtcSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -56,12 +53,6 @@ args = [
     "<%= settings.btc_perps_market_id %>",
     "<%= extras.btc_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                      # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_btc %>", settlementReward = "<%= parseEther(settings.settlement_reward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
-]
-depends = [
-    'provision.perpsFactory',
-    'var.perps_btc_market_settings',
-    'invoke.addPerpsBtcSettlementStrategy',
-    'provision.pyth_erc7412_wrapper',
 ]
 
 [invoke.setPerpsBtcFundingParameters]
@@ -73,7 +64,6 @@ args = [
     "<%= parseEther(settings.btc_perps_market_skew_scale) %>",
     "<%= parseEther(settings.btc_perps_market_max_funding_velocity) %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 [invoke.setPerpsBtcOrderFees]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -84,7 +74,6 @@ args = [
     "<%= parseEther(settings.btc_perps_maker_fee_ratio) %>",
     "<%= parseEther(settings.btc_perps_taker_fee_ratio) %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 [invoke.setPerpsBtcMaxMarketSize]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -94,7 +83,6 @@ args = [
     "<%= settings.btc_perps_market_id %>",
     "<%= parseEther(settings.btc_perps_max_market_size) %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 [invoke.setPerpsBtcMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -104,7 +92,6 @@ args = [
     "<%= settings.btc_perps_market_id %>",
     "<%= parseEther(settings.btc_perps_max_market_value) %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 [invoke.setPerpsBtcMaxLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -117,7 +104,6 @@ args = [
     "<%= parseEther(settings.btc_perps_max_liquidation_pd) %>",
     "<%= settings.btc_perps_endorsed_liquidator %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 [invoke.setPerpsBtcLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -131,7 +117,6 @@ args = [
     "<%= parseEther(settings.btc_perps_flag_reward_ratio_d18) %>",
     "<%= parseEther(settings.btc_perps_minimum_position_margin) %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]
 
 [invoke.setPerpsBtcLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -141,4 +126,3 @@ args = [
     "<%= settings.btc_perps_market_id %>",
     "<%= parseEther(settings.btc_perps_locked_oi_ratio) %>",
 ]
-depends = ["invoke.createBtcPerpsMarket", "var.perps_btc_market_settings"]

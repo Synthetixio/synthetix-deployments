@@ -50,6 +50,10 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/global.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/referrers.toml",
 
+    # Perps Liquidation rewards
+    "tomls/omnibus-arbitrum-mainnet/rewards/sBTC_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/sETH_perps_liquidations_rewards.toml",
+
     # Perps Markets
     "tomls/omnibus-arbitrum-mainnet/perps/markets/btc.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/eth.toml",
@@ -267,7 +271,7 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 #
 [setting.pyth_feed_id_btc]
-defaultValue = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+defaultValue = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]

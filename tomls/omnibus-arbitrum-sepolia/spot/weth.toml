@@ -24,7 +24,7 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_btc]
+[invoke.CoreProxy_configureMaximumMarketCollateral_eth]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []

@@ -22,11 +22,6 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.eth_perps_market_id %>", "Ethereum", "ETH"]
-depends = [
-    "var.perps_eth_market_settings",
-    "invoke.PerpsMarketProxy_setFeatureFlagAllowAll_perpsSystem",
-    "invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_deployer",
-]
 
 [invoke.setPerpsPriceEth]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -37,7 +32,6 @@ args = [
     "<%= extras.eth_oracle_id %>",
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 # Do not modify this step. Edit [invoke.setPerpsEthSettlementStrategy] instead.
 [invoke.addPerpsEthSettlementStrategy]
@@ -50,7 +44,6 @@ args = [
 ]
 extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.eth_pyth_settlement_strategy.arg = 2
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -60,17 +53,6 @@ args = [
     "<%= settings.eth_perps_market_id %>",
     "<%= extras.eth_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                                      # Settlement Strategy ID
     { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", settlementReward = "<%= parseEther(settings.settlement_reward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
-]
-depends = [
-    'provision.perpsFactory',
-    'var.perps_eth_market_settings',
-    'invoke.addPerpsEthSettlementStrategy',
-    'provision.pyth_erc7412_wrapper',
-    'setting.big_cap_settlement_delay',
-    'setting.big_cap_settlement_window_duration',
-    'setting.pyth_feed_id_eth',
-    'setting.settlement_reward',
-    'setting.commitment_price_delay',
 ]
 
 [invoke.setPerpsEthFundingParameters]
@@ -82,7 +64,6 @@ args = [
     "<%= parseEther(settings.eth_perps_market_skew_scale) %>",
     "<%= parseEther(settings.eth_perps_market_max_funding_velocity) %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthOrderFees]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -93,7 +74,6 @@ args = [
     "<%= parseEther(settings.eth_perps_maker_fee_ratio) %>",
     "<%= parseEther(settings.eth_perps_taker_fee_ratio) %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthMaxMarketSize]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -103,7 +83,6 @@ args = [
     "<%= settings.eth_perps_market_id %>",
     "<%= parseEther(settings.eth_perps_max_market_size) %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -113,7 +92,6 @@ args = [
     "<%= settings.eth_perps_market_id %>",
     "<%= parseEther(settings.eth_perps_max_market_value) %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthMaxLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -126,7 +104,6 @@ args = [
     "<%= parseEther(settings.eth_perps_max_liquidation_pd) %>",
     "<%= settings.eth_perps_endorsed_liquidator %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -140,7 +117,6 @@ args = [
     "<%= parseEther(settings.eth_perps_flag_reward_ratio) %>",
     "<%= parseEther(settings.eth_perps_minimum_position_margin) %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]
 
 [invoke.setPerpsEthLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -150,4 +126,3 @@ args = [
     "<%= settings.eth_perps_market_id %>",
     "<%= parseEther(settings.eth_perps_locked_oi_ratio) %>",
 ]
-depends = ["invoke.createEthPerpsMarket", "var.perps_eth_market_settings"]

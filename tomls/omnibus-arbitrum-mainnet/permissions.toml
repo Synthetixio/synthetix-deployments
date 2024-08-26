@@ -89,7 +89,7 @@ fromCall.func = "owner"
 args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.deployer %>"]
 
 # Allow all to create synth. Remove it! 
-# TODO fix it
+# TODO fix it!
 [invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_owner]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"

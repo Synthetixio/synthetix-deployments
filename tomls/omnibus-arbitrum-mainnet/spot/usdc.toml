@@ -6,15 +6,11 @@ args = [
     "Synthetic USD Coin",
     "sUSDC",
     "<%= settings.owner %>",
-] # should have been `settings.deployer`!
+] # should have been `settings.deployer`! # NOTE is it too late to change this?
 extra.synth_usdc_market_id.event = "SynthRegistered"
 extra.synth_usdc_market_id.arg = 0
 extra.synth_usdc_token_address.event = "SynthRegistered"
 extra.synth_usdc_token_address.arg = 1
-depends = [
-    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_deployer',
-    'invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_owner',
-]
 
 [invoke.SpotMarketProxy_updatePriceData_usdc]
 target = ["spotFactory.SpotMarketProxy"]
