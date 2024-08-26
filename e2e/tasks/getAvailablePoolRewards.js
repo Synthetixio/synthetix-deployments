@@ -5,7 +5,7 @@ const { parseError } = require('../parseError');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-async function getAvailableRewards({ distributorAddress, accountId, poolId, collateralType }) {
+async function getAvailablePoolRewards({ distributorAddress, accountId, poolId, collateralType }) {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -17,7 +17,7 @@ async function getAvailableRewards({ distributorAddress, accountId, poolId, coll
   );
 
   const availableRewards = await CoreProxy.callStatic
-    .getAvailableRewards(accountId, poolId, collateralType, distributorAddress)
+    .getAvailablePoolRewards(accountId, poolId, collateralType, distributorAddress)
     .catch(parseError);
   log({ availableRewards });
 
@@ -25,13 +25,13 @@ async function getAvailableRewards({ distributorAddress, accountId, poolId, coll
 }
 
 module.exports = {
-  getAvailableRewards,
+  getAvailablePoolRewards,
 };
 
 if (require.main === module) {
   require('../inspect');
   const [distributorAddress, accountId, poolId, collateralType] = process.argv.slice(2);
-  getAvailableRewards({ distributorAddress, accountId, poolId, collateralType }).then((data) =>
+  getAvailablePoolRewards({ distributorAddress, accountId, poolId, collateralType }).then((data) =>
     console.log(JSON.stringify(data, null, 2))
   );
 }

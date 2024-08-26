@@ -9,18 +9,18 @@ const { getLiquidationParameters } = require('./getLiquidationParameters');
 
 async function setLiquidationParameters({
   marketId,
-  newInitialMarginFraction,
-  newMaintenanceMarginScalar,
-  newMinimumInitialMarginRatio,
-  newLiquidationRewardRatio,
+  newInitialMarginRatioD18,
+  newMinimumInitialMarginRatioD18,
+  newMaintenanceMarginScalarD18,
+  newFlagRewardRatioD18,
   newMinimumPositionMargin,
 }) {
   log({
     marketId,
-    newInitialMarginFraction,
-    newMaintenanceMarginScalar,
-    newMinimumInitialMarginRatio,
-    newLiquidationRewardRatio,
+    newInitialMarginRatioD18,
+    newMinimumInitialMarginRatioD18,
+    newMaintenanceMarginScalarD18,
+    newFlagRewardRatioD18,
     newMinimumPositionMargin,
   });
 
@@ -43,7 +43,7 @@ async function setLiquidationParameters({
     maintenanceMarginScalarD18,
     flagRewardRatioD18,
     minimumPositionMargin,
-  } = getLiquidationParameters({ marketId });
+  } = await getLiquidationParameters({ marketId });
 
   log({
     marketId,
@@ -56,26 +56,22 @@ async function setLiquidationParameters({
 
   const tx = await PerpsMarketProxy.connect(signer).setLiquidationParameters(
     marketId,
-    newInitialMarginFraction
-      ? newInitialMarginFraction
+    newInitialMarginRatioD18
+      ? newInitialMarginRatioD18
       : initialMarginRatioD18
         ? initialMarginRatioD18
         : 0,
-    newMaintenanceMarginScalar
-      ? newMaintenanceMarginScalar
-      : maintenanceMarginScalarD18
-        ? maintenanceMarginScalarD18
-        : 0,
-    newMinimumInitialMarginRatio
-      ? newMinimumInitialMarginRatio
+    newMinimumInitialMarginRatioD18
+      ? newMinimumInitialMarginRatioD18
       : minimumInitialMarginRatioD18
         ? minimumInitialMarginRatioD18
         : 0,
-    newLiquidationRewardRatio
-      ? newLiquidationRewardRatio
-      : flagRewardRatioD18
-        ? flagRewardRatioD18
+    newMaintenanceMarginScalarD18
+      ? newMaintenanceMarginScalarD18
+      : maintenanceMarginScalarD18
+        ? maintenanceMarginScalarD18
         : 0,
+    newFlagRewardRatioD18 ? newFlagRewardRatioD18 : flagRewardRatioD18 ? flagRewardRatioD18 : 0,
     newMinimumPositionMargin
       ? newMinimumPositionMargin
       : minimumPositionMargin

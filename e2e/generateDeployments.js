@@ -66,7 +66,9 @@ async function extractRewardsDistributors(deployments) {
     if (key.startsWith('provision.')) {
       const [, artifactName] = key.split('.');
       const rewardsDistributor =
-        value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributor;
+        value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributor ||
+        // RewardsDistributorExternal is a wrapper over RewardsDistributor with identical functionality
+        value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributorExternal;
       if (rewardsDistributor) {
         log({
           RewardsDistributor: {
@@ -76,14 +78,19 @@ async function extractRewardsDistributors(deployments) {
           },
         });
 
-        let rewardManager,
-          poolId,
-          collateralTypeAddress,
-          payoutTokenAddress,
-          _payoutTokenDecimals,
-          name;
-        if (rewardsDistributor.constructorArgs.length === 6) {
+        let rewardManager;
+        let poolId;
+        let collateralTypeAddress;
+        let payoutTokenAddress;
+        let _payoutTokenDecimals;
+        let name;
+        let authorisedDistributor;
+        if (
+          value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributor &&
+          rewardsDistributor.constructorArgs.length === 6
+        ) {
           [
+            //
             rewardManager,
             poolId,
             collateralTypeAddress,
@@ -91,20 +98,58 @@ async function extractRewardsDistributors(deployments) {
             _payoutTokenDecimals,
             name,
           ] = rewardsDistributor.constructorArgs;
-        } else {
-          [rewardManager, poolId, payoutTokenAddress, _payoutTokenDecimals, name] =
-            rewardsDistributor.constructorArgs;
-
-          collateralTypeAddress = null;
         }
 
-        let collateralType = collateralTypeAddress
-          ? await fetchTokenInfo(collateralTypeAddress)
-          : null;
+        if (
+          value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributor &&
+          rewardsDistributor.constructorArgs.length === 5
+        ) {
+          [
+            // new version has 5 arguments, without collateralTypeAddress
+            rewardManager,
+            poolId,
+            payoutTokenAddress,
+            _payoutTokenDecimals,
+            name,
+          ] = rewardsDistributor.constructorArgs;
+        }
 
+        if (
+          value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributorExternal &&
+          rewardsDistributor.constructorArgs.length === 7
+        ) {
+          [
+            rewardManager,
+            poolId,
+            collateralTypeAddress,
+            payoutTokenAddress,
+            _payoutTokenDecimals,
+            name,
+            authorisedDistributor,
+          ] = rewardsDistributor.constructorArgs;
+        }
+
+        if (
+          value?.artifacts?.imports?.[artifactName]?.contracts?.RewardsDistributorExternal &&
+          rewardsDistributor.constructorArgs.length === 6
+        ) {
+          [
+            // new version has 6 arguments, without collateralTypeAddress
+            rewardManager,
+            poolId,
+            payoutTokenAddress,
+            _payoutTokenDecimals,
+            name,
+            authorisedDistributor,
+          ] = rewardsDistributor.constructorArgs;
+        }
+
+        const collateralType = collateralTypeAddress
+          ? await fetchTokenInfo(collateralTypeAddress)
+          : undefined;
         const payoutToken = await fetchTokenInfo(payoutTokenAddress);
 
-        const contractName = collateralType
+        const contractName = collateralTypeAddress
           ? `RewardsDistributor_${poolId}_${collateralType.symbol}_${payoutToken.symbol}`
           : `RewardsDistributor_${poolId}_${payoutToken.symbol}`;
         if (contractName in contracts) {
