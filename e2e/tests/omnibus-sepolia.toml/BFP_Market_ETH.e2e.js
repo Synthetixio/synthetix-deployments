@@ -216,26 +216,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should approve snxUSD spending for BfpMarketProxy', async () => {
+  it('should approve sUSD spending for BfpMarketProxy', async () => {
     // This is needed to pay back debt.
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed BfpMarketProxy snxUSD spending'
+      'New wallet has not allowed BfpMarketProxy sUSD spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
       spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       true
@@ -351,18 +351,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(newPosition.positionSize, 0);
   });
 
-  it('should mint and withdraw 1000 snxUSD', async () => {
-    const balanceBefore = await getCollateralBalance({ address, symbol: 'snxUSD' });
+  it('should mint and withdraw 1000 sUSD', async () => {
+    const balanceBefore = await getCollateralBalance({ address, symbol: 'sUSD' });
 
     await borrowUsd({ wallet, accountId, symbol: 'fWETH', amount: 1000, poolId: 1 });
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
     await withdrawCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
       accountId,
       amount: 1000,
     });
-    const newBalance = await getCollateralBalance({ address, symbol: 'snxUSD' });
+    const newBalance = await getCollateralBalance({ address, symbol: 'sUSD' });
     assert.equal(newBalance - balanceBefore, 1000);
   });
 
