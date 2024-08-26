@@ -46,7 +46,7 @@ include = [
     #
 
     # Perps Settings
-    # "tomls/omnibus-arbitrum-mainnet/perps/perps-keeper-cost.toml", # TODO fix it
+    "tomls/omnibus-arbitrum-mainnet/perps/perps-keeper-cost.toml", # TODO fix it
     "tomls/omnibus-arbitrum-mainnet/perps/global.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/referrers.toml",
 
@@ -283,9 +283,9 @@ args = [
     "<%= extras.spartan_council_pool_id %>",
     [
         { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 96, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_btc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 96, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 
