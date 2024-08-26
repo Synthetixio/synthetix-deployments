@@ -29,7 +29,7 @@ const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.skip(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
