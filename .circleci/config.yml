@@ -12,9 +12,9 @@ commands:
 
   install-anvil:
     steps:
-#      - restore_cache:
-#          keys:
-#            - foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
+      - restore_cache:
+          keys:
+            - foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
 
       - run:
           name: "Install Foundry"
@@ -66,9 +66,9 @@ commands:
 
   install-ipfs:
     steps:
-#      - restore_cache:
-#          keys:
-#            - ipfs-{{ .Environment.IPFS_CACHE_VERSION }}
+      - restore_cache:
+          keys:
+            - ipfs-{{ .Environment.IPFS_CACHE_VERSION }}
 
       - run:
           name: "Install IPFS"
