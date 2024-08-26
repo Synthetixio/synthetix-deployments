@@ -371,18 +371,6 @@ defaultValue = "1"
 [setting.pool_owner]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
-[invoke.setScPoolConfig]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
-
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
 
