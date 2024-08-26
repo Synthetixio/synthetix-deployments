@@ -314,14 +314,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     log({ newDepositedWeth });
 
+    await wait(2000);
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: -0.01,
     });
+    await wait(2000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
+    await wait(2000);
 
     assert.equal(newPosition.positionSize, -0.01);
   });
