@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: "20.16.0"
+    default: "20.17.0"
 
 commands:
   yarn-install:
@@ -12,9 +12,9 @@ commands:
 
   install-anvil:
     steps:
-      - restore_cache:
-          keys:
-            - foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
+#      - restore_cache:
+#          keys:
+#            - foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
 
       - run:
           name: "Install Foundry"
@@ -66,9 +66,9 @@ commands:
 
   install-ipfs:
     steps:
-      - restore_cache:
-          keys:
-            - ipfs-{{ .Environment.IPFS_CACHE_VERSION }}
+#      - restore_cache:
+#          keys:
+#            - ipfs-{{ .Environment.IPFS_CACHE_VERSION }}
 
       - run:
           name: "Install IPFS"
