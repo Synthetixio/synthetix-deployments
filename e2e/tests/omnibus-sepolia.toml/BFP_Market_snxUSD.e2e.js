@@ -85,11 +85,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getConfigUint('accountTimeoutWithdraw'), 0);
   });
 
-  it('should mint 100_000 snxUSD using ETH collateral', async () => {
+  it('should mint 100_000 sUSD using ETH collateral', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'snxUSD' }),
+      await getCollateralBalance({ address, symbol: 'sUSD' }),
       0,
-      'New wallet has 0 snxUSD balance'
+      'New wallet has 0 sUSD balance'
     );
     await approveCollateral({
       privateKey,
@@ -107,8 +107,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await borrowUsd({ wallet, accountId, symbol: 'fWETH', amount: 100_000, poolId: 1 });
 
-    // Verify the new snxUSD balance
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
+    // Verify the new sUSD balance
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
       totalDeposited: 100_000,
       totalAssigned: 0,
       totalLocked: 0,
@@ -118,49 +118,49 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       privateKey,
       accountId,
       amount: 100_000,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
     });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000);
   });
 
-  it('should approve snxUSD spending for CoreProxy', async () => {
+  it('should approve sUSD spending for CoreProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy snxUSD spending'
+      'New wallet has not allowed CoreProxy sUSD spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 50_000 snxUSD into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
+  it('should deposit 50_000 sUSD into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'snxUSD', accountId, amount: 50_000 });
+    await depositCollateral({ privateKey, symbol: 'sUSD', accountId, amount: 50_000 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50_000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 50_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
       totalDeposited: 50000,
       totalAssigned: 0,
       totalLocked: 0,
@@ -207,32 +207,32 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     log({ accountId, permissions });
   });
 
-  it('should approve snxUSD spending for BfpMarketProxy', async () => {
+  it('should approve sUSD spending for BfpMarketProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed BfpMarketProxy snxUSD spending'
+      'New wallet has not allowed BfpMarketProxy sUSD spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
       spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 50_000 snxUSD collateral into the bfp', async () => {
+  it('should deposit 50_000 sUSD collateral into the bfp', async () => {
     const marketId = require('../../deployments/extras.json').eth_market_id;
     const collateralAddress = require('../../deployments/systemToken.json').address;
 
@@ -244,16 +244,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     log({ oldDigest });
 
-    const oldDepositedsnxUSD = oldDigest.depositedCollaterals.find(
+    const oldDepositedsUSD = oldDigest.depositedCollaterals.find(
       (c) => c.collateralAddress === collateralAddress
     );
-    log({ oldDepositedsnxUSD });
+    log({ oldDepositedsUSD });
     log(collateralAddress);
 
     assert.equal(
-      parseFloat(ethers.utils.formatEther(oldDepositedsnxUSD.available)),
+      parseFloat(ethers.utils.formatEther(oldDepositedsUSD.available)),
       0,
-      'New account has 0 deposited snxUSD'
+      'New account has 0 deposited sUSD'
     );
 
     await contractWrite({
@@ -271,12 +271,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     log({ newDigest });
 
-    const newDepositedsnxUSD = newDigest.depositedCollaterals.find(
+    const newDepositedsUSD = newDigest.depositedCollaterals.find(
       (c) => c.collateralAddress === collateralAddress
     );
-    log({ newDepositedsnxUSD });
+    log({ newDepositedsUSD });
 
-    assert.equal(parseFloat(ethers.utils.formatEther(newDepositedsnxUSD.available)), 50_000);
+    assert.equal(parseFloat(ethers.utils.formatEther(newDepositedsUSD.available)), 50_000);
   });
 
   it('should open a short', async () => {
@@ -299,10 +299,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     log({ newDigest });
 
-    const newDepositedsnxUSD = newDigest.depositedCollaterals.find(
+    const newDepositedsUSD = newDigest.depositedCollaterals.find(
       (c) => c.collateralAddress === collateralAddress
     );
-    log({ newDepositedsnxUSD });
+    log({ newDepositedsUSD });
 
     await wait(2000);
     await commitBfpOrder({
