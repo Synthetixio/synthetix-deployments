@@ -124,7 +124,7 @@ commands:
                     if [[ $line == *"The local node will continue running at"* ]]; then
                         break
                     fi
-                    if [[ $line == *"An error occured during build"* ]]; then
+                    if [[ $line == *"An error occurred during build"* ]]; then
                         exit 1
                     fi
                 done < <(tail -f -n0 ./cannon-build.log)
