@@ -178,8 +178,8 @@ args = [
     "<%= settings.sc_pool_id %>",
     [
         { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 90, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= settings.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= settings.eth_market_id %>", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.eth_market_id %>", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
 
@@ -285,7 +285,7 @@ options.decimals = "18"
 # Set weth_address so that Core is configured with the fake WETH.
 #
 [setting.weth_address]
-defaultValue = "<%= console.log('weth_mock_collateral',weth_mock_collateral) || weth_mock_collateral.MintableToken.address %>"
+defaultValue = "<%= weth_mock_collateral.MintableToken.address %>"
 
 # --- Configure bfp --- #
 #
