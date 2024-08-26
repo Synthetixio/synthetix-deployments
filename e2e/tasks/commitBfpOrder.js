@@ -42,6 +42,10 @@ async function commitBfpOrder({
     hooks: hooks,
     trackingCode: trackingCode,
   };
+
+  log({ params });
+  log('submitting commitOrder now');
+
   const commitReceipt = await contractWrite({
     wallet,
     contract: 'BfpMarketProxy',
