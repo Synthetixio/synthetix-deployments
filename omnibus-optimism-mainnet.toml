@@ -117,3 +117,8 @@ args = [
         { marketId = "<%= extras.synth_eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
     ],
 ]
+
+[clone.trusted_multicall_forwarder]
+source = "trusted-multicall-forwarder"
+target = "trusted-multicall-forwarder"
+options.salt = "<%= settings.salt %>"
