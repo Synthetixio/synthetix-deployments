@@ -24,15 +24,15 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
-# NOTE not sure what to put here
-[invoke.CoreProxy_configureMaximumMarketCollateral_eth]
+# WETH is already configured but we will set the max market collateral
+[invoke.CoreProxy_configureMaximumMarketCollateral_WETH]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
-    "<%= imports.perpsFactory.extras.superMarketId %>",
-    "<%= extras.synth_eth_token_address %>",
+    "<%= extras.synth_eth_market_id %>",
+    "<%= settings.weth_address %>",
     "<%= settings.synth_eth_max_collateral_amount %>",
 ]
 
@@ -91,14 +91,13 @@ liquidationRewardD18 = "<%= parseEther('1') %>"
 minDelegationD18 = "<%= parseEther('1') %>"
 depositingEnabled = false
 
-# WETH is already configured but we will set the max market collateral
-[invoke.CoreProxy_configureMaximumMarketCollateral_WETH]
+[invoke.CoreProxy_configureMaximumMarketCollateral_sETH]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
-    "<%= extras.synth_eth_market_id %>",
-    "<%= settings.weth_address %>",
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_eth_token_address %>",
     "<%= settings.synth_eth_max_collateral_amount %>",
 ]
