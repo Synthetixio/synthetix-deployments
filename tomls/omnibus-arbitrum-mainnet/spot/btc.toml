@@ -10,7 +10,7 @@ description = "tBTC address"
 target = ["spotFactory.SpotMarketProxy"]
 from = "<%= settings.pdao %>"
 func = "createSynth"
-args = ["Synthetic Bitcoin", "sBTC", "<%= settings.owner %>"]
+args = ["Synthetic Bitcoin", "stBTC", "<%= settings.owner %>"]
 extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
@@ -70,7 +70,7 @@ args = [
 extra.synth_btc_settlement_strategy_id.event = "SettlementStrategyAdded"
 extra.synth_btc_settlement_strategy_id.arg = 1
 
-[invoke.SpotMarketProxy_setSettlementStrategy_sBTC]
+[invoke.SpotMarketProxy_setSettlementStrategy_stBTC]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
@@ -89,12 +89,12 @@ args = [
     { tokenAddress = "<%= settings.tbtc_address %>", oracleNodeId = "<%= extras.btc_oracle_id %>", issuanceRatioD18 = "<%= parseEther('2') %>", liquidationRatioD18 = "<%= parseEther('1.1') %>", liquidationRewardD18 = "<%= parseEther('0.5') %>", minDelegationD18 = "<%= parseEther('0.5') %>", depositingEnabled = false },
 ]
 
-[invoke.CoreProxy_configureCollateral_sBTC]
+[invoke.CoreProxy_configureCollateral_stBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.CoreProxy_configureCollateral_sBTC.args]]
+[[invoke.CoreProxy_configureCollateral_stBTC.args]]
 tokenAddress = "<%= extras.synth_btc_token_address %>"
 oracleNodeId = "<%= extras.btc_oracle_id %>"
 issuanceRatioD18 = "<%= parseEther('2') %>"
@@ -103,7 +103,7 @@ liquidationRewardD18 = "<%= parseEther('0.5') %>"
 minDelegationD18 = "<%= parseEther('0.5') %>"
 depositingEnabled = false
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_sBTC]
+[invoke.CoreProxy_configureMaximumMarketCollateral_stBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []

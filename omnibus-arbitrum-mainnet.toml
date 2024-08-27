@@ -51,7 +51,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/referrers.toml",
 
     # Perps Liquidation rewards
-    "tomls/omnibus-arbitrum-mainnet/rewards/sBTC_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/stBTC_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-mainnet/rewards/sETH_perps_liquidations_rewards.toml",
 
     # Perps Markets

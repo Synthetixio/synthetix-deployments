@@ -153,7 +153,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     const balance = await wrapCollateral({
       wallet,
-      symbol: 'sBTC',
+      symbol: 'stBTC',
       synthAddress: extras.synth_btc_token_address,
       synthMarketId: extras.synth_btc_market_id,
       amount: 5,
@@ -212,7 +212,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should approve USDx, sBTC, sETH spending for PerpsMarketProxy', async () => {
+  it('should approve USDx, stBTC, sETH spending for PerpsMarketProxy', async () => {
     await approveToken({
       privateKey,
       tokenAddress: require('../../deployments/systemToken.json').address,
@@ -256,7 +256,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should make sBTC, sETH, and USDx deposit to Perps', async () => {
+  it('should make stBTC, sETH, and USDx deposit to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_eth_market_id, accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_btc_market_id, accountId }), 0);
