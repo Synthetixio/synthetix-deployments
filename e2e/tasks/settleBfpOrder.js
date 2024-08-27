@@ -10,6 +10,7 @@ const { getPythVaa } = require('../getPythVaa');
 const { getBfpPosition } = require('./getBfpPosition');
 const { getBfpMarketConfig } = require('./getBfpMarketConfig');
 const { getBfpGlobalConfig } = require('./getBfpGlobalConfig');
+const { getTimes } = require('./syncTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
