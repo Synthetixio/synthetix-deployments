@@ -102,3 +102,10 @@ args = [
     "<%= extras.synth_eth_token_address %>",
     "<%= settings.synth_eth_max_collateral_amount %>",
 ]
+
+[invoke.SpotMarketProxy_setAtomicFixedFee_sETH]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_eth_market_id %>"]
+func = "setAtomicFixedFee"
+args = ["<%= extras.synth_eth_market_id %>", "<%= parseEther(String(0.01)) %>"]
