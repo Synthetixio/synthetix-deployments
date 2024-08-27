@@ -5,16 +5,11 @@ const { wait } = require('../../wait');
 require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
-const { approveCollateral } = require('../../tasks/approveCollateral');
 const { createPerpsAccount } = require('../../tasks/createPerpsAccount');
-const { getCollateralBalance } = require('../../tasks/getCollateralBalance');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
-const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
-const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
 const { setEthBalance } = require('../../tasks/setEthBalance');
-const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
 const { spotSell } = require('../../tasks/spotSell');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
@@ -32,24 +27,20 @@ const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
-const { contractRead } = require('../../tasks/contractRead');
-const { contractWrite } = require('../../tasks/contractWrite');
+const { getTokenBalance } = require('../../tasks/getTokenBalance');
+const { approveToken } = require('../../tasks/approveToken');
+const { isTokenApproved } = require('../../tasks/isTokenApproved');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const extras = require('../../deployments/extras.json');
+  const meta = require('../../deployments/meta.json');
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
   const wallet = ethers.Wallet.createRandom().connect(provider);
-  const address = wallet.address;
+  const walletAddress = wallet.address;
   const privateKey = wallet.privateKey;
-
-  const PerpsMarketProxy = new ethers.Contract(
-    require('../../deployments/PerpsMarketProxy.json').address,
-    require('../../deployments/PerpsMarketProxy.json').abi,
-    wallet
-  );
 
   let snapshot;
 
@@ -79,136 +70,51 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should ensure pool configuration', async () => {
-    const poolId = 1;
-    const poolConfig = await contractRead({
-      wallet,
-      contract: 'CoreProxy',
-      func: 'getPoolConfiguration',
-      args: [poolId],
-    });
-    function serialisePoolConfig(config) {
-      return JSON.stringify(
-        config.map(({ marketId, weightD18, maxDebtShareValueD18 }) => ({
-          marketId: ethers.BigNumber.from(marketId),
-          weightD18: ethers.BigNumber.from(weightD18),
-          maxDebtShareValueD18: ethers.BigNumber.from(maxDebtShareValueD18),
-        }))
-      );
-    }
-
-    log({
-      poolConfig,
-      json: JSON.stringify(
-        poolConfig.map(({ marketId, weightD18, maxDebtShareValueD18 }) => ({
-          marketId: ethers.BigNumber.from(marketId),
-          weightD18: ethers.BigNumber.from(weightD18),
-          maxDebtShareValueD18: ethers.BigNumber.from(maxDebtShareValueD18),
-        }))
-      ),
-    });
-    const expectedPoolConfig = [
-      {
-        marketId: extras.perps_super_market_id,
-        weightD18: 96,
-        maxDebtShareValueD18: ethers.utils.parseEther('1'),
-      },
-      {
-        marketId: extras.synth_usdc_market_id,
-        weightD18: 1,
-        maxDebtShareValueD18: ethers.utils.parseEther('1'),
-      },
-      {
-        marketId: extras.synth_btc_market_id,
-        weightD18: 1,
-        maxDebtShareValueD18: ethers.utils.parseEther('1'),
-      },
-      {
-        marketId: extras.synth_eth_market_id,
-        weightD18: 1,
-        maxDebtShareValueD18: ethers.utils.parseEther('1'),
-      },
-    ];
-    log({
-      expectedPoolConfig,
-      json: JSON.stringify(
-        expectedPoolConfig.map(({ marketId, weightD18, maxDebtShareValueD18 }) => ({
-          marketId: ethers.BigNumber.from(marketId),
-          weightD18: ethers.BigNumber.from(weightD18),
-          maxDebtShareValueD18: ethers.BigNumber.from(maxDebtShareValueD18),
-        }))
-      ),
-    });
-    if (serialisePoolConfig(poolConfig) !== serialisePoolConfig(expectedPoolConfig)) {
-      await contractWrite({
-        wallet,
-        contract: 'CoreProxy',
-        func: 'setPoolConfiguration',
-        args: [poolId, expectedPoolConfig],
-        impersonate: await contractRead({
-          wallet,
-          contract: 'CoreProxy',
-          func: 'owner',
-        }),
-      });
-    }
-
-    const newPoolConfig = await contractRead({
-      wallet,
-      contract: 'CoreProxy',
-      func: 'getPoolConfiguration',
-      args: [poolId],
-    });
-
-    assert.equal(serialisePoolConfig(newPoolConfig), serialisePoolConfig(expectedPoolConfig));
-  });
-
   it('should set tBTC balance to 10', async () => {
-    const { tokenAddress } = await getCollateralConfig('tBTC');
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'tBTC' }),
+      await getTokenBalance({ walletAddress, tokenAddress: extras.tbtc_address }),
       0,
       'New wallet has 0 tBTC balance'
     );
     await setTokenBalance({
       wallet,
       balance: 10,
-      tokenAddress: require('../../deployments/extras.json').tbtc_address,
+      tokenAddress: extras.tbtc_address,
       friendlyWhale: '0xe9e6b9aAAfaf6816C3364345F6eF745CcFC8660a',
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'tBTC' }), 10);
+    assert.equal(await getTokenBalance({ walletAddress, tokenAddress: extras.tbtc_address }), 10);
   });
 
   it('should set WETH balance to 50', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'WETH' }),
+      await getTokenBalance({ walletAddress, tokenAddress: extras.weth_address }),
       0,
       'New wallet has 0 WETH balance'
     );
     await setWETHTokenBalance({ wallet, balance: 50 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 50);
+    assert.equal(await getTokenBalance({ walletAddress, tokenAddress: extras.weth_address }), 50);
   });
 
   it('should approve tBTC spending for SpotMarket', async () => {
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'tBTC',
-        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: extras.tbtc_address,
+        spenderAddress: meta.contracts.SpotMarketProxy,
       }),
       false,
       'New wallet has not allowed SpotMarket tBTC spending'
     );
-    await approveCollateral({
+    await approveToken({
       privateKey,
-      symbol: 'tBTC',
-      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
+      tokenAddress: extras.tbtc_address,
+      spenderAddress: meta.contracts.SpotMarketProxy,
     });
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'tBTC',
-        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: extras.tbtc_address,
+        spenderAddress: meta.contracts.SpotMarketProxy,
       }),
       true
     );
@@ -216,24 +122,24 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should approve WETH spending for SpotMarket', async () => {
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'WETH',
-        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: extras.weth_address,
+        spenderAddress: meta.contracts.SpotMarketProxy,
       }),
       false,
       'New wallet has not allowed SpotMarket WETH spending'
     );
-    await approveCollateral({
+    await approveToken({
       privateKey,
-      symbol: 'WETH',
-      spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
+      tokenAddress: extras.weth_address,
+      spenderAddress: meta.contracts.SpotMarketProxy,
     });
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'WETH',
-        spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: extras.weth_address,
+        spenderAddress: meta.contracts.SpotMarketProxy,
       }),
       true
     );
@@ -248,8 +154,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sBTC',
-      synthAddress: require('../../deployments/extras.json').synth_btc_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_btc_market_id,
+      synthAddress: extras.synth_btc_token_address,
+      synthMarketId: extras.synth_btc_market_id,
       amount: 5,
     });
     assert.equal(balance, 5);
@@ -264,8 +170,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const balance = await wrapCollateral({
       wallet,
       symbol: 'sETH',
-      synthAddress: require('../../deployments/extras.json').synth_eth_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_eth_market_id,
+      synthAddress: extras.synth_eth_token_address,
+      synthMarketId: extras.synth_eth_market_id,
       amount: 15,
     });
     assert.equal(balance, 15);
@@ -285,53 +191,66 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should atomic swap 5 sETH to USDx to trade', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
+    assert.equal(
+      await getTokenBalance({
+        walletAddress,
+        tokenAddress: require('../../deployments/systemToken.json').address,
+      }),
+      0
+    );
     await spotSell({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_eth_market_id,
+      marketId: extras.synth_eth_market_id,
       synthAmount: 5,
       minUsdAmount: 1000, // 0% slippage
     });
-    assert.ok(await getCollateralBalance({ address, symbol: 'USDx' }));
+    assert.ok(
+      (await getTokenBalance({
+        walletAddress,
+        tokenAddress: require('../../deployments/systemToken.json').address,
+      })) > 0
+    );
   });
 
   it('should approve USDx, sBTC, sETH spending for PerpsMarketProxy', async () => {
-    await approveCollateral({
+    await approveToken({
       privateKey,
-      symbol: 'USDx',
-      spenderAddress: PerpsMarketProxy.address,
-    });
-    await approveCollateral({
-      privateKey,
-      symbol: 'sBTC',
-      spenderAddress: PerpsMarketProxy.address,
-    });
-    await approveCollateral({
-      privateKey,
-      symbol: 'sETH',
-      spenderAddress: PerpsMarketProxy.address,
+      tokenAddress: require('../../deployments/systemToken.json').address,
+      spenderAddress: meta.contracts.PerpsMarketProxy,
     });
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'USDx',
-        spenderAddress: PerpsMarketProxy.address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: require('../../deployments/systemToken.json').address,
+        spenderAddress: meta.contracts.PerpsMarketProxy,
       }),
       true
     );
+
+    await approveToken({
+      privateKey,
+      tokenAddress: extras.synth_btc_token_address,
+      spenderAddress: meta.contracts.PerpsMarketProxy,
+    });
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'sBTC',
-        spenderAddress: PerpsMarketProxy.address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: extras.synth_btc_token_address,
+        spenderAddress: meta.contracts.PerpsMarketProxy,
       }),
       true
     );
+
+    await approveToken({
+      privateKey,
+      tokenAddress: extras.synth_eth_token_address,
+      spenderAddress: meta.contracts.PerpsMarketProxy,
+    });
     assert.equal(
-      await isCollateralApproved({
-        address,
-        symbol: 'sETH',
-        spenderAddress: PerpsMarketProxy.address,
+      await isTokenApproved({
+        walletAddress,
+        tokenAddress: extras.synth_eth_token_address,
+        spenderAddress: meta.contracts.PerpsMarketProxy,
       }),
       true
     );
