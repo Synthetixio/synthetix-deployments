@@ -29,7 +29,7 @@ const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -308,14 +308,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       (c) => c.collateralAddress === collateralAddress
     );
     log({ newDepositedWeth });
-
+    await wait(1000);
+    await syncTime();
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: -0.01,
     });
-
+    await wait(1000);
+    await syncTime();
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
     assert.equal(newPosition.positionSize, -0.01);
@@ -326,14 +328,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const currentPosition = await getBfpPosition({ accountId, marketId });
 
     assert.equal(currentPosition.positionSize, -0.01);
-
+    await wait(1000);
+    await syncTime();
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: 0.01,
     });
-
+    await wait(1000);
+    await syncTime();
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
     assert.equal(newPosition.positionSize, 0);
