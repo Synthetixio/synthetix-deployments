@@ -456,6 +456,9 @@ async function run() {
     contracts.PerpsMarketProxy = perpsFactory.contracts.PerpsMarketProxy;
     contracts.PerpsAccountProxy =
       perpsFactory.contracts.PerpsAccountProxy ?? perpsFactory.contracts.AccountProxy;
+    Object.assign(extras, {
+      perps_super_market_id: perpsFactory?.extras?.superMarketId,
+    });
   }
 
   const bfp_market_factory =
