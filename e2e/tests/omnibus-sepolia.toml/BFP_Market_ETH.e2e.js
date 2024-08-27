@@ -296,11 +296,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(currentPosition.positionSize, 0);
 
-    // We must sync timestamp of the fork before making time-sensitive operations
-    await syncTime();
-
-    await wait(1000);
-
     const newDigest = await contractRead({
       wallet,
       contract: 'BfpMarketProxy',
@@ -314,17 +309,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     log({ newDepositedWeth });
 
-    await wait(2000);
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: -0.01,
     });
-    await wait(2000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
-    await wait(2000);
 
     assert.equal(newPosition.positionSize, -0.01);
   });
@@ -335,10 +327,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(currentPosition.positionSize, -0.01);
 
-    // We must sync timestamp of the fork before making time-sensitive operations
-    await syncTime();
-
-    await wait(1000);
     await commitBfpOrder({
       wallet,
       accountId,
