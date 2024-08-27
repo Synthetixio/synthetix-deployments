@@ -308,8 +308,13 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
       (c) => c.collateralAddress === collateralAddress
     );
     log({ newDepositedWeth });
-    await wait(1000);
-    await syncTime();
+    const { now, blockTimestamp } = getTimes(provider);
+    const buffer = 1; // 1s
+    const diff = now - blockTimestamp;
+
+    if (diff < 0) {
+      await wait(Math.abs(diff) + buffer * 1000);
+    }
     await commitBfpOrder({
       wallet,
       accountId,
@@ -330,10 +335,11 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(currentPosition.positionSize, -0.01);
     const { now, blockTimestamp } = getTimes(provider);
+    const buffer = 1; // 1s
     const diff = now - blockTimestamp;
 
     if (diff < 0) {
-      await wait(Math.abs(diff) * 1000);
+      await wait(Math.abs(diff) + buffer * 1000);
     }
     await commitBfpOrder({
       wallet,
