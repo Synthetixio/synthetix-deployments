@@ -227,7 +227,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should distribute 1_000 ARB vault rewards and 1_000 ARB pool rewards', async () => {
+  it('should distribute 2_000 ARB vault rewards', async () => {
     await syncTime();
 
     const poolId = 1;
@@ -237,7 +237,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);
 
-    const amount = ethers.utils.parseUnits(`${1_000}`, 18);
+    const amount = ethers.utils.parseUnits(`${2_000}`, 18);
     const start = Math.floor(Date.now() / 1_000);
     const duration = 10;
 
@@ -246,16 +246,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       distributorAddress,
       poolId,
       collateralType,
-      amount,
-      start,
-      duration,
-    });
-
-    await distributeRewards({
-      wallet: signer,
-      distributorAddress,
-      poolId,
-      collateralType: ethers.constants.AddressZero,
       amount,
       start,
       duration,

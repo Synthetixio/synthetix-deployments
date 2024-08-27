@@ -275,7 +275,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId, marketId: extras.synth_eth_market_id }), 10);
   });
 
-  it('should open a 1 BTC long position', async () => {
+  it('should open a 0.1 BTC long position', async () => {
     const marketId = extras.btc_perps_market_id;
     const settlementStrategyId = extras.btc_pyth_settlement_strategy;
 
@@ -287,7 +287,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId,
-      sizeDelta: 1,
+      sizeDelta: 0.1,
       settlementStrategyId,
     });
 
@@ -300,7 +300,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime });
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
-    assert.equal(position.positionSize, 1);
+    assert.equal(position.positionSize, 0.1);
     const debt = await getDebt({ accountId });
     assert.equal(debt, 0);
   });
