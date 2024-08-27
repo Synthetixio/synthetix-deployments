@@ -198,20 +198,20 @@ fromCall.args = ["3"]
 func = "setMarketMinDelegateTime"
 args = ["3", 0]
 
-#[invoke.setScPoolConfig]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getPoolOwner"
-#fromCall.args = ["<%= settings.sc_pool_id %>"]
-#func = "setPoolConfiguration"
-#args = [
-#    "<%= settings.sc_pool_id %>",
-#    [
-#        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 90, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#        { marketId = "<%= extras.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#        { marketId = "3", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#        { marketId = "<%= extras.eth_market_id %>", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#    ],
-#]
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 90, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "3", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.eth_market_id %>", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
 
 # --- BFP configurations  -- #
 #
