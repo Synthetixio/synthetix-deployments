@@ -32,6 +32,8 @@ const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
+const { contractRead } = require('../../tasks/contractRead');
+const { contractWrite } = require('../../tasks/contractWrite');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const extras = require('../../deployments/extras.json');
@@ -75,6 +77,90 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
+  });
+
+  it('should ensure pool configuration', async () => {
+    const poolId = 1;
+    const poolConfig = await contractRead({
+      wallet,
+      contract: 'CoreProxy',
+      func: 'getPoolConfiguration',
+      args: [poolId],
+    });
+    function serialisePoolConfig(config) {
+      return JSON.stringify(
+        config.map(({ marketId, weightD18, maxDebtShareValueD18 }) => ({
+          marketId: ethers.BigNumber.from(marketId),
+          weightD18: ethers.BigNumber.from(weightD18),
+          maxDebtShareValueD18: ethers.BigNumber.from(maxDebtShareValueD18),
+        }))
+      );
+    }
+
+    log({
+      poolConfig,
+      json: JSON.stringify(
+        poolConfig.map(({ marketId, weightD18, maxDebtShareValueD18 }) => ({
+          marketId: ethers.BigNumber.from(marketId),
+          weightD18: ethers.BigNumber.from(weightD18),
+          maxDebtShareValueD18: ethers.BigNumber.from(maxDebtShareValueD18),
+        }))
+      ),
+    });
+    const expectedPoolConfig = [
+      {
+        marketId: extras.perps_super_market_id,
+        weightD18: 96,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+      {
+        marketId: extras.synth_usdc_market_id,
+        weightD18: 1,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+      {
+        marketId: extras.synth_btc_market_id,
+        weightD18: 1,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+      {
+        marketId: extras.synth_eth_market_id,
+        weightD18: 1,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+    ];
+    log({
+      expectedPoolConfig,
+      json: JSON.stringify(
+        expectedPoolConfig.map(({ marketId, weightD18, maxDebtShareValueD18 }) => ({
+          marketId: ethers.BigNumber.from(marketId),
+          weightD18: ethers.BigNumber.from(weightD18),
+          maxDebtShareValueD18: ethers.BigNumber.from(maxDebtShareValueD18),
+        }))
+      ),
+    });
+    if (serialisePoolConfig(poolConfig) !== serialisePoolConfig(expectedPoolConfig)) {
+      await contractWrite({
+        wallet,
+        contract: 'CoreProxy',
+        func: 'setPoolConfiguration',
+        args: [poolId, expectedPoolConfig],
+        impersonate: await contractRead({
+          wallet,
+          contract: 'CoreProxy',
+          func: 'owner',
+        }),
+      });
+    }
+
+    const newPoolConfig = await contractRead({
+      wallet,
+      contract: 'CoreProxy',
+      func: 'getPoolConfiguration',
+      args: [poolId],
+    });
+
+    assert.equal(serialisePoolConfig(newPoolConfig), serialisePoolConfig(expectedPoolConfig));
   });
 
   it('should set tBTC balance to 10', async () => {
