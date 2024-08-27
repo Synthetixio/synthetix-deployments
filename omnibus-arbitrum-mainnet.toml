@@ -46,7 +46,7 @@ include = [
     #
 
     # Perps Settings
-    "tomls/omnibus-arbitrum-mainnet/perps/perps-keeper-cost.toml", # TODO fix it
+    "tomls/omnibus-arbitrum-mainnet/perps/perps-keeper-cost.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/global.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/referrers.toml",
 
