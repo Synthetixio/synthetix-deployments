@@ -30,9 +30,9 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
   await wait((minOrderAge + bufferSeconds) * 1000);
 
   const orderDigest = await BfpMarketProxy.getOrderDigest(accountId, marketId);
+  log({ orderDigest });
   const times = await getTimes(wallet.provider);
   log({ times });
-  log({ orderDigest });
 
   if (orderDigest.sizeDelta.eq(0)) {
     throw Error('Order does not exists.');
