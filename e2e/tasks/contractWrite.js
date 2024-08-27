@@ -19,7 +19,9 @@ async function contractWrite({ wallet, contract, func, args = [], impersonate = 
     require(`../deployments/${contract}.json`).abi,
     impersonate ? wallet.provider.getSigner(impersonate) : wallet
   );
-  const gasLimit = await Contract.estimateGas[func](...args).catch(parseError);
+  const gasLimit = await Contract.estimateGas[func](...args)
+    .catch(parseError)
+    .catch(() => ethers.BigNumber.from(10_000_000));
   const tx = await Contract[func](...args, { gasLimit: gasLimit.mul(2) }).catch(parseError);
   const result = await tx
     .wait()

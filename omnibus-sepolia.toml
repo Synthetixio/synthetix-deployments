@@ -169,26 +169,57 @@ targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
-#[invoke.setScPoolConfig]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getPoolOwner"
-#fromCall.args = ["<%= settings.sc_pool_id %>"]
-#func = "setPoolConfiguration"
-#args = [
-#    "<%= settings.sc_pool_id %>",
-#    [
-#        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 90, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#        { marketId = "<%= extras.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#        { marketId = "<%= extras.eth_market_id %>", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-#    ],
-#]
+# Temporary config for debugging start
+[invoke.setMinDelegationTimeLegacyMarket]
+target = ["system.CoreProxy"]
+fromCall.func = "getMarketAddress"
+fromCall.args = ["<%= imports.legacyMarket.settings.marketId %>"]
+func = "setMarketMinDelegateTime"
+args = ["<%= imports.legacyMarket.settings.marketId %>", 0]
+
+[invoke.setMinDelegationTimeSUsde]
+target = ["system.CoreProxy"]
+fromCall.func = "getMarketAddress"
+fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+func = "setMarketMinDelegateTime"
+args = ["<%= extras.synth_usde_market_id %>", 0]
+
+[invoke.setMinDelegationTimeBfpEth]
+target = ["system.CoreProxy"]
+fromCall.func = "getMarketAddress"
+fromCall.args = ["<%= extras.eth_market_id %>"]
+func = "setMarketMinDelegateTime"
+args = ["<%= extras.eth_market_id %>", 0]
+
+[invoke.setMinDelegationTimeUnkownMarket]
+target = ["system.CoreProxy"]
+fromCall.func = "getMarketAddress"
+fromCall.args = ["3"]
+func = "setMarketMinDelegateTime"
+args = ["3", 0]
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 90, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "3", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+        { marketId = "<%= extras.eth_market_id %>", weightD18 = 9, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
 
 # --- BFP configurations  -- #
 #
 #
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.6.0"
+defaultValue = "synthetix-bfp-market:3.6.1-dev.7d60444d"
+# Temporary config for debugging end
 
 # Collaterals configurations
 #
