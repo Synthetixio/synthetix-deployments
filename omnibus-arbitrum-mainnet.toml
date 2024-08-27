@@ -104,6 +104,9 @@ defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 [setting.deployer]
 defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
 
+[setting.pdao]
+defaultValue = "0xD3DFa13CDc7c133b1700c243f03A8C6Df513A93b"
+
 [setting.minimum_liquidity_ratio]
 defaultValue = "<%= parseEther('2.00') %>"
 description = "200% min market collateralization"
