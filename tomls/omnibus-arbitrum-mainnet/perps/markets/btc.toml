@@ -17,11 +17,12 @@ btc_perps_locked_oi_ratio = "0.25"
 btc_perps_max_liquidation_pd = "0.0005"
 btc_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
-[invoke.createBtcPerpsMarket]
+[invoke.PerpsMarketProxy_PerpsMarketProxy_createMarket_BTC]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
+from = "<%= settings.pdao %>"
 func = "createMarket"
 args = ["<%= settings.btc_perps_market_id %>", "Bitcoin", "BTC"]
+depends = ["invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_pdao"]
 
 [invoke.setPerpsPriceBtc]
 target = ["perpsFactory.PerpsMarketProxy"]

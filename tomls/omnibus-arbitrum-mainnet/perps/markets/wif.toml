@@ -17,11 +17,12 @@ wif_perps_locked_oi_ratio = "0.50"
 wif_perps_max_liquidation_pd = "0.0005"
 wif_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
-[invoke.createWifPerpsMarket]
+[invoke.PerpsMarketProxy_PerpsMarketProxy_createMarket_WIF]
 target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
+from = "<%= settings.pdao %>"
 func = "createMarket"
 args = ["<%= settings.wif_perps_market_id %>", "dogwifhat", "WIF"]
+depends = ["invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_pdao"]
 
 [invoke.setPerpsPriceWif]
 target = ["perpsFactory.PerpsMarketProxy"]

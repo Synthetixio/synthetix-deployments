@@ -8,13 +8,14 @@ description = "tBTC address"
 
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "owner"
+from = "<%= settings.pdao %>"
 func = "createSynth"
 args = ["Synthetic Bitcoin", "sBTC", "<%= settings.owner %>"]
 extra.synth_btc_market_id.event = "SynthRegistered"
 extra.synth_btc_market_id.arg = 0
 extra.synth_btc_token_address.event = "SynthRegistered"
 extra.synth_btc_token_address.arg = 1
+depends = ["invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_pdao"]
 
 [invoke.SpotMarketProxy_updatePriceData_btc]
 target = ["spotFactory.SpotMarketProxy"]

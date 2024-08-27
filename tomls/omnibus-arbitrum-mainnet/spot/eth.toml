@@ -4,13 +4,14 @@ synth_eth_skew_scale = "<%= parseEther(String(350_000)) %>"
 
 [invoke.SpotMarketProxy_createSynth_eth]
 target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "owner"
+from = "<%= settings.pdao %>"
 func = "createSynth"
 args = ["Synthetic Ether", "sETH", "<%= settings.owner %>"]
 extra.synth_eth_market_id.event = "SynthRegistered"
 extra.synth_eth_market_id.arg = 0
 extra.synth_eth_token_address.event = "SynthRegistered"
 extra.synth_eth_token_address.arg = 1
+depends = ["invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_pdao"]
 
 [invoke.SpotMarketProxy_updatePriceData_eth]
 target = ["spotFactory.SpotMarketProxy"]

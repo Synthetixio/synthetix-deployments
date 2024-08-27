@@ -3,7 +3,6 @@
 [setting.perps_super_market_name]
 defaultValue = "Multi Collateral Perps"
 
-# Since multiple of these can be created, should be moved to a High MCap Perps Folder
 [provision.perpsFactory]
 source = "<%= settings.perps_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
