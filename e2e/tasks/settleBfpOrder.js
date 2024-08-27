@@ -30,7 +30,7 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
   await wait((minOrderAge + bufferSeconds) * 1000);
 
   const orderDigest = await BfpMarketProxy.getOrderDigest(accountId, marketId);
-  const times = getTimes(wallet.provider);
+  const times = await getTimes(wallet.provider);
   log({ times });
   log({ orderDigest });
 
