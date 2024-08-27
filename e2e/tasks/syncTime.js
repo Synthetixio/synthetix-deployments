@@ -13,7 +13,7 @@ const wait = (ms) =>
     }, ms);
   });
 
-export async function getTimes(provider) {
+async function getTimes(provider) {
   const blockNumber = await provider.send('eth_blockNumber', []);
   const block = await provider.send('eth_getBlockByNumber', [blockNumber, false]);
   const blockTimestamp = parseInt(block.timestamp, 16);
@@ -70,6 +70,7 @@ async function syncTime() {
 
 module.exports = {
   syncTime,
+  getTimes,
 };
 
 if (require.main === module) {
