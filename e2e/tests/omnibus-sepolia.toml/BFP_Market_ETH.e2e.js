@@ -6,7 +6,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { wait } = require('../../wait');
 
-const { syncTime } = require('../../tasks/syncTime');
+const { syncTime, getTimes } = require('../../tasks/syncTime');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
@@ -329,8 +329,12 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     const currentPosition = await getBfpPosition({ accountId, marketId });
 
     assert.equal(currentPosition.positionSize, -0.01);
-    await wait(1000);
-    await syncTime();
+    const { now, blockTimestamp } = getTimes(provider);
+    const diff = now - blockTimestamp;
+
+    if (diff < 0) {
+      await wait(Math.abs(diff) * 1000);
+    }
     await commitBfpOrder({
       wallet,
       accountId,
