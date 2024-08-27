@@ -29,7 +29,7 @@ const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 
-describe.only(require('path').basename(__filename, '.e2e.js'), function () {
+describe.on(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -317,7 +317,8 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: -0.01,
     });
     await wait(1000);
-    await syncTime();
+    await wait(5000);
+
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
     assert.equal(newPosition.positionSize, -0.01);
@@ -336,8 +337,12 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
       marketId,
       sizeDelta: 0.01,
     });
-    await wait(1000);
-    await syncTime();
+
+    // Wait for commitment price/settlement delay
+    await wait(2000);
+
+    // Wait for pyth to update prices
+    await wait(5000);
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
     assert.equal(newPosition.positionSize, 0);
