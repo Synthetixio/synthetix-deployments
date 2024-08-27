@@ -508,19 +508,3 @@ args = [
     "<%= settings.weth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
-
-# --- Configure SC pool after market creation--- #
-#
-#
-
-[invoke.CoreProxy_setPoolConfiguration]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= settings.eth_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]

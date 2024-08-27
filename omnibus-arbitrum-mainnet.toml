@@ -192,18 +192,6 @@ description = "https://coinmarketcap.com/currencies/ethena-usde/"
 defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[invoke.CoreProxy_setPoolConfiguration_SpartanCouncil]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= extras.spartan_council_pool_id %>",
-    [
-        { marketId = "<%= extras.synth_usdc_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
-
 [setting.usd_token_name]
 defaultValue = "<%= formatBytes32String('USDToken') %>"
 

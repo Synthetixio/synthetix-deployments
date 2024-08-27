@@ -1,5 +1,0 @@
-[invoke.setPerpsMaxCollateralForSnxUsd]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setCollateralConfiguration"
-args = ["0", "<%= MaxUint256 %>", "0", "0", "0"]

@@ -165,19 +165,6 @@ targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
-[invoke.setScPoolConfig]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "setPoolConfiguration"
-args = [
-    "<%= settings.sc_pool_id %>",
-    [
-        { marketId = "<%= imports.legacyMarket.settings.marketId %>", weightD18 = 99, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-        { marketId = "<%= settings.synth_usde_market_id %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
-    ],
-]
-
 # Governance Councils Configuration
 [var.governance]
 governance_package = "synthetix-governance:3.0.5"

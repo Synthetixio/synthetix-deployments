@@ -7,7 +7,6 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { setMintableTokenBalance } = require('../../tasks/setMintableTokenBalance');
-const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
 const { createAccount } = require('../../tasks/createAccount');
 const { getCollateralConfig } = require('../../tasks/getCollateralConfig');
@@ -36,7 +35,6 @@ log({ rewardsDistributor });
 
 const payoutToken = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
-//const collateralType = rewardsDistributor.collateralType.address;
 
 log({ distributorAddress, payoutToken, rewardManager });
 
@@ -84,10 +82,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
-    console.log('got back info', info);
+    log(info);
     assert.equal(info.name, 'Spartan Council Pool ARB Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
-    //assert.equal(info.collateralType, collateralType, 'collateralType');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),
       `${payoutToken}`.toLowerCase(),
