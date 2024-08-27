@@ -8,12 +8,11 @@ include = [
 ]
 
 [setting.owner]
-defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769" #TODO update to new PDAO multisig
 
 # Governance Councils Configuration
 [var.governance]
 governance_package = "synthetix-governance:3.0.5"
-governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
 governance_salt = "synthetix-governance"
 # Wormhole
 governance_wormhole_core = "0xc1BA3CC4bFE724A08FbbFbF64F8db196738665f4"    # https://explorer.snaxchain.io/address/0xc1BA3CC4bFE724A08FbbFbF64F8db196738665f4

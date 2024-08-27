@@ -9,7 +9,7 @@ include = [
 ]
 
 [setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9" # Testnet Deployer
 
 # Governance Councils Configuration
 [var.governance]
