@@ -118,7 +118,7 @@ args = [
     ],
 ]
 
-[clone.trusted_multicall_forwarder]
-source = "trusted-multicall-forwarder"
-target = "trusted-multicall-forwarder"
-options.salt = "<%= settings.salt %>"
+# [clone.trusted_multicall_forwarder]
+# source = "trusted-multicall-forwarder"
+# target = "trusted-multicall-forwarder:0.0.3@with-synthetix"
+# options.salt = "<%= settings.salt %>"
