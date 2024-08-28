@@ -10,7 +10,7 @@ perps_collateral_liquidation_ratio = "0.0003"
 perps_max_positions_per_account = "10"
 perps_max_collaterals_per_account = "3"
 
-[invoke.setPerpsLiquidationRewardGuards]
+[invoke.PerpsMarketProxy_setKeeperRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setKeeperRewardGuards"
@@ -21,7 +21,7 @@ args = [
     "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>",
 ]
 
-[invoke.setPerAccountCapsPerps]
+[invoke.PerpsMarketProxy_setPerAccountCaps]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
@@ -30,13 +30,13 @@ args = [
     "<%= settings.perps_max_collaterals_per_account %>",
 ]
 
-[invoke.setPerpsMarketKeeperCostNodeId]
+[invoke.PerpsMarketProxy_updateKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateKeeperCostNodeId"
 args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
 
-[invoke.setInterestRateParams]
+[invoke.PerpsMarketProxy_setInterestRateParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setInterestRateParameters"
@@ -46,7 +46,7 @@ args = [
     "<%= parseEther(settings.perps_high_util_gradient) %>",
 ]
 
-[invoke.PerpsMarketProxy_setCollateralLiquidationRatio_btc]
+[invoke.PerpsMarketProxy_setCollateralLiquidateRewardRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setCollateralLiquidateRewardRatio"

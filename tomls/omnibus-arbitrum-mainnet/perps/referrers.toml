@@ -1,7 +1,7 @@
 [setting.referrer_fee]
 defaultValue = "<%= parseEther('0.2') %>"
 
-[invoke.setKwentaAsReferrerOnPerpsMarket]
+[invoke.PerpsMarketProxy_updateReferrerShare_Kwenta]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"

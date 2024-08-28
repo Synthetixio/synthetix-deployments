@@ -11,7 +11,7 @@ source = "<%= settings.perps_keeper_cost_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 
-[invoke.registerPerps_KeeperCostEthOracleNode]
+[invoke.OracleManagerProxy_registerNode_keeper_cost_ETH]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -25,7 +25,7 @@ args = [
 extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_eth_oracle_id.arg = 0
 
-[invoke.registerPerps_KeeperCostUsdOracleNode]
+[invoke.OracleManagerProxy_registerNode_keeper_cost_USD]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
