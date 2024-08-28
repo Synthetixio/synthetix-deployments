@@ -1,0 +1,53 @@
+[var.perps_global_settings]
+perps_liquidation_min_keeper_reward_usd = "<%= parseEther('1') %>"
+perps_liquidation_min_keeper_profit_ratio_d18 = "<%= parseEther('0.30') %>"
+perps_liquidation_max_keeper_reward_usd = "<%= parseEther('30') %>"
+perps_liquidation_max_keeper_scaling_ratio_d18 = "<%= parseEther('0.0003') %>"
+perps_low_util_gradient = "<%= parseEther('0') %>"
+perps_gradient_breakpoint = "<%= parseEther('0') %>"
+perps_high_util_gradient = "<%= parseEther('0') %>"
+perps_collateral_liquidation_ratio = "<%= parseEther('0.0003') %>"
+perps_max_positions_per_account = "10"
+perps_max_collaterals_per_account = "3"
+
+[invoke.PerpsMarketProxy_setKeeperRewardGuards]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setKeeperRewardGuards"
+args = [
+    "<%= settings.perps_liquidation_min_keeper_reward_usd %>",
+    "<%= settings.perps_liquidation_min_keeper_profit_ratio_d18 %>",
+    "<%= settings.perps_liquidation_max_keeper_reward_usd %>",
+    "<%= settings.perps_liquidation_max_keeper_scaling_ratio_d18 %>",
+]
+
+[invoke.PerpsMarketProxy_setPerAccountCaps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setPerAccountCaps"
+args = [
+    "<%= settings.perps_max_positions_per_account %>",
+    "<%= settings.perps_max_collaterals_per_account %>",
+]
+
+[invoke.PerpsMarketProxy_updateKeeperCostNodeId]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateKeeperCostNodeId"
+args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
+
+[invoke.PerpsMarketProxy_setInterestRateParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setInterestRateParameters"
+args = [
+    "<%= settings.perps_low_util_gradient %>",
+    "<%= settings.perps_gradient_breakpoint %>",
+    "<%= settings.perps_high_util_gradient %>",
+]
+
+[invoke.PerpsMarketProxy_setCollateralLiquidateRewardRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralLiquidateRewardRatio"
+args = ["<%= settings.perps_collateral_liquidation_ratio %>"]
