@@ -3,7 +3,7 @@ eth_upper_limit_discount = "<%= parseEther('0.1') %>"
 eth_lower_limit_discount = "<%= parseEther('0.01') %>"
 eth_discount_scalar = "<%= parseEther('1') %>"
 
-[invoke.PerpsMarketProxy_setCollateralConfiguration_eth]
+[invoke.PerpsMarketProxy_setCollateralConfiguration_sETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setCollateralConfiguration"

@@ -1,20 +1,20 @@
 [var.perps_market_settings_ETH]
 eth_perps_market_id = "100"
-eth_perps_market_skew_scale = "<%= String(350_000) %>"
-eth_perps_market_max_funding_velocity = "9"
-eth_perps_maker_fee_ratio = "0"
-eth_perps_taker_fee_ratio = "0.0005"
-eth_perps_max_market_size = "<%= String(0) %>"
-eth_perps_max_market_value = "<%= String(0) %>"
-eth_perps_initial_margin_ratio = "0.744"
-eth_perps_minimum_initial_margin_ratio = "0.02"
-eth_perps_maintenance_margin_scalar = "0.333"
-eth_perps_flag_reward_ratio = "0.0003"
-eth_perps_minimum_position_margin = "50"
-eth_perps_locked_oi_ratio = "0.25"
-eth_perps_max_liquidation_limit_accumulation_multiplier = "1.5"
+eth_perps_market_skew_scale = "<%= parseEther(String(350_000)) %>"
+eth_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+eth_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+eth_perps_taker_fee_ratio = "<%= parseEther('0.0005') %>"
+eth_perps_max_market_size = "<%= parseEther(String(0)) %>"
+eth_perps_max_market_value = "<%= parseEther(String(0)) %>"
+eth_perps_initial_margin_ratio = "<%= parseEther('0.744') %>"
+eth_perps_minimum_initial_margin_ratio = "<%= parseEther('0.02') %>"
+eth_perps_maintenance_margin_scalar = "<%= parseEther('0.333') %>"
+eth_perps_flag_reward_ratio = "<%= parseEther('0.0003') %>"
+eth_perps_minimum_position_margin = "<%= parseEther('50') %>"
+eth_perps_locked_oi_ratio = "<%= parseEther('0.25') %>"
+eth_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 eth_perps_max_seconds_in_liquidation_window = "30"
-eth_perps_max_liquidation_pd = "0.0005"
+eth_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 eth_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
 [invoke.PerpsMarketProxy_createMarket_ETH]
@@ -62,8 +62,8 @@ fromCall.func = "owner"
 func = "setFundingParameters"
 args = [
     "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_market_skew_scale) %>",
-    "<%= parseEther(settings.eth_perps_market_max_funding_velocity) %>",
+    "<%= settings.eth_perps_market_skew_scale %>",
+    "<%= settings.eth_perps_market_max_funding_velocity %>",
 ]
 
 [invoke.PerpsMarketProxy_setOrderFees_ETH]
@@ -72,27 +72,21 @@ fromCall.func = "owner"
 func = "setOrderFees"
 args = [
     "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_maker_fee_ratio) %>",
-    "<%= parseEther(settings.eth_perps_taker_fee_ratio) %>",
+    "<%= settings.eth_perps_maker_fee_ratio %>",
+    "<%= settings.eth_perps_taker_fee_ratio %>",
 ]
 
 [invoke.PerpsMarketProxy_setMaxMarketSize_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = [
-    "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_max_market_size) %>",
-]
+args = ["<%= settings.eth_perps_market_id %>", "<%= settings.eth_perps_max_market_size %>"]
 
 [invoke.PerpsMarketProxy_setMaxMarketValue_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = [
-    "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_max_market_value) %>",
-]
+args = ["<%= settings.eth_perps_market_id %>", "<%= settings.eth_perps_max_market_value %>"]
 
 [invoke.PerpsMarketProxy_setMaxLiquidationParameters_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -100,9 +94,9 @@ fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
 args = [
     "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_max_liquidation_limit_accumulation_multiplier) %>",
+    "<%= settings.eth_perps_max_liquidation_limit_accumulation_multiplier %>",
     "<%= settings.eth_perps_max_seconds_in_liquidation_window %>",
-    "<%= parseEther(settings.eth_perps_max_liquidation_pd) %>",
+    "<%= settings.eth_perps_max_liquidation_pd %>",
     "<%= settings.eth_perps_endorsed_liquidator %>",
 ]
 
@@ -112,18 +106,15 @@ fromCall.func = "owner"
 func = "setLiquidationParameters"
 args = [
     "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_initial_margin_ratio) %>",
-    "<%= parseEther(settings.eth_perps_minimum_initial_margin_ratio) %>",
-    "<%= parseEther(settings.eth_perps_maintenance_margin_scalar) %>",
-    "<%= parseEther(settings.eth_perps_flag_reward_ratio) %>",
-    "<%= parseEther(settings.eth_perps_minimum_position_margin) %>",
+    "<%= settings.eth_perps_initial_margin_ratio %>",
+    "<%= settings.eth_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.eth_perps_maintenance_margin_scalar %>",
+    "<%= settings.eth_perps_flag_reward_ratio %>",
+    "<%= settings.eth_perps_minimum_position_margin %>",
 ]
 
 [invoke.PerpsMarketProxy_setLockedOiRatio_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = [
-    "<%= settings.eth_perps_market_id %>",
-    "<%= parseEther(settings.eth_perps_locked_oi_ratio) %>",
-]
+args = ["<%= settings.eth_perps_market_id %>", "<%= settings.eth_perps_locked_oi_ratio %>"]

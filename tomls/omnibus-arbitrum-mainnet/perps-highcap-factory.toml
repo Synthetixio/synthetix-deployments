@@ -1,5 +1,3 @@
-[setting.perps_market_package]
-
 [setting.perps_super_market_name]
 defaultValue = "Multi Collateral Perps"
 
@@ -13,7 +11,7 @@ options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_pres
 options.spotMarketPackage = "<%= settings.spot_market_package %>@<%= settings.target_preset %>"
 depends = ["provision.spotFactory"]
 
-[invoke.setPerpsMarketName]
+[invoke.PerpsMarketProxy_setPerpsMarketName]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerpsMarketName"
