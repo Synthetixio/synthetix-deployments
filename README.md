@@ -92,7 +92,14 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    yarn update-prices
    ```
 
-4. Execute tests
+4. Run bootstrap steps
+   Bootstrap ensures that necessary runtime contracts configs are applied. Like `setPoolConfiguration`.
+
+   ```sh
+   DEBUG='e2e:*' node ./e2e/tests/omnibus-base-sepolia-andromeda.toml/bootstrap
+   ```
+
+5. Execute tests
    ```sh
    DEBUG='e2e:*' mocha e2e/tests/omnibus-base-sepolia-andromeda.toml/*.e2e.js
    ```

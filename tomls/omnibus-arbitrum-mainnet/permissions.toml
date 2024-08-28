@@ -82,8 +82,20 @@ fromCall.func = "owner"
 func = "addToFeatureFlagAllowlist"
 args = ["<%= formatBytes32String('createPool') %>", "<%= settings.deployer %>"]
 
-[invoke.CoreProxy_addToFeatureFlagAllowlist_createSynth_deployer]
+[invoke.SpotMarketProxy_addToFeatureFlagAllowlist_createSynth_pdao]
 target = ["spotFactory.SpotMarketProxy"]
 func = "addToFeatureFlagAllowlist"
 fromCall.func = "owner"
-args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.deployer %>"]
+args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.pdao %>"]
+
+[invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_pdao]
+target = ["perpsFactory.PerpsMarketProxy"]
+func = "addToFeatureFlagAllowlist"
+fromCall.func = "owner"
+args = ["<%= formatBytes32String('createMarket') %>", "<%= settings.pdao %>"]
+
+[invoke.PerpsMarketProxy_setFeatureFlagAllowAll_perpsSystem]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('perpsSystem') %>", true]

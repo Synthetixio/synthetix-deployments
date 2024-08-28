@@ -1,0 +1,16 @@
+[var.perps_collateral_sETH_settings]
+eth_upper_limit_discount = "<%= parseEther('0.1') %>"
+eth_lower_limit_discount = "<%= parseEther('0.01') %>"
+eth_discount_scalar = "<%= parseEther('1') %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_eth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_eth_market_id %>",
+    "<%= settings.synth_eth_max_collateral_amount %>",
+    "<%= settings.eth_upper_limit_discount %>",
+    "<%= settings.eth_lower_limit_discount %>",
+    "<%= settings.eth_discount_scalar %>",
+]

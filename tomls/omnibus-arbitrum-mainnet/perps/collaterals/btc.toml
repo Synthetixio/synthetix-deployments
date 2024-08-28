@@ -1,0 +1,16 @@
+[var.perps_collateral_stBTC_settings]
+btc_upper_limit_discount = "<%= parseEther('0.075') %>"
+btc_lower_limit_discount = "<%= parseEther('0.010') %>"
+btc_discount_scalar = "<%= parseEther('1') %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_btc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= settings.synth_btc_max_collateral_amount %>", # from spot/btc.toml
+    "<%= settings.btc_upper_limit_discount %>",
+    "<%= settings.btc_lower_limit_discount %>",
+    "<%= settings.btc_discount_scalar %>",
+]

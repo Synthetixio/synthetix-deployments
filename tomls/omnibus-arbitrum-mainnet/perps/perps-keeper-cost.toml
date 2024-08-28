@@ -1,3 +1,11 @@
+[var.perps_keeper_settings]
+perps_keeper_l1_cost_settle_gas_units = "<%= String(30_000) %>"
+perps_keeper_l2_cost_settle_gas_units = "<%= String(2_000_000) %>"
+perps_keeper_l1_cost_flag_gas_units = "<%= String(6_000) %>"
+perps_keeper_l2_cost_flag_gas_units = "<%= String(760_000) %>"
+perps_keeper_l1_cost_liquidate_gas_units = "<%= String(3_000) %>"
+perps_keeper_l2_cost_liquidate_gas_units = "<%= String(1_300_000) %>"
+
 [provision.perps_gas_oracle_node]
 source = "<%= settings.perps_keeper_cost_package %>"
 targetPreset = "<%= settings.target_preset %>"
@@ -16,16 +24,6 @@ args = [
 ]
 extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_eth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.perps_gas_oracle_node',
-    'setting.perps_keeper_l1_cost_settle_gas_units',
-    'setting.perps_keeper_l2_cost_settle_gas_units',
-    'setting.perps_keeper_l1_cost_flag_gas_units',
-    'setting.perps_keeper_l2_cost_flag_gas_units',
-    'setting.perps_keeper_l1_cost_liquidate_gas_units',
-    'setting.perps_keeper_l2_cost_liquidate_gas_units',
-]
 
 [invoke.registerPerps_KeeperCostUsdOracleNode]
 target = ["system.oracle_manager.Proxy"]
