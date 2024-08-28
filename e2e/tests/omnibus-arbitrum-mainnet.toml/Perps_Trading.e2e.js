@@ -30,6 +30,8 @@ const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { approveToken } = require('../../tasks/approveToken');
 const { isTokenApproved } = require('../../tasks/isTokenApproved');
+const { contractRead } = require('../../tasks/contractRead');
+const { contractWrite } = require('../../tasks/contractWrite');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const extras = require('../../deployments/extras.json');
@@ -68,6 +70,31 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
     await setEthBalance({ address, balance: 100 });
     assert.equal(await getEthBalance({ address }), 100);
+  });
+
+  it('should set max market size/value for BTC', async () => {
+    await contractWrite({
+      wallet,
+      contract: 'PerpsMarketProxy',
+      func: 'setMaxMarketSize',
+      args: [extras.btc_perps_market_id, ethers.utils.parseEther(String(1_200))],
+      impersonate: await contractRead({
+        wallet,
+        contract: 'PerpsMarketProxy',
+        func: 'owner',
+      }),
+    });
+    await contractWrite({
+      wallet,
+      contract: 'PerpsMarketProxy',
+      func: 'setMaxMarketValue',
+      args: [extras.btc_perps_market_id, ethers.utils.parseEther(String(50_000_000))],
+      impersonate: await contractRead({
+        wallet,
+        contract: 'PerpsMarketProxy',
+        func: 'owner',
+      }),
+    });
   });
 
   it('should set tBTC balance to 10', async () => {
