@@ -1,4 +1,4 @@
-[var.perps_eth_market_settings]
+[var.perps_market_settings_ETH]
 eth_perps_market_id = "100"
 eth_perps_market_skew_scale = "<%= String(350_000) %>"
 eth_perps_market_max_funding_velocity = "9"
@@ -17,14 +17,14 @@ eth_perps_max_seconds_in_liquidation_window = "30"
 eth_perps_max_liquidation_pd = "0.0005"
 eth_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
-[invoke.PerpsMarketProxy_PerpsMarketProxy_createMarket_ETH]
+[invoke.PerpsMarketProxy_createMarket_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 from = "<%= settings.pdao %>"
 func = "createMarket"
 args = ["<%= settings.eth_perps_market_id %>", "Ethereum", "ETH"]
 depends = ["invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_pdao"]
 
-[invoke.setPerpsPriceEth]
+[invoke.PerpsMarketProxy_updatePriceData_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
@@ -34,8 +34,8 @@ args = [
     "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
-# Do not modify this step. Edit [invoke.setPerpsEthSettlementStrategy] instead.
-[invoke.addPerpsEthSettlementStrategy]
+# DO NOT MODIFY THIS STEP!. Edit [invoke.PerpsMarketProxy_setSettlementStrategy_ETH] instead.
+[invoke.PerpsMarketProxy_addSettlementStrategy_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
@@ -46,7 +46,7 @@ args = [
 extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.eth_pyth_settlement_strategy.arg = 2
 
-[invoke.setPerpsEthSettlementStrategy]
+[invoke.PerpsMarketProxy_setSettlementStrategy_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
@@ -56,7 +56,7 @@ args = [
     { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
-[invoke.setPerpsEthFundingParameters]
+[invoke.PerpsMarketProxy_setFundingParameters_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
@@ -66,7 +66,7 @@ args = [
     "<%= parseEther(settings.eth_perps_market_max_funding_velocity) %>",
 ]
 
-[invoke.setPerpsEthOrderFees]
+[invoke.PerpsMarketProxy_setOrderFees_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
@@ -76,7 +76,7 @@ args = [
     "<%= parseEther(settings.eth_perps_taker_fee_ratio) %>",
 ]
 
-[invoke.setPerpsEthMaxMarketSize]
+[invoke.PerpsMarketProxy_setMaxMarketSize_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
@@ -85,7 +85,7 @@ args = [
     "<%= parseEther(settings.eth_perps_max_market_size) %>",
 ]
 
-[invoke.setPerpsEthMaxMarketValue]
+[invoke.PerpsMarketProxy_setMaxMarketValue_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
@@ -94,7 +94,7 @@ args = [
     "<%= parseEther(settings.eth_perps_max_market_value) %>",
 ]
 
-[invoke.setPerpsEthMaxLiquidationParameters]
+[invoke.PerpsMarketProxy_setMaxLiquidationParameters_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
@@ -106,7 +106,7 @@ args = [
     "<%= settings.eth_perps_endorsed_liquidator %>",
 ]
 
-[invoke.setPerpsEthLiquidationParameters]
+[invoke.PerpsMarketProxy_setLiquidationParameters_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
@@ -119,7 +119,7 @@ args = [
     "<%= parseEther(settings.eth_perps_minimum_position_margin) %>",
 ]
 
-[invoke.setPerpsEthLockedOiRatio]
+[invoke.PerpsMarketProxy_setLockedOiRatio_ETH]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
