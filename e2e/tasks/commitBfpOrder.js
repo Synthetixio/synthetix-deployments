@@ -38,9 +38,9 @@ async function commitBfpOrder({
     limitPrice: ethers.utils.parseEther(
       Math.floor(pythPrice * (sizeDelta > 0 ? 1.05 : 0.95)).toString()
     ),
-    keeperFeeBufferUsd: keeperFeeBufferUsd,
-    hooks: hooks,
-    trackingCode: trackingCode,
+    keeperFeeBufferUsd,
+    hooks,
+    trackingCode,
   };
 
   log({ params });
