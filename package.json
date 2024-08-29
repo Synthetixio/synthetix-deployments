@@ -46,9 +46,9 @@
     "update-prices": "DEBUG='e2e:*' node ./e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
   },
   "devDependencies": {
-    "@pythnetwork/pyth-evm-js": "^1.63.0",
-    "@usecannon/builder": "2.16.4",
-    "@usecannon/cli": "2.16.4",
+    "@pythnetwork/pyth-evm-js": "^1.65.0",
+    "@usecannon/builder": "2.16.5",
+    "@usecannon/cli": "2.16.5",
     "debug": "^4.3.6",
     "ethers": "^5.7.2",
     "hardhat": "^2.22.9",

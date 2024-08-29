@@ -892,13 +892,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.63.0":
-  version: 1.63.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.63.0"
+"@pythnetwork/pyth-evm-js@npm:^1.65.0":
+  version: 1.65.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.65.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/11ecaa2fa72cd0a7e446ea6f5c615f3e2842d8fd48795b936ad7fa6ddd6dbafc61e6dbb30942540fdce1a6b732b6c6a299e7f431be711d8b5a46d81d9d2412c8
+  checksum: 10/f149565750203691c14851834d8fdb1cb24838c94821f430be796d580e4a3940e1772e10fe3f1dd14340d0aa1bfa513da03a0b220d545d133a37b5891072c0c3
   languageName: node
   linkType: hard
 
@@ -1145,9 +1145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.16.4":
-  version: 2.16.4
-  resolution: "@usecannon/builder@npm:2.16.4"
+"@usecannon/builder@npm:2.16.5":
+  version: 2.16.5
+  resolution: "@usecannon/builder@npm:2.16.5"
   dependencies:
     "@synthetixio/router": "npm:^3.4.0"
     axios: "npm:^1.7.2"
@@ -1163,16 +1163,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.16.5"
     zod: "npm:^3.23.6"
-  checksum: 10/e13d2e477e03e153ecaa54272e61cd360ee40378a8adacae61f4109f489346f2e85d333006c1da5967160492b3dcba114dbbd6100474a8beec0b2204de16b8e2
+  checksum: 10/154f3582d5678c0a15c382eea8be0dcdd115f82867b9347b5322728a5d6193dcf44bd93548735dbe6bcedf80f8ce5ea954b2e8beb33ee099c9a63038f399de71
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.16.4":
-  version: 2.16.4
-  resolution: "@usecannon/cli@npm:2.16.4"
+"@usecannon/cli@npm:2.16.5":
+  version: 2.16.5
+  resolution: "@usecannon/cli@npm:2.16.5"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.16.4"
+    "@usecannon/builder": "npm:2.16.5"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1191,7 +1191,7 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/4d94b884667c7ff1731c69e2011a12438ee8c290e89d9b442d106e950b8f610ac38c46d201b8fa77a6466b90c22b9bd7677a9d8fdc26db82cbfa651ef18704f9
+  checksum: 10/a3f0d4dabade7f27661cdae7fc718c2fbbd0d18f2a4a7042f728caedda4a3a58c9bcefba11e6b5e0fb71381f9b6e13b65b97e7b135ff8273f12e6a3b3fa08ecb
   languageName: node
   linkType: hard
 
@@ -4550,9 +4550,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.63.0"
-    "@usecannon/builder": "npm:2.16.4"
-    "@usecannon/cli": "npm:2.16.4"
+    "@pythnetwork/pyth-evm-js": "npm:^1.65.0"
+    "@usecannon/builder": "npm:2.16.5"
+    "@usecannon/cli": "npm:2.16.5"
     debug: "npm:^4.3.6"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.9"
