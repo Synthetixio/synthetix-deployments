@@ -14,7 +14,7 @@ from = "<%= settings.owner %>"
 func = "setSnapshotContract"
 args = [
     "<%= settings.governance_snapshot_record %>",
-    "<%= settings.governance_spartan_weight%>",
+    "<%= settings.governance_spartan_weight %>",
     true,
 ]
 

@@ -17,9 +17,9 @@ include = [
     "tomls/markets/spot/eth.toml",
 
     # Governance
-    "tomls/governance/councils-satellite.toml",
-    "tomls/governance/wormhole.toml",
-    "tomls/governance/snapshot-record.toml",
+    "tomls/omnibus-optimism-mainnet/governance/councils-satellite.toml",
+    "tomls/omnibus-optimism-mainnet/governance/wormhole.toml",
+    "tomls/omnibus-optimism-mainnet/governance/snapshot-record.toml",
 ]
 
 [setting.snx_package]
@@ -111,19 +111,15 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 [setting.pythPriceVerificationAddress]
 defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
 
-# Governance Councils Configuration
 [var.governance]
 governance_package = "synthetix-governance-satellite:3.0.5"
 governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
-# Wormhole
 governance_wormhole_core = "0xEe91C335eab126dF5fDB3797EA9d6aD93aeC9722"    # https://docs.wormhole.com/wormhole/reference/constants#core-contracts
 governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # https://docs.wormhole.com/wormhole/reference/constants#standard-relayer
-# Snapshot
-governance_snapshot_record = "0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79" # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/10-main/interact/synthetix/SynthetixDebtShare/0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79
-governance_ambassador_weight = "0"                                        # Quadratic Weight
-governance_spartan_weight = "0"                                           # Quadratic Weight
-governance_treasury_weight = "1"                                          # Linear Weight
-# Proxy Config
+governance_snapshot_record = "0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79"  # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/10-main/interact/synthetix/SynthetixDebtShare/0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79
+governance_ambassador_weight = "0"                                         # Quadratic Weight
+governance_spartan_weight = "0"                                            # Quadratic Weight
+governance_treasury_weight = "1"                                           # Linear Weight
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
 governance_initial_epoch_index = "0"

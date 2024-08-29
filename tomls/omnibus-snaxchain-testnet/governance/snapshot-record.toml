@@ -1,0 +1,29 @@
+[invoke.governance_set_snapshot_record_ambassador]
+target = ["governance_ambassador_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = [
+    "<%= settings.governance_snapshot_record %>",
+    "<%= settings.governance_ambassador_weight %>",
+    true,
+]
+
+[invoke.governance_set_snapshot_record_spartan]
+target = ["governance_spartan_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = [
+    "<%= settings.governance_snapshot_record %>",
+    "<%= settings.governance_spartan_weight %>",
+    true,
+]
+
+[invoke.governance_set_snapshot_record_treasury]
+target = ["governance_treasury_council.GovernanceProxy"]
+from = "<%= settings.owner %>"
+func = "setSnapshotContract"
+args = [
+    "<%= settings.governance_snapshot_record %>",
+    "<%= settings.governance_treasury_weight %>",
+    true,
+]
