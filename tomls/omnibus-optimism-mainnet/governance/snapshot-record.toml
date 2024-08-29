@@ -1,4 +1,4 @@
-[invoke.governance_set_snapshot_record_ambassador]
+[invoke.GovernanceProxy_setSnapshotContract_ambassador]
 target = ["governance_ambassador_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setSnapshotContract"
@@ -8,7 +8,7 @@ args = [
     true,
 ]
 
-[invoke.governance_set_snapshot_record_spartan]
+[invoke.GovernanceProxy_setSnapshotContract_spartan]
 target = ["governance_spartan_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setSnapshotContract"
@@ -18,7 +18,7 @@ args = [
     true,
 ]
 
-[invoke.governance_set_snapshot_record_treasury]
+[invoke.GovernanceProxy_setSnapshotContract_treasury]
 target = ["governance_treasury_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setSnapshotContract"

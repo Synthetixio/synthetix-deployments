@@ -1,6 +1,6 @@
 # Configure wormhole networks, values taken from:
 # https://docs.wormhole.com/wormhole/reference/constants#chain-ids
-[invoke.governance_set_registered_emitters_ambassador]
+[invoke.GovernanceProxy_setRegisteredEmitters_ambassador]
 target = ["governance_ambassador_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setRegisteredEmitters"
@@ -16,7 +16,7 @@ args = [
         "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
     ],
 ]
-[invoke.governance_set_registered_emitters_spartan]
+[invoke.GovernanceProxy_setRegisteredEmitters_spartan]
 target = ["governance_spartan_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setRegisteredEmitters"
@@ -32,7 +32,7 @@ args = [
         "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
     ],
 ]
-[invoke.governance_set_registered_emitters_treasury]
+[invoke.GovernanceProxy_setRegisteredEmitters_treasury]
 target = ["governance_treasury_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setRegisteredEmitters"
@@ -49,12 +49,20 @@ args = [
     ],
 ]
 
-[invoke.governance_set_gas_limit]
-target = [
-    "governance_ambassador_council.GovernanceProxy",
-    "governance_spartan_council.GovernanceProxy",
-    "governance_treasury_council.GovernanceProxy",
-]
+[invoke.GovernanceProxy_setGasLimit_ambassador]
+target = ["governance_ambassador_council.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setGasLimit"
-args = ["1000000"]
+args = ["<%= String(1_000_000) %>"]
+
+[invoke.GovernanceProxy_setGasLimit_spartan]
+target = ["governance_spartan_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
+
+[invoke.GovernanceProxy_setGasLimit_treasury]
+target = ["governance_treasury_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
