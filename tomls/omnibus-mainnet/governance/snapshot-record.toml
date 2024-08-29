@@ -27,3 +27,24 @@ args = [
     "<%= settings.governance_treasury_weight %>",
     true,
 ]
+
+[import.v2x]
+source = "synthetix:2.101.3"
+
+[invoke.SynthetixDebtShare_addAuthorizedToSnapshot_ambassador]
+target = ["v2x.SynthetixDebtShare"]
+fromCall.func = "owner"
+func = "addAuthorizedToSnapshot"
+args = ["<%= governance_ambassador_council.GovernanceProxy.address %>"]
+
+[invoke.SynthetixDebtShare_addAuthorizedToSnapshot_spartan]
+target = ["v2x.SynthetixDebtShare"]
+fromCall.func = "owner"
+func = "addAuthorizedToSnapshot"
+args = ["<%= governance_spartan_council.GovernanceProxy.address %>"]
+
+[invoke.SynthetixDebtShare_addAuthorizedToSnapshot_treasury]
+target = ["v2x.SynthetixDebtShare"]
+fromCall.func = "owner"
+func = "addAuthorizedToSnapshot"
+args = ["<%= governance_treasury_council.GovernanceProxy.address %>"]
