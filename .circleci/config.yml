@@ -778,7 +778,7 @@ workflows:
 
       - fork-test-new:
           name: test-snaxchain-mainnet
-          toml: omnibus-snaxchain.toml
+          toml: omnibus-snaxchain-mainnet.toml
           # package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 2192
