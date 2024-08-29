@@ -2,7 +2,7 @@
 # https://docs.wormhole.com/wormhole/reference/constants#chain-ids
 [invoke.governance_set_registered_emitters_ambassador]
 target = ["governance_ambassador_council.GovernanceProxy"]
-from = "<%= settings.owner %>"
+fromCall.func = "owner"
 func = "setRegisteredEmitters"
 args = [
     [
@@ -18,7 +18,7 @@ args = [
 ]
 [invoke.governance_set_registered_emitters_spartan]
 target = ["governance_spartan_council.GovernanceProxy"]
-from = "<%= settings.owner %>"
+fromCall.func = "owner"
 func = "setRegisteredEmitters"
 args = [
     [
@@ -34,7 +34,7 @@ args = [
 ]
 [invoke.governance_set_registered_emitters_treasury]
 target = ["governance_treasury_council.GovernanceProxy"]
-from = "<%= settings.owner %>"
+fromCall.func = "owner"
 func = "setRegisteredEmitters"
 args = [
     [
@@ -55,6 +55,6 @@ target = [
     "governance_spartan_council.GovernanceProxy",
     "governance_treasury_council.GovernanceProxy",
 ]
-from = "<%= settings.owner %>"
+fromCall.func = "owner"
 func = "setGasLimit"
 args = ["1000000"]
