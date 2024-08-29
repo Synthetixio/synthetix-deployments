@@ -3,9 +3,9 @@ version = "1"
 description = "Snaxchain Testnet deployment"
 include = [
     # Governance
-    "tomls/omnibus-snaxchain-testnet/governance/councils-mothership.test.toml",
+    "tomls/omnibus-snaxchain-testnet/governance/councils-mothership.toml",
     "tomls/omnibus-snaxchain-testnet/governance/wormhole-testnet.toml",
-    "tomls/omnibus-snaxchain-testnet/governance/snapshot-record.test.toml",
+    "tomls/omnibus-snaxchain-testnet/governance/snapshot-record.toml",
 ]
 
 [setting.owner]
