@@ -28,22 +28,17 @@ async function ensurePoolConfiguration(expectedPoolConfig) {
   log({ oldPoolConfig: normalisePoolConfig(oldPoolConfig) });
 
   // Updates params for existing markets and appends new ones
-  const updatedPoolConfig = oldPoolConfig.map(oldItem => {
-    const expectedItem = expectedPoolConfig.find(expectedItem =>
-      expectedItem.marketId.toString() === oldItem.marketId.toString()
+  const updatedPoolConfig = oldPoolConfig.map((oldItem) => {
+    const expectedItem = expectedPoolConfig.find(
+      (expectedItem) => expectedItem.marketId.toString() === oldItem.marketId.toString()
     );
-    return expectedItem ? {
-      marketId: expectedItem.marketId,
-      weightD18: expectedItem.weightD18,
-      maxDebtShareValueD18: expectedItem.maxDebtShareValueD18
-    } : oldItem;
-  });
-
-  // Append new items from expectedPoolConfig that don't exist in oldPoolConfig
-  expectedPoolConfig.forEach(expectedItem => {
-    if (!updatedPoolConfig.some(item => item.marketId.toString() === expectedItem.marketId.toString())) {
-      updatedPoolConfig.push(expectedItem);
-    }
+    return expectedItem
+      ? {
+          marketId: expectedItem.marketId,
+          weightD18: expectedItem.weightD18,
+          maxDebtShareValueD18: expectedItem.maxDebtShareValueD18,
+        }
+      : oldItem;
   });
 
   log({ updatedPoolConfig: normalisePoolConfig(updatedPoolConfig) });
