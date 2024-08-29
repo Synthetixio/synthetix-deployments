@@ -11,9 +11,9 @@ args = [
         "24", # optimism
     ],
     [
-        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_ambassador_council.GovernanceProxy.address %>",
+        "<%= governance_ambassador_council.GovernanceProxy.address %>",
+        "<%= governance_ambassador_council.GovernanceProxy.address %>",
     ],
 ]
 [invoke.GovernanceProxy_setRegisteredEmitters_spartan]
@@ -27,9 +27,9 @@ args = [
         "24", # optimism
     ],
     [
-        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_spartan_council.GovernanceProxy.address %>",
+        "<%= governance_spartan_council.GovernanceProxy.address %>",
+        "<%= governance_spartan_council.GovernanceProxy.address %>",
     ],
 ]
 [invoke.GovernanceProxy_setRegisteredEmitters_treasury]
@@ -43,9 +43,9 @@ args = [
         "24", # optimism
     ],
     [
-        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_treasury_council.GovernanceProxy.address %>",
+        "<%= governance_treasury_council.GovernanceProxy.address %>",
+        "<%= governance_treasury_council.GovernanceProxy.address %>",
     ],
 ]
 
