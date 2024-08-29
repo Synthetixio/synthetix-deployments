@@ -169,35 +169,6 @@ targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
-# Temporary config for debugging start
-#[invoke.setMinDelegationTimeLegacyMarket]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getMarketAddress"
-#fromCall.args = ["<%= imports.legacyMarket.settings.marketId %>"]
-#func = "setMarketMinDelegateTime"
-#args = ["<%= imports.legacyMarket.settings.marketId %>", 0]
-#
-#[invoke.setMinDelegationTimeSUsde]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getMarketAddress"
-#fromCall.args = ["<%= extras.synth_usde_market_id %>"]
-#func = "setMarketMinDelegateTime"
-#args = ["<%= extras.synth_usde_market_id %>", 0]
-#
-#[invoke.setMinDelegationTimeBfpEth]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getMarketAddress"
-#fromCall.args = ["<%= extras.eth_market_id %>"]
-#func = "setMarketMinDelegateTime"
-#args = ["<%= extras.eth_market_id %>", 0]
-#
-#[invoke.setMinDelegationTimeUnkownMarket]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getMarketAddress"
-#fromCall.args = ["3"]
-#func = "setMarketMinDelegateTime"
-#args = ["3", 0]
-
 # --- BFP configurations  -- #
 #
 #
