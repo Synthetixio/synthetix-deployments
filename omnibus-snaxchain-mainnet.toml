@@ -7,8 +7,14 @@ include = [
     "tomls/omnibus-snaxchain-mainnet/governance/wormhole.toml",
 ]
 
+[setting.salt]
+defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
+
 [setting.owner]
-defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
+
+[setting.deployer]
+defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
 
 [var.governance]
 governance_package = "synthetix-governance:3.0.5"
