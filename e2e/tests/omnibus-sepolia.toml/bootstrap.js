@@ -18,6 +18,11 @@ Promise.resolve()
         maxDebtShareValueD18: ethers.utils.parseEther('1'),
       },
       {
+        marketId: 3,
+        weightD18: 9,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+      {
         marketId: extras.eth_market_id,
         weightD18: 9,
         maxDebtShareValueD18: ethers.utils.parseEther('1'),
