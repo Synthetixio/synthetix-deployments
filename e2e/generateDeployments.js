@@ -426,18 +426,15 @@ async function run() {
     contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
   }
 
-  if (deployments.state['provision.legacyMarket']) {
-    contracts.LegacyMarketProxy =
-      deployments.state['provision.legacyMarket'].artifacts.imports.legacyMarket.contracts.Proxy;
-    contracts.V2x =
-      deployments.state[
-        'provision.legacyMarket'
-      ].artifacts.imports.legacyMarket.imports.v2x.contracts.Synthetix;
-
-    contracts.V2xUsd =
-      deployments.state[
-        'provision.legacyMarket'
-      ].artifacts.imports.legacyMarket.imports.v2x.contracts.SynthsUSD;
+  const legacyMarket =
+    deployments?.state?.['provision.legacyMarket']?.artifacts?.imports?.legacyMarket;
+  if (legacyMarket) {
+    contracts.LegacyMarketProxy = legacyMarket.contracts.Proxy;
+    contracts.V2x = legacyMarket.imports.v2x.contracts.Synthetix;
+    contracts.V2xUsd = legacyMarket.imports.v2x.contracts.SynthsUSD;
+    Object.assign(extras, {
+      legacy_market_id: legacyMarket?.extras?.marketId,
+    });
   }
 
   const trustedMulticallForwarder = system?.imports?.trusted_multicall_forwarder;
@@ -458,6 +455,9 @@ async function run() {
     contracts.PerpsMarketProxy = perpsFactory.contracts.PerpsMarketProxy;
     contracts.PerpsAccountProxy =
       perpsFactory.contracts.PerpsAccountProxy ?? perpsFactory.contracts.AccountProxy;
+    Object.assign(extras, {
+      perps_super_market_id: perpsFactory?.extras?.superMarketId,
+    });
   }
 
   const bfp_market_factory =

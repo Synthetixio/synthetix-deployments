@@ -5,7 +5,6 @@ func = "createPool"
 args = ["<%= settings.spartan_council_pool_id_setting %>", "<%= settings.pool_owner %>"]
 extra.spartan_council_pool_id.event = "PoolCreated"
 extra.spartan_council_pool_id.arg = 0
-depends = ["invoke.CoreProxy_addToFeatureFlagAllowlist_createPool_deployer"]
 
 [invoke.CoreProxy_setPoolName_SpartanCouncil]
 target = ["system.CoreProxy"]
