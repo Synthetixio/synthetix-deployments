@@ -1,0 +1,68 @@
+# Configure wormhole networks, values taken from:
+# https://docs.wormhole.com/wormhole/reference/constants#chain-ids
+[invoke.GovernanceProxy_setRegisteredEmitters_ambassador]
+target = ["governance_ambassador_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
+    ],
+    [
+        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+[invoke.GovernanceProxy_setRegisteredEmitters_spartan]
+target = ["governance_spartan_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
+    ],
+    [
+        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+[invoke.GovernanceProxy_setRegisteredEmitters_treasury]
+target = ["governance_treasury_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
+    ],
+    [
+        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+
+[invoke.GovernanceProxy_setGasLimit_ambassador]
+target = ["governance_ambassador_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
+
+[invoke.GovernanceProxy_setGasLimit_spartan]
+target = ["governance_spartan_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
+
+[invoke.GovernanceProxy_setGasLimit_treasury]
+target = ["governance_treasury_council.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]

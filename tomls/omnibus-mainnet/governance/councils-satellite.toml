@@ -1,6 +1,7 @@
 [clone.governance_ambassador_council]
 source = "<%= settings.governance_package %>"
-options.salt = "<%= settings.governance_salt %>-ambassador"
+targetPreset = "ambassador"
+options.salt = "<%= settings.salt %>"
 options.owner = "<%= settings.owner %>"
 options.wormhole_core = "<%= settings.governance_wormhole_core %>"
 options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
@@ -13,7 +14,8 @@ options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date
 
 [clone.governance_spartan_council]
 source = "<%= settings.governance_package %>"
-options.salt = "<%= settings.governance_salt %>-spartan"
+targetPreset = "spartan"
+options.salt = "<%= settings.salt %>"
 options.owner = "<%= settings.owner %>"
 options.wormhole_core = "<%= settings.governance_wormhole_core %>"
 options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
@@ -26,7 +28,8 @@ options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date
 
 [clone.governance_treasury_council]
 source = "<%= settings.governance_package %>"
-options.salt = "<%= settings.governance_salt %>-treasury"
+targetPreset = "treasury"
+options.salt = "<%= settings.salt %>"
 options.owner = "<%= settings.owner %>"
 options.wormhole_core = "<%= settings.governance_wormhole_core %>"
 options.wormhole_relayer = "<%= settings.governance_wormhole_relayer %>"
