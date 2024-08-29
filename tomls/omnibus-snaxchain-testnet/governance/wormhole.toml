@@ -6,15 +6,9 @@ fromCall.func = "owner"
 func = "setRegisteredEmitters"
 args = [
     [
-        "43", # snaxchain
-        "2",  # ethereum
-        "24", # optimism
+        "43", # snaxchain testnet
     ],
-    [
-        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_ambassador_council.GovernanceProxy.address %>", # TODO check this for correctness
-    ],
+    ["<%= governance_ambassador_council.GovernanceProxy.address %>"],
 ]
 [invoke.GovernanceProxy_setRegisteredEmitters_spartan]
 target = ["governance_spartan_council.GovernanceProxy"]
@@ -22,15 +16,9 @@ fromCall.func = "owner"
 func = "setRegisteredEmitters"
 args = [
     [
-        "43", # snaxchain
-        "2",  # ethereum
-        "24", # optimism
+        "43", # snaxchain testnet
     ],
-    [
-        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_spartan_council.GovernanceProxy.address %>", # TODO check this for correctness
-    ],
+    ["<%= governance_spartan_council.GovernanceProxy.address %>"],
 ]
 [invoke.GovernanceProxy_setRegisteredEmitters_treasury]
 target = ["governance_treasury_council.GovernanceProxy"]
@@ -38,15 +26,9 @@ fromCall.func = "owner"
 func = "setRegisteredEmitters"
 args = [
     [
-        "43", # snaxchain
-        "2",  # ethereum
-        "24", # optimism
+        "43", # snaxchain testnet
     ],
-    [
-        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
-        "<%= governance_treasury_council.GovernanceProxy.address %>", # TODO check this for correctness
-    ],
+    ["<%= governance_treasury_council.GovernanceProxy.address %>"],
 ]
 
 [invoke.GovernanceProxy_setGasLimit_ambassador]
