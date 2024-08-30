@@ -34,8 +34,8 @@ fromCall.func = "owner"
 func = "setSettlementStrategy"
 args = [
     "<%= settings.perpsMaticMarketId %>",
-    "<%= extras.matic_pyth_settlement_strategy %>",                                                                                                                                                                                                                                                                                                                                                                                                                         # Settlement Strategy ID
-    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythMaticFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
+    "<%= extras.matic_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.bigCapSettlementDelay %>", settlementWindowDuration = "<%= settings.bigCapSettlementWindowDuration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pythPolFeedId %>", settlementReward = "<%= parseEther(settings.settlementReward) %>", disabled = false, commitmentPriceDelay = "<%= settings.commitmentPriceDelay %>" },
 ]
 depends = [
     'provision.perpsFactory',
@@ -44,7 +44,7 @@ depends = [
     'provision.pyth_erc7412_wrapper',
     'setting.bigCapSettlementDelay',
     'setting.bigCapSettlementWindowDuration',
-    'setting.pythMaticFeedId',
+    'setting.pythPolFeedId',
     'setting.settlementReward',
     'setting.commitmentPriceDelay',
 ]
