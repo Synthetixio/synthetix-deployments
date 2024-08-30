@@ -84,7 +84,7 @@ defaultValue = "0xe470A3068302CF045Eec3B800dDBFf42B42e18D8"
 defaultValue = "0.001"
 
 [setting.synthEthMaxMarketCollateral]
-defaultValue = "100"
+defaultValue = "0"
 
 [setting.synthEthSkewScale]
 defaultValue = "100000"
