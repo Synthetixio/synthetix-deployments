@@ -13,6 +13,7 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [var.governance]
 governance_package = "synthetix-governance:3.0.5"
+governance_satellite_package = "synthetix-governance-satellite:3.0.5"
 governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
 governance_snapshot_record = "0x7BaE0d0Bf556B2C8F3BFd250D7c63B1B2711652B"  # mock
 governance_ambassador_weight = "0"                                         # Quadratic Weight
