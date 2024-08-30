@@ -414,15 +414,17 @@ async function run() {
     timestamp: deployments.timestamp,
     miscUrl: deployments.miscUrl,
   };
-  const extras = {};
   log('Generating deployments info for', meta);
-
-  const system = deployments.state['provision.system'].artifacts.imports.system;
+  const extras = {};
   const contracts = {};
-  contracts.CoreProxy = system.contracts.CoreProxy;
-  contracts.AccountProxy = system.contracts.AccountProxy;
-  contracts.USDProxy = system.contracts.USDProxy;
-  contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
+
+  const system = deployments?.state?.['provision.system']?.artifacts?.imports?.system;
+  if (system) {
+    contracts.CoreProxy = system.contracts.CoreProxy;
+    contracts.AccountProxy = system.contracts.AccountProxy;
+    contracts.USDProxy = system.contracts.USDProxy;
+    contracts.OracleManagerProxy = system.imports.oracle_manager.contracts.Proxy;
+  }
 
   const legacyMarket =
     deployments?.state?.['provision.legacyMarket']?.artifacts?.imports?.legacyMarket;
@@ -462,8 +464,8 @@ async function run() {
     deployments?.state?.['provision.bfp_market_factory']?.artifacts?.imports?.bfp_market_factory;
   if (bfp_market_factory) {
     contracts.BfpMarketProxy = bfp_market_factory.contracts.BfpMarketProxy;
-    contracts.PerpAccountProxy = bfp_market_factory.contracts.PerpAccountProxy;
-    contracts.PerpRewardDistributor = bfp_market_factory.contracts.PerpRewardDistributor;
+    contracts.BfpAccountProxy = bfp_market_factory.contracts.PerpAccountProxy;
+    contracts.BfpRewardDistributor = bfp_market_factory.contracts.PerpRewardDistributor;
   }
 
   const pyth_erc7412_wrapper =
@@ -473,12 +475,14 @@ async function run() {
     contracts.PythERC7412Wrapper = pyth_erc7412_wrapper.contracts.PythERC7412Wrapper;
   }
 
-  const systemToken = await fetchTokenInfo(contracts.USDProxy.address);
-  log('Writing', `deployments/systemToken.json`);
-  await fs.writeFile(
-    `${__dirname}/deployments/systemToken.json`,
-    JSON.stringify(systemToken, null, 2)
-  );
+  if (contracts.USDProxy) {
+    const systemToken = await fetchTokenInfo(contracts.USDProxy.address);
+    log('Writing', `deployments/systemToken.json`);
+    await fs.writeFile(
+      `${__dirname}/deployments/systemToken.json`,
+      JSON.stringify(systemToken, null, 2)
+    );
+  }
 
   const { items: mintableTokens, contracts: mintableTokenContracts } =
     await extractMintableTokens(deployments);
