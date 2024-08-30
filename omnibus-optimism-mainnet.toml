@@ -7,7 +7,7 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/oracles/snx.toml",
-    "tomls/collaterals/snx.toml",
+    "tomls/omnibus-optimism-mainnet/collaterals/snx.toml",
     # eth collateral is not enabled/set up on v3
     #"tomls/oracles/eth.toml",
     #"tomls/collaterals/weth.toml",
@@ -56,10 +56,10 @@ defaultValue = "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
 defaultValue = "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593"
 
 [setting.snx_liquidation_reward]
-defaultValue = "10000000000000000000"
+defaultValue = "<%= parseEther('10') %>"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "2000000000000000000"
+defaultValue = "<%= parseEther('2') %>"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"

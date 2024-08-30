@@ -1,0 +1,13 @@
+[invoke.configureSnxCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configureWethCollateral.args]]
+tokenAddress = "<%= settings.snx_address %>"
+oracleNodeId = "<%= extras.snx_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('5') %>"
+liquidationRatioD18 = "<%= parseEther('1.05') %>"
+liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>"
+minDelegationD18 = "<%= 2 * settings.snx_liquidation_reward %>"
+depositingEnabled = false
