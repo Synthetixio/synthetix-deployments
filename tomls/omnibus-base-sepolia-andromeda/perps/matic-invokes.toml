@@ -95,11 +95,9 @@ args = [
     "<%= parseEther(settings.perpsMaticFlagRewardRatioD18) %>",
     "<%= parseEther(settings.perpsMaticMinimumPositionMargin) %>",
 ]
-depends = ["invoke.createMaticPerpsMarket"]
 
 [invoke.setPerpsMaticLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.perpsMaticMarketId %>", "<%= parseEther(settings.perpsMaticLockedOiRatio) %>"]
-depends = ["invoke.createMaticPerpsMarket"]
