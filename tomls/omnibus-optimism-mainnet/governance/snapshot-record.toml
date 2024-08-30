@@ -1,0 +1,50 @@
+[invoke.GovernanceProxy_setSnapshotContract_ambassador]
+target = ["governance_satellite_ambassador.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = [
+    "<%= settings.governance_snapshot_record %>",
+    "<%= settings.governance_ambassador_weight %>",
+    true,
+]
+
+[invoke.GovernanceProxy_setSnapshotContract_spartan]
+target = ["governance_satellite_spartan.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = [
+    "<%= settings.governance_snapshot_record %>",
+    "<%= settings.governance_spartan_weight %>",
+    true,
+]
+
+[invoke.GovernanceProxy_setSnapshotContract_treasury]
+target = ["governance_satellite_treasury.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setSnapshotContract"
+args = [
+    "<%= settings.governance_snapshot_record %>",
+    "<%= settings.governance_treasury_weight %>",
+    true,
+]
+
+[import.v2x]
+source = "synthetix:2.101.3"
+
+[invoke.SynthetixDebtShare_addAuthorizedToSnapshot_ambassador]
+target = ["v2x.SynthetixDebtShare"]
+fromCall.func = "owner"
+func = "addAuthorizedToSnapshot"
+args = ["<%= governance_satellite_ambassador.GovernanceProxy.address %>"]
+
+[invoke.SynthetixDebtShare_addAuthorizedToSnapshot_spartan]
+target = ["v2x.SynthetixDebtShare"]
+fromCall.func = "owner"
+func = "addAuthorizedToSnapshot"
+args = ["<%= governance_satellite_spartan.GovernanceProxy.address %>"]
+
+[invoke.SynthetixDebtShare_addAuthorizedToSnapshot_treasury]
+target = ["v2x.SynthetixDebtShare"]
+fromCall.func = "owner"
+func = "addAuthorizedToSnapshot"
+args = ["<%= governance_satellite_treasury.GovernanceProxy.address %>"]

@@ -1,0 +1,68 @@
+# Configure wormhole networks, values taken from:
+# https://docs.wormhole.com/wormhole/reference/constants#chain-ids
+[invoke.GovernanceProxy_setRegisteredEmitters_ambassador]
+target = ["governance_satellite_ambassador.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
+    ],
+    [
+        "<%= governance_satellite_ambassador.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_satellite_ambassador.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_satellite_ambassador.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+[invoke.GovernanceProxy_setRegisteredEmitters_spartan]
+target = ["governance_satellite_spartan.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
+    ],
+    [
+        "<%= governance_satellite_spartan.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_satellite_spartan.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_satellite_spartan.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+[invoke.GovernanceProxy_setRegisteredEmitters_treasury]
+target = ["governance_satellite_treasury.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setRegisteredEmitters"
+args = [
+    [
+        "43", # snaxchain
+        "2",  # ethereum
+        "24", # optimism
+    ],
+    [
+        "<%= governance_satellite_treasury.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_satellite_treasury.GovernanceProxy.address %>", # TODO check this for correctness
+        "<%= governance_satellite_treasury.GovernanceProxy.address %>", # TODO check this for correctness
+    ],
+]
+
+[invoke.GovernanceProxy_setGasLimit_ambassador]
+target = ["governance_satellite_ambassador.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
+
+[invoke.GovernanceProxy_setGasLimit_spartan]
+target = ["governance_satellite_spartan.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
+
+[invoke.GovernanceProxy_setGasLimit_treasury]
+target = ["governance_satellite_treasury.GovernanceProxy"]
+fromCall.func = "owner"
+func = "setGasLimit"
+args = ["<%= String(1_000_000) %>"]
