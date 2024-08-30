@@ -1145,9 +1145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.16.5":
-  version: 2.16.5
-  resolution: "@usecannon/builder@npm:2.16.5"
+"@usecannon/builder@npm:2.16.6":
+  version: 2.16.6
+  resolution: "@usecannon/builder@npm:2.16.6"
   dependencies:
     "@synthetixio/router": "npm:^3.4.0"
     axios: "npm:^1.7.2"
@@ -1163,16 +1163,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.16.5"
     zod: "npm:^3.23.6"
-  checksum: 10/154f3582d5678c0a15c382eea8be0dcdd115f82867b9347b5322728a5d6193dcf44bd93548735dbe6bcedf80f8ce5ea954b2e8beb33ee099c9a63038f399de71
+  checksum: 10/0ea843262c3b3c2d7ca3d9267f8e9f9414de0043dc7783c20b17f30be59b87751db3e33b3d2d9310cb703c7d61204575feb03e69b3f0eb309f6c581dfb463c11
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.16.5":
-  version: 2.16.5
-  resolution: "@usecannon/cli@npm:2.16.5"
+"@usecannon/cli@npm:2.16.6":
+  version: 2.16.6
+  resolution: "@usecannon/cli@npm:2.16.6"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.16.5"
+    "@usecannon/builder": "npm:2.16.6"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1191,7 +1191,7 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/a3f0d4dabade7f27661cdae7fc718c2fbbd0d18f2a4a7042f728caedda4a3a58c9bcefba11e6b5e0fb71381f9b6e13b65b97e7b135ff8273f12e6a3b3fa08ecb
+  checksum: 10/66b68fe8d908afe0801ff13fc2dd94ad5ac7b5a08e9424e2953588d7e31ab4e414b1b81b09e3484beec18271d7f3d0c976a30f793d23c74d4967ff1f5cfa9815
   languageName: node
   linkType: hard
 
@@ -4551,8 +4551,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.65.0"
-    "@usecannon/builder": "npm:2.16.5"
-    "@usecannon/cli": "npm:2.16.5"
+    "@usecannon/builder": "npm:2.16.6"
+    "@usecannon/cli": "npm:2.16.6"
     debug: "npm:^4.3.6"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.9"
@@ -4563,7 +4563,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.20.0"
+    viem: "npm:^2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -4864,9 +4864,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.16.5, viem@npm:^2.20.0":
-  version: 2.20.0
-  resolution: "viem@npm:2.20.0"
+"viem@npm:^2.16.5, viem@npm:^2.21.0":
+  version: 2.21.0
+  resolution: "viem@npm:2.21.0"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.0"
     "@noble/curves": "npm:1.4.0"
@@ -4882,7 +4882,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/d4163e0afb245fb0a3564586e4530a5ae543145c96db09292454dbfa4014c88b13518f4f10e1b9b6e40a5f18034c1015a6d417e2ae8790b90f48095eaedd88e8
+  checksum: 10/4d01f716f7352bb4ac319a871b18b64be86d163cc2889c6a2bccc029861cc6afd9d5c41678ad9d0f9dfd5294a50ca3297d8e36db519a6885998a2a478f1827cc
   languageName: node
   linkType: hard
 

@@ -47,8 +47,8 @@
   },
   "devDependencies": {
     "@pythnetwork/pyth-evm-js": "^1.65.0",
-    "@usecannon/builder": "2.16.5",
-    "@usecannon/cli": "2.16.5",
+    "@usecannon/builder": "2.16.6",
+    "@usecannon/cli": "2.16.6",
     "debug": "^4.3.6",
     "ethers": "^5.7.2",
     "hardhat": "^2.22.9",
@@ -59,7 +59,7 @@
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.20.0"
+    "viem": "^2.21.0"
   },
   "mocha": {
     "timeout": "5m",
