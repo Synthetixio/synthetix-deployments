@@ -7,7 +7,7 @@ include = [
     "tomls/core.toml",
     "tomls/permissions.toml",
     "tomls/oracles/snx.toml",
-    "tomls/collaterals/snx.toml",
+    "tomls/omnibus-optimism-mainnet/collaterals/snx.toml",
     # eth collateral is not enabled/set up on v3
     #"tomls/oracles/eth.toml",
     #"tomls/collaterals/weth.toml",
@@ -23,13 +23,13 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.5"
+defaultValue = "synthetix:3.6.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.5"
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.5"
+defaultValue = "synthetix-perps-market:3.6.0"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -56,10 +56,10 @@ defaultValue = "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
 defaultValue = "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593"
 
 [setting.snx_liquidation_reward]
-defaultValue = "10000000000000000000"
+defaultValue = "<%= parseEther('10') %>"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "2000000000000000000"
+defaultValue = "<%= parseEther('2') %>"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"
@@ -84,7 +84,7 @@ defaultValue = "0xe470A3068302CF045Eec3B800dDBFf42B42e18D8"
 defaultValue = "0.001"
 
 [setting.synthEthMaxMarketCollateral]
-defaultValue = "100"
+defaultValue = "0"
 
 [setting.synthEthSkewScale]
 defaultValue = "100000"
