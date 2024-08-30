@@ -174,7 +174,7 @@ options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 #
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.6.1-dev.7d60444d"
+defaultValue = "synthetix-bfp-market:3.6.0"
 
 # Collaterals configurations
 #
