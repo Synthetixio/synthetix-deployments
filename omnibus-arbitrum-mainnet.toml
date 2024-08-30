@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "19"
+version = "20"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -151,7 +151,7 @@ defaultValue = "60"
 defaultValue = "2"
 
 [setting.settlement_reward]
-defaultValue = "<%= parseEther('0.5') %>"
+defaultValue = "<%= parseEther('1') %>"
 
 [setting.settlement_minimum_usd_exchange_amount]
 defaultValue = "<%= parseEther('0.000001') %>"
