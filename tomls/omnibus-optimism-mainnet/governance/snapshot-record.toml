@@ -1,5 +1,5 @@
 [invoke.GovernanceProxy_setSnapshotContract_ambassador]
-target = ["governance_ambassador_council.GovernanceProxy"]
+target = ["governance_satellite_ambassador.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setSnapshotContract"
 args = [
