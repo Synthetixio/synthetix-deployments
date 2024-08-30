@@ -27,28 +27,14 @@ async function ensurePoolConfiguration(expectedPoolConfig) {
   });
   log({ oldPoolConfig: normalisePoolConfig(oldPoolConfig) });
 
-  // Updates params for existing markets and appends new ones
-  const updatedPoolConfig = oldPoolConfig.map((oldItem) => {
-    const expectedItem = expectedPoolConfig.find(
-      (expectedItem) => expectedItem.marketId.toString() === oldItem.marketId.toString()
-    );
-    return expectedItem
-      ? {
-          marketId: expectedItem.marketId,
-          weightD18: expectedItem.weightD18,
-          maxDebtShareValueD18: expectedItem.maxDebtShareValueD18,
-        }
-      : oldItem;
-  });
+  log({ expectedPoolConfig: normalisePoolConfig(expectedPoolConfig) });
 
-  log({ updatedPoolConfig: normalisePoolConfig(updatedPoolConfig) });
-
-  if (JSON.stringify(oldPoolConfig) !== JSON.stringify(updatedPoolConfig)) {
+  if (JSON.stringify(oldPoolConfig) !== JSON.stringify(expectedPoolConfig)) {
     await contractWrite({
       wallet,
       contract: 'CoreProxy',
       func: 'setPoolConfiguration',
-      args: [poolId, updatedPoolConfig],
+      args: [poolId, expectedPoolConfig],
       impersonate: await contractRead({
         wallet,
         contract: 'CoreProxy',
