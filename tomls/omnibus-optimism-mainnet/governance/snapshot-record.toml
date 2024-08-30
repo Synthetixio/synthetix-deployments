@@ -9,7 +9,7 @@ args = [
 ]
 
 [invoke.GovernanceProxy_setSnapshotContract_spartan]
-target = ["governance_spartan_council.GovernanceProxy"]
+target = ["governance_satellite_spartan.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setSnapshotContract"
 args = [
@@ -19,7 +19,7 @@ args = [
 ]
 
 [invoke.GovernanceProxy_setSnapshotContract_treasury]
-target = ["governance_treasury_council.GovernanceProxy"]
+target = ["governance_satellite_treasury.GovernanceProxy"]
 fromCall.func = "owner"
 func = "setSnapshotContract"
 args = [
@@ -35,16 +35,16 @@ source = "synthetix:2.101.3"
 target = ["v2x.SynthetixDebtShare"]
 fromCall.func = "owner"
 func = "addAuthorizedToSnapshot"
-args = ["<%= governance_ambassador_council.GovernanceProxy.address %>"]
+args = ["<%= governance_satellite_ambassador.GovernanceProxy.address %>"]
 
 [invoke.SynthetixDebtShare_addAuthorizedToSnapshot_spartan]
 target = ["v2x.SynthetixDebtShare"]
 fromCall.func = "owner"
 func = "addAuthorizedToSnapshot"
-args = ["<%= governance_spartan_council.GovernanceProxy.address %>"]
+args = ["<%= governance_satellite_spartan.GovernanceProxy.address %>"]
 
 [invoke.SynthetixDebtShare_addAuthorizedToSnapshot_treasury]
 target = ["v2x.SynthetixDebtShare"]
 fromCall.func = "owner"
 func = "addAuthorizedToSnapshot"
-args = ["<%= governance_treasury_council.GovernanceProxy.address %>"]
+args = ["<%= governance_satellite_treasury.GovernanceProxy.address %>"]

@@ -1,4 +1,4 @@
-[clone.governance_ambassador_council]
+[clone.governance_satellite_ambassador]
 source = "<%= settings.governance_satellite_package %>"
 targetPreset = "ambassador"
 options.salt = "<%= settings.salt %>-ambassador"
@@ -12,7 +12,7 @@ options.initial_nomination_period_start_date = "<%= settings.governance_initial_
 options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
 options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
 
-[clone.governance_spartan_council]
+[clone.governance_satellite_spartan]
 source = "<%= settings.governance_satellite_package %>"
 targetPreset = "spartan"
 options.salt = "<%= settings.salt %>-spartan"
@@ -26,7 +26,7 @@ options.initial_nomination_period_start_date = "<%= settings.governance_initial_
 options.initial_voting_period_start_date = "<%= settings.governance_initial_voting_period_start_date %>"
 options.initial_epoch_end_date = "<%= settings.governance_initial_epoch_end_date %>"
 
-[clone.governance_treasury_council]
+[clone.governance_satellite_treasury]
 source = "<%= settings.governance_satellite_package %>"
 targetPreset = "treasury"
 options.salt = "<%= settings.salt %>-treasury"
