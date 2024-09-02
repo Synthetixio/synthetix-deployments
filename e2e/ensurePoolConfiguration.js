@@ -12,6 +12,7 @@ function normalisePoolConfig(config) {
 async function ensurePoolConfiguration(expectedPoolConfig) {
   const { contractRead } = require('./tasks/contractRead');
   const { contractWrite } = require('./tasks/contractWrite');
+  const { setEthBalance } = require('./tasks/setEthBalance');
 
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -30,16 +31,18 @@ async function ensurePoolConfiguration(expectedPoolConfig) {
   log({ expectedPoolConfig: normalisePoolConfig(expectedPoolConfig) });
 
   if (JSON.stringify(oldPoolConfig) !== JSON.stringify(expectedPoolConfig)) {
+    const owner = await contractRead({
+      wallet,
+      contract: 'CoreProxy',
+      func: 'owner',
+    });
+    await setEthBalance({ address: owner, balance: 100 });
     await contractWrite({
       wallet,
       contract: 'CoreProxy',
       func: 'setPoolConfiguration',
       args: [poolId, expectedPoolConfig],
-      impersonate: await contractRead({
-        wallet,
-        contract: 'CoreProxy',
-        func: 'owner',
-      }),
+      impersonate: owner,
     });
   }
 
