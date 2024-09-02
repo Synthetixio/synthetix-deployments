@@ -310,14 +310,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     if (diff < 0) {
       await wait(Math.abs(diff) + buffer * 1000);
     }
+    await wait(15000);
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: -0.01,
     });
-    await wait(1000);
-    await wait(5000);
+    await wait(10000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
