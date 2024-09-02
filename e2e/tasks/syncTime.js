@@ -13,19 +13,20 @@ const wait = (ms) =>
     }, ms);
   });
 
+async function getTimes(provider) {
+  const blockNumber = await provider.send('eth_blockNumber', []);
+  const block = await provider.send('eth_getBlockByNumber', [blockNumber, false]);
+  const blockTimestamp = parseInt(block.timestamp, 16);
+  const now = Math.floor(Date.now() / 1000);
+  return { blockNumber, blockTimestamp, now };
+}
+
 async function syncTime() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
 
-  async function getTimes() {
-    const blockNumber = await provider.send('eth_blockNumber', []);
-    const block = await provider.send('eth_getBlockByNumber', [blockNumber, false]);
-    const blockTimestamp = parseInt(block.timestamp, 16);
-    const now = Math.floor(Date.now() / 1000);
-    return { blockNumber, blockTimestamp, now };
-  }
-  const oldTimes = await getTimes();
+  const oldTimes = await getTimes(provider);
   log({
     diff: oldTimes.now - oldTimes.blockTimestamp,
     oldRealtime: new Date(oldTimes.now * 1000),
@@ -58,7 +59,7 @@ async function syncTime() {
     //    clearInterval(interval);
   }
 
-  const newTimes = await getTimes();
+  const newTimes = await getTimes(provider);
   log({
     diff: newTimes.now - newTimes.blockTimestamp,
     newRealtime: new Date(newTimes.now * 1000),
@@ -69,6 +70,7 @@ async function syncTime() {
 
 module.exports = {
   syncTime,
+  getTimes,
 };
 
 if (require.main === module) {

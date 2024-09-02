@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: "20.14.0"
+    default: "20.17.0"
 
 commands:
   yarn-install:
@@ -771,6 +771,14 @@ workflows:
           preset: "main"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+
+      - fork-test:
+          name: test-sepolia
+          toml: omnibus-sepolia.toml
+          package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 11155111
+          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
       - fork-test-new:
           name: test-snaxchain-testnet
