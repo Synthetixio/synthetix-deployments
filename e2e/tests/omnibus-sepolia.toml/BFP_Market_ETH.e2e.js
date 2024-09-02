@@ -321,7 +321,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       marketId,
       sizeDelta: -0.01,
     });
-    await wait(1000);
     await wait(5000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });

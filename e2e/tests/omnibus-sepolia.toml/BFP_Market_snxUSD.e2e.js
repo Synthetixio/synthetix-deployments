@@ -6,7 +6,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { wait } = require('../../wait');
 
-const { syncTime } = require('../../tasks/syncTime');
+const { syncTime, getTimes } = require('../../tasks/syncTime');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
@@ -24,7 +24,6 @@ const { contractWrite } = require('../../tasks/contractWrite');
 const { commitBfpOrder } = require('../../tasks/commitBfpOrder');
 const { settleBfpOrder } = require('../../tasks/settleBfpOrder');
 const { getBfpPosition } = require('../../tasks/getBfpPosition');
-const { getBfpDebt } = require('../../tasks/getBfpDebt');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
@@ -303,18 +302,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       (c) => c.collateralAddress === collateralAddress
     );
     log({ newDepositedsUSD });
+    const { now, blockTimestamp } = getTimes(provider);
+    const buffer = 1; // 1s
+    const diff = now - blockTimestamp;
 
-    await wait(2000);
+    //To resolve the time issues on CI some buffer time is needed
+    if (diff < 0) {
+      await wait(Math.abs(diff) + buffer * 1000);
+    }
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: -0.01,
     });
-    await wait(2000);
+    await wait(5000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
-    await wait(2000);
 
     assert.equal(newPosition.positionSize, -0.01);
   });
