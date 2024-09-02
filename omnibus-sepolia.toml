@@ -160,7 +160,7 @@ targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
-[invoke.CoreProxy_setPoolCollateralConfiguration_SNX]
+[invoke.CoreProxy_setPoolCollateralConfiguration_SpartanCouncilPool_SNX]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]

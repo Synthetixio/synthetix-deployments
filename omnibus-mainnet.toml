@@ -127,7 +127,7 @@ source = "usde-token"
 #"<%= settings.synth_usde_max_market_collateral %>",
 #]
 
-[invoke.CoreProxy_setPoolCollateralConfiguration_SNX]
+[invoke.CoreProxy_setPoolCollateralConfiguration_SpartanCouncilPool_SNX]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
