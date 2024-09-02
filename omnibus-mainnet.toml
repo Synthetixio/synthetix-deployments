@@ -127,6 +127,17 @@ source = "usde-token"
 #"<%= settings.synth_usde_max_market_collateral %>",
 #]
 
+[invoke.CoreProxy_setPoolCollateralConfiguration_SNX]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.snx_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = 0 }
+]
+
 [invoke.pauseLMMigration]
 target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
