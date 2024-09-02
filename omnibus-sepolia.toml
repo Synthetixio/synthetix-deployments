@@ -159,3 +159,14 @@ source = "pyth-erc7412-wrapper:3.3.15"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_SNX]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.snx_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = 0 }
+]
