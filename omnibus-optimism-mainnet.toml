@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "6"
+version = "7"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -112,8 +112,8 @@ defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0a
 defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
 
 [var.governance]
-governance_package = "synthetix-governance:3.0.8"
-governance_satellite_package = "synthetix-governance-satellite:3.0.8"
+governance_package = "synthetix-governance:3.0.9"
+governance_satellite_package = "synthetix-governance-satellite:3.0.9"
 governance_wormhole_core = "0xEe91C335eab126dF5fDB3797EA9d6aD93aeC9722"    # https://docs.wormhole.com/wormhole/reference/constants#core-contracts
 governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # https://docs.wormhole.com/wormhole/reference/constants#standard-relayer
 governance_snapshot_record = "0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79"  # synthetix debt share https://usecannon.com/packages/synthetix/2.101.2/10-main/interact/synthetix/SynthetixDebtShare/0x45c55BF488D3Cb8640f12F63CbeDC027E8261E79
