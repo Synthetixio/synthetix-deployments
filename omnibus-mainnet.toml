@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "10"
+version = "11"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -134,8 +134,8 @@ func = "setPauseMigration"
 args = [true]
 
 [var.governance]
-governance_package = "synthetix-governance:3.0.7"
-governance_satellite_package = "synthetix-governance-satellite:3.0.7"
+governance_package = "synthetix-governance:3.0.9"
+governance_satellite_package = "synthetix-governance-satellite:3.0.9"
 governance_snapshot_record_package = "synthetix-snapshot-rewards:3.5.0"
 governance_wormhole_core = "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"    # https://docs.wormhole.com/wormhole/reference/constants#core-contracts
 governance_wormhole_relayer = "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911" # https://docs.wormhole.com/wormhole/reference/constants#standard-relayer
