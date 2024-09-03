@@ -10,6 +10,7 @@ const { getPythVaa } = require('../getPythVaa');
 const { getBfpPosition } = require('./getBfpPosition');
 const { getBfpMarketConfig } = require('./getBfpMarketConfig');
 const { getBfpGlobalConfig } = require('./getBfpGlobalConfig');
+const { getTimes } = require('./syncTime');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
@@ -30,7 +31,9 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
   await wait((minOrderAge + bufferSeconds) * 1000);
 
   const orderDigest = await BfpMarketProxy.getOrderDigest(accountId, marketId);
-  log({ orderIsReady: orderDigest.isReady });
+  log({ orderDigest });
+  const times = await getTimes(wallet.provider);
+  log({ times });
 
   if (orderDigest.sizeDelta.eq(0)) {
     throw Error('Order does not exists.');

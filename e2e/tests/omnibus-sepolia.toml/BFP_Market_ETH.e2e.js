@@ -6,7 +6,7 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.j
 
 const { wait } = require('../../wait');
 
-const { syncTime } = require('../../tasks/syncTime');
+const { syncTime, getTimes } = require('../../tasks/syncTime');
 const { getEthBalance } = require('../../tasks/getEthBalance');
 const { setEthBalance } = require('../../tasks/setEthBalance');
 const { getAccountOwner } = require('../../tasks/getAccountOwner');
@@ -216,26 +216,26 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should approve snxUSD spending for BfpMarketProxy', async () => {
+  it('should approve sUSD spending for BfpMarketProxy', async () => {
     // This is needed to pay back debt.
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed BfpMarketProxy snxUSD spending'
+      'New wallet has not allowed BfpMarketProxy sUSD spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
       spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'sUSD',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       true
@@ -258,6 +258,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       (c) => c.collateralAddress === collateralAddress
     );
     log({ oldDepositedWeth });
+    log(collateralAddress);
 
     assert.equal(
       parseFloat(ethers.utils.formatEther(oldDepositedWeth.available)),
@@ -287,22 +288,41 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(parseFloat(ethers.utils.formatEther(newDepositedWeth.available)), 500);
   });
+
   it('should open a short', async () => {
     const marketId = require('../../deployments/extras.json').eth_market_id;
     const currentPosition = await getBfpPosition({ accountId, marketId });
+    const collateralAddress = require('../../deployments/extras.json').weth_address;
 
     assert.equal(currentPosition.positionSize, 0);
 
-    // We must sync timestamp of the fork before making time-sensitive operations
-    await syncTime();
+    const newDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ newDigest });
 
-    await wait(1000);
+    const newDepositedWeth = newDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ newDepositedWeth });
+    const { now, blockTimestamp } = getTimes(provider);
+    const buffer = 1; // 1s
+    const diff = now - blockTimestamp;
+
+    if (diff < 0) {
+      await wait(Math.abs(diff) + buffer * 1000);
+    }
     await commitBfpOrder({
       wallet,
       accountId,
       marketId,
       sizeDelta: -0.01,
     });
+    await wait(1000);
+    await wait(5000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
@@ -314,11 +334,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const currentPosition = await getBfpPosition({ accountId, marketId });
 
     assert.equal(currentPosition.positionSize, -0.01);
+    const { now, blockTimestamp } = getTimes(provider);
+    const buffer = 1; // 1s
+    const diff = now - blockTimestamp;
 
-    // We must sync timestamp of the fork before making time-sensitive operations
-    await syncTime();
-
-    await wait(1000);
+    if (diff < 0) {
+      await wait(Math.abs(diff) + buffer * 1000);
+    }
     await commitBfpOrder({
       wallet,
       accountId,
@@ -326,23 +348,28 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       sizeDelta: 0.01,
     });
 
+    // Wait for commitment price/settlement delay
+    await wait(2000);
+
+    // Wait for pyth to update prices
+    await wait(5000);
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
 
     assert.equal(newPosition.positionSize, 0);
   });
 
-  it('should mint and withdraw 1000 snxUSD', async () => {
-    const balanceBefore = await getCollateralBalance({ address, symbol: 'snxUSD' });
+  it('should mint and withdraw 1000 sUSD', async () => {
+    const balanceBefore = await getCollateralBalance({ address, symbol: 'sUSD' });
 
     await borrowUsd({ wallet, accountId, symbol: 'fWETH', amount: 1000, poolId: 1 });
     await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
     await withdrawCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'sUSD',
       accountId,
       amount: 1000,
     });
-    const newBalance = await getCollateralBalance({ address, symbol: 'snxUSD' });
+    const newBalance = await getCollateralBalance({ address, symbol: 'sUSD' });
     assert.equal(newBalance - balanceBefore, 1000);
   });
 

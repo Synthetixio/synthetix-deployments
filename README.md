@@ -59,9 +59,9 @@ _The --provider-url and --private-key parameters are unnecessary if using [Frame
 
 ## Fork-testing locally
 
-Example based on `omnibus-base-sepolia-andromeda.toml`
+Example based on `omnibus-base-sepolia-andromeda.toml`. Make sure you have a valid `INFURA_API_KEY` in your terminal session.
 
-1. Run local Anvil node for the required network.
+1. Run local Anvil node for the required network. Keep this running.
 
    ```sh
    yarn cannon build omnibus-base-sepolia-andromeda.toml --port 8545 --keep-alive --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log
@@ -73,7 +73,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`
    yarn start:base-sepolia
    ```
 
-2. Fetch deployments and store as JSON files
+2. Open a new terminal window, fetch deployments and store as JSON files
 
    ```sh
    yarn fetch-deployments

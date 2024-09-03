@@ -24,7 +24,7 @@ if (!buildLog) {
 }
 
 async function run() {
-  const log = require('debug')('e2e:poolsOwnership');
+  const log = require('debug')('e2e:extractCannonState');
 
   log('Resolving Deployment Data URL from log', { buildLog });
   const cannonLog = await fs.readFile(buildLog, 'utf8');

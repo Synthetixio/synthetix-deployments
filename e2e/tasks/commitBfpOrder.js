@@ -25,6 +25,12 @@ async function commitBfpOrder({
 
   const pythPrice = await getPythPrice({ feedId: marketConfig.pythPriceFeedId });
   log({ pythPrice });
+
+  const trackingCode = ethers.utils.formatBytes32String(
+    require('crypto').randomBytes(8).toString('hex')
+  );
+  log({ trackingCode });
+
   const params = {
     accountId,
     marketId,
@@ -32,9 +38,14 @@ async function commitBfpOrder({
     limitPrice: ethers.utils.parseEther(
       Math.floor(pythPrice * (sizeDelta > 0 ? 1.05 : 0.95)).toString()
     ),
-    keeperFeeBufferUsd: keeperFeeBufferUsd,
-    hooks: hooks,
+    keeperFeeBufferUsd,
+    hooks,
+    trackingCode,
   };
+
+  log({ params });
+  log('submitting commitOrder now');
+
   const commitReceipt = await contractWrite({
     wallet,
     contract: 'BfpMarketProxy',
