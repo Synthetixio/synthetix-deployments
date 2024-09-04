@@ -38,9 +38,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
-    
+
     "<%= settings.gmx_perps_market_id %>",
-    
+
     { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
 ]
 extra.gmx_pyth_settlement_strategy.event = "SettlementStrategyAdded"
@@ -117,4 +117,3 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.gmx_perps_market_id %>", "<%= settings.gmx_perps_locked_oi_ratio %>"]
-
