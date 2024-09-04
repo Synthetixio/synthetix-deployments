@@ -21,7 +21,7 @@ tia_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.tia_perps_market_id %>", "TIA", "TIA"]
+args = ["<%= settings.tia_perps_market_id %>", "Celestia", "TIA"]
 
 [invoke.setPerpsPriceTia]
 target = ["perpsFactory.PerpsMarketProxy"]
