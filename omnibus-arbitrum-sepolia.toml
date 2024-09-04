@@ -50,7 +50,6 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-link.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-doge.toml",
