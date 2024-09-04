@@ -57,7 +57,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/SOL.toml",
 
     #
     # Perps
@@ -78,7 +78,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/btc.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/SOL.toml",
 ]
 
 [setting.target_preset]
@@ -333,7 +333,7 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 #
 #
-[provision.sol_mock_collateral]
+[provision.SOL_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@sol"
 options.name = "Fake SOL Coin"
@@ -341,8 +341,8 @@ options.symbol = "fSOL"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.sol_address]
-defaultValue = "<%= imports.sol_mock_collateral.contracts.MintableToken.address %>"
+[setting.SOL_address]
+defaultValue = "<%= imports.SOL_mock_collateral.contracts.MintableToken.address %>"
 description = "Using mock for testnet SOL"
 
 [setting.pyth_feed_id_sol]
