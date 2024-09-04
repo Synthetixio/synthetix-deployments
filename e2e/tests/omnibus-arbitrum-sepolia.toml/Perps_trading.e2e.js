@@ -20,6 +20,8 @@ const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
 const { getDebt } = require('../../tasks/getDebt');
 const { getCanLiquidate } = require('../../tasks/getCanLiquidate');
+const { getSupportedCollaterals } = require('../../tasks/getSupportedCollaterals');
+const { getAccountCollateralIds } = require('../../tasks/getAccountCollateralIds');
 const { getAvailableMargin } = require('../../tasks/getAvailableMargin');
 const { liquidate } = require('../../tasks/liquidate');
 const { setLiquidationParameters } = require('../../tasks/setLiquidationParameters');
@@ -257,7 +259,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_eth_market_id, accountId }), 0);
     assert.equal(await getPerpsCollateral({ marketId: extras.synth_btc_market_id, accountId }), 0);
-
+    const initialAccountCollaterals = await getAccountCollateralIds({ accountId });
+    assert.equal(initialAccountCollaterals, 0);
     await modifyPerpsCollateral({ wallet, accountId, marketId: 0, deltaAmount: 2_000 });
     await modifyPerpsCollateral({
       wallet,
@@ -341,6 +344,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       feedId: extras.pyth_feed_id_eth,
       priceVerificationContract: extras.pyth_price_verification_address,
     });
+
+    const systemCollaterals = await getSupportedCollaterals();
+    const accountCollaterals = await getAccountCollateralIds({ accountId });
+    // NOTE this is a check that all margin in the system is provided by the account before liquidation tests
+    // to prevent the system from potentially being bricked
+    // ref: https://github.com/Synthetixio/synthetix-deployments/issues/358
+    assert.equal(systemCollaterals.length, accountCollaterals.length);
 
     await liquidate({ wallet, accountId });
 
