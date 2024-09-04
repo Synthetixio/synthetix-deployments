@@ -21,7 +21,7 @@ xrp_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.xrp_perps_market_id %>", "XRP", "XRP"]
+args = ["<%= settings.xrp_perps_market_id %>", "XRP", "Ripple"]
 
 [invoke.setPerpsPriceXrp]
 target = ["perpsFactory.PerpsMarketProxy"]
