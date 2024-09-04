@@ -521,6 +521,8 @@ jobs:
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 42161       --json > ./e2e/cannon/42161-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 2192        --json > ./e2e/cannon/2192-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 13001       --json > ./e2e/cannon/13001-main.json
 
       - store_artifacts:
           path: "./e2e/cannon"
