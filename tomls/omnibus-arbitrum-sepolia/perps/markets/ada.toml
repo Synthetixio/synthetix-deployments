@@ -1,20 +1,20 @@
 [var.perps_ada_market_settings]
 ada_perps_market_id = "2500"
-ada_perps_market_skew_scale = "<%= parseEther(String('150_000_000')) %>"
-ada_perps_market_max_funding_velocity = "<%= parseEther(String('36')) %>"
-ada_perps_maker_fee_ratio = "<%= parseEther(String('0')) %>"
-ada_perps_taker_fee_ratio = "<%= parseEther(String('0.0080')) %>"
-ada_perps_max_market_size = "<%= parseEther(String('12_000_000')) %>"
-ada_perps_max_market_value = "<%= parseEther(String('4_000_000')) %>"
-ada_perps_initial_margin_ratio = "<%= parseEther(String('3.2')) %>"
-ada_perps_maintenance_margin_scalar = "<%= parseEther(String('0.33')) %>"
-ada_perps_minimum_initial_margin_ratio = "<%= parseEther(String('0.05')) %>"
-ada_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
-ada_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+ada_perps_market_skew_scale = "<%= parseEther(String(150_000_000)) %>"
+ada_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+ada_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+ada_perps_taker_fee_ratio = "<%= parseEther('0.0080') %>"
+ada_perps_max_market_size = "<%= parseEther(String(12_000_000)) %>"
+ada_perps_max_market_value = "<%= parseEther(String(4_000_000)) %>"
+ada_perps_initial_margin_ratio = "<%= parseEther('3.2') %>"
+ada_perps_maintenance_margin_scalar = "<%= parseEther('0.33') %>"
+ada_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+ada_perps_flag_reward_ratio_d18 = "<%= '0.0003' %>"
+ada_perps_max_liquidation_limit_accumulation_multiplier = "<%= '1.5' %>"
 ada_perps_max_seconds_in_liquidation_window = "30"
 ada_perps_minimum_position_margin = "<%= parseEther('50') %>"
-ada_perps_locked_oi_ratio = "<%= parseEther('0.50') %>"
-ada_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+ada_perps_locked_oi_ratio = "<%= '0.50' %>"
+ada_perps_max_liquidation_pd = "<%= '0.0005' %>"
 ada_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
 [invoke.createAdaPerpsMarket]
@@ -38,8 +38,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
+    
     "<%= settings.ada_perps_market_id %>",
-
+    
     { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
 ]
 extra.ada_pyth_settlement_strategy.event = "SettlementStrategyAdded"
@@ -116,3 +117,4 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.ada_perps_market_id %>", "<%= settings.ada_perps_locked_oi_ratio %>"]
+

@@ -1,20 +1,20 @@
 [var.perps_doge_market_settings]
 doge_perps_market_id = "700"
-doge_perps_market_skew_scale = "<%= parseEther(String('789_000_000')) %>"
-doge_perps_market_max_funding_velocity = "<%= parseEther(String('36')) %>"
-doge_perps_maker_fee_ratio = "<%= parseEther(String('0')) %>"
-doge_perps_taker_fee_ratio = "<%= parseEther(String('0.0080')) %>"
-doge_perps_max_market_size = "<%= parseEther(String('51_000_000')) %>"
-doge_perps_max_market_value = "<%= parseEther(String('5_000_000')) %>"
-doge_perps_initial_margin_ratio = "<%= parseEther(String('1.6')) %>"
-doge_perps_maintenance_margin_scalar = "<%= parseEther(String('0.36')) %>"
-doge_perps_minimum_initial_margin_ratio = "<%= parseEther(String('0.02')) %>"
-doge_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
-doge_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+doge_perps_market_skew_scale = "<%= parseEther(String(789_000_000)) %>"
+doge_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+doge_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+doge_perps_taker_fee_ratio = "<%= parseEther('0.0080') %>"
+doge_perps_max_market_size = "<%= parseEther(String(51_000_000)) %>"
+doge_perps_max_market_value = "<%= parseEther(String(5_000_000)) %>"
+doge_perps_initial_margin_ratio = "<%= parseEther('1.6') %>"
+doge_perps_maintenance_margin_scalar = "<%= parseEther('0.36') %>"
+doge_perps_minimum_initial_margin_ratio = "<%= parseEther('0.02') %>"
+doge_perps_flag_reward_ratio_d18 = "<%= '0.0003' %>"
+doge_perps_max_liquidation_limit_accumulation_multiplier = "<%= '1.5' %>"
 doge_perps_max_seconds_in_liquidation_window = "30"
 doge_perps_minimum_position_margin = "<%= parseEther('50') %>"
-doge_perps_locked_oi_ratio = "<%= parseEther('0.50') %>"
-doge_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+doge_perps_locked_oi_ratio = "<%= '0.50' %>"
+doge_perps_max_liquidation_pd = "<%= '0.0005' %>"
 doge_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
 [invoke.createDogePerpsMarket]
@@ -38,8 +38,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
 args = [
+    
     "<%= settings.doge_perps_market_id %>",
-
+    
     { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
 ]
 extra.doge_pyth_settlement_strategy.event = "SettlementStrategyAdded"
@@ -116,3 +117,4 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
 args = ["<%= settings.doge_perps_market_id %>", "<%= settings.doge_perps_locked_oi_ratio %>"]
+
