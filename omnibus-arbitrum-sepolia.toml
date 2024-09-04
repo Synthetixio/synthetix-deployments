@@ -49,13 +49,13 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
-    
+
     # Spot Markets
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/usde.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/USDe.toml",
 
     #
     # Perps
@@ -75,7 +75,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/btc.toml",
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/USDe.toml",
 ]
 
 [setting.target_preset]
@@ -322,7 +322,6 @@ description = "Using mock for testnet USDe"
 [setting.pyth_feed_id_USDe]
 defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
 
 #
 #
