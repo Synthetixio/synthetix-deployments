@@ -1,7 +1,7 @@
 [provision.RewardsDistributor_sBTC_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.6.0"
 target = "synthetix-rewards-dist-ext:3.6.0@perps-sBTC"
-options.salt = "<%= settings.salt %>-perps-sBTC"
+options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= extras.synth_btc_token_address %>"
