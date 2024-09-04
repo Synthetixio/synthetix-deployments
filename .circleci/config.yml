@@ -521,6 +521,8 @@ jobs:
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 42161       --json > ./e2e/cannon/42161-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 421614      --json > ./e2e/cannon/421614-main.json
       - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 11155111    --json > ./e2e/cannon/11155111-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 2192        --json > ./e2e/cannon/2192-main.json
+      - run: yarn cannon inspect synthetix-omnibus:latest@main        --chain-id 13001       --json > ./e2e/cannon/13001-main.json
 
       - store_artifacts:
           path: "./e2e/cannon"
@@ -780,29 +782,21 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
-      - fork-test-new:
+      - fork-test:
           name: test-snaxchain-testnet
           toml: omnibus-snaxchain-testnet.toml
-          # package: "synthetix-omnibus:latest"
+          package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 13001
           provider-url: https://testnet.snaxchain.io/$CONDUIT_API_KEY
 
-      - fork-test-new:
+      - fork-test:
           name: test-snaxchain-mainnet
           toml: omnibus-snaxchain-mainnet.toml
-          # package: "synthetix-omnibus:latest"
+          package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 2192
           provider-url: https://mainnet.snaxchain.io/$CONDUIT_API_KEY
-
-  #      - fork-test:
-  #          name: test-sepolia
-  #          toml: omnibus-sepolia.toml
-  #          package: "synthetix-omnibus:latest"
-  #          preset: "main"
-  #          chain-id: 11155111
-  #          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
   deployment-info:
     when:
