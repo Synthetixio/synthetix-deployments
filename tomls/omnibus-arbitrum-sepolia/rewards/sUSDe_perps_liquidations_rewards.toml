@@ -24,6 +24,7 @@ args = [
         "<%= settings.weth_address %>",
     ],
 ]
+depends = ["invoke.PerpsMarketProxy_setCollateralConfiguration_susde"]
 
 [invoke.CoreProxy_registerRewardsDistributor_sUSDe_liquidation_rewards_for_SpartanCouncilPool_ARB_lp]
 target = ["system.CoreProxy"]
