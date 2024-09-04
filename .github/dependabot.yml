@@ -9,5 +9,14 @@ updates:
         patterns:
           - "@usecannon*"
           - "*cannon*"
+      other:
+        patterns:
+          - "*"
+
+        # excluding all patterns from other groups
+        exclude-patterns:
+          # cannon
+          - "@usecannon*"
+          - "*cannon*"
     reviewers:
       - "noisekit"
