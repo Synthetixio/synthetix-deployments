@@ -53,7 +53,7 @@ defaultValue = "2000000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.sc_pool_id]
 defaultValue = "1"

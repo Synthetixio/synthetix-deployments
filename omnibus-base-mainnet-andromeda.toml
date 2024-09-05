@@ -351,10 +351,10 @@ options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
 
 [setting.owner]
-defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.deployer]
-defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.pdao]
 defaultValue = "0xbb63CA5554dc4CcaCa4EDd6ECC2837d5EFe83C82"
@@ -369,7 +369,7 @@ defaultValue = "86400" # 1 day
 defaultValue = "1"
 
 [setting.pool_owner]
-defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
+defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
 [setting.usdc_address]
 defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
