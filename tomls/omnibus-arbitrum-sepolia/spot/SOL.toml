@@ -72,6 +72,6 @@ args = [
 [invoke.SpotMarketProxy_setAtomicFixedFee_sSOL]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_sol_market_id %>"]
+fromCall.args = ["<%= extras.synth_SOL_market_id %>"]
 func = "setAtomicFixedFee"
-args = ["<%= extras.synth_sol_market_id %>", "<%= parseEther(String(0.02)) %>"]
+args = ["<%= extras.synth_SOL_market_id %>", "<%= parseEther(String(0.02)) %>"]
