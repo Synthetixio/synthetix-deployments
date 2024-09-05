@@ -3,7 +3,7 @@ const { ethers } = require('ethers');
 require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
-const MAINNET_DEPLOYER = '0xEde8a407913A874Dd7e3d5B731AFcA135D30375E';
+const MAINNET_DEPLOYER = '0x1C8236B406911A376369e33D39189F1b4B39F27D';
 const DAO_GNOSIS_SAFE = '0xbb63CA5554dc4CcaCa4EDd6ECC2837d5EFe83C82';
 
 // While we develop rapidly,

@@ -86,7 +86,7 @@ defaultValue = "1500000000000000000"
 defaultValue = "86400"
 
 [setting.deployer]
-defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
 
 [setting.pdao]
 defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
