@@ -527,3 +527,20 @@ args = [
         "<%= settings.deployer %>",
     ],
 ]
+
+[invoke.authorizedPublishers_synthetix_mock_tokens]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-mock-tokens') %>"]
+func = "setAdditionalPublishers"
+args = [
+    "<%= formatBytes32String('synthetix-mock-tokens') %>",
+    [
+        "0xEb3107117FEAd7de89Cd14D463D340A2E6917769",
+        "<%= settings.deployer %>",
+    ],
+    [
+        "0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C",
+        "<%= settings.deployer %>",
+    ],
+]
