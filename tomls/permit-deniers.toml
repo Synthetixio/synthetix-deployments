@@ -18,6 +18,9 @@ args = [
 ]
 
 [invoke.set_deniers_perps]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setDeniers"
 args = [
     "<%= formatBytes32String('perpsSystem') %>",
     [
@@ -31,6 +34,4 @@ args = [
         "0x562948111d50BF039A39Eea48D127f2Ae51ddF02",
         "<%= settings.deployer %>",
     ],
-]target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setDeniers"
+]
