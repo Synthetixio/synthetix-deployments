@@ -18,8 +18,8 @@ include = [
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
 
-		# Cannon Registry Mainnet Configuration
-		"tomls/omnibus-mainnet/cannon-permissions.toml",
+    # Cannon Registry Mainnet Configuration
+    "tomls/omnibus-mainnet/cannon-permissions.toml",
 
     # Governance
     "tomls/omnibus-mainnet/governance/councils-satellite.toml",
