@@ -1,0 +1,343 @@
+[import.cannonRegistry]
+source = "registry:2.15.1"
+
+[invoke.authorizedPublishers_synthetix_bfp_market]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-bfp-market') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-bfp-market') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_lido_wsteth_to_eth_ratio_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('lido-wsteth-to-eth-ratio-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('lido-wsteth-to-eth-ratio-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_legacy_market]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-legacy-market') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-legacy-market') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_rewards_distributor]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-rewards-distributor') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-rewards-distributor') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_pyth_erc7412_wrapper]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('pyth-erc7412-wrapper') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('pyth-erc7412-wrapper') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_op_gas_price_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('op-gas-price-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('op-gas-price-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_buyback_snx]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('buyback-snx') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('buyback-snx') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_arbitrum_gas_price_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('arbitrum-gas-price-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('arbitrum-gas-price-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_governance_satellite]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-governance-satellite') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-governance-satellite') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_governance]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-governance') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-governance') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_trusted_multicall_forwarder]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('trusted-multicall-forwarder') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('trusted-multicall-forwarder') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_spot_market]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-spot-market') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-spot-market') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_perps_market]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-perps-market') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-perps-market') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_oracle_manager]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('oracle-manager') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('oracle-manager') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_omnibus]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-omnibus') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-omnibus') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_sandbox]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-sandbox') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-sandbox') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_rewards_manager]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-rewards-manager') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-rewards-manager') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_arbitrum_gas_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('arbitrum-gas-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('arbitrum-gas-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_op_gas_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('op-gas-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('op-gas-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_spot_market_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('spot-market-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('spot-market-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_transparent_upgradable_proxy]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('transparent-upgradable-proxy') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('transparent-upgradable-proxy') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_mintable_token]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('mintable-token') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('mintable-token') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_erc4626]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('erc4626') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('erc4626') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_erc_4626_to_assets_ratio_oracle]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('erc-4626-to-assets-ratio-oracle') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('erc-4626-to-assets-ratio-oracle') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_rewards_dist_ext]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-rewards-dist-ext') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-rewards-dist-ext') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_fake_susde_token]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('fake-susde-token') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('fake-susde-token') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_fake_usde_token]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('fake-usde-token') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('fake-usde-token') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_fake_wsteth_token]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('fake-wsteth-token') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('fake-wsteth-token') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_synthetix_snapshot_rewards]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('synthetix-snapshot-rewards') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('synthetix-snapshot-rewards') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
+
+[invoke.authorizedPublishers_chainlink]
+target = ["cannonRegistry.Proxy"]
+fromCall.func = "getPackageOwner"
+fromCall.args = ["<%= formatBytes32String('chainlink') %>"]
+func = "setAdditionalPublishers"
+args = [
+	"<%= formatBytes32String('chainlink') %>",
+  ["0xEb3107117FEAd7de89Cd14D463D340A2E6917769", "<%= settings.deployer %>"],
+  ["0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C", "<%= settings.deployer %>"]
+]
