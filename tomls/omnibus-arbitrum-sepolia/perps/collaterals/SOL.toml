@@ -1,0 +1,16 @@
+[var.perps_collateral_sSOL_settings]
+sSOL_upper_limit_discount = "<%= parseEther('0.15') %>"
+sSOL_lower_limit_discount = "<%= parseEther('0.05') %>"
+sSOL_discount_scalar = "<%= parseEther('1') %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_sSOL]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_SOL_market_id %>",
+    "<%= settings.synth_SOL_max_collateral_amount %>",
+    "<%= settings.sSOL_upper_limit_discount %>",
+    "<%= settings.sSOL_lower_limit_discount %>",
+    "<%= settings.sSOL_discount_scalar %>",
+]
