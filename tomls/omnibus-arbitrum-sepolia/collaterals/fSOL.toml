@@ -4,7 +4,7 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.CoreProxy_configureCollateral_fSOL.args]]
-tokenAddress = "<%= extras.SOL_address %>"
+tokenAddress = "<%= settings.SOL_address %>"
 oracleNodeId = "<%= extras.sol_oracle_id %>"
 issuanceRatioD18 = "<%= parseEther('2') %>"
 liquidationRatioD18 = "<%= parseEther('1.1') %>"
