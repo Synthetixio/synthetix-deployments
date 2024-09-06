@@ -14,3 +14,14 @@ args = [
     "<%= settings.sUSDe_lower_limit_discount %>",
     "<%= settings.sUSDe_discount_scalar %>",
 ]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_Perps_sUSDe]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_USDe_token_address %>",
+    "<%= settings.synth_USDe_max_collateral_amount %>",
+]

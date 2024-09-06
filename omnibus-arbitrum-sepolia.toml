@@ -15,10 +15,15 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/sSOL.toml",
+
+    # System collaterals for Perps
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-BTC.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-ETH.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-SOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-USDe.toml",
 
     # LP Rewards
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
