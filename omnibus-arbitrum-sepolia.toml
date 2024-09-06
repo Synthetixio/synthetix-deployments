@@ -11,83 +11,72 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/permissions.toml",
     "tomls/omnibus-arbitrum-sepolia/pools/spartan-council.toml",
 
-    # USDC
-    "tomls/oracles/pyth-usdc.toml",
+    # System collaterals
     "tomls/omnibus-arbitrum-sepolia/collaterals/usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
-
-    # DAI
-    "tomls/oracles/pyth-dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
-
-    # ARB
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
-
-    # WETH
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
-
-    # sUSDe
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
-
-    # USDe
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/sSOL.toml",
 
-    # SOL
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/sol.toml",
+    # LP Rewards
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
 
     # Perps Liquidation rewards
     "tomls/omnibus-arbitrum-sepolia/rewards/sBTC_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/sETH_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/sUSDe_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/sSOL_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/sUSDe_perps_liquidations_rewards.toml",
 
     # Pyth oracles
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-link.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-doge.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-gmx.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-aave.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-near.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-uni.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xrp.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ltc.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ordi.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-stx.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-shib.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bnb.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-avax.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pepe.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-op.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-rune.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pyth.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-crv.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-tia.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ada.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-avax.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bch.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bnb.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-crv.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-dai.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-doge.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-dydx.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-gmx.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-link.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ltc.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-mkr.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-near.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-op.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ordi.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pepe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pyth.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-rune.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-shib.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-stx.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-tia.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-uni.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-usdc.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xlm.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xrp.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/SOL.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/SOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
 
     #
     # Perps
@@ -97,6 +86,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/perps-keeper-cost.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/global.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/referrers.toml",
+
     # Perps Markets
     "tomls/omnibus-arbitrum-sepolia/perps/markets/btc.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/eth.toml",

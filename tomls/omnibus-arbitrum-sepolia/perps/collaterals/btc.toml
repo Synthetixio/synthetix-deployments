@@ -9,8 +9,19 @@ fromCall.func = "owner"
 func = "setCollateralConfiguration"
 args = [
     "<%= extras.synth_btc_market_id %>",
-    "<%= settings.synth_btc_max_collateral_amount %>", # from spot/btc.toml
+    "<%= settings.synth_btc_max_collateral_amount %>",
     "<%= settings.btc_upper_limit_discount %>",
     "<%= settings.btc_lower_limit_discount %>",
     "<%= settings.btc_discount_scalar %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_Perps_sBTC]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_btc_token_address %>",
+    "<%= settings.synth_btc_max_collateral_amount %>",
 ]
