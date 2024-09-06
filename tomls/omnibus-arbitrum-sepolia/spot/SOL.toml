@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_SOL_market_id %>",
     "<%= extras.sol_oracle_id %>",
     "<%= extras.sol_oracle_id %>",
-    "<%= settings.sol_staleness_tolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_sol]
@@ -34,6 +34,13 @@ args = [
     "<%= settings.SOL_address %>",
     "<%= settings.synth_SOL_max_collateral_amount %>",
 ]
+
+[invoke.SpotMarketProxy_setMarketSkewScale_sol]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_SOL_market_id %>"]
+func = "setMarketSkewScale"
+args = ["<%= extras.synth_SOL_market_id %>", "<%= settings.synth_SOL_skew_scale %>"]
 
 [invoke.SpotMarketProxy_setWrapper_sol]
 target = ["spotFactory.SpotMarketProxy"]
@@ -72,6 +79,6 @@ args = [
 [invoke.SpotMarketProxy_setAtomicFixedFee_sSOL]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_sol_market_id %>"]
+fromCall.args = ["<%= extras.synth_SOL_market_id %>"]
 func = "setAtomicFixedFee"
-args = ["<%= extras.synth_sol_market_id %>", "<%= parseEther(String(0.02)) %>"]
+args = ["<%= extras.synth_SOL_market_id %>", "<%= parseEther(String(0.02)) %>"]

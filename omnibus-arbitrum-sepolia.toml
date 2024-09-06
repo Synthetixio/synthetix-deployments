@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "24"
+version = "25"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -11,79 +11,77 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/permissions.toml",
     "tomls/omnibus-arbitrum-sepolia/pools/spartan-council.toml",
 
-    # USDC
-    "tomls/oracles/pyth-usdc.toml",
+    # System collaterals
     "tomls/omnibus-arbitrum-sepolia/collaterals/usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
-
-    # DAI
-    "tomls/oracles/pyth-dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
-
-    # ARB
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
-
-    # WETH
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
-
-    # sUSDe
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
-
-    # USDe
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/fBTC.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/fSOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-BTC.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-ETH.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-SOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-USDe.toml",
+
+    # LP Rewards
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
 
     # Perps Liquidation rewards
     "tomls/omnibus-arbitrum-sepolia/rewards/sBTC_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/sETH_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/sUSDe_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/sSOL_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/sUSDe_perps_liquidations_rewards.toml",
 
     # Pyth oracles
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-link.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-doge.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-gmx.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-aave.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-near.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-uni.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xrp.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ltc.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ordi.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-stx.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-shib.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bnb.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-avax.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pepe.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-op.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-rune.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pyth.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-crv.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-tia.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ada.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-avax.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bch.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bnb.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-crv.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-dai.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-doge.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-dydx.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-gmx.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-link.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ltc.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-mkr.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-near.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-op.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ordi.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pepe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pyth.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-rune.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-shib.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-stx.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-tia.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-uni.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-usdc.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xlm.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xrp.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/SOL.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/SOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
 
     #
     # Perps
@@ -93,6 +91,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/perps-keeper-cost.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/global.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/referrers.toml",
+
     # Perps Markets
     "tomls/omnibus-arbitrum-sepolia/perps/markets/btc.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/eth.toml",
@@ -229,14 +228,6 @@ defaultValue = "<%= parseEther('0.000001') %>"
 
 [setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
-
-[setting.usdc_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
-[setting.dai_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
 
 #
 #
@@ -377,6 +368,29 @@ description = "Using mock for testnet USDe"
 [setting.pyth_feed_id_USDe]
 defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+
+#
+#
+#
+# BTC
+#
+#
+#
+[provision.btc_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@btc"
+options.name = "Fake BTC Coin"
+options.symbol = "fBTC"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+[setting.btc_address]
+defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
+description = "Mock BTC address"
+
+[setting.pyth_feed_id_btc]
+defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet -- Note, this is the wBTC feed id not the pure BTC feed Id"
 
 #
 #
@@ -685,17 +699,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 [setting.pyth_feed_id_xlm]
 defaultValue = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# BTC
-#
-#
-#
-[setting.pyth_feed_id_btc]
-defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33" #note this is the wBTC feed id not the pure BTC feed Id
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.usd_token_name]

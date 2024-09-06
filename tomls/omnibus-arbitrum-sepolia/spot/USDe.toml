@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_USDe_market_id %>",
     "<%= extras.USDe_oracle_id %>",
     "<%= extras.USDe_oracle_id %>",
-    "<%= settings.USDe_staleness_tolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_USDe]
@@ -72,6 +72,6 @@ args = [
 [invoke.SpotMarketProxy_setAtomicFixedFee_sUSDe]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+fromCall.args = ["<%= extras.synth_USDe_market_id %>"]
 func = "setAtomicFixedFee"
-args = ["<%= extras.synth_usde_market_id %>", "<%= parseEther(String(0.02)) %>"]
+args = ["<%= extras.synth_USDe_market_id %>", "<%= parseEther(String(0.02)) %>"]
