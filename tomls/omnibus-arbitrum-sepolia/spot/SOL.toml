@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_SOL_market_id %>",
     "<%= extras.sol_oracle_id %>",
     "<%= extras.sol_oracle_id %>",
-    "<%= settings.sol_staleness_tolerance %>",
+    "<%= settings.SOL_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_sol]
