@@ -18,8 +18,8 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
-
-    # System collaterals for Perps
+    "tomls/omnibus-arbitrum-sepolia/collaterals/fBTC.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/fSOL.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-BTC.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-ETH.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-SOL.toml",
