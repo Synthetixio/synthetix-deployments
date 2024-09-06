@@ -241,10 +241,6 @@ description = "1 hour"
 defaultValue = "<%= String(1 * 3600) %>"
 description = "1 hour"
 
-[setting.SOL_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
 #
 #
 #
