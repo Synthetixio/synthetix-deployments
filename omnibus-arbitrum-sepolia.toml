@@ -388,6 +388,29 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 #
 #
+# BTC
+#
+#
+#
+[provision.btc_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@btc"
+options.name = "Fake BTC Coin"
+options.symbol = "fBTC"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
+[setting.btc_address]
+defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
+description = "Mock BTC address"
+
+[setting.pyth_feed_id_btc]
+defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet -- Note, this is the wBTC feed id not the pure BTC feed Id"
+
+#
+#
+#
 # SOL
 #
 #
@@ -692,17 +715,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #
 [setting.pyth_feed_id_xlm]
 defaultValue = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# BTC
-#
-#
-#
-[setting.pyth_feed_id_btc]
-defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33" #note this is the wBTC feed id not the pure BTC feed Id
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
 [setting.usd_token_name]

@@ -2,18 +2,6 @@
 synth_btc_max_collateral_amount = "<%= parseEther(String(75)) %>"
 synth_btc_skew_scale = "<%= parseEther(String(3_500)) %>"
 
-[provision.btc_mock_collateral]
-source = "mintable-token:1.8"
-target = "synthetix-mock-tokens:1.8@btc"
-options.name = "Fake BTC Coin"
-options.symbol = "fBTC"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
-[setting.btc_address]
-defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
-description = "Mock btc address"
-
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
