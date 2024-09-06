@@ -1,0 +1,39 @@
+[setting.max_collateral_limit_SOL]
+defaultValue = "<%= parseEther(String(7_500)) %>"
+
+[setting.SOL_issuance_ratio]
+defaultValue = "<%= parseEther('2.00') %>"
+
+[setting.SOL_liquidation_ratio]
+defaultValue = "<%= parseEther('1.05') %>"
+
+[setting.SOL_liquidation_reward]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.SOL_min_delegation]
+defaultValue = "<%= parseEther('100') %>"
+
+[invoke.CoreProxy_configureCollateral_SOL]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_SOL.args]]
+tokenAddress = "<%= settings.SOL_address %>"
+oracleNodeId = "<%= extras.sol_oracle_id %>"
+issuanceRatioD18 = "<%= settings.SOL_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.SOL_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.SOL_liquidation_reward %>"
+minDelegationD18 = "<%= settings.SOL_min_delegation %>"
+depositingEnabled = false
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_SOL]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.SOL_address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_SOL %>", issuanceRatioD18 = 0 },
+]

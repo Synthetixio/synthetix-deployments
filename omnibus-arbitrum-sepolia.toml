@@ -40,6 +40,10 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
 
+    # SOL
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/sol.toml",
+
     # Perps Liquidation rewards
     "tomls/omnibus-arbitrum-sepolia/rewards/sBTC_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/sETH_perps_liquidations_rewards.toml",
