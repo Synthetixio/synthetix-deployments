@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_USDe_market_id %>",
     "<%= extras.USDe_oracle_id %>",
     "<%= extras.USDe_oracle_id %>",
-    "<%= settings.USDe_staleness_tolerance %>",
+    "<%= settings.big_cap_strict_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_USDe]

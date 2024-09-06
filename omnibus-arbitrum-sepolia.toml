@@ -229,18 +229,6 @@ defaultValue = "<%= parseEther('0.000001') %>"
 [setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.usdc_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
-[setting.dai_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
-[setting.USDe_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
 #
 #
 #
