@@ -59,95 +59,96 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set fSOL balance to 1000', async () => {
-    const { tokenAddress } = await getCollateralConfig('fSOL');
+  it('should set fBTC balance to 0.1', async () => {
+    const { tokenAddress } = await getCollateralConfig('fBTC');
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fSOL' }),
+      await getCollateralBalance({ address, symbol: 'fBTC' }),
       0,
-      'New wallet has 0 fSOL balance'
+      'New wallet has 0 fBTC balance'
     );
     await setMintableTokenBalance({
       privateKey,
       tokenAddress,
-      balance: 1_000,
+      balance: 0.1,
     });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'fSOL' }), 1000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'fBTC' }), 0.1);
   });
 
-  it('should approve fSOL spending for SpotMarket', async () => {
+  it('should approve fBTC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fSOL',
+        symbol: 'fBTC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed SpotMarket fSOL spending'
+      'New wallet has not allowed SpotMarket fBTC spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fSOL',
+      symbol: 'fBTC',
       spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fSOL',
+        symbol: 'fBTC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it(`should wrap 1000 fSOL -> sSOL`, async () => {
+  it(`should wrap 0.1 fBTC -> sBTC`, async () => {
+    // btc has only 60s staleness
     await doPriceUpdateForPyth({
       wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_sol,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_btc,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });
 
     const synthBalance = await wrapCollateral({
       wallet,
-      symbol: 'fSOL',
-      synthAddress: require('../../deployments/extras.json').synth_SOL_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      amount: 1000,
+      symbol: 'fBTC',
+      synthAddress: require('../../deployments/extras.json').synth_btc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_btc_market_id,
+      amount: 0.1,
     });
-    assert.equal(synthBalance, 1000);
+    assert.equal(synthBalance, 0.1);
     assert.equal(
       await getTokenBalance({
         walletAddress: address,
-        tokenAddress: require('../../deployments/extras.json').synth_SOL_token_address,
+        tokenAddress: require('../../deployments/extras.json').synth_btc_token_address,
       }),
-      1000
+      0.1
     );
   });
 
-  it(`should unwrap 50 sSOL -> fSOL`, async () => {
+  it(`should unwrap 0.05 sBTC -> fBTC`, async () => {
     const synthBalance = await unwrapCollateral({
       wallet,
-      symbol: 'fSOL',
-      synthAddress: require('../../deployments/extras.json').synth_SOL_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      amount: 50,
+      symbol: 'fBTC',
+      synthAddress: require('../../deployments/extras.json').synth_btc_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_btc_market_id,
+      amount: 0.05,
     });
-    assert.equal(synthBalance, 950);
-    assert.equal(await getCollateralBalance({ address, symbol: 'fSOL' }), 50);
+    assert.equal(synthBalance, 0.05);
+    assert.equal(await getCollateralBalance({ address, symbol: 'fBTC' }), 0.05);
   });
 
-  it('should swap 10 sSOL -> USDx', async () => {
+  it('should swap 0.01 sBTC -> USDx', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await spotSell({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      synthAmount: 10,
-      minUsdAmount: 100,
+      marketId: require('../../deployments/extras.json').synth_btc_market_id,
+      synthAmount: 0.01,
+      minUsdAmount: 200,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 100,
-      'USDx balance >= 100'
+      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 200,
+      'USDx balance >= 200'
     );
   });
 
@@ -176,20 +177,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 100 USDx -> sSOL', async () => {
+  it('should swap 200 USDx -> sBTC', async () => {
     await spotBuy({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      usdAmount: 100,
-      minAmountReceived: 0.1,
+      marketId: require('../../deployments/extras.json').synth_btc_market_id,
+      usdAmount: 200,
+      minAmountReceived: 0.001,
     });
     assert.ok(
       (await getTokenBalance({
         walletAddress: address,
-        tokenAddress: require('../../deployments/extras.json').synth_SOL_token_address,
+        tokenAddress: require('../../deployments/extras.json').synth_btc_token_address,
       })) >=
-        940 + 0.1,
-      `sSOL balance >= ${940 + 0.1}`
+        0.04 + 0.001,
+      `sBTC balance >= ${0.04 + 0.001}`
     );
   });
 });
