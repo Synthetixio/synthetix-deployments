@@ -383,7 +383,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 defaultValue = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-
 #USD Core Token
 
 [setting.usd_token_name]
