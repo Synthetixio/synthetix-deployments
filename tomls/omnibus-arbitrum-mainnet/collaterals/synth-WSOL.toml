@@ -1,0 +1,13 @@
+[invoke.CoreProxy_configureCollateral_WSOL]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_WSOL.args]]
+tokenAddress = "<%= extras.synth_WSOL_token_address %>"
+oracleNodeId = "<%= extras.sol_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('2.00') %>"
+liquidationRatioD18 = "<%= parseEther('1.05') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
+minDelegationD18 = "<%= parseEther('100') %>"
+depositingEnabled = false
