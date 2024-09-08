@@ -1,6 +1,6 @@
 [var.btc_spot_settings]
 synth_btc_max_collateral_amount = "<%= parseEther(String(75)) %>"
-synth_btc_skew_scale = "<%= parseEther(String(3_500)) %>"
+synth_btc_skew_scale = "<%= parseEther(String(35_000)) %>"
 
 [setting.tbtc_address]
 defaultValue = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
