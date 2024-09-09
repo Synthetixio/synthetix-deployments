@@ -4,7 +4,7 @@ target = "synthetix-rewards-dist-ext:3.6.0@perps-sUSDe"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.payoutToken = "<%= extras.synth_btc_token_address %>"
+options.payoutToken = "<%= extras.synth_USDe_token_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Perps sUSDe Liquidation Rewards"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
@@ -14,9 +14,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "registerDistributor"
 args = [
-    "<%= extras.synth_btc_token_address %>",
+    "<%= extras.synth_USDe_token_address %>",
     "<%= imports.RewardsDistributor_sUSDe_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
-    "<%= extras.synth_btc_market_id %>",
+    "<%= extras.synth_USDe_market_id %>",
     [
         "<%= settings.arb_address %>",
         "<%= settings.usdc_address %>",
