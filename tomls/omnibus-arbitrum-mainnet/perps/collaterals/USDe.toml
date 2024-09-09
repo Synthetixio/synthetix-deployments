@@ -1,7 +1,7 @@
 [var.perps_collateral_sUSDe_settings]
 sUSDe_upper_limit_discount = "<%= parseEther('0.0051') %>"
 sUSDe_lower_limit_discount = "<%= parseEther('0.0050') %>"
-sUSDe_discount_scalar = "<%= 1 %>"                         #1 wei
+swSOL_discount_scalar = "<%= parseEther('1') %>"
 
 [invoke.PerpsMarketProxy_setCollateralConfiguration_sUSDe]
 target = ["perpsFactory.PerpsMarketProxy"]

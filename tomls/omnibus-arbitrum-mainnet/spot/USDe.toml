@@ -1,6 +1,6 @@
 [var.USDe_spot_settings]
 synth_USDe_max_collateral_amount = "<%= parseEther(String(10_000_000)) %>"
-synth_USDe_skew_scale = "<%= parseEther(String(0)) %>"
+synth_USDe_skew_scale = "<%= 1 %>" #1 wei
 
 [invoke.SpotMarketProxy_createSynth_USDe]
 target = ["spotFactory.SpotMarketProxy"]
