@@ -278,10 +278,6 @@ description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 defaultValue = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 
-[setting.pyth_feed_id_sUSDe]
-defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
 [setting.pyth_feed_id_link]
 defaultValue = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
