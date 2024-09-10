@@ -1,21 +1,21 @@
-[provision.RewardsDistributor_sUSDe_liquidation_rewards]
+[provision.RewardsDistributor_synth_usde_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.6.0"
-target = "synthetix-rewards-dist-ext:3.6.0@perps-sUSDe"
+target = "synthetix-rewards-dist-ext:3.6.0@perps-synth-usde"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= extras.synth_usde_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Perps sUSDe Liquidation Rewards"
+options.name = "Perps USDe Liquidation Rewards"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
-[invoke.PerpsMarketProxy_registerDistributor_sUSDe_liquidations]
+[invoke.PerpsMarketProxy_registerDistributor_synth_usde_liquidations]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "registerDistributor"
 args = [
     "<%= extras.synth_usde_token_address %>",
-    "<%= imports.RewardsDistributor_sUSDe_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= extras.synth_usde_market_id %>",
     [
         "<%= settings.arb_address %>",
@@ -25,7 +25,7 @@ args = [
     ],
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_sUSDe_liquidation_rewards_for_SpartanCouncilPool_ARB_lp]
+[invoke.CoreProxy_registerRewardsDistributor_synth_usde_liquidation_rewards_for_SpartanCouncilPool_ARB_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
@@ -33,10 +33,10 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.arb_address %>",
-    "<%= imports.RewardsDistributor_sUSDe_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_sUSDe_liquidation_rewards_for_SpartanCouncilPool_USDC_lp]
+[invoke.CoreProxy_registerRewardsDistributor_synth_usde_liquidation_rewards_for_SpartanCouncilPool_USDC_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
@@ -44,10 +44,10 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.usdc_address %>",
-    "<%= imports.RewardsDistributor_sUSDe_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_sUSDe_liquidation_rewards_for_SpartanCouncilPool_USDe_lp]
+[invoke.CoreProxy_registerRewardsDistributor_synth_usde_liquidation_rewards_for_SpartanCouncilPool_USDe_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
@@ -55,10 +55,10 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.usde_address %>",
-    "<%= imports.RewardsDistributor_sUSDe_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_sUSDe_liquidation_rewards_for_SpartanCouncilPool_WETH_lp]
+[invoke.CoreProxy_registerRewardsDistributor_synth_usde_liquidation_rewards_for_SpartanCouncilPool_WETH_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
@@ -66,5 +66,5 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.weth_address %>",
-    "<%= imports.RewardsDistributor_sUSDe_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]

@@ -1,21 +1,21 @@
-[var.perps_collateral_sUSDe_settings]
-sUSDe_upper_limit_discount = "<%= parseEther('0.0051') %>"
-sUSDe_lower_limit_discount = "<%= parseEther('0.0050') %>"
-sUSDe_discount_scalar = "<%= parseEther('1') %>"
+[var.perps_collateral_usde_settings]
+synth_usde_upper_limit_discount = "<%= parseEther('0.0051') %>"
+synth_usde_lower_limit_discount = "<%= parseEther('0.0050') %>"
+synth_usde_discount_scalar = "<%= parseEther('1') %>"
 
-[invoke.PerpsMarketProxy_setCollateralConfiguration_sUSDe]
+[invoke.PerpsMarketProxy_setCollateralConfiguration_synth_usde]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setCollateralConfiguration"
 args = [
     "<%= extras.synth_usde_market_id %>",
     "<%= settings.synth_usde_max_collateral_amount %>",
-    "<%= settings.sUSDe_upper_limit_discount %>",
-    "<%= settings.sUSDe_lower_limit_discount %>",
-    "<%= settings.sUSDe_discount_scalar %>",
+    "<%= settings.synth_usde_upper_limit_discount %>",
+    "<%= settings.synth_usde_lower_limit_discount %>",
+    "<%= settings.synth_usde_discount_scalar %>",
 ]
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_Perps_sUSDe]
+[invoke.CoreProxy_configureMaximumMarketCollateral_Perps_synth_usde]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 fromCall.args = []
