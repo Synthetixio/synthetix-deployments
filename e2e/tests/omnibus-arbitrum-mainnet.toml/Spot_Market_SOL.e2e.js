@@ -100,14 +100,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should wrap 1 SOL -> swSOL`, async () => {
+  it(`should do strict price update`, async () => {
     await doPriceUpdateForPyth({
       wallet,
       feedId: require('../../deployments/extras.json').pyth_feed_id_sol,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });
+  });
 
+  it(`should wrap 1 SOL -> swSOL`, async () => {
     const synthBalance = await wrapCollateral({
       wallet,
       symbol: 'SOL',
