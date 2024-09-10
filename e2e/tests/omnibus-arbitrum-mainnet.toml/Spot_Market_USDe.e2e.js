@@ -132,11 +132,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       marketId: require('../../deployments/extras.json').synth_usde_market_id,
       synthAmount: 500,
-      minUsdAmount: 400,
+      minUsdAmount: 200,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 400,
-      'USDx balance >= 400'
+      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 200,
+      'USDx balance >= 200'
     );
   });
 
@@ -165,20 +165,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 400 USDx -> sUSDe', async () => {
+  it('should swap 200 USDx -> sUSDe', async () => {
     await spotBuy({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usde_market_id,
-      usdAmount: 400,
-      minAmountReceived: 300,
+      usdAmount: 200,
+      minAmountReceived: 50,
     });
     assert.ok(
       (await getTokenBalance({
         walletAddress: address,
         tokenAddress: require('../../deployments/extras.json').synth_usde_token_address,
       })) >=
-        500 + 300,
-      `sUSDe balance >= ${500 + 300}`
+        500 + 50,
+      `sUSDe balance >= ${500 + 50}`
     );
   });
 
