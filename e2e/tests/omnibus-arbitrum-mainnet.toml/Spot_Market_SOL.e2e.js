@@ -100,7 +100,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should wrap 1 SOL -> sSOL`, async () => {
+  it(`should wrap 1 SOL -> swSOL`, async () => {
     await doPriceUpdateForPyth({
       wallet,
       feedId: require('../../deployments/extras.json').pyth_feed_id_sol,
@@ -125,7 +125,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should unwrap 50 sSOL -> SOL`, async () => {
+  it(`should unwrap 50 swSOL -> SOL`, async () => {
     const synthBalance = await unwrapCollateral({
       wallet,
       symbol: 'SOL',
@@ -137,7 +137,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getCollateralBalance({ address, symbol: 'SOL' }), 0.5);
   });
 
-  it('should swap 0.3 sSOL -> USDx', async () => {
+  it('should swap 0.3 swSOL -> USDx', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await spotSell({
       wallet,
@@ -151,7 +151,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 5 USDx -> sSOL', async () => {
+  it('should swap 5 USDx -> swSOL', async () => {
     await spotBuy({
       wallet,
       marketId: require('../../deployments/extras.json').synth_sol_market_id,
@@ -164,7 +164,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         tokenAddress: require('../../deployments/extras.json').synth_sol_token_address,
       })) >=
         0.2 + 0.00001,
-      `sSOL balance >= ${0.2 + 0.00001}`
+      `swSOL balance >= ${0.2 + 0.00001}`
     );
   });
 
