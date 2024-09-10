@@ -6,7 +6,7 @@ synth_sol_skew_scale = "<%= parseEther(String(1_406_250)) %>"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Wormhole sol", "ssol", "<%= settings.owner %>"]
+args = ["Synthetic Wormhole SOL", "sSOL", "<%= settings.owner %>"]
 extra.synth_sol_market_id.event = "SynthRegistered"
 extra.synth_sol_market_id.arg = 0
 extra.synth_sol_token_address.event = "SynthRegistered"
