@@ -58,7 +58,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getEthBalance({ address }), 100);
   });
 
-  it('should set SOL balance to 1000', async () => {
+  it('should set SOL balance to 1', async () => {
     const { tokenAddress } = await getCollateralConfig('SOL');
     assert.equal(
       await getCollateralBalance({ address, symbol: 'SOL' }),
@@ -67,12 +67,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await setTokenBalance({
       wallet,
-      balance: 1000,
+      balance: 1,
       tokenAddress,
       friendlyWhale: '0xD13A513f3d249E1558C176f93e24781f50772048',
     });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'SOL' }), 1000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'SOL' }), 1);
   });
 
   it('should approve SOL spending for SpotMarket', async () => {
@@ -100,7 +100,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should wrap 1000 SOL -> sSOL`, async () => {
+  it(`should wrap 1 SOL -> sSOL`, async () => {
     await doPriceUpdateForPyth({
       wallet,
       feedId: require('../../deployments/extras.json').pyth_feed_id_sol,
@@ -111,17 +111,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const synthBalance = await wrapCollateral({
       wallet,
       symbol: 'SOL',
-      synthAddress: require('../../deployments/extras.json').synth_SOL_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      amount: 1000,
+      synthAddress: require('../../deployments/extras.json').synth_sol_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_sol_market_id,
+      amount: 1,
     });
-    assert.equal(synthBalance, 1000);
+    assert.equal(synthBalance, 1);
     assert.equal(
       await getTokenBalance({
         walletAddress: address,
-        tokenAddress: require('../../deployments/extras.json').synth_SOL_token_address,
+        tokenAddress: require('../../deployments/extras.json').synth_sol_token_address,
       }),
-      1000
+      1
     );
   });
 
@@ -129,25 +129,42 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const synthBalance = await unwrapCollateral({
       wallet,
       symbol: 'SOL',
-      synthAddress: require('../../deployments/extras.json').synth_SOL_token_address,
-      synthMarketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      amount: 50,
+      synthAddress: require('../../deployments/extras.json').synth_sol_token_address,
+      synthMarketId: require('../../deployments/extras.json').synth_sol_market_id,
+      amount: 0.5,
     });
-    assert.equal(synthBalance, 950);
-    assert.equal(await getCollateralBalance({ address, symbol: 'SOL' }), 50);
+    assert.equal(synthBalance, 0.5);
+    assert.equal(await getCollateralBalance({ address, symbol: 'SOL' }), 0.5);
   });
 
-  it('should swap 10 sSOL -> USDx', async () => {
+  it('should swap 0.3 sSOL -> USDx', async () => {
     assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await spotSell({
       wallet,
-      marketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      synthAmount: 10,
-      minUsdAmount: 100,
+      marketId: require('../../deployments/extras.json').synth_sol_market_id,
+      synthAmount: 0.3,
+      minUsdAmount: 10,
     });
     assert.ok(
-      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 100,
-      'USDx balance >= 100'
+      (await getCollateralBalance({ address, symbol: 'USDx' })) >= 10,
+      'USDx balance >= 10'
+    );
+  });
+
+  it('should swap 5 USDx -> sSOL', async () => {
+    await spotBuy({
+      wallet,
+      marketId: require('../../deployments/extras.json').synth_sol_market_id,
+      usdAmount: 5,
+      minAmountReceived: 0.00001,
+    });
+    assert.ok(
+      (await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: require('../../deployments/extras.json').synth_sol_token_address,
+      })) >=
+        0.2 + 0.00001,
+      `sSOL balance >= ${0.2 + 0.00001}`
     );
   });
 
@@ -173,23 +190,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
-    );
-  });
-
-  it('should swap 100 USDx -> sSOL', async () => {
-    await spotBuy({
-      wallet,
-      marketId: require('../../deployments/extras.json').synth_SOL_market_id,
-      usdAmount: 100,
-      minAmountReceived: 0.1,
-    });
-    assert.ok(
-      (await getTokenBalance({
-        walletAddress: address,
-        tokenAddress: require('../../deployments/extras.json').synth_SOL_token_address,
-      })) >=
-        940 + 0.1,
-      `sSOL balance >= ${940 + 0.1}`
     );
   });
 });
