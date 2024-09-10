@@ -9,7 +9,7 @@ fromCall.func = "owner"
 func = "setCollateralConfiguration"
 args = [
     "<%= extras.synth_usde_market_id %>",
-    "<%= settings.synth_USDe_max_collateral_amount %>",
+    "<%= settings.synth_usde_max_collateral_amount %>",
     "<%= settings.sUSDe_upper_limit_discount %>",
     "<%= settings.sUSDe_lower_limit_discount %>",
     "<%= settings.sUSDe_discount_scalar %>",
@@ -23,5 +23,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= imports.perpsFactory.extras.superMarketId %>",
     "<%= extras.synth_usde_token_address %>",
-    "<%= settings.synth_USDe_max_collateral_amount %>",
+    "<%= settings.synth_usde_max_collateral_amount %>",
 ]
