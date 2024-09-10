@@ -59,7 +59,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pol.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pyth.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-rune.toml",
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sUSDe.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-susde.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-shib.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sol.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-stx.toml",
