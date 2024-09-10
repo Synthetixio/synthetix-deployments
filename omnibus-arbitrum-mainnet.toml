@@ -13,27 +13,27 @@ include = [
 
     # System collaterals
     "tomls/omnibus-arbitrum-mainnet/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/WSOL.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/tBTC.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/USDe.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/usde.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-TBTC.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-ETH.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-WSOL.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-USDe.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-tbtc.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-usde.toml",
 
     # LP Rewards
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_ARB_lp.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_USDC_lp.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_WETH_lp.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_USDe_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_arb_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_usdc_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_weth_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_usde_lp.toml",
 
     # Perps Liquidation rewards
-    "tomls/omnibus-arbitrum-mainnet/rewards/stBTC_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/sETH_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/sUSDe_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/swSOL_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/stbtc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/seth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/susde_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/ssol_perps_liquidations_rewards.toml",
 
     # Pyth oracles
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-aave.toml",
@@ -73,10 +73,10 @@ include = [
 
     # Spot Markets
     "tomls/omnibus-arbitrum-mainnet/spot/eth.toml",
-    "tomls/omnibus-arbitrum-mainnet/spot/btc.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/spot/usdc.toml",
-    "tomls/omnibus-arbitrum-mainnet/spot/USDe.toml",
-    "tomls/omnibus-arbitrum-mainnet/spot/WSOL.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/sol.toml",
 
     #
     # Perps
@@ -123,8 +123,8 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/btc.toml",
-    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/WSOL.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/sol.toml",
 
 ]
 
@@ -237,7 +237,7 @@ defaultValue = "<%= parseEther(String(10_000_000)) %>"
 #Token Addresses
 [setting.arb_address]
 defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
-[setting.USDe_address]
+[setting.usde_address]
 defaultValue = "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
 description = "https://coinmarketcap.com/currencies/ethena-usde/"
 [setting.weth_address]
@@ -246,9 +246,12 @@ description = "https://docs.arbitrum.io/build-decentralized-apps/reference/usefu
 [setting.usdc_address]
 defaultValue = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
 description = "https://developers.circle.com/stablecoins/docs/usdc-on-main-networks"
-[setting.WSOL_address]
+[setting.sol_address]
 defaultValue = "0xb74Da9FE2F96B9E0a5f4A3cf0b92dd2bEC617124"
 description = "https://docs.wormhole.com/wormhole"
+[setting.tbtc_address]
+defaultValue = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+description = "tBTC address"
 
 #Pyth Feeds - Perps
 [setting.pyth_feed_id_eth]

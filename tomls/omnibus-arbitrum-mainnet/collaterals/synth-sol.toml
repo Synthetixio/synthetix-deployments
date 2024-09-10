@@ -1,10 +1,10 @@
-[invoke.CoreProxy_configureCollateral_swSOL]
+[invoke.CoreProxy_configureCollateral_ssol]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.CoreProxy_configureCollateral_swSOL.args]]
-tokenAddress = "<%= extras.synth_WSOL_token_address %>"
+[[invoke.CoreProxy_configureCollateral_ssol.args]]
+tokenAddress = "<%= extras.synth_sol_token_address %>"
 oracleNodeId = "<%= extras.sol_oracle_id %>"
 issuanceRatioD18 = "<%= parseEther('2.00') %>"
 liquidationRatioD18 = "<%= parseEther('1.05') %>"

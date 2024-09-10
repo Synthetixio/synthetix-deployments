@@ -4,7 +4,7 @@ target = "synthetix-rewards-distributor:0.0.2@ARB_rewards_for_USDe_lp"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
-options.collateralType = "<%= settings.USDe_address %>"
+options.collateralType = "<%= settings.usde_address %>"
 options.payoutToken = "<%= settings.arb_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Spartan Council Pool ARB Rewards for USDe LP"
@@ -16,6 +16,6 @@ fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.USDe_address %>",
+    "<%= settings.usde_address %>",
     "<%= imports.RewardsDistributor_SpartanCouncilPool_ARB_rewards_for_USDe_lp.contracts.RewardsDistributor.address %>",
 ]

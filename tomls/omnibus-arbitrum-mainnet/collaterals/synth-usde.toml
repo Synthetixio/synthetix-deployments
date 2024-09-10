@@ -4,7 +4,7 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.CoreProxy_configureCollateral_synth_USDe.args]]
-tokenAddress = "<%= extras.synth_USDe_token_address %>"
+tokenAddress = "<%= extras.synth_usde_token_address %>"
 oracleNodeId = "<%= extras.USDe_oracle_id %>"
 issuanceRatioD18 = "<%= parseEther('2.00') %>"
 liquidationRatioD18 = "<%= parseEther('1.05') %>"
