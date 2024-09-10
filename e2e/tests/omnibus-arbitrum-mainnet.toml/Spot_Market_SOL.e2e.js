@@ -125,7 +125,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it(`should unwrap 50 swSOL -> SOL`, async () => {
+  it(`should unwrap 0.5 swSOL -> SOL`, async () => {
     const synthBalance = await unwrapCollateral({
       wallet,
       symbol: 'SOL',
@@ -151,23 +151,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 5 USDx -> swSOL', async () => {
-    await spotBuy({
-      wallet,
-      marketId: require('../../deployments/extras.json').synth_sol_market_id,
-      usdAmount: 5,
-      minAmountReceived: 0.00001,
-    });
-    assert.ok(
-      (await getTokenBalance({
-        walletAddress: address,
-        tokenAddress: require('../../deployments/extras.json').synth_sol_token_address,
-      })) >=
-        0.2 + 0.00001,
-      `swSOL balance >= ${0.2 + 0.00001}`
-    );
-  });
-
   it('should approve USDx spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
@@ -190,6 +173,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
+    );
+  });
+
+  it('should swap 5 USDx -> swSOL', async () => {
+    await spotBuy({
+      wallet,
+      marketId: require('../../deployments/extras.json').synth_sol_market_id,
+      usdAmount: 5,
+      minAmountReceived: 0.00001,
+    });
+    assert.ok(
+      (await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: require('../../deployments/extras.json').synth_sol_token_address,
+      })) >=
+        0.2 + 0.00001,
+      `swSOL balance >= ${0.2 + 0.00001}`
     );
   });
 });
