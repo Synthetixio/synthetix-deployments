@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "23"
+version = "24"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -55,20 +55,20 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-near.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-op.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ordi.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pepe.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pol.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pyth.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-rune.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-shib.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pepe.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pol.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pyth.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-rune.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-shib.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sol.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-stx.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tia.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-uni.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-stx.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tia.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-uni.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usdc.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usde.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-wif.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xlm.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xrp.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xlm.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xrp.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-mainnet/spot/eth.toml",
@@ -105,18 +105,18 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/near.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/op.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/ordi.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/pepe.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/pol.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/pyth.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/rune.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/shib.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/pepe.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/pol.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/pyth.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/rune.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/shib.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/sol.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/stx.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/tia.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/uni.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/stx.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/tia.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/uni.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/wif.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/xlm.toml",
-    #    "tomls/omnibus-arbitrum-mainnet/perps/markets/xrp.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/xlm.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/xrp.toml",
 
     # Margin Collateral (Synths)
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/btc.toml",
