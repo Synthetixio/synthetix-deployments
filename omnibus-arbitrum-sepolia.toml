@@ -232,23 +232,15 @@ defaultValue = "<%= parseEther('0.000001') %>"
 [setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.synth_usdc_max_market_collateral]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-
-[setting.max_collateral_limit_usdc]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-
-[setting.synth_dai_max_market_collateral]
-defaultValue = "<%= parseEther(String(0)) %>"
-
-[setting.max_collateral_limit_dai]
-defaultValue = "<%= parseEther(String(0)) %>"
-
-[setting.max_collateral_limit_weth]
-defaultValue = "<%= parseEther(String(5_400)) %>"
-
-[setting.max_collateral_limit_arb]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
+[var.collateral_limits]
+max_collateral_limit_arb = "<%= parseEther(String(10_000_000)) %>"
+max_collateral_limit_dai = "<%= parseEther(String(0)) %>"
+max_collateral_limit_usdc = "<%= parseEther(String(10_000_000)) %>"
+max_collateral_limit_weeth = "<%= parseEther(String(289)) %>"
+max_collateral_limit_weth = "<%= parseEther(String(5_400)) %>"
+max_collateral_limit_wsteth = "<%= parseEther(String(2_564)) %>"
+synth_dai_max_market_collateral = "<%= parseEther(String(0)) %>"
+synth_usdc_max_market_collateral = "<%= parseEther(String(10_000_000)) %>"
 
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"
