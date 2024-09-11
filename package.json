@@ -63,7 +63,7 @@
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.21.2"
+    "viem": "^2.21.5"
   },
   "mocha": {
     "timeout": "5m",
