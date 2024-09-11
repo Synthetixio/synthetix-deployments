@@ -20,8 +20,10 @@ args = [
     [
         "<%= settings.arb_address %>",
         "<%= settings.usdc_address %>",
-        "<%= settings.USDe_address %>",
+        "<%= settings.usde_address %>",
         "<%= settings.weth_address %>",
+        "<%= settings.weeth_address %>",
+        "<%= settings.wsteth_address %>",
     ],
 ]
 
@@ -54,7 +56,7 @@ fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.USDe_address %>",
+    "<%= settings.usde_address %>",
     "<%= imports.RewardsDistributor_sETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
 

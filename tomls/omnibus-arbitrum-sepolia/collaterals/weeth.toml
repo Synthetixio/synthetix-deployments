@@ -1,0 +1,24 @@
+[invoke.CoreProxy_configureCollateral_weeth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_weeth.args]]
+tokenAddress = "<%= settings.weeth_address %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('3.00') %>"
+liquidationRatioD18 = "<%= parseEther('1.25') %>"
+liquidationRewardD18 = "<%= parseEther('0.005') %>"
+minDelegationD18 = "<%= parseEther('0.01') %>"
+depositingEnabled = true
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_weeth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.weeth_address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_weeth %>", issuanceRatioD18 = 0 },
+]

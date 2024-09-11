@@ -15,15 +15,17 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/dai.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/usde.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/sUSDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/fBTC.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/fSOL.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-BTC.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-ETH.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-SOL.toml",
-    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/susde.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/wsteth.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/weeth.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-btc.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-usde.toml",
 
     # LP Rewards
     "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
@@ -41,7 +43,6 @@ include = [
     # Pyth oracles
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-aave.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-ada.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-avax.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-bch.toml",
@@ -63,23 +64,25 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pol.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pyth.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-rune.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sUSDe.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-shib.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-stx.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-susde.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-tia.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-uni.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-usde.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-weeth.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wif.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-wsteth.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xlm.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xrp.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/SOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/sol.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/usdc.toml",
-    "tomls/omnibus-arbitrum-sepolia/spot/USDe.toml",
+    "tomls/omnibus-arbitrum-sepolia/spot/usde.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/wbtc.toml",
     "tomls/omnibus-arbitrum-sepolia/spot/weth.toml",
 
@@ -128,8 +131,8 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/btc.toml",
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/SOL.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/sol.toml",
 ]
 
 [setting.target_preset]
@@ -229,34 +232,24 @@ defaultValue = "<%= parseEther('0.000001') %>"
 [setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
-#
-#
-#
-# USDC
-#
-#
-#
-[setting.usdc_address]
-defaultValue = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
-description = "https://developers.circle.com/stablecoins/docs/usdc-on-test-networks"
-
-[setting.pyth_feed_id_usdc]
-defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
 [setting.synth_usdc_max_market_collateral]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
 
 [setting.max_collateral_limit_usdc]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
 
-#
-#
-#
-# DAI
-#
-#
-#
+[setting.synth_dai_max_market_collateral]
+defaultValue = "<%= parseEther(String(0)) %>"
+
+[setting.max_collateral_limit_dai]
+defaultValue = "<%= parseEther(String(0)) %>"
+
+[setting.max_collateral_limit_weth]
+defaultValue = "<%= parseEther(String(5_400)) %>"
+
+[setting.max_collateral_limit_arb]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
+
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@dai"
@@ -265,45 +258,6 @@ options.symbol = "fDAI"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.dai_address]
-defaultValue = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet"
-
-[setting.pyth_feed_id_dai]
-defaultValue = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-[setting.synth_dai_max_market_collateral]
-defaultValue = "<%= parseEther(String(0)) %>"
-
-[setting.max_collateral_limit_dai]
-defaultValue = "<%= parseEther(String(0)) %>"
-
-#
-#
-#
-# WETH
-#
-#
-#
-[setting.weth_address]
-defaultValue = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"
-description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
-
-[setting.pyth_feed_id_eth]
-defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-[setting.max_collateral_limit_weth]
-defaultValue = "<%= parseEther(String(5_400)) %>"
-
-#
-#
-#
-# ARB
-#
-#
-#
 [provision.arb_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@arb"
@@ -312,24 +266,6 @@ options.symbol = "fARB"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.arb_address]
-defaultValue = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet"
-
-[setting.pyth_feed_id_arb]
-defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-[setting.max_collateral_limit_arb]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-
-#
-#
-#
-# sUSDe
-#
-#
-#
 [provision.sUSDe_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@sUSDe"
@@ -338,21 +274,6 @@ options.symbol = "fsUSDe"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.sUSDe_address]
-defaultValue = "<%= imports.sUSDe_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet sUSDe"
-
-[setting.pyth_feed_id_sUSDe]
-defaultValue = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# USDe
-#
-#
-#
 [provision.USDe_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@USDe"
@@ -361,21 +282,6 @@ options.symbol = "fUSDe"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.USDe_address]
-defaultValue = "<%= imports.USDe_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet USDe"
-
-[setting.pyth_feed_id_USDe]
-defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# BTC
-#
-#
-#
 [provision.btc_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@btc"
@@ -384,21 +290,6 @@ options.symbol = "fBTC"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.btc_address]
-defaultValue = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
-description = "Mock BTC address"
-
-[setting.pyth_feed_id_btc]
-defaultValue = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet -- Note, this is the wBTC feed id not the pure BTC feed Id"
-
-#
-#
-#
-# SOL
-#
-#
-#
 [provision.SOL_mock_collateral]
 source = "mintable-token:1.8"
 target = "synthetix-mock-tokens:1.8@sol"
@@ -407,299 +298,72 @@ options.symbol = "fSOL"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[setting.SOL_address]
-defaultValue = "<%= imports.SOL_mock_collateral.contracts.MintableToken.address %>"
-description = "Using mock for testnet SOL"
+[provision.weeth_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@weETH"
+options.name = "Fake Wrapped eETH"
+options.symbol = "weETH"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
 
-[setting.pyth_feed_id_sol]
-defaultValue = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+[provision.wsteth_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@wstETH"
+options.name = "Fake Wrapped liquid staked Ether 2.0"
+options.symbol = "wstETH"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
 
-#
-#
-#
-# WIF
-#
-#
-#
-[setting.pyth_feed_id_wif]
-defaultValue = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+[var.token_addresses]
+arb_address = "<%= imports.arb_mock_collateral.contracts.MintableToken.address %>"
+dai_address = "<%= imports.dai_mock_collateral.contracts.MintableToken.address %>"
+sol_address = "<%= imports.SOL_mock_collateral.contracts.MintableToken.address %>"
+susde_address = "<%= imports.sUSDe_mock_collateral.contracts.MintableToken.address %>"
+tbtc_address = "<%= imports.btc_mock_collateral.contracts.MintableToken.address %>"
+usdc_address = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"                              # https://developers.circle.com/stablecoins/docs/usdc-on-test-networks
+usde_address = "<%= imports.USDe_mock_collateral.contracts.MintableToken.address %>"
+weth_address = "0x980B62Da83eFf3D4576C647993b0c1D7faf17c73"                              # https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1
+wsteth_address = "<%= imports.wsteth_mock_collateral.contracts.MintableToken.address %>" # https://docs.lido.fi/deployed-contracts/#arbitrum Arbitrum 0x5979D7b546E38E414F7E9822514be443A4800529
+weeth_address = "<%= imports.weeth_mock_collateral.contracts.MintableToken.address %>"   # https://etherfi.gitbook.io/etherfi/contracts-and-integrations/deployed-contracts Arbitrum 0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe
 
-#
-#
-#
-# LINK
-#
-#
-#
-[setting.pyth_feed_id_link]
-defaultValue = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
+[var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# DOGE
-#
-#
-#
-[setting.pyth_feed_id_doge]
-defaultValue = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# GMX
-#
-#
-#
-[setting.pyth_feed_id_gmx]
-defaultValue = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# AAVE
-#
-#
-#
-[setting.pyth_feed_id_aave]
-defaultValue = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# NEAR
-#
-#
-#
-[setting.pyth_feed_id_near]
-defaultValue = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# UNI
-#
-#
-#
-[setting.pyth_feed_id_uni]
-defaultValue = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# XRP
-#
-#
-#
-[setting.pyth_feed_id_xrp]
-defaultValue = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# LTC
-#
-#
-#
-[setting.pyth_feed_id_ltc]
-defaultValue = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874e19a54"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# ORDI
-#
-#
-#
-[setting.pyth_feed_id_ordi]
-defaultValue = "0x193c739db502aadcef37c2589738b1e37bdb257d58cf1ab3c7ebc8e6df4e3ec0"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# STX
-#
-#
-#
-[setting.pyth_feed_id_stx]
-defaultValue = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# SHIB
-#
-#
-#
-[setting.pyth_feed_id_shib]
-defaultValue = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# BNB
-#
-#
-#
-[setting.pyth_feed_id_bnb]
-defaultValue = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# AVAX
-#
-#
-#
-[setting.pyth_feed_id_avax]
-defaultValue = "0x93da3352f9f1d105fdfe4971cfa80e9dd777bfc5d0f683ebb6e1294b92137bb7"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# PEPE
-#
-#
-#
-[setting.pyth_feed_id_pepe]
-defaultValue = "0xd69731a2e74ac1ce884fc3890f7ee324b6deb66147055249568869ed700882e4"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# OP
-#
-#
-#
-[setting.pyth_feed_id_op]
-defaultValue = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# RUNE
-#
-#
-#
-[setting.pyth_feed_id_rune]
-defaultValue = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61baacb1e"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# PYTH
-#
-#
-#
-[setting.pyth_feed_id_pyth]
-defaultValue = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# CRV
-#
-#
-#
-[setting.pyth_feed_id_crv]
-defaultValue = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# TIA
-#
-#
-#
-[setting.pyth_feed_id_tia]
-defaultValue = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# ADA
-#
-#
-#
-[setting.pyth_feed_id_ada]
-defaultValue = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# BCH
-#
-#
-#
-[setting.pyth_feed_id_bch]
-defaultValue = "0x3dd2b63686a450ec7290df3a1e0b583c0481f651351edfa7636f39aed55cf8a3"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# DYDX
-#
-#
-#
-[setting.pyth_feed_id_dydx]
-defaultValue = "0x6489800bb8974169adfe35937bf6736507097d13c190d760c557108c7e93a81b"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# POL
-#
-#
-#
-[setting.pyth_feed_id_pol]
-defaultValue = "0xffd11c5a1cfd42f80afb2df4d9f264c15f956d68153335374ec10722edd70472"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# MKR
-#
-#
-#
-[setting.pyth_feed_id_mkr]
-defaultValue = "0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# XLM
-#
-#
-#
-[setting.pyth_feed_id_xlm]
-defaultValue = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
+pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
+pyth_feed_id_arb = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
+pyth_feed_id_avax = "0x93da3352f9f1d105fdfe4971cfa80e9dd777bfc5d0f683ebb6e1294b92137bb7"
+pyth_feed_id_bch = "0x3dd2b63686a450ec7290df3a1e0b583c0481f651351edfa7636f39aed55cf8a3"
+pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
+pyth_feed_id_btc = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"    # Note, this is the wBTC feed id not the pure BTC feed Id
+pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
+pyth_feed_id_dai = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
+pyth_feed_id_doge = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
+pyth_feed_id_dydx = "0x6489800bb8974169adfe35937bf6736507097d13c190d760c557108c7e93a81b"
+pyth_feed_id_eth = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
+pyth_feed_id_link = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
+pyth_feed_id_ltc = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874e19a54"
+pyth_feed_id_mkr = "0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378"
+pyth_feed_id_near = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
+pyth_feed_id_op = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
+pyth_feed_id_ordi = "0x193c739db502aadcef37c2589738b1e37bdb257d58cf1ab3c7ebc8e6df4e3ec0"
+pyth_feed_id_pepe = "0xd69731a2e74ac1ce884fc3890f7ee324b6deb66147055249568869ed700882e4"
+pyth_feed_id_pol = "0xffd11c5a1cfd42f80afb2df4d9f264c15f956d68153335374ec10722edd70472"
+pyth_feed_id_pyth = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
+pyth_feed_id_rune = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61baacb1e"
+pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"
+pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+pyth_feed_id_stx = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
+pyth_feed_id_susde = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
+pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
+pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
+pyth_feed_id_usdc = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
+pyth_feed_id_usde = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
+pyth_feed_id_weeth = "0x9ee4e7c60b940440a261eb54b6d8149c23b580ed7da3139f7f08f4ea29dad395"
+pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
+pyth_feed_id_wsteth = "0x6df640f3b8963d8f8358f791f352b8364513f6ab1cca5ed3f1f7b5448980e784"
+pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
+pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 
 [setting.usd_token_name]
 defaultValue = "<%= formatBytes32String('USDToken') %>"

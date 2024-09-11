@@ -102,7 +102,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it(`should wrap 1000 fUSDe -> sUSDe`, async () => {
     await doPriceUpdateForPyth({
       wallet,
-      feedId: require('../../deployments/extras.json').pyth_feed_id_USDe,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_usde,
       priceVerificationContract: require('../../deployments/extras.json')
         .pyth_price_verification_address,
     });

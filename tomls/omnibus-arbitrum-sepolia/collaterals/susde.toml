@@ -19,7 +19,7 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.CoreProxy_configureCollateral_sUSDe.args]]
-tokenAddress = "<%= settings.sUSDe_address %>"
+tokenAddress = "<%= settings.susde_address %>"
 oracleNodeId = "<%= extras.sUSDe_oracle_id %>"
 issuanceRatioD18 = "<%= settings.sUSDe_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.sUSDe_liquidation_ratio %>"
@@ -34,6 +34,6 @@ fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
     "<%= extras.spartan_council_pool_id %>",
-    "<%= settings.sUSDe_address %>",
+    "<%= settings.susde_address %>",
     { collateralLimitD18 = "<%= settings.sUSDe_max_collateral_limit %>", issuanceRatioD18 = 0 },
 ]

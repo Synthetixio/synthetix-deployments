@@ -4,7 +4,7 @@ target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     5, # 5 = pyth aggregator type
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_sUSDe, false]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_susde, false]) %>",
     [
     ],
 ]
@@ -17,7 +17,7 @@ target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     9, # 9 = PythOffchainLookupNode
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_sUSDe, settings.big_cap_default_staleness_tolerance]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_susde, settings.big_cap_default_staleness_tolerance]) %>",
     [
     ],
 ]
