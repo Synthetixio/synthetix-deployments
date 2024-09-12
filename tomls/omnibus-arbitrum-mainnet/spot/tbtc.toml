@@ -1,10 +1,6 @@
 [var.btc_spot_settings]
 synth_btc_max_collateral_amount = "<%= parseEther(String(75)) %>"
-synth_btc_skew_scale = "<%= parseEther(String(3_500)) %>"
-
-[setting.tbtc_address]
-defaultValue = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
-description = "tBTC address"
+synth_btc_skew_scale = "<%= parseEther(String(35_000)) %>"
 
 [invoke.SpotMarketProxy_createSynth_btc]
 target = ["spotFactory.SpotMarketProxy"]
@@ -119,4 +115,4 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setAtomicFixedFee"
-args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(String(0.01)) %>"]
+args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(String(0.30)) %>"]

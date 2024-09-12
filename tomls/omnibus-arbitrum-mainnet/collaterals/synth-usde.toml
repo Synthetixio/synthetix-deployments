@@ -1,0 +1,13 @@
+[invoke.CoreProxy_configureCollateral_synth_USDe]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_synth_USDe.args]]
+tokenAddress = "<%= extras.synth_usde_token_address %>"
+oracleNodeId = "<%= extras.USDe_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('2.00') %>"
+liquidationRatioD18 = "<%= parseEther('1.05') %>"
+liquidationRewardD18 = "<%= parseEther('1') %>"
+minDelegationD18 = "<%= parseEther('100') %>"
+depositingEnabled = false

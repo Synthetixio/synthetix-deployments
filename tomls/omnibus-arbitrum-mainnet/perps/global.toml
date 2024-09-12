@@ -2,7 +2,7 @@
 perps_liquidation_min_keeper_reward_usd = "<%= parseEther('1') %>"
 perps_liquidation_min_keeper_profit_ratio_d18 = "<%= parseEther('0.30') %>"
 perps_liquidation_max_keeper_reward_usd = "<%= parseEther('30') %>"
-perps_liquidation_max_keeper_scaling_ratio_d18 = "<%= parseEther('0.0003') %>"
+perps_liquidation_max_keeper_scaling_ratio_d18 = "<%= parseEther('0.4') %>"
 perps_low_util_gradient = "<%= parseEther('0') %>"
 perps_gradient_breakpoint = "<%= parseEther('0') %>"
 perps_high_util_gradient = "<%= parseEther('0') %>"
