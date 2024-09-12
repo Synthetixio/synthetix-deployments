@@ -6,7 +6,7 @@ synth_usde_skew_scale = "<%= 1 %>"                                         #1 we
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic USDe", "sUSDe", "<%= settings.owner %>"]
+args = ["Synthetic USDe", "sUSDe", "<%= settings.pdao %>"]
 extra.synth_usde_market_id.event = "SynthRegistered"
 extra.synth_usde_market_id.arg = 0
 extra.synth_usde_token_address.event = "SynthRegistered"
