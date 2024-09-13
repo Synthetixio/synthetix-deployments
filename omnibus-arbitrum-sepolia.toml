@@ -28,17 +28,17 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-usde.toml",
 
     # LP Rewards
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDC_lp.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_ARB_lp.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_WETH_lp.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_sUSDe_lp.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/ARB_rewards_for_USDe_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/arb_rewards_for_usdc_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/arb_rewards_for_arb_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/arb_rewards_for_weth_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/arb_rewards_for_susde_lp.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/arb_rewards_for_usde_lp.toml",
 
     # Perps Liquidation rewards
-    "tomls/omnibus-arbitrum-sepolia/rewards/sBTC_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/sETH_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/sSOL_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-sepolia/rewards/sUSDe_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/sbtc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/seth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/ssol_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/susde_perps_liquidations_rewards.toml",
 
     # Pyth oracles
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-aave.toml",
