@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "21"
+version = "24"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -11,35 +11,71 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/permissions.toml",
     "tomls/omnibus-arbitrum-mainnet/pools/spartan-council.toml",
 
-    # USDC
-    "tomls/oracles/pyth-usdc.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_USDC_lp.toml",
-
-    # ARB
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
+    # System collaterals
     "tomls/omnibus-arbitrum-mainnet/collaterals/arb.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_ARB_lp.toml",
-
-    # WETH
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/tbtc.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/usde.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_WETH_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-tbtc.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-usde.toml",
 
-    # USDe
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-USDe.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/USDe.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/ARB_rewards_for_USDe_lp.toml",
+    # LP Rewards
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_arb_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_usdc_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_weth_lp.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_usde_lp.toml",
 
-    # Other Pyth Feeds
+    # Perps Liquidation rewards
+    "tomls/omnibus-arbitrum-mainnet/rewards/stbtc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/seth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/susde_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/ssol_perps_liquidations_rewards.toml",
+
+    # Pyth oracles
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-aave.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ada.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-avax.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bch.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bnb.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-crv.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-doge.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-dydx.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-gmx.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-link.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ltc.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-mkr.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-near.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-op.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ordi.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pepe.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pol.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-pyth.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-rune.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-shib.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-stx.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tia.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-uni.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usdc.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usde.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-wif.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xlm.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xrp.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-mainnet/spot/eth.toml",
-    "tomls/omnibus-arbitrum-mainnet/spot/btc.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/spot/usdc.toml",
+    "tomls/omnibus-arbitrum-mainnet/spot/usde.toml",
 
     #
     # Perps
@@ -50,20 +86,45 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/global.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/referrers.toml",
 
-    # Perps Liquidation rewards
-    "tomls/omnibus-arbitrum-mainnet/rewards/stBTC_perps_liquidations_rewards.toml",
-    "tomls/omnibus-arbitrum-mainnet/rewards/sETH_perps_liquidations_rewards.toml",
-
     # Perps Markets
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/aave.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/ada.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/arb.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/avax.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/bch.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/bnb.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/btc.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/crv.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/doge.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/dydx.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/gmx.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/link.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/ltc.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/mkr.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/near.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/op.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/ordi.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/pepe.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/pol.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/pyth.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/rune.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/shib.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/stx.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/tia.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/uni.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/wif.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/xlm.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/xrp.toml",
 
     # Margin Collateral (Synths)
-    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
-    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/btc.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/eth.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usde.toml",
+
 ]
 
 [setting.target_preset]
@@ -162,113 +223,62 @@ defaultValue = "<%= parseEther('0.000001') %>"
 [setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
-[setting.usdc_staleness_tolerance]
-defaultValue = "<%= String(1 * 3600) %>"
-description = "1 hour"
-
-#
-#
-#
-# USDC
-#
-#
-#
-[setting.usdc_address]
-defaultValue = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
-description = "https://developers.circle.com/stablecoins/docs/usdc-on-main-networks"
-
-[setting.pyth_feed_id_usdc]
-defaultValue = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
+#Collateral Limits
+[setting.max_collateral_limit_arb]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
+[setting.max_collateral_limit_weth]
+defaultValue = "<%= parseEther(String(5_400)) %>"
+[setting.max_collateral_limit_usdc]
+defaultValue = "<%= parseEther(String(10_000_000)) %>"
 [setting.synth_usdc_max_market_collateral]
 defaultValue = "<%= parseEther(String(10_000_000)) %>"
 
-[setting.max_collateral_limit_usdc]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
+#Token Addresses
+[var.token_addresses]
+arb_address = "0x912CE59144191C1204E64559FE8253a0e49E6548"
+sol_address = "0xb74Da9FE2F96B9E0a5f4A3cf0b92dd2bEC617124"  # https://docs.wormhole.com/wormhole
+tbtc_address = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+usdc_address = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" # https://developers.circle.com/stablecoins/docs/usdc-on-main-networks
+usde_address = "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34" # https://coinmarketcap.com/currencies/ethena-usde/
+weth_address = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1" # https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1
 
-#
-#
-#
-# WETH
-#
-#
-#
-[setting.weth_address]
-defaultValue = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
-description = "https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1"
-
-[setting.pyth_feed_id_eth]
-defaultValue = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+#Pyth Feeds - Perps
+[var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
+pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
+pyth_feed_id_arb = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
+pyth_feed_id_avax = "0x93da3352f9f1d105fdfe4971cfa80e9dd777bfc5d0f683ebb6e1294b92137bb7"
+pyth_feed_id_bch = "0x3dd2b63686a450ec7290df3a1e0b583c0481f651351edfa7636f39aed55cf8a3"
+pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
+pyth_feed_id_btc = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
+pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
+pyth_feed_id_doge = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
+pyth_feed_id_dydx = "0x6489800bb8974169adfe35937bf6736507097d13c190d760c557108c7e93a81b"
+pyth_feed_id_eth = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
+pyth_feed_id_link = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
+pyth_feed_id_ltc = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874e19a54"
+pyth_feed_id_mkr = "0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378"
+pyth_feed_id_near = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
+pyth_feed_id_op = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
+pyth_feed_id_ordi = "0x193c739db502aadcef37c2589738b1e37bdb257d58cf1ab3c7ebc8e6df4e3ec0"
+pyth_feed_id_pepe = "0xd69731a2e74ac1ce884fc3890f7ee324b6deb66147055249568869ed700882e4"
+pyth_feed_id_pol = "0xffd11c5a1cfd42f80afb2df4d9f264c15f956d68153335374ec10722edd70472"
+pyth_feed_id_pyth = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
+pyth_feed_id_rune = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61baacb1e"
+pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"
+pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+pyth_feed_id_stx = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
+pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
+pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
+pyth_feed_id_usdc = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
+pyth_feed_id_usde = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
+pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
+pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
+pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 
-[setting.max_collateral_limit_weth]
-defaultValue = "<%= parseEther(String(5_400)) %>"
-
-#
-#
-#
-# ARB
-#
-#
-#
-[setting.arb_address]
-defaultValue = "0x912CE59144191C1204E64559FE8253a0e49E6548"
-
-[setting.pyth_feed_id_arb]
-defaultValue = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-[setting.max_collateral_limit_arb]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-
-#
-#
-#
-# USDe
-#
-#
-#
-[setting.USDe_address]
-defaultValue = "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
-description = "https://coinmarketcap.com/currencies/ethena-usde/"
-
-[setting.pyth_feed_id_USDe]
-defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# SOL
-#
-#
-#
-[setting.pyth_feed_id_sol]
-defaultValue = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# WIF
-#
-#
-#
-[setting.pyth_feed_id_wif]
-defaultValue = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-
-#
-#
-#
-# BTC
-#
-#
-#
-[setting.pyth_feed_id_btc]
-defaultValue = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
-description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+#USD Core Token
 
 [setting.usd_token_name]
 defaultValue = "<%= formatBytes32String('USDToken') %>"

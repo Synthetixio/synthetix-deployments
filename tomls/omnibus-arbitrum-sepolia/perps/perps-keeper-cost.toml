@@ -24,7 +24,6 @@ args = [
 ]
 extra.perps_keeper_cost_eth_oracle_id.event = "NodeRegistered"
 extra.perps_keeper_cost_eth_oracle_id.arg = 0
-depends = ['provision.system', 'provision.perps_gas_oracle_node', 'var.perps_keeper_settings']
 
 [invoke.registerPerps_KeeperCostUsdOracleNode]
 target = ["system.oracle_manager.Proxy"]

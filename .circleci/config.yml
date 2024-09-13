@@ -127,6 +127,9 @@ commands:
                     if [[ $line == *"An error occured during build"* ]]; then
                         exit 1
                     fi
+                    if [[ $line == *"Error:"* ]]; then
+                        exit 1
+                    fi
                 done < <(tail -f -n0 ./cannon-build.log)
             fi
 
@@ -250,12 +253,12 @@ jobs:
         type: string
       preset:
         type: string
-      parallelism:
-        type: integer
-        default: 1
+      resource_class:
+        type: string
+        default: "medium"
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
-    parallelism: << parameters.parallelism >>
+    resource_class: << parameters.resource_class >>
     environment:
       DEBUG: "e2e:*"
       NODE_OPTIONS: "--max_old_space_size=8192"
@@ -773,6 +776,7 @@ workflows:
           preset: "main"
           chain-id: 42161
           provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          # resource_class: xlarge
 
       - fork-test:
           name: test-sepolia
