@@ -31,7 +31,7 @@ fromCall.args = []
 func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_SOL_market_id %>",
-    "<%= settings.SOL_address %>",
+    "<%= settings.sol_address %>",
     "<%= settings.synth_SOL_max_collateral_amount %>",
 ]
 
@@ -49,7 +49,7 @@ fromCall.args = ["<%= extras.synth_SOL_market_id %>"]
 func = "setWrapper"
 args = [
     "<%= extras.synth_SOL_market_id %>",
-    "<%= settings.SOL_address %>",
+    "<%= settings.sol_address %>",
     "<%= settings.synth_SOL_max_collateral_amount %>",
 ]
 

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "24"
+version = "25"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -17,10 +17,13 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/collaterals/tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/weeth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
-    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-tbtc.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/wsteth.toml",
+
     "tomls/omnibus-arbitrum-mainnet/collaterals/synth-eth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/synth-sol.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/synth-usde.toml",
 
     # LP Rewards
@@ -38,7 +41,6 @@ include = [
     # Pyth oracles
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-aave.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ada.toml",
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-avax.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bch.toml",
@@ -66,7 +68,9 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-uni.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usdc.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-weeth.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-wif.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-wsteth.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xlm.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-xrp.toml",
 
@@ -223,24 +227,24 @@ defaultValue = "<%= parseEther('0.000001') %>"
 [setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
-#Collateral Limits
-[setting.max_collateral_limit_arb]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-[setting.max_collateral_limit_weth]
-defaultValue = "<%= parseEther(String(5_400)) %>"
-[setting.max_collateral_limit_usdc]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
-[setting.synth_usdc_max_market_collateral]
-defaultValue = "<%= parseEther(String(10_000_000)) %>"
+[var.collateral_limits]
+max_collateral_limit_arb = "<%= parseEther(String(10_000_000)) %>"
+max_collateral_limit_usdc = "<%= parseEther(String(10_000_000)) %>"
+max_collateral_limit_weeth = "<%= parseEther(String(289)) %>"
+max_collateral_limit_weth = "<%= parseEther(String(5_400)) %>"
+max_collateral_limit_wsteth = "<%= parseEther(String(2_564)) %>"
+synth_usdc_max_market_collateral = "<%= parseEther(String(10_000_000)) %>"
 
 #Token Addresses
 [var.token_addresses]
 arb_address = "0x912CE59144191C1204E64559FE8253a0e49E6548"
-sol_address = "0xb74Da9FE2F96B9E0a5f4A3cf0b92dd2bEC617124"  # https://docs.wormhole.com/wormhole
+sol_address = "0xb74Da9FE2F96B9E0a5f4A3cf0b92dd2bEC617124"    # https://docs.wormhole.com/wormhole
 tbtc_address = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
-usdc_address = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" # https://developers.circle.com/stablecoins/docs/usdc-on-main-networks
-usde_address = "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34" # https://coinmarketcap.com/currencies/ethena-usde/
-weth_address = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1" # https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1
+usdc_address = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"   # https://developers.circle.com/stablecoins/docs/usdc-on-main-networks
+usde_address = "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"   # https://coinmarketcap.com/currencies/ethena-usde/
+weeth_address = "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe"  # https://etherfi.gitbook.io/etherfi/contracts-and-integrations/deployed-contracts
+weth_address = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"   # https://docs.arbitrum.io/build-decentralized-apps/reference/useful-addresses#core-contracts-1
+wsteth_address = "0x5979D7b546E38E414F7E9822514be443A4800529" # https://docs.lido.fi/deployed-contracts/#arbitrum
 
 #Pyth Feeds - Perps
 [var.pyth_feeds]
@@ -274,7 +278,9 @@ pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066df
 pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
 pyth_feed_id_usdc = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
 pyth_feed_id_usde = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
+pyth_feed_id_weeth = "0x9ee4e7c60b940440a261eb54b6d8149c23b580ed7da3139f7f08f4ea29dad395"
 pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
+pyth_feed_id_wsteth = "0x6df640f3b8963d8f8358f791f352b8364513f6ab1cca5ed3f1f7b5448980e784"
 pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 

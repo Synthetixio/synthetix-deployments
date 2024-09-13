@@ -1,11 +1,11 @@
-[invoke.CoreProxy_configureCollateral_fSOL]
+[invoke.CoreProxy_configureCollateral_fBTC]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.CoreProxy_configureCollateral_fSOL.args]]
-tokenAddress = "<%= settings.SOL_address %>"
-oracleNodeId = "<%= extras.sol_oracle_id %>"
+[[invoke.CoreProxy_configureCollateral_fBTC.args]]
+tokenAddress = "<%= settings.tbtc_address %>"
+oracleNodeId = "<%= extras.btc_oracle_id %>"
 issuanceRatioD18 = "<%= parseEther('2') %>"
 liquidationRatioD18 = "<%= parseEther('1.1') %>"
 liquidationRewardD18 = "<%= parseEther('0.5') %>"
