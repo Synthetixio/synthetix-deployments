@@ -421,7 +421,7 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     // Create a new object with the updated minMarginUsd
     const updatedMarketConfiguration = {
       ...marketConfiguration,
-      minMarginUsd: collateralUsd,
+      minMarginUsd: collateralUsd + 1,
     };
     log('New minMarginUsd: ' + updatedMarketConfiguration.minMarginUsd);
 
