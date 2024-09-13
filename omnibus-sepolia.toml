@@ -27,7 +27,7 @@ include = [
 defaultValue = "snaxtest"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.6.0"
+defaultValue = "synthetix:3.6.1-dev.96c3151f"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"
@@ -303,6 +303,8 @@ collateralTypes = [
     "<%= settings.snx_address %>",
     "<%= imports.wsteth.contracts.Token.address %>",
     "<%= imports.susde.contracts.Token.address %>",
+#    "<%= settings.weth_address %>",
+#    "<%= system.USDProxy.address %>",
 ]
 
 # --- Global Market configuration --- #
@@ -452,3 +454,14 @@ args = [
     "<%= settings.weth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
+
+#[invoke.CoreProxy_registerRewardsDistributor_susd]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= system.USDProxy.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]

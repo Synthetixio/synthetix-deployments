@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const assert = require('assert');
-const { ethers } = require('ethers');
+const { ethers, BigNumber } = require('ethers');
 require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
@@ -339,7 +339,7 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     const diff = now - blockTimestamp;
 
     if (diff < 0) {
-      // await wait(Math.abs(diff) + buffer * 1000);
+      await wait(Math.abs(diff) + buffer * 1000);
     }
     await commitBfpOrder({
       wallet,
@@ -361,6 +361,8 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   it('should liquidate an underwater position', async () => {
     const marketId = require('../../deployments/extras.json').eth_market_id;
     const collateralAddress = require('../../deployments/extras.json').weth_address;
+    const poolId =  require('../../deployments/extras.json').sc_pool_id;
+    const wethRewardsDistributor = require('../../deployments/extras.json').weth_rewards_distributor;
 
     const newDigest = await contractRead({
       wallet,
@@ -401,10 +403,27 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
 
     log({ newPosition, marketConfiguration });
 
+    // getMarginDigest
+    const marginDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getMarginDigest',
+      args: [accountId, marketId],
+    });
+    log({ marginDigest });
+    //find out how much collateral is in USD
+    const collateralUsd = marginDigest.collateralUsd;
+    log({ collateralUsd });
+
+
     log('Updating market configuration');
     log('Previous minMarginUsd: ' + marketConfiguration.minMarginUsd);
-    marketConfiguration.minMarginUsd = marketConfiguration.minMarginUsd * 2;
-    log('New minMarginUsd: ' + marketConfiguration.minMarginUsd);
+    // Create a new object with the updated minMarginUsd
+    const updatedMarketConfiguration = {
+      ...marketConfiguration,
+      minMarginUsd: collateralUsd,
+    };
+    log('New minMarginUsd: ' + updatedMarketConfiguration.minMarginUsd);
 
     const owner = await contractRead({
       wallet,
@@ -416,14 +435,41 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       contract: 'BfpMarketProxy',
       func: 'setMarketConfigurationById',
-      args: [{
-        marketId,
-        ...marketConfiguration,
-      }],
+      args: [
+        {
+          marketId,
+          ...updatedMarketConfiguration,
+        },
+      ],
       impersonate: owner,
     });
 
     log('Market configuration updated');
+
+    // const availableRewards = await contractRead({
+    //   wallet,
+    //   contract: 'CoreProxy',
+    //   func: 'getAvailableRewards',
+    //   args: [accountId, poolId, collateralAddress, wethRewardsDistributor],
+    // });
+    //
+    // log({ availableRewards });
+
+
+    // getPoolCollateralTypes
+
+    const rewardDistributor = new ethers.Contract( wethRewardsDistributor, require('../../deployments/BfpRewardDistributor.json').abi, wallet);
+    const poolCollateralTypes = await rewardDistributor.getPoolCollateralTypes();
+
+    // const poolCollateralTypes = await contractRead({
+    //   wallet,
+    //   abi: require('../../deployments/BfpRewardDistributor.json').abi,
+    //   address: wethRewardsDistributor,
+    //   func: 'getPoolCollateralTypes',
+    //   args: [],
+    // });
+
+    log({ poolCollateralTypes });
 
     // liquidate position
 
@@ -446,7 +492,6 @@ describe.only(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     log(accountId + ' position liquidated');
-
   });
 
   it('should mint and withdraw 1000 sUSD', async () => {
