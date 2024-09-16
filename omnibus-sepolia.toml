@@ -27,10 +27,10 @@ include = [
 defaultValue = "snaxtest"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.7.0"
+defaultValue = "oracle-manager:3.7.0-dev.1da30773"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.7.0"
+defaultValue = "synthetix:3.7.0-dev.1da30773"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"
