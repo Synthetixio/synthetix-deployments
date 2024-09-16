@@ -899,13 +899,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.66.0":
-  version: 1.66.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.66.0"
+"@pythnetwork/pyth-evm-js@npm:^1.67.0":
+  version: 1.67.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.67.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/3a3343b18ffddcda9a9c02664d2bc28103262b714c540751bfe67e069edc8f47172a8c7f5a6d618c27430b993b860886d87a74fab43a871c9f9ee61de5f149a4
+  checksum: 10/85721f625b9af095c7bc9d38cb0ea6f203683e43236890604b427b5711eb70862c8f2cc3a44fcb58b497c2ef2c4f70be55e16be46a2e0dfa512fa2325d9f4a34
   languageName: node
   linkType: hard
 
@@ -4550,7 +4550,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.66.0"
+    "@pythnetwork/pyth-evm-js": "npm:^1.67.0"
     "@usecannon/builder": "npm:2.17.1"
     "@usecannon/cli": "npm:2.17.1"
     debug: "npm:^4.3.7"
@@ -4563,7 +4563,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.21.2"
+    viem: "npm:^2.21.7"
   languageName: unknown
   linkType: soft
 
@@ -4864,7 +4864,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.16.5, viem@npm:^2.21.2":
+"viem@npm:^2.16.5":
   version: 2.21.2
   resolution: "viem@npm:2.21.2"
   dependencies:
@@ -4883,6 +4883,28 @@ __metadata:
     typescript:
       optional: true
   checksum: 10/23dcdb1a3223f2e0db60f9d3ba2c19a241087a3c7b438f0069dc7f97e1f1a889dfa0dd52bc91c767ca60dc430ddf5cd92006124da7e08a09d6c0a9c108758b8e
+  languageName: node
+  linkType: hard
+
+"viem@npm:^2.21.7":
+  version: 2.21.7
+  resolution: "viem@npm:2.21.7"
+  dependencies:
+    "@adraffy/ens-normalize": "npm:1.10.0"
+    "@noble/curves": "npm:1.4.0"
+    "@noble/hashes": "npm:1.4.0"
+    "@scure/bip32": "npm:1.4.0"
+    "@scure/bip39": "npm:1.4.0"
+    abitype: "npm:1.0.5"
+    isows: "npm:1.0.4"
+    webauthn-p256: "npm:0.0.5"
+    ws: "npm:8.17.1"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/224d148f42f5a58785ce937aca1fe7e6bb8891dcd70f5d15c7bd7102a9b24e968c7ed94ab75e87131291c6695ff44e4f32e04d38a6b13ffd309ccfb97a7fded6
   languageName: node
   linkType: hard
 
