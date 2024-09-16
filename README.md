@@ -5,7 +5,9 @@ This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/s
 ## Deployment Guide
 
 - Run `yarn` to install the latest dependencies
-- Run `yarn cannon setup` and ensure you’ve set the IPFS endpoint for publishing to the Synthetix cluster.
+- Run `cannon setup` and ensure you’ve set the IPFS endpoint for publishing to the Synthetix cluster.
+- Run `ipfs init` in another tab
+- Run `ipfs daemon` in the same new tab
 
 ### Specify Upgrade
 
