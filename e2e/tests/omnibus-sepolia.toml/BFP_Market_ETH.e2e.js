@@ -474,7 +474,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     log({ newPosition, marketConfiguration });
 
-    // getMarginDigest
     const marginDigest = await contractRead({
       wallet,
       contract: 'BfpMarketProxy',
@@ -482,18 +481,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       args: [accountId, marketId],
     });
     log({ marginDigest });
-    //find out how much collateral is in USD
     const collateralUsd = marginDigest.collateralUsd;
     log({ collateralUsd });
 
-    log('Updating market configuration');
-    log('Previous minMarginUsd: ' + marketConfiguration.minMarginUsd);
-    // Create a new object with the updated minMarginUsd
     const updatedMarketConfiguration = {
       ...marketConfiguration,
       minMarginUsd: collateralUsd + 1,
     };
-    log('New minMarginUsd: ' + updatedMarketConfiguration.minMarginUsd);
 
     const owner = await contractRead({
       wallet,
@@ -514,8 +508,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       impersonate: owner,
     });
 
-    log('Market configuration updated');
-
     const rewardDistributor = new ethers.Contract(
       wethRewardsDistributor,
       require('../../deployments/BfpRewardDistributor.json').abi,
@@ -524,8 +516,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const poolCollateralTypes = await rewardDistributor.getPoolCollateralTypes();
     log({ poolCollateralTypes });
 
-    // liquidate position
-
+    // start the liquidation process
     const { tx, receipt } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
@@ -534,16 +525,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     log({ tx, receipt });
-    log('Flagged position for liquidation');
 
-    // Attempt to liquidate. This should complete successfully.
     await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
       func: 'liquidatePosition',
       args: [accountId, marketId],
     });
-
-    log(accountId + ' position liquidated');
   });
 });
