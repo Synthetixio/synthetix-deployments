@@ -377,120 +377,114 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(newCollateral.toNumber(), 0);
   });
 
-  it('should liquidate an underwater position', async () => {
+  describe('Liquidation', async () => {
     const marketId = require('../../deployments/extras.json').eth_market_id;
     const collateralAddress = require('../../deployments/systemToken.json').address;
-    const poolId = require('../../deployments/extras.json').sc_pool_id;
-    const wethRewardsDistributor =
-      require('../../deployments/extras.json').weth_rewards_distributor;
 
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'modifyCollateral',
-      args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(10_000))],
+    it('should open a short', async () => {
+      await contractWrite({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'modifyCollateral',
+        args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(10_000))],
+      });
+
+      const newDigest = await contractRead({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'getAccountDigest',
+        args: [accountId, marketId],
+      });
+      log({ newDigest });
+
+      const newDepositedsUSD = newDigest.depositedCollaterals.find(
+        (c) => c.collateralAddress === collateralAddress
+      );
+      log({ newDepositedsUSD });
+      const { now, blockTimestamp } = getTimes(provider);
+      const buffer = 1; // 1s
+      const diff = now - blockTimestamp;
+
+      if (diff < 0) {
+        await wait(Math.abs(diff) + buffer * 1000);
+      }
+      await commitBfpOrder({
+        wallet,
+        accountId,
+        marketId,
+        sizeDelta: -0.01,
+      });
+      await wait(1000);
+      await wait(5000);
+
+      const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
+      assert.equal(newPosition.positionSize, -0.01);
     });
 
-    const newDigest = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getAccountDigest',
-      args: [accountId, marketId],
+    it('should liquidate an underwater position', async () => {
+      let marketConfiguration = await contractRead({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'getMarketConfigurationById',
+        args: [marketId],
+      });
+
+      log({ marketConfiguration });
+
+      const marginDigest = await contractRead({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'getMarginDigest',
+        args: [accountId, marketId],
+      });
+      log({ marginDigest });
+      const collateralUsd = marginDigest.collateralUsd;
+      log({ collateralUsd });
+
+      // Sets minMarginUsd to be above the current collateral value
+      const updatedMarketConfiguration = {
+        ...marketConfiguration,
+        minMarginUsd: collateralUsd + 1,
+      };
+
+      const owner = await contractRead({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'owner',
+      });
+
+      await contractWrite({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'setMarketConfigurationById',
+        args: [
+          {
+            marketId,
+            ...updatedMarketConfiguration,
+          },
+        ],
+        impersonate: owner,
+      });
+
+      // start the liquidation process
+      const { tx, receipt } = await contractWrite({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'flagPosition',
+        args: [accountId, marketId],
+      });
+
+      log({ tx, receipt });
+
+      await contractWrite({
+        wallet,
+        contract: 'BfpMarketProxy',
+        func: 'liquidatePosition',
+        args: [accountId, marketId],
+      });
+
+      const currentPosition = await getBfpPosition({ accountId, marketId });
+      assert.equal(currentPosition.positionSize, 0);
     });
-    log({ newDigest });
-
-    const newDepositedsUSD = newDigest.depositedCollaterals.find(
-      (c) => c.collateralAddress === collateralAddress
-    );
-    log({ newDepositedsUSD });
-    const { now, blockTimestamp } = getTimes(provider);
-    const buffer = 1; // 1s
-    const diff = now - blockTimestamp;
-
-    if (diff < 0) {
-      await wait(Math.abs(diff) + buffer * 1000);
-    }
-    await commitBfpOrder({
-      wallet,
-      accountId,
-      marketId,
-      sizeDelta: -0.01,
-    });
-    await wait(1000);
-    await wait(5000);
-
-    const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
-    assert.equal(newPosition.positionSize, -0.01);
-
-    let marketConfiguration = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getMarketConfigurationById',
-      args: [marketId],
-    });
-
-    log({ newPosition, marketConfiguration });
-
-    const marginDigest = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getMarginDigest',
-      args: [accountId, marketId],
-    });
-    log({ marginDigest });
-    const collateralUsd = marginDigest.collateralUsd;
-    log({ collateralUsd });
-
-    const updatedMarketConfiguration = {
-      ...marketConfiguration,
-      minMarginUsd: collateralUsd + 1,
-    };
-
-    const owner = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'owner',
-    });
-
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'setMarketConfigurationById',
-      args: [
-        {
-          marketId,
-          ...updatedMarketConfiguration,
-        },
-      ],
-      impersonate: owner,
-    });
-
-    const rewardDistributor = new ethers.Contract(
-      wethRewardsDistributor,
-      require('../../deployments/BfpRewardDistributor.json').abi,
-      wallet
-    );
-    const poolCollateralTypes = await rewardDistributor.getPoolCollateralTypes();
-    log({ poolCollateralTypes });
-
-    // start the liquidation process
-    const { tx, receipt } = await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'flagPosition',
-      args: [accountId, marketId],
-    });
-
-    log({ tx, receipt });
-
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'liquidatePosition',
-      args: [accountId, marketId],
-    });
-
-    const currentPosition = await getBfpPosition({ accountId, marketId });
-    assert.equal(currentPosition.positionSize, 0);
   });
 });
