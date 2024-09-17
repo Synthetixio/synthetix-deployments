@@ -464,6 +464,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await wait(5000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
+    assert.equal(newPosition.positionSize, -0.01);
 
     let marketConfiguration = await contractRead({
       wallet,
@@ -532,5 +533,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       func: 'liquidatePosition',
       args: [accountId, marketId],
     });
+
+    const currentPosition = await getBfpPosition({ accountId, marketId });
+    assert.equal(currentPosition.positionSize, 0);
   });
 });
