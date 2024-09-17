@@ -27,7 +27,7 @@ include = [
 defaultValue = "snaxtest"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.6.1-dev.96c3151f"
+defaultValue = "synthetix:3.6.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"
@@ -453,7 +453,7 @@ args = [
     "<%= settings.weth_rewards_distributor %>",
 ]
 
-#  it should be ensured these are registered as well
+#  adding these for future reference, it should be ensured these are registered as well
 #
 # [invoke.CoreProxy_registerRewardsDistributor_susd]
 # target = ["system.CoreProxy"]
