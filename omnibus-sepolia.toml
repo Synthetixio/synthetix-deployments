@@ -240,6 +240,12 @@ defaultValue = "<%= parseEther('0.0012') %>"
 [setting.liquidation_window_duration]
 defaultValue = "90"
 
+[setting.min_keeper_fee_usd]
+defaultValue = "<%= parseEther('10') %>"
+
+[setting.max_keeper_fee_usd]
+defaultValue = "<%= parseEther('100') %>"
+
 # --- Provision bfp market --- #
 #
 #
@@ -354,7 +360,9 @@ args = ["<%= settings.eth_oracle_id %>"]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = [{ name = "<%= formatBytes32String('ETHPERP') %>", minDelegateTime = 86400 }]
+args = [
+    { name = "<%= formatBytes32String('ETHPERP') %>", minDelegateTime = 86400 },
+]
 extra.eth_market_id.event = "MarketCreated"
 extra.eth_market_id.arg = 0
 
