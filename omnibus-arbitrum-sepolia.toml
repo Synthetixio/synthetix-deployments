@@ -151,7 +151,7 @@ defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:0.0.0-dev.87e877bd8"
+defaultValue = "synthetix-perps-market:3.6.4"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
