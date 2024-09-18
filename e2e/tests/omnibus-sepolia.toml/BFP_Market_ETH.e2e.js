@@ -518,8 +518,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         args: [accountId, marketId],
       });
 
-      log({ tx, receipt });
-
       await contractWrite({
         wallet,
         contract: 'BfpMarketProxy',
