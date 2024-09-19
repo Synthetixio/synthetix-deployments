@@ -4563,7 +4563,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.21.7"
+    viem: "npm:^2.21.9"
   languageName: unknown
   linkType: soft
 
@@ -4864,9 +4864,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.16.5, viem@npm:^2.21.7":
-  version: 2.21.7
-  resolution: "viem@npm:2.21.7"
+"viem@npm:^2.16.5, viem@npm:^2.21.9":
+  version: 2.21.9
+  resolution: "viem@npm:2.21.9"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.0"
     "@noble/curves": "npm:1.4.0"
@@ -4882,7 +4882,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/224d148f42f5a58785ce937aca1fe7e6bb8891dcd70f5d15c7bd7102a9b24e968c7ed94ab75e87131291c6695ff44e4f32e04d38a6b13ffd309ccfb97a7fded6
+  checksum: 10/bdafc5359a43dcb472aef1b1737ba2deae24104192af65a6a068cc583df1ab4dccd75505895556386da05ebb3bd4c9c5d7294ac5c2c12aeee99ca9f555e16d1b
   languageName: node
   linkType: hard
 
