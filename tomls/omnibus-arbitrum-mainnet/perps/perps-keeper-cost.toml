@@ -1,10 +1,10 @@
 [var.perps_keeper_settings]
 perps_keeper_l1_cost_settle_gas_units = "<%= String(30_000) %>"
-perps_keeper_l2_cost_settle_gas_units = "<%= String(4_950_000) %>"
-perps_keeper_l1_cost_flag_gas_units = "<%= String(30_000) %>"
-perps_keeper_l2_cost_flag_gas_units = "<%= String(3_550_000) %>"
-perps_keeper_l1_cost_liquidate_gas_units = "<%= String(6_000) %>"
-perps_keeper_l2_cost_liquidate_gas_units = "<%= String(1_600_000) %>"
+perps_keeper_l2_cost_settle_gas_units = "<%= String(4_000_000) %>"
+perps_keeper_l1_cost_flag_gas_units = "<%= String(5_500) %>"
+perps_keeper_l2_cost_flag_gas_units = "<%= String(3_600_000) %>"
+perps_keeper_l1_cost_liquidate_gas_units = "<%= String(34_000) %>"
+perps_keeper_l2_cost_liquidate_gas_units = "<%= String(2_500_000) %>"
 
 [provision.perps_gas_oracle_node]
 source = "<%= settings.perps_keeper_cost_package %>"
