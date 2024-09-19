@@ -18,6 +18,7 @@ const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { unwrapCollateral } = require('../../tasks/unwrapCollateral');
 const { spotSell } = require('../../tasks/spotSell');
 const { spotBuy } = require('../../tasks/spotBuy');
+const { doPriceUpdateForPyth } = require('../../tasks/doPriceUpdateForPyth');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -98,6 +99,12 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it(`should wrap 1000 USDC -> sUSDC`, async () => {
+    await doPriceUpdateForPyth({
+      wallet,
+      feedId: require('../../deployments/extras.json').pyth_feed_id_usdc,
+      priceVerificationContract: require('../../deployments/extras.json')
+        .pyth_price_verification_address,
+    });
     const synthBalance = await wrapCollateral({
       wallet,
       symbol: 'USDC',

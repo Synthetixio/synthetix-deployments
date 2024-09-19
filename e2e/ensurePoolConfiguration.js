@@ -26,11 +26,14 @@ async function ensurePoolConfiguration(expectedPoolConfig) {
     func: 'getPoolConfiguration',
     args: [poolId],
   });
-  log({ oldPoolConfig: normalisePoolConfig(oldPoolConfig) });
 
+  log({ oldPoolConfig: normalisePoolConfig(oldPoolConfig) });
   log({ expectedPoolConfig: normalisePoolConfig(expectedPoolConfig) });
 
-  if (JSON.stringify(oldPoolConfig) !== JSON.stringify(expectedPoolConfig)) {
+  if (
+    JSON.stringify(normalisePoolConfig(oldPoolConfig)) !==
+    JSON.stringify(normalisePoolConfig(expectedPoolConfig))
+  ) {
     const owner = await contractRead({
       wallet,
       contract: 'CoreProxy',

@@ -1,7 +1,7 @@
 [clone.governance_ambassador_council]
 source = "<%= settings.governance_package %>"
-targetPreset = "ambassador"
-options.salt = "<%= settings.salt %>"
+target = "<%= settings.governance_package %>@ambassador"
+options.salt = "<%= settings.salt %>-ambassador"
 options.owner = "<%= settings.owner %>"
 options.council_token_name = "Synthetix Ambassador Council Token"
 options.council_token_symbol = "SNXAMB"
@@ -16,8 +16,8 @@ options.voting_period_duration = "<%= settings.governance_voting_period_duration
 
 [clone.governance_spartan_council]
 source = "<%= settings.governance_package %>"
-targetPreset = "spartan"
-options.salt = "<%= settings.salt %>"
+target = "<%= settings.governance_package %>@spartan"
+options.salt = "<%= settings.salt %>-spartan"
 options.owner = "<%= settings.owner %>"
 options.council_token_name = "Synthetix Spartan Council Token"
 options.council_token_symbol = "SNXSPR"
@@ -32,8 +32,8 @@ options.voting_period_duration = "<%= settings.governance_voting_period_duration
 
 [clone.governance_treasury_council]
 source = "<%= settings.governance_package %>"
-targetPreset = "treasury"
-options.salt = "<%= settings.salt %>"
+target = "<%= settings.governance_package %>@treasury"
+options.salt = "<%= settings.salt %>-treasury"
 options.owner = "<%= settings.owner %>"
 options.council_token_name = "Synthetix Treasury Council Token"
 options.council_token_symbol = "SNXTRY"

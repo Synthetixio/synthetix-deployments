@@ -50,10 +50,10 @@
     "update-prices": "DEBUG='e2e:*' node ./e2e/tasks/doAllPriceUpdates.js 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
   },
   "devDependencies": {
-    "@pythnetwork/pyth-evm-js": "^1.66.0",
-    "@usecannon/builder": "2.17.0",
-    "@usecannon/cli": "2.17.0",
-    "debug": "^4.3.6",
+    "@pythnetwork/pyth-evm-js": "^1.67.0",
+    "@usecannon/builder": "2.17.2",
+    "@usecannon/cli": "2.17.2",
+    "debug": "^4.3.7",
     "ethers": "^5.7.2",
     "hardhat": "^2.22.10",
     "mocha": "^10.7.3",
@@ -63,7 +63,7 @@
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.21.1"
+    "viem": "^2.21.9"
   },
   "mocha": {
     "timeout": "5m",

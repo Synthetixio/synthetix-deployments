@@ -9,7 +9,7 @@ Promise.resolve()
     return ensurePoolConfiguration([
       {
         marketId: extras.perps_super_market_id,
-        weightD18: 96,
+        weightD18: 95,
         maxDebtShareValueD18: ethers.utils.parseEther('1'),
       },
       {
@@ -24,6 +24,16 @@ Promise.resolve()
       },
       {
         marketId: extras.synth_eth_market_id,
+        weightD18: 1,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+      {
+        marketId: extras.synth_usde_market_id,
+        weightD18: 1,
+        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+      },
+      {
+        marketId: extras.synth_sol_market_id,
         weightD18: 1,
         maxDebtShareValueD18: ethers.utils.parseEther('1'),
       },

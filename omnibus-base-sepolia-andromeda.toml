@@ -1,12 +1,12 @@
 name = "synthetix-omnibus"
-version = "47"
+version = "49"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
     "tomls/core.toml",
     "tomls/settings.toml",
     "tomls/permissions.toml",
-    "tomls/permit-deniers.toml",
+    "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/markets/perps-highcap-factory.toml",
