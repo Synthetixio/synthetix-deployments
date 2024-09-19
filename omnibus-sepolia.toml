@@ -276,6 +276,26 @@ defaultValue = "<%= weth_mock_collateral.MintableToken.address %>"
 # --- Configure bfp --- #
 #
 #
+[setting.min_keeper_fee_usd]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
+
+[setting.max_keeper_fee_usd]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
+
+[setting.keeper_profit_margin_usd]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
+
+[setting.keeper_profit_margin_percent]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
+
+[setting.low_utilization_slope_percent]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
+
+[setting.high_utilization_slope_percent]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
+
+[setting.min_collateral_discount]
+defaultValue = "<%= parseEther('1') %>" # TODO: set this to correct amount
 
 # Set pyth
 #

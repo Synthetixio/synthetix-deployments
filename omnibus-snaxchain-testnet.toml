@@ -29,6 +29,7 @@ governance_wormhole_core = "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd"    # htt
 governance_wormhole_relayer = "0xe1ECA712d327ed8e0E762A303c95c19b7b4659EE" # Mock relayer https://usecannon.com/packages/synthetix-governance/8/13001-test
 governance_initial_council_member = "<%= settings.owner %>"
 governance_minimum_active_members = "1"
+governance_initial_nomination_period_start_date = "1725072898"             # TODO: set this to correct amount
 governance_administration_period_duration = "90"                           # days
 governance_nomination_period_duration = "15"                               # days
 governance_voting_period_duration = "15"                                   # days
