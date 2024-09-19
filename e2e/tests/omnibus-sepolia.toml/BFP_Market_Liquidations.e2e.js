@@ -28,7 +28,6 @@ const { getBfpDebt } = require('../../tasks/getBfpDebt');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { getContract } = require('viem');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -482,12 +481,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should flag an underwater fWETH backed position', async () => {
-    const { tx, receipt } = await contractWrite({
+    const { events } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
       func: 'flagPosition',
       args: [accountId, marketId],
     });
+    let eventEmitted = false;
+    for (const event of events) {
+      if (event.event === 'PositionFlaggedLiquidation') {
+        eventEmitted = true;
+        console.assert(event.args.accountId.eq(accountId));
+        console.assert(event.args.marketId.eq(marketId));
+        break;
+      }
+    }
+    assert.ok(eventEmitted);
   });
 
   it('should liquidate an underwater fWETH backed position', async () => {
@@ -624,12 +633,22 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should flag an underwater sUSD backed position', async () => {
-    const { tx, receipt } = await contractWrite({
+    const { events } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
       func: 'flagPosition',
       args: [accountId, marketId],
     });
+    let eventEmitted = false;
+    for (const event of events) {
+      if (event.event === 'PositionFlaggedLiquidation') {
+        eventEmitted = true;
+        console.assert(event.args.accountId.eq(accountId));
+        console.assert(event.args.marketId.eq(marketId));
+        break;
+      }
+    }
+    assert.ok(eventEmitted);
   });
 
   it('should liquidate an underwater sUSD backed position', async () => {
