@@ -9,8 +9,8 @@ Promise.resolve()
     return ensurePoolConfiguration([
       {
         marketId: extras.legacy_market_id,
-        weightD18: 90,
-        maxDebtShareValueD18: ethers.utils.parseEther('1'),
+        weightD18: 70,
+        maxDebtShareValueD18: ethers.utils.parseEther('3'),
       },
       {
         marketId: extras.synth_usde_market_id,
@@ -19,12 +19,12 @@ Promise.resolve()
       },
       {
         marketId: '3', //old market, kept to avoid breaking the tests
-        weightD18: 90,
+        weightD18: 10,
         maxDebtShareValueD18: ethers.utils.parseEther('1'),
       },
       {
         marketId: extras.eth_market_id,
-        weightD18: 9,
+        weightD18: 18,
         maxDebtShareValueD18: ethers.utils.parseEther('1'),
       },
     ]);

@@ -2,10 +2,48 @@
 
 This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/synthetixio/synthetix-v3) protocol.
 
-## Deployment Guide
+## Deployment Requirements
 
-- Run `yarn` to install the latest dependencies
-- Run `yarn cannon setup` and ensure you’ve set the IPFS endpoint for publishing to the Synthetix cluster.
+**Important** to not use global `cannon` installation and rely on cannon cli from the repo by running it with `yarn cannon` command.
+Sometimes newer or older versions of cannon may produce incompatible state and as a result deployment state will be borked.
+Using exactly same cannon version as all the repo maintainers use is a requirement and not an recommendation.
+
+Run `yarn upgrade-interactive` and make sure that `@usecannon/cli` and `hardhat-cannon` are updated to the latest versions.
+If not, make a separate PR with cannon update (even though cannon updates are automated, there is a delay up to a day for that to happen)
+
+After installing for the first time, run `yarn cannon setup` to configure a reliable IPFS URL for publishing packages and any other preferred settings,
+Cannon keeps its settings in file `~/.local/share/cannon/settings.json` and it might be more convenient to update it instead of using setup wizard.
+
+Required options to set:
+
+- `ipfsUrl`: `https://ipfs.synthetix.io`
+- `writeIpfsUrl`: `https://<USER>:<PASS>@ipfs.synthetix.io`
+- `publishIpfsUrl`: `https://<USER>:<PASS>@ipfs.synthetix.io`
+- `registries`: list of per-chain registries with infura RPCs
+
+Here is how your `settings.json` should look like (with sensitive fields stripped)
+
+```json
+{
+  "ipfsUrl": "https://ipfs.synthetix.io",
+  "writeIpfsUrl": "https://<USER>:<PASS>@ipfs.synthetix.io",
+  "publishIpfsUrl": "https://<USER>:<PASS>@ipfs.synthetix.io",
+  "registries": [
+    {
+      "name": "OP Mainnet",
+      "chainId": 10,
+      "rpcUrl": ["https://optimism-mainnet.infura.io/v3/<INFURA_KEY>"],
+      "address": "0x8E5C7EFC9636A6A0408A46BB7F617094B81e5dba"
+    },
+    {
+      "name": "Ethereum Mainnet",
+      "chainId": 1,
+      "rpcUrl": ["https://mainnet.infura.io/v3/<INFURA_KEY>"],
+      "address": "0x8E5C7EFC9636A6A0408A46BB7F617094B81e5dba"
+    }
+  ]
+}
+```
 
 ### Specify Upgrade
 
