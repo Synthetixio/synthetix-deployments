@@ -44,7 +44,6 @@ async function commitBfpOrder({
   };
 
   log({ params });
-  log('submitting commitOrder now');
 
   const commitReceipt = await contractWrite({
     wallet,
