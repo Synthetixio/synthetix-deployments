@@ -70,3 +70,25 @@ args = [
     "<%= settings.weth_address %>",
     "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usde_liquidation_rewards_for_SpartanCouncilPool_wstETH_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.wsteth_address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usde_liquidation_rewards_for_SpartanCouncilPool_weETH_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.weeth_address %>",
+    "<%= imports.RewardsDistributor_synth_usde_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]

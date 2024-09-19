@@ -786,13 +786,13 @@ workflows:
           chain-id: 11155111
           provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
 
-      #- fork-test:
-      #    name: test-snaxchain-testnet
-      #    toml: omnibus-snaxchain-testnet.toml
-      #    package: "synthetix-omnibus:latest"
-      #    preset: "main"
-      #    chain-id: 13001
-      #    provider-url: https://testnet.snaxchain.io/$CONDUIT_API_KEY
+      - fork-test-new:
+          name: test-snaxchain-testnet
+          toml: omnibus-snaxchain-testnet.toml
+          # package: "synthetix-omnibus:latest"
+          preset: "main"
+          chain-id: 13001
+          provider-url: https://testnet.snaxchain.io/$CONDUIT_API_KEY
 
       - fork-test:
           name: test-snaxchain-mainnet
