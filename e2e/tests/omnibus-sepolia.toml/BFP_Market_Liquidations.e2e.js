@@ -28,8 +28,9 @@ const { getBfpDebt } = require('../../tasks/getBfpDebt');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
+const { getContract } = require('viem');
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.only(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -39,8 +40,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   // const accountId = 1337;
   const address = wallet.address;
   const privateKey = wallet.privateKey;
+  const marketId = require('../../deployments/extras.json').eth_market_id;
 
   let snapshot;
+  let oldMinMarginUsd;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
@@ -242,8 +245,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should deposit 500 fWETH collateral into the bfp', async () => {
-    const marketId = require('../../deployments/extras.json').eth_market_id;
+  it('should deposit 500 fWETH collateral into the bfp and mint 100_000 sUSD', async () => {
     const collateralAddress = require('../../deployments/extras.json').weth_address;
 
     const oldDigest = await contractRead({
@@ -286,15 +288,120 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     log({ newDepositedWeth });
 
+    await borrowUsd({ wallet, accountId, symbol: 'fWETH', amount: 100_000, poolId: 1 });
+    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
+
+    // Verify the new sUSD balance
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
+      totalDeposited: 100_000,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+
+    await withdrawCollateral({
+      privateKey,
+      accountId,
+      amount: 100_000,
+      symbol: 'sUSD',
+    });
+
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000);
+
     assert.equal(parseFloat(ethers.utils.formatEther(newDepositedWeth.available)), 500);
   });
 
-  it('should open a short', async () => {
-    const marketId = require('../../deployments/extras.json').eth_market_id;
-    const currentPosition = await getBfpPosition({ accountId, marketId });
-    const collateralAddress = require('../../deployments/extras.json').weth_address;
+  it('should approve sUSD spending for CoreProxy', async () => {
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSD',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
+      false,
+      'New wallet has not allowed CoreProxy sUSD spending'
+    );
+    await approveCollateral({
+      privateKey,
+      symbol: 'sUSD',
+      spenderAddress: require('../../deployments/CoreProxy.json').address,
+    });
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSD',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
+      true
+    );
+  });
 
-    assert.equal(currentPosition.positionSize, 0);
+  it('should deposit 50_000 sUSD into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
+      totalDeposited: 0,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+
+    await depositCollateral({ privateKey, symbol: 'sUSD', accountId, amount: 50_000 });
+
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 50_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
+      totalDeposited: 50000,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+  });
+
+  it('should deposit 25_000 sUSD collateral into the bfp', async () => {
+    const marketId = require('../../deployments/extras.json').eth_market_id;
+    const collateralAddress = require('../../deployments/systemToken.json').address;
+
+    const oldDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ oldDigest });
+
+    const oldDepositedsUSD = oldDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ oldDepositedsUSD });
+    log(collateralAddress);
+
+    assert.equal(
+      parseFloat(ethers.utils.formatEther(oldDepositedsUSD.available)),
+      0,
+      'New account has 0 deposited sUSD'
+    );
+
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'modifyCollateral',
+      args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(25_000))],
+    });
+
+    const newDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ newDigest });
+
+    const newDepositedsUSD = newDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ newDepositedsUSD });
+
+    assert.equal(parseFloat(ethers.utils.formatEther(newDepositedsUSD.available)), 25_000);
+  });
+
+  it('should open a short with fWETH collateral', async () => {
+    const collateralAddress = require('../../deployments/extras.json').weth_address;
 
     const newDigest = await contractRead({
       wallet,
@@ -325,15 +432,131 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await wait(5000);
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
-
     assert.equal(newPosition.positionSize, -0.01);
   });
 
-  it('should close the short', async () => {
-    const marketId = require('../../deployments/extras.json').eth_market_id;
-    const currentPosition = await getBfpPosition({ accountId, marketId });
+  it('should update market configuration minMarginUsd force liquidations', async () => {
+    let marketConfiguration = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getMarketConfigurationById',
+      args: [marketId],
+    });
+    oldMinMarginUsd = marketConfiguration.minMarginUsd;
+    log({ marketConfiguration });
 
-    assert.equal(currentPosition.positionSize, -0.01);
+    const marginDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getMarginDigest',
+      args: [accountId, marketId],
+    });
+    log({ marginDigest });
+    const collateralUsd = marginDigest.collateralUsd;
+    log({ collateralUsd });
+
+    // Sets minMarginUsd to be above the current collateral value
+    const updatedMarketConfiguration = {
+      ...marketConfiguration,
+      minMarginUsd: collateralUsd + 1,
+    };
+
+    const owner = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'owner',
+    });
+
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'setMarketConfigurationById',
+      args: [
+        {
+          marketId,
+          ...updatedMarketConfiguration,
+        },
+      ],
+      impersonate: owner,
+    });
+  });
+
+  it('should flag an underwater fWETH backed position', async () => {
+    const { tx, receipt } = await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'flagPosition',
+      args: [accountId, marketId],
+    });
+  });
+
+  it('should liquidate an underwater fWETH backed position', async () => {
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'liquidatePosition',
+      args: [accountId, marketId],
+    });
+
+    const currentPosition = await getBfpPosition({ accountId, marketId });
+    assert.equal(currentPosition.positionSize, 0);
+  });
+
+  it('revert the minMarginUsd to the old value', async () => {
+    const owner = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'owner',
+    });
+
+    let marketConfiguration = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getMarketConfigurationById',
+      args: [marketId],
+    });
+
+    const updatedMarketConfiguration = {
+      ...marketConfiguration,
+      minMarginUsd: oldMinMarginUsd,
+    };
+
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'setMarketConfigurationById',
+      args: [
+        {
+          marketId,
+          ...updatedMarketConfiguration,
+        },
+      ],
+      impersonate: owner,
+    });
+  });
+
+  it('should open a short with sUSD collateral', async () => {
+    const collateralAddress = require('../../deployments/systemToken.json').address;
+
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'modifyCollateral',
+      args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(20_000))],
+    });
+
+    const newDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ newDigest });
+
+    const newDepositedsUSD = newDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ newDepositedsUSD });
     const { now, blockTimestamp } = getTimes(provider);
     const buffer = 1; // 1s
     const diff = now - blockTimestamp;
@@ -345,79 +568,79 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       marketId,
-      sizeDelta: 0.01,
+      sizeDelta: -0.01,
     });
-
-    // Wait for commitment price/settlement delay
-    await wait(2000);
-
-    // Wait for pyth to update prices
+    await wait(1000);
     await wait(5000);
+
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
-
-    assert.equal(newPosition.positionSize, 0);
+    assert.equal(newPosition.positionSize, -0.01);
   });
 
-  it('should mint and withdraw 1000 sUSD', async () => {
-    const balanceBefore = await getCollateralBalance({ address, symbol: 'sUSD' });
-
-    await borrowUsd({ wallet, accountId, symbol: 'fWETH', amount: 1000, poolId: 1 });
-    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
-    await withdrawCollateral({
-      privateKey,
-      symbol: 'sUSD',
-      accountId,
-      amount: 1000,
-    });
-    const newBalance = await getCollateralBalance({ address, symbol: 'sUSD' });
-    assert.equal(newBalance - balanceBefore, 1000);
-  });
-
-  it('should payback debt', async () => {
-    const marketId = require('../../deployments/extras.json').eth_market_id;
-    const debtUsd = await getBfpDebt({ accountId, marketId });
-
-    log({ debtUsd });
-
-    await contractWrite({
+  it('should update market configuration minMarginUsd force liquidations', async () => {
+    let marketConfiguration = await contractRead({
       wallet,
       contract: 'BfpMarketProxy',
-      func: 'payDebt',
-      args: [accountId, marketId, ethers.utils.parseEther(`${debtUsd + 1}`)], // Adding one to avoid lingering rounding debt.
+      func: 'getMarketConfigurationById',
+      args: [marketId],
     });
+    oldMinMarginUsd = marketConfiguration.minMarginUsd;
+    log({ marketConfiguration });
 
-    const newDebtUsd = await getBfpDebt({ accountId, marketId });
-    assert.equal(newDebtUsd, 0);
-  });
-
-  it('should withdrawAll', async () => {
-    const marketId = require('../../deployments/extras.json').eth_market_id;
-
-    const { collateralUsd } = await contractRead({
+    const marginDigest = await contractRead({
       wallet,
       contract: 'BfpMarketProxy',
       func: 'getMarginDigest',
       args: [accountId, marketId],
     });
-
+    log({ marginDigest });
+    const collateralUsd = marginDigest.collateralUsd;
     log({ collateralUsd });
-    assert.ok(parseFloat(ethers.utils.formatUnits(collateralUsd)) > 0);
+
+    // Sets minMarginUsd to be above the current collateral value
+    const updatedMarketConfiguration = {
+      ...marketConfiguration,
+      minMarginUsd: collateralUsd + 1,
+    };
+
+    const owner = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'owner',
+    });
 
     await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
-      func: 'withdrawAllCollateral',
-      args: [accountId, marketId],
+      func: 'setMarketConfigurationById',
+      args: [
+        {
+          marketId,
+          ...updatedMarketConfiguration,
+        },
+      ],
+      impersonate: owner,
     });
+  });
 
-    const { collateralUsd: newCollateral } = await contractRead({
+  it('should flag an underwater sUSD backed position', async () => {
+    const { tx, receipt } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
-      func: 'getMarginDigest',
+      func: 'flagPosition',
+      args: [accountId, marketId],
+    });
+  });
+
+  it('should liquidate an underwater sUSD backed position', async () => {
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'liquidatePosition',
       args: [accountId, marketId],
     });
 
-    log({ newCollateral });
-    assert.equal(newCollateral.toNumber(), 0);
+    const currentPosition = await getBfpPosition({ accountId, marketId });
+    assert.equal(currentPosition.positionSize, 0);
   });
 });
