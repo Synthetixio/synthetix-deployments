@@ -93,3 +93,14 @@ args = [
     "<%= settings.weeth_address %>",
     "<%= imports.RewardsDistributor_sETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
+
+[invoke.CoreProxy_registerRewardsDistributor_sETH_liquidation_rewards_for_SpartanCouncilPool_susde_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.susde_address %>",
+    "<%= imports.RewardsDistributor_sETH_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
