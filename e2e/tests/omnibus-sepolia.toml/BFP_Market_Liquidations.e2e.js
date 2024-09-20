@@ -28,6 +28,9 @@ const { getBfpDebt } = require('../../tasks/getBfpDebt');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
+const { getBfpMarketConfig } = require('../../tasks/getBfpMarketConfig');
+const { getPythPrice } = require('../../tasks/getPythPrice');
+const { parseUnits } = require("ethers/lib/utils");
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -434,7 +437,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(newPosition.positionSize, -0.01);
   });
 
-  it('should update market configuration minMarginUsd force liquidations', async () => {
+  it('should update market configuration minMarginUsd to force liquidations', async () => {
     let marketConfiguration = await contractRead({
       wallet,
       contract: 'BfpMarketProxy',
@@ -481,6 +484,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should flag an underwater fWETH backed position', async () => {
+    const marketConfig = await getBfpMarketConfig({ marketId });
+    const { flagKeeperReward } = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getLiquidationFees',
+      args: [accountId, marketId],
+    });
+
+    const pythPrice = await getPythPrice({ feedId: marketConfig.pythPriceFeedId });
+
     const { events } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
@@ -491,8 +504,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     for (const event of events) {
       if (event.event === 'PositionFlaggedLiquidation') {
         eventEmitted = true;
-        console.assert(event.args.accountId.eq(accountId));
-        console.assert(event.args.marketId.eq(marketId));
+        assert.deepEqual(event.args, [
+          BigNumber.from(accountId),
+          BigNumber.from(marketId),
+          wallet.address,
+          flagKeeperReward,
+          parseUnits(pythPrice.toString(), 18)]
+      );
         break;
       }
     }
@@ -586,7 +604,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(newPosition.positionSize, -0.01);
   });
 
-  it('should update market configuration minMarginUsd force liquidations', async () => {
+  it('should update market configuration minMarginUsd to force liquidations', async () => {
     let marketConfiguration = await contractRead({
       wallet,
       contract: 'BfpMarketProxy',
@@ -633,6 +651,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should flag an underwater sUSD backed position', async () => {
+    const marketConfig = await getBfpMarketConfig({ marketId });
+    const { flagKeeperReward } = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getLiquidationFees',
+      args: [accountId, marketId],
+    });
+
+    const pythPrice = await getPythPrice({ feedId: marketConfig.pythPriceFeedId });
+
     const { events } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
@@ -643,8 +671,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     for (const event of events) {
       if (event.event === 'PositionFlaggedLiquidation') {
         eventEmitted = true;
-        console.assert(event.args.accountId.eq(accountId));
-        console.assert(event.args.marketId.eq(marketId));
+        assert.deepEqual(event.args, [
+          BigNumber.from(accountId),
+          BigNumber.from(marketId),
+          wallet.address,
+          flagKeeperReward,
+          parseUnits(pythPrice.toString(), 18)]
+        );
         break;
       }
     }

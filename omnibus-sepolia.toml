@@ -458,38 +458,3 @@ args = [
     "<%= settings.weth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
-
-#  adding these for future reference, it should be ensured these are registered as well
-#
-# [invoke.CoreProxy_registerRewardsDistributor_susd]
-# target = ["system.CoreProxy"]
-# fromCall.func = "getPoolOwner"
-# fromCall.args = ["<%= settings.sc_pool_id %>"]
-# func = "registerRewardsDistributor"
-# args = [
-#    "<%= settings.sc_pool_id %>",
-#    "<%= system.USDProxy.address %>",
-#    "<%= settings.weth_rewards_distributor %>",
-# ]
-
-# [invoke.CoreProxy_registerRewardsDistributor_wsteth]
-# target = ["system.CoreProxy"]
-# fromCall.func = "getPoolOwner"
-# fromCall.args = ["<%= settings.sc_pool_id %>"]
-# func = "registerRewardsDistributor"
-# args = [
-#    "<%= settings.sc_pool_id %>",
-#    "<%= imports.wsteth.contracts.Token.address %>",
-#    "<%= settings.weth_rewards_distributor %>",
-# ]
-
-# [invoke.CoreProxy_registerRewardsDistributor_susde]
-# target = ["system.CoreProxy"]
-# fromCall.func = "getPoolOwner"
-# fromCall.args = ["<%= settings.sc_pool_id %>"]
-# func = "registerRewardsDistributor"
-# args = [
-#    "<%= settings.sc_pool_id %>",
-#    "<%= imports.susde.contracts.Token.address %>",
-#    "<%= settings.weth_rewards_distributor %>",
-# ]
