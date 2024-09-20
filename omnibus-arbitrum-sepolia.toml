@@ -1,9 +1,9 @@
 name = "synthetix-omnibus"
-version = "28"
+version = "29"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
-    "tomls/core.toml",
+    "tomls/omnibus-arbitrum-sepolia/core.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/omnibus-arbitrum-sepolia/perps-highcap-factory.toml",
     "tomls/omnibus-arbitrum-sepolia/permit-deniers.toml",
@@ -142,16 +142,19 @@ defaultValue = "main"
 defaultValue = "snax"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.5.0"
+defaultValue = "synthetix:3.7.1"
+
+[setting.oracle_manager_package]
+defaultValue = "oracle-manager:3.7.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.6.0"
+defaultValue = "synthetix-spot-market:3.7.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.6.4"
+defaultValue = "synthetix-perps-market:3.7.1"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
