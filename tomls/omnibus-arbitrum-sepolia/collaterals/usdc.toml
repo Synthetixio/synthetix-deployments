@@ -1,5 +1,5 @@
 [setting.usdc_issuance_ratio]
-defaultValue = "<%= parseEther('2.00') %>"
+defaultValue = "<%= parseEther('10') %>"
 
 [setting.usdc_liquidation_ratio]
 defaultValue = "<%= parseEther('1.05') %>"

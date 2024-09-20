@@ -6,7 +6,7 @@ func = "configureCollateral"  # "args" see below in the multiline block
 [[invoke.CoreProxy_configureCollateral_weeth.args]]
 tokenAddress = "<%= settings.weeth_address %>"
 oracleNodeId = "<%= extras.weeth_oracle_id %>"
-issuanceRatioD18 = "<%= parseEther('3.50') %>"
+issuanceRatioD18 = "<%= parseEther('10') %>"
 liquidationRatioD18 = "<%= parseEther('1.50') %>"
 liquidationRewardD18 = "<%= parseEther('0.005') %>"
 minDelegationD18 = "<%= parseEther('0.01') %>"
