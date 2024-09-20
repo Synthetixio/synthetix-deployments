@@ -25,6 +25,9 @@ include = [
     "tomls/omnibus-mainnet/governance/councils-satellite.toml",
     "tomls/omnibus-mainnet/governance/wormhole.toml",
     "tomls/omnibus-mainnet/governance/snapshot-record.toml",
+
+    # BFP Configuration
+    "tomls/omnibus-mainnet/bfp.toml",
 ]
 
 [setting.snx_package]
@@ -38,6 +41,9 @@ defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.5.0"
+
+[setting.bfp_market_package]
+defaultValue = "synthetix-bfp-market:3.6.0"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
