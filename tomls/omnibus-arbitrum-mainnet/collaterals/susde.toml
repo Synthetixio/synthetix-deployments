@@ -5,21 +5,21 @@ susde_liquidation_ratio = "<%= parseEther('1.05') %>"
 susde_liquidation_reward = "<%= parseEther('1') %>"
 susde_min_delegation = "<%= parseEther('100') %>"
 
-[invoke.CoreProxy_configureCollateral_sUSDe]
+[invoke.CoreProxy_configureCollateral_susde]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.CoreProxy_configureCollateral_sUSDe.args]]
+[[invoke.CoreProxy_configureCollateral_susde.args]]
 tokenAddress = "<%= settings.susde_address %>"
-oracleNodeId = "<%= extras.sUSDe_oracle_id %>"
+oracleNodeId = "<%= extras.susde_oracle_id %>"
 issuanceRatioD18 = "<%= settings.susde_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.susde_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.susde_liquidation_reward %>"
 minDelegationD18 = "<%= settings.susde_min_delegation %>"
 depositingEnabled = true
 
-[invoke.CoreProxy_setPoolCollateralConfiguration_sUSDe]
+[invoke.CoreProxy_setPoolCollateralConfiguration_susde]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
