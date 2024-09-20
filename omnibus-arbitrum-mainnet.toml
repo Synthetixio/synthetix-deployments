@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "27"
+version = "28"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [

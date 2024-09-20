@@ -1,5 +1,5 @@
 [setting.weth_issuance_ratio]
-defaultValue = "<%= parseEther('3.00') %>"
+defaultValue = "<%= parseEther('10') %>"
 
 [setting.weth_liquidation_ratio]
 defaultValue = "<%= parseEther('1.25') %>"

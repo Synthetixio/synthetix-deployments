@@ -1,5 +1,5 @@
 [setting.arb_issuance_ratio]
-defaultValue = "<%= parseEther('3.50') %>"
+defaultValue = "<%= parseEther('10') %>"
 
 [setting.arb_liquidation_ratio]
 defaultValue = "<%= parseEther('1.50') %>"
