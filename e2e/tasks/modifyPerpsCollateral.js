@@ -25,10 +25,13 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount, marketId 
     marketId,
     ethers.utils.parseEther(`${deltaAmount}`),
   ];
-  const gasLimit = await PerpsMarketProxy.estimateGas.modifyCollateral(...args).catch(parseError);
-  const tx = await PerpsMarketProxy.modifyCollateral(...args, { gasLimit: gasLimit.mul(2) }).catch(
-    parseError
-  );
+  const gasLimit = await PerpsMarketProxy.estimateGas
+    .modifyCollateral(...args)
+    .catch(parseError)
+    .catch(() => ethers.BigNumber.from(10_000_000));
+  const tx = await PerpsMarketProxy.modifyCollateral(...args, {
+    gasLimit: gasLimit.mul(2),
+  }).catch(parseError);
   await tx
     .wait()
     .then((txn) => log(txn.events) || txn, parseError)
@@ -36,6 +39,7 @@ async function modifyPerpsCollateral({ wallet, accountId, deltaAmount, marketId 
 
   const currentAmount = await getPerpsCollateral({ accountId });
   log({ address: wallet.address, accountId, deltaAmount, currentAmount });
+  return currentAmount;
 }
 
 module.exports = {
