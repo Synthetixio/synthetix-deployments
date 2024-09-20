@@ -21,6 +21,7 @@ args = [
         "<%= settings.arb_address %>",
         "<%= settings.usdc_address %>",
         "<%= settings.usde_address %>",
+        "<%= settings.susde_address %>",
         "<%= settings.weth_address %>",
         "<%= settings.weeth_address %>",
         "<%= settings.wsteth_address %>",
