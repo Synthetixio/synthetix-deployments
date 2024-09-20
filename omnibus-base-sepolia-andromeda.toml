@@ -1,9 +1,9 @@
 name = "synthetix-omnibus"
-version = "50"
+version = "49"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
-    "tomls/omnibus-base-sepolia-andromeda/core.toml",
+    "tomls/core.toml",
     "tomls/settings.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
@@ -325,10 +325,7 @@ defaultValue = "2"
 defaultValue = "2"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.7.1"
-
-[setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.7.1"
+defaultValue = "synthetix:3.3.18"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.4.0"
@@ -337,7 +334,7 @@ defaultValue = "op-gas-price-oracle:3.4.0"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.7.1"
+defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
