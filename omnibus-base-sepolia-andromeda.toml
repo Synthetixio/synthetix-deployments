@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "49"
+version = "50"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -334,7 +334,8 @@ defaultValue = "op-gas-price-oracle:3.4.0"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.19"
+defaultValue = "synthetix-perps-market:3.6.4"
+
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
