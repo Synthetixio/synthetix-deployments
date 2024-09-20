@@ -2,7 +2,7 @@
 defaultValue = "<%= parseEther(String(50_000_000)) %>"
 
 [setting.USDe_issuance_ratio]
-defaultValue = "<%= parseEther('10') %>"
+defaultValue = "<%= parseEther('1000') %>"
 
 [setting.USDe_liquidation_ratio]
 defaultValue = "<%= parseEther('1.05') %>"
