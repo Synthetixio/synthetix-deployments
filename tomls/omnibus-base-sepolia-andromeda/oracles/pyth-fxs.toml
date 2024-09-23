@@ -11,12 +11,6 @@ args = [
 ]
 extra.fxs_pyth_oracle_id.event = "NodeRegistered"
 extra.fxs_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_fxs',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupFxsOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.fxs_lookup_oracle_id.event = "NodeRegistered"
 extra.fxs_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_fxs',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerFxsOracleNode]
 target = ["system.oracle_manager.Proxy"]

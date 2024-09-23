@@ -11,12 +11,6 @@ args = [
 ]
 extra.arkm_pyth_oracle_id.event = "NodeRegistered"
 extra.arkm_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_arkm',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupArkmOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.arkm_lookup_oracle_id.event = "NodeRegistered"
 extra.arkm_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_arkm',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerArkmOracleNode]
 target = ["system.oracle_manager.Proxy"]

@@ -11,12 +11,6 @@ args = [
 ]
 extra.trx_pyth_oracle_id.event = "NodeRegistered"
 extra.trx_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_trx',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupTrxOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.trx_lookup_oracle_id.event = "NodeRegistered"
 extra.trx_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_trx',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerTrxOracleNode]
 target = ["system.oracle_manager.Proxy"]

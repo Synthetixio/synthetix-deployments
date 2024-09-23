@@ -11,12 +11,6 @@ args = [
 ]
 extra.gala_pyth_oracle_id.event = "NodeRegistered"
 extra.gala_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_gala',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupGalaOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.gala_lookup_oracle_id.event = "NodeRegistered"
 extra.gala_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_gala',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerGalaOracleNode]
 target = ["system.oracle_manager.Proxy"]

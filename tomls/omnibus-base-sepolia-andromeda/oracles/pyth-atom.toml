@@ -11,12 +11,6 @@ args = [
 ]
 extra.atom_pyth_oracle_id.event = "NodeRegistered"
 extra.atom_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_atom',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupAtomOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.atom_lookup_oracle_id.event = "NodeRegistered"
 extra.atom_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_atom',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerAtomOracleNode]
 target = ["system.oracle_manager.Proxy"]

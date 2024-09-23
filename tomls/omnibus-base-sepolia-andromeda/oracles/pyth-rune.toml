@@ -11,12 +11,6 @@ args = [
 ]
 extra.rune_pyth_oracle_id.event = "NodeRegistered"
 extra.rune_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_rune',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupRuneOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.rune_lookup_oracle_id.event = "NodeRegistered"
 extra.rune_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_rune',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerRuneOracleNode]
 target = ["system.oracle_manager.Proxy"]

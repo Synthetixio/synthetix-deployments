@@ -11,12 +11,6 @@ args = [
 ]
 extra.ftm_pyth_oracle_id.event = "NodeRegistered"
 extra.ftm_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_ftm',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupFtmOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.ftm_lookup_oracle_id.event = "NodeRegistered"
 extra.ftm_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_ftm',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerFtmOracleNode]
 target = ["system.oracle_manager.Proxy"]

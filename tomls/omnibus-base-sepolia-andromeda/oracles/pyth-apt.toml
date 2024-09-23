@@ -11,12 +11,6 @@ args = [
 ]
 extra.apt_pyth_oracle_id.event = "NodeRegistered"
 extra.apt_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_apt',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupAptOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.apt_lookup_oracle_id.event = "NodeRegistered"
 extra.apt_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_apt',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerAptOracleNode]
 target = ["system.oracle_manager.Proxy"]

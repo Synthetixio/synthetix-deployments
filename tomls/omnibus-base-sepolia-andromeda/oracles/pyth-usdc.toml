@@ -10,12 +10,6 @@ args = [
 ]
 extra.usdc_pyth_oracle_id.event = "NodeRegistered"
 extra.usdc_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_usdc',
-]
-
 [invoke.OracleManagerProxy_registerNode_pyth_offchain_lookup_usdc]
 description = "Pyth Off-chain Lookup"
 target = ["system.oracle_manager.Proxy"]
@@ -28,13 +22,6 @@ args = [
 ]
 extra.usdc_lookup_oracle_id.event = "NodeRegistered"
 extra.usdc_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_usdc',
-    'setting.big_cap_default_staleness_tolerance',
-]
-
 [invoke.OracleManagerProxy_registerNode_staleness_usdc]
 description = "Staleness Node"
 target = ["system.oracle_manager.Proxy"]

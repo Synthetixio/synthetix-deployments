@@ -11,12 +11,6 @@ args = [
 ]
 extra.yfi_pyth_oracle_id.event = "NodeRegistered"
 extra.yfi_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_yfi',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupYfiOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.yfi_lookup_oracle_id.event = "NodeRegistered"
 extra.yfi_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_yfi',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerYfiOracleNode]
 target = ["system.oracle_manager.Proxy"]

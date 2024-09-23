@@ -11,12 +11,6 @@ args = [
 ]
 extra.near_pyth_oracle_id.event = "NodeRegistered"
 extra.near_pyth_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'setting.pyth_price_verification_address',
-    'setting.pyth_feed_id_near',
-]
-
 # Pyth Off-chain Lookup
 [invoke.registerLookupNearOracleNode]
 target = ["system.oracle_manager.Proxy"]
@@ -29,13 +23,6 @@ args = [
 ]
 extra.near_lookup_oracle_id.event = "NodeRegistered"
 extra.near_lookup_oracle_id.arg = 0
-depends = [
-    'provision.system',
-    'provision.pyth_erc7412_wrapper',
-    'setting.pyth_feed_id_near',
-    'setting.bigCapDefaultStalenessTolerance',
-]
-
 # Staleness Node
 [invoke.registerNearOracleNode]
 target = ["system.oracle_manager.Proxy"]
