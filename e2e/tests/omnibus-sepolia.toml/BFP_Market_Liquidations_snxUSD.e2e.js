@@ -30,7 +30,7 @@ const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { getBfpMarketConfig } = require('../../tasks/getBfpMarketConfig');
 const { getPythPrice } = require('../../tasks/getPythPrice');
-const { parseUnits } = require("ethers/lib/utils");
+const { parseUnits } = require('ethers/lib/utils');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -518,8 +518,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
           BigNumber.from(marketId),
           wallet.address,
           flagKeeperReward,
-          parseUnits(pythPrice.toString(), 18)]
-        );
+          parseUnits(pythPrice.toString(), 18),
+        ]);
         break;
       }
     }
