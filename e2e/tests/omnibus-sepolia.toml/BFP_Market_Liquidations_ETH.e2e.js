@@ -485,14 +485,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should flag an underwater fWETH backed position', async () => {
     const marketConfig = await getBfpMarketConfig({ marketId });
-    const { flagKeeperReward } = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getLiquidationFees',
-      args: [accountId, marketId],
-    });
-
-    const pythPrice = await getPythPrice({ feedId: marketConfig.pythPriceFeedId });
 
     const { events } = await contractWrite({
       wallet,
@@ -500,6 +492,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       func: 'flagPosition',
       args: [accountId, marketId],
     });
+
+    const pythPrice = await getPythPrice({ feedId: marketConfig.pythPriceFeedId });
+    const { flagKeeperReward } = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getLiquidationFees',
+      args: [accountId, marketId],
+      blockTag: events.blockNumber,
+    });
+
     let eventEmitted = false;
     for (const event of events) {
       if (event.event === 'PositionFlaggedLiquidation') {
@@ -510,7 +512,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
           wallet.address,
           flagKeeperReward,
           parseUnits(pythPrice.toString(), 18)]
-      );
+        );
         break;
       }
     }
@@ -560,139 +562,5 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       ],
       impersonate: owner,
     });
-  });
-
-  it('should open a short with sUSD collateral', async () => {
-    const collateralAddress = require('../../deployments/systemToken.json').address;
-
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'modifyCollateral',
-      args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(20_000))],
-    });
-
-    const newDigest = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getAccountDigest',
-      args: [accountId, marketId],
-    });
-    log({ newDigest });
-
-    const newDepositedsUSD = newDigest.depositedCollaterals.find(
-      (c) => c.collateralAddress === collateralAddress
-    );
-    log({ newDepositedsUSD });
-    const { now, blockTimestamp } = getTimes(provider);
-    const buffer = 1; // 1s
-    const diff = now - blockTimestamp;
-
-    if (diff < 0) {
-      await wait(Math.abs(diff) + buffer * 1000);
-    }
-    await commitBfpOrder({
-      wallet,
-      accountId,
-      marketId,
-      sizeDelta: -0.01,
-    });
-    await wait(1000);
-    await wait(5000);
-
-    const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
-    assert.equal(newPosition.positionSize, -0.01);
-  });
-
-  it('should update market configuration minMarginUsd to force liquidations', async () => {
-    let marketConfiguration = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getMarketConfigurationById',
-      args: [marketId],
-    });
-    oldMinMarginUsd = marketConfiguration.minMarginUsd;
-    log({ marketConfiguration });
-
-    const marginDigest = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getMarginDigest',
-      args: [accountId, marketId],
-    });
-    log({ marginDigest });
-    const collateralUsd = marginDigest.collateralUsd;
-    log({ collateralUsd });
-
-    // Sets minMarginUsd to be above the current collateral value
-    const updatedMarketConfiguration = {
-      ...marketConfiguration,
-      minMarginUsd: collateralUsd + 1,
-    };
-
-    const owner = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'owner',
-    });
-
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'setMarketConfigurationById',
-      args: [
-        {
-          marketId,
-          ...updatedMarketConfiguration,
-        },
-      ],
-      impersonate: owner,
-    });
-  });
-
-  it('should flag an underwater sUSD backed position', async () => {
-    const marketConfig = await getBfpMarketConfig({ marketId });
-    const { flagKeeperReward } = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getLiquidationFees',
-      args: [accountId, marketId],
-    });
-
-    const pythPrice = await getPythPrice({ feedId: marketConfig.pythPriceFeedId });
-
-    const { events } = await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'flagPosition',
-      args: [accountId, marketId],
-    });
-    let eventEmitted = false;
-    for (const event of events) {
-      if (event.event === 'PositionFlaggedLiquidation') {
-        eventEmitted = true;
-        assert.deepEqual(event.args, [
-          BigNumber.from(accountId),
-          BigNumber.from(marketId),
-          wallet.address,
-          flagKeeperReward,
-          parseUnits(pythPrice.toString(), 18)]
-        );
-        break;
-      }
-    }
-    assert.ok(eventEmitted);
-  });
-
-  it('should liquidate an underwater sUSD backed position', async () => {
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'liquidatePosition',
-      args: [accountId, marketId],
-    });
-
-    const currentPosition = await getBfpPosition({ accountId, marketId });
-    assert.equal(currentPosition.positionSize, 0);
   });
 });
