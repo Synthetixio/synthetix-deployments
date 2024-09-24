@@ -21,7 +21,7 @@ matic_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.matic_perps_market_id %>", "Matic", "MATIC"]
+args = ["<%= settings.matic_perps_market_id %>", "Polygon", "MATIC"]
 
 [invoke.setPerpsPriceMatic]
 target = ["perpsFactory.PerpsMarketProxy"]

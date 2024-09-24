@@ -21,7 +21,7 @@ bnb_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.bnb_perps_market_id %>", "Binance Coin", "BNB"]
+args = ["<%= settings.bnb_perps_market_id %>", "BNB", "BNB"]
 
 [invoke.setPerpsPriceBnb]
 target = ["perpsFactory.PerpsMarketProxy"]
