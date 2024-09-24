@@ -185,11 +185,14 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/yfi.toml",
 ]
 
-[setting.commitmentPriceDelay]
+[setting.commitment_price_delay]
 defaultValue = "2"
 
-[setting.bigCapSettlementDelay]
+[setting.big_cap_settlement_delay]
 defaultValue = "2"
+
+[setting.big_cap_settlement_window_duration]
+defaultValue = "60"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.18"
