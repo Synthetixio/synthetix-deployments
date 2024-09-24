@@ -356,10 +356,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       if (event.event === 'PositionFlaggedLiquidation') {
         eventEmitted = true;
         log({ event });
-        assert.deepEqual(event.args.slice(0,3), [
+        assert.deepEqual(event.args.slice(0, 3), [
           BigNumber.from(accountId),
           BigNumber.from(marketId),
-          wallet.address
+          wallet.address,
         ]);
         break;
       }
