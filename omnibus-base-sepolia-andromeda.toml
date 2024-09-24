@@ -102,6 +102,9 @@ include = [
     # Perps
     #
 
+    # Margin Collateral
+    "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/usd.toml",
+
     # Perps Settings
     "tomls/omnibus-base-sepolia-andromeda/perps/perps-keeper-cost.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/global.toml",

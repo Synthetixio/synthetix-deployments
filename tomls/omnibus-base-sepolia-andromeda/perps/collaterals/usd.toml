@@ -4,7 +4,7 @@ usd_upper_limit_discount = "0"
 usd_lower_limit_discount = "0"
 usd_discount_scalar = "0"
 
-[invoke.setPerpsMaxCollateralForSnxUsd]
+[invoke.PerpsMarketProxy_setCollateralConfiguration_USD]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setCollateralConfiguration"
