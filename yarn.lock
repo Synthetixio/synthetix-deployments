@@ -1152,9 +1152,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.17.3-hotfix.0":
-  version: 2.17.3-hotfix.0
-  resolution: "@usecannon/builder@npm:2.17.3-hotfix.0"
+"@usecannon/builder@npm:2.17.3":
+  version: 2.17.3
+  resolution: "@usecannon/builder@npm:2.17.3"
   dependencies:
     "@synthetixio/router": "npm:^3.4.0"
     axios: "npm:^1.7.2"
@@ -1170,16 +1170,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.16.5"
     zod: "npm:^3.23.6"
-  checksum: 10/d16b9c4dfd3075d719683353e953a170d280b7510e14b030ffe85e3b78cbd75b252f4de298de556ada9d83036777cdd266463b90c6ba418c1e7e4201e52df5e5
+  checksum: 10/5497690e2522ceffe90c7195d912576eb987f44434460b486cf8d98b33782bc029a252c39d057023868254a30a94402d680c1d446f1ea4ca8359a1922f1b6556
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.17.3-hotfix.0":
-  version: 2.17.3-hotfix.0
-  resolution: "@usecannon/cli@npm:2.17.3-hotfix.0"
+"@usecannon/cli@npm:2.17.3":
+  version: 2.17.3
+  resolution: "@usecannon/cli@npm:2.17.3"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.17.3-hotfix.0"
+    "@usecannon/builder": "npm:2.17.3"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^9.5.0"
@@ -1198,7 +1198,7 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/8dffc2f36267f4b6e8de1a4b196e3dd77278bfa1c62b100115cd8ce6a84c0b800e026c07dc403b765bb79eb2180ce012324a3d03dd889e7eb03b1338972afad9
+  checksum: 10/d9229e18bd232bdeb04cc23db42b7c6cabae4cf05a4815fc49da8d0aa3037b44c79f19efc3bea29c41c224d0ca5c037e9063e644c423309be606bf2e562438f9
   languageName: node
   linkType: hard
 
@@ -4551,8 +4551,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.67.0"
-    "@usecannon/builder": "npm:2.17.3-hotfix.0"
-    "@usecannon/cli": "npm:2.17.3-hotfix.0"
+    "@usecannon/builder": "npm:2.17.3"
+    "@usecannon/cli": "npm:2.17.3"
     debug: "npm:^4.3.7"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.10"
