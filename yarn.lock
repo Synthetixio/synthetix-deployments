@@ -4888,29 +4888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.16.5":
-  version: 2.21.9
-  resolution: "viem@npm:2.21.9"
-  dependencies:
-    "@adraffy/ens-normalize": "npm:1.10.0"
-    "@noble/curves": "npm:1.4.0"
-    "@noble/hashes": "npm:1.4.0"
-    "@scure/bip32": "npm:1.4.0"
-    "@scure/bip39": "npm:1.4.0"
-    abitype: "npm:1.0.5"
-    isows: "npm:1.0.4"
-    webauthn-p256: "npm:0.0.5"
-    ws: "npm:8.17.1"
-  peerDependencies:
-    typescript: ">=5.0.4"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10/bdafc5359a43dcb472aef1b1737ba2deae24104192af65a6a068cc583df1ab4dccd75505895556386da05ebb3bd4c9c5d7294ac5c2c12aeee99ca9f555e16d1b
-  languageName: node
-  linkType: hard
-
-"viem@npm:^2.21.14":
+"viem@npm:^2.16.5, viem@npm:^2.21.14":
   version: 2.21.14
   resolution: "viem@npm:2.21.14"
   dependencies:
