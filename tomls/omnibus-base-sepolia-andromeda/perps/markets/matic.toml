@@ -2,10 +2,10 @@
 matic_perps_market_id = "1700"
 matic_perps_market_skew_scale = "<%= parseEther(String(84_000_000)) %>"
 matic_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-matic_perps_maker_fee_ratio = "<%= parseEther('0') %>"
-matic_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
-matic_perps_max_market_size = "<%= parseEther('0') %>"
-matic_perps_max_market_value = "<%= parseEther('0') %>"
+matic_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+matic_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+matic_perps_max_market_size = "<%= parseEther(String(0)) %>"
+matic_perps_max_market_value = "<%= parseEther(String(0)) %>"
 matic_perps_initial_margin_ratio = "<%= parseEther('4.41') %>"
 matic_perps_maintenance_margin_scalar = "<%= parseEther('0.26') %>"
 matic_perps_minimum_initial_margin_ratio = "<%= parseEther('0.02') %>"
@@ -13,9 +13,9 @@ matic_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 matic_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 matic_perps_max_seconds_in_liquidation_window = "30"
 matic_perps_minimum_position_margin = "<%= parseEther('50') %>"
-matic_perps_locked_oi_ratio = "<%= parseEther('0.50') %>"
+matic_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
 matic_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
-matic_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
+matic_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 
 [invoke.createMaticPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -52,7 +52,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.matic_perps_market_id %>",
     "<%= extras.matic_pyth_settlement_strategy %>",
-    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_pol %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_matic %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
 [invoke.setPerpsMaticFundingParameters]
