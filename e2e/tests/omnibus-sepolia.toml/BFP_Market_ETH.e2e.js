@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const assert = require('assert');
-const { ethers, BigNumber } = require('ethers');
+const { ethers } = require('ethers');
 require('../../inspect');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.e2e.js')}`);
 
