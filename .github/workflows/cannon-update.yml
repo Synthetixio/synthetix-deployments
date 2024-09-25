@@ -32,7 +32,7 @@ jobs:
           title: Cannon Hotfix
           commit-message: Cannon Hotfix
           branch: cannon-hotfix
-          reviewers: noisekit, dbeal
+          reviewers: noisekit, dbeal-eth
           labels: dependabot, cannon
           draft: true
           add-paths: .
