@@ -1,6 +1,5 @@
 #BFP Configuration
 
-
 # Collaterals configurations
 
 [setting.snxusd_max_collateral]
@@ -158,9 +157,7 @@ args = ["<%= settings.eth_oracle_id %>"]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = [
-    { name = "<%= formatBytes32String('ETHPERP') %>", minDelegateTime = 86400 },
-]
+args = [{ name = "<%= formatBytes32String('ETHPERP') %>", minDelegateTime = 86400 }]
 extra.eth_market_id.event = "MarketCreated"
 extra.eth_market_id.arg = 0
 

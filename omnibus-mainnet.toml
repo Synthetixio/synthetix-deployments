@@ -6,11 +6,12 @@ include = [
     "tomls/ccip-mainnet.toml",
     "tomls/core.toml",
     "tomls/permissions.toml",
-    #"tomls/oracles/wsteth.toml",
-    #"tomls/oracles/susde.toml",
+    "tomls/oracles/eth.toml",
+    "tomls/oracles/wsteth.toml",
+    "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
-    #"tomls/collaterals/wsteth.toml",
-    #"tomls/collaterals/susde.toml",
+    "tomls/collaterals/wsteth.toml",
+    "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
     "tomls/markets/spot-factory.toml",
@@ -31,10 +32,10 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.5.0"
+defaultValue = "synthetix:3.6.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.19"
