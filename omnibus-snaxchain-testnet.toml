@@ -9,7 +9,7 @@ include = [
 ]
 
 [setting.salt]
-defaultValue = "better salt"
+defaultValue = "even better salt"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
