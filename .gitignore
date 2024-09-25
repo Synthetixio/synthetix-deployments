@@ -19,3 +19,4 @@ deployments/
 e2e/cannon
 e2e/tmp
 /*.js
+docs/
