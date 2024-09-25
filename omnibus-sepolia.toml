@@ -240,6 +240,12 @@ defaultValue = "<%= parseEther('0.0012') %>"
 [setting.liquidation_window_duration]
 defaultValue = "90"
 
+[setting.min_keeper_fee_usd]
+defaultValue = "<%= parseEther('10') %>"
+
+[setting.max_keeper_fee_usd]
+defaultValue = "<%= parseEther('100') %>"
+
 # --- Provision bfp market --- #
 #
 #
