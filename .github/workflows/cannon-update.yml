@@ -31,7 +31,7 @@ jobs:
         with:
           title: Cannon Hotfix
           commit-message: Cannon Hotfix
-          branch: cannon-hotfix
+          branch: cannon-${{ inputs.cannon_tag }}
           reviewers: noisekit, dbeal-eth
           labels: dependabot, cannon
           draft: true
