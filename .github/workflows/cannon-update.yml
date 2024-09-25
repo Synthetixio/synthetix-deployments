@@ -29,8 +29,9 @@ jobs:
 
       - uses: peter-evans/create-pull-request@v7
         with:
-          title: Cannon Hotfix
-          commit-message: Cannon Hotfix
+          title: "Cannon Update: ${{ inputs.cannon_tag }}"
+          commit-message: "Cannon Update: ${{ inputs.cannon_tag }}"
+          body: ""
           branch: cannon-${{ inputs.cannon_tag }}
           reviewers: noisekit, dbeal-eth
           labels: dependabot, cannon
