@@ -64,12 +64,14 @@ defaultValue = "snax"
 [setting.snx_address]
 defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
-# update to actual wstETH oracle address when becomes available
-#[setting.wsteth_aggregator_address]
-#defaultValue = ""
+[setting.eth_aggregator_address]
+defaultValue = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+
+[setting.wsteth_aggregator_address]
+defaultValue = "0x164b276057258d81941e97B0a900D4C7B358bCe0"
 
 [setting.susde_aggregator_address]
-defaultValue = "0xFF3BC18cCBd5999CE63E788A1c250a88626aD099"
+defaultValue = "0xeD9960f685C3c4d6aa937E56169a41C19D0aC9c6"
 
 [setting.usde_aggregator_address]
 defaultValue = "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
@@ -112,6 +114,9 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 
 [setting.ccip_token_pool]
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
+
+[setting.pyth_price_verification_address]
+defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
 
 [setting.synthUsdeAsyncFixedFee]
 defaultValue = "0"

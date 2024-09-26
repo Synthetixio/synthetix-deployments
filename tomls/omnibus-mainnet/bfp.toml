@@ -122,8 +122,8 @@ pythPublishTimeMin = 12
 pythPublishTimeMax = 60
 minOrderAge = 12
 maxOrderAge = 60
-minKeeperFeeUsd = "<%= setting.min_keeper_fee_usd %>"
-maxKeeperFeeUsd = "<%= setting.max_keeper_fee_usd %>"
+minKeeperFeeUsd = "<%= settings.min_keeper_fee_usd %>"
+maxKeeperFeeUsd = "<%= settings.max_keeper_fee_usd %>"
 keeperProfitMarginUsd = "<%= settings.keeper_profit_margin_usd %>"
 keeperProfitMarginPercent = "<%= settings.keeper_profit_margin_percent %>"
 keeperSettlementGasUnits = 1200000
