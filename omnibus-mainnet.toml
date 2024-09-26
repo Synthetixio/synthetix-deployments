@@ -10,6 +10,7 @@ include = [
     "tomls/oracles/wsteth.toml",
     "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
+    "tomls/collaterals/weth.toml",
     "tomls/collaterals/wsteth.toml",
     "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
@@ -32,7 +33,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.6.0"
+defaultValue = "synthetix:3.7.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"
@@ -51,6 +52,9 @@ defaultValue = 'susde-token'
 
 [setting.wsteth_package]
 defaultValue = 'wsteth-token'
+
+[setting.weth_address]
+defaultValue = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"

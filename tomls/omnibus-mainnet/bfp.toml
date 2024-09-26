@@ -201,7 +201,7 @@ args = [
         "<%= settings.weth_address %>",
     ],
     [ # oracle node ids
-        "<%= imports.system.settings.const_one_oracle_id %>",
+        "<%= imports.system.extras.const_one_oracle_id %>",
         "<%= settings.eth_oracle_id %>",
     ],
     [ # maxAllowances
@@ -213,7 +213,7 @@ args = [
         "<%= settings.weth_skew_scale %>",
     ],
     [ # rewardDistributors
-        "<%= settings.weth_rewards_distributor %>",
+        "0x0000000000000000000000000000000000000000",
         "<%= settings.weth_rewards_distributor %>",
     ],
 ]
