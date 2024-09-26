@@ -4587,7 +4587,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.21.14"
+    viem: "npm:^2.21.15"
   languageName: unknown
   linkType: soft
 
@@ -4888,7 +4888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.16.5, viem@npm:^2.21.14":
+"viem@npm:^2.16.5":
   version: 2.21.14
   resolution: "viem@npm:2.21.14"
   dependencies:
@@ -4907,6 +4907,28 @@ __metadata:
     typescript:
       optional: true
   checksum: 10/0de5a87604ff8397ab12da3a05212b999cb86fc9d7ac601ae3c49a0ed039246299e401dbdb0b41b4bbb4006b2bff8a358ec2f44d01268f625666a6ad159e0514
+  languageName: node
+  linkType: hard
+
+"viem@npm:^2.21.15":
+  version: 2.21.15
+  resolution: "viem@npm:2.21.15"
+  dependencies:
+    "@adraffy/ens-normalize": "npm:1.10.0"
+    "@noble/curves": "npm:1.4.0"
+    "@noble/hashes": "npm:1.4.0"
+    "@scure/bip32": "npm:1.4.0"
+    "@scure/bip39": "npm:1.4.0"
+    abitype: "npm:1.0.5"
+    isows: "npm:1.0.4"
+    webauthn-p256: "npm:0.0.5"
+    ws: "npm:8.17.1"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/dd44562369a613672b6a5503a9843c1c87c7e2130577c61fb97434385995976453784b150056ab329bd62fb65258af8791a0620496065ca2810d9b51fa72ac0d
   languageName: node
   linkType: hard
 
