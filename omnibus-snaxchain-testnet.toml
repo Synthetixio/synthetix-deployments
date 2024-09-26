@@ -9,7 +9,7 @@ include = [
 ]
 
 [setting.salt]
-defaultValue = "better salt"
+defaultValue = "even better salt"
 
 [setting.owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
@@ -19,12 +19,12 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 
 [var.governance]
 governance_package = "synthetix-governance:3.6.3"
-governance_satellite_package = "synthetix-governance-satellite:3.6.3"
+governance_satellite_package = "synthetix-governance-satellite:3.6.2"
 governance_snapshot_record_package = "synthetix-snapshot-rewards:3.4.0"
 governance_snapshot_record = "0x7BaE0d0Bf556B2C8F3BFd250D7c63B1B2711652B"  # mock
 governance_ambassador_weight = "0"                                         # Quadratic Weight
-governance_spartan_weight = "0"                                            # Quadratic Weight
-governance_treasury_weight = "0"                                           # Linear Weight
+governance_spartan_weight = "1"                                            # Linear Weight
+governance_treasury_weight = "1"                                           # Linear Weight
 governance_wormhole_core = "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd"    # https://testnet-explorer.snaxchain.io/address/0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd
 governance_wormhole_relayer = "0xe1ECA712d327ed8e0E762A303c95c19b7b4659EE" # Mock relayer https://usecannon.com/packages/synthetix-governance/8/13001-test
 governance_initial_council_member = "<%= settings.owner %>"
