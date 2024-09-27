@@ -33,7 +33,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.7.0"
+defaultValue = "synthetix:3.8.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"
@@ -55,6 +55,9 @@ defaultValue = 'wsteth-token'
 
 [setting.weth_address]
 defaultValue = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+
+[setting.weth_max_pool_collateral]
+defaultValue = "<%= parseEther(String(20_000)) %>"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -121,6 +124,21 @@ defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
 
 [setting.pyth_price_verification_address]
 defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
+
+# Collaterals configurations
+#
+[setting.snxusd_max_collateral]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+[setting.weth_max_collateral]
+defaultValue = "<%= parseEther(String(10_000)) %>"
+
+[setting.snxusd_skew_scale]
+defaultValue = "0" # skew scale is not used for sUSD.
+
+[setting.weth_skew_scale]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
 
 [setting.synthUsdeAsyncFixedFee]
 defaultValue = "0"
