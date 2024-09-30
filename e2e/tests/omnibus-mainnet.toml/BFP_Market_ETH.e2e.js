@@ -28,7 +28,7 @@ const { getBfpDebt } = require('../../tasks/getBfpDebt');
 const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
-const { wrapEth } = require("../../tasks/wrapEth");
+const { wrapEth } = require('../../tasks/wrapEth');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
