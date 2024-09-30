@@ -21,6 +21,7 @@ args = [
         "<%= settings.arb_address %>",
         "<%= settings.usdc_address %>",
         "<%= settings.usde_address %>",
+        "<%= settings.susde_address %>",
         "<%= settings.weth_address %>",
         "<%= settings.weeth_address %>",
         "<%= settings.wsteth_address %>",
@@ -91,5 +92,16 @@ func = "registerRewardsDistributor"
 args = [
     "<%= extras.spartan_council_pool_id %>",
     "<%= settings.weeth_address %>",
+    "<%= imports.RewardsDistributor_sSOL_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_sSOL_liquidation_rewards_for_SpartanCouncilPool_susde_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.susde_address %>",
     "<%= imports.RewardsDistributor_sSOL_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "28"
+version = "29"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -17,6 +17,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/collaterals/tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/usdc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/susde.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weeth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/weth.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/wsteth.toml",
@@ -64,6 +65,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-shib.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sol.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-stx.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-susde.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tia.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-uni.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-usdc.toml",
@@ -239,6 +241,7 @@ synth_usdc_max_market_collateral = "<%= parseEther(String(10_000_000)) %>"
 [var.token_addresses]
 arb_address = "0x912CE59144191C1204E64559FE8253a0e49E6548"
 sol_address = "0xb74Da9FE2F96B9E0a5f4A3cf0b92dd2bEC617124"    # https://docs.wormhole.com/wormhole
+susde_address = "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"  # https://coinmarketcap.com/currencies/ethena-staked-usde/
 tbtc_address = "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
 usdc_address = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"   # https://developers.circle.com/stablecoins/docs/usdc-on-main-networks
 usde_address = "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"   # https://coinmarketcap.com/currencies/ethena-usde/
@@ -274,6 +277,7 @@ pyth_feed_id_rune = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61
 pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"
 pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
 pyth_feed_id_stx = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
+pyth_feed_id_susde = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
 pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
 pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
 pyth_feed_id_usdc = "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a"
