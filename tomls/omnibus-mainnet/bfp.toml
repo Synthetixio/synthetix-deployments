@@ -105,8 +105,8 @@ name = "weth RewardDistributor"
 token = "<%= settings.weth_address %>"
 collateralTypes = [
     "<%= settings.snx_address %>",
-    "<%= imports.wsteth.contracts.Token.address %>",
-    "<%= imports.susde.contracts.Token.address %>",
+#    "<%= imports.wsteth.contracts.Token.address %>",
+#    "<%= imports.susde.contracts.Token.address %>",
 ]
 
 # --- Global Market configuration --- #
@@ -256,35 +256,35 @@ args = [
     "<%= settings.weth_rewards_distributor %>",
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_susd]
+[invoke.CoreProxy_registerRewardsDistributor_snx]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
 fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= settings.sc_pool_id %>",
-    "<%= system.USDProxy.address %>",
+    "<%= settings.snx_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
 
-[invoke.CoreProxy_registerRewardsDistributor_wsteth]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= settings.sc_pool_id %>",
-    "<%= imports.wsteth.contracts.Token.address %>",
-    "<%= settings.weth_rewards_distributor %>",
-]
+#[invoke.CoreProxy_registerRewardsDistributor_wsteth]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= imports.wsteth.contracts.Token.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]
 
-[invoke.CoreProxy_registerRewardsDistributor_susde]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= settings.sc_pool_id %>",
-    "<%= imports.susde.contracts.Token.address %>",
-    "<%= settings.weth_rewards_distributor %>",
-]
+#[invoke.CoreProxy_registerRewardsDistributor_susde]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= imports.susde.contracts.Token.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]
