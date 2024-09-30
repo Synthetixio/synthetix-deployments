@@ -28,6 +28,7 @@ const { borrowUsd } = require('../../tasks/borrowUsd');
 const { setConfigUint } = require('../../tasks/setConfigUint');
 const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
 const { getConfigUint } = require('../../tasks/getConfigUint');
+const { wrapEth } = require('../../tasks/wrapEth');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -59,14 +60,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(wallet.address);
   });
 
-  it('should set ETH balance to 100 and fWETH balance to 1_000', async () => {
+  it('should set ETH balance to 1100', async () => {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
-    await setEthBalance({ address, balance: 100 });
-    assert.equal(await getEthBalance({ address }), 100);
-
-    const { tokenAddress } = await getCollateralConfig('fWETH');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fWETH' }), 1_000);
+    await setEthBalance({ address, balance: 1100 });
+    assert.equal(await getEthBalance({ address }), 1100);
   });
 
   it('should create user account', async () => {
@@ -77,6 +74,17 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await createAccount({ wallet, accountId });
     assert.equal(await getAccountOwner({ accountId }), address);
+  });
+
+  it('should set WETH balance to 1_000', async () => {
+    assert.equal(
+      await getCollateralBalance({ address, symbol: 'WETH' }),
+      0,
+      'New wallet has 0 WETH balance'
+    );
+    const { tokenAddress } = await getCollateralConfig('WETH');
+    await wrapEth({ privateKey, amount: 1_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 1_000);
   });
 
   it('should disable withdrawal timeout', async () => {

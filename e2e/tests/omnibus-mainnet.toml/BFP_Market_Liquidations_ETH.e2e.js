@@ -24,6 +24,7 @@ const { contractWrite } = require('../../tasks/contractWrite');
 const { commitBfpOrder } = require('../../tasks/commitBfpOrder');
 const { settleBfpOrder } = require('../../tasks/settleBfpOrder');
 const { getBfpPosition } = require('../../tasks/getBfpPosition');
+const { wrapEth } = require('../../tasks/wrapEth');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -59,10 +60,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(wallet.address);
   });
 
-  it('should set ETH balance to 100', async () => {
+  it('should set ETH balance to 1100', async () => {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
-    await setEthBalance({ address, balance: 100 });
-    assert.equal(await getEthBalance({ address }), 100);
+    await setEthBalance({ address, balance: 1100 });
+    assert.equal(await getEthBalance({ address }), 1100);
   });
 
   it('should create user account', async () => {
@@ -82,7 +83,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       'New wallet has 0 WETH balance'
     );
     const { tokenAddress } = await getCollateralConfig('WETH');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1_000 });
+    await wrapEth({ privateKey, amount: 1_000 });
     assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 1_000);
   });
 
