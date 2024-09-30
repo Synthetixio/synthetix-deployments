@@ -126,7 +126,8 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
 
 [setting.pyth_price_verification_address]
-defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
+defaultValue = "0x4305FB66699C3B2702D4d05CF36551390A4c69C6"
+description = "https://docs.pyth.network/price-feeds/contract-addresses/evm"
 
 # Collaterals configurations
 #
