@@ -100,19 +100,19 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fWETH',
+      symbol: 'WETH',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
-    await depositCollateral({ privateKey, symbol: 'fWETH', accountId, amount: 500 });
+    await depositCollateral({ privateKey, symbol: 'WETH', accountId, amount: 500 });
     await delegateCollateral({
       privateKey,
-      symbol: 'fWETH',
+      symbol: 'WETH',
       accountId,
       amount: 500,
       poolId: 1,
     });
 
-    await borrowUsd({ wallet, accountId, symbol: 'fWETH', amount: 100_000, poolId: 1 });
+    await borrowUsd({ wallet, accountId, symbol: 'WETH', amount: 100_000, poolId: 1 });
 
     // Verify the new sUSD balance
     assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
