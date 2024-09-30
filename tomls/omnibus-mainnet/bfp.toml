@@ -105,8 +105,8 @@ name = "weth RewardDistributor"
 token = "<%= settings.weth_address %>"
 collateralTypes = [
     "<%= settings.snx_address %>",
-#    "<%= imports.wsteth.contracts.Token.address %>",
-#    "<%= imports.susde.contracts.Token.address %>",
+    #    "<%= imports.wsteth.contracts.Token.address %>",
+    #    "<%= imports.susde.contracts.Token.address %>",
 ]
 
 # --- Global Market configuration --- #
