@@ -437,7 +437,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should settle the short position', async () => {
-    await wait(12_000); // waits for oracle price update
+    await wait(15_000); // waits for oracle price update
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
     assert.equal(newPosition.positionSize, -0.01);
