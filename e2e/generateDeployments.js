@@ -256,6 +256,25 @@ async function extractSynths(deployments) {
       }
     }
   }
+
+  // walk over all the setWrapper invokes and find wrapped token info for each synth
+  for (const [key, value] of Object.entries(deployments?.state || {})) {
+    if (key.startsWith('invoke.')) {
+      const [, artifactName] = key.split('.');
+      const events = value?.artifacts?.txns?.[artifactName]?.events?.WrapperSet;
+      if (events && events.length === 1) {
+        // can only have one RewardsDistributorRegistered event
+        log({ WrapperSet: events[0] });
+        const [synthMarketId, wrapCollateralType, maxWrappableAmount] = events[0].args;
+        for (const synth of items) {
+          if (`${synth.synthMarketId}` === `${synthMarketId}`) {
+            synth.token = await fetchTokenInfo(wrapCollateralType);
+            synth.maxWrappableAmount = maxWrappableAmount;
+          }
+        }
+      }
+    }
+  }
   return {
     items,
     contracts,
