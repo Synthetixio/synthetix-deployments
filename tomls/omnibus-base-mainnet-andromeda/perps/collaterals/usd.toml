@@ -1,0 +1,17 @@
+[var.perps_collateral_USD_settings]
+usd_max_collateral_amount = "<%= MaxUint256 %>"
+usd_upper_limit_discount = "0"
+usd_lower_limit_discount = "0"
+usd_discount_scalar = "0"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_USD]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "0",
+    "<%= settings.usd_max_collateral_amount %>",
+    "<%= settings.usd_upper_limit_discount %>",
+    "<%= settings.usd_lower_limit_discount %>",
+    "<%= settings.usd_discount_scalar %>",
+]
