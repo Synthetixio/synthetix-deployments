@@ -1,0 +1,39 @@
+# This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
+# Latest Pyth Price
+[invoke.registerPythArbOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    5, # 5 = pyth aggregator type
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_arb, false]) %>",
+    [
+    ],
+]
+extra.arb_pyth_oracle_id.event = "NodeRegistered"
+extra.arb_pyth_oracle_id.arg = 0
+# Pyth Off-chain Lookup
+[invoke.registerLookupArbOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    9, # 9 = PythOffchainLookupNode
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_arb, settings.bigCapDefaultStalenessTolerance]) %>",
+    [
+    ],
+]
+extra.arb_lookup_oracle_id.event = "NodeRegistered"
+extra.arb_lookup_oracle_id.arg = 0
+# Staleness Node
+[invoke.registerArbOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.bigCapDefaultStalenessTolerance]) %>",
+    [
+        "<%= extras.arb_pyth_oracle_id %>",
+        "<%= extras.arb_lookup_oracle_id %>",
+    ],
+]
+extra.arb_oracle_id.event = "NodeRegistered"
+extra.arb_oracle_id.arg = 0
