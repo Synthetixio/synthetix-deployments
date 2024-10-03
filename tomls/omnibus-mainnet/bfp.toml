@@ -1,0 +1,290 @@
+#BFP Configuration
+
+# Collaterals configurations
+
+[setting.snxusd_max_collateral]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+[setting.weth_max_collateral]
+defaultValue = "<%= parseEther(String(10_000)) %>"
+
+[setting.snxusd_skew_scale]
+defaultValue = "0" # skew scale is not used for sUSD.
+
+[setting.weth_skew_scale]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+# ETH market configurations
+
+[setting.maker_fee]
+defaultValue = "<%= parseEther('0.0001') %>"
+
+[setting.taker_fee]
+defaultValue = "<%= parseEther('0.0006') %>"
+
+[setting.max_market_size]
+defaultValue = "<%= parseEther(String(1000)) %>"
+
+[setting.max_funding_velocity]
+defaultValue = "<%= parseEther('3') %>"
+
+[setting.skew_scale]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+[setting.funding_velocity_clamp]
+defaultValue = "<%= parseEther('0.0003') %>"
+
+[setting.min_credit_percent]
+defaultValue = "<%= parseEther('0.25') %>"
+
+[setting.min_margin_usd]
+defaultValue = "<%= parseEther('1000') %>"
+
+[setting.min_margin_ratio]
+defaultValue = "<%= parseEther('0.02') %>"
+
+[setting.incremental_margin_scalar]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.maintenance_margin_scalar]
+defaultValue = "<%= parseEther('0.3') %>"
+
+[setting.max_initial_margin_ratio]
+defaultValue = "<%= parseEther('0.9') %>"
+
+[setting.liquidation_reward_percent]
+defaultValue = "<%= parseEther('0.0005') %>"
+
+[setting.liquidation_limit_scalar]
+defaultValue = "<%= parseEther('1') %>"
+
+[setting.liquidation_max_pd]
+defaultValue = "<%= parseEther('0.0012') %>"
+
+[setting.liquidation_window_duration]
+defaultValue = "90"
+
+[setting.min_keeper_fee_usd]
+defaultValue = "<%= parseEther('10') %>"
+
+[setting.max_keeper_fee_usd]
+defaultValue = "<%= parseEther('100') %>"
+
+# --- Provision bfp market --- #
+
+[provision.bfp_market_factory]
+source = "<%= settings.bfp_market_package %>"
+targetPreset = "<%= settings.target_preset %>"
+options.coreProxyOwner = "<%= settings.owner %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.synthetixPreset = "<%= settings.target_preset %>"
+depends = ["provision.system"]
+
+# Set pyth
+
+[invoke.BfpMarketProxy_setPyth]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setPyth"
+args = ["<%= settings.pyth_price_verification_address %>"]
+
+# --- Add Rewards distributors --- #
+
+[invoke.BfpMarketProxy_createRewardDistributor_weth]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "createRewardDistributor"
+extra.weth_rewards_distributor.event = "RewardDistributorCreated"
+extra.weth_rewards_distributor.arg = 0
+
+[[invoke.BfpMarketProxy_createRewardDistributor_weth.args]]
+poolId = "<%= settings.sc_pool_id %>"
+name = "weth RewardDistributor"
+token = "<%= settings.weth_address %>"
+collateralTypes = [
+    "<%= settings.snx_address %>",
+    #    "<%= imports.wsteth.contracts.Token.address %>",
+    #    "<%= imports.susde.contracts.Token.address %>",
+]
+
+# --- Global Market configuration --- #
+
+[invoke.BfpMarketProxy_setMarketConfiguration]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setMarketConfiguration"
+depends = ['provision.bfp_market_factory']
+
+[[invoke.BfpMarketProxy_setMarketConfiguration.args]]
+pythPublishTimeMin = 12
+pythPublishTimeMax = 60
+minOrderAge = 12
+maxOrderAge = 60
+minKeeperFeeUsd = "<%= settings.min_keeper_fee_usd %>"
+maxKeeperFeeUsd = "<%= settings.max_keeper_fee_usd %>"
+keeperProfitMarginUsd = "<%= settings.keeper_profit_margin_usd %>"
+keeperProfitMarginPercent = "<%= settings.keeper_profit_margin_percent %>"
+keeperSettlementGasUnits = 1200000
+keeperCancellationGasUnits = 600000
+keeperFlagGasUnits = 1200000
+keeperLiquidateMarginGasUnits = 1200000
+keeperLiquidationGasUnits = 1200000
+keeperLiquidationEndorsed = "<%= settings.keeper %>"
+collateralDiscountScalar = 1
+minCollateralDiscount = "<%= settings.min_collateral_discount %>"
+maxCollateralDiscount = "<%= parseEther('0.1') %>"
+utilizationBreakpointPercent = "<%= parseEther('0.025') %>"
+lowUtilizationSlopePercent = "<%= settings.low_utilization_slope_percent  %>"
+highUtilizationSlopePercent = "<%= settings.high_utilization_slope_percent %>"
+
+# --- Set eth oracle node id --- #
+#
+#
+
+[invoke.BfpMarketProxy_setEthOracleNodeId]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setEthOracleNodeId"
+args = ["<%= settings.eth_oracle_id %>"]
+
+# --- Create Market --- #
+#
+#
+
+[invoke.BfpMarketProxy_createMarket_eth]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = [{ name = "<%= formatBytes32String('ETHPERP') %>", minDelegateTime = 86400 }]
+extra.eth_market_id.event = "MarketCreated"
+extra.eth_market_id.arg = 0
+
+# --- Set Specific BFP Market Configuration --- #
+#
+#
+
+[invoke.BfpMarketProxy_setMarketConfigurationById_eth]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setMarketConfigurationById"
+
+[[invoke.BfpMarketProxy_setMarketConfigurationById_eth.args]]
+oracleNodeId = "<%= settings.eth_oracle_id %>"
+pythPriceFeedId = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace" # https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+marketId = "<%= settings.eth_market_id %>"
+makerFee = "<%= settings.maker_fee %>"
+takerFee = "<%= settings.taker_fee %>"
+maxMarketSize = "<%= settings.max_market_size %>"
+maxFundingVelocity = "<%= settings.max_funding_velocity %>"
+skewScale = "<%= settings.skew_scale %>"
+fundingVelocityClamp = "<%= settings.funding_velocity_clamp %>"
+minCreditPercent = "<%= settings.min_credit_percent %>"
+minMarginUsd = "<%= settings.min_margin_usd %>"
+minMarginRatio = "<%= settings.min_margin_ratio %>"
+incrementalMarginScalar = "<%= settings.incremental_margin_scalar %>"
+maintenanceMarginScalar = "<%= settings.maintenance_margin_scalar %>"
+maxInitialMarginRatio = "<%= settings.max_initial_margin_ratio %>"
+liquidationRewardPercent = "<%= settings.liquidation_reward_percent %>"
+liquidationLimitScalar = "<%= settings.liquidation_limit_scalar %>"
+liquidationWindowDuration = "<%= settings.liquidation_window_duration %>"
+liquidationMaxPd = "<%= settings.liquidation_max_pd %>"
+
+[invoke.BfpMarketProxy_setMarginCollateralConfiguration]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "setMarginCollateralConfiguration"
+args = [
+    [ # collateral addresses
+        "<%= system.USDProxy.address %>",
+        "<%= settings.weth_address %>",
+    ],
+    [ # oracle node ids
+        "<%= imports.system.extras.const_one_oracle_id %>",
+        "<%= settings.eth_oracle_id %>",
+    ],
+    [ # maxAllowances
+        "<%= settings.snxusd_max_collateral %>",
+        "<%= settings.weth_max_collateral %>",
+    ],
+    [ # skew_scales
+        "<%= settings.snxusd_skew_scale %>",
+        "<%= settings.weth_skew_scale %>",
+    ],
+    [ # rewardDistributors
+        "0x0000000000000000000000000000000000000000",
+        "<%= settings.weth_rewards_distributor %>",
+    ],
+]
+
+# --- Enable all BFP features --- #
+#
+#
+
+[invoke.BfpMarketProxy_enableAllFeatures]
+target = ["bfp_market_factory.BfpMarketProxy"]
+fromCall.func = "owner"
+func = "enableAllFeatures"
+
+# --- Configure maximum market collateral in Core --- #
+#
+#
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_weth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= settings.eth_market_id %>",
+    "<%= settings.weth_address %>",
+    "<%= settings.weth_max_pool_collateral %>",
+]
+
+# --- Register Reward Distributors with Core --- #
+#
+#
+
+[invoke.CoreProxy_registerRewardsDistributor_weth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.weth_address %>",
+    "<%= settings.weth_rewards_distributor %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_snx]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.snx_address %>",
+    "<%= settings.weth_rewards_distributor %>",
+]
+
+#[invoke.CoreProxy_registerRewardsDistributor_wsteth]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= imports.wsteth.contracts.Token.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]
+
+#[invoke.CoreProxy_registerRewardsDistributor_susde]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= imports.susde.contracts.Token.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]
