@@ -72,5 +72,5 @@ fromCall.args = ["<%= extras.synth_usdc_market_id %>"]
 func = "setCollateralLeverage"
 args = [
     "<%= extras.synth_usdc_market_id %>",
-     "<%= parseEther('10') %>",
-
+    "<%= parseEther('10') %>",
+]
