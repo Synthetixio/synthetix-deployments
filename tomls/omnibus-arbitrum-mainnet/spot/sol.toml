@@ -83,7 +83,7 @@ fromCall.args = ["<%= extras.synth_sol_market_id %>"]
 func = "setAtomicFixedFee"
 args = ["<%= extras.synth_sol_market_id %>", "<%= parseEther(String(0.30)) %>"]
 
-[invoke.setCollateralLeverage_sol]
+[invoke.SpotMarketProxy_setCollateralLeverage_sol]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_sol_market_id %>"]
