@@ -81,7 +81,4 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_usde_market_id %>"]
 func = "setCollateralLeverage"
-args = [
-    "<%= extras.synth_usde_market_id %>",
-    "<%= parseEther('10') %>",
-]
+args = ["<%= extras.synth_usde_market_id %>", "<%= parseEther('10') %>"]
