@@ -116,3 +116,13 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_btc_market_id %>"]
 func = "setAtomicFixedFee"
 args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther(String(0.30)) %>"]
+
+[invoke.setCollateralLeverage_btc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_btc_market_id %>"]
+func = "setCollateralLeverage"
+args = [
+    "<%= extras.synth_btc_market_id %>",
+    "<%= parseEther('10') %>",
+]
