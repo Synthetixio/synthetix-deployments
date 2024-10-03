@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "11"
+version = "12"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -112,6 +112,9 @@ defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
 
 [setting.pdao]
 defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+
+[setting.keeper]
+defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
 [setting.sc_pool_id]
 defaultValue = "1"

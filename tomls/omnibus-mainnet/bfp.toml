@@ -131,7 +131,7 @@ keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "<%= settings.deployer %>"                         # TODO, this is currently deployer, change to a keeper
+keeperLiquidationEndorsed = "<%= settings.keeper %>"
 collateralDiscountScalar = 1
 minCollateralDiscount = "<%= settings.min_collateral_discount %>"
 maxCollateralDiscount = "<%= parseEther('0.1') %>"
