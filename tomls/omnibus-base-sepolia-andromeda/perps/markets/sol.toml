@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.sol_perps_market_id %>",
     "<%= extras.sol_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsSolSettlementStrategy]

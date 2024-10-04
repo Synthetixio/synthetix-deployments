@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.doge_perps_market_id %>",
     "<%= extras.doge_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsDogeSettlementStrategy]

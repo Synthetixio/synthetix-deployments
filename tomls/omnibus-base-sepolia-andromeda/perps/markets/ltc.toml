@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.ltc_perps_market_id %>",
     "<%= extras.ltc_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsLtcSettlementStrategy]
