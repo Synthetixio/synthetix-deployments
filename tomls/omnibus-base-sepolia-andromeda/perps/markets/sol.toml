@@ -21,7 +21,7 @@ sol_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.sol_perps_market_id %>", "Sol", "SOL"]
+args = ["<%= settings.sol_perps_market_id %>", "Solana", "SOL"]
 
 [invoke.setPerpsPriceSol]
 target = ["perpsFactory.PerpsMarketProxy"]
