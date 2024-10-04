@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.near_perps_market_id %>",
     "<%= extras.near_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.bigCapDefaultStalenessTolerance %>",
 ]
 
 [invoke.addPerpsNearSettlementStrategy]
