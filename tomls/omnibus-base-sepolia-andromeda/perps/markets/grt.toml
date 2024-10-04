@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.grt_perps_market_id %>",
     "<%= extras.grt_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsGrtSettlementStrategy]

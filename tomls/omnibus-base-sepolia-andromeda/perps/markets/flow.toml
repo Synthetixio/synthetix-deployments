@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.flow_perps_market_id %>",
     "<%= extras.flow_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsFlowSettlementStrategy]
