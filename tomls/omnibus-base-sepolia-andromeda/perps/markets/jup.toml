@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.jup_perps_market_id %>",
     "<%= extras.jup_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.bigCapDefaultStalenessTolerance %>",
 ]
 
 [invoke.addPerpsJupSettlementStrategy]
