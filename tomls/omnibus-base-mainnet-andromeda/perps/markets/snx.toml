@@ -21,7 +21,7 @@ snx_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.snx_perps_market_id %>", "Synthetix Network Token", "SNX"]
+args = ["<%= settings.snx_perps_market_id %>", "Synthetix", "SNX"]
 
 [invoke.setPerpsPriceSnx]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.snx_perps_market_id %>",
     "<%= extras.snx_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.bigCapDefaultStalenessTolerance %>",
 ]
 
 [invoke.addPerpsSnxSettlementStrategy]
