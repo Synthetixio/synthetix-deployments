@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.ldo_perps_market_id %>",
     "<%= extras.ldo_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsLdoSettlementStrategy]
