@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.atom_perps_market_id %>",
     "<%= extras.atom_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsAtomSettlementStrategy]
