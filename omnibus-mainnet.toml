@@ -1,16 +1,18 @@
 name = "synthetix-omnibus"
-version = "11"
+version = "12"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
     "tomls/ccip-mainnet.toml",
-    "tomls/core.toml",
+    "tomls/omnibus-mainnet/core.toml",
     "tomls/permissions.toml",
-    #"tomls/oracles/wsteth.toml",
-    #"tomls/oracles/susde.toml",
+    "tomls/oracles/eth.toml",
+    "tomls/oracles/wsteth.toml",
+    "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
-    #"tomls/collaterals/wsteth.toml",
-    #"tomls/collaterals/susde.toml",
+    "tomls/collaterals/weth.toml",
+    #    "tomls/collaterals/wsteth.toml",
+    #    "tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
     "tomls/markets/spot-factory.toml",
@@ -25,13 +27,19 @@ include = [
     "tomls/omnibus-mainnet/governance/councils-satellite.toml",
     "tomls/omnibus-mainnet/governance/wormhole.toml",
     "tomls/omnibus-mainnet/governance/snapshot-record.toml",
+
+    # BFP Configuration
+    "tomls/omnibus-mainnet/bfp.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.5.0"
+defaultValue = "synthetix:3.8.0"
+
+[setting.oracle_manager_package]
+defaultValue = "oracle-manager:3.8.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.3.19"
@@ -39,11 +47,20 @@ defaultValue = "synthetix-perps-market:3.3.19"
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.5.0"
 
+[setting.bfp_market_package]
+defaultValue = "synthetix-bfp-market:3.6.0"
+
 [setting.susde_package]
 defaultValue = 'susde-token'
 
 [setting.wsteth_package]
 defaultValue = 'wsteth-token'
+
+[setting.weth_address]
+defaultValue = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+
+[setting.weth_max_pool_collateral]
+defaultValue = "<%= parseEther(String(20_000)) %>"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -57,12 +74,14 @@ defaultValue = "snax"
 [setting.snx_address]
 defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
-# update to actual wstETH oracle address when becomes available
-#[setting.wsteth_aggregator_address]
-#defaultValue = ""
+[setting.eth_aggregator_address]
+defaultValue = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+
+[setting.wsteth_aggregator_address]
+defaultValue = "0x164b276057258d81941e97B0a900D4C7B358bCe0"
 
 [setting.susde_aggregator_address]
-defaultValue = "0xFF3BC18cCBd5999CE63E788A1c250a88626aD099"
+defaultValue = "0xeD9960f685C3c4d6aa937E56169a41C19D0aC9c6"
 
 [setting.usde_aggregator_address]
 defaultValue = "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
@@ -94,6 +113,9 @@ defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
 [setting.pdao]
 defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 
+[setting.keeper]
+defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
+
 [setting.sc_pool_id]
 defaultValue = "1"
 
@@ -105,6 +127,24 @@ defaultValue = "0xE561d5E02207fb5eB32cca20a699E0d8919a1476"
 
 [setting.ccip_token_pool]
 defaultValue = "0x057152DB365B47851B0A0bd431644b8eE21fE1b4"
+
+[setting.pyth_price_verification_address]
+defaultValue = "0x4305FB66699C3B2702D4d05CF36551390A4c69C6"
+description = "https://docs.pyth.network/price-feeds/contract-addresses/evm"
+
+# Collaterals configurations
+#
+[setting.snxusd_max_collateral]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
+
+[setting.weth_max_collateral]
+defaultValue = "<%= parseEther(String(10_000)) %>"
+
+[setting.snxusd_skew_scale]
+defaultValue = "0" # skew scale is not used for sUSD.
+
+[setting.weth_skew_scale]
+defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 [setting.synthUsdeAsyncFixedFee]
 defaultValue = "0"
