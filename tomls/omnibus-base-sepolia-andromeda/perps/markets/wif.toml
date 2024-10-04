@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.wif_perps_market_id %>",
     "<%= extras.wif_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsWifSettlementStrategy]

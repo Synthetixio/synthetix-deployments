@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.ton_perps_market_id %>",
     "<%= extras.ton_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsTonSettlementStrategy]

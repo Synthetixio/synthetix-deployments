@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.sei_perps_market_id %>",
     "<%= extras.sei_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsSeiSettlementStrategy]
