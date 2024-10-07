@@ -9,7 +9,6 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/permit-deniers.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
-    
     "tomls/permit-pdao-createMarket.toml",
 
     # System collaterals
