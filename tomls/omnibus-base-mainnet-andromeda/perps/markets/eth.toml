@@ -1,0 +1,119 @@
+[var.perps_eth_market_settings]
+eth_perps_market_id = "100"
+eth_perps_market_skew_scale = "<%= parseEther(String(350_000)) %>"
+eth_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+eth_perps_maker_fee_ratio = "<%= parseEther('0.000001') %>"
+eth_perps_taker_fee_ratio = "<%= parseEther('0.000500') %>"
+eth_perps_max_market_size = "<%= parseEther(String(10_000)) %>"
+eth_perps_max_market_value = "<%= parseEther(String(15_000_000)) %>"
+eth_perps_initial_margin_ratio = "<%= parseEther('1.16') %>"
+eth_perps_maintenance_margin_scalar = "<%= parseEther('0.28') %>"
+eth_perps_minimum_initial_margin_ratio = "<%= parseEther('0.02') %>"
+eth_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+eth_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+eth_perps_max_seconds_in_liquidation_window = "30"
+eth_perps_minimum_position_margin = "<%= parseEther('50') %>"
+eth_perps_locked_oi_ratio = "<%= parseEther('0.25') %>"
+eth_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+eth_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createEthPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.eth_perps_market_id %>", "Ethereum", "ETH"]
+
+[invoke.setPerpsPriceEth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.eth_perps_market_id %>",
+    "<%= extras.eth_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsEthSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.eth_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.eth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.eth_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsEthSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.eth_perps_market_id %>",
+    "<%= extras.eth_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_eth %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsEthFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.eth_perps_market_id %>",
+    "<%= settings.eth_perps_market_skew_scale %>",
+    "<%= settings.eth_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsEthOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.eth_perps_market_id %>",
+    "<%= settings.eth_perps_maker_fee_ratio %>",
+    "<%= settings.eth_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsEthMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.eth_perps_market_id %>", "<%= settings.eth_perps_max_market_size %>"]
+
+[invoke.setPerpsEthMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.eth_perps_market_id %>", "<%= settings.eth_perps_max_market_value %>"]
+
+[invoke.setPerpsEthMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.eth_perps_market_id %>",
+    "<%= settings.eth_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.eth_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.eth_perps_max_liquidation_pd %>",
+    "<%= settings.eth_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsEthLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.eth_perps_market_id %>",
+    "<%= settings.eth_perps_initial_margin_ratio %>",
+    "<%= settings.eth_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.eth_perps_maintenance_margin_scalar %>",
+    "<%= settings.eth_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.eth_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsEthLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.eth_perps_market_id %>", "<%= settings.eth_perps_locked_oi_ratio %>"]

@@ -1,0 +1,119 @@
+[var.perps_sushi_market_settings]
+sushi_perps_market_id = "6700"
+sushi_perps_market_skew_scale = "<%= parseEther(String(8_000_000)) %>"
+sushi_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+sushi_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+sushi_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+sushi_perps_max_market_size = "<%= parseEther(String(117_960)) %>"
+sushi_perps_max_market_value = "<%= parseEther(String(50_000)) %>"
+sushi_perps_initial_margin_ratio = "<%= parseEther('1.37') %>"
+sushi_perps_maintenance_margin_scalar = "<%= parseEther('0.4') %>"
+sushi_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+sushi_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+sushi_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+sushi_perps_max_seconds_in_liquidation_window = "30"
+sushi_perps_minimum_position_margin = "<%= parseEther('50') %>"
+sushi_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+sushi_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+sushi_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createSushiPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.sushi_perps_market_id %>", "Sushiswap", "SUSHI"]
+
+[invoke.setPerpsPriceSushi]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.sushi_perps_market_id %>",
+    "<%= extras.sushi_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsSushiSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.sushi_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.sushi_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.sushi_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsSushiSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.sushi_perps_market_id %>",
+    "<%= extras.sushi_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_sushi %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsSushiFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.sushi_perps_market_id %>",
+    "<%= settings.sushi_perps_market_skew_scale %>",
+    "<%= settings.sushi_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsSushiOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.sushi_perps_market_id %>",
+    "<%= settings.sushi_perps_maker_fee_ratio %>",
+    "<%= settings.sushi_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsSushiMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.sushi_perps_market_id %>", "<%= settings.sushi_perps_max_market_size %>"]
+
+[invoke.setPerpsSushiMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.sushi_perps_market_id %>", "<%= settings.sushi_perps_max_market_value %>"]
+
+[invoke.setPerpsSushiMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.sushi_perps_market_id %>",
+    "<%= settings.sushi_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.sushi_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.sushi_perps_max_liquidation_pd %>",
+    "<%= settings.sushi_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsSushiLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.sushi_perps_market_id %>",
+    "<%= settings.sushi_perps_initial_margin_ratio %>",
+    "<%= settings.sushi_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.sushi_perps_maintenance_margin_scalar %>",
+    "<%= settings.sushi_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.sushi_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsSushiLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.sushi_perps_market_id %>", "<%= settings.sushi_perps_locked_oi_ratio %>"]

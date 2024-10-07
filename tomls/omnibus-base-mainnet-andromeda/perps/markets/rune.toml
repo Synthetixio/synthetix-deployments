@@ -1,0 +1,119 @@
+[var.perps_rune_market_settings]
+rune_perps_market_id = "1300"
+rune_perps_market_skew_scale = "<%= parseEther(String(3_000_000)) %>"
+rune_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+rune_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+rune_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+rune_perps_max_market_size = "<%= parseEther(String(300_000)) %>"
+rune_perps_max_market_value = "<%= parseEther(String(1_000_000)) %>"
+rune_perps_initial_margin_ratio = "<%= parseEther('5.39') %>"
+rune_perps_maintenance_margin_scalar = "<%= parseEther('0.36') %>"
+rune_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+rune_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+rune_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+rune_perps_max_seconds_in_liquidation_window = "30"
+rune_perps_minimum_position_margin = "<%= parseEther('50') %>"
+rune_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+rune_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+rune_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createRunePerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.rune_perps_market_id %>", "THORChain", "RUNE"]
+
+[invoke.setPerpsPriceRune]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.rune_perps_market_id %>",
+    "<%= extras.rune_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsRuneSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.rune_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.rune_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.rune_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsRuneSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.rune_perps_market_id %>",
+    "<%= extras.rune_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_rune %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsRuneFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.rune_perps_market_id %>",
+    "<%= settings.rune_perps_market_skew_scale %>",
+    "<%= settings.rune_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsRuneOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.rune_perps_market_id %>",
+    "<%= settings.rune_perps_maker_fee_ratio %>",
+    "<%= settings.rune_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsRuneMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.rune_perps_market_id %>", "<%= settings.rune_perps_max_market_size %>"]
+
+[invoke.setPerpsRuneMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.rune_perps_market_id %>", "<%= settings.rune_perps_max_market_value %>"]
+
+[invoke.setPerpsRuneMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.rune_perps_market_id %>",
+    "<%= settings.rune_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.rune_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.rune_perps_max_liquidation_pd %>",
+    "<%= settings.rune_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsRuneLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.rune_perps_market_id %>",
+    "<%= settings.rune_perps_initial_margin_ratio %>",
+    "<%= settings.rune_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.rune_perps_maintenance_margin_scalar %>",
+    "<%= settings.rune_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.rune_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsRuneLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.rune_perps_market_id %>", "<%= settings.rune_perps_locked_oi_ratio %>"]
