@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.algo_perps_market_id %>",
     "<%= extras.algo_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsAlgoSettlementStrategy]

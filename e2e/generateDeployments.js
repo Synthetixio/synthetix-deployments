@@ -58,6 +58,55 @@ async function fetchTokenInfo(address) {
   return fetchTokenInfo.cache[address];
 }
 
+async function fetchOracleInfo({ nodeId, OracleManagerProxy }) {
+  if (!fetchOracleInfo.cache) {
+    fetchOracleInfo.cache = {};
+  }
+  if (!fetchOracleInfo.cache[nodeId]) {
+    const oracle = {};
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.RPC_URL || 'http://127.0.0.1:8545'
+    );
+    const OracleContract = new ethers.Contract(
+      OracleManagerProxy.address,
+      OracleManagerProxy.abi,
+      provider
+    );
+    const oracleInfo = await OracleContract.getNode(nodeId);
+    if (oracleInfo.nodeType === 8) {
+      [oracle.constPrice] = ethers.utils.defaultAbiCoder.decode(['uint256'], oracleInfo.parameters);
+      oracle.constPrice = `${oracle.constPrice}`;
+    }
+    if (oracleInfo.nodeType === 2) {
+      [oracle.externalContract] = ethers.utils.defaultAbiCoder.decode(
+        ['address'],
+        oracleInfo.parameters
+      );
+    }
+    if (oracleInfo.nodeType === 7 && oracleInfo.parents?.[0]) {
+      // staleness circuit breaker
+      [oracle.stalenessTolerance] = ethers.utils.defaultAbiCoder.decode(
+        ['uint256'],
+        oracleInfo.parameters
+      );
+      oracle.stalenessTolerance = `${oracle.stalenessTolerance}`;
+      for (const parentOracleId of oracleInfo.parents) {
+        const parentOracleInfo = await OracleContract.getNode(parentOracleId).catch(() => {});
+        if (parentOracleInfo && parentOracleInfo.nodeType === 5) {
+          // pyth aggregator type
+          [_, oracle.pythFeedId] = ethers.utils.defaultAbiCoder.decode(
+            ['address', 'bytes32', 'bool'],
+            parentOracleInfo.parameters
+          );
+          break;
+        }
+      }
+    }
+    fetchOracleInfo.cache[nodeId] = oracle;
+  }
+  return fetchOracleInfo.cache[nodeId];
+}
+
 async function extractRewardsDistributors(deployments) {
   const items = [];
   const contracts = {};
@@ -393,10 +442,36 @@ async function extractCollaterals(deployments) {
       }
     }
   }
+
   return {
     items,
     contracts,
   };
+}
+
+async function extractPythFeeds(deployments) {
+  const items = [];
+  for (const [key, value] of Object.entries(deployments?.state || {})) {
+    if (key.startsWith('invoke.')) {
+      const [, artifactName] = key.split('.');
+      const events = value?.artifacts?.txns?.[artifactName]?.events?.NodeRegistered;
+      if (events && events.length === 1) {
+        // can only have one NodeRegistered event
+        log({ NodeRegistered: events[0] });
+        const [_oracleNodeId, nodeType, parameters] = events[0].args;
+        if (nodeType === 5) {
+          // pyth aggregator type
+          const [_priceVerificationAddress, feedId] = ethers.utils.defaultAbiCoder.decode(
+            ['address', 'bytes32', 'bool'],
+            parameters
+          );
+          items.push(feedId);
+        }
+      }
+    }
+  }
+
+  return items;
 }
 
 async function run() {
@@ -514,12 +589,22 @@ async function run() {
 
   const { items: collateralTokens, contracts: collateralTokenContracts } =
     await extractCollaterals(deployments);
+  for (const collateralToken of collateralTokens) {
+    collateralToken.oracle = await fetchOracleInfo({
+      nodeId: collateralToken.oracleNodeId,
+      OracleManagerProxy: contracts.OracleManagerProxy,
+    });
+  }
   log('Writing', `deployments/collateralTokens.json`);
   await fs.writeFile(
     `${__dirname}/deployments/collateralTokens.json`,
     JSON.stringify(collateralTokens, null, 2)
   );
   Object.assign(contracts, collateralTokenContracts);
+
+  // Extract all Pyth Feeds
+  const pythFeeds = await extractPythFeeds(deployments);
+  await fs.writeFile(`${__dirname}/deployments/pythFeeds.json`, JSON.stringify(pythFeeds, null, 2));
 
   // Extract all extras
   Object.values(deployments?.state).forEach((step) => {
