@@ -88,6 +88,42 @@ async function abi() {
     </tr>
   `);
   table.push(`
+    <tr>
+      <td>Collateral tokens</td>
+      <td><a href="./${chainId}-${preset}/collateralTokens.json"><code>collateralTokens.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>Collateral tokens</td>
+      <td><a href="./${chainId}-${preset}/collateralTokens.json"><code>collateralTokens.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>Synth tokens</td>
+      <td><a href="./${chainId}-${preset}/synthTokens.json"><code>synthTokens.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>System token</td>
+      <td><a href="./${chainId}-${preset}/systemToken.json"><code>systemToken.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>Rewards distributors</td>
+      <td><a href="./${chainId}-${preset}/rewardsDistributors.json"><code>rewardsDistributors.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>All utilised Pyth price feeds</td>
+      <td><a href="./${chainId}-${preset}/pythFeeds.json"><code>pythFeeds.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
       </tbody>
     </table>
   `);

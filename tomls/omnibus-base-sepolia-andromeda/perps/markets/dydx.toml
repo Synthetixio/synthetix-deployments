@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.dydx_perps_market_id %>",
     "<%= extras.dydx_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsDydxSettlementStrategy]

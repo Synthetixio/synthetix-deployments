@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.xlm_perps_market_id %>",
     "<%= extras.xlm_oracle_id %>",
-    "<%= settings.bigCapDefaultStalenessTolerance %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
 ]
 
 [invoke.addPerpsXlmSettlementStrategy]
