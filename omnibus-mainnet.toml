@@ -45,7 +45,7 @@ defaultValue = "synthetix-spot-market:3.6.0"
 defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.5.0"
+defaultValue = "synthetix-legacy-market:3.8.0"
 
 [setting.bfp_market_package]
 defaultValue = "synthetix-bfp-market:3.6.0"
