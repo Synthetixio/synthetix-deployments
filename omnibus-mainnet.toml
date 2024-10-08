@@ -11,9 +11,9 @@ include = [
     "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
     "tomls/collaterals/weth.toml",
-    #    "tomls/collaterals/wsteth.toml",
-    #    "tomls/collaterals/susde.toml",
-    "tomls/collaterals/snx.toml",
+    "tomls/omnibus-mainnet/collaterals/wsteth.toml",
+    "tomls/omnibus-mainnet/collaterals/susde.toml",
+    "tomls/omnibus-mainnet/collaterals/snx.toml",
     "tomls/markets/legacy.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/markets/spot/usde.toml",
@@ -53,8 +53,14 @@ defaultValue = "synthetix-bfp-market:3.8.0"
 [setting.susde_package]
 defaultValue = 'susde-token'
 
+[setting.susde_address]
+defaultValue = "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
+
 [setting.wsteth_package]
 defaultValue = 'wsteth-token'
+
+[setting.wsteth_address]
+defaultValue = "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
 
 [setting.weth_address]
 defaultValue = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
