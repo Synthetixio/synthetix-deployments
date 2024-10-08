@@ -1,0 +1,119 @@
+[var.perps_bnb_market_settings]
+bnb_perps_market_id = "1800"
+bnb_perps_market_skew_scale = "<%= parseEther(String(250_000)) %>"
+bnb_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+bnb_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+bnb_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+bnb_perps_max_market_size = "<%= parseEther(String(7_000)) %>"
+bnb_perps_max_market_value = "<%= parseEther(String(2_000_000)) %>"
+bnb_perps_initial_margin_ratio = "<%= parseEther('10.72') %>"
+bnb_perps_maintenance_margin_scalar = "<%= parseEther('0.35') %>"
+bnb_perps_minimum_initial_margin_ratio = "<%= parseEther('0.02') %>"
+bnb_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+bnb_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+bnb_perps_max_seconds_in_liquidation_window = "30"
+bnb_perps_minimum_position_margin = "<%= parseEther('50') %>"
+bnb_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+bnb_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+bnb_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createBnbPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.bnb_perps_market_id %>", "BNB", "BNB"]
+
+[invoke.setPerpsPriceBnb]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.bnb_perps_market_id %>",
+    "<%= extras.bnb_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsBnbSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.bnb_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.bnb_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.bnb_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsBnbSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.bnb_perps_market_id %>",
+    "<%= extras.bnb_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_bnb %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsBnbFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.bnb_perps_market_id %>",
+    "<%= settings.bnb_perps_market_skew_scale %>",
+    "<%= settings.bnb_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsBnbOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.bnb_perps_market_id %>",
+    "<%= settings.bnb_perps_maker_fee_ratio %>",
+    "<%= settings.bnb_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsBnbMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.bnb_perps_market_id %>", "<%= settings.bnb_perps_max_market_size %>"]
+
+[invoke.setPerpsBnbMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.bnb_perps_market_id %>", "<%= settings.bnb_perps_max_market_value %>"]
+
+[invoke.setPerpsBnbMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.bnb_perps_market_id %>",
+    "<%= settings.bnb_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.bnb_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.bnb_perps_max_liquidation_pd %>",
+    "<%= settings.bnb_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsBnbLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.bnb_perps_market_id %>",
+    "<%= settings.bnb_perps_initial_margin_ratio %>",
+    "<%= settings.bnb_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.bnb_perps_maintenance_margin_scalar %>",
+    "<%= settings.bnb_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.bnb_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsBnbLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.bnb_perps_market_id %>", "<%= settings.bnb_perps_locked_oi_ratio %>"]

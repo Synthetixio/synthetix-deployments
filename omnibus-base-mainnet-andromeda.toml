@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "49"
+version = "52"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -9,316 +9,198 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/permit-deniers.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/markets/perps-highcap-factory.toml",
-    "tomls/markets/common/bigcap-settings.toml",
-    "tomls/permit-all-perps-perpsHighcapSystem.toml",
     "tomls/permit-pdao-createMarket.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
+
+    # System collaterals
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstataUSDC.toml",
+
+    # LP Rewards
+    "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/usdc_rewards_for_sc_pool.toml",
+
+    # Spot Markets
+    "tomls/omnibus-base-mainnet-andromeda/spot/USDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/stataUSDC.toml",
+
+    # stataUSDC
+    "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
+
+    # Pyth oracles
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-aave.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ada.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-algo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-apt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-arb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-arkm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-atom.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-avax.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-axl.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-axs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bal.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bch.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-blur.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bnb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bome.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bonk.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-btc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-comp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-crv.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-doge.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-dot.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-dydx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ena.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-eos.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-etc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-eth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ethbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ethfi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-fil.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-flow.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ftm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-fxs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-gala.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-gmx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-grt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-icp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-imx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-inj.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-jto.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-jup.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ldo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-link.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ltc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-matic.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-meme.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-near.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-op.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ordi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-pendle.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-pepe.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-pyth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-rndr.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-rune.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sei.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-shib.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-snx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-strk.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-stx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sui.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sushi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-tao.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-tia.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ton.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-trx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-uni.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-w.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-wif.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xlm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xrp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-yfi.toml",
+
+    #
+    # Perps
+    #
+
+    # Margin Collateral
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/usd.toml",
+
+    # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/perps-keeper-cost.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
+    "tomls/markets/perps-highcap-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
+    "tomls/permit-all-perps-perpsHighcapSystem.toml",
 
-    # USDC
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sUSDC.toml",
-    "tomls/omnibus-base-mainnet-andromeda/spot/USDC.toml",
+    # Perps Markets
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/aave.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ada.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/algo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/apt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/arb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/arkm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/atom.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/avax.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/axl.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/axs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/bal.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/bch.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/blur.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/bnb.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/bome.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/bonk.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/btc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/comp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/crv.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/doge.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/dot.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/dydx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ena.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/eos.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/etc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/eth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ethbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ethfi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/fil.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/flow.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ftm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/fxs.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/gala.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/gmx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/grt.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/icp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/imx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/inj.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/jto.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/jup.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ldo.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/link.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ltc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/matic.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/meme.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/near.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/op.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ordi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/pendle.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/pepe.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/pyth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/rndr.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/rune.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/sei.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/shib.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/snx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/sol.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/strk.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/stx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/sui.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/sushi.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/tao.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/tia.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ton.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/trx.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/uni.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/w.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/wif.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/xlm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/xrp.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/yfi.toml",
 
-    # stataUSDC
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstataUSDC.toml",
-    "tomls/omnibus-base-mainnet-andromeda/spot/stataUSDC.toml",
-    "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
-
-    # BTC
-    "tomls/omnibus-base-mainnet-andromeda/perps/btc-invokes.toml",
-    "tomls/oracles/pyth-btc.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/btc.toml",
-    # ETH
-    "tomls/omnibus-base-mainnet-andromeda/perps/eth-invokes.toml",
-    "tomls/oracles/pyth-eth.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/eth.toml",
-    # SNX
-    "tomls/omnibus-base-mainnet-andromeda/perps/snx-invokes.toml",
-    "tomls/oracles/pyth-snx.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/snx.toml",
-    # SOL
-    "tomls/omnibus-base-mainnet-andromeda/perps/sol-invokes.toml",
-    "tomls/oracles/pyth-sol.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/sol.toml",
-    # WIF
-    "tomls/omnibus-base-mainnet-andromeda/perps/wif-invokes.toml",
-    "tomls/oracles/pyth-wif.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/wif.toml",
-    # W
-    "tomls/omnibus-base-mainnet-andromeda/perps/w-invokes.toml",
-    "tomls/oracles/pyth-w.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/w.toml",
-    # ENA
-    "tomls/omnibus-base-mainnet-andromeda/perps/ena-invokes.toml",
-    "tomls/oracles/pyth-ena.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ena.toml",
-    # DOGE
-    "tomls/omnibus-base-mainnet-andromeda/perps/doge-invokes.toml",
-    "tomls/oracles/pyth-doge.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/doge.toml",
-    # AVAX
-    "tomls/omnibus-base-mainnet-andromeda/perps/avax-invokes.toml",
-    "tomls/oracles/pyth-avax.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/avax.toml",
-    # OP
-    "tomls/omnibus-base-mainnet-andromeda/perps/op-invokes.toml",
-    "tomls/oracles/pyth-op.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/op.toml",
-    # ORDI
-    "tomls/omnibus-base-mainnet-andromeda/perps/ordi-invokes.toml",
-    "tomls/oracles/pyth-ordi.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ordi.toml",
-    # PEPE
-    "tomls/omnibus-base-mainnet-andromeda/perps/pepe-invokes.toml",
-    "tomls/oracles/pyth-pepe.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/pepe.toml",
-    # RUNE
-    "tomls/omnibus-base-mainnet-andromeda/perps/rune-invokes.toml",
-    "tomls/oracles/pyth-rune.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/rune.toml",
-    # BONK
-    "tomls/omnibus-base-mainnet-andromeda/perps/bonk-invokes.toml",
-    "tomls/oracles/pyth-bonk.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/bonk.toml",
-    # FTM
-    "tomls/omnibus-base-mainnet-andromeda/perps/ftm-invokes.toml",
-    "tomls/oracles/pyth-ftm.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ftm.toml",
-    # ARB
-    "tomls/omnibus-base-mainnet-andromeda/perps/arb-invokes.toml",
-    "tomls/oracles/pyth-arb.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/arb.toml",
-    # MATIC
-    "tomls/omnibus-base-mainnet-andromeda/perps/matic-invokes.toml",
-    "tomls/oracles/pyth-matic.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/matic.toml",
-    # BNB
-    "tomls/omnibus-base-mainnet-andromeda/perps/bnb-invokes.toml",
-    "tomls/oracles/pyth-bnb.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/bnb.toml",
-
-    # LINK
-    "tomls/omnibus-base-mainnet-andromeda/perps/link-invokes.toml",
-    "tomls/oracles/pyth-link.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/link.toml",
-    # PENDLE
-    "tomls/omnibus-base-mainnet-andromeda/perps/pendle-invokes.toml",
-    "tomls/oracles/pyth-pendle.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/pendle.toml",
-    # INJ
-    "tomls/omnibus-base-mainnet-andromeda/perps/inj-invokes.toml",
-    "tomls/oracles/pyth-inj.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/inj.toml",
-    # GMX
-    "tomls/omnibus-base-mainnet-andromeda/perps/gmx-invokes.toml",
-    "tomls/oracles/pyth-gmx.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/gmx.toml",
-    # TIA
-    "tomls/omnibus-base-mainnet-andromeda/perps/tia-invokes.toml",
-    "tomls/oracles/pyth-tia.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/tia.toml",
-    # SUI
-    "tomls/omnibus-base-mainnet-andromeda/perps/sui-invokes.toml",
-    "tomls/oracles/pyth-sui.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/sui.toml",
-    # TON
-    "tomls/omnibus-base-mainnet-andromeda/perps/ton-invokes.toml",
-    "tomls/oracles/pyth-ton.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ton.toml",
-    # ARKM
-    "tomls/omnibus-base-mainnet-andromeda/perps/arkm-invokes.toml",
-    "tomls/oracles/pyth-arkm.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/arkm.toml",
-    # GALA
-    "tomls/omnibus-base-mainnet-andromeda/perps/gala-invokes.toml",
-    "tomls/oracles/pyth-gala.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/gala.toml",
-    # TAO
-    "tomls/omnibus-base-mainnet-andromeda/perps/tao-invokes.toml",
-    "tomls/oracles/pyth-tao.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/tao.toml",
-    # BOME
-    "tomls/omnibus-base-mainnet-andromeda/perps/bome-invokes.toml",
-    "tomls/oracles/pyth-bome.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/bome.toml",
-    # ETHFI
-    "tomls/omnibus-base-mainnet-andromeda/perps/ethfi-invokes.toml",
-    "tomls/oracles/pyth-ethfi.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ethfi.toml",
-    # STX
-    "tomls/omnibus-base-mainnet-andromeda/perps/stx-invokes.toml",
-    "tomls/oracles/pyth-stx.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/stx.toml",
-    # AXL
-    "tomls/omnibus-base-mainnet-andromeda/perps/axl-invokes.toml",
-    "tomls/oracles/pyth-axl.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/axl.toml",
-    # AAVE
-    "tomls/omnibus-base-mainnet-andromeda/perps/aave-invokes.toml",
-    "tomls/oracles/pyth-aave.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/aave.toml",
-    # ADA
-    "tomls/omnibus-base-mainnet-andromeda/perps/ada-invokes.toml",
-    "tomls/oracles/pyth-ada.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ada.toml",
-    # ALGO
-    "tomls/omnibus-base-mainnet-andromeda/perps/algo-invokes.toml",
-    "tomls/oracles/pyth-algo.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/algo.toml",
-    # APT
-    "tomls/omnibus-base-mainnet-andromeda/perps/apt-invokes.toml",
-    "tomls/oracles/pyth-apt.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/apt.toml",
-    # ATOM
-    "tomls/omnibus-base-mainnet-andromeda/perps/atom-invokes.toml",
-    "tomls/oracles/pyth-atom.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/atom.toml",
-    # AXS
-    "tomls/omnibus-base-mainnet-andromeda/perps/axs-invokes.toml",
-    "tomls/oracles/pyth-axs.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/axs.toml",
-    # BAL
-    "tomls/omnibus-base-mainnet-andromeda/perps/bal-invokes.toml",
-    "tomls/oracles/pyth-bal.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/bal.toml",
-    # BCH
-    "tomls/omnibus-base-mainnet-andromeda/perps/bch-invokes.toml",
-    "tomls/oracles/pyth-bch.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/bch.toml",
-    # BLUR
-    "tomls/omnibus-base-mainnet-andromeda/perps/blur-invokes.toml",
-    "tomls/oracles/pyth-blur.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/blur.toml",
-    # COMP
-    "tomls/omnibus-base-mainnet-andromeda/perps/comp-invokes.toml",
-    "tomls/oracles/pyth-comp.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/comp.toml",
-    # CRV
-    "tomls/omnibus-base-mainnet-andromeda/perps/crv-invokes.toml",
-    "tomls/oracles/pyth-crv.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/crv.toml",
-    # DOT
-    "tomls/omnibus-base-mainnet-andromeda/perps/dot-invokes.toml",
-    "tomls/oracles/pyth-dot.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/dot.toml",
-    # DYDX
-    "tomls/omnibus-base-mainnet-andromeda/perps/dydx-invokes.toml",
-    "tomls/oracles/pyth-dydx.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/dydx.toml",
-    # EOS
-    "tomls/omnibus-base-mainnet-andromeda/perps/eos-invokes.toml",
-    "tomls/oracles/pyth-eos.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/eos.toml",
-    # ETC
-    "tomls/omnibus-base-mainnet-andromeda/perps/etc-invokes.toml",
-    "tomls/oracles/pyth-etc.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/etc.toml",
-    # ETHBTC
-    "tomls/omnibus-base-mainnet-andromeda/perps/ethbtc-invokes.toml",
-    "tomls/oracles/pyth-ethbtc.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ethbtc.toml",
-    # FIL
-    "tomls/omnibus-base-mainnet-andromeda/perps/fil-invokes.toml",
-    "tomls/oracles/pyth-fil.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/fil.toml",
-    # FLOW
-    "tomls/omnibus-base-mainnet-andromeda/perps/flow-invokes.toml",
-    "tomls/oracles/pyth-flow.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/flow.toml",
-    # FXS
-    "tomls/omnibus-base-mainnet-andromeda/perps/fxs-invokes.toml",
-    "tomls/oracles/pyth-fxs.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/fxs.toml",
-    # GRT
-    "tomls/omnibus-base-mainnet-andromeda/perps/grt-invokes.toml",
-    "tomls/oracles/pyth-grt.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/grt.toml",
-    # ICP
-    "tomls/omnibus-base-mainnet-andromeda/perps/icp-invokes.toml",
-    "tomls/oracles/pyth-icp.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/icp.toml",
-    # IMX
-    "tomls/omnibus-base-mainnet-andromeda/perps/imx-invokes.toml",
-    "tomls/oracles/pyth-imx.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/imx.toml",
-    # JTO
-    "tomls/omnibus-base-mainnet-andromeda/perps/jto-invokes.toml",
-    "tomls/oracles/pyth-jto.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/jto.toml",
-    # JUP
-    "tomls/omnibus-base-mainnet-andromeda/perps/jup-invokes.toml",
-    "tomls/oracles/pyth-jup.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/jup.toml",
-    # LDO
-    "tomls/omnibus-base-mainnet-andromeda/perps/ldo-invokes.toml",
-    "tomls/oracles/pyth-ldo.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ldo.toml",
-    # LTC
-    "tomls/omnibus-base-mainnet-andromeda/perps/ltc-invokes.toml",
-    "tomls/oracles/pyth-ltc.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/ltc.toml",
-    # MEME
-    "tomls/omnibus-base-mainnet-andromeda/perps/meme-invokes.toml",
-    "tomls/oracles/pyth-meme.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/meme.toml",
-    # NEAR
-    "tomls/omnibus-base-mainnet-andromeda/perps/near-invokes.toml",
-    "tomls/oracles/pyth-near.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/near.toml",
-    # PYTH
-    "tomls/omnibus-base-mainnet-andromeda/perps/pyth-invokes.toml",
-    "tomls/oracles/pyth-pyth.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/pyth.toml",
-    # RNDR
-    "tomls/omnibus-base-mainnet-andromeda/perps/rndr-invokes.toml",
-    "tomls/oracles/pyth-rndr.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/rndr.toml",
-    # SEI
-    "tomls/omnibus-base-mainnet-andromeda/perps/sei-invokes.toml",
-    "tomls/oracles/pyth-sei.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/sei.toml",
-    # SHIB
-    "tomls/omnibus-base-mainnet-andromeda/perps/shib-invokes.toml",
-    "tomls/oracles/pyth-shib.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/shib.toml",
-    # STRK
-    "tomls/omnibus-base-mainnet-andromeda/perps/strk-invokes.toml",
-    "tomls/oracles/pyth-strk.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/strk.toml",
-    # SUSHI
-    "tomls/omnibus-base-mainnet-andromeda/perps/sushi-invokes.toml",
-    "tomls/oracles/pyth-sushi.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/sushi.toml",
-    # TRX
-    "tomls/omnibus-base-mainnet-andromeda/perps/trx-invokes.toml",
-    "tomls/oracles/pyth-trx.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/trx.toml",
-    # UNI
-    "tomls/omnibus-base-mainnet-andromeda/perps/uni-invokes.toml",
-    "tomls/oracles/pyth-uni.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/uni.toml",
-    # XLM
-    "tomls/omnibus-base-mainnet-andromeda/perps/xlm-invokes.toml",
-    "tomls/oracles/pyth-xlm.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/xlm.toml",
-    # XRP
-    "tomls/omnibus-base-mainnet-andromeda/perps/xrp-invokes.toml",
-    "tomls/oracles/pyth-xrp.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/xrp.toml",
-    # YFI
-    "tomls/omnibus-base-mainnet-andromeda/perps/yfi-invokes.toml",
-    "tomls/oracles/pyth-yfi.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/yfi.toml",
 ]
 
-[setting.commitmentPriceDelay]
+[setting.commitment_price_delay]
 defaultValue = "2"
 
-[setting.bigCapSettlementDelay]
+[setting.big_cap_settlement_delay]
 defaultValue = "2"
+
+[setting.big_cap_settlement_window_duration]
+defaultValue = "60"
+
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('1') %>"
 
 [setting.snx_package]
 defaultValue = "synthetix:3.3.18"
@@ -330,7 +212,7 @@ defaultValue = "op-gas-price-oracle:3.4.0"
 defaultValue = "synthetix-spot-market:3.3.15"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.19"
+defaultValue = "synthetix-perps-market:3.6.4"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
@@ -381,46 +263,76 @@ description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13c
 [setting.snx_address]
 defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
 
-[provision.stp_14_spartan_council_pool_snx_rewards]
-source = "synthetix-rewards-distributor:0.0.2"
-targetPreset = "<%= settings.target_preset %>"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= settings.sc_pool_id %>"
-options.collateralType = "<%= extras.synth_usdc_token_address %>"
-options.payoutToken = "<%= settings.snx_address %>"
-options.payoutTokenDecimals = "18"
-options.name = "Spartan Council Pool Rewards"
-
-[invoke.stp_14_register_spartan_council_pool_snx_rewards]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= settings.sc_pool_id %>",
-    "<%= extras.synth_usdc_token_address %>",
-    "<%= imports.stp_14_spartan_council_pool_snx_rewards.contracts.RewardsDistributor.address %>",
-]
-
-[provision.sccp_313_spartan_council_pool_usdc_rewards]
-source = "synthetix-rewards-distributor:0.0.2"
-targetPreset = "<%= settings.target_preset %>"
-options.salt = "<%= settings.salt %>"
-options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= settings.sc_pool_id %>"
-options.collateralType = "<%= extras.synth_usdc_token_address %>"
-options.payoutToken = "<%= settings.usdc_address %>"
-options.payoutTokenDecimals = "6"
-options.name = "Spartan Council Pool USDC Rewards"
-
-[invoke.sccp_313_register_spartan_council_pool_usdc_rewards]
-target = ["system.CoreProxy"]
-fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
-func = "registerRewardsDistributor"
-args = [
-    "<%= settings.sc_pool_id %>",
-    "<%= extras.synth_usdc_token_address %>",
-    "<%= imports.sccp_313_spartan_council_pool_usdc_rewards.contracts.RewardsDistributor.address %>",
-]
+[var.pyth_feeds]
+description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+pyth_feed_id_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+pyth_feed_id_eth = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
+pyth_feed_id_snx = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
+pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
+pyth_feed_id_w = "0xeff7446475e218517566ea99e72a4abec2e1bd8498b43b7d8331e29dcb059389"
+pyth_feed_id_arb = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
+pyth_feed_id_avax = "0x93da3352f9f1d105fdfe4971cfa80e9dd777bfc5d0f683ebb6e1294b92137bb7"
+pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
+pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
+pyth_feed_id_doge = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
+pyth_feed_id_ena = "0xb7910ba7322db020416fcac28b48c01212fd9cc8fbcbaf7d30477ed8605f6bd4"
+pyth_feed_id_ftm = "0x5c6c0d2386e3352356c3ab84434fafb5ea067ac2678a38a338c4a69ddc4bdb0c"
+pyth_feed_id_pol = "0xffd11c5a1cfd42f80afb2df4d9f264c15f956d68153335374ec10722edd70472"
+pyth_feed_id_op = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
+pyth_feed_id_ordi = "0x193c739db502aadcef37c2589738b1e37bdb257d58cf1ab3c7ebc8e6df4e3ec0"
+pyth_feed_id_pepe = "0xd69731a2e74ac1ce884fc3890f7ee324b6deb66147055249568869ed700882e4"
+pyth_feed_id_rune = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61baacb1e"
+pyth_feed_id_arkm = "0x7677dd124dee46cfcd46ff03cf405fb0ed94b1f49efbea3444aadbda939a7ad3"
+pyth_feed_id_axl = "0x60144b1d5c9e9851732ad1d9760e3485ef80be39b984f6bf60f82b28a2b7f126"
+pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c39052f7a"
+pyth_feed_id_ethfi = "0xb27578a9654246cb0a2950842b92330e9ace141c52b63829cc72d5c45a5a595a"
+pyth_feed_id_gala = "0x0781209c28fda797616212b7f94d77af3a01f3e94a5d421760aef020cf2bcb51"
+pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
+pyth_feed_id_inj = "0x7a5bc1d2b56ad029048cd63964b3ad2776eadf812edc1a43a31406cb54bff592"
+pyth_feed_id_link = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
+pyth_feed_id_pendle = "0x9a4df90b25497f66b1afb012467e316e801ca3d839456db028892fe8c70c8016"
+pyth_feed_id_stx = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
+pyth_feed_id_sui = "0x23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744"
+pyth_feed_id_tao = "0x410f41de235f2db824e562ea7ab2d3d3d4ff048316c61d629c0b93f58584e1af"
+pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
+pyth_feed_id_ton = "0x8963217838ab4cf5cadc172203c1f0b763fbaa45f346d8ee50ba994bbcac3026"
+pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
+pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
+pyth_feed_id_algo = "0xfa17ceaf30d19ba51112fdcc750cc83454776f47fb0112e4af07f15f4bb1ebc0"
+pyth_feed_id_apt = "0x03ae4db29ed4ae33d323568895aa00337e658e348b37509f5372ae51f0af00d5"
+pyth_feed_id_atom = "0xb00b60f88b03a6a625a8d1c048c3f66653edf217439983d037e7222c4e612819"
+pyth_feed_id_axs = "0xb7e3904c08ddd9c0c10c6d207d390fd19e87eb6aab96304f571ed94caebdefa0"
+pyth_feed_id_bal = "0x07ad7b4a7662d19a6bc675f6b467172d2f3947fa653ca97555a9b20236406628"
+pyth_feed_id_bch = "0x3dd2b63686a450ec7290df3a1e0b583c0481f651351edfa7636f39aed55cf8a3"
+pyth_feed_id_blur = "0x856aac602516addee497edf6f50d39e8c95ae5fb0da1ed434a8c2ab9c3e877e9"
+pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
+pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
+pyth_feed_id_dot = "0xca3eed9b267293f6595901c734c7525ce8ef49adafe8284606ceb307afa2ca5b"
+pyth_feed_id_dydx = "0x6489800bb8974169adfe35937bf6736507097d13c190d760c557108c7e93a81b"
+pyth_feed_id_eos = "0x06ade621dbc31ed0fc9255caaab984a468abe84164fb2ccc76f02a4636d97e31"
+pyth_feed_id_etc = "0x7f5cc8d963fc5b3d2ae41fe5685ada89fd4f14b435f8050f28c7fd409f40c2d8"
+pyth_feed_id_ethbtc = "0xc96458d393fe9deb7a7d63a0ac41e2898a67a7750dbd166673279e06c868df0a"
+pyth_feed_id_fil = "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e"
+pyth_feed_id_flow = "0x2fb245b9a84554a0f15aa123cbb5f64cd263b59e9a87d80148cbffab50c69f30"
+pyth_feed_id_fxs = "0x735f591e4fed988cd38df74d8fcedecf2fe8d9111664e0fd500db9aa78b316b1"
+pyth_feed_id_grt = "0x4d1f8dae0d96236fb98e8f47471a366ec3b1732b47041781934ca3a9bb2f35e7"
+pyth_feed_id_icp = "0xc9907d786c5821547777780a1e4f89484f3417cb14dd244f2b0a34ea7a554d67"
+pyth_feed_id_imx = "0x941320a8989414874de5aa2fc340a75d5ed91fdff1613dd55f83844d52ea63a2"
+pyth_feed_id_jto = "0xb43660a5f790c69354b0729a5ef9d50d68f1df92107540210b9cccba1f947cc2"
+pyth_feed_id_jup = "0x0a0408d619e9380abad35060f9192039ed5042fa6f82301d0e48bb52be830996"
+pyth_feed_id_ldo = "0xc63e2a7f37a04e5e614c07238bedb25dcc38927fba8fe890597a593c0b2fa4ad"
+pyth_feed_id_ltc = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874e19a54"
+pyth_feed_id_meme = "0xcd2cee36951a571e035db0dfad138e6ecdb06b517cc3373cd7db5d3609b7927c"
+pyth_feed_id_near = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
+pyth_feed_id_pyth = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
+pyth_feed_id_rndr = "0x3d4a2bd9535be6ce8059d75eadeba507b043257321aa544717c56fa19b49e35d"
+pyth_feed_id_sei = "0x53614f1cb0c031d4af66c04cb9c756234adad0e1cee85303795091499a4084eb"
+pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"
+pyth_feed_id_strk = "0x6a182399ff70ccf3e06024898942028204125a819e519a335ffa4579e66cd870"
+pyth_feed_id_sushi = "0x26e4f737fde0263a9eea10ae63ac36dcedab2aaf629261a994e1eeb6ee0afe53"
+pyth_feed_id_trx = "0x67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b"
+pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
+pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
+pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
+pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"

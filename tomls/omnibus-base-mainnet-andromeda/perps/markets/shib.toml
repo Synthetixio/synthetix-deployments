@@ -1,0 +1,119 @@
+[var.perps_shib_market_settings]
+shib_perps_market_id = "6500"
+shib_perps_market_skew_scale = "<%= parseEther(String(1_875_000_000_000)) %>"
+shib_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+shib_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+shib_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+shib_perps_max_market_size = "<%= parseEther(String(5_813_953_488)) %>"
+shib_perps_max_market_value = "<%= parseEther(String(50_000)) %>"
+shib_perps_initial_margin_ratio = "<%= parseEther('2.2') %>"
+shib_perps_maintenance_margin_scalar = "<%= parseEther('0.32') %>"
+shib_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+shib_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+shib_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+shib_perps_max_seconds_in_liquidation_window = "30"
+shib_perps_minimum_position_margin = "<%= parseEther('50') %>"
+shib_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+shib_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+shib_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createShibPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.shib_perps_market_id %>", "Shiba Inu", "SHIB"]
+
+[invoke.setPerpsPriceShib]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.shib_perps_market_id %>",
+    "<%= extras.shib_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsShibSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.shib_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.shib_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.shib_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsShibSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.shib_perps_market_id %>",
+    "<%= extras.shib_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_shib %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsShibFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.shib_perps_market_id %>",
+    "<%= settings.shib_perps_market_skew_scale %>",
+    "<%= settings.shib_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsShibOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.shib_perps_market_id %>",
+    "<%= settings.shib_perps_maker_fee_ratio %>",
+    "<%= settings.shib_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsShibMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.shib_perps_market_id %>", "<%= settings.shib_perps_max_market_size %>"]
+
+[invoke.setPerpsShibMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.shib_perps_market_id %>", "<%= settings.shib_perps_max_market_value %>"]
+
+[invoke.setPerpsShibMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.shib_perps_market_id %>",
+    "<%= settings.shib_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.shib_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.shib_perps_max_liquidation_pd %>",
+    "<%= settings.shib_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsShibLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.shib_perps_market_id %>",
+    "<%= settings.shib_perps_initial_margin_ratio %>",
+    "<%= settings.shib_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.shib_perps_maintenance_margin_scalar %>",
+    "<%= settings.shib_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.shib_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsShibLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.shib_perps_market_id %>", "<%= settings.shib_perps_locked_oi_ratio %>"]

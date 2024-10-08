@@ -1,0 +1,119 @@
+[var.perps_yfi_market_settings]
+yfi_perps_market_id = "7200"
+yfi_perps_market_skew_scale = "<%= parseEther(String(2_125)) %>"
+yfi_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+yfi_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+yfi_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+yfi_perps_max_market_size = "<%= parseEther(String(15)) %>"
+yfi_perps_max_market_value = "<%= parseEther(String(50_000)) %>"
+yfi_perps_initial_margin_ratio = "<%= parseEther('1.49') %>"
+yfi_perps_maintenance_margin_scalar = "<%= parseEther('0.39') %>"
+yfi_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+yfi_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+yfi_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+yfi_perps_max_seconds_in_liquidation_window = "30"
+yfi_perps_minimum_position_margin = "<%= parseEther('50') %>"
+yfi_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+yfi_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+yfi_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createYfiPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.yfi_perps_market_id %>", "Yearn Finance", "YFI"]
+
+[invoke.setPerpsPriceYfi]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.yfi_perps_market_id %>",
+    "<%= extras.yfi_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsYfiSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.yfi_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.yfi_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.yfi_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsYfiSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.yfi_perps_market_id %>",
+    "<%= extras.yfi_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_yfi %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsYfiFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.yfi_perps_market_id %>",
+    "<%= settings.yfi_perps_market_skew_scale %>",
+    "<%= settings.yfi_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsYfiOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.yfi_perps_market_id %>",
+    "<%= settings.yfi_perps_maker_fee_ratio %>",
+    "<%= settings.yfi_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsYfiMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.yfi_perps_market_id %>", "<%= settings.yfi_perps_max_market_size %>"]
+
+[invoke.setPerpsYfiMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.yfi_perps_market_id %>", "<%= settings.yfi_perps_max_market_value %>"]
+
+[invoke.setPerpsYfiMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.yfi_perps_market_id %>",
+    "<%= settings.yfi_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.yfi_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.yfi_perps_max_liquidation_pd %>",
+    "<%= settings.yfi_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsYfiLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.yfi_perps_market_id %>",
+    "<%= settings.yfi_perps_initial_margin_ratio %>",
+    "<%= settings.yfi_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.yfi_perps_maintenance_margin_scalar %>",
+    "<%= settings.yfi_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.yfi_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsYfiLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.yfi_perps_market_id %>", "<%= settings.yfi_perps_locked_oi_ratio %>"]

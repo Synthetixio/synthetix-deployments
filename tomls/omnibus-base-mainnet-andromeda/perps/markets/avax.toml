@@ -1,0 +1,119 @@
+[var.perps_avax_market_settings]
+avax_perps_market_id = "900"
+avax_perps_market_skew_scale = "<%= parseEther(String(1_250_000)) %>"
+avax_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+avax_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+avax_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+avax_perps_max_market_size = "<%= parseEther(String(100_000)) %>"
+avax_perps_max_market_value = "<%= parseEther(String(2_000_000)) %>"
+avax_perps_initial_margin_ratio = "<%= parseEther('9.08') %>"
+avax_perps_maintenance_margin_scalar = "<%= parseEther('0.36') %>"
+avax_perps_minimum_initial_margin_ratio = "<%= parseEther('0.02') %>"
+avax_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+avax_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+avax_perps_max_seconds_in_liquidation_window = "30"
+avax_perps_minimum_position_margin = "<%= parseEther('50') %>"
+avax_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+avax_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+avax_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createAvaxPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.avax_perps_market_id %>", "Avalanche", "AVAX"]
+
+[invoke.setPerpsPriceAvax]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.avax_perps_market_id %>",
+    "<%= extras.avax_oracle_id %>",
+    "<%= settings.bigCapStrictStalenessTolerance %>",
+]
+
+[invoke.addPerpsAvaxSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.avax_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.avax_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.avax_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsAvaxSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.avax_perps_market_id %>",
+    "<%= extras.avax_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_avax %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsAvaxFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.avax_perps_market_id %>",
+    "<%= settings.avax_perps_market_skew_scale %>",
+    "<%= settings.avax_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsAvaxOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.avax_perps_market_id %>",
+    "<%= settings.avax_perps_maker_fee_ratio %>",
+    "<%= settings.avax_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsAvaxMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.avax_perps_market_id %>", "<%= settings.avax_perps_max_market_size %>"]
+
+[invoke.setPerpsAvaxMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.avax_perps_market_id %>", "<%= settings.avax_perps_max_market_value %>"]
+
+[invoke.setPerpsAvaxMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.avax_perps_market_id %>",
+    "<%= settings.avax_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.avax_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.avax_perps_max_liquidation_pd %>",
+    "<%= settings.avax_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsAvaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.avax_perps_market_id %>",
+    "<%= settings.avax_perps_initial_margin_ratio %>",
+    "<%= settings.avax_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.avax_perps_maintenance_margin_scalar %>",
+    "<%= settings.avax_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.avax_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsAvaxLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.avax_perps_market_id %>", "<%= settings.avax_perps_locked_oi_ratio %>"]
