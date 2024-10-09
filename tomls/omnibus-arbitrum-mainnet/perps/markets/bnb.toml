@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.bnb_perps_market_id %>",
     "<%= extras.bnb_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsBnbSettlementStrategy]

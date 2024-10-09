@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.gmx_perps_market_id %>",
     "<%= extras.gmx_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsGmxSettlementStrategy]

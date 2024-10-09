@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_btc_market_id %>",
     "<%= extras.btc_oracle_id %>",
     "<%= extras.btc_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_btc]

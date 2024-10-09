@@ -22,7 +22,7 @@ args = [
     "<%= extras.synth_eth_market_id %>",
     "<%= extras.eth_oracle_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= settings.big_cap_strict_staleness_tolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 # WETH is already configured but we will set the max market collateral
