@@ -111,6 +111,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/perps-lowcap-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
 
     # Perps Markets
@@ -187,6 +188,18 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/yfi.toml",
 ]
 
+[setting.commitment_price_delay]
+defaultValue = "2"
+
+[setting.big_cap_settlement_delay]
+defaultValue = "2"
+
+[setting.big_cap_settlement_window_duration]
+defaultValue = "60"
+
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('1') %>"
+
 [setting.snx_package]
 defaultValue = "synthetix:3.3.18"
 
@@ -248,33 +261,6 @@ depends = ['provision.system', 'setting.account_timeout_withdraw']
 
 [setting.sc_pool_id]
 defaultValue = "1"
-
-[setting.commitment_price_delay]
-defaultValue = "2"
-
-[setting.default_staleness_tolerance]
-defaultValue = "3600"
-
-[setting.strict_staleness_tolerance]
-defaultValue = "60"
-
-[setting.settlement_window_duration]
-defaultValue = "60"
-
-[setting.settlement_delay]
-defaultValue = "2"
-
-[setting.settlement_reward]
-defaultValue = "<%= parseEther('1') %>"
-
-[setting.settlement_minimum_usd_exchange_amount]
-defaultValue = "<%= parseEther('0.000001') %>"
-
-[setting.settlement_max_rounding_loss]
-defaultValue = "<%= parseEther('0.000001') %>"
-
-[setting.price_deviation_tolerance]
-defaultValue = "<%= parseEther('1') %>"
 
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
