@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.crv_perps_market_id %>",
     "<%= extras.crv_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsCrvSettlementStrategy]

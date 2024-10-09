@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.avax_perps_market_id %>",
     "<%= extras.avax_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsAvaxSettlementStrategy]

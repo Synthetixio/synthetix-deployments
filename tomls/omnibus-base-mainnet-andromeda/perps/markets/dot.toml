@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.dot_perps_market_id %>",
     "<%= extras.dot_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsDotSettlementStrategy]

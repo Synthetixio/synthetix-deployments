@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.bch_perps_market_id %>",
     "<%= extras.bch_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsBchSettlementStrategy]

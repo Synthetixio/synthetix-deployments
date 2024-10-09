@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.arb_perps_market_id %>",
     "<%= extras.arb_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsArbSettlementStrategy]

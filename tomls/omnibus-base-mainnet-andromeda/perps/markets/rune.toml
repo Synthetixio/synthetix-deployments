@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.rune_perps_market_id %>",
     "<%= extras.rune_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsRuneSettlementStrategy]

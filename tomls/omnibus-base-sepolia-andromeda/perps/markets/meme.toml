@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.meme_perps_market_id %>",
     "<%= extras.meme_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsMemeSettlementStrategy]
