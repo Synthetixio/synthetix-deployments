@@ -21,6 +21,7 @@ eos_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
+args = ["<%= settings.eos_perps_market_id %>", "Eos", "EOS"]
 
 [invoke.setPerpsPriceEos]
 target = ["perpsFactory.PerpsMarketProxy"]
