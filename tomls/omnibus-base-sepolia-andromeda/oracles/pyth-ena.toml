@@ -17,7 +17,7 @@ target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     9, # 9 = PythOffchainLookupNode
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_ena, settings.bigCapDefaultStalenessTolerance]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_ena, settings.default_staleness_tolerance]) %>",
     [
     ],
 ]
@@ -29,7 +29,7 @@ target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     7, # 7 = staleness circuit breaker
-    "<%= defaultAbiCoder.encode(['uint256'], [settings.bigCapDefaultStalenessTolerance]) %>",
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
     [
         "<%= extras.ena_pyth_oracle_id %>",
         "<%= extras.ena_lookup_oracle_id %>",

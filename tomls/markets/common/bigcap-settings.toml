@@ -6,8 +6,8 @@ defaultValue = "2"
 [setting.bigCapSettlementWindowDuration]
 defaultValue = "60"
 
-[setting.bigCapDefaultStalenessTolerance]
+[setting.default_staleness_tolerance]
 defaultValue = "3600"
 
-[setting.bigCapStrictStalenessTolerance]
+[setting.strict_staleness_tolerance]
 defaultValue = "60"
