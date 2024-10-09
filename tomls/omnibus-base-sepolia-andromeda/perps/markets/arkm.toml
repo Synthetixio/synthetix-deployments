@@ -22,6 +22,7 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.arkm_perps_market_id %>", "Arkham", "ARKM"]
+args = ["<%= settings.arkm_perps_market_id %>", "0", "ARKM"]
 
 [invoke.setPerpsPriceArkm]
 target = ["perpsFactory.PerpsMarketProxy"]
