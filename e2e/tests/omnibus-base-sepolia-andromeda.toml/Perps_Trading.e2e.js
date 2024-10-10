@@ -267,7 +267,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       args: [marketId, 1],
       impersonate: owner,
     });
-    try {
+    await contractWrite({
+      wallet,
+      contract: 'PerpsMarketProxy',
+      func: 'setMaxMarketSize',
+      args: [marketId, maxMarketSize],
+      impersonate: owner,
+    });
+  try {
       await commitPerpsOrder({
         wallet,
         accountId,
@@ -285,13 +292,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
       assert.equal(parsedError.name, 'MaxOpenInterestReached');
       // restore market size
-      await contractWrite({
-        wallet,
-        contract: 'PerpsMarketProxy',
-        func: 'setMaxMarketSize',
-        args: [marketId, maxMarketSize],
-        impersonate: owner,
-      });
     }
   });
 });
