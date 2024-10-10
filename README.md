@@ -32,13 +32,13 @@ Here is how your `settings.json` should look like (with sensitive fields strippe
     {
       "name": "OP Mainnet",
       "chainId": 10,
-      "rpcUrl": ["https://optimism-mainnet.infura.io/v3/<INFURA_KEY>"],
+      "rpcUrl": ["https://optimism-mainnet.infura.io/v3/<INFURA_API_KEY>"],
       "address": "0x8E5C7EFC9636A6A0408A46BB7F617094B81e5dba"
     },
     {
       "name": "Ethereum Mainnet",
       "chainId": 1,
-      "rpcUrl": ["https://mainnet.infura.io/v3/<INFURA_KEY>"],
+      "rpcUrl": ["https://mainnet.infura.io/v3/<INFURA_API_KEY>"],
       "address": "0x8E5C7EFC9636A6A0408A46BB7F617094B81e5dba"
     }
   ]
