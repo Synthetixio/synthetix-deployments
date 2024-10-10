@@ -266,7 +266,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       func: 'setMaxMarketSize',
       args: [marketId, 1],
       impersonate: owner,
-    })
+    });
     try {
       await commitPerpsOrder({
         wallet,
@@ -291,7 +291,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         func: 'setMaxMarketSize',
         args: [marketId, maxMarketSize],
         impersonate: owner,
-      })
-      }
+      });
+    }
   });
 });
