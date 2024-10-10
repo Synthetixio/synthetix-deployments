@@ -738,7 +738,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://base-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-base-mainnet-andromeda
@@ -746,7 +746,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://base-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-mainnet
@@ -754,7 +754,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-optimism-mainnet
@@ -762,7 +762,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://optimism-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-arbitrum-sepolia
@@ -770,7 +770,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-arbitrum-mainnet
@@ -778,7 +778,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-mainnet.infura.io/ws/v3/$INFURA_API_KEY
           # resource_class: xlarge
 
       - fork-test:
@@ -787,7 +787,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - fork-test:
           name: test-snaxchain-testnet
@@ -795,7 +795,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 13001
-          provider-url: https://testnet.snaxchain.io/$CONDUIT_API_KEY
+          provider-url: wss://testnet.snaxchain.io/$CONDUIT_API_KEY
 
       - fork-test:
           name: test-snaxchain-mainnet
@@ -803,7 +803,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 2192
-          provider-url: https://mainnet.snaxchain.io/$CONDUIT_API_KEY
+          provider-url: wss://mainnet.snaxchain.io/$CONDUIT_API_KEY
 
   deployment-info:
     when:
@@ -822,56 +822,56 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://base-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-base-mainnet-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://base-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-optimism-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://optimism-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-arbitrum-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-arbitrum-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - deployment-info:
           name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
   npm-package:
     when:
@@ -888,56 +888,56 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://sepolia.base.org
+          provider-url: wss://sepolia.base.org
 
       - npm-package:
           name: npm-base-mainnet-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://mainnet.base.org
+          provider-url: wss://mainnet.base.org
 
       - npm-package:
           name: npm-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - npm-package:
           name: npm-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - npm-package:
           name: npm-optimism-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://optimism-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - npm-package:
           name: npm-arbitrum-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - npm-package:
           name: npm-arbitrum-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - npm-package:
           name: npm-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
   preview:
     when:
@@ -955,14 +955,14 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://mainnet.infura.io/ws/v3/$INFURA_API_KEY
       - preview:
           name: preview-optimism-mainnet
           toml: omnibus-optimism-mainnet.toml
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://optimism-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-base-mainnet-andromeda
@@ -970,7 +970,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://base-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-base-sepolia-andromeda
@@ -978,7 +978,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://base-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-arbitrum-sepolia
@@ -986,7 +986,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-arbitrum-mainnet
@@ -994,7 +994,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://arbitrum-mainnet.infura.io/ws/v3/$INFURA_API_KEY
 
       - preview:
           name: preview-sepolia
@@ -1002,7 +1002,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          provider-url: wss://sepolia.infura.io/ws/v3/$INFURA_API_KEY
 
       # oracles are not ready so skip for now
       #- preview:
@@ -1011,4 +1011,4 @@ workflows:
       #package: "synthetix-omnibus:latest"
       #preset: "main"
       #chain-id: 11155420
-      #provider-url: https://optimism-sepolia.infura.io/v3/$INFURA_API_KEY
+      #provider-url: wss://optimism-sepolia.infura.io/ws/v3/$INFURA_API_KEY
