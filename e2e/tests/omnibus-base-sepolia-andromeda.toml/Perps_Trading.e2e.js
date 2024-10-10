@@ -25,6 +25,8 @@ const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
+const { contractRead } = require('../../tasks/contractRead');
+const { contractWrite } = require('../../tasks/contractWrite');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
