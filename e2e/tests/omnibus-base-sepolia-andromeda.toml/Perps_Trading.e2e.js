@@ -25,6 +25,8 @@ const { getPerpsPosition } = require('../../tasks/getPerpsPosition');
 const { doStrictPriceUpdate } = require('../../tasks/doStrictPriceUpdate');
 const { syncTime } = require('../../tasks/syncTime');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
+const { contractRead } = require('../../tasks/contractRead');
+const { contractWrite } = require('../../tasks/contractWrite');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
@@ -249,5 +251,47 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await settlePerpsOrder({ wallet, accountId, marketId });
     const position = await getPerpsPosition({ accountId, marketId });
     assert.equal(position.positionSize, 0);
+  });
+
+  it('should revert when trade > Max Market Size', async () => {
+    const marketId = 200;
+    const settlementStrategyId =
+      require('../../deployments/extras.json').btc_pyth_settlement_strategy;
+    const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+    // Lower max market size to something reasonable that can be exceeded
+    const owner = await contractRead({ wallet, contract: 'PerpsMarketProxy', func: 'owner' });
+    await contractWrite({
+      wallet,
+      contract: 'PerpsMarketProxy',
+      func: 'setMaxMarketSize',
+      args: [marketId, 1],
+      impersonate: owner,
+    });
+    try {
+      await commitPerpsOrder({
+        wallet,
+        accountId,
+        marketId,
+        sizeDelta: parseFloat(ethers.utils.formatEther(maxMarketSize.mul(2))),
+        settlementStrategyId,
+      });
+      throw Error('Commit should revert');
+    } catch (error) {
+      const errorData =
+        error?.error?.error?.error?.data ||
+        error?.error?.data?.data ||
+        error?.error?.error?.data ||
+        error?.error?.data;
+      const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
+      assert.equal(parsedError.name, 'MaxOpenInterestReached');
+      // restore market size
+      await contractWrite({
+        wallet,
+        contract: 'PerpsMarketProxy',
+        func: 'setMaxMarketSize',
+        args: [marketId, maxMarketSize],
+        impersonate: owner,
+      });
+    }
   });
 });
