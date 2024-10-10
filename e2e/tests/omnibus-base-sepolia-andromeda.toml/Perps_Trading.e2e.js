@@ -256,7 +256,15 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     const settlementStrategyId =
       require('../../deployments/extras.json').btc_pyth_settlement_strategy;
     const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
-    log({ marketId, maxMarketSize });
+    // Lower max market size to something reasonable that can be exceeded
+    const owner = await contractRead({ wallet, contract: 'PerpsMarketProxy', func: 'owner' });
+    await contractWrite({
+      wallet,
+      contract: 'PerpsMarketProxy',
+      func: 'setMaxMarketSize',
+      args: [marketId, 1],
+      impersonate: owner,
+    })
     try {
       await commitPerpsOrder({
         wallet,
@@ -274,6 +282,14 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
         error?.error?.data;
       const parsedError = errorData ? PerpsMarketProxy.interface.parseError(errorData) : error;
       assert.equal(parsedError.name, 'MaxOpenInterestReached');
-    }
+      // restore market size
+      await contractWrite({
+        wallet,
+        contract: 'PerpsMarketProxy',
+        func: 'setMaxMarketSize',
+        args: [marketId, maxMarketSize],
+        impersonate: owner,
+      })
+      }
   });
 });
