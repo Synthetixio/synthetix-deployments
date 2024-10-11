@@ -1,7 +1,7 @@
 [var.perps_rune_market_settings]
 rune_perps_market_id = "1300"
-rune_perps_market_skew_scale = "<%= parseEther(String(3_000_000)) %>"
-rune_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+rune_perps_market_skew_scale = "<%= parseEther(String(6_000_000)) %>"
+rune_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 rune_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 rune_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 rune_perps_max_market_size = "<%= parseEther(String(300_000)) %>"
