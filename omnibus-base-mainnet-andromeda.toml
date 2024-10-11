@@ -268,7 +268,6 @@ description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13c
 [setting.snx_address]
 defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
 
-
 [var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 pyth_feed_id_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
