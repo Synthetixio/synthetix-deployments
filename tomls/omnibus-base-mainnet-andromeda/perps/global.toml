@@ -29,7 +29,7 @@ defaultValue = "<%= String(2_300_000) %>"
 defaultValue = "<%= String(5_050) %>"
 
 [setting.perps_liquidation_min_keeper_reward_usd]
-defaultValue = "5"
+defaultValue = "1"
 
 [setting.perps_liquidation_min_keeper_profit_ratio_d18]
 defaultValue = "0.30"
