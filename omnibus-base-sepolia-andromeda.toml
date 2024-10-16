@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "55"
+version = "56"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
