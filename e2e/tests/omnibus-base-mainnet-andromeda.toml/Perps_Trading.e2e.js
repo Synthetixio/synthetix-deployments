@@ -13,6 +13,7 @@ const { getPerpsAccountOwner } = require('../../tasks/getPerpsAccountOwner');
 const { getPerpsAccountPermissions } = require('../../tasks/getPerpsAccountPermissions');
 const { isCollateralApproved } = require('../../tasks/isCollateralApproved');
 const { setEthBalance } = require('../../tasks/setEthBalance');
+const { setTokenBalance } = require('../../tasks/setTokenBalance');
 const { spotSell } = require('../../tasks/spotSell');
 const { wrapCollateral } = require('../../tasks/wrapCollateral');
 const { getPerpsCollateral } = require('../../tasks/getPerpsCollateral');
@@ -26,7 +27,8 @@ const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
-const { setTokenBalance } = require('../../tasks/setTokenBalance');
+const { contractRead } = require('../../tasks/contractRead');
+const { contractWrite } = require('../../tasks/contractWrite');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`420${crypto.randomInt(1000)}`);
@@ -256,16 +258,30 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should revert when trade > Max Market Size', async () => {
     const marketId = 200;
+
+    await contractWrite({
+      wallet,
+      contract: 'PerpsMarketProxy',
+      func: 'setMaxMarketSize',
+      args: [marketId, ethers.BigNumber.from(1)], // 1 wei
+      impersonate: await contractRead({
+        wallet,
+        contract: 'PerpsMarketProxy',
+        func: 'owner',
+      }),
+    });
+
     const settlementStrategyId =
       require('../../deployments/extras.json').btc_pyth_settlement_strategy;
-    const maxSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
-    log({ marketId, maxSize });
+    const maxMarketSize = await PerpsMarketProxy.getMaxMarketSize(marketId);
+
+    log({ marketId, maxMarketSize });
     try {
       await commitPerpsOrder({
         wallet,
         accountId,
         marketId,
-        sizeDelta: parseFloat(ethers.utils.formatEther(maxSize.mul(2))),
+        sizeDelta: 0.01,
         settlementStrategyId,
       });
       throw Error('Commit should revert');

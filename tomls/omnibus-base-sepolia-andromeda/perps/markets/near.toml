@@ -1,11 +1,11 @@
 [var.perps_near_market_settings]
 near_perps_market_id = "6100"
-near_perps_market_skew_scale = "<%= parseEther(String(9_375_000)) %>"
-near_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+near_perps_market_skew_scale = "<%= parseEther(String(11_718_750)) %>"
+near_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 near_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 near_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
-near_perps_max_market_size = "<%= parseEther(String(18_900)) %>"
-near_perps_max_market_value = "<%= parseEther(String(50_000)) %>"
+near_perps_max_market_size = "<%= parseEther(String(596_400)) %>"
+near_perps_max_market_value = "<%= parseEther(String(2_000_000)) %>"
 near_perps_initial_margin_ratio = "<%= parseEther('3.35') %>"
 near_perps_maintenance_margin_scalar = "<%= parseEther('0.36') %>"
 near_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.near_perps_market_id %>",
     "<%= extras.near_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsNearSettlementStrategy]
@@ -52,7 +52,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.near_perps_market_id %>",
     "<%= extras.near_pyth_settlement_strategy %>",
-    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_near %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_near %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
 [invoke.setPerpsNearFundingParameters]

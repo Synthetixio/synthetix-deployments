@@ -32,3 +32,4 @@ governance_minimum_active_members = "1"
 governance_administration_period_duration = "90"                           # days
 governance_nomination_period_duration = "15"                               # days
 governance_voting_period_duration = "15"                                   # days
+governance_initial_nomination_period_start_date = "0"

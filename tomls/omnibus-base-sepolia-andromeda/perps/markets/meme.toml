@@ -1,11 +1,11 @@
 [var.perps_meme_market_settings]
 meme_perps_market_id = "6000"
-meme_perps_market_skew_scale = "<%= parseEther(String(325_000_000)) %>"
-meme_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+meme_perps_market_skew_scale = "<%= parseEther(String(1_300_000_000)) %>"
+meme_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 meme_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 meme_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
-meme_perps_max_market_size = "<%= parseEther(String(5_336_179)) %>"
-meme_perps_max_market_value = "<%= parseEther(String(50_000)) %>"
+meme_perps_max_market_size = "<%= parseEther(String(73_846_350)) %>"
+meme_perps_max_market_value = "<%= parseEther(String(500_000)) %>"
 meme_perps_initial_margin_ratio = "<%= parseEther('1.32') %>"
 meme_perps_maintenance_margin_scalar = "<%= parseEther('0.37') %>"
 meme_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.meme_perps_market_id %>",
     "<%= extras.meme_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsMemeSettlementStrategy]
@@ -52,7 +52,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.meme_perps_market_id %>",
     "<%= extras.meme_pyth_settlement_strategy %>",
-    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_meme %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_meme %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
 [invoke.setPerpsMemeFundingParameters]

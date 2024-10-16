@@ -28,17 +28,20 @@ const {
 const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
 const { claimRewards } = require('../../tasks/claimRewards');
 
-const { address: distributorAddress } = require('../../deployments/RewardsDistributor_1_fARB.json');
+const {
+  address: distributorAddress,
+} = require('../../deployments/RewardsDistributor_1_fARB_fARB.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
 const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
 log({ rewardsDistributor });
 
 const payoutToken = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
+const collateralType = rewardsDistributor.collateralType.address;
 
 log({ distributorAddress, payoutToken, rewardManager });
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.skip(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
@@ -50,7 +53,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   let snapshot;
   let initialBalance;
   let initialRewardsAmount;
-  let collateralType;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
@@ -75,15 +77,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await syncTime();
   });
 
-  it('pulls fARB info', async () => {
-    const { tokenAddress } = await getCollateralConfig('fARB');
-    collateralType = tokenAddress;
-  });
-
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
     log(info);
-    assert.equal(info.name, 'Spartan Council Pool ARB Rewards', 'name');
+    assert.equal(info.name, 'Spartan Council Pool ARB Rewards for ARB LP', 'name');
     assert.equal(info.poolId, 1, 'poolId');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),

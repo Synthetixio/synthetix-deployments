@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "30"
+version = "32"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -142,19 +142,19 @@ defaultValue = "main"
 defaultValue = "snax"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.7.1"
+defaultValue = "synthetix:3.8.1"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.7.1"
+defaultValue = "oracle-manager:3.8.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.7.1"
+defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.7.1"
+defaultValue = "synthetix-perps-market:3.8.1"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
@@ -211,16 +211,16 @@ defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
 [setting.commitment_price_delay]
 defaultValue = "2"
 
-[setting.big_cap_default_staleness_tolerance]
+[setting.default_staleness_tolerance]
 defaultValue = "3600"
 
-[setting.big_cap_strict_staleness_tolerance]
+[setting.strict_staleness_tolerance]
 defaultValue = "60"
 
-[setting.big_cap_settlement_window_duration]
+[setting.settlement_window_duration]
 defaultValue = "60"
 
-[setting.big_cap_settlement_delay]
+[setting.settlement_delay]
 defaultValue = "2"
 
 [setting.settlement_reward]

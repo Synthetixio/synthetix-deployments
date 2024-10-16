@@ -1,7 +1,7 @@
 [var.perps_matic_market_settings]
 matic_perps_market_id = "1700"
 matic_perps_market_skew_scale = "<%= parseEther(String(84_000_000)) %>"
-matic_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+matic_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 matic_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 matic_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 matic_perps_max_market_size = "<%= parseEther(String(0)) %>"
@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.matic_perps_market_id %>",
     "<%= extras.matic_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsMaticSettlementStrategy]
@@ -52,7 +52,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.matic_perps_market_id %>",
     "<%= extras.matic_pyth_settlement_strategy %>",
-    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_pol %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_pol %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
 [invoke.setPerpsMaticFundingParameters]

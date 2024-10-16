@@ -1,11 +1,11 @@
 [var.perps_pyth_market_settings]
 pyth_perps_market_id = "6200"
-pyth_perps_market_skew_scale = "<%= parseEther(String(30_000_000)) %>"
-pyth_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+pyth_perps_market_skew_scale = "<%= parseEther(String(60_000_000)) %>"
+pyth_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 pyth_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 pyth_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
-pyth_perps_max_market_size = "<%= parseEther(String(617_717)) %>"
-pyth_perps_max_market_value = "<%= parseEther(String(100_000)) %>"
+pyth_perps_max_market_size = "<%= parseEther(String(2_277_900)) %>"
+pyth_perps_max_market_value = "<%= parseEther(String(500_000)) %>"
 pyth_perps_initial_margin_ratio = "<%= parseEther('0.84') %>"
 pyth_perps_maintenance_margin_scalar = "<%= parseEther('0.37') %>"
 pyth_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.pyth_perps_market_id %>",
     "<%= extras.pyth_oracle_id %>",
-    "<%= settings.bigCapStrictStalenessTolerance %>",
+    "<%= settings.strict_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsPythSettlementStrategy]
@@ -52,7 +52,7 @@ func = "setSettlementStrategy"
 args = [
     "<%= settings.pyth_perps_market_id %>",
     "<%= extras.pyth_pyth_settlement_strategy %>",
-    { strategyType = "0", settlementDelay = "<%= settings.big_cap_settlement_delay %>", settlementWindowDuration = "<%= settings.big_cap_settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_pyth %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_pyth %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
 [invoke.setPerpsPythFundingParameters]

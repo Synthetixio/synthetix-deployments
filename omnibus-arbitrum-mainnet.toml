@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "30"
+version = "31"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -149,7 +149,7 @@ defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.6.4"
+defaultValue = "synthetix-perps-market:3.6.5"
 
 [setting.pyth_price_verification_address]
 defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
@@ -205,16 +205,16 @@ defaultValue = "0xe2163dd599067919d1e9108929b568Bf41D3A420"
 [setting.commitment_price_delay]
 defaultValue = "2"
 
-[setting.big_cap_default_staleness_tolerance]
+[setting.default_staleness_tolerance]
 defaultValue = "3600"
 
-[setting.big_cap_strict_staleness_tolerance]
+[setting.strict_staleness_tolerance]
 defaultValue = "60"
 
-[setting.big_cap_settlement_window_duration]
+[setting.settlement_window_duration]
 defaultValue = "60"
 
-[setting.big_cap_settlement_delay]
+[setting.settlement_delay]
 defaultValue = "2"
 
 [setting.settlement_reward]

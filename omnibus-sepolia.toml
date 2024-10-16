@@ -323,6 +323,13 @@ target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfiguration"
 
+[var.bfp]
+keeper_profit_margin_usd = "<%= parseEther('5') %>"
+keeper_profit_margin_percent = "<%= parseEther('0.01') %>"
+min_collateral_discount = "0"
+low_utilization_slope_percent = "0"
+high_utilization_slope_percent = "0"
+
 [[invoke.BfpMarketProxy_setMarketConfiguration.args]]
 pythPublishTimeMin = 12
 pythPublishTimeMax = 60

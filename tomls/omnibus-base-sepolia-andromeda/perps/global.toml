@@ -2,34 +2,34 @@
 defaultValue = "1"
 
 [setting.perps_keeper_l1_cost_settle_gas_units]
-defaultValue = "<%= String(30_000) %>"
+defaultValue = "<%= String(23_000) %>"
 
 [setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "<%= String(2_450_000) %>"
-
-[setting.perps_keeper_l1_cost_flag_gas_units]
-defaultValue = "<%= String(31_000) %>"
-
-[setting.perps_keeper_l2_cost_flag_gas_units]
-defaultValue = "<%= String(1_160_000) %>"
-
-[setting.perps_keeper_l1_cost_liquidate_gas_units]
-defaultValue = "<%= String(5_500) %>"
-
-[setting.perps_keeper_l2_cost_liquidate_gas_units]
-defaultValue = "<%= String(600_000) %>"
+defaultValue = "<%= String(5_500_000) %>"
 
 [setting.perps_keeper_settle_tx_size]
 defaultValue = "<%= String(5_000) %>"
 
+[setting.perps_keeper_l1_cost_flag_gas_units]
+defaultValue = "<%= String(4_500) %>"
+
+[setting.perps_keeper_l2_cost_flag_gas_units]
+defaultValue = "<%= String(450_000) %>"
+
 [setting.perps_keeper_flag_tx_size]
-defaultValue = "<%= String(3_100) %>"
+defaultValue = "<%= String(3_000) %>"
+
+[setting.perps_keeper_l1_cost_liquidate_gas_units]
+defaultValue = "<%= String(26_600) %>"
+
+[setting.perps_keeper_l2_cost_liquidate_gas_units]
+defaultValue = "<%= String(2_300_000) %>"
 
 [setting.perps_keeper_liquidate_tx_size]
-defaultValue = "<%= String(1_100) %>"
+defaultValue = "<%= String(5_050) %>"
 
 [setting.perps_liquidation_min_keeper_reward_usd]
-defaultValue = "5"
+defaultValue = "1"
 
 [setting.perps_liquidation_min_keeper_profit_ratio_d18]
 defaultValue = "0.30"

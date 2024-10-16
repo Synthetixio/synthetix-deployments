@@ -1,9 +1,9 @@
 name = "synthetix-omnibus"
-version = "52"
+version = "55"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
-    "tomls/core.toml",
+    "tomls/omnibus-base-sepolia-andromeda/core.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
@@ -111,7 +111,6 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/referrers.toml",
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/markets/perps-lowcap-factory.toml",
-    "tomls/markets/common/bigcap-settings.toml",
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
 
     # Perps Markets
@@ -188,29 +187,20 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/yfi.toml",
 ]
 
-[setting.commitment_price_delay]
-defaultValue = "2"
-
-[setting.big_cap_settlement_delay]
-defaultValue = "2"
-
-[setting.big_cap_settlement_window_duration]
-defaultValue = "60"
-
-[setting.settlement_reward]
-defaultValue = "<%= parseEther('1') %>"
-
 [setting.snx_package]
-defaultValue = "synthetix:3.3.18"
+defaultValue = "synthetix:3.8.1"
+
+[setting.oracle_manager_package]
+defaultValue = "oracle-manager:3.8.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.4.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.6.4"
+defaultValue = "synthetix-perps-market:3.8.1"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
@@ -261,6 +251,24 @@ depends = ['provision.system', 'setting.account_timeout_withdraw']
 
 [setting.sc_pool_id]
 defaultValue = "1"
+
+[setting.commitment_price_delay]
+defaultValue = "2"
+
+[setting.default_staleness_tolerance]
+defaultValue = "3600"
+
+[setting.strict_staleness_tolerance]
+defaultValue = "60"
+
+[setting.settlement_window_duration]
+defaultValue = "60"
+
+[setting.settlement_delay]
+defaultValue = "2"
+
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('1') %>"
 
 [setting.pool_owner]
 defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
