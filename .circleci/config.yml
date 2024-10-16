@@ -747,6 +747,7 @@ workflows:
           preset: "andromeda"
           chain-id: 8453
           provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          resource_class: large
 
       - fork-test:
           name: test-mainnet
