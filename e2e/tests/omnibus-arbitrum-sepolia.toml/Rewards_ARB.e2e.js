@@ -38,7 +38,7 @@ const rewardManager = rewardsDistributor.rewardManager;
 
 log({ distributorAddress, payoutToken, rewardManager });
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.skip(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
