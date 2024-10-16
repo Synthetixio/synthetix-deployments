@@ -883,13 +883,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.71.0":
-  version: 1.71.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.71.0"
+"@pythnetwork/pyth-evm-js@npm:^1.73.0":
+  version: 1.73.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.73.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/9bebf702781c2947276dbde253d28c2ffbe07b95fa94d522dba02a611768c1a33a10cf8d3aab179a4d8dd2f80fac87eb5aa4210c31f32708ea5e81f6580db224
+  checksum: 10/c91fd770f896a64934c853da303fc26fe0f774dcced50f9feac683ec7d7e8939711e74d40c5405b5cd372d32f34ff368742c5b6f1deaa6ee85c297634c0cb8d5
   languageName: node
   linkType: hard
 
@@ -4585,7 +4585,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.71.0"
+    "@pythnetwork/pyth-evm-js": "npm:^1.73.0"
     "@usecannon/builder": "npm:2.18.2"
     "@usecannon/cli": "npm:2.18.2"
     debug: "npm:^4.3.7"
@@ -4598,7 +4598,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.21.21"
+    viem: "npm:^2.21.27"
   languageName: unknown
   linkType: soft
 
@@ -4899,9 +4899,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.21.15, viem@npm:^2.21.21":
-  version: 2.21.21
-  resolution: "viem@npm:2.21.21"
+"viem@npm:^2.21.15, viem@npm:^2.21.27":
+  version: 2.21.27
+  resolution: "viem@npm:2.21.27"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.11.0"
     "@noble/curves": "npm:1.6.0"
@@ -4917,7 +4917,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/1fe36236c802a512a359c4710d98e627c04795cdf62bb0341c9ac6ab8afc5626431a1b471062ac29f5e2f23bca6ce933d552858f55ad1968514aaea1fb74324d
+  checksum: 10/a166aa83956a22514de1f23d9cbf1b1fef224499a93f51e4cac73421b1cb004600158a5cd57f68940d631446b80952be3d535d6f27ab21151698d2f4b6a77b94
   languageName: node
   linkType: hard
 
