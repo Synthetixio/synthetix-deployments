@@ -214,45 +214,45 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should atomic swap 50 sUSDC to snxUSD to burn debt', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
+  it('should atomic swap 50 sUSDC to USDx to burn debt', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 0);
     await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       synthAmount: 50,
       minUsdAmount: 50, // 0% slippage
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 50);
   });
 
-  it('should approve snxUSD spending for CoreProxy', async () => {
+  it('should approve USDx spending for CoreProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'USDx',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy snxUSD spending'
+      'New wallet has not allowed CoreProxy USDx spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'USDx',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'snxUSD',
+        symbol: 'USDx',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 30 snxUSD into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 50);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
+  it('should deposit 30 USDx into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 50);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDx' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
@@ -260,13 +260,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await depositCollateral({
       privateKey,
-      symbol: 'snxUSD',
+      symbol: 'USDx',
       accountId,
       amount: 30,
     });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 20);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'snxUSD' }), {
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDx' }), 20);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'USDx' }), {
       totalDeposited: 30,
       totalAssigned: 0,
       totalLocked: 0,
@@ -325,7 +325,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       totalLocked: 0,
     });
     // 100k in wallet
-    // -50 -> swapped to snxUSD
+    // -50 -> swapped to USDx
     // + 100k from withdrawal
     // = 199_950
     assert.equal(await getCollateralBalance({ address, symbol: 'sUSDC' }), 199_950);

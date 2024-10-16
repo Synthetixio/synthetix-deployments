@@ -5,6 +5,8 @@ const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}
 
 const ERC7412_ABI = [
   'error OracleDataRequired(address oracleContract, bytes oracleQuery)',
+  'error OracleDataRequired(address oracleContract, bytes oracleQuery, uint256 feeRequired)',
+  'error Errors(bytes errors)',
   'error FeeRequired(uint feeAmount)',
 ];
 const PYTH_ERRORS = [
@@ -120,7 +122,11 @@ function parseError(error) {
         provider
       );
       const data = AllErrors.interface.parseError(errorData);
-      if (
+      if (data?.name === 'Errors') {
+        const errors = data?.args?.errors;
+        log({ errors });
+        return errors.map((e) => parseError(e)).flatten();
+      } else if (
         data?.name === 'OracleDataRequired' &&
         data?.args?.oracleContract &&
         data?.args?.oracleQuery
@@ -161,7 +167,7 @@ function parseError(error) {
           errorFragment: data.errorFragment,
         };
         log(err);
-        return err;
+        return [err];
       }
       return data;
     } catch (e) {

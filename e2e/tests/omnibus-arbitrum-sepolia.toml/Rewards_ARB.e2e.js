@@ -37,6 +37,7 @@ log({ rewardsDistributor });
 
 const payoutToken = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
+const collateralType = rewardsDistributor.collateralType.address;
 
 log({ distributorAddress, payoutToken, rewardManager });
 
@@ -52,7 +53,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   let snapshot;
   let initialBalance;
   let initialRewardsAmount;
-  let collateralType;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
@@ -77,15 +77,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await syncTime();
   });
 
-  it('pulls fARB info', async () => {
-    const { tokenAddress } = await getCollateralConfig('fARB');
-    collateralType = tokenAddress;
-  });
-
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
     log(info);
-    assert.equal(info.name, 'Spartan Council Pool ARB Rewards', 'name');
+    assert.equal(info.name, 'Spartan Council Pool ARB Rewards for ARB LP', 'name');
     assert.equal(info.poolId, 1, 'poolId');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),
