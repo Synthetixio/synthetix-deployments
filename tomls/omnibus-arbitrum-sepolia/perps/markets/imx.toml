@@ -21,7 +21,7 @@ imx_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.imx_perps_market_id %>", "Immutable", "IMX"]
+args = ["<%= settings.imx_perps_market_id %>", "Immutable X", "IMX"]
 
 [invoke.setPerpsPriceImx]
 target = ["perpsFactory.PerpsMarketProxy"]
