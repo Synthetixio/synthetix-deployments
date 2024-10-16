@@ -145,49 +145,49 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(permissions.length, 0);
   });
 
-  it('should atomic swap 100_000_000 sUSDC to sUSD to trade', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 0);
+  it('should atomic swap 100_000_000 sUSDC to snxUSD to trade', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 0);
     await spotSell({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
       synthAmount: 100_000_000,
       minUsdAmount: 100_000_000, // 0% slippage
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'snxUSD' }), 100_000_000);
   });
 
-  it('should approve sUSD spending for PerpsMarketProxy', async () => {
+  it('should approve snxUSD spending for PerpsMarketProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'sUSD',
+        symbol: 'snxUSD',
         spenderAddress: PerpsMarketProxy.address,
       }),
       false,
-      'New wallet has not allowed PerpsMarketProxy sUSD spending'
+      'New wallet has not allowed PerpsMarketProxy snxUSD spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'sUSD',
+      symbol: 'snxUSD',
       spenderAddress: PerpsMarketProxy.address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'sUSD',
+        symbol: 'snxUSD',
         spenderAddress: PerpsMarketProxy.address,
       }),
       true
     );
   });
 
-  it('should deposit 100_000_000 sUSD to Perps', async () => {
+  it('should deposit 100_000_000 snxUSD to Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 0);
     await modifyPerpsCollateral({ wallet, accountId, deltaAmount: 100_000_000 });
     assert.equal(await getPerpsCollateral({ accountId }), 100_000_000);
   });
 
-  it('should withdraw 1_000 sUSD from Perps', async () => {
+  it('should withdraw 1_000 snxUSD from Perps', async () => {
     assert.equal(await getPerpsCollateral({ accountId }), 100_000_000);
     await modifyPerpsCollateral({ wallet, accountId, deltaAmount: -1_000 });
     assert.equal(await getPerpsCollateral({ accountId }), 99_999_000);
