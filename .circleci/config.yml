@@ -771,6 +771,7 @@ workflows:
           preset: "main"
           chain-id: 421614
           provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          resource_class: large
 
       - fork-test:
           name: test-arbitrum-mainnet
