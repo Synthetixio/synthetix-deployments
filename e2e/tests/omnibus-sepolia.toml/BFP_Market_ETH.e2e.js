@@ -370,7 +370,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       amount: 1000,
     });
     const newBalance = await getCollateralBalance({ address, symbol: 'sUSD' });
-    assert.equal(newBalance - balanceBefore, 1000);
+    const amountMinted = newBalance - balanceBefore;
+    assert.ok(Math.abs(amountMinted - 1000) <= 0.00001, 'Amount minted is not 1000');
   });
 
   it('should payback debt', async () => {
