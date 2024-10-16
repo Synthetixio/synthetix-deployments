@@ -9,7 +9,7 @@ source = "<%= settings.perps_market_package %>"
 targetPreset = "<%= settings.target_preset %>"
 options.coreProxyOwner = "<%= settings.owner %>"
 options.owner = "<%= settings.owner %>"
-options.salt = "<%= settings.salt %>"
+options.salt = "<%= settings.salt %>-perps-lowcap"
 options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_preset %>"
 options.spotMarketPackage = "<%= settings.spot_market_package %>@<%= settings.target_preset %>"
 
