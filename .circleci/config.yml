@@ -40,7 +40,7 @@ commands:
 
   run-anvil:
     parameters:
-      provider-url:
+      rpc-env:
         type: string
       port:
         type: integer
@@ -51,7 +51,7 @@ commands:
           command: |
             anvil \
               --port << parameters.port >> \
-              --fork-url << parameters.provider-url >>
+              --fork-url "$<< parameters.rpc-env >>"
           background: true
 
   wait-for-anvil:
@@ -247,7 +247,7 @@ jobs:
         type: string
       chain-id:
         type: integer
-      provider-url:
+      rpc-env:
         type: string
       package:
         type: string
@@ -277,7 +277,7 @@ jobs:
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
-              --provider-url << parameters.provider-url >> \
+              --provider-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -354,7 +354,7 @@ jobs:
         type: integer
       preset:
         type: string
-      provider-url:
+      rpc-env:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
@@ -375,7 +375,7 @@ jobs:
               --port 8545 \
               --dry-run \
               --chain-id << parameters.chain-id >> \
-              --provider-url << parameters.provider-url >> \
+              --provider-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -435,7 +435,7 @@ jobs:
         type: integer
       preset:
         type: string
-      provider-url:
+      rpc-env:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
@@ -446,7 +446,7 @@ jobs:
       - checkout
       - install-anvil
       - run-anvil:
-          provider-url: << parameters.provider-url >>
+          rpc-env: << parameters.rpc-env >>
       - yarn-install
       - wait-for-anvil
 
@@ -575,7 +575,7 @@ jobs:
         type: integer
       preset:
         type: string
-      provider-url:
+      rpc-env:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
@@ -586,7 +586,7 @@ jobs:
       - checkout
       - install-anvil
       - run-anvil:
-          provider-url: << parameters.provider-url >>
+          rpc-env: << parameters.rpc-env >>
       - yarn-install
       - wait-for-anvil
 
@@ -644,7 +644,7 @@ jobs:
         type: integer
       preset:
         type: string
-      provider-url:
+      rpc-env:
         type: string
     docker:
       - image: cimg/node:<< pipeline.parameters.node-version >>
@@ -666,7 +666,7 @@ jobs:
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
-              --provider-url << parameters.provider-url >> \
+              --provider-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -738,7 +738,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_BASE_SEPOLIA
           resource_class: large
 
       - fork-test:
@@ -747,7 +747,8 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_BASE_MAINNET
+          resource_class: large
 
       - fork-test:
           name: test-mainnet
@@ -755,7 +756,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_MAINNET
 
       - fork-test:
           name: test-optimism-mainnet
@@ -763,7 +764,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_OPTIMISM_MAINNET
 
       - fork-test:
           name: test-arbitrum-sepolia
@@ -771,7 +772,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_SEPOLIA
           resource_class: large
 
       - fork-test:
@@ -780,7 +781,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_MAINNET
           resource_class: large
 
       - fork-test:
@@ -789,7 +790,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_SEPOLIA
 
       - fork-test:
           name: test-snaxchain-testnet
@@ -797,7 +798,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 13001
-          provider-url: https://testnet.snaxchain.io/$CONDUIT_API_KEY
+          rpc-env: RPC_SNAXCHAIN_TESTNET
 
       - fork-test:
           name: test-snaxchain-mainnet
@@ -805,7 +806,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 2192
-          provider-url: https://mainnet.snaxchain.io/$CONDUIT_API_KEY
+          rpc-env: RPC_SNAXCHAIN_MAINNET
 
   deployment-info:
     when:
@@ -824,56 +825,56 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_BASE_SEPOLIA
 
       - deployment-info:
           name: docs-base-mainnet-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_BASE_MAINNET
 
       - deployment-info:
           name: docs-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_MAINNET
 
       - deployment-info:
           name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_SEPOLIA
 
       - deployment-info:
           name: docs-optimism-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_OPTIMISM_MAINNET
 
       - deployment-info:
           name: docs-arbitrum-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_SEPOLIA
 
       - deployment-info:
           name: docs-arbitrum-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_MAINNET
 
       - deployment-info:
           name: docs-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_SEPOLIA
 
   npm-package:
     when:
@@ -890,56 +891,56 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://sepolia.base.org
+          rpc-env: RPC_BASE_SEPOLIA
 
       - npm-package:
           name: npm-base-mainnet-andromeda
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://mainnet.base.org
+          rpc-env: RPC_BASE_MAINNET
 
       - npm-package:
           name: npm-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_MAINNET
 
       - npm-package:
           name: npm-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_SEPOLIA
 
       - npm-package:
           name: npm-optimism-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_OPTIMISM_MAINNET
 
       - npm-package:
           name: npm-arbitrum-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_SEPOLIA
 
       - npm-package:
           name: npm-arbitrum-mainnet
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_MAINNET
 
       - npm-package:
           name: npm-sepolia
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_SEPOLIA
 
   preview:
     when:
@@ -957,14 +958,14 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 1
-          provider-url: https://mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_MAINNET
       - preview:
           name: preview-optimism-mainnet
           toml: omnibus-optimism-mainnet.toml
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 10
-          provider-url: https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_OPTIMISM_MAINNET
 
       - preview:
           name: preview-base-mainnet-andromeda
@@ -972,7 +973,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 8453
-          provider-url: https://base-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_BASE_MAINNET
 
       - preview:
           name: preview-base-sepolia-andromeda
@@ -980,7 +981,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "andromeda"
           chain-id: 84532
-          provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_BASE_SEPOLIA
 
       - preview:
           name: preview-arbitrum-sepolia
@@ -988,7 +989,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 421614
-          provider-url: https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_SEPOLIA
 
       - preview:
           name: preview-arbitrum-mainnet
@@ -996,7 +997,7 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 42161
-          provider-url: https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_ARBITRUM_MAINNET
 
       - preview:
           name: preview-sepolia
@@ -1004,13 +1005,4 @@ workflows:
           package: "synthetix-omnibus:latest"
           preset: "main"
           chain-id: 11155111
-          provider-url: https://sepolia.infura.io/v3/$INFURA_API_KEY
-
-      # oracles are not ready so skip for now
-      #- preview:
-      #name: preview-optimism-sepolia
-      #toml: omnibus-optimism-sepolia.toml
-      #package: "synthetix-omnibus:latest"
-      #preset: "main"
-      #chain-id: 11155420
-      #provider-url: https://optimism-sepolia.infura.io/v3/$INFURA_API_KEY
+          rpc-env: RPC_SEPOLIA
