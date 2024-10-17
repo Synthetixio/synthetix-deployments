@@ -739,6 +739,7 @@ workflows:
           preset: "andromeda"
           chain-id: 84532
           provider-url: https://base-sepolia.infura.io/v3/$INFURA_API_KEY
+          resource_class: large
 
       - fork-test:
           name: test-base-mainnet-andromeda
