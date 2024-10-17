@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "13"
+version = "14"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -10,7 +10,7 @@ include = [
     "tomls/oracles/wsteth.toml",
     "tomls/oracles/susde.toml",
     "tomls/oracles/snx.toml",
-    "tomls/collaterals/weth.toml",
+    "tomls/omnibus-mainnet/collaterals/weth.toml",
     "tomls/omnibus-mainnet/collaterals/wsteth.toml",
     "tomls/omnibus-mainnet/collaterals/susde.toml",
     "tomls/omnibus-mainnet/collaterals/snx.toml",
@@ -36,13 +36,13 @@ include = [
 defaultValue = "synthetix:3.8.0"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.0"
+defaultValue = "oracle-manager:3.8.1"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.6.0"
+defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.3.19"
+defaultValue = "synthetix-perps-market:3.8.1"
 
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.8.0"
@@ -106,6 +106,9 @@ defaultValue = "129600"
 
 [setting.snx_liquidation_reward]
 defaultValue = "50000000000000000000"
+
+[setting.snx_min_delegation]
+defaultValue = "100000000000000000000"
 
 [setting.minimum_liquidity_ratio]
 defaultValue = "1500000000000000000"
