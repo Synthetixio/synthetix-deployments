@@ -1,186 +1,7 @@
-name = "synthetix-omnibus"
-version = "9"
-description = "Includes the full synthetix system with configurations applied"
-include = [
-    "tomls/settings.toml",
-    "tomls/ccip-testnet.toml",
-    "tomls/omnibus-sepolia/core.toml",
-    "tomls/permissions.toml",
-    "tomls/oracles/wsteth.toml",
-    "tomls/oracles/susde.toml",
-    "tomls/oracles/snx.toml",
-    "tomls/oracles/eth.toml",
-    "tomls/collaterals/wsteth.toml",
-    "tomls/collaterals/susde.toml",
-    "tomls/collaterals/snx.toml",
-    "tomls/omnibus-sepolia/collaterals/weth.toml",
-    "tomls/markets/legacy.toml",
-    "tomls/markets/spot-factory.toml",
-    "tomls/markets/spot/usde.toml",
-    "tomls/pools/spartan-council.toml",
-    "tomls/permit-all-createPool.toml",
-    "tomls/permit-all-registerMarket.toml",
-    "tomls/permit-all-transferCrossChain.toml",
-]
-
-[setting.salt]
-defaultValue = "snaxtest"
-
-[setting.snx_package]
-defaultValue = "synthetix:3.8.0"
-
-[setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.0"
-
-[setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.6.0"
-
-[setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.8.0"
-
-[setting.susde_package]
-defaultValue = "fake-susde-token"
-
-depends = ["clone.susde_deploy"]
-
-[setting.wsteth_package]
-defaultValue = "fake-wsteth-token"
-
-depends = ["clone.wsteth_deploy"]
-
-[setting.owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.snx_address]
-defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
-
-[setting.wsteth_aggregator_address]
-defaultValue = "0xaaabb530434B0EeAAc9A42E25dbC6A22D7bE218E"
-
-[setting.wsteth_chainlink_staleness_tolerance]
-defaultValue = "86400"
-
-[setting.eth_aggregator_address]
-defaultValue = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
-description = "https://docs.chain.link/data-feeds/price-feeds/addresses/?network=ethereum&page=1"
-
-[setting.weth_max_pool_collateral]
-defaultValue = "<%= parseEther(String(20_000)) %>"
-
-[setting.susde_aggregator_address]
-defaultValue = "0x6f7be09227d98Ce1Df812d5Bc745c0c775507E92"
-
-[setting.susde_chainlink_staleness_tolerance]
-defaultValue = "86400"
-
-[setting.usde_aggregator_address]
-defaultValue = "0x55ec7c3ed0d7CB5DF4d3d8bfEd2ecaf28b4638fb"
-
-[setting.usde_chainlink_staleness_tolerance]
-defaultValue = "86400"
-
-[setting.snx_aggregator_address]
-defaultValue = "0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC"
-
-[setting.snx_chainlink_staleness_tolerance]
-defaultValue = "86400"
-
-[setting.snx_liquidation_reward]
-defaultValue = "50000000000000000000"
-
-[setting.weth_liquidation_reward]
-defaultValue = "10000000000000000000"
-
-[setting.minimum_liquidity_ratio]
-defaultValue = "2000000000000000000"
-
-[setting.account_timeout_withdraw]
-defaultValue = "86400"
-
-[setting.deployer]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.pdao]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.sc_pool_id]
-defaultValue = "1"
-
-[setting.pool_owner]
-defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
-
-[setting.ccip_router]
-defaultValue = "0xd0daae2231e9cb96b94c8512223533293c3693bf"
-
-[setting.ccip_token_pool]
-defaultValue = "0x9b65749b38278060c5787cce0391ac7f1094c8e8"
-
-[setting.synthUsdeAsyncFixedFee]
-defaultValue = "0"
-
-[setting.synthUsdeSkewScale]
-defaultValue = "0"
-
-[setting.pythFeedUrl]
-defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
-
-[setting.pythUsdeFeedId]
-defaultValue = "0x6ec879b1e9963de5ee97e9c8710b742d6228252a5e2ca12d4ae81d7fe5ee8c5d"
-
-[setting.pyth_price_verification_address]
-defaultValue = "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21"
-
-[setting.synth_usde_max_market_collateral]
-defaultValue = "<%= parseEther('100000000') %>"
-
-# we want to enable the spot market wrapper for usde
-[clone.usde]
-source = "mintable-token:2.0"
-target = "fake-usde-token"
-options.name = "Ethena USD (fake)"
-options.symbol = "USDe"
-options.owner = "<%= settings.deployer %>"
-
-[clone.susde_deploy]
-source = "mintable-token:2.0"
-target = "fake-susde-token"
-options.name = "Ethena Staked USD (fake)"
-options.symbol = "sUSDe"
-options.owner = "<%= settings.deployer %>"
-
-[clone.wsteth_deploy]
-source = "mintable-token:2.0"
-target = "fake-wsteth-token"
-options.name = "Lido Wrapped Staked ETH (fake)"
-options.symbol = "WstETH"
-options.owner = "<%= settings.deployer %>"
-
-[invoke.SpotMarketProxy_setWrapper_usde]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usde_market_id %>"]
-func = "setWrapper"
-args = [
-    "<%= extras.synth_usde_market_id %>",
-    "<%= imports.usde.contracts.Token.address %>",
-    "<%= settings.synth_usde_max_market_collateral %>",
-]
-
-[provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.5.0"
-targetPreset = "<%= settings.target_preset %>"
-options.salt = "<%= settings.salt %>"
-options.pythAddress = "<%= settings.pyth_price_verification_address %>"
-
-# --- BFP configurations  -- #
-#
-#
-
-[setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.8.0"
+#BFP Configuration
 
 # Collaterals configurations
-#
+
 [setting.snxusd_max_collateral]
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
@@ -194,7 +15,7 @@ defaultValue = "0" # skew scale is not used for sUSD.
 defaultValue = "<%= parseEther(String(1_000_000)) %>"
 
 # ETH market configurations
-#
+
 [setting.maker_fee]
 defaultValue = "<%= parseEther('0.0001') %>"
 
@@ -250,8 +71,6 @@ defaultValue = "<%= parseEther('10') %>"
 defaultValue = "<%= parseEther('100') %>"
 
 # --- Provision bfp market --- #
-#
-#
 
 [provision.bfp_market_factory]
 source = "<%= settings.bfp_market_package %>"
@@ -263,31 +82,7 @@ options.synthetixPackage = "<%= settings.snx_package %>@<%= settings.target_pres
 options.synthetixPreset = "<%= settings.target_preset %>"
 depends = ["provision.system"]
 
-# --- Provision fake collaterals --- #
-#
-#
-
-# Create a mintable fake ETH for collateral
-#
-
-[provision.weth_mock_collateral]
-source = "mintable-token:1.8"
-options.name = "Fake WETH"
-options.symbol = "fWETH"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
-# Set weth_address so that Core is configured with the fake WETH.
-#
-[setting.weth_address]
-defaultValue = "<%= weth_mock_collateral.MintableToken.address %>"
-
-# --- Configure bfp --- #
-#
-#
-
 # Set pyth
-#
 
 [invoke.BfpMarketProxy_setPyth]
 target = ["bfp_market_factory.BfpMarketProxy"]
@@ -296,7 +91,7 @@ func = "setPyth"
 args = ["<%= settings.pyth_price_verification_address %>"]
 
 # --- Add Rewards distributors --- #
-#
+
 [invoke.BfpMarketProxy_createRewardDistributor_weth]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
@@ -310,25 +105,17 @@ name = "weth RewardDistributor"
 token = "<%= settings.weth_address %>"
 collateralTypes = [
     "<%= settings.snx_address %>",
-    "<%= imports.wsteth.contracts.Token.address %>",
-    "<%= imports.susde.contracts.Token.address %>",
+    #    "<%= imports.wsteth.contracts.Token.address %>",
+    #    "<%= imports.susde.contracts.Token.address %>",
 ]
 
 # --- Global Market configuration --- #
-#
-#
 
 [invoke.BfpMarketProxy_setMarketConfiguration]
 target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfiguration"
-
-[var.bfp]
-keeper_profit_margin_usd = "<%= parseEther('5') %>"
-keeper_profit_margin_percent = "<%= parseEther('0.01') %>"
-min_collateral_discount = "0"
-low_utilization_slope_percent = "0"
-high_utilization_slope_percent = "0"
+depends = ['provision.bfp_market_factory']
 
 [[invoke.BfpMarketProxy_setMarketConfiguration.args]]
 pythPublishTimeMin = 12
@@ -344,7 +131,7 @@ keeperCancellationGasUnits = 600000
 keeperFlagGasUnits = 1200000
 keeperLiquidateMarginGasUnits = 1200000
 keeperLiquidationGasUnits = 1200000
-keeperLiquidationEndorsed = "<%= settings.deployer %>"                         # TODO, this is currently deployer, change to a keeper
+keeperLiquidationEndorsed = "<%= settings.keeper %>"
 collateralDiscountScalar = 1
 minCollateralDiscount = "<%= settings.min_collateral_discount %>"
 maxCollateralDiscount = "<%= parseEther('0.1') %>"
@@ -414,7 +201,7 @@ args = [
         "<%= settings.weth_address %>",
     ],
     [ # oracle node ids
-        "<%= imports.system.settings.const_one_oracle_id %>",
+        "<%= imports.system.extras.const_one_oracle_id %>",
         "<%= settings.eth_oracle_id %>",
     ],
     [ # maxAllowances
@@ -468,3 +255,36 @@ args = [
     "<%= settings.weth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
+
+[invoke.CoreProxy_registerRewardsDistributor_snx]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.snx_address %>",
+    "<%= settings.weth_rewards_distributor %>",
+]
+
+#[invoke.CoreProxy_registerRewardsDistributor_wsteth]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= imports.wsteth.contracts.Token.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]
+
+#[invoke.CoreProxy_registerRewardsDistributor_susde]
+#target = ["system.CoreProxy"]
+#fromCall.func = "getPoolOwner"
+#fromCall.args = ["<%= settings.sc_pool_id %>"]
+#func = "registerRewardsDistributor"
+#args = [
+#    "<%= settings.sc_pool_id %>",
+#    "<%= imports.susde.contracts.Token.address %>",
+#    "<%= settings.weth_rewards_distributor %>",
+#]
