@@ -232,7 +232,6 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/sol.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usde.toml",
-
 ]
 
 [setting.target_preset]
