@@ -98,6 +98,7 @@ fromCall.func = "owner"
 func = "createRewardDistributor"
 extra.weth_rewards_distributor.event = "RewardDistributorCreated"
 extra.weth_rewards_distributor.arg = 0
+depends = ['provision.bfp_market_factory', 'setting.sc_pool_id', 'setting.weth_address', 'setting.snx_address']
 
 [[invoke.BfpMarketProxy_createRewardDistributor_weth.args]]
 poolId = "<%= settings.sc_pool_id %>"
@@ -105,8 +106,8 @@ name = "weth RewardDistributor"
 token = "<%= settings.weth_address %>"
 collateralTypes = [
     "<%= settings.snx_address %>",
-    #    "<%= imports.wsteth.contracts.Token.address %>",
-    #    "<%= imports.susde.contracts.Token.address %>",
+        "<%= setting.wsteth_address %>",
+        "<%= setting.susde_address %>",
 ]
 
 # --- Global Market configuration --- #
@@ -116,6 +117,13 @@ target = ["bfp_market_factory.BfpMarketProxy"]
 fromCall.func = "owner"
 func = "setMarketConfiguration"
 depends = ['provision.bfp_market_factory']
+
+[var.bfp]
+keeper_profit_margin_usd = "<%= parseEther('5') %>"
+keeper_profit_margin_percent = "<%= parseEther('0.01') %>"
+min_collateral_discount = "0"
+low_utilization_slope_percent = "0"
+high_utilization_slope_percent = "0"
 
 [[invoke.BfpMarketProxy_setMarketConfiguration.args]]
 pythPublishTimeMin = 12
@@ -267,24 +275,24 @@ args = [
     "<%= settings.weth_rewards_distributor %>",
 ]
 
-#[invoke.CoreProxy_registerRewardsDistributor_wsteth]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getPoolOwner"
-#fromCall.args = ["<%= settings.sc_pool_id %>"]
-#func = "registerRewardsDistributor"
-#args = [
-#    "<%= settings.sc_pool_id %>",
-#    "<%= imports.wsteth.contracts.Token.address %>",
-#    "<%= settings.weth_rewards_distributor %>",
-#]
+[invoke.CoreProxy_registerRewardsDistributor_wsteth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.wsteth_address %>",
+    "<%= settings.weth_rewards_distributor %>",
+]
 
-#[invoke.CoreProxy_registerRewardsDistributor_susde]
-#target = ["system.CoreProxy"]
-#fromCall.func = "getPoolOwner"
-#fromCall.args = ["<%= settings.sc_pool_id %>"]
-#func = "registerRewardsDistributor"
-#args = [
-#    "<%= settings.sc_pool_id %>",
-#    "<%= imports.susde.contracts.Token.address %>",
-#    "<%= settings.weth_rewards_distributor %>",
-#]
+[invoke.CoreProxy_registerRewardsDistributor_susde]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.susde_address %>",
+    "<%= settings.weth_rewards_distributor %>",
+]

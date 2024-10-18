@@ -149,6 +149,9 @@ defaultValue = "<%= parseEther(String(1_000_000)) %>"
 [setting.weth_max_collateral]
 defaultValue = "<%= parseEther(String(10_000)) %>"
 
+[setting.wsteth_max_collateral]
+defaultValue = "<%= parseEther(String(5_000)) %>"
+
 [setting.snxusd_skew_scale]
 defaultValue = "0" # skew scale is not used for sUSD.
 

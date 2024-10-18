@@ -22,10 +22,10 @@ depositingEnabled = true
 [invoke.CoreProxy_setPoolCollateralConfiguration_susde]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
-    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.sc_pool_id %>",
     "<%= settings.susde_address %>",
     { collateralLimitD18 = "<%= settings.susde_max_collateral_limit %>", issuanceRatioD18 = 0 },
 ]
