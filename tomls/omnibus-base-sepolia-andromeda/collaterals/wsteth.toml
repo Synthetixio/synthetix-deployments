@@ -1,25 +1,39 @@
 [setting.wsteth_issuance_ratio]
-defaultValue = "<%= parseEther('2') %>"
+defaultValue = "<%= parseEther('10') %>"
 
 [setting.wsteth_liquidation_ratio]
-defaultValue = "<%= parseEther('1.1') %>"
+defaultValue = "<%= parseEther('1.50') %>"
 
 [setting.wsteth_liquidation_reward]
-defaultValue = "<%= parseEther('0.0001') %>"
+defaultValue = "<%= parseEther('0.5') %>"
 
 [setting.wsteth_min_delegation]
-defaultValue = "<%= parseEther('0.1') %>"
+defaultValue = "<%= parseEther('50') %>"
 
-[invoke.configure_wsteth_collateral]
+[setting.max_collateral_limit_wsteth]
+defaultValue = "<%= parseEther('1750') %>"
+
+[invoke.CoreProxy_configureCollateral_wsteth]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
-[[invoke.configure_wsteth_collateral.args]]
-tokenAddress = "<%= extras.synth_wsteth_token_address %>"
+[[invoke.CoreProxy_configureCollateral_wsteth.args]]
+tokenAddress = "<%= settings.wsteth_address %>"
 oracleNodeId = "<%= extras.wsteth_oracle_id %>"
 issuanceRatioD18 = "<%= settings.wsteth_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.wsteth_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.wsteth_liquidation_reward %>"
 minDelegationD18 = "<%= settings.wsteth_min_delegation %>"
 depositingEnabled = false
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_wsteth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.sc_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.sc_pool_id %>",
+    "<%= settings.wsteth_address %>",
+    { collateralLimitD18 = "<%= settings.max_collateral_limit_wsteth %>", issuanceRatioD18 = 0 },
+]
