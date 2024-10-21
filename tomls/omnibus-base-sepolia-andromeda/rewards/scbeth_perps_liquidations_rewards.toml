@@ -19,7 +19,7 @@ args = [
     "<%= extras.synth_cbeth_market_id %>",
     [
         "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>",
-        "<%= settings.stataBasUSDC_address %>",        
+        "<%= settings.stataBasUSDC_address %>",
     ],
 ]
 
