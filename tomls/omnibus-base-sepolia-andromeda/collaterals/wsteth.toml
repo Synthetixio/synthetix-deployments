@@ -1,0 +1,25 @@
+[setting.wsteth_issuance_ratio]
+defaultValue = "<%= parseEther('2') %>"
+
+[setting.wsteth_liquidation_ratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
+[setting.wsteth_liquidation_reward]
+defaultValue = "<%= parseEther('0.0001') %>"
+
+[setting.wsteth_min_delegation]
+defaultValue = "<%= parseEther('0.1') %>"
+
+[invoke.configure_wsteth_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_wsteth_collateral.args]]
+tokenAddress = "<%= extras.synth_wsteth_token_address %>"
+oracleNodeId = "<%= extras.wsteth_oracle_id %>"
+issuanceRatioD18 = "<%= settings.wsteth_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.wsteth_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.wsteth_liquidation_reward %>"
+minDelegationD18 = "<%= settings.wsteth_min_delegation %>"
+depositingEnabled = false
