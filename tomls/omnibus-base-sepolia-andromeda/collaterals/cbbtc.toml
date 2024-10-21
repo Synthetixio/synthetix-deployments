@@ -1,0 +1,25 @@
+[setting.cbbtc_issuance_ratio]
+defaultValue = "<%= parseEther('2') %>"
+
+[setting.cbbtc_liquidation_ratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
+[setting.cbbtc_liquidation_reward]
+defaultValue = "<%= parseEther('0.0001') %>"
+
+[setting.cbbtc_min_delegation]
+defaultValue = "<%= parseEther('0.1') %>"
+
+[invoke.configure_cbbtc_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_cbbtc_collateral.args]]
+tokenAddress = "<%= extras.synth_cbbtc_token_address %>"
+oracleNodeId = "<%= extras.cbbtc_oracle_id %>"
+issuanceRatioD18 = "<%= settings.cbbtc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.cbbtc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.cbbtc_liquidation_reward %>"
+minDelegationD18 = "<%= settings.cbbtc_min_delegation %>"
+depositingEnabled = false
