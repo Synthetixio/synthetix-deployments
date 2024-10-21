@@ -98,7 +98,7 @@ fromCall.func = "owner"
 func = "createRewardDistributor"
 extra.weth_rewards_distributor.event = "RewardDistributorCreated"
 extra.weth_rewards_distributor.arg = 0
-depends = ['provision.bfp_market_factory', 'setting.sc_pool_id', 'setting.weth_address', 'setting.snx_address']
+depends = ['provision.bfp_market_factory']
 
 [[invoke.BfpMarketProxy_createRewardDistributor_weth.args]]
 poolId = "<%= settings.sc_pool_id %>"
@@ -106,8 +106,8 @@ name = "weth RewardDistributor"
 token = "<%= settings.weth_address %>"
 collateralTypes = [
     "<%= settings.snx_address %>",
-        "<%= setting.wsteth_address %>",
-        "<%= setting.susde_address %>",
+    "<%= settings.wsteth_address %>",
+    "<%= settings.susde_address %>",
 ]
 
 # --- Global Market configuration --- #
@@ -263,6 +263,7 @@ args = [
     "<%= settings.weth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
+depends = ['provision.system']
 
 [invoke.CoreProxy_registerRewardsDistributor_snx]
 target = ["system.CoreProxy"]
@@ -274,6 +275,7 @@ args = [
     "<%= settings.snx_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
+depends = ['provision.system', 'invoke.BfpMarketProxy_createRewardDistributor_weth']
 
 [invoke.CoreProxy_registerRewardsDistributor_wsteth]
 target = ["system.CoreProxy"]
@@ -285,6 +287,7 @@ args = [
     "<%= settings.wsteth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
+depends = ['provision.system', 'invoke.BfpMarketProxy_createRewardDistributor_weth']
 
 [invoke.CoreProxy_registerRewardsDistributor_susde]
 target = ["system.CoreProxy"]
@@ -296,3 +299,4 @@ args = [
     "<%= settings.susde_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
+depends = ['provision.system', 'invoke.BfpMarketProxy_createRewardDistributor_weth']
