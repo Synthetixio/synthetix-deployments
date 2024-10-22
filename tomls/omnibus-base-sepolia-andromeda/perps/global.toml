@@ -49,9 +49,6 @@ defaultValue = "0.80"
 [setting.perps_high_util_gradient]
 defaultValue = "0.01"
 
-[setting.perps_collateral_liquidation_ratio]
-defaultValue = "<%= parseEther('0.0003') %>"
-
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -109,9 +106,3 @@ depends = [
     'setting.perps_gradient_breakpoint',
     'setting.perps_high_util_gradient',
 ]
-
-[invoke.PerpsMarketProxy_setCollateralLiquidateRewardRatio]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setCollateralLiquidateRewardRatio"
-args = ["<%= settings.perps_collateral_liquidation_ratio %>"]
