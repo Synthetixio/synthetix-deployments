@@ -6,7 +6,7 @@ synth_cbeth_skew_scale = "<%= parseEther(String(350_000)) %>"
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = ["Synthetic Coinbase Wrapped Staked ETH", "sCBETH", "<%= settings.owner %>"]
+args = ["Synthetic Coinbase Wrapped Staked ETH", "scbETH", "<%= settings.owner %>"]
 extra.synth_cbeth_market_id.event = "SynthRegistered"
 extra.synth_cbeth_market_id.arg = 0
 extra.synth_cbeth_token_address.event = "SynthRegistered"
