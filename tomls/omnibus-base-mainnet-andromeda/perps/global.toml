@@ -83,7 +83,7 @@ args = [["0"]]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
-args = ["10", "1"]
+args = ["10", "3"]
 
 [invoke.setPerpsMarketKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]
