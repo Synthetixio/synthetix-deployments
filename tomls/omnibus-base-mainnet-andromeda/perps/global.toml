@@ -49,6 +49,9 @@ defaultValue = "0" # not enabled
 [setting.perps_high_util_gradient]
 defaultValue = "0" # not enabled
 
+[setting.perps_collateral_liquidation_ratio]
+defaultValue = "<%= parseEther('0.0003') %>"
+
 [invoke.setPerpsLiquidationRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
@@ -100,9 +103,9 @@ args = [
     "<%= parseEther(settings.perps_gradient_breakpoint) %>",
     "<%= parseEther(settings.perps_high_util_gradient) %>",
 ]
-depends = [
-    'provision.perpsFactory',
-    'setting.perps_low_util_gradient',
-    'setting.perps_gradient_breakpoint',
-    'setting.perps_high_util_gradient',
-]
+
+[invoke.PerpsMarketProxy_setCollateralLiquidateRewardRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralLiquidateRewardRatio"
+args = ["<%= settings.perps_collateral_liquidation_ratio %>"]
