@@ -30,10 +30,10 @@ depositingEnabled = false
 [invoke.CoreProxy_setPoolCollateralConfiguration_cbeth]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= extras.sc_pool_id %>"]
+fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "setPoolCollateralConfiguration"
 args = [
-    "<%= extras.sc_pool_id %>",
+    "<%= settings.sc_pool_id %>",
     "<%= settings.cbeth_address %>",
     { collateralLimitD18 = "<%= settings.max_collateral_limit_cbeth %>", issuanceRatioD18 = 0 },
 ]
