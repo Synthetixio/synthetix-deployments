@@ -1,4 +1,4 @@
-[setting.scbbtc_issuance_ratio]
+[var.scbbtc_synth_config]
 defaultValue = "<%= parseEther('2') %>"
 
 [setting.scbbtc_liquidation_ratio]
