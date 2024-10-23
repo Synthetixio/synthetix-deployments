@@ -11,12 +11,12 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/feeCollector.toml",
 
     # System collaterals
-    "tomls/omnibus-base-sepolia-andromeda/collaterals/sUSDC.toml",
-    "tomls/omnibus-base-sepolia-andromeda/collaterals/sstataUSDC.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/cbbtc.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/cbeth.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/wsteth.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/weth.toml",
+    "tomls/omnibus-base-sepolia-andromeda/collaterals/synth-usdc.toml",
+    "tomls/omnibus-base-sepolia-andromeda/collaterals/synth-stata-usdc.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/synth-cbbtc.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/synth-cbeth.toml",
     "tomls/omnibus-base-sepolia-andromeda/collaterals/synth-wsteth.toml",

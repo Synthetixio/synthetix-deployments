@@ -1,14 +1,8 @@
-[setting.scbeth_issuance_ratio]
-defaultValue = "<%= parseEther('2') %>"
-
-[setting.scbeth_liquidation_ratio]
-defaultValue = "<%= parseEther('1.1') %>"
-
-[setting.scbeth_liquidation_reward]
-defaultValue = "<%= parseEther('0.0001') %>"
-
-[setting.scbeth_min_delegation]
-defaultValue = "<%= parseEther('0.1') %>"
+[var.scbeth_synth_config]
+scbeth_issuance_ratio = "<%= parseEther('2') %>"
+scbeth_liquidation_ratio = "<%= parseEther('1.1') %>"
+scbeth_liquidation_reward = "<%= parseEther('0.0001') %>"
+scbeth_min_delegation = "<%= parseEther('0.1') %>"
 
 [invoke.configure_scbeth_collateral]
 target = ["system.CoreProxy"]

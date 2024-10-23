@@ -1,14 +1,8 @@
-[setting.swsteth_issuance_ratio]
-defaultValue = "<%= parseEther('2') %>"
-
-[setting.swsteth_liquidation_ratio]
-defaultValue = "<%= parseEther('1.1') %>"
-
-[setting.swsteth_liquidation_reward]
-defaultValue = "<%= parseEther('0.0001') %>"
-
-[setting.swsteth_min_delegation]
-defaultValue = "<%= parseEther('0.1') %>"
+[var.swsteth_synth_config]
+swsteth_issuance_ratio = "<%= parseEther('2') %>"
+swsteth_liquidation_ratio = "<%= parseEther('1.1') %>"
+swsteth_liquidation_reward = "<%= parseEther('0.0001') %>"
+swsteth_min_delegation = "<%= parseEther('0.1') %>"
 
 [invoke.configure_swsteth_collateral]
 target = ["system.CoreProxy"]
