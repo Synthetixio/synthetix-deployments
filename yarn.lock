@@ -1024,20 +1024,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/router@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@synthetixio/router@npm:3.4.0"
-  dependencies:
-    "@ethersproject/keccak256": "npm:^5.7.0"
-    debug: "npm:^4.3.4"
-    mustache: "npm:^4.2.0"
-  peerDependencies:
-    hardhat: ^2.0.0
-    solc: ^0.8.17
-  checksum: 10/da0db66e85b5dbd684563df4160cc0e74809c1a69fd455407efde994a37c8509ebf6c298f5708175e79cb62f89d7fa397646304e00b3fa948bb738dc7d664cdd
-  languageName: node
-  linkType: hard
-
 "@taplo/core@npm:^0.1.0":
   version: 0.1.1
   resolution: "@taplo/core@npm:0.1.1"
@@ -1136,11 +1122,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.18.2":
-  version: 2.18.2
-  resolution: "@usecannon/builder@npm:2.18.2"
+"@usecannon/builder@npm:2.18.3":
+  version: 2.18.3
+  resolution: "@usecannon/builder@npm:2.18.3"
   dependencies:
-    "@synthetixio/router": "npm:^3.4.0"
+    "@usecannon/router": "npm:^4.0.0"
+    "@usecannon/web-solc": "npm:0.5.1"
     axios: "npm:^1.7.2"
     axios-retry: "npm:^4.4.2"
     buffer: "npm:^6.0.3"
@@ -1154,16 +1141,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.21.15"
     zod: "npm:^3.23.6"
-  checksum: 10/c69d931e4ce7400e1d0a74cdcd210b2197d06d59639f3cd07ea5bd9ef8a90eda7abbba484098b0fa8cfffe7c2457da787d3c1c796beed1f45ca96beada6e9763
+  checksum: 10/e89136b17cc20115d4f9cebecd506a89f684a191dae158c67cd69145c43c9144c40763e8b175312a5c4bb1c9b8b1ad8efd95f76d4a566d08cc6e553da91bb56c
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.18.2":
-  version: 2.18.2
-  resolution: "@usecannon/cli@npm:2.18.2"
+"@usecannon/cli@npm:2.18.3":
+  version: 2.18.3
+  resolution: "@usecannon/cli@npm:2.18.3"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.18.2"
+    "@usecannon/builder": "npm:2.18.3"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^12.1.0"
@@ -1182,7 +1169,25 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/4bd1f92b930db90c082079948b8396423a28d0851e139d54a9d1b6dd64fd9e1a041f6363b1f5ddeb5ebb58ed971495d5adc9336d2b3225f7ebcdb8e9364f3be5
+  checksum: 10/2a38be4f5ec9f3b61a0b9b2fe06ba59b6ba56de096a34088f1da5565465e299554bd51d21f5289e7912019e21e43b7f53c556bae860c178240f50f2afb059ca8
+  languageName: node
+  linkType: hard
+
+"@usecannon/router@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@usecannon/router@npm:4.0.0"
+  dependencies:
+    "@ethersproject/keccak256": "npm:^5.7.0"
+    debug: "npm:^4.3.7"
+    mustache: "npm:^4.2.0"
+  checksum: 10/5854d20febe20faba9169ef0140fb5aa651a301750061e1d711088df998007ef4043db2589ead9ff473fd13df4f11384f2a43a76c2bcbf5f1978c886e43151d0
+  languageName: node
+  linkType: hard
+
+"@usecannon/web-solc@npm:0.5.1":
+  version: 0.5.1
+  resolution: "@usecannon/web-solc@npm:0.5.1"
+  checksum: 10/598f1d5729d7674ec9bbf003b06224e0163c44914a852297cca5ae4eaff23e40f653ba215daec7270da4cd014eeda0e660446172d4efdd7156ffe6b250795074
   languageName: node
   linkType: hard
 
@@ -4586,8 +4591,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.73.0"
-    "@usecannon/builder": "npm:2.18.2"
-    "@usecannon/cli": "npm:2.18.2"
+    "@usecannon/builder": "npm:2.18.3"
+    "@usecannon/cli": "npm:2.18.3"
     debug: "npm:^4.3.7"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.13"
