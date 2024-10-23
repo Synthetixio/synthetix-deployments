@@ -350,19 +350,11 @@ options.symbol = "wstETH"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
-[provision.weth_mock_collateral]
-source = "mintable-token:1.8"
-target = "synthetix-mock-tokens:1.8@wsteth"
-options.name = "Fake Wrapped ETH"
-options.symbol = "wETH"
-options.owner = "<%= settings.owner %>"
-options.decimals = "18"
-
 [var.token_addresses]
 cbbtc_address = "<%= imports.cbbtc_mock_collateral.contracts.MintableToken.address %>"
 cbeth_address = "<%= imports.cbeth_mock_collateral.contracts.MintableToken.address %>"
 wsteth_address = "<%= imports.wsteth_mock_collateral.contracts.MintableToken.address %>"
-weth_address = "<%= imports.weth_mock_collateral.contracts.MintableToken.address %>"
+weth_address = "0x4200000000000000000000000000000000000006"
 
 [var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
