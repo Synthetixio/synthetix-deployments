@@ -1,17 +1,9 @@
-[setting.cbeth_issuance_ratio]
-defaultValue = "<%= parseEther('10') %>"
-
-[setting.cbeth_liquidation_ratio]
-defaultValue = "<%= parseEther('1.50') %>"
-
-[setting.cbeth_liquidation_reward]
-defaultValue = "<%= parseEther('0.5') %>"
-
-[setting.cbeth_min_delegation]
-defaultValue = "<%= parseEther('50') %>"
-
-[setting.max_collateral_limit_cbeth]
-defaultValue = "<%= parseEther('1750') %>"
+[var.cbeth_synth_config]
+cbeth_issuance_ratio = "<%= parseEther('2') %>"
+cbeth_liquidation_ratio = "<%= parseEther('1.1') %>"
+cbeth_liquidation_reward = "<%= parseEther('0.0001') %>"
+cbeth_min_delegation = "<%= parseEther('0.1') %>"
+cbeth_max_collateral_limit = "<%= parseEther('1750') %>"
 
 [invoke.CoreProxy_configureCollateral_cbeth]
 target = ["system.CoreProxy"]
@@ -35,5 +27,5 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.cbeth_address %>",
-    { collateralLimitD18 = "<%= settings.max_collateral_limit_cbeth %>", issuanceRatioD18 = 0 },
+    { collateralLimitD18 = "<%= settings.cbeth_max_collateral_limit %>", issuanceRatioD18 = 0 },
 ]

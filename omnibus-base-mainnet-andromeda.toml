@@ -12,12 +12,12 @@ include = [
     "tomls/permit-pdao-createMarket.toml",
 
     # System collaterals
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sUSDC.toml",
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstataUSDC.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/cbbtc.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/cbeth.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/wsteth.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/weth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-usdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-stata-usdc.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-cbbtc.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-cbeth.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-wsteth.toml",

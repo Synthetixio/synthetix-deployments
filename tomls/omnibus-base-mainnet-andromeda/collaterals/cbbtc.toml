@@ -1,17 +1,9 @@
-[setting.cbbtc_issuance_ratio]
-defaultValue = "<%= parseEther('10') %>"
-
-[setting.cbbtc_liquidation_ratio]
-defaultValue = "<%= parseEther('1.50') %>"
-
-[setting.cbbtc_liquidation_reward]
-defaultValue = "<%= parseEther('0.5') %>"
-
-[setting.cbbtc_min_delegation]
-defaultValue = "<%= parseEther('50') %>"
-
-[setting.max_collateral_limit_cbbtc]
-defaultValue = "<%= parseEther('100') %>"
+[var.cbbtc_synth_config]
+cbbtc_issuance_ratio = "<%= parseEther('10') %>"
+cbbtc_liquidation_ratio = "<%= parseEther('1.5') %>"
+cbbtc_liquidation_reward = "<%= parseEther('0.0001') %>"
+cbbtc_min_delegation = "<%= parseEther('0.1') %>"
+cbbtc_max_collateral_limit = "<%= parseEther('100') %>"
 
 [invoke.CoreProxy_configureCollateral_cbbtc]
 target = ["system.CoreProxy"]
@@ -35,5 +27,5 @@ func = "setPoolCollateralConfiguration"
 args = [
     "<%= settings.sc_pool_id %>",
     "<%= settings.cbbtc_address %>",
-    { collateralLimitD18 = "<%= settings.max_collateral_limit_cbbtc %>", issuanceRatioD18 = 0 },
+    { collateralLimitD18 = "<%= settings.cbbtc_max_collateral_limit %>", issuanceRatioD18 = 0 },
 ]
