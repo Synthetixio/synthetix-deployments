@@ -18,8 +18,8 @@ args = [
     "<%= imports.RewardsDistributor_scbbtc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
     "<%= extras.synth_cbbtc_market_id %>",
     [
-        "<%= settings.usdc_address %>",
-        "<%= settings.stataBasUSDC_address %>",
+        "<%= extras.synth_usdc_token_address %>",
+        "<%= settings.synth_stata_usdc_token_address %>",
     ],
 ]
 
@@ -30,7 +30,7 @@ fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= settings.sc_pool_id %>",
-    "<%= settings.usdc_address %>",
+    "<%= extras.synth_usdc_token_address %>",
     "<%= imports.RewardsDistributor_scbbtc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
 
@@ -41,6 +41,6 @@ fromCall.args = ["<%= settings.sc_pool_id %>"]
 func = "registerRewardsDistributor"
 args = [
     "<%= settings.sc_pool_id %>",
-    "<%= settings.stataBasUSDC_address %>",
+    "<%= settings.synth_stata_usdc_token_address %>",
     "<%= imports.RewardsDistributor_scbbtc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
