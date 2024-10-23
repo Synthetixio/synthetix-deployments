@@ -247,7 +247,7 @@ defaultValue = "synthetix:3.3.18"
 defaultValue = "op-gas-price-oracle:3.4.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.3.15"
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.6.5"
