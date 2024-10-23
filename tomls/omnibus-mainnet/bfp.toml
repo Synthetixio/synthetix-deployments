@@ -300,3 +300,15 @@ args = [
     "<%= settings.weth_rewards_distributor %>",
 ]
 depends = ['provision.system', 'invoke.BfpMarketProxy_createRewardDistributor_weth']
+
+[invoke.CoreProxy_registerRewardsDistributor_snxusd]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= system.USDProxy.address %>",
+    "<%= settings.weth_rewards_distributor %>",
+]
+depends = ['provision.system', 'invoke.BfpMarketProxy_createRewardDistributor_weth']

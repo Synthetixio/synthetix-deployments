@@ -1,4 +1,9 @@
-[setting.weth_address]
+[var.weth_collateral_config]
+weth_max_collateral_limit = "<%= parseEther(String(10_000_000)) %>"
+weth_issuance_ratio = "<%= parseEther('3') %>"
+weth_liquidation_ratio = "<%= parseEther('1.5') %>"
+weth_liquidation_reward = "<%= parseEther('0.01') %>"
+weth_min_delegation = "<%= parseEther('0.01') %>"
 
 [invoke.configureWethCollateral]
 target = ["system.CoreProxy"]
@@ -8,10 +13,10 @@ func = "configureCollateral"  # "args" see below in the multiline block
 [[invoke.configureWethCollateral.args]]
 tokenAddress = "<%= settings.weth_address %>"
 oracleNodeId = "<%= extras.eth_oracle_id %>"
-issuanceRatioD18 = "<%= parseEther('3') %>"
-liquidationRatioD18 = "<%= parseEther('1.5') %>"
-liquidationRewardD18 = "<%= parseEther('0.01') %>"
-minDelegationD18 = "<%= parseEther('0.01') %>"
+issuanceRatioD18 = "<%= settings.weth_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.weth_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.weth_liquidation_reward %>"
+minDelegationD18 = "<%= settings.weth_min_delegation %>"
 depositingEnabled = true
 
 [invoke.CoreProxy_setPoolCollateralConfiguration_weth]
