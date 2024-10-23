@@ -1,0 +1,11 @@
+[setting.relayerFee]
+defaultValue = "<%= parseEther('0.2') %>"
+
+[setting.polynomialRelayerAddress]
+defaultValue = "0x159c143eF9Be79d5672726150462C9EfA679b27c"
+
+[invoke.setPolynomialAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateRelayerShare"
+args = ["<%= settings.polynomialRelayerAddress %>", "<%= settings.relayerFee %>"]
