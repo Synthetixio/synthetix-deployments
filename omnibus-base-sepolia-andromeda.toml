@@ -246,10 +246,10 @@ defaultValue = "oracle-manager:3.8.1"
 defaultValue = "op-gas-price-oracle:3.4.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.8.1"
+defaultValue = "synthetix-spot-market:3.6.0"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.8.1"
+defaultValue = "synthetix-perps-market:3.6.5"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
