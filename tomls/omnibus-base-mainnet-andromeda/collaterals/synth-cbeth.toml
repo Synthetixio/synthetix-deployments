@@ -1,0 +1,19 @@
+[var.scbeth_synth_config]
+scbeth_issuance_ratio = "<%= parseEther('2') %>"
+scbeth_liquidation_ratio = "<%= parseEther('1.1') %>"
+scbeth_liquidation_reward = "<%= parseEther('0.0001') %>"
+scbeth_min_delegation = "<%= parseEther('0.1') %>"
+
+[invoke.configure_scbeth_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_scbeth_collateral.args]]
+tokenAddress = "<%= extras.synth_cbeth_token_address %>"
+oracleNodeId = "<%= extras.cbeth_oracle_id %>"
+issuanceRatioD18 = "<%= settings.scbeth_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.scbeth_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.scbeth_liquidation_reward %>"
+minDelegationD18 = "<%= settings.scbeth_min_delegation %>"
+depositingEnabled = false

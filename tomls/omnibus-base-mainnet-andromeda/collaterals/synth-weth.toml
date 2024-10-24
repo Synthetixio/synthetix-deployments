@@ -1,0 +1,19 @@
+[var.sweth_synth_config]
+sweth_issuance_ratio = "<%= parseEther('2') %>"
+sweth_liquidation_ratio = "<%= parseEther('1.1') %>"
+sweth_liquidation_reward = "<%= parseEther('0.0001') %>"
+sweth_min_delegation = "<%= parseEther('0.1') %>"
+
+[invoke.configure_sweth_collateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.configure_sweth_collateral.args]]
+tokenAddress = "<%= extras.synth_weth_token_address %>"
+oracleNodeId = "<%= extras.eth_oracle_id %>"
+issuanceRatioD18 = "<%= settings.sweth_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.sweth_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.sweth_liquidation_reward %>"
+minDelegationD18 = "<%= settings.sweth_min_delegation %>"
+depositingEnabled = false

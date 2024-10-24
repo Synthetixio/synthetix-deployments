@@ -1,0 +1,92 @@
+[var.cbbtc_spot_settings]
+synth_cbbtc_max_collateral_amount = "<%= parseEther(String(100)) %>"
+synth_cbbtc_skew_scale = "<%= parseEther(String(35_000)) %>"
+
+[invoke.SpotMarketProxy_createSynth_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "owner"
+func = "createSynth"
+args = ["Synthetic Coinbase Wrapped BTC", "scbBTC", "<%= settings.owner %>"]
+extra.synth_cbbtc_market_id.event = "SynthRegistered"
+extra.synth_cbbtc_market_id.arg = 0
+extra.synth_cbbtc_token_address.event = "SynthRegistered"
+extra.synth_cbbtc_token_address.arg = 1
+
+[invoke.SpotMarketProxy_updatePriceData_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "updatePriceData"
+args = [
+    "<%= extras.synth_cbbtc_market_id %>",
+    "<%= extras.cbbtc_oracle_id %>",
+    "<%= extras.cbbtc_oracle_id %>",
+    "<%= settings.strict_staleness_tolerance %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_cbbtc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= extras.synth_cbbtc_market_id %>",
+    "<%= settings.cbbtc_address %>",
+    "<%= settings.synth_cbbtc_max_collateral_amount %>",
+]
+
+[invoke.SpotMarketProxy_setMarketSkewScale_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setMarketSkewScale"
+args = ["<%= extras.synth_cbbtc_market_id %>", "<%= settings.synth_cbbtc_skew_scale %>"]
+
+[invoke.SpotMarketProxy_setWrapper_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setWrapper"
+args = [
+    "<%= extras.synth_cbbtc_market_id %>",
+    "<%= settings.cbbtc_address %>",
+    "<%= settings.synth_cbbtc_max_collateral_amount %>",
+]
+
+# NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
+[invoke.SpotMarketProxy_addSettlementStrategy_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "addSettlementStrategy"
+args = [
+    "<%= extras.synth_cbbtc_market_id %>",
+    { strategyType = "1", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", url = "", settlementReward = 0, minimumUsdExchangeAmount = "0", maxRoundingLoss = "1", priceDeviationTolerance = "0", disabled = false },
+]
+extra.synth_cbbtc_settlement_strategy_id.event = "SettlementStrategyAdded"
+extra.synth_cbbtc_settlement_strategy_id.arg = 1
+
+[invoke.SpotMarketProxy_setSettlementStrategy_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setSettlementStrategy"
+args = [
+    "<%= extras.synth_cbbtc_market_id %>",
+    "<%= extras.synth_cbbtc_settlement_strategy_id %>",
+    { strategyType = "1", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_cbbtc %>", url = "<%= settings.pyth_feed_url %>", settlementReward = "<%= settings.settlement_reward %>", minimumUsdExchangeAmount = "<%= settings.settlement_minimum_usd_exchange_amount %>", maxRoundingLoss = "<%= settings.settlement_max_rounding_loss %>", priceDeviationTolerance = "<%= settings.price_deviation_tolerance %>", disabled = true },
+]
+
+[invoke.SpotMarketProxy_setAtomicFixedFee_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setAtomicFixedFee"
+args = ["<%= extras.synth_cbbtc_market_id %>", "<%= parseEther(String(0.3)) %>"]
+
+[invoke.SpotMarketProxy_setCollateralLeverage_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setCollateralLeverage"
+args = ["<%= extras.synth_cbbtc_market_id %>", "<%= parseEther('10') %>"]
