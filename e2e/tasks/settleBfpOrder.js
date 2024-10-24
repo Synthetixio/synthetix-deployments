@@ -36,7 +36,7 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
   log({ times });
 
   if (orderDigest.sizeDelta.eq(0)) {
-    throw Error('Order does not exists.');
+    throw Error('Order does not exist.');
   }
   if (orderDigest.isReady) {
     throw Error('Order is not ready to settle.');
@@ -54,10 +54,12 @@ async function settleBfpOrder({ wallet, accountId, marketId }) {
   const gasLimit = await BfpMarketProxy.estimateGas
     .settleOrder(...args, { value: ethers.BigNumber.from(1) })
     .catch(parseError);
+
   const tx = await BfpMarketProxy.settleOrder(...args, {
     gasLimit: gasLimit.mul(2),
     value: ethers.BigNumber.from(1),
   }).catch(parseError);
+
   await tx
     .wait()
     .then((txn) => log(txn.events) || txn, parseError)
