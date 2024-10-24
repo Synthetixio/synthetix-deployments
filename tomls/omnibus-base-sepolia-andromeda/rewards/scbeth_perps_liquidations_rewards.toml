@@ -1,0 +1,46 @@
+[provision.RewardsDistributor_scbeth_liquidation_rewards]
+source = "synthetix-rewards-dist-ext:3.6.0"
+target = "synthetix-rewards-dist-ext:3.6.0@perps-scbeth"
+options.salt = "<%= settings.salt %>-perps-scbeth"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= settings.sc_pool_id %>"
+options.payoutToken = "<%= extras.synth_cbeth_token_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Perps Coinbase Wrapped Staked ETH Liquidation Rewards"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+
+[invoke.PerpsMarketProxy_registerDistributor_synth_cbeth_liquidations]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = [
+    "<%= extras.synth_cbeth_token_address %>",
+    "<%= imports.RewardsDistributor_scbeth_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= extras.synth_cbeth_market_id %>",
+    [
+        "<%= extras.synth_usdc_token_address %>",
+        "<%= settings.synth_stata_usdc_token_address %>",
+    ],
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_scbeth_liquidation_rewards_for_SpartanCouncilPool_usdc_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_scbeth_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_scbeth_liquidation_rewards_for_SpartanCouncilPool_stata_usdc_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= settings.synth_stata_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_scbeth_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
