@@ -33,7 +33,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.8.1"
+defaultValue = "synthetix:3.8.0"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.8.1"
@@ -94,6 +94,9 @@ defaultValue = "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
 
 [setting.snx_aggregator_address]
 defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
+
+[setting.wsteth_chainlink_staleness_tolerance]
+defaultValue = "129600"
 
 [setting.susde_chainlink_staleness_tolerance]
 defaultValue = "129600"
