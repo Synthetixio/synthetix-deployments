@@ -1,8 +1,8 @@
 [var.sstatausdc_synth_config]
 sstatausdc_issuance_ratio = "<%= MaxUint256 %>"
-sstatausdc_liquidation_ratio =  "<%= parseEther('1.1') %>"
-sstatausdc_liquidation_reward =  "<%= parseEther('1') %>"
-sstatausdc_min_delegation =  "<%= parseEther('100') %>"
+sstatausdc_liquidation_ratio = "<%= parseEther('1.1') %>"
+sstatausdc_liquidation_reward = "<%= parseEther('1') %>"
+sstatausdc_min_delegation = "<%= parseEther('100') %>"
 
 [invoke.configure_sstatausdc_collateral]
 target = ["system.CoreProxy"]
