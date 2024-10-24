@@ -6,10 +6,11 @@ include = [
     "tomls/ccip-mainnet.toml",
     "tomls/omnibus-mainnet/core.toml",
     "tomls/permissions.toml",
-    "tomls/oracles/eth.toml",
-    "tomls/oracles/wsteth.toml",
-    "tomls/oracles/susde.toml",
-    "tomls/oracles/snx.toml",
+    "tomls/omnibus-mainnet/oracles/eth.toml",
+    "tomls/omnibus-mainnet/oracles/wsteth.toml",
+    "tomls/omnibus-mainnet/oracles/susde.toml",
+    "tomls/omnibus-mainnet/oracles/usde.toml",
+    "tomls/omnibus-mainnet/oracles/snx.toml",
     "tomls/omnibus-mainnet/collaterals/weth.toml",
     "tomls/omnibus-mainnet/collaterals/wsteth.toml",
     "tomls/omnibus-mainnet/collaterals/susde.toml",
@@ -94,6 +95,9 @@ defaultValue = "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
 
 [setting.snx_aggregator_address]
 defaultValue = "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699"
+
+[setting.eth_chainlink_staleness_tolerance]
+defaultValue = "129600"
 
 [setting.wsteth_chainlink_staleness_tolerance]
 defaultValue = "129600"
