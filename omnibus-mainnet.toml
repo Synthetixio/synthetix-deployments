@@ -33,7 +33,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.8.0"
+defaultValue = "synthetix:3.8.1"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.8.1"
@@ -78,7 +78,7 @@ defaultValue = "0x33303637343430323300000000000000000000000000000000000000000000
 defaultValue = "snax"
 
 [setting.snx_address]
-defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
+defaultValue = "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
 
 [setting.eth_aggregator_address]
 defaultValue = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"

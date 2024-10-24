@@ -18,10 +18,8 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   );
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const wallet = ethers.Wallet.createRandom().connect(provider);
-  // const wallet = new ethers.Wallet('0xab', provider);
-  // const accountId = 1337;
   const address = wallet.address;
-  const poolId = '1';
+  const poolId = require('../../deployments/extras.json').sc_pool_id;
 
   let registeredDistributors;
   let liquidationDistributors;
