@@ -1,7 +1,7 @@
 [provision.RewardsDistributor_scbeth_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.6.0"
 target = "synthetix-rewards-dist-ext:3.6.0@perps-scbeth"
-options.salt = "<%= settings.salt %>"
+options.salt = "<%= settings.salt %>-perps-scbeth"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= settings.sc_pool_id %>"
 options.payoutToken = "<%= extras.synth_cbeth_token_address %>"

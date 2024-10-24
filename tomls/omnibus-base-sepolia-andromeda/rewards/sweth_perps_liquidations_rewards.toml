@@ -1,7 +1,7 @@
 [provision.RewardsDistributor_sweth_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.6.0"
 target = "synthetix-rewards-dist-ext:3.6.0@perps-sweth"
-options.salt = "<%= settings.salt %>"
+options.salt = "<%= settings.salt %>-perps-sweth"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= settings.sc_pool_id %>"
 options.payoutToken = "<%= extras.synth_weth_token_address %>"
