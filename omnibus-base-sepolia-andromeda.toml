@@ -316,10 +316,16 @@ defaultValue = "60"
 [setting.settlement_delay]
 defaultValue = "2"
 
+[setting.settlement_reward]
+defaultValue = "<%= parseEther('1') %>"
+
 [setting.settlement_minimum_usd_exchange_amount]
 defaultValue = "<%= parseEther('0.000001') %>"
 
-[setting.settlement_reward]
+[setting.settlement_max_rounding_loss]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.price_deviation_tolerance]
 defaultValue = "<%= parseEther('1') %>"
 
 [setting.pool_owner]
