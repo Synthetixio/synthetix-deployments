@@ -57,7 +57,6 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bome.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bonk.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-btc.toml",
-    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-real-btc.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-comp.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-crv.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-doge.toml",
@@ -112,6 +111,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-susde.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-sushi.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tao.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-tia.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ton.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-trx.toml",
@@ -370,8 +370,7 @@ pyth_feed_id_blur = "0x856aac602516addee497edf6f50d39e8c95ae5fb0da1ed434a8c2ab9c
 pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
 pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c39052f7a"
 pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
-pyth_feed_id_real_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
-pyth_feed_id_btc = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
+pyth_feed_id_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
 pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
 pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
 pyth_feed_id_doge = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
@@ -426,6 +425,7 @@ pyth_feed_id_sui = "0x23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6d
 pyth_feed_id_susde = "0xca3ba9a619a4b3755c10ac7d5e760275aa95e9823d38a84fedd416856cdba37c"
 pyth_feed_id_sushi = "0x26e4f737fde0263a9eea10ae63ac36dcedab2aaf629261a994e1eeb6ee0afe53"
 pyth_feed_id_tao = "0x410f41de235f2db824e562ea7ab2d3d3d4ff048316c61d629c0b93f58584e1af"
+pyth_feed_id_tbtc = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
 pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
 pyth_feed_id_ton = "0x8963217838ab4cf5cadc172203c1f0b763fbaa45f346d8ee50ba994bbcac3026"
 pyth_feed_id_trx = "0x67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b"
