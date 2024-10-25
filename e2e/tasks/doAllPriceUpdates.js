@@ -14,11 +14,12 @@ const splitIntoChunks = (array, chunkSize) => {
 };
 
 async function doAllPriceUpdates({ wallet }) {
-  const feedIds = require('../deployments/pythFeeds.json');
+  const extras = require('../deployments/extras.json');
 
   const priceVerificationContract =
     extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
 
+  const feedIds = require('../deployments/pythFeeds.json');
   log({ feeds: feedIds.length, feedIds });
   const batches = splitIntoChunks(feedIds, 200);
 
