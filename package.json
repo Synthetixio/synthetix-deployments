@@ -58,7 +58,7 @@
     "@usecannon/cli": "2.18.4",
     "debug": "^4.3.7",
     "ethers": "^5.7.2",
-    "hardhat": "^2.22.14",
+    "hardhat": "^2.22.15",
     "mocha": "^10.7.3",
     "numbro": "^2.5.0",
     "pako": "^2.1.0",

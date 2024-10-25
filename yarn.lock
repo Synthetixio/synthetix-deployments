@@ -2480,9 +2480,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.22.14":
-  version: 2.22.14
-  resolution: "hardhat@npm:2.22.14"
+"hardhat@npm:^2.22.15":
+  version: 2.22.15
+  resolution: "hardhat@npm:2.22.15"
   dependencies:
     "@ethersproject/abi": "npm:^5.1.2"
     "@metamask/eth-sig-util": "npm:^4.0.0"
@@ -2538,7 +2538,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/bootstrap.js
-  checksum: 10/4eeda95dad3ea6d9aaec23646232c5b299d58ef7065e24e6de6fbcc79e39495b3c9dc1a67c6538d7f919856b42d9d96558cd59940417693a7d23933a451f474b
+  checksum: 10/bbbed84de84605ae5a8177c5b35d62ff202a7a01c0550d094bead80aeea9d4fc33c30f2b819c3dcba8837ff1f5b08aa6d05d3e1402b55796848368ce7bcdbf28
   languageName: node
   linkType: hard
 
@@ -4596,7 +4596,7 @@ __metadata:
     "@usecannon/cli": "npm:2.18.4"
     debug: "npm:^4.3.7"
     ethers: "npm:^5.7.2"
-    hardhat: "npm:^2.22.14"
+    hardhat: "npm:^2.22.15"
     mocha: "npm:^10.7.3"
     numbro: "npm:^2.5.0"
     pako: "npm:^2.1.0"
