@@ -14,21 +14,13 @@ const splitIntoChunks = (array, chunkSize) => {
 };
 
 async function doAllPriceUpdates({ wallet }) {
-  const extras = require('../deployments/extras.json');
+  const feedIds = require('../deployments/pythFeeds.json');
 
   const priceVerificationContract =
     extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
 
-  const possiblyDuplicateFeedIds = Object.entries(extras)
-    .filter(
-      ([key]) =>
-        key.startsWith('pyth_feed_id_') || (key.startsWith('pyth') && key.endsWith('FeedId'))
-    )
-    .map(([_key, value]) => value);
-  const feedIds = Array.from(new Set(possiblyDuplicateFeedIds));
-
   log({ feeds: feedIds.length, feedIds });
-  const batches = splitIntoChunks(feedIds, 50);
+  const batches = splitIntoChunks(feedIds, 200);
 
   for (const batch of batches) {
     await doPriceUpdateForPyth({ wallet, feedId: batch, priceVerificationContract });
