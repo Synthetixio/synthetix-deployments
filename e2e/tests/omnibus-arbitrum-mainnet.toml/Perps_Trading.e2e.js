@@ -400,7 +400,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await doPriceUpdateForPyth({
       wallet,
-      feedId: extras.pyth_feed_id_eth,
+      feedId: [extras.pyth_feed_id_eth, extras.pyth_feed_id_tbtc],
       priceVerificationContract: extras.pyth_price_verification_address,
     });
 
