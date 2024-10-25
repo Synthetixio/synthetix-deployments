@@ -227,7 +227,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should wrap 5 tBTC', async () => {
     await doPriceUpdateForPyth({
       wallet,
-      feedId: extras.pyth_feed_id_btc,
+      feedId: extras.pyth_feed_id_tbtc,
       priceVerificationContract: extras.pyth_price_verification_address,
     });
     const balance = await wrapCollateral({
@@ -400,7 +400,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await doPriceUpdateForPyth({
       wallet,
-      feedId: extras.pyth_feed_id_eth,
+      feedId: [extras.pyth_feed_id_eth, extras.pyth_feed_id_tbtc],
       priceVerificationContract: extras.pyth_price_verification_address,
     });
 

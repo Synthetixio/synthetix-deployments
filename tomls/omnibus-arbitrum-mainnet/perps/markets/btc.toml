@@ -30,7 +30,7 @@ fromCall.func = "owner"
 func = "updatePriceData"
 args = [
     "<%= settings.btc_perps_market_id %>",
-    "<%= extras.btc_oracle_id %>",
+    "<%= extras.real_btc_oracle_id %>",
     "<%= settings.strict_staleness_tolerance %>",
 ]
 
