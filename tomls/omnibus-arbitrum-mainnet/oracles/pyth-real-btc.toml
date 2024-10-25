@@ -1,0 +1,40 @@
+[invoke.OracleManagerProxy_registerNode_pyth_real_BTC]
+description = "Latest Pyth Price. This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error"
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    5, # 5 = pyth aggregator type
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_real_btc, false]) %>",
+    [
+    ],
+]
+extra.real_btc_pyth_oracle_id.event = "NodeRegistered"
+extra.real_btc_pyth_oracle_id.arg = 0
+
+[invoke.OracleManagerProxy_registerNode_pyth_offchain_lookup_real_BTC]
+description = "Pyth Off-chain Lookup"
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    9, # 9 = PythOffchainLookupNode
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_real_btc, settings.default_staleness_tolerance]) %>",
+    [
+    ],
+]
+extra.real_btc_lookup_oracle_id.event = "NodeRegistered"
+extra.real_btc_lookup_oracle_id.arg = 0
+
+# Staleness Node
+[invoke.OracleManagerProxy_registerNode_staleness_real_BTC]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
+    [
+        "<%= extras.real_btc_pyth_oracle_id %>",
+        "<%= extras.real_btc_lookup_oracle_id %>",
+    ],
+]
+extra.real_btc_oracle_id.event = "NodeRegistered"
+extra.real_btc_oracle_id.arg = 0

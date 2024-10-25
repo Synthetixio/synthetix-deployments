@@ -57,6 +57,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bome.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bonk.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-btc.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-real-btc.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-comp.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-crv.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-doge.toml",
@@ -369,6 +370,7 @@ pyth_feed_id_blur = "0x856aac602516addee497edf6f50d39e8c95ae5fb0da1ed434a8c2ab9c
 pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
 pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c39052f7a"
 pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
+pyth_feed_id_real_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
 pyth_feed_id_btc = "0x56a3121958b01f99fdc4e1fd01e81050602c7ace3a571918bb55c6a96657cca9"
 pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
 pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
