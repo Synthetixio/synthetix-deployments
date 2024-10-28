@@ -305,7 +305,7 @@ defaultValue = "1"
 defaultValue = "2"
 
 [setting.default_staleness_tolerance]
-defaultValue = "60"
+defaultValue = "3600"
 
 [setting.strict_staleness_tolerance]
 defaultValue = "60"
