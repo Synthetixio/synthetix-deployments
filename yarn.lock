@@ -2570,6 +2570,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"has-symbols@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "has-symbols@npm:1.0.3"
+  checksum: 10/464f97a8202a7690dadd026e6d73b1ceeddd60fe6acfd06151106f050303eaa75855aaa94969df8015c11ff7c505f196114d22f7386b4a471038da5874cf5e9b
+  languageName: node
+  linkType: hard
+
+"has-tostringtag@npm:^1.0.0":
+  version: 1.0.2
+  resolution: "has-tostringtag@npm:1.0.2"
+  dependencies:
+    has-symbols: "npm:^1.0.3"
+  checksum: 10/c74c5f5ceee3c8a5b8bc37719840dc3749f5b0306d818974141dda2471a1a2ca6c8e46b9d6ac222c5345df7a901c9b6f350b1e6d62763fec877e26609a401bfe
+  languageName: node
+  linkType: hard
+
 "hash-base@npm:^3.0.0":
   version: 3.1.0
   resolution: "hash-base@npm:3.1.0"
@@ -2939,6 +2955,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-string@npm:^1.0.4":
+  version: 1.0.7
+  resolution: "is-string@npm:1.0.7"
+  dependencies:
+    has-tostringtag: "npm:^1.0.0"
+  checksum: 10/2bc292fe927493fb6dfc3338c099c3efdc41f635727c6ebccf704aeb2a27bca7acb9ce6fd34d103db78692b10b22111a8891de26e12bfa1c5e11e263c99d1fef
+  languageName: node
+  linkType: hard
+
 "is-unicode-supported@npm:^0.1.0":
   version: 0.1.0
   resolution: "is-unicode-supported@npm:0.1.0"
@@ -3159,6 +3184,13 @@ __metadata:
   dependencies:
     p-locate: "npm:^5.0.0"
   checksum: 10/72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
+  languageName: node
+  linkType: hard
+
+"lodash.once@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.once@npm:4.1.1"
+  checksum: 10/202f2c8c3d45e401b148a96de228e50ea6951ee5a9315ca5e15733d5a07a6b1a02d9da1e7fdf6950679e17e8ca8f7190ec33cae47beb249b0c50019d753f38f3
   languageName: node
   linkType: hard
 
@@ -3489,7 +3521,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdirp@npm:^1.0.3":
+"mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
   bin:
@@ -3528,6 +3560,21 @@ __metadata:
   peerDependencies:
     mocha: ">=2.2.5"
   checksum: 10/f2e9db2daf4b5de8824ed557a7d6b534683558fadf843de6b4f96385c6edad239ee6194e81f5983809d7223b45f57c7af0337442552cab47103e9e92d5ee4cb3
+  languageName: node
+  linkType: hard
+
+"mocha-multi@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "mocha-multi@npm:1.1.7"
+  dependencies:
+    debug: "npm:^4.1.1"
+    is-string: "npm:^1.0.4"
+    lodash.once: "npm:^4.1.1"
+    mkdirp: "npm:^1.0.4"
+    object-assign: "npm:^4.1.1"
+  peerDependencies:
+    mocha: ">=2.2.0 <7 || >=9"
+  checksum: 10/848a6ced811c4a1595b7db94a92deb5cad8b044832af9ec9a2a5ba94101272445ad5fb1bf973762f3afa4db28dc66cfe919648a2d3f1068ca6e27ee85f1f93db
   languageName: node
   linkType: hard
 
@@ -3745,6 +3792,13 @@ __metadata:
   dependencies:
     bignumber.js: "npm:^8 || ^9"
   checksum: 10/50408c826dded5b5a2a5511ea8af204af4a426e9b89cac367dd115ead813c1da35448fb7b38b1c80b2edae762b59e7ca7d74414f6eb6d74685665e295f2c8f9a
+  languageName: node
+  linkType: hard
+
+"object-assign@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "object-assign@npm:4.1.1"
+  checksum: 10/fcc6e4ea8c7fe48abfbb552578b1c53e0d194086e2e6bbbf59e0a536381a292f39943c6e9628af05b5528aa5e3318bb30d6b2e53cadaf5b8fe9e12c4b69af23f
   languageName: node
   linkType: hard
 
@@ -4655,6 +4709,7 @@ __metadata:
     hardhat: "npm:^2.22.14"
     mocha: "npm:^10.7.3"
     mocha-junit-reporter: "npm:^2.2.1"
+    mocha-multi: "npm:^1.1.7"
     numbro: "npm:^2.5.0"
     pako: "npm:^2.1.0"
     prettier: "npm:^3.3.3"
