@@ -35,15 +35,15 @@
     "build:arbitrum-sepolia": "cannon build omnibus-arbitrum-sepolia.toml --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 421614 --provider-url https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
     "build:snax": "cannon build omnibus-snaxchain-mainnet.toml --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 2192 --provider-url https://mainnet.snaxchain.io | tee ./e2e/cannon-build.log",
     "build:snax-testnet": "cannon build omnibus-snaxchain-testnet.toml --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 13001 --provider-url https://testnet.snaxchain.io | tee ./e2e/cannon-build.log",
-    "test:mainnet": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-mainnet.toml/**/*.e2e.js",
-    "test:sepolia": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-sepolia.toml/**/*.e2e.js",
-    "test:optimism": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-optimism-mainnet.toml/**/*.e2e.js",
-    "test:base": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-mainnet-andromeda.toml/**/*.e2e.js",
-    "test:base-sepolia": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-base-sepolia-andromeda.toml/**/*.e2e.js",
-    "test:arbitrum": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-arbitrum-mainnet.toml/**/*.e2e.js",
-    "test:arbitrum-sepolia": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-arbitrum-sepolia.toml/**/*.e2e.js",
-    "test:snax": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-snaxchain-mainnet.toml/**/*.e2e.js",
-    "test:snax-testnet": "DEBUG='e2e:*' mocha ./e2e/tests/omnibus-snaxchain-testnet.toml/**/*.e2e.js",
+    "test:mainnet": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-mainnet.toml/**/*.e2e.js",
+    "test:sepolia": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-sepolia.toml/**/*.e2e.js",
+    "test:optimism": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-optimism-mainnet.toml/**/*.e2e.js",
+    "test:base": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-base-mainnet-andromeda.toml/**/*.e2e.js",
+    "test:base-sepolia": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-base-sepolia-andromeda.toml/**/*.e2e.js",
+    "test:arbitrum": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-arbitrum-mainnet.toml/**/*.e2e.js",
+    "test:arbitrum-sepolia": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-arbitrum-sepolia.toml/**/*.e2e.js",
+    "test:snax": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-snaxchain-mainnet.toml/**/*.e2e.js",
+    "test:snax-testnet": "DEBUG='e2e:*' node --test --test-reporter spec ./e2e/tests/omnibus-snaxchain-testnet.toml/**/*.e2e.js",
     "pretty": "prettier . '**/*.toml' --write",
     "pretty:check": "prettier . '**/*.toml' --check",
     "fetch-deployments": "DEBUG='e2e:*' node e2e/extractCannonState ./e2e/cannon-build.log > /tmp/cannonState.json && DEBUG='e2e:*' node e2e/generateDeployments /tmp/cannonState.json",
@@ -78,13 +78,6 @@
   "resolutions": {
     "mocha": "^11",
     "viem": "^2.30.0"
-  },
-  "mocha": {
-    "timeout": "5m",
-    "recursive": true,
-    "bail": true,
-    "async-only": true,
-    "exit": true
   },
   "packageManager": "yarn@4.5.1"
 }
