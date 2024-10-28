@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "34"
+version = "35"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -256,7 +256,7 @@ defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.8.1"
+defaultValue = "synthetix-perps-market:3.9.0"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"

@@ -1,4 +1,4 @@
-[invoke.OracleManagerProxy_registerNode_pyth_BTC]
+[invoke.OracleManagerProxy_registerNode_pyth_real_BTC]
 description = "Latest Pyth Price. This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error"
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
@@ -8,10 +8,10 @@ args = [
     [
     ],
 ]
-extra.btc_pyth_oracle_id.event = "NodeRegistered"
-extra.btc_pyth_oracle_id.arg = 0
+extra.real_btc_pyth_oracle_id.event = "NodeRegistered"
+extra.real_btc_pyth_oracle_id.arg = 0
 
-[invoke.OracleManagerProxy_registerNode_pyth_offchain_lookup_BTC]
+[invoke.OracleManagerProxy_registerNode_pyth_offchain_lookup_real_BTC]
 description = "Pyth Off-chain Lookup"
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
@@ -21,20 +21,20 @@ args = [
     [
     ],
 ]
-extra.btc_lookup_oracle_id.event = "NodeRegistered"
-extra.btc_lookup_oracle_id.arg = 0
+extra.real_btc_lookup_oracle_id.event = "NodeRegistered"
+extra.real_btc_lookup_oracle_id.arg = 0
 
 # Staleness Node
-[invoke.OracleManagerProxy_registerNode_staleness_BTC]
+[invoke.OracleManagerProxy_registerNode_staleness_real_BTC]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     7, # 7 = staleness circuit breaker
     "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
     [
-        "<%= extras.btc_pyth_oracle_id %>",
-        "<%= extras.btc_lookup_oracle_id %>",
+        "<%= extras.real_btc_pyth_oracle_id %>",
+        "<%= extras.real_btc_lookup_oracle_id %>",
     ],
 ]
-extra.btc_oracle_id.event = "NodeRegistered"
-extra.btc_oracle_id.arg = 0
+extra.real_btc_oracle_id.event = "NodeRegistered"
+extra.real_btc_oracle_id.arg = 0
