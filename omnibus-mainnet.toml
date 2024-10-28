@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "14"
+version = "15"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -43,13 +43,13 @@ defaultValue = "oracle-manager:3.8.1"
 defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.8.1"
+defaultValue = "synthetix-perps-market:3.9.0"
 
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.8.0"
 
 [setting.bfp_market_package]
-defaultValue = "synthetix-bfp-market:3.8.1"
+defaultValue = "synthetix-bfp-market:3.9.0"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
