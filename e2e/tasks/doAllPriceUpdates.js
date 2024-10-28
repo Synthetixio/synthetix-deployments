@@ -19,16 +19,9 @@ async function doAllPriceUpdates({ wallet }) {
   const priceVerificationContract =
     extras.pyth_price_verification_address || extras.pythPriceVerificationAddress;
 
-  const possiblyDuplicateFeedIds = Object.entries(extras)
-    .filter(
-      ([key]) =>
-        key.startsWith('pyth_feed_id_') || (key.startsWith('pyth') && key.endsWith('FeedId'))
-    )
-    .map(([_key, value]) => value);
-  const feedIds = Array.from(new Set(possiblyDuplicateFeedIds));
-
+  const feedIds = require('../deployments/pythFeeds.json');
   log({ feeds: feedIds.length, feedIds });
-  const batches = splitIntoChunks(feedIds, 50);
+  const batches = splitIntoChunks(feedIds, 200);
 
   for (const batch of batches) {
     await doPriceUpdateForPyth({ wallet, feedId: batch, priceVerificationContract });
