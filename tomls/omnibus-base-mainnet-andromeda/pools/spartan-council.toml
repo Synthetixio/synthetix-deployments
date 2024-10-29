@@ -1,0 +1,26 @@
+[setting.deployer]
+
+[setting.spartan_council_pool_id_setting]
+
+[setting.pool_owner]
+
+[invoke.createScPool]
+target = ["system.CoreProxy"]
+func = "createPool"
+args = ["<%= settings.spartan_council_pool_id_setting %>", "<%= settings.pool_owner %>"]
+depends = ["invoke.permitCreatePool"]
+
+[invoke.setScPoolName]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "setPoolName"
+args = ["<%= settings.spartan_council_pool_id_setting %>", "Spartan Council Pool"]
+depends = ["invoke.createScPool"]
+
+[invoke.setPreferredPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPreferredPool"
+args = ["<%= settings.spartan_council_pool_id_setting %>"]
+depends = ["invoke.createScPool"]

@@ -7,7 +7,7 @@ include = [
     "tomls/settings.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-mainnet-andromeda/permit-deniers.toml",
-    "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-base-mainnet-andromeda/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/permit-pdao-createMarket.toml",
 
@@ -285,7 +285,7 @@ defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
 [setting.account_timeout_withdraw]
 defaultValue = "86400" # 1 day
 
-[setting.sc_pool_id]
+[setting.spartan_council_pool_id_setting]
 defaultValue = "1"
 
 [setting.commitment_price_delay]
