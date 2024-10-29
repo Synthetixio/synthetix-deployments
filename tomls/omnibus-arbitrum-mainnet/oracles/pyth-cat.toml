@@ -1,6 +1,5 @@
-# This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
-# Latest Pyth Price
-[invoke.registerPythCatOracleNode]
+[invoke.OracleManagerProxy_registerNode_pyth_cat]
+description = "Latest Pyth Price. This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error "
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -11,8 +10,9 @@ args = [
 ]
 extra.cat_pyth_oracle_id.event = "NodeRegistered"
 extra.cat_pyth_oracle_id.arg = 0
-# Pyth Off-chain Lookup
-[invoke.registerLookupCatOracleNode]
+
+[invoke.OracleManagerProxy_registerNode_pyth_offchain_lookup_cat]
+description = "Pyth Off-chain Lookup"
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -23,8 +23,9 @@ args = [
 ]
 extra.cat_lookup_oracle_id.event = "NodeRegistered"
 extra.cat_lookup_oracle_id.arg = 0
+
 # Staleness Node
-[invoke.registerCatOracleNode]
+[invoke.OracleManagerProxy_registerNode_staleness_cat]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
