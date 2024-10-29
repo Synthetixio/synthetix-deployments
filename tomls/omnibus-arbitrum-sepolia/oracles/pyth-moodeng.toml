@@ -1,6 +1,5 @@
-# This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
-# Latest Pyth Price
-[invoke.registerPythMoodengOracleNode]
+[invoke.OracleManagerProxy_registerNode_pyth_moodeng]
+description = "Latest Pyth Price. This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error "
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -11,8 +10,9 @@ args = [
 ]
 extra.moodeng_pyth_oracle_id.event = "NodeRegistered"
 extra.moodeng_pyth_oracle_id.arg = 0
-# Pyth Off-chain Lookup
-[invoke.registerLookupMoodengOracleNode]
+
+[invoke.OracleManagerProxy_registerNode_pyth_offchain_lookup_moodeng]
+description = "Pyth Off-chain Lookup"
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
@@ -23,8 +23,9 @@ args = [
 ]
 extra.moodeng_lookup_oracle_id.event = "NodeRegistered"
 extra.moodeng_lookup_oracle_id.arg = 0
+
 # Staleness Node
-[invoke.registerMoodengOracleNode]
+[invoke.OracleManagerProxy_registerNode_staleness_moodeng]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
