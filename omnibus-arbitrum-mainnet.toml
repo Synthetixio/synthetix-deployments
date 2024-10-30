@@ -298,7 +298,7 @@ args = [
     "<%= settings.account_withdraw_timeout %>",
 ]
 
-[setting.sc_pool_id]
+[setting.setting.spartan_council_pool_id_setting]
 defaultValue = "1"
 
 [setting.pool_owner]
