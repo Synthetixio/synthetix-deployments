@@ -3,7 +3,7 @@ version = "56"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
-    "tomls/core.toml",
+    "tomls/omnibus-base-mainnet-andromeda/core.toml",
     "tomls/settings.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-mainnet-andromeda/permit-deniers.toml",
@@ -241,16 +241,19 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.3.18"
+defaultValue = "synthetix:3.8.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.4.0"
 
+[setting.oracle_manager_package]
+defaultValue = "oracle-manager:3.8.1"
+
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.6.0"
+defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.6.5"
+defaultValue = "synthetix-perps-market:3.9.0"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
