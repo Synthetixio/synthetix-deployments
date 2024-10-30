@@ -24,15 +24,4 @@ options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.bundleSalt = "<%= settings.bundleSalt %>"
 options.oracle_manager_package = "<%= settings.oracle_manager_package %>"
-
-[invoke.CoreProxy_initOrUpgradeToken_USDToken]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "initOrUpgradeToken"
-args = [
-    "<%= formatBytes32String('USDToken') %>",
-    "Synthetic USD Token v3",
-    "snxUSD",
-    18,
-    "<%= imports.system.contracts.USDRouter.address %>",
-]
+options.usd_token_symbol = 'snxUSD'
