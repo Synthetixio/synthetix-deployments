@@ -1,8 +1,8 @@
 [var.susdc_synth_config]
 susdc_issuance_ratio = "<%= MaxUint256 %>"
-susdc_liquidation_ratio =  "<%= parseEther('1.005') %>"
+susdc_liquidation_ratio = "<%= parseEther('1.005') %>"
 susdc_liquidation_reward = "<%= parseEther('1') %>"
-susdc_min_delegation =  "<%= parseEther('100') %>"
+susdc_min_delegation = "<%= parseEther('100') %>"
 
 [invoke.configure_susdc_collateral]
 target = ["system.CoreProxy"]
