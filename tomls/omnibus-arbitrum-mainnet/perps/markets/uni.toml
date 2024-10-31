@@ -1,7 +1,7 @@
 [var.perps_uni_market_settings]
 uni_perps_market_id = "1100"
 uni_perps_market_skew_scale = "<%= parseEther(String(2_250_000)) %>"
-uni_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+uni_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 uni_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 uni_perps_taker_fee_ratio = "<%= parseEther('0.0005') %>"
 uni_perps_max_market_size = "<%= parseEther(String(500_000)) %>"
