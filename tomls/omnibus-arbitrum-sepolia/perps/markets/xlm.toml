@@ -1,7 +1,7 @@
 [var.perps_xlm_market_settings]
 xlm_perps_market_id = "3000"
 xlm_perps_market_skew_scale = "<%= parseEther(String(166_500_000)) %>"
-xlm_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+xlm_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 xlm_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 xlm_perps_taker_fee_ratio = "<%= parseEther('0.0005') %>"
 xlm_perps_max_market_size = "<%= parseEther(String(11_000_000)) %>"
