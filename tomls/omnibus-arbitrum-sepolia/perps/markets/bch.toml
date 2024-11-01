@@ -1,7 +1,7 @@
 [var.perps_bch_market_settings]
 bch_perps_market_id = "2600"
 bch_perps_market_skew_scale = "<%= parseEther(String(84_375)) %>"
-bch_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+bch_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 bch_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 bch_perps_taker_fee_ratio = "<%= parseEther('0.0005') %>"
 bch_perps_max_market_size = "<%= parseEther(String(15_000)) %>"
