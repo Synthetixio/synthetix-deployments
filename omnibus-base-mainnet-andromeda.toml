@@ -113,7 +113,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xrp.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-zro.toml",
-#    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-cat.toml",
+    #    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-cat.toml",
 
     #
     # Perps
