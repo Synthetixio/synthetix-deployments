@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "36"
+version = "37"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
@@ -75,6 +75,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-fxs.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-gala.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-gmx.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-goat.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-grt.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-icp.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-imx.toml",
@@ -130,7 +131,6 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-yfi.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-zro.toml",
     #"tomls/omnibus-arbitrum-mainnet/oracles/pyth-cat.toml",
-    #"tomls/omnibus-arbitrum-mainnet/oracles/pyth-goat.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-mainnet/spot/eth.toml",
@@ -184,6 +184,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/fxs.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/gala.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/gmx.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/goat.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/grt.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/icp.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/imx.toml",
@@ -233,7 +234,6 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/yfi.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/zro.toml",
     #"tomls/omnibus-arbitrum-mainnet/perps/markets/cat.toml",
-    #"tomls/omnibus-arbitrum-mainnet/perps/markets/goat.toml",
 
     # Margin Collateral (Synths)
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/btc.toml",
@@ -363,7 +363,6 @@ wsteth_address = "0x5979D7b546E38E414F7E9822514be443A4800529" # https://docs.lid
 [var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 #pyth_feed_id_cat = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018" #placeholder needs to be updated
-#pyth_feed_id_goat = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf" #need to wait for pyth feed to be ready 0xf7731dc812590214d3eb4343bfb13d1b4cfa9b1d4e020644b5d5d8e07d60c66c
 pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
 pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
 pyth_feed_id_algo = "0xfa17ceaf30d19ba51112fdcc750cc83454776f47fb0112e4af07f15f4bb1ebc0"
@@ -399,6 +398,7 @@ pyth_feed_id_ftm = "0x5c6c0d2386e3352356c3ab84434fafb5ea067ac2678a38a338c4a69ddc
 pyth_feed_id_fxs = "0x735f591e4fed988cd38df74d8fcedecf2fe8d9111664e0fd500db9aa78b316b1"
 pyth_feed_id_gala = "0x0781209c28fda797616212b7f94d77af3a01f3e94a5d421760aef020cf2bcb51"
 pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
+pyth_feed_id_goat = "0xf7731dc812590214d3eb4343bfb13d1b4cfa9b1d4e020644b5d5d8e07d60c66c"
 pyth_feed_id_grt = "0x4d1f8dae0d96236fb98e8f47471a366ec3b1732b47041781934ca3a9bb2f35e7"
 pyth_feed_id_icp = "0xc9907d786c5821547777780a1e4f89484f3417cb14dd244f2b0a34ea7a554d67"
 pyth_feed_id_imx = "0x941320a8989414874de5aa2fc340a75d5ed91fdff1613dd55f83844d52ea63a2"
