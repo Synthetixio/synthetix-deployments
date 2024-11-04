@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
+const { parseError } = require('../parseError');
+
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function getCanLiquidate({ accountId }) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -12,7 +15,9 @@ async function getCanLiquidate({ accountId }) {
     provider
   );
 
-  return await PerpsMarketProxy.canLiquidate(accountId);
+  const canLiquidate = await PerpsMarketProxy.canLiquidate(accountId).catch(parseError);
+  log({ canLiquidate });
+  return canLiquidate;
 }
 
 module.exports = {
