@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 const { ethers } = require('ethers');
+const { parseError } = require('../parseError');
+
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function getAvailableMargin({ accountId }) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -12,7 +15,9 @@ async function getAvailableMargin({ accountId }) {
     provider
   );
 
-  return parseFloat(ethers.utils.formatUnits(await PerpsMarketProxy.getAvailableMargin(accountId)));
+  const availableMargin = await PerpsMarketProxy.getAvailableMargin(accountId).catch(parseError);
+  log({ availableMargin });
+  return parseFloat(ethers.utils.formatUnits(availableMargin));
 }
 
 module.exports = {

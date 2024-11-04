@@ -4,6 +4,7 @@ const { ethers } = require('ethers');
 const { setEthBalance } = require('./setEthBalance');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { parseError } = require('../parseError');
+const { traceTxn } = require('../traceTxn');
 const { gasLog } = require('../gasLog');
 const { getLiquidationParameters } = require('./getLiquidationParameters');
 
@@ -54,7 +55,8 @@ async function setLiquidationParameters({
     minimumPositionMargin,
   });
 
-  const tx = await PerpsMarketProxy.connect(signer).setLiquidationParameters(
+  const args = [
+    //
     marketId,
     newInitialMarginRatioD18
       ? newInitialMarginRatioD18
@@ -77,12 +79,19 @@ async function setLiquidationParameters({
       : minimumPositionMargin
         ? minimumPositionMargin
         : 0,
-    { gasLimit: 10_000_000 }
-  );
+  ];
+
+  const gasLimit = await PerpsMarketProxy.connect(signer)
+    .estimateGas.setLiquidationParameters(...args)
+    .catch(parseError)
+    .catch(() => 10_000_000);
+  const tx = await PerpsMarketProxy.connect(signer).setLiquidationParameters(...args, {
+    gasLimit: gasLimit.mul(2),
+  });
 
   await tx
     .wait()
-    .then((txn) => log(txn.events) || txn, parseError)
+    .then((txn) => log(txn.events) || txn, traceTxn(tx))
     .then(gasLog({ action: 'PerpsMarketProxy.setLiquidationParameters', log }));
   await provider.send('anvil_stopImpersonatingAccount', [owner]);
 
