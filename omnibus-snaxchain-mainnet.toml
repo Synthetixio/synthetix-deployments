@@ -1,6 +1,10 @@
 name = "synthetix-omnibus"
 version = "5"
 description = "Snaxchain deployment"
+deployers = [
+    "0x1C8236B406911A376369e33D39189F1b4B39F27D",
+    "0xF5d66dC9B6963c61D7dacB1208145397cAc2e678",
+]
 include = [
     # Governance
     "tomls/omnibus-snaxchain-mainnet/governance/councils-mothership.toml",
