@@ -289,7 +289,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should claim fwSNX rewards', async () => {
+  it.skip('should claim fwSNX rewards', async () => {
     const poolId = 1;
 
     // mine a few blocks

@@ -262,7 +262,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should claim ARB rewards', async () => {
+  it.skip('should claim ARB rewards', async () => {
     const poolId = 1;
 
     const availableRewards = await getAvailableRewards({

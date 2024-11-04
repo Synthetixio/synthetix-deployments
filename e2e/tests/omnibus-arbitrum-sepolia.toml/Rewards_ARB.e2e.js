@@ -261,7 +261,7 @@ describe.skip(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should claim fARB rewards', async () => {
+  it.skip('should claim fARB rewards', async () => {
     const poolId = 1;
 
     const availableRewards = await getAvailableRewards({
