@@ -24,3 +24,4 @@ options.owner = "<%= settings.owner %>"
 options.salt = "<%= settings.salt %>"
 options.bundleSalt = "<%= settings.bundleSalt %>"
 options.oracle_manager_package = "<%= settings.oracle_manager_package %>"
+options.usd_token_symbol = 'snxUSD'
