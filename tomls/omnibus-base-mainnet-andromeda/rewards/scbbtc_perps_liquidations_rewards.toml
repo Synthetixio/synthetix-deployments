@@ -1,0 +1,46 @@
+[provision.RewardsDistributor_scbbtc_liquidation_rewards]
+source = "synthetix-rewards-dist-ext:3.6.0"
+target = "synthetix-rewards-dist-ext:3.6.0@perps-scbbtc"
+options.salt = "<%= settings.salt %>-perps-scbbtc"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= settings.spartan_council_pool_id_setting %>"
+options.payoutToken = "<%= extras.synth_cbbtc_token_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Perps Coinbase Wrapped Bitcoin Liquidation Rewards"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+
+[invoke.PerpsMarketProxy_registerDistributor_synth_cbbtc_liquidations]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = [
+    "<%= extras.synth_cbbtc_token_address %>",
+    "<%= imports.RewardsDistributor_scbbtc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= extras.synth_cbbtc_market_id %>",
+    [
+        "<%= extras.synth_usdc_token_address %>",
+        "<%= settings.synth_stata_usdc_token_address %>",
+    ],
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_scbbtc_liquidation_rewards_for_SpartanCouncilPool_usdc_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.spartan_council_pool_id_setting %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_scbbtc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_scbbtc_liquidation_rewards_for_SpartanCouncilPool_stata_usdc_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.spartan_council_pool_id_setting %>",
+    "<%= settings.synth_stata_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_scbbtc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]

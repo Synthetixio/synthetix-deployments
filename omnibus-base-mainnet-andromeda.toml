@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "57"
+version = "58"
 description = "Andromeda deployment"
 preset = "andromeda"
 include = [
@@ -7,26 +7,49 @@ include = [
     "tomls/settings.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-mainnet-andromeda/permit-deniers.toml",
-    "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-base-mainnet-andromeda/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/permit-pdao-createMarket.toml",
 
     # System collaterals
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sUSDC.toml",
-    "tomls/omnibus-base-mainnet-andromeda/collaterals/sstataUSDC.toml",
-
-    # LP Rewards
-    "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
-    "tomls/omnibus-base-mainnet-andromeda/rewards/usdc_rewards_for_sc_pool.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/cbbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/cbeth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/wsteth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/weth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-usdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-stata-usdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-cbbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-cbeth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-wsteth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-weth.toml",
 
     # Spot Markets
     "tomls/omnibus-base-mainnet-andromeda/spot/USDC.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/stataUSDC.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/cbbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/cbeth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/wsteth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/weth.toml",
+
+    # Perps Liquidation rewards
+    "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/usdc_rewards_for_sc_pool.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/usdc_rewards_for_sc_pool.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/scbbtc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/scbeth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/swsteth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/sweth_perps_liquidations_rewards.toml",
 
     # stataUSDC
     "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
 
     # Pyth oracles
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-cbbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-cbeth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-wsteth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
+
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-aave.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ada.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-algo.toml",
@@ -121,6 +144,10 @@ include = [
 
     # Margin Collateral
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/usd.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/cbbtc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/cbeth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/wsteth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/weth.toml",
 
     # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
@@ -131,6 +158,7 @@ include = [
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
 
     # Perps Markets
+
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/aave.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/ada.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/algo.toml",
@@ -269,7 +297,7 @@ defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
 [setting.account_timeout_withdraw]
 defaultValue = "86400" # 1 day
 
-[setting.sc_pool_id]
+[setting.spartan_council_pool_id_setting]
 defaultValue = "1"
 
 [setting.commitment_price_delay]
@@ -300,8 +328,25 @@ defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
 defaultValue = "0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 
-[setting.snx_address]
-defaultValue = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
+[var.token_addresses]
+cbbtc_address = "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+cbeth_address = "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22"
+wsteth_address = "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452"
+weth_address = "0x4200000000000000000000000000000000000006"
+snx_address = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
+
+[setting.pyth_feed_url]
+defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
+description = "Pyth settlement strategy config"
+
+[setting.settlement_minimum_usd_exchange_amount]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.settlement_max_rounding_loss]
+defaultValue = "<%= parseEther('0.000001') %>"
+
+[setting.price_deviation_tolerance]
+defaultValue = "<%= parseEther('1') %>"
 
 [var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
@@ -323,6 +368,8 @@ pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1
 pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c39052f7a"
 pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
 pyth_feed_id_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+pyth_feed_id_cbbtc = "0x2817d7bfe5c64b8ea956e9a26f573ef64e72e4d7891f2d6af9bcc93f7aff9a97"
+pyth_feed_id_cbeth = "0x15ecddd26d49e1a8f1de9376ebebc03916ede873447c1255d2d5891b92ce5717"
 pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
 pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
 pyth_feed_id_doge = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
@@ -385,8 +432,10 @@ pyth_feed_id_ton = "0x8963217838ab4cf5cadc172203c1f0b763fbaa45f346d8ee50ba994bbc
 pyth_feed_id_trx = "0x67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b"
 pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
 pyth_feed_id_w = "0xeff7446475e218517566ea99e72a4abec2e1bd8498b43b7d8331e29dcb059389"
+pyth_feed_id_weth = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
 pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
 pyth_feed_id_wld = "0xd6835ad1f773de4a378115eb6824bd0c0e42d84d1c84d9750e853fb6b6c7794a"
+pyth_feed_id_wsteth = "0x6df640f3b8963d8f8358f791f352b8364513f6ab1cca5ed3f1f7b5448980e784"
 pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"

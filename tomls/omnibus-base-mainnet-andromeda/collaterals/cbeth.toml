@@ -1,0 +1,31 @@
+[var.cbeth_synth_config]
+cbeth_issuance_ratio = "<%= parseEther('2') %>"
+cbeth_liquidation_ratio = "<%= parseEther('1.1') %>"
+cbeth_liquidation_reward = "<%= parseEther('0.0001') %>"
+cbeth_min_delegation = "<%= parseEther('0.1') %>"
+cbeth_max_collateral_limit = "<%= parseEther('1750') %>"
+
+[invoke.CoreProxy_configureCollateral_cbeth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_cbeth.args]]
+tokenAddress = "<%= settings.cbeth_address %>"
+oracleNodeId = "<%= extras.cbeth_oracle_id %>"
+issuanceRatioD18 = "<%= settings.cbeth_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.cbeth_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.cbeth_liquidation_reward %>"
+minDelegationD18 = "<%= settings.cbeth_min_delegation %>"
+depositingEnabled = false
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_cbeth]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.spartan_council_pool_id_setting %>",
+    "<%= settings.cbeth_address %>",
+    { collateralLimitD18 = "<%= settings.cbeth_max_collateral_limit %>", issuanceRatioD18 = 0 },
+]

@@ -1,108 +1,53 @@
-[setting.settlementReward]
-defaultValue = "1"
+[var.perps_global_settings]
+perps_liquidation_min_keeper_reward_usd = "<%= parseEther('1') %>"
+perps_liquidation_min_keeper_profit_ratio_d18 = "<%= parseEther('0.30') %>"
+perps_liquidation_max_keeper_reward_usd = "<%= parseEther('30') %>"
+perps_liquidation_max_keeper_scaling_ratio_d18 = "<%= parseEther('0.3') %>"
+perps_low_util_gradient = "<%= parseEther('0') %>"
+perps_gradient_breakpoint = "<%= parseEther('0') %>"
+perps_high_util_gradient = "<%= parseEther('0') %>"
+perps_collateral_liquidation_ratio = "<%= parseEther('0.0003') %>"
+perps_max_positions_per_account = "10"
+perps_max_collaterals_per_account = "3"
 
-[setting.perps_keeper_l1_cost_settle_gas_units]
-defaultValue = "<%= String(23_000) %>"
-
-[setting.perps_keeper_l2_cost_settle_gas_units]
-defaultValue = "<%= String(5_500_000) %>"
-
-[setting.perps_keeper_settle_tx_size]
-defaultValue = "<%= String(5_000) %>"
-
-[setting.perps_keeper_l1_cost_flag_gas_units]
-defaultValue = "<%= String(4_500) %>"
-
-[setting.perps_keeper_l2_cost_flag_gas_units]
-defaultValue = "<%= String(450_000) %>"
-
-[setting.perps_keeper_flag_tx_size]
-defaultValue = "<%= String(3_000) %>"
-
-[setting.perps_keeper_l1_cost_liquidate_gas_units]
-defaultValue = "<%= String(26_600) %>"
-
-[setting.perps_keeper_l2_cost_liquidate_gas_units]
-defaultValue = "<%= String(2_300_000) %>"
-
-[setting.perps_keeper_liquidate_tx_size]
-defaultValue = "<%= String(5_050) %>"
-
-[setting.perps_liquidation_min_keeper_reward_usd]
-defaultValue = "1"
-
-[setting.perps_liquidation_min_keeper_profit_ratio_d18]
-defaultValue = "0.30"
-
-[setting.perps_liquidation_max_keeper_reward_usd]
-defaultValue = "100"
-
-[setting.perps_liquidation_max_keeper_scaling_ratio_d18]
-defaultValue = "0.3"
-
-[setting.perps_low_util_gradient]
-defaultValue = "0" # not enabled
-
-[setting.perps_gradient_breakpoint]
-defaultValue = "0" # not enabled
-
-[setting.perps_high_util_gradient]
-defaultValue = "0" # not enabled
-
-[invoke.setPerpsLiquidationRewardGuards]
+[invoke.PerpsMarketProxy_setKeeperRewardGuards]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setKeeperRewardGuards"
 args = [
-    "<%= parseEther(settings.perps_liquidation_min_keeper_reward_usd) %>",
-    "<%= parseEther(settings.perps_liquidation_min_keeper_profit_ratio_d18) %>",
-    "<%= parseEther(settings.perps_liquidation_max_keeper_reward_usd) %>",
-    "<%= parseEther(settings.perps_liquidation_max_keeper_scaling_ratio_d18) %>",
-]
-depends = [
-    'provision.perpsFactory',
-    'setting.perps_liquidation_min_keeper_reward_usd',
-    'setting.perps_liquidation_min_keeper_profit_ratio_d18',
-    'setting.perps_liquidation_max_keeper_reward_usd',
-    'setting.perps_liquidation_max_keeper_scaling_ratio_d18',
+    "<%= settings.perps_liquidation_min_keeper_reward_usd %>",
+    "<%= settings.perps_liquidation_min_keeper_profit_ratio_d18 %>",
+    "<%= settings.perps_liquidation_max_keeper_reward_usd %>",
+    "<%= settings.perps_liquidation_max_keeper_scaling_ratio_d18 %>",
 ]
 
-[invoke.setPerpsMaxCollateralForSnxUsd]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setCollateralConfiguration"
-args = ["0", "<%= MaxUint256 %>"]
-
-[invoke.setPerpsSynthDeductionPriority]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "setSynthDeductionPriority"
-args = [["0"]]
-
-[invoke.setPerAccountCapsPerps]
+[invoke.PerpsMarketProxy_setPerAccountCaps]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setPerAccountCaps"
-args = ["10", "1"]
+args = [
+    "<%= settings.perps_max_positions_per_account %>",
+    "<%= settings.perps_max_collaterals_per_account %>",
+]
 
-[invoke.setPerpsMarketKeeperCostNodeId]
+[invoke.PerpsMarketProxy_updateKeeperCostNodeId]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateKeeperCostNodeId"
 args = ["<%= extras.perps_keeper_cost_usd_oracle_id %>"]
 
-[invoke.setInterestRateParams]
+[invoke.PerpsMarketProxy_setInterestRateParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setInterestRateParameters"
 args = [
-    "<%= parseEther(settings.perps_low_util_gradient) %>",
-    "<%= parseEther(settings.perps_gradient_breakpoint) %>",
-    "<%= parseEther(settings.perps_high_util_gradient) %>",
+    "<%= settings.perps_low_util_gradient %>",
+    "<%= settings.perps_gradient_breakpoint %>",
+    "<%= settings.perps_high_util_gradient %>",
 ]
-depends = [
-    'provision.perpsFactory',
-    'setting.perps_low_util_gradient',
-    'setting.perps_gradient_breakpoint',
-    'setting.perps_high_util_gradient',
-]
+
+[invoke.PerpsMarketProxy_setCollateralLiquidateRewardRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralLiquidateRewardRatio"
+args = ["<%= settings.perps_collateral_liquidation_ratio %>"]
