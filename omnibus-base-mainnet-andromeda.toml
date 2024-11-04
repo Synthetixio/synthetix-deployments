@@ -2,7 +2,10 @@ name = "synthetix-omnibus"
 version = "59"
 description = "Andromeda deployment"
 preset = "andromeda"
-deployers = ["0x1C8236B406911A376369e33D39189F1b4B39F27D","0xbb63CA5554dc4CcaCa4EDd6ECC2837d5EFe83C82"]
+deployers = [
+    "0x1C8236B406911A376369e33D39189F1b4B39F27D",
+    "0xbb63CA5554dc4CcaCa4EDd6ECC2837d5EFe83C82",
+]
 include = [
     "tomls/omnibus-base-mainnet-andromeda/core.toml",
     "tomls/settings.toml",
