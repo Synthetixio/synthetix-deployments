@@ -1,9 +1,10 @@
 name = "synthetix-omnibus"
-version = "37"
+version = "38"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
     "tomls/core.toml",
+    "tomls/omnibus-arbitrum-mainnet/core.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/omnibus-arbitrum-mainnet/perps-highcap-factory.toml",
     "tomls/omnibus-arbitrum-mainnet/permit-deniers.toml",
@@ -250,16 +251,19 @@ defaultValue = "main"
 defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.5.0"
+defaultValue = "synthetix:3.8.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.3.16"
 
+[setting.oracle_manager_package]
+defaultValue = "oracle-manager:3.8.1"
+
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.6.0"
+defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.6.5"
+defaultValue = "synthetix-perps-market:3.9.0"
 
 [setting.pyth_price_verification_address]
 defaultValue = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"
