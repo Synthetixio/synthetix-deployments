@@ -3,7 +3,6 @@ version = "38"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 include = [
-    "tomls/core.toml",
     "tomls/omnibus-arbitrum-mainnet/core.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/omnibus-arbitrum-mainnet/perps-highcap-factory.toml",
