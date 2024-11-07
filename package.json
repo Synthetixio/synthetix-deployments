@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "@pythnetwork/pyth-evm-js": "^1.73.0",
-    "@usecannon/builder": "2.18.4",
-    "@usecannon/cli": "2.18.4",
+    "@usecannon/builder": "2.19.1",
+    "@usecannon/cli": "2.19.1",
     "debug": "^4.3.7",
     "ethers": "^5.7.2",
     "hardhat": "^2.22.14",
