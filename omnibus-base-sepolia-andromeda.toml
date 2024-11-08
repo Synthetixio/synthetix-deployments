@@ -126,6 +126,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-wif.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-wld.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-wsteth.toml",
+    "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-wsteth-r.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-xlm.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-xrp.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-yfi.toml",
@@ -465,6 +466,8 @@ pyth_feed_id_weth = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d66548087463
 pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4cc61fc"
 pyth_feed_id_wld = "0xd6835ad1f773de4a378115eb6824bd0c0e42d84d1c84d9750e853fb6b6c7794a"
 pyth_feed_id_wsteth = "0x6df640f3b8963d8f8358f791f352b8364513f6ab1cca5ed3f1f7b5448980e784"
+pyth_feed_id_wsteth_steth_r = "0xf59ead01ed0faba85332a1e2feae8ddb14a1c94ebac259f1c982c92fc7ce333e"
+pyth_feed_id_steth_eth_r = "0x3af6a3098c56f58ff47cc46dee4a5b1910e5c157f7f0b665952445867470d61f"
 pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"

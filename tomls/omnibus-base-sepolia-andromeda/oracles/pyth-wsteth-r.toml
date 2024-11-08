@@ -1,0 +1,115 @@
+# This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
+
+################################################################
+# First step is registering the wsteth-steth redemption based feed
+################################################################
+[invoke.registerPythWstEthStethOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    5, # 5 = pyth aggregator type
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_wsteth_steth_r, false]) %>",
+    [
+    ],
+]
+extra.wsteth_steth_r_pyth_oracle_id.event = "NodeRegistered"
+extra.wsteth_steth_r_pyth_oracle_id.arg = 0
+# Pyth Off-chain Lookup
+[invoke.registerLookupWstEthStethOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    9, # 9 = PythOffchainLookupNode
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_wsteth_steth_r, settings.default_staleness_tolerance]) %>",
+    [
+    ],
+]
+extra.wsteth_steth_r_lookup_oracle_id.event = "NodeRegistered"
+extra.wsteth_steth_r_lookup_oracle_id.arg = 0
+# Staleness Node
+[invoke.registerWstEthStethOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
+    [
+        "<%= extras.wsteth_steth_r_pyth_oracle_id %>",
+        "<%= extras.wsteth_steth_r_lookup_oracle_id %>",
+    ],
+]
+extra.wsteth_steth_r_oracle_id.event = "NodeRegistered"
+extra.wsteth_steth_r_oracle_id.arg = 0
+
+################################################################
+# Second step is registering the steth-eth redemption based feed
+################################################################
+[invoke.registerPythStethEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    5, # 5 = pyth aggregator type
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_steth_eth_r, false]) %>",
+    [
+    ],
+]
+extra.steth_eth_r_pyth_oracle_id.event = "NodeRegistered"
+extra.steth_eth_r_pyth_oracle_id.arg = 0
+# Pyth Off-chain Lookup
+[invoke.registerLookupStethEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    9, # 9 = PythOffchainLookupNode
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_steth_eth_r, settings.default_staleness_tolerance]) %>",
+    [
+    ],
+]
+extra.steth_eth_r_lookup_oracle_id.event = "NodeRegistered"
+extra.steth_eth_r_lookup_oracle_id.arg = 0
+# Staleness Node
+[invoke.registerStethEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
+    [
+        "<%= extras.steth_eth_r_pyth_oracle_id %>",
+        "<%= extras.steth_eth_r_lookup_oracle_id %>",
+    ],
+]
+extra.steth_eth_r_oracle_id.event = "NodeRegistered"
+extra.steth_eth_r_oracle_id.arg = 0
+
+# Third step combine wsteth/steth * steth/eth * eth/usd to get back the wsteth/usd redemption based price
+
+# step a, do a wsteh/steth * steth/eth
+[invoke.registerWstethEthRedemptionNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 1 = reducer node
+    1,
+    # 1 parameters: 1 operation = 7 for mul decimal
+    "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
+    # 2 parent: 1 is the eth txn price node id, 2 is the eth oracle node id
+    ["<%= extras.wsteth_steth_r_oracle_id %>", "<%= extras.steth_eth_r_oracle_id %>"],
+]
+extra.wsteth_eth_r_oracle_id.event = "NodeRegistered"
+extra.wsteth_eth_r_oracle_id.arg = 0
+
+# step b, do a step 1 * eth/usd
+[invoke.registerWstethUsdRedemptionNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 1 = reducer node
+    1,
+    # 1 parameters: 1 operation = 7 for mul decimal
+    "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
+    # 2 parent: 1 is the eth txn price node id, 2 is the eth oracle node id
+    ["<%= extras.wsteth_eth_r_oracle_id %>", "<%= extras.eth_oracle_id %>"],
+]
+extra.wsteth_usd_r_oracle_id.event = "NodeRegistered"
+extra.wsteth_usd_r_oracle_id.arg = 0
