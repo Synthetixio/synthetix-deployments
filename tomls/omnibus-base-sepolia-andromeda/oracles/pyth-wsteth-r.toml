@@ -1,5 +1,3 @@
-# This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
-
 ################################################################
 # First step is registering the wsteth-steth redemption based feed
 ################################################################
