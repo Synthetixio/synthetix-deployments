@@ -83,6 +83,46 @@ async function renderCollateralConfig(config) {
     </tr>
   `);
 
+  if (config?.oracle?.constPrice) {
+    table.push(`
+      <tr>
+        <td>oracle.constPrice</td>
+        <td>${readableNumber(config.oracle.constPrice)}</td>
+        <td>${rawValue(config.oracle.constPrice)}</td>
+      </tr>
+    `);
+  }
+
+  if (config?.oracle?.stalenessTolerance) {
+    table.push(`
+      <tr>
+        <td>oracle.stalenessTolerance</td>
+        <td>${readableNumber(config.oracle.stalenessTolerance)}</td>
+        <td>${rawValue(config.oracle.stalenessTolerance)}</td>
+      </tr>
+    `);
+  }
+
+  if (config?.oracle?.pythFeedId) {
+    table.push(`
+      <tr>
+        <td>oracle.pythFeedId</td>
+        <td></td>
+        <td>${rawValue(config.oracle.pythFeedId)}</td>
+      </tr>
+    `);
+  }
+
+  if (config?.oracle?.externalContract) {
+    table.push(`
+      <tr>
+        <td>oracle.externalContract</td>
+        <td>${addrHtmlLink(config.oracle.externalContract)}</td>
+        <td>${rawValue(config.oracle.externalContract)}</td>
+      </tr>
+    `);
+  }
+
   table.push(`
       </tbody>
     </table>
@@ -96,28 +136,9 @@ async function renderCollateralConfig(config) {
 async function collateralConfigurations() {
   const out = [];
 
-  const { getCollateralConfigurations } = require('../tasks/getCollateralConfigurations');
-  const allConfigs = await getCollateralConfigurations();
-  const { deprecated, configs } = allConfigs.reverse().reduce(
-    (result, config) => {
-      if (config.symbol in result.configs) {
-        result.deprecated.unshift(config);
-      } else {
-        Object.assign(result.configs, { [config.symbol]: config });
-      }
-      return result;
-    },
-    { deprecated: [], configs: {} }
-  );
-  log({ deprecated });
-
-  for (const config of Object.values(configs).sort(sortBySymbol)) {
+  const collateralTokens = require('../deployments/collateralTokens.json');
+  for (const config of collateralTokens) {
     out.push(`# Collateral \`${config.symbol}\` ${config.name}`);
-    out.push(await renderCollateralConfig(config));
-  }
-
-  for (const config of deprecated) {
-    out.push(`# Deprecated Collateral (DO NOT USE!) \`${config.symbol}\` ${config.name}`);
     out.push(await renderCollateralConfig(config));
   }
 

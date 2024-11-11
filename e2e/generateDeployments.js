@@ -474,6 +474,188 @@ async function extractPythFeeds(deployments) {
   return items;
 }
 
+async function extractPerpsMarkets(deployments) {
+  // walk over all the MarketCreated events
+  const meta = {};
+  const markets = {};
+  for (const [key, value] of Object.entries(deployments?.state || {})) {
+    if (key.startsWith('invoke.')) {
+      const [, artifactName] = key.split('.');
+      const events = value?.artifacts?.txns?.[artifactName]?.events?.MarketCreated;
+      if (events && events.length === 1) {
+        log({ MarketCreated: events[0] });
+        const [id, name, symbol] = events[0].args;
+        markets[id] = {
+          id,
+          symbol,
+          name,
+        };
+      }
+    }
+  }
+
+  for (const [key, value] of Object.entries(deployments?.state || {})) {
+    if (key.startsWith('invoke.')) {
+      const [, artifactName] = key.split('.');
+
+      const eventsSettlementStrategySet =
+        value?.artifacts?.txns?.[artifactName]?.events?.SettlementStrategySet;
+      if (eventsSettlementStrategySet && eventsSettlementStrategySet.length === 1) {
+        log({ SettlementStrategySet: eventsSettlementStrategySet[0] });
+        const [perpsMarketId, settlementStrategyId, settlementStrategy] =
+          eventsSettlementStrategySet[0].args;
+        settlementStrategy.settlementStrategyId = settlementStrategyId;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].settlementStrategyId = settlementStrategyId;
+          markets[perpsMarketId].settlementStrategy = settlementStrategy;
+        }
+      }
+
+      const eventsFundingParametersSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.FundingParametersSet;
+      if (eventsFundingParametersSet && eventsFundingParametersSet.length === 1) {
+        log({ FundingParametersSet: eventsFundingParametersSet[0] });
+        const [perpsMarketId, skewScale, maxFundingVelocity] = eventsFundingParametersSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].fundingParameters = { skewScale, maxFundingVelocity };
+        }
+      }
+
+      const eventsLiquidationParametersSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.LiquidationParametersSet;
+      if (eventsLiquidationParametersSet && eventsLiquidationParametersSet.length === 1) {
+        log({ LiquidationParametersSet: eventsLiquidationParametersSet[0] });
+        const [
+          perpsMarketId,
+          initialMarginRatioD18,
+          minimumInitialMarginRatioD18,
+          maintenanceMarginScalarD18,
+          flagRewardRatioD18,
+          minimumPositionMargin,
+        ] = eventsLiquidationParametersSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].liquidationParameters = {
+            initialMarginRatioD18,
+            minimumInitialMarginRatioD18,
+            maintenanceMarginScalarD18,
+            flagRewardRatioD18,
+            minimumPositionMargin,
+          };
+        }
+      }
+
+      const eventsLockedOiRatioSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.LockedOiRatioSet;
+      if (eventsLockedOiRatioSet && eventsLockedOiRatioSet.length === 1) {
+        log({ LockedOiRatioSet: eventsLockedOiRatioSet[0] });
+        const [perpsMarketId, lockedOiRatio] = eventsLockedOiRatioSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].lockedOiRatio = lockedOiRatio;
+        }
+      }
+
+      const eventsMaxLiquidationParametersSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.MaxLiquidationParametersSet;
+      if (eventsMaxLiquidationParametersSet && eventsMaxLiquidationParametersSet.length === 1) {
+        log({ MaxLiquidationParametersSet: eventsMaxLiquidationParametersSet[0] });
+        const [
+          perpsMarketId,
+          maxLiquidationLimitAccumulationMultiplier,
+          maxSecondsInLiquidationWindow,
+          maxLiquidationPd,
+          endorsedLiquidator,
+        ] = eventsMaxLiquidationParametersSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].maxLiquidationParameters = {
+            maxLiquidationLimitAccumulationMultiplier,
+            maxSecondsInLiquidationWindow,
+            maxLiquidationPd,
+            endorsedLiquidator,
+          };
+        }
+      }
+
+      const eventsMaxMarketSizeSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketSizeSet;
+      if (eventsMaxMarketSizeSet && eventsMaxMarketSizeSet.length === 1) {
+        log({ MaxMarketSizeSet: eventsMaxMarketSizeSet[0] });
+        const [perpsMarketId, maxMarketSize] = eventsMaxMarketSizeSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].maxMarketSize = maxMarketSize;
+        }
+      }
+
+      const eventsMaxMarketValueSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketValueSet;
+      if (eventsMaxMarketValueSet && eventsMaxMarketValueSet.length === 1) {
+        log({ MaxMarketValueSet: eventsMaxMarketValueSet[0] });
+        const [perpsMarketId, maxMarketValue] = eventsMaxMarketValueSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].maxMarketValue = maxMarketValue;
+        }
+      }
+
+      const eventsOrderFeesSet = value?.artifacts?.txns?.[artifactName]?.events?.OrderFeesSet;
+      if (eventsOrderFeesSet && eventsOrderFeesSet.length === 1) {
+        log({ OrderFeesSet: eventsOrderFeesSet[0] });
+        const [perpsMarketId, makerFee, takerFee] = eventsOrderFeesSet[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].orderFees = { makerFee, takerFee };
+        }
+      }
+
+      const eventsMarketPriceDataUpdated =
+        value?.artifacts?.txns?.[artifactName]?.events?.MarketPriceDataUpdated;
+      if (eventsMarketPriceDataUpdated && eventsMarketPriceDataUpdated.length === 1) {
+        log({ MarketPriceDataUpdated: eventsMarketPriceDataUpdated[0] });
+        const [perpsMarketId, oracleId, stalenessTolerance] = eventsMarketPriceDataUpdated[0].args;
+        if (perpsMarketId in markets) {
+          markets[perpsMarketId].marketPriceData = { oracleId, stalenessTolerance };
+        }
+      }
+
+      const eventsKeeperRewardGuardsSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.KeeperRewardGuardsSet;
+      if (eventsKeeperRewardGuardsSet && eventsKeeperRewardGuardsSet.length === 1) {
+        log({ KeeperRewardGuardsSet: eventsKeeperRewardGuardsSet[0] });
+        const [
+          minKeeperRewardUsd,
+          minKeeperProfitRatioD18,
+          maxKeeperRewardUsd,
+          maxKeeperScalingRatioD18,
+        ] = eventsKeeperRewardGuardsSet[0].args;
+        meta.keeperRewardGuards = {
+          minKeeperRewardUsd,
+          minKeeperProfitRatioD18,
+          maxKeeperRewardUsd,
+          maxKeeperScalingRatioD18,
+        };
+      }
+
+      const eventsInterestRateParametersSet =
+        value?.artifacts?.txns?.[artifactName]?.events?.InterestRateParametersSet;
+      if (eventsInterestRateParametersSet && eventsInterestRateParametersSet.length === 1) {
+        log({ InterestRateParametersSet: eventsInterestRateParametersSet[0] });
+        const [
+          lowUtilizationInterestRateGradient,
+          interestRateGradientBreakpoint,
+          highUtilizationInterestRateGradient,
+        ] = eventsInterestRateParametersSet[0].args;
+        meta.interestRateParameters = {
+          lowUtilizationInterestRateGradient,
+          interestRateGradientBreakpoint,
+          highUtilizationInterestRateGradient,
+        };
+      }
+    }
+  }
+
+  return {
+    ...meta,
+    markets,
+  };
+}
+
 async function run() {
   const deployments = require(path.resolve(cannonState));
 
@@ -634,6 +816,13 @@ async function run() {
     JSON.stringify(rewardsDistributors, null, 2)
   );
   Object.assign(contracts, rewardsDistributorContracts);
+
+  const perpsMarkets = await extractPerpsMarkets(deployments);
+  log('Writing', `deployments/perpsMarkets.json`);
+  await fs.writeFile(
+    `${__dirname}/deployments/perpsMarkets.json`,
+    JSON.stringify(perpsMarkets, null, 2)
+  );
 
   Object.assign(meta, {
     contracts: Object.fromEntries(
