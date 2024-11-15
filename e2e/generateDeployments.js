@@ -264,7 +264,7 @@ async function getSynth(deployments, { synthMarketId }) {
 }
 
 async function extractSynths(deployments) {
-  const items = [];
+  const markets = {};
   const contracts = {};
   const duplicates = {};
   for (const [key, value] of Object.entries(deployments?.state || {})) {
@@ -282,11 +282,12 @@ async function extractSynths(deployments) {
         }
         if (address) {
           const token = await fetchTokenInfo(address);
-          items.push({
-            // TODO: cleanup BigNumber decode after optimism-mainnet upgraded
-            synthMarketId: ethers.BigNumber.from(synthMarketId).toString(),
+          // TODO: cleanup BigNumber decode after optimism-mainnet upgraded
+          const id = ethers.BigNumber.from(synthMarketId).toString();
+          markets[id] = {
+            id,
             ...token,
-          });
+          };
           const contractName = `SynthToken_${token.symbol}`;
           if (contractName in contracts) {
             duplicates[contractName] =
@@ -310,22 +311,72 @@ async function extractSynths(deployments) {
   for (const [key, value] of Object.entries(deployments?.state || {})) {
     if (key.startsWith('invoke.')) {
       const [, artifactName] = key.split('.');
-      const events = value?.artifacts?.txns?.[artifactName]?.events?.WrapperSet;
+      let events;
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.WrapperSet;
       if (events && events.length === 1) {
-        // can only have one RewardsDistributorRegistered event
-        log({ WrapperSet: events[0] });
         const [synthMarketId, wrapCollateralType, maxWrappableAmount] = events[0].args;
-        for (const synth of items) {
-          if (`${synth.synthMarketId}` === `${synthMarketId}`) {
-            synth.token = await fetchTokenInfo(wrapCollateralType);
-            synth.maxWrappableAmount = maxWrappableAmount;
-          }
+        if (synthMarketId in markets) {
+          markets[synthMarketId].token = await fetchTokenInfo(wrapCollateralType);
+          markets[synthMarketId].maxWrappableAmount = maxWrappableAmount;
+        }
+      }
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.AtomicFixedFeeSet;
+      if (events && events.length === 1) {
+        const [synthMarketId, atomicFixedFee] = events[0].args;
+        if (synthMarketId in markets) {
+          markets[synthMarketId].atomicFixedFee = atomicFixedFee;
+        }
+      }
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.MarketSkewScaleSet;
+      if (events && events.length === 1) {
+        const [synthMarketId, skewScale] = events[0].args;
+        if (synthMarketId in markets) {
+          markets[synthMarketId].skewScale = skewScale;
+        }
+      }
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.CollateralLeverageSet;
+      if (events && events.length === 1) {
+        const [synthMarketId, collateralLeverage] = events[0].args;
+        if (synthMarketId in markets) {
+          markets[synthMarketId].collateralLeverage = collateralLeverage;
+        }
+      }
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.SynthPriceDataUpdated;
+      if (events && events.length === 1) {
+        const [synthMarketId, buyFeedId, sellFeedId, strictStalenessTolerance] = events[0].args;
+        if (synthMarketId in markets) {
+          markets[synthMarketId].synthPriceData = {
+            buyFeedId,
+            sellFeedId,
+            strictStalenessTolerance,
+          };
+        }
+      }
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.SettlementStrategySet;
+      if (events && events.length === 1) {
+        const [synthMarketId, settlementStrategyId, settlementStrategy] = events[0].args;
+        if (synthMarketId in markets) {
+          markets[synthMarketId].settlementStrategyId = settlementStrategyId;
+          markets[synthMarketId].settlementStrategy = {
+            settlementStrategyId,
+            ...settlementStrategy,
+          };
         }
       }
     }
   }
+
   return {
-    items,
+    spotMarkets: {
+      markets,
+    },
+    items: Object.values(markets),
     contracts,
   };
 }
@@ -498,12 +549,11 @@ async function extractPerpsMarkets(deployments) {
     if (key.startsWith('invoke.')) {
       const [, artifactName] = key.split('.');
 
-      const eventsSettlementStrategySet =
-        value?.artifacts?.txns?.[artifactName]?.events?.SettlementStrategySet;
-      if (eventsSettlementStrategySet && eventsSettlementStrategySet.length === 1) {
-        log({ SettlementStrategySet: eventsSettlementStrategySet[0] });
-        const [perpsMarketId, settlementStrategyId, settlementStrategy] =
-          eventsSettlementStrategySet[0].args;
+      let events;
+
+      events = value?.artifacts?.txns?.[artifactName]?.events?.SettlementStrategySet;
+      if (events && events.length === 1) {
+        const [perpsMarketId, settlementStrategyId, settlementStrategy] = events[0].args;
         settlementStrategy.settlementStrategyId = settlementStrategyId;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].settlementStrategyId = settlementStrategyId;
@@ -511,20 +561,16 @@ async function extractPerpsMarkets(deployments) {
         }
       }
 
-      const eventsFundingParametersSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.FundingParametersSet;
-      if (eventsFundingParametersSet && eventsFundingParametersSet.length === 1) {
-        log({ FundingParametersSet: eventsFundingParametersSet[0] });
-        const [perpsMarketId, skewScale, maxFundingVelocity] = eventsFundingParametersSet[0].args;
+      events = value?.artifacts?.txns?.[artifactName]?.events?.FundingParametersSet;
+      if (events && events.length === 1) {
+        const [perpsMarketId, skewScale, maxFundingVelocity] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].fundingParameters = { skewScale, maxFundingVelocity };
         }
       }
 
-      const eventsLiquidationParametersSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.LiquidationParametersSet;
-      if (eventsLiquidationParametersSet && eventsLiquidationParametersSet.length === 1) {
-        log({ LiquidationParametersSet: eventsLiquidationParametersSet[0] });
+      events = value?.artifacts?.txns?.[artifactName]?.events?.LiquidationParametersSet;
+      if (events && events.length === 1) {
         const [
           perpsMarketId,
           initialMarginRatioD18,
@@ -532,7 +578,7 @@ async function extractPerpsMarkets(deployments) {
           maintenanceMarginScalarD18,
           flagRewardRatioD18,
           minimumPositionMargin,
-        ] = eventsLiquidationParametersSet[0].args;
+        ] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].liquidationParameters = {
             initialMarginRatioD18,
@@ -544,27 +590,25 @@ async function extractPerpsMarkets(deployments) {
         }
       }
 
-      const eventsLockedOiRatioSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.LockedOiRatioSet;
-      if (eventsLockedOiRatioSet && eventsLockedOiRatioSet.length === 1) {
-        log({ LockedOiRatioSet: eventsLockedOiRatioSet[0] });
-        const [perpsMarketId, lockedOiRatio] = eventsLockedOiRatioSet[0].args;
+      events = value?.artifacts?.txns?.[artifactName]?.events?.LockedOiRatioSet;
+      if (events && events.length === 1) {
+        log({ LockedOiRatioSet: events[0] });
+        const [perpsMarketId, lockedOiRatio] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].lockedOiRatio = lockedOiRatio;
         }
       }
 
-      const eventsMaxLiquidationParametersSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.MaxLiquidationParametersSet;
-      if (eventsMaxLiquidationParametersSet && eventsMaxLiquidationParametersSet.length === 1) {
-        log({ MaxLiquidationParametersSet: eventsMaxLiquidationParametersSet[0] });
+      events = value?.artifacts?.txns?.[artifactName]?.events?.MaxLiquidationParametersSet;
+      if (events && events.length === 1) {
+        log({ MaxLiquidationParametersSet: events[0] });
         const [
           perpsMarketId,
           maxLiquidationLimitAccumulationMultiplier,
           maxSecondsInLiquidationWindow,
           maxLiquidationPd,
           endorsedLiquidator,
-        ] = eventsMaxLiquidationParametersSet[0].args;
+        ] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxLiquidationParameters = {
             maxLiquidationLimitAccumulationMultiplier,
@@ -575,55 +619,51 @@ async function extractPerpsMarkets(deployments) {
         }
       }
 
-      const eventsMaxMarketSizeSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketSizeSet;
-      if (eventsMaxMarketSizeSet && eventsMaxMarketSizeSet.length === 1) {
-        log({ MaxMarketSizeSet: eventsMaxMarketSizeSet[0] });
-        const [perpsMarketId, maxMarketSize] = eventsMaxMarketSizeSet[0].args;
+      events = value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketSizeSet;
+      if (events && events.length === 1) {
+        log({ MaxMarketSizeSet: events[0] });
+        const [perpsMarketId, maxMarketSize] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxMarketSize = maxMarketSize;
         }
       }
 
-      const eventsMaxMarketValueSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketValueSet;
-      if (eventsMaxMarketValueSet && eventsMaxMarketValueSet.length === 1) {
-        log({ MaxMarketValueSet: eventsMaxMarketValueSet[0] });
-        const [perpsMarketId, maxMarketValue] = eventsMaxMarketValueSet[0].args;
+      events = value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketValueSet;
+      if (events && events.length === 1) {
+        log({ MaxMarketValueSet: events[0] });
+        const [perpsMarketId, maxMarketValue] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxMarketValue = maxMarketValue;
         }
       }
 
-      const eventsOrderFeesSet = value?.artifacts?.txns?.[artifactName]?.events?.OrderFeesSet;
-      if (eventsOrderFeesSet && eventsOrderFeesSet.length === 1) {
-        log({ OrderFeesSet: eventsOrderFeesSet[0] });
-        const [perpsMarketId, makerFee, takerFee] = eventsOrderFeesSet[0].args;
+      events = value?.artifacts?.txns?.[artifactName]?.events?.OrderFeesSet;
+      if (events && events.length === 1) {
+        log({ OrderFeesSet: events[0] });
+        const [perpsMarketId, makerFee, takerFee] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].orderFees = { makerFee, takerFee };
         }
       }
 
-      const eventsMarketPriceDataUpdated =
-        value?.artifacts?.txns?.[artifactName]?.events?.MarketPriceDataUpdated;
-      if (eventsMarketPriceDataUpdated && eventsMarketPriceDataUpdated.length === 1) {
-        log({ MarketPriceDataUpdated: eventsMarketPriceDataUpdated[0] });
-        const [perpsMarketId, oracleId, stalenessTolerance] = eventsMarketPriceDataUpdated[0].args;
+      events = value?.artifacts?.txns?.[artifactName]?.events?.MarketPriceDataUpdated;
+      if (events && events.length === 1) {
+        log({ MarketPriceDataUpdated: events[0] });
+        const [perpsMarketId, feedId, strictStalenessTolerance] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].marketPriceData = { oracleId, stalenessTolerance };
+          markets[perpsMarketId].marketPriceData = { feedId, strictStalenessTolerance };
         }
       }
 
-      const eventsKeeperRewardGuardsSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.KeeperRewardGuardsSet;
-      if (eventsKeeperRewardGuardsSet && eventsKeeperRewardGuardsSet.length === 1) {
-        log({ KeeperRewardGuardsSet: eventsKeeperRewardGuardsSet[0] });
+      events = value?.artifacts?.txns?.[artifactName]?.events?.KeeperRewardGuardsSet;
+      if (events && events.length === 1) {
+        log({ KeeperRewardGuardsSet: events[0] });
         const [
           minKeeperRewardUsd,
           minKeeperProfitRatioD18,
           maxKeeperRewardUsd,
           maxKeeperScalingRatioD18,
-        ] = eventsKeeperRewardGuardsSet[0].args;
+        ] = events[0].args;
         meta.keeperRewardGuards = {
           minKeeperRewardUsd,
           minKeeperProfitRatioD18,
@@ -632,15 +672,14 @@ async function extractPerpsMarkets(deployments) {
         };
       }
 
-      const eventsInterestRateParametersSet =
-        value?.artifacts?.txns?.[artifactName]?.events?.InterestRateParametersSet;
-      if (eventsInterestRateParametersSet && eventsInterestRateParametersSet.length === 1) {
-        log({ InterestRateParametersSet: eventsInterestRateParametersSet[0] });
+      events = value?.artifacts?.txns?.[artifactName]?.events?.InterestRateParametersSet;
+      if (events && events.length === 1) {
+        log({ InterestRateParametersSet: events[0] });
         const [
           lowUtilizationInterestRateGradient,
           interestRateGradientBreakpoint,
           highUtilizationInterestRateGradient,
-        ] = eventsInterestRateParametersSet[0].args;
+        ] = events[0].args;
         meta.interestRateParameters = {
           lowUtilizationInterestRateGradient,
           interestRateGradientBreakpoint,
@@ -800,11 +839,20 @@ async function run() {
     snx_address: extras?.snx_address ?? deployments?.def?.setting?.snx_address?.defaultValue,
   });
 
-  const { items: synthTokens, contracts: synthTokenContracts } = await extractSynths(deployments);
+  const {
+    spotMarkets,
+    items: synthTokens,
+    contracts: synthTokenContracts,
+  } = await extractSynths(deployments);
   log('Writing', `deployments/synthTokens.json`);
   await fs.writeFile(
     `${__dirname}/deployments/synthTokens.json`,
     JSON.stringify(synthTokens, null, 2)
+  );
+  log('Writing', `deployments/spotMarkets.json`);
+  await fs.writeFile(
+    `${__dirname}/deployments/spotMarkets.json`,
+    JSON.stringify(spotMarkets, null, 2)
   );
   Object.assign(contracts, synthTokenContracts);
 
