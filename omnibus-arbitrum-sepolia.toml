@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "38"
+version = "39"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
