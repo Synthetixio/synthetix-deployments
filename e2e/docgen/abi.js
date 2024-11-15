@@ -113,6 +113,12 @@ async function abi() {
   `);
   table.push(`
     <tr>
+      <td>Spot markets</td>
+      <td><a href="./${chainId}-${preset}/spotMarkets.json"><code>spotMarkets.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
       <td>Perps markets</td>
       <td><a href="./${chainId}-${preset}/perpsMarkets.json"><code>perpsMarkets.json</code></a></td>
     </tr>
