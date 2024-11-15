@@ -247,26 +247,11 @@ async function extractRewardsDistributors(deployments) {
   };
 }
 
-async function getSynth(deployments, { synthMarketId }) {
-  const spotFactory =
-    deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
-  if (spotFactory) {
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.RPC_URL || 'http://127.0.0.1:8545'
-    );
-    const SpotMarketProxy = new ethers.Contract(
-      spotFactory.contracts.SpotMarketProxy.address,
-      spotFactory.contracts.SpotMarketProxy.abi,
-      provider
-    );
-    return await SpotMarketProxy.getSynth(synthMarketId);
-  }
-}
-
 async function extractSynths(deployments) {
   const markets = {};
   const contracts = {};
   const duplicates = {};
+
   for (const [key, value] of Object.entries(deployments?.state || {})) {
     if (key.startsWith('invoke.')) {
       const [, artifactName] = key.split('.');
@@ -275,33 +260,59 @@ async function extractSynths(deployments) {
         // can only have one SynthRegistered event
         log({ SynthRegistered: events[0] });
         let [synthMarketId, address] = events[0].args;
-        if (!address) {
-          // For old spot market we did not emit token address and need to get it dynamically
-          // TODO: remove after optimism-mainnet upgraded
-          address = await getSynth(deployments, { synthMarketId }).catch((e) => log(e));
-        }
-        if (address) {
-          const token = await fetchTokenInfo(address);
-          // TODO: cleanup BigNumber decode after optimism-mainnet upgraded
-          const id = ethers.BigNumber.from(synthMarketId).toString();
-          markets[id] = {
-            id,
-            ...token,
-          };
-          const contractName = `SynthToken_${token.symbol}`;
-          if (contractName in contracts) {
-            duplicates[contractName] =
-              contractName in duplicates ? duplicates[contractName] + 1 : 1;
-            contracts[`${contractName}__${duplicates[contractName]}`] = {
-              address,
-              abi: require('./SynthTokenModule.json'),
-            };
-          } else {
-            contracts[`${contractName}`] = {
-              address,
-              abi: require('./SynthTokenModule.json'),
-            };
+        const id = ethers.BigNumber.from(synthMarketId).toString();
+        markets[id] = { id };
+
+        const spotFactory =
+          deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
+        if (spotFactory) {
+          const provider = new ethers.providers.JsonRpcProvider(
+            process.env.RPC_URL || 'http://127.0.0.1:8545'
+          );
+          const SpotMarketProxy = new ethers.Contract(
+            spotFactory.contracts.SpotMarketProxy.address,
+            spotFactory.contracts.SpotMarketProxy.abi,
+            provider
+          );
+
+          if (!address) {
+            // For old spot market we did not emit token address and need to get it dynamically
+            // TODO: remove after optimism-mainnet upgraded
+            address = await SpotMarketProxy.getSynth(id);
           }
+
+          if (address) {
+            const synthToken = await fetchTokenInfo(address);
+            markets[id].synthToken = synthToken;
+
+            const contractName = `SynthToken_${synthToken.symbol}`;
+            if (contractName in contracts) {
+              duplicates[contractName] =
+                contractName in duplicates ? duplicates[contractName] + 1 : 1;
+              contracts[`${contractName}__${duplicates[contractName]}`] = {
+                address,
+                abi: require('./SynthTokenModule.json'),
+              };
+            } else {
+              contracts[`${contractName}`] = {
+                address,
+                abi: require('./SynthTokenModule.json'),
+              };
+            }
+          }
+
+          const { atomicFixedFee, asyncFixedFee, wrapFee, unwrapFee } =
+            await SpotMarketProxy.getMarketFees(id);
+          const feeCollector = await SpotMarketProxy.getFeeCollector(id);
+          const marketUtilizationFees = await SpotMarketProxy.getMarketUtilizationFees(id);
+          markets[id].fees = {
+            atomicFixedFee: ethers.BigNumber.from(atomicFixedFee).toString(),
+            asyncFixedFee: ethers.BigNumber.from(asyncFixedFee).toString(),
+            wrapFee: ethers.BigNumber.from(wrapFee).toString(),
+            unwrapFee: ethers.BigNumber.from(unwrapFee).toString(),
+            marketUtilizationFees: ethers.BigNumber.from(marketUtilizationFees).toString(),
+            feeCollector,
+          };
         }
       }
     }
