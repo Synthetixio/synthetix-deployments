@@ -316,58 +316,58 @@ async function perpsMarkets() {
         <td>${
           [
             'PYTH', // 0
-          ][market.settlementStrategy.strategyType] || 'Unknown'
+          ][market.settlementStrategy?.strategyType] || 'Unknown'
         }</td>
-        <td>${rawValue(market.settlementStrategy.strategyType)}</td>
+        <td>${rawValue(market.settlementStrategy?.strategyType)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementDelay</td>
-        <td>${readableNumber(market.settlementStrategy.settlementDelay)}</td>
-        <td>${rawValue(market.settlementStrategy.settlementDelay)}</td>
+        <td>${readableNumber(market.settlementStrategy?.settlementDelay)}</td>
+        <td>${rawValue(market.settlementStrategy?.settlementDelay)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementWindowDuration</td>
-        <td>${readableNumber(market.settlementStrategy.settlementWindowDuration)}</td>
-        <td>${rawValue(market.settlementStrategy.settlementWindowDuration)}</td>
+        <td>${readableNumber(market.settlementStrategy?.settlementWindowDuration)}</td>
+        <td>${rawValue(market.settlementStrategy?.settlementWindowDuration)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>priceVerificationContract</td>
         <td></td>
-        <td>${addrHtmlLink(chainId, market.settlementStrategy.priceVerificationContract)}</td>
+        <td>${addrHtmlLink(chainId, market.settlementStrategy?.priceVerificationContract)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>feedId</td>
         <td></td>
-        <td>${rawValue(market.settlementStrategy.feedId)}</td>
+        <td>${rawValue(market.settlementStrategy?.feedId)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementReward</td>
-        <td>${readableBigWei(market.settlementStrategy.settlementReward)}</td>
-        <td>${rawValue(market.settlementStrategy.settlementReward)}</td>
+        <td>${readableBigWei(market.settlementStrategy?.settlementReward)}</td>
+        <td>${rawValue(market.settlementStrategy?.settlementReward)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>disabled</td>
-        <td>${market.settlementStrategy.disabled === true ? '🚫 Disabled' : market.settlementStrategy.disabled === false ? '✅ Enabled' : 'n/a'}</td>
-        <td>${rawValue(market.settlementStrategy.disabled)}</td>
+        <td>${market.settlementStrategy?.disabled === true ? '🚫 Disabled' : market.settlementStrategy?.disabled === false ? '✅ Enabled' : 'n/a'}</td>
+        <td>${rawValue(market.settlementStrategy?.disabled)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>commitmentPriceDelay</td>
-        <td>${readableNumber(market.settlementStrategy.commitmentPriceDelay)}</td>
-        <td>${rawValue(market.settlementStrategy.commitmentPriceDelay)}</td>
+        <td>${readableNumber(market.settlementStrategy?.commitmentPriceDelay)}</td>
+        <td>${rawValue(market.settlementStrategy?.commitmentPriceDelay)}</td>
       </tr>
     `);
 

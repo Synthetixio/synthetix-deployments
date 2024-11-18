@@ -272,10 +272,10 @@ async function extractSynths(deployments) {
       if (events && events.length === 1) {
         // can only have one SynthRegistered event
         log({ SynthRegistered: events[0] });
-        let [synthMarketId, address] = events[0].args;
-        const id = bn(synthMarketId);
-        spotMarkets[id] = { id };
-        synthTokens[id] = { synthMarketId: id };
+        let [synthMarketId_, address] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
+        spotMarkets[synthMarketId] = { id: synthMarketId };
+        synthTokens[synthMarketId] = { synthMarketId };
 
         const spotFactory =
           deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
@@ -292,13 +292,13 @@ async function extractSynths(deployments) {
           if (!address) {
             // For old spot market we did not emit token address and need to get it dynamically
             // TODO: remove after optimism-mainnet upgraded
-            address = await SpotMarketProxy.getSynth(id);
+            address = await SpotMarketProxy.getSynth(synthMarketId);
           }
 
           if (address) {
             const synthToken = await fetchTokenInfo(address);
-            spotMarkets[id].synthToken = synthToken;
-            Object.assign(synthTokens[id], synthToken);
+            spotMarkets[synthMarketId].synthToken = synthToken;
+            Object.assign(synthTokens[synthMarketId], synthToken);
 
             const contractName = `SynthToken_${synthToken.symbol}`;
             if (contractName in contracts) {
@@ -317,10 +317,11 @@ async function extractSynths(deployments) {
           }
 
           const { atomicFixedFee, asyncFixedFee, wrapFee, unwrapFee } =
-            await SpotMarketProxy.getMarketFees(id);
-          const feeCollector = await SpotMarketProxy.getFeeCollector(id);
-          const marketUtilizationFees = await SpotMarketProxy.getMarketUtilizationFees(id);
-          spotMarkets[id].fees = {
+            await SpotMarketProxy.getMarketFees(synthMarketId);
+          const feeCollector = await SpotMarketProxy.getFeeCollector(synthMarketId);
+          const marketUtilizationFees =
+            await SpotMarketProxy.getMarketUtilizationFees(synthMarketId);
+          spotMarkets[synthMarketId].fees = {
             atomicFixedFee: bn(atomicFixedFee),
             asyncFixedFee: bn(asyncFixedFee),
             wrapFee: bn(wrapFee),
@@ -341,7 +342,8 @@ async function extractSynths(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.WrapperSet;
       if (events && events.length === 1) {
-        const [synthMarketId, wrapCollateralType, maxWrappableAmount] = events[0].args;
+        const [synthMarketId_, wrapCollateralType, maxWrappableAmount] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
         if (synthMarketId in spotMarkets) {
           const token = await fetchTokenInfo(wrapCollateralType);
           spotMarkets[synthMarketId].token = token;
@@ -353,7 +355,8 @@ async function extractSynths(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.AtomicFixedFeeSet;
       if (events && events.length === 1) {
-        const [synthMarketId, atomicFixedFee] = events[0].args;
+        const [synthMarketId_, atomicFixedFee] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
         if (synthMarketId in spotMarkets) {
           spotMarkets[synthMarketId].atomicFixedFee = atomicFixedFee;
         }
@@ -361,7 +364,8 @@ async function extractSynths(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.MarketSkewScaleSet;
       if (events && events.length === 1) {
-        const [synthMarketId, skewScale] = events[0].args;
+        const [synthMarketId_, skewScale] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
         if (synthMarketId in spotMarkets) {
           spotMarkets[synthMarketId].skewScale = skewScale;
         }
@@ -369,7 +373,8 @@ async function extractSynths(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.CollateralLeverageSet;
       if (events && events.length === 1) {
-        const [synthMarketId, collateralLeverage] = events[0].args;
+        const [synthMarketId_, collateralLeverage] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
         if (synthMarketId in spotMarkets) {
           spotMarkets[synthMarketId].collateralLeverage = collateralLeverage;
         }
@@ -377,7 +382,8 @@ async function extractSynths(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.SynthPriceDataUpdated;
       if (events && events.length === 1) {
-        const [synthMarketId, buyFeedId, sellFeedId, strictStalenessTolerance] = events[0].args;
+        const [synthMarketId_, buyFeedId, sellFeedId, strictStalenessTolerance] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
         if (synthMarketId in spotMarkets) {
           spotMarkets[synthMarketId].synthPriceData = {
             buyFeedId,
@@ -389,7 +395,8 @@ async function extractSynths(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.SettlementStrategySet;
       if (events && events.length === 1) {
-        const [synthMarketId, settlementStrategyId, settlementStrategy] = events[0].args;
+        const [synthMarketId_, settlementStrategyId, settlementStrategy] = events[0].args;
+        const synthMarketId = bn(synthMarketId_);
         if (synthMarketId in spotMarkets) {
           spotMarkets[synthMarketId].settlementStrategyId = settlementStrategyId;
           spotMarkets[synthMarketId].settlementStrategy = {
@@ -560,7 +567,8 @@ async function extractPerpsMarkets(deployments) {
       const events = value?.artifacts?.txns?.[artifactName]?.events?.MarketCreated;
       if (events && events.length === 1) {
         log({ MarketCreated: events[0] });
-        const [id, name, symbol] = events[0].args;
+        const [perpsMarketId_, name, symbol] = events[0].args;
+        const id = bn(perpsMarketId_);
         markets[id] = {
           id,
           symbol,
@@ -578,7 +586,8 @@ async function extractPerpsMarkets(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.SettlementStrategySet;
       if (events && events.length === 1) {
-        const [perpsMarketId, settlementStrategyId, settlementStrategy] = events[0].args;
+        const [perpsMarketId_, settlementStrategyId, settlementStrategy] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         settlementStrategy.settlementStrategyId = settlementStrategyId;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].settlementStrategyId = settlementStrategyId;
@@ -588,7 +597,8 @@ async function extractPerpsMarkets(deployments) {
 
       events = value?.artifacts?.txns?.[artifactName]?.events?.FundingParametersSet;
       if (events && events.length === 1) {
-        const [perpsMarketId, skewScale, maxFundingVelocity] = events[0].args;
+        const [perpsMarketId_, skewScale, maxFundingVelocity] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].fundingParameters = {
             skewScale: bn(skewScale),
@@ -600,13 +610,14 @@ async function extractPerpsMarkets(deployments) {
       events = value?.artifacts?.txns?.[artifactName]?.events?.LiquidationParametersSet;
       if (events && events.length === 1) {
         const [
-          perpsMarketId,
+          perpsMarketId_,
           initialMarginRatioD18,
           minimumInitialMarginRatioD18,
           maintenanceMarginScalarD18,
           flagRewardRatioD18,
           minimumPositionMargin,
         ] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].liquidationParameters = {
             initialMarginRatioD18: bn(initialMarginRatioD18),
@@ -621,7 +632,8 @@ async function extractPerpsMarkets(deployments) {
       events = value?.artifacts?.txns?.[artifactName]?.events?.LockedOiRatioSet;
       if (events && events.length === 1) {
         log({ LockedOiRatioSet: events[0] });
-        const [perpsMarketId, lockedOiRatio] = events[0].args;
+        const [perpsMarketId_, lockedOiRatio] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].lockedOiRatio = bn(lockedOiRatio);
         }
@@ -631,12 +643,13 @@ async function extractPerpsMarkets(deployments) {
       if (events && events.length === 1) {
         log({ MaxLiquidationParametersSet: events[0] });
         const [
-          perpsMarketId,
+          perpsMarketId_,
           maxLiquidationLimitAccumulationMultiplier,
           maxSecondsInLiquidationWindow,
           maxLiquidationPd,
           endorsedLiquidator,
         ] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxLiquidationParameters = {
             maxLiquidationLimitAccumulationMultiplier: bn(
@@ -652,7 +665,8 @@ async function extractPerpsMarkets(deployments) {
       events = value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketSizeSet;
       if (events && events.length === 1) {
         log({ MaxMarketSizeSet: events[0] });
-        const [perpsMarketId, maxMarketSize] = events[0].args;
+        const [perpsMarketId_, maxMarketSize] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxMarketSize = bn(maxMarketSize);
         }
@@ -661,7 +675,8 @@ async function extractPerpsMarkets(deployments) {
       events = value?.artifacts?.txns?.[artifactName]?.events?.MaxMarketValueSet;
       if (events && events.length === 1) {
         log({ MaxMarketValueSet: events[0] });
-        const [perpsMarketId, maxMarketValue] = events[0].args;
+        const [perpsMarketId_, maxMarketValue] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxMarketValue = bn(maxMarketValue);
         }
@@ -670,7 +685,8 @@ async function extractPerpsMarkets(deployments) {
       events = value?.artifacts?.txns?.[artifactName]?.events?.OrderFeesSet;
       if (events && events.length === 1) {
         log({ OrderFeesSet: events[0] });
-        const [perpsMarketId, makerFee, takerFee] = events[0].args;
+        const [perpsMarketId_, makerFee, takerFee] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].orderFees = {
             makerFee: bn(makerFee),
@@ -682,7 +698,8 @@ async function extractPerpsMarkets(deployments) {
       events = value?.artifacts?.txns?.[artifactName]?.events?.MarketPriceDataUpdated;
       if (events && events.length === 1) {
         log({ MarketPriceDataUpdated: events[0] });
-        const [perpsMarketId, feedId, strictStalenessTolerance] = events[0].args;
+        const [perpsMarketId_, feedId, strictStalenessTolerance] = events[0].args;
+        const perpsMarketId = bn(perpsMarketId_);
         if (perpsMarketId in markets) {
           markets[perpsMarketId].marketPriceData = {
             feedId,
