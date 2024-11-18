@@ -53,20 +53,24 @@
     "cannon:alpha": "yarn up @usecannon/builder@alpha @usecannon/cli@alpha --exact && yarn dedupe"
   },
   "devDependencies": {
-    "@pythnetwork/pyth-evm-js": "^1.73.0",
+    "@pythnetwork/pyth-evm-js": "^1.76.0",
     "@usecannon/builder": "2.19.4",
     "@usecannon/cli": "2.19.4",
     "debug": "^4.3.7",
     "ethers": "^5.7.2",
-    "hardhat": "^2.22.14",
-    "mocha": "^10.7.3",
+    "hardhat": "^2.22.15",
+    "mocha": "^10.8.2",
     "numbro": "^2.5.0",
     "pako": "^2.1.0",
     "prettier": "^3.3.3",
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.21.34"
+    "viem": "^2.21.47"
+  },
+  "resolutions": {
+    "mocha": "^10",
+    "viem": "^2"
   },
   "mocha": {
     "timeout": "5m",
