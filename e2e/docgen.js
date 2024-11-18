@@ -15,17 +15,17 @@ const { prettyMd } = require('./docgen/lib/pretty');
 
 async function docgen() {
   const out = [];
-  out.push(await abi().catch(log));
-  out.push(await collateralConfigurations().catch(log));
-  out.push(await spotMarkets().catch(log));
-  out.push(await perpsMarkets().catch(log));
-  out.push(await rewardsDistributors().catch(log));
+  out.push(await abi());
+  out.push(await collateralConfigurations());
+  out.push(await spotMarkets());
+  out.push(await perpsMarkets());
+  out.push(await rewardsDistributors());
 
   out.push('# Owners');
   out.push('');
-  out.push(await contractsOwnership().catch(log));
-  out.push(await poolsOwnership().catch(log));
-  out.push(await marketsOwnership().catch(log));
+  out.push(await contractsOwnership());
+  out.push(await poolsOwnership());
+  out.push(await marketsOwnership());
   return out.join('\n');
 }
 

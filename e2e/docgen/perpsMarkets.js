@@ -4,14 +4,6 @@ const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
 
-function catcher(value = undefined) {
-  return (error) => {
-    log({ error: error });
-    console.error(error);
-    return value;
-  };
-}
-
 async function perpsMarkets() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
