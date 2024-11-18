@@ -1,7 +1,7 @@
 [var.perps_tia_market_settings]
 tia_perps_market_id = "2400"
 tia_perps_market_skew_scale = "<%= parseEther(String(4_000_000)) %>"
-tia_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+tia_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 tia_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 tia_perps_taker_fee_ratio = "<%= parseEther('0.0005') %>"
 tia_perps_max_market_size = "<%= parseEther(String(800_000)) %>"

@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "35"
+version = "39"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -77,6 +77,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-fxs.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-gala.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-gmx.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-goat.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-grt.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-icp.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-imx.toml",
@@ -97,6 +98,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pendle.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-people.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pepe.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pnut.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pol.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-popcat.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-pyth.toml",
@@ -128,6 +130,9 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-xrp.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-yfi.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-zro.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-moodeng.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-safe.toml",
+    #"tomls/omnibus-arbitrum-sepolia/oracles/pyth-cat.toml",
 
     # Spot Markets
     "tomls/omnibus-arbitrum-sepolia/spot/dai.toml",
@@ -182,6 +187,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/markets/fxs.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/gala.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/gmx.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/goat.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/grt.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/icp.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/imx.toml",
@@ -195,6 +201,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/markets/meme.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/mew.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/mkr.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/moodeng.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/near.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/not.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/op.toml",
@@ -202,11 +209,13 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/markets/pendle.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/people.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/pepe.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/pnut.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/pol.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/popcat.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/pyth.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/render.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/rune.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/safe.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/sats.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/sei.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/shib.toml",
@@ -228,6 +237,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/markets/xrp.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/yfi.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/zro.toml",
+    #"tomls/omnibus-arbitrum-sepolia/perps/markets/cat.toml",
 
     # Margin Collateral (Synths)
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
@@ -425,6 +435,8 @@ weeth_address = "<%= imports.weeth_mock_collateral.contracts.MintableToken.addre
 
 [var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
+#pyth_feed_id_cat = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018" #placeholder needs to be updated
+pyth_feed_id_goat = "0xf7731dc812590214d3eb4343bfb13d1b4cfa9b1d4e020644b5d5d8e07d60c66c"
 pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
 pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
 pyth_feed_id_algo = "0xfa17ceaf30d19ba51112fdcc750cc83454776f47fb0112e4af07f15f4bb1ebc0"
@@ -441,7 +453,7 @@ pyth_feed_id_blur = "0x856aac602516addee497edf6f50d39e8c95ae5fb0da1ed434a8c2ab9c
 pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1101c4f"
 pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c39052f7a"
 pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
-pyth_feed_id_btc = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"    # Note, this is the wBTC feed id not the pure BTC feed Id
+pyth_feed_id_btc = "0xc9d8b075a5c69303365ae23633d4e085199bf5c520a3b90fed1322a0342ffc33"     # Note, this is the wBTC feed id not the pure BTC feed Id
 pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
 pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
 pyth_feed_id_dai = "0xb0948a5e5313200c632b51bb5ca32f6de0d36e9950a942d19751e833f70dabfd"
@@ -474,6 +486,7 @@ pyth_feed_id_ltc = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874
 pyth_feed_id_meme = "0xcd2cee36951a571e035db0dfad138e6ecdb06b517cc3373cd7db5d3609b7927c"
 pyth_feed_id_mew = "0x514aed52ca5294177f20187ae883cec4a018619772ddce41efcc36a6448f5d5d"
 pyth_feed_id_mkr = "0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378"
+pyth_feed_id_moodeng = "0xffff73128917a90950cd0473fd2551d7cd274fd5a6cc45641881bbcc6ee73417"
 pyth_feed_id_near = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
 pyth_feed_id_not = "0x75ec6f04d4bded6afdc1440689be4402dd1e23d2ff2c21e081871eb2739ceb36"
 pyth_feed_id_op = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
@@ -481,11 +494,13 @@ pyth_feed_id_ordi = "0x193c739db502aadcef37c2589738b1e37bdb257d58cf1ab3c7ebc8e6d
 pyth_feed_id_pendle = "0x9a4df90b25497f66b1afb012467e316e801ca3d839456db028892fe8c70c8016"
 pyth_feed_id_people = "0xb7fe919d83815ca6074c82a3286b1cd6ffb7d3136e323cd2b1ef706cfc7e5945"
 pyth_feed_id_pepe = "0xd69731a2e74ac1ce884fc3890f7ee324b6deb66147055249568869ed700882e4"
+pyth_feed_id_pnut = "0x116da895807f81f6b5c5f01b109376e7f6834dc8b51365ab7cdfa66634340e54"
 pyth_feed_id_pol = "0xffd11c5a1cfd42f80afb2df4d9f264c15f956d68153335374ec10722edd70472"
 pyth_feed_id_popcat = "0xb9312a7ee50e189ef045aa3c7842e099b061bd9bdc99ac645956c3b660dc8cce"
 pyth_feed_id_pyth = "0x0bbf28e9a841a1cc788f6a361b17ca072d0ea3098a1e5df1c3922d06719579ff"
 pyth_feed_id_render = "0x3d4a2bd9535be6ce8059d75eadeba507b043257321aa544717c56fa19b49e35d"
 pyth_feed_id_rune = "0x5fcf71143bb70d41af4fa9aa1287e2efd3c5911cee59f909f915c9f61baacb1e"
+pyth_feed_id_safe = "0x7b3576858506a94fad3a9cc55e32934f0c3931150fe3a3c7b83558dbae5b8e38"
 pyth_feed_id_sats = "0x40440d18fb5ad809e2825ce7dfc035cfa57135c13062a04addafe0c7f54425e0"
 pyth_feed_id_sei = "0x53614f1cb0c031d4af66c04cb9c756234adad0e1cee85303795091499a4084eb"
 pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"

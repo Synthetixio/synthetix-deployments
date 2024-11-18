@@ -1,0 +1,31 @@
+[var.cbbtc_synth_config]
+cbbtc_issuance_ratio = "<%= parseEther('10') %>"
+cbbtc_liquidation_ratio = "<%= parseEther('1.5') %>"
+cbbtc_liquidation_reward = "<%= parseEther('0.0001') %>"
+cbbtc_min_delegation = "<%= parseEther('0.1') %>"
+cbbtc_max_collateral_limit = "<%= parseEther('100') %>"
+
+[invoke.CoreProxy_configureCollateral_cbbtc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_cbbtc.args]]
+tokenAddress = "<%= settings.cbbtc_address %>"
+oracleNodeId = "<%= extras.cbbtc_oracle_id %>"
+issuanceRatioD18 = "<%= settings.cbbtc_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.cbbtc_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.cbbtc_liquidation_reward %>"
+minDelegationD18 = "<%= settings.cbbtc_min_delegation %>"
+depositingEnabled = false
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_cbbtc]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.spartan_council_pool_id_setting %>",
+    "<%= settings.cbbtc_address %>",
+    { collateralLimitD18 = "<%= settings.cbbtc_max_collateral_limit %>", issuanceRatioD18 = 0 },
+]

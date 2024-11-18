@@ -30,7 +30,7 @@ defaultValue = "snaxtest"
 defaultValue = "synthetix:3.8.0"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.0"
+defaultValue = "oracle-manager:3.8.1"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"

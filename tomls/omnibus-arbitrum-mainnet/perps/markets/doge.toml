@@ -1,7 +1,7 @@
 [var.perps_doge_market_settings]
 doge_perps_market_id = "700"
 doge_perps_market_skew_scale = "<%= parseEther(String(789_000_000)) %>"
-doge_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+doge_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 doge_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 doge_perps_taker_fee_ratio = "<%= parseEther('0.0005') %>"
 doge_perps_max_market_size = "<%= parseEther(String(51_000_000)) %>"
