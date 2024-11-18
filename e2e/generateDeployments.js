@@ -13,6 +13,8 @@ const fgCyan = '\x1b[36m';
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
+const bn = (num) => ethers.BigNumber.from(num).toString();
+
 const [cannonState] = process.argv.slice(2);
 if (!cannonState) {
   console.error(`${fgRed}ERROR: Expected 1 argument${fgReset}`);
@@ -271,7 +273,7 @@ async function extractSynths(deployments) {
         // can only have one SynthRegistered event
         log({ SynthRegistered: events[0] });
         let [synthMarketId, address] = events[0].args;
-        const id = ethers.BigNumber.from(synthMarketId).toString();
+        const id = bn(synthMarketId);
         spotMarkets[id] = { id };
         synthTokens[id] = { synthMarketId: id };
 
@@ -319,11 +321,11 @@ async function extractSynths(deployments) {
           const feeCollector = await SpotMarketProxy.getFeeCollector(id);
           const marketUtilizationFees = await SpotMarketProxy.getMarketUtilizationFees(id);
           spotMarkets[id].fees = {
-            atomicFixedFee: ethers.BigNumber.from(atomicFixedFee).toString(),
-            asyncFixedFee: ethers.BigNumber.from(asyncFixedFee).toString(),
-            wrapFee: ethers.BigNumber.from(wrapFee).toString(),
-            unwrapFee: ethers.BigNumber.from(unwrapFee).toString(),
-            marketUtilizationFees: ethers.BigNumber.from(marketUtilizationFees).toString(),
+            atomicFixedFee: bn(atomicFixedFee),
+            asyncFixedFee: bn(asyncFixedFee),
+            wrapFee: bn(wrapFee),
+            unwrapFee: bn(unwrapFee),
+            marketUtilizationFees: bn(marketUtilizationFees),
             feeCollector,
           };
         }
@@ -477,10 +479,6 @@ async function extractCollaterals(deployments) {
             tokenAddress,
             minDelegationD18,
           ] = params;
-          issuanceRatioD18 = ethers.BigNumber.from(issuanceRatioD18).toString();
-          liquidationRatioD18 = ethers.BigNumber.from(liquidationRatioD18).toString();
-          liquidationRewardD18 = ethers.BigNumber.from(liquidationRewardD18).toString();
-          minDelegationD18 = ethers.BigNumber.from(minDelegationD18).toString();
         } else {
           ({
             depositingEnabled,
@@ -510,12 +508,12 @@ async function extractCollaterals(deployments) {
         items.push({
           ...token,
           depositingEnabled,
-          issuanceRatioD18,
-          liquidationRatioD18,
-          liquidationRewardD18,
           oracleNodeId,
           tokenAddress,
-          minDelegationD18,
+          issuanceRatioD18: bn(issuanceRatioD18),
+          liquidationRatioD18: bn(liquidationRatioD18),
+          liquidationRewardD18: bn(liquidationRewardD18),
+          minDelegationD18: bn(minDelegationD18),
         });
       }
     }
@@ -592,7 +590,10 @@ async function extractPerpsMarkets(deployments) {
       if (events && events.length === 1) {
         const [perpsMarketId, skewScale, maxFundingVelocity] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].fundingParameters = { skewScale, maxFundingVelocity };
+          markets[perpsMarketId].fundingParameters = {
+            skewScale: bn(skewScale),
+            maxFundingVelocity: bn(maxFundingVelocity),
+          };
         }
       }
 
@@ -608,11 +609,11 @@ async function extractPerpsMarkets(deployments) {
         ] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].liquidationParameters = {
-            initialMarginRatioD18,
-            minimumInitialMarginRatioD18,
-            maintenanceMarginScalarD18,
-            flagRewardRatioD18,
-            minimumPositionMargin,
+            initialMarginRatioD18: bn(initialMarginRatioD18),
+            minimumInitialMarginRatioD18: bn(minimumInitialMarginRatioD18),
+            maintenanceMarginScalarD18: bn(maintenanceMarginScalarD18),
+            flagRewardRatioD18: bn(flagRewardRatioD18),
+            minimumPositionMargin: bn(minimumPositionMargin),
           };
         }
       }
@@ -622,7 +623,7 @@ async function extractPerpsMarkets(deployments) {
         log({ LockedOiRatioSet: events[0] });
         const [perpsMarketId, lockedOiRatio] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].lockedOiRatio = lockedOiRatio;
+          markets[perpsMarketId].lockedOiRatio = bn(lockedOiRatio);
         }
       }
 
@@ -638,9 +639,11 @@ async function extractPerpsMarkets(deployments) {
         ] = events[0].args;
         if (perpsMarketId in markets) {
           markets[perpsMarketId].maxLiquidationParameters = {
-            maxLiquidationLimitAccumulationMultiplier,
-            maxSecondsInLiquidationWindow,
-            maxLiquidationPd,
+            maxLiquidationLimitAccumulationMultiplier: bn(
+              maxLiquidationLimitAccumulationMultiplier
+            ),
+            maxSecondsInLiquidationWindow: bn(maxSecondsInLiquidationWindow),
+            maxLiquidationPd: bn(maxLiquidationPd),
             endorsedLiquidator,
           };
         }
@@ -651,7 +654,7 @@ async function extractPerpsMarkets(deployments) {
         log({ MaxMarketSizeSet: events[0] });
         const [perpsMarketId, maxMarketSize] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].maxMarketSize = maxMarketSize;
+          markets[perpsMarketId].maxMarketSize = bn(maxMarketSize);
         }
       }
 
@@ -660,7 +663,7 @@ async function extractPerpsMarkets(deployments) {
         log({ MaxMarketValueSet: events[0] });
         const [perpsMarketId, maxMarketValue] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].maxMarketValue = maxMarketValue;
+          markets[perpsMarketId].maxMarketValue = bn(maxMarketValue);
         }
       }
 
@@ -669,7 +672,10 @@ async function extractPerpsMarkets(deployments) {
         log({ OrderFeesSet: events[0] });
         const [perpsMarketId, makerFee, takerFee] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].orderFees = { makerFee, takerFee };
+          markets[perpsMarketId].orderFees = {
+            makerFee: bn(makerFee),
+            takerFee: bn(takerFee),
+          };
         }
       }
 
@@ -678,7 +684,10 @@ async function extractPerpsMarkets(deployments) {
         log({ MarketPriceDataUpdated: events[0] });
         const [perpsMarketId, feedId, strictStalenessTolerance] = events[0].args;
         if (perpsMarketId in markets) {
-          markets[perpsMarketId].marketPriceData = { feedId, strictStalenessTolerance };
+          markets[perpsMarketId].marketPriceData = {
+            feedId,
+            strictStalenessTolerance: bn(strictStalenessTolerance),
+          };
         }
       }
 
@@ -692,10 +701,10 @@ async function extractPerpsMarkets(deployments) {
           maxKeeperScalingRatioD18,
         ] = events[0].args;
         meta.keeperRewardGuards = {
-          minKeeperRewardUsd,
-          minKeeperProfitRatioD18,
-          maxKeeperRewardUsd,
-          maxKeeperScalingRatioD18,
+          minKeeperRewardUsd: bn(minKeeperRewardUsd),
+          minKeeperProfitRatioD18: bn(minKeeperProfitRatioD18),
+          maxKeeperRewardUsd: bn(maxKeeperRewardUsd),
+          maxKeeperScalingRatioD18: bn(maxKeeperScalingRatioD18),
         };
       }
 
@@ -708,9 +717,9 @@ async function extractPerpsMarkets(deployments) {
           highUtilizationInterestRateGradient,
         ] = events[0].args;
         meta.interestRateParameters = {
-          lowUtilizationInterestRateGradient,
-          interestRateGradientBreakpoint,
-          highUtilizationInterestRateGradient,
+          lowUtilizationInterestRateGradient: bn(lowUtilizationInterestRateGradient),
+          interestRateGradientBreakpoint: bn(interestRateGradientBreakpoint),
+          highUtilizationInterestRateGradient: bn(highUtilizationInterestRateGradient),
         };
       }
     }
