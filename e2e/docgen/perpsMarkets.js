@@ -1,15 +1,10 @@
-const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
+const { readableBigWei, readableNumber, rawValue } = require('./lib/numbers');
 
 async function perpsMarkets() {
-  const provider = new ethers.providers.JsonRpcProvider(
-    process.env.RPC_URL || 'http://127.0.0.1:8545'
-  );
-  const network = await provider.getNetwork();
-  const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
+  const { name, version, preset, chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
   const out = [];
@@ -17,9 +12,7 @@ async function perpsMarkets() {
 
   const perpsMarkets = require('../deployments/perpsMarkets.json');
 
-  const marketIds = Object.keys(perpsMarkets.markets)
-    .map((marketId) => Number(marketId))
-    .sort();
+  const marketIds = Object.keys(perpsMarkets.markets);
   log({ marketIds });
 
   out.push(`# Perps Markets`);
@@ -39,22 +32,22 @@ async function perpsMarkets() {
   table.push(`
     <tr>
       <td>lowUtilizationInterestRateGradient</td>
-      <td>${readableBigWei(perpsMarkets.interestRateParameters.lowUtilizationInterestRateGradient)}</td>
-      <td>${rawValue(perpsMarkets.interestRateParameters.lowUtilizationInterestRateGradient)}</td>
+      <td>${readableBigWei(perpsMarkets.interestRateParameters?.lowUtilizationInterestRateGradient)}</td>
+      <td>${rawValue(perpsMarkets.interestRateParameters?.lowUtilizationInterestRateGradient)}</td>
     </tr>
   `);
   table.push(`
     <tr>
       <td>interestRateGradientBreakpoint</td>
-      <td>${readableBigWei(perpsMarkets.interestRateParameters.interestRateGradientBreakpoint)}</td>
-      <td>${rawValue(perpsMarkets.interestRateParameters.interestRateGradientBreakpoint)}</td>
+      <td>${readableBigWei(perpsMarkets.interestRateParameters?.interestRateGradientBreakpoint)}</td>
+      <td>${rawValue(perpsMarkets.interestRateParameters?.interestRateGradientBreakpoint)}</td>
     </tr>
   `);
   table.push(`
     <tr>
       <td>highUtilizationInterestRateGradient</td>
-      <td>${readableBigWei(perpsMarkets.interestRateParameters.highUtilizationInterestRateGradient)}</td>
-      <td>${rawValue(perpsMarkets.interestRateParameters.highUtilizationInterestRateGradient)}</td>
+      <td>${readableBigWei(perpsMarkets.interestRateParameters?.highUtilizationInterestRateGradient)}</td>
+      <td>${rawValue(perpsMarkets.interestRateParameters?.highUtilizationInterestRateGradient)}</td>
     </tr>
   `);
   table.push(`
@@ -77,29 +70,29 @@ async function perpsMarkets() {
   table.push(`
     <tr>
       <td>minKeeperRewardUsd</td>
-      <td>${readableBigWei(perpsMarkets.keeperRewardGuards.minKeeperRewardUsd)}</td>
-      <td>${rawValue(perpsMarkets.keeperRewardGuards.minKeeperRewardUsd)}</td>
+      <td>${readableBigWei(perpsMarkets.keeperRewardGuards?.minKeeperRewardUsd)}</td>
+      <td>${rawValue(perpsMarkets.keeperRewardGuards?.minKeeperRewardUsd)}</td>
     </tr>
   `);
   table.push(`
     <tr>
       <td>minKeeperProfitRatioD18</td>
-      <td>${readableBigWei(perpsMarkets.keeperRewardGuards.minKeeperProfitRatioD18)}</td>
-      <td>${rawValue(perpsMarkets.keeperRewardGuards.minKeeperProfitRatioD18)}</td>
+      <td>${readableBigWei(perpsMarkets.keeperRewardGuards?.minKeeperProfitRatioD18)}</td>
+      <td>${rawValue(perpsMarkets.keeperRewardGuards?.minKeeperProfitRatioD18)}</td>
     </tr>
   `);
   table.push(`
     <tr>
       <td>maxKeeperRewardUsd</td>
-      <td>${readableBigWei(perpsMarkets.keeperRewardGuards.maxKeeperRewardUsd)}</td>
-      <td>${rawValue(perpsMarkets.keeperRewardGuards.maxKeeperRewardUsd)}</td>
+      <td>${readableBigWei(perpsMarkets.keeperRewardGuards?.maxKeeperRewardUsd)}</td>
+      <td>${rawValue(perpsMarkets.keeperRewardGuards?.maxKeeperRewardUsd)}</td>
     </tr>
   `);
   table.push(`
     <tr>
       <td>maxKeeperScalingRatioD18</td>
-      <td>${readableBigWei(perpsMarkets.keeperRewardGuards.maxKeeperScalingRatioD18)}</td>
-      <td>${rawValue(perpsMarkets.keeperRewardGuards.maxKeeperScalingRatioD18)}</td>
+      <td>${readableBigWei(perpsMarkets.keeperRewardGuards?.maxKeeperScalingRatioD18)}</td>
+      <td>${rawValue(perpsMarkets.keeperRewardGuards?.maxKeeperScalingRatioD18)}</td>
     </tr>
   `);
   table.push(`
@@ -171,15 +164,15 @@ async function perpsMarkets() {
     table.push(`
       <tr>
         <td>skewScale</td>
-        <td>${readableBigWei(market.fundingParameters.skewScale)}</td>
-        <td>${rawValue(market.fundingParameters.skewScale)}</td>
+        <td>${readableBigWei(market.fundingParameters?.skewScale)}</td>
+        <td>${rawValue(market.fundingParameters?.skewScale)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxFundingVelocity</td>
-        <td>${readableBigWei(market.fundingParameters.maxFundingVelocity)}</td>
-        <td>${rawValue(market.fundingParameters.maxFundingVelocity)}</td>
+        <td>${readableBigWei(market.fundingParameters?.maxFundingVelocity)}</td>
+        <td>${rawValue(market.fundingParameters?.maxFundingVelocity)}</td>
       </tr>
     `);
     table.push(`
@@ -202,15 +195,15 @@ async function perpsMarkets() {
     table.push(`
       <tr>
         <td>makerFee</td>
-        <td>${readableBigWei(market.orderFees.makerFee)}</td>
-        <td>${rawValue(market.orderFees.makerFee)}</td>
+        <td>${readableBigWei(market.orderFees?.makerFee)}</td>
+        <td>${rawValue(market.orderFees?.makerFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>takerFee</td>
-        <td>${readableBigWei(market.orderFees.takerFee)}</td>
-        <td>${rawValue(market.orderFees.takerFee)}</td>
+        <td>${readableBigWei(market.orderFees?.takerFee)}</td>
+        <td>${rawValue(market.orderFees?.takerFee)}</td>
       </tr>
     `);
     table.push(`
@@ -233,64 +226,64 @@ async function perpsMarkets() {
     table.push(`
       <tr>
         <td>initialMarginRatioD18</td>
-        <td>${readableBigWei(market.liquidationParameters.initialMarginRatioD18)}</td>
-        <td>${rawValue(market.liquidationParameters.initialMarginRatioD18)}</td>
+        <td>${readableBigWei(market.liquidationParameters?.initialMarginRatioD18)}</td>
+        <td>${rawValue(market.liquidationParameters?.initialMarginRatioD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>minimumInitialMarginRatioD18</td>
-        <td>${readableBigWei(market.liquidationParameters.minimumInitialMarginRatioD18)}</td>
-        <td>${rawValue(market.liquidationParameters.minimumInitialMarginRatioD18)}</td>
+        <td>${readableBigWei(market.liquidationParameters?.minimumInitialMarginRatioD18)}</td>
+        <td>${rawValue(market.liquidationParameters?.minimumInitialMarginRatioD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maintenanceMarginScalarD18</td>
-        <td>${readableBigWei(market.liquidationParameters.maintenanceMarginScalarD18)}</td>
-        <td>${rawValue(market.liquidationParameters.maintenanceMarginScalarD18)}</td>
+        <td>${readableBigWei(market.liquidationParameters?.maintenanceMarginScalarD18)}</td>
+        <td>${rawValue(market.liquidationParameters?.maintenanceMarginScalarD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>flagRewardRatioD18</td>
-        <td>${readableBigWei(market.liquidationParameters.flagRewardRatioD18)}</td>
-        <td>${rawValue(market.liquidationParameters.flagRewardRatioD18)}</td>
+        <td>${readableBigWei(market.liquidationParameters?.flagRewardRatioD18)}</td>
+        <td>${rawValue(market.liquidationParameters?.flagRewardRatioD18)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>minimumPositionMargin</td>
-        <td>${readableBigWei(market.liquidationParameters.minimumPositionMargin)}</td>
-        <td>${rawValue(market.liquidationParameters.minimumPositionMargin)}</td>
+        <td>${readableBigWei(market.liquidationParameters?.minimumPositionMargin)}</td>
+        <td>${rawValue(market.liquidationParameters?.minimumPositionMargin)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxLiquidationLimitAccumulationMultiplier</td>
-        <td>${readableBigWei(market.maxLiquidationParameters.maxLiquidationLimitAccumulationMultiplier)}</td>
-        <td>${rawValue(market.maxLiquidationParameters.maxLiquidationLimitAccumulationMultiplier)}</td>
+        <td>${readableBigWei(market.maxLiquidationParameters?.maxLiquidationLimitAccumulationMultiplier)}</td>
+        <td>${rawValue(market.maxLiquidationParameters?.maxLiquidationLimitAccumulationMultiplier)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxLiquidationPd</td>
-        <td>${readableBigWei(market.maxLiquidationParameters.maxLiquidationPd)}</td>
-        <td>${rawValue(market.maxLiquidationParameters.maxLiquidationPd)}</td>
+        <td>${readableBigWei(market.maxLiquidationParameters?.maxLiquidationPd)}</td>
+        <td>${rawValue(market.maxLiquidationParameters?.maxLiquidationPd)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxSecondsInLiquidationWindow</td>
-        <td>${market.maxLiquidationParameters.maxSecondsInLiquidationWindow}</td>
-        <td>${rawValue(market.maxLiquidationParameters.maxSecondsInLiquidationWindow)}</td>
+        <td>${market.maxLiquidationParameters?.maxSecondsInLiquidationWindow}</td>
+        <td>${rawValue(market.maxLiquidationParameters?.maxSecondsInLiquidationWindow)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>endorsedLiquidator</td>
         <td></td>
-        <td>${addrHtmlLink(chainId, market.maxLiquidationParameters.endorsedLiquidator)}</td>
+        <td>${addrHtmlLink(chainId, market.maxLiquidationParameters?.endorsedLiquidator)}</td>
       </tr>
     `);
     table.push(`

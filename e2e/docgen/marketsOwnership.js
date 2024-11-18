@@ -2,17 +2,16 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { extractSynthMarkets } = require('./lib/extractSynthMarkets');
 
 async function marketsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
-  const network = await provider.getNetwork();
-  const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
+  const { name, version, preset, chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
-  const synthMarketIds = Object.values(await extractSynthMarkets());
+  const spotMarkets = require('../deployments/spotMarkets.json');
+  const synthMarketIds = Object.keys(spotMarkets.markets);
   log({ synthMarketIds });
   if (Object.values(synthMarketIds).length < 1) {
     return '';

@@ -1,26 +1,17 @@
-const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
-const { extractSynthMarkets } = require('./lib/extractSynthMarkets');
-const { extractSettlementStrategies } = require('./lib/extractSettlementStrategies');
+const { readableBigWei, readableNumber, rawValue } = require('./lib/numbers');
 
 async function spotMarkets() {
-  const provider = new ethers.providers.JsonRpcProvider(
-    process.env.RPC_URL || 'http://127.0.0.1:8545'
-  );
-  const network = await provider.getNetwork();
-  const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
+  const { name, version, preset, chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
   const out = [];
   const table = [];
 
   const spotMarkets = require('../deployments/spotMarkets.json');
-  const marketIds = Object.keys(spotMarkets.markets)
-    .map((marketId) => Number(marketId))
-    .sort();
+  const marketIds = Object.keys(spotMarkets.markets);
   log({ marketIds });
 
   out.push(`# Spot Markets`);
@@ -52,28 +43,28 @@ async function spotMarkets() {
     table.push(`
       <tr>
         <td>maxWrappableAmount</td>
-        <td>${readableWei(market.maxWrappableAmount)}</td>
+        <td>${readableBigWei(market.maxWrappableAmount)}</td>
         <td>${rawValue(market.maxWrappableAmount)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>atomicFixedFee</td>
-        <td>${readableWei(market.atomicFixedFee)}</td>
+        <td>${readableBigWei(market.atomicFixedFee)}</td>
         <td>${rawValue(market.atomicFixedFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>skewScale</td>
-        <td>${readableWei(market.skewScale)}</td>
+        <td>${readableBigWei(market.skewScale)}</td>
         <td>${rawValue(market.skewScale)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>collateralLeverage</td>
-        <td>${readableWei(market.collateralLeverage)}</td>
+        <td>${readableBigWei(market.collateralLeverage)}</td>
         <td>${rawValue(market.collateralLeverage)}</td>
       </tr>
     `);
@@ -143,28 +134,28 @@ async function spotMarkets() {
       <tr>
         <td>symbol</td>
         <td></td>
-        <td>${rawValue(market.token.symbol)}</td>
+        <td>${rawValue(market.token?.symbol)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>name</td>
         <td></td>
-        <td>${rawValue(market.token.name)}</td>
+        <td>${rawValue(market.token?.name)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>address</td>
         <td></td>
-        <td>${addrHtmlLink(chainId, market.token.address)}</td>
+        <td>${market.token?.address ? addrHtmlLink(chainId, market.token?.address) : rawValue(market.token?.address)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>decimals</td>
-        <td>${market.token.decimals}</td>
-        <td>${rawValue(market.token.decimals)}</td>
+        <td>${market.token?.decimals}</td>
+        <td>${rawValue(market.token?.decimals)}</td>
       </tr>
     `);
     table.push(`
@@ -188,21 +179,21 @@ async function spotMarkets() {
       <tr>
         <td>buyFeedId</td>
         <td></td>
-        <td>${rawValue(market.synthPriceData.buyFeedId)}</td>
+        <td>${rawValue(market.synthPriceData?.buyFeedId)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>sellFeedId</td>
         <td></td>
-        <td>${rawValue(market.synthPriceData.sellFeedId)}</td>
+        <td>${rawValue(market.synthPriceData?.sellFeedId)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>strictStalenessTolerance</td>
-        <td>${market.synthPriceData.strictStalenessTolerance}</td>
-        <td>${rawValue(market.synthPriceData.strictStalenessTolerance)}</td>
+        <td>${market.synthPriceData?.strictStalenessTolerance}</td>
+        <td>${rawValue(market.synthPriceData?.strictStalenessTolerance)}</td>
       </tr>
     `);
     table.push(`
@@ -225,35 +216,35 @@ async function spotMarkets() {
     table.push(`
       <tr>
         <td>atomicFixedFee</td>
-        <td>${readableWei(market.fees.atomicFixedFee)}</td>
+        <td>${readableBigWei(market.fees.atomicFixedFee)}</td>
         <td>${rawValue(market.fees.atomicFixedFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>asyncFixedFee</td>
-        <td>${readableWei(market.fees.asyncFixedFee)}</td>
+        <td>${readableBigWei(market.fees.asyncFixedFee)}</td>
         <td>${rawValue(market.fees.asyncFixedFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>wrapFee</td>
-        <td>${readableWei(market.fees.wrapFee)}</td>
+        <td>${readableBigWei(market.fees.wrapFee)}</td>
         <td>${rawValue(market.fees.wrapFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>unwrapFee</td>
-        <td>${readableWei(market.fees.unwrapFee)}</td>
+        <td>${readableBigWei(market.fees.unwrapFee)}</td>
         <td>${rawValue(market.fees.unwrapFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>marketUtilizationFees</td>
-        <td>${readableWei(market.fees.marketUtilizationFees)}</td>
+        <td>${readableBigWei(market.fees.marketUtilizationFees)}</td>
         <td>${rawValue(market.fees.marketUtilizationFees)}</td>
       </tr>
     `);
@@ -295,79 +286,79 @@ async function spotMarkets() {
           [
             'ONCHAIN', // 0
             'PYTH', // 1
-          ][market.settlementStrategy.strategyType] || 'Unknown'
+          ][market.settlementStrategy?.strategyType] || 'Unknown'
         }</td>
-        <td>${rawValue(market.settlementStrategy.strategyType)}</td>
+        <td>${rawValue(market.settlementStrategy?.strategyType)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementDelay</td>
-        <td>${readableNumber(market.settlementStrategy.settlementDelay)}</td>
-        <td>${rawValue(market.settlementStrategy.settlementDelay)}</td>
+        <td>${readableNumber(market.settlementStrategy?.settlementDelay)}</td>
+        <td>${rawValue(market.settlementStrategy?.settlementDelay)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementWindowDuration</td>
-        <td>${readableNumber(market.settlementStrategy.settlementWindowDuration)}</td>
-        <td>${rawValue(market.settlementStrategy.settlementWindowDuration)}</td>
+        <td>${readableNumber(market.settlementStrategy?.settlementWindowDuration)}</td>
+        <td>${rawValue(market.settlementStrategy?.settlementWindowDuration)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>priceVerificationContract</td>
         <td></td>
-        <td>${addrHtmlLink(chainId, market.settlementStrategy.priceVerificationContract)}</td>
+        <td>${addrHtmlLink(chainId, market.settlementStrategy?.priceVerificationContract)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>feedId</td>
         <td></td>
-        <td>${rawValue(market.settlementStrategy.feedId)}</td>
+        <td>${rawValue(market.settlementStrategy?.feedId)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>url</td>
         <td></td>
-        <td>${rawValue(market.settlementStrategy.url)}</td>
+        <td>${rawValue(market.settlementStrategy?.url)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>settlementReward</td>
-        <td>${readableWei(market.settlementStrategy.settlementReward)}</td>
-        <td>${rawValue(market.settlementStrategy.settlementReward)}</td>
+        <td>${readableBigWei(market.settlementStrategy?.settlementReward)}</td>
+        <td>${rawValue(market.settlementStrategy?.settlementReward)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>priceDeviationTolerance</td>
-        <td>${readableWei(market.settlementStrategy.priceDeviationTolerance)}</td>
-        <td>${rawValue(market.settlementStrategy.priceDeviationTolerance)}</td>
+        <td>${readableBigWei(market.settlementStrategy?.priceDeviationTolerance)}</td>
+        <td>${rawValue(market.settlementStrategy?.priceDeviationTolerance)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>minimumUsdExchangeAmount</td>
-        <td>${readableWei(market.settlementStrategy.minimumUsdExchangeAmount)}</td>
-        <td>${rawValue(market.settlementStrategy.minimumUsdExchangeAmount)}</td>
+        <td>${readableBigWei(market.settlementStrategy?.minimumUsdExchangeAmount)}</td>
+        <td>${rawValue(market.settlementStrategy?.minimumUsdExchangeAmount)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxRoundingLoss</td>
-        <td>${readableWei(market.settlementStrategy.maxRoundingLoss)}</td>
-        <td>${rawValue(market.settlementStrategy.maxRoundingLoss)}</td>
+        <td>${readableBigWei(market.settlementStrategy?.maxRoundingLoss)}</td>
+        <td>${rawValue(market.settlementStrategy?.maxRoundingLoss)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>disabled</td>
-        <td>${market.settlementStrategy.disabled === true ? '🚫 Disabled' : market.settlementStrategy.disabled === false ? '✅ Enabled' : 'n/a'}</td>
-        <td>${rawValue(market.settlementStrategy.disabled)}</td>
+        <td>${market.settlementStrategy?.disabled === true ? '🚫 Disabled' : market.settlementStrategy?.disabled === false ? '✅ Enabled' : 'n/a'}</td>
+        <td>${rawValue(market.settlementStrategy?.disabled)}</td>
       </tr>
     `);
     table.push(`
