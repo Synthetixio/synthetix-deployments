@@ -23,12 +23,22 @@ if (!cannonState) {
   process.exit(1);
 }
 
-function readableAbi(abi) {
-  return new ethers.utils.Interface(abi).format(ethers.utils.FormatTypes.full);
-}
-
-function jsonAbi(abi) {
-  return JSON.parse(new ethers.utils.Interface(abi).format(ethers.utils.FormatTypes.json));
+function dedupedAbi(abi) {
+  const deduped = new Set();
+  const readableAbi = [];
+  const jsonAbi = [];
+  abi.forEach((line) => {
+    const fragment = ethers.utils.Fragment.from(line);
+    if (fragment) {
+      const minimal = fragment.format(ethers.utils.FormatTypes.minimal);
+      if (!deduped.has(minimal)) {
+        readableAbi.push(fragment.format(ethers.utils.FormatTypes.full));
+        jsonAbi.push(JSON.parse(fragment.format(ethers.utils.FormatTypes.json)));
+        deduped.add(minimal);
+      }
+    }
+  });
+  return { readableAbi, jsonAbi };
 }
 
 async function fetchTokenInfo(address) {
@@ -720,7 +730,7 @@ async function run() {
       deployments,
       (key, value) => {
         if (key === 'abi' && Array.isArray(value)) {
-          return readableAbi(value);
+          return dedupedAbi(value).readableAbi;
         }
         if (key === 'depends' && Array.isArray(value)) {
           return Array.from(new Set(value)).sort();
@@ -901,21 +911,22 @@ async function run() {
   await fs.writeFile(`${__dirname}/deployments/extras.json`, JSON.stringify(extras, null, 2));
 
   for (const [name, { address, abi }] of Object.entries(contracts)) {
-    const dedupedAbi = Array.from(new Set(readableAbi(abi)));
+    const { readableAbi, jsonAbi } = dedupedAbi(abi);
+
     log('Writing', `deployments/${name}.json`, { address });
     await fs.writeFile(
       `${__dirname}/deployments/${name}.json`,
-      JSON.stringify({ address, abi: dedupedAbi }, null, 2)
+      JSON.stringify({ address, abi: readableAbi }, null, 2)
     );
     log('Writing', `deployments/abi/${name}.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.json`,
-      JSON.stringify(jsonAbi(dedupedAbi), null, 2)
+      JSON.stringify(jsonAbi, null, 2)
     );
     log('Writing', `deployments/abi/${name}.readable.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.readable.json`,
-      JSON.stringify(dedupedAbi, null, 2)
+      JSON.stringify(readableAbi, null, 2)
     );
   }
 }
