@@ -68,6 +68,10 @@
     "supports-color": "^8.1.1",
     "viem": "^2.21.45"
   },
+  "resolutions": {
+    "mocha": "^10",
+    "viem": "^2"
+  },
   "mocha": {
     "timeout": "5m",
     "recursive": true,
