@@ -6,7 +6,7 @@ const { contractsOwnership } = require('./docgen/contractsOwnership');
 const { poolsOwnership } = require('./docgen/poolsOwnership');
 const { marketsOwnership } = require('./docgen/marketsOwnership');
 const { collateralConfigurations } = require('./docgen/collateralConfigurations');
-const { synthMarkets } = require('./docgen/synthMarkets');
+const { spotMarkets } = require('./docgen/spotMarkets');
 const { perpsMarkets } = require('./docgen/perpsMarkets');
 const { rewardsDistributors } = require('./docgen/rewardsDistributors');
 const { abi } = require('./docgen/abi');
@@ -15,17 +15,17 @@ const { prettyMd } = require('./docgen/lib/pretty');
 
 async function docgen() {
   const out = [];
-  out.push(await abi().catch(log));
-  out.push(await collateralConfigurations().catch(log));
-  out.push(await synthMarkets().catch(log));
-  out.push(await perpsMarkets().catch(log));
-  out.push(await rewardsDistributors().catch(log));
+  out.push(await abi());
+  out.push(await collateralConfigurations());
+  out.push(await spotMarkets());
+  out.push(await perpsMarkets());
+  out.push(await rewardsDistributors());
 
   out.push('# Owners');
   out.push('');
-  out.push(await contractsOwnership().catch(log));
-  out.push(await poolsOwnership().catch(log));
-  out.push(await marketsOwnership().catch(log));
+  out.push(await contractsOwnership());
+  out.push(await poolsOwnership());
+  out.push(await marketsOwnership());
   return out.join('\n');
 }
 

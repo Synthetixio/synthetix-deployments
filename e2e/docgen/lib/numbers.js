@@ -1,8 +1,19 @@
 const { ethers } = require('ethers');
 const numbro = require('numbro');
 
-function rawValue(value) {
-  if (value instanceof ethers.BigNumber) {
+function rawValue(rawValue) {
+  if (
+    typeof rawValue === 'undefined' ||
+    rawValue === null ||
+    ethers.utils.isAddress(rawValue) ||
+    ethers.utils.isHexString(rawValue) ||
+    ethers.utils.isBytesLike(rawValue) ||
+    ethers.utils.isBytes(rawValue)
+  ) {
+    return `<code>${JSON.stringify(rawValue)}</code>`;
+  }
+  try {
+    const value = ethers.BigNumber.from(rawValue);
     if (ethers.constants.MaxUint256.eq(value)) {
       return `<code>MaxUint256</code> / <code>${value.toHexString()}</code>`;
     }
@@ -10,17 +21,16 @@ function rawValue(value) {
       return `<code>MaxInt256</code> / <code>${value.toHexString()}</code>`;
     }
     return `<code>${value.toString()}</code> / <code>${value.toHexString()}</code>`;
+  } catch {
+    return `<code>${JSON.stringify(rawValue)}</code>`;
   }
-  return `<code>${JSON.stringify(value)}</code>`;
 }
 
-function readableBigWei(value) {
-  if (typeof value === 'undefined' || value === null) {
+function readableBigWei(rawValue) {
+  if (typeof rawValue === 'undefined' || rawValue === null) {
     return 'n/a';
   }
-  if (!(value instanceof ethers.BigNumber)) {
-    return rawValue(value);
-  }
+  const value = ethers.BigNumber.from(rawValue);
   if (ethers.constants.MaxUint256.eq(value)) {
     return '<code>MaxUint256</code>';
   }
@@ -36,13 +46,11 @@ function readableBigWei(value) {
   });
 }
 
-function readableWei(value) {
-  if (typeof value === 'undefined' || value === null) {
+function readableWei(rawValue) {
+  if (typeof rawValue === 'undefined' || rawValue === null) {
     return 'n/a';
   }
-  if (!(value instanceof ethers.BigNumber)) {
-    return rawValue(value);
-  }
+  const value = ethers.BigNumber.from(rawValue);
   if (ethers.constants.MaxUint256.eq(value)) {
     return '<code>MaxUint256</code>';
   }
