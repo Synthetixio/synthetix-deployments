@@ -1,20 +1,9 @@
-const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
 
 async function abi() {
-  const provider = new ethers.providers.JsonRpcProvider(
-    process.env.RPC_URL || 'http://127.0.0.1:8545'
-  );
-  const network = await provider.getNetwork();
-  const {
-    name,
-    version,
-    preset = 'main',
-    chainId = network.chainId,
-    contracts,
-  } = require('../deployments/meta.json');
+  const { name, version, preset, chainId, contracts } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
   const out = [];
@@ -109,6 +98,18 @@ async function abi() {
     <tr>
       <td>System token</td>
       <td><a href="./${chainId}-${preset}/systemToken.json"><code>systemToken.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>Spot markets</td>
+      <td><a href="./${chainId}-${preset}/spotMarkets.json"><code>spotMarkets.json</code></a></td>
+    </tr>
+  `);
+  table.push(`
+    <tr>
+      <td>Perps markets</td>
+      <td><a href="./${chainId}-${preset}/perpsMarkets.json"><code>perpsMarkets.json</code></a></td>
     </tr>
   `);
   table.push(`

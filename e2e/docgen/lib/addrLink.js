@@ -1,14 +1,26 @@
 const { extractChain } = require('viem');
 const chains = require('viem/chains');
 
-function addrLink(chainId, address) {
+function url(chainId, address) {
   const chain = extractChain({ chains: Object.values(chains), id: Number(chainId) });
-  return `[${address}](${chain.blockExplorers.default.url}/address/${address})`;
+  if (!chain) {
+    throw new Error(`Incorrect chainId: ${chainId}`);
+  }
+  return `${chain.blockExplorers.default.url}/address/${address}`;
+}
+
+function addrLink(chainId, address) {
+  if (!(chainId && address)) {
+    return 'n/a';
+  }
+  return `[${address}](${url(chainId, address)})`;
 }
 
 function addrHtmlLink(chainId, address) {
-  const chain = extractChain({ chains: Object.values(chains), id: Number(chainId) });
-  return `<a href="${chain.blockExplorers.default.url}/address/${address}"><code>${address}</code></a>`;
+  if (!(chainId && address)) {
+    return 'n/a';
+  }
+  return `<a href="${url(chainId, address)}"><code>${address}</code></a>`;
 }
 
 module.exports = {

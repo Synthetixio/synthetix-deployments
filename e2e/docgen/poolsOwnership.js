@@ -7,8 +7,7 @@ async function poolsOwnership() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
-  const network = await provider.getNetwork();
-  const { name, version, preset, chainId = network.chainId } = require('../deployments/meta.json');
+  const { name, version, preset, chainId } = require('../deployments/meta.json');
   log({ name, version, preset, chainId });
 
   const out = [];
