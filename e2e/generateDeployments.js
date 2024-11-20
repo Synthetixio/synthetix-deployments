@@ -13,6 +13,10 @@ const fgCyan = '\x1b[36m';
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
+const provider = new ethers.providers.JsonRpcProvider(
+  process.env.RPC_URL || 'http://127.0.0.1:8545'
+);
+
 const bn = (num) => ethers.BigNumber.from(num).toString();
 
 const [cannonState] = process.argv.slice(2);
@@ -48,9 +52,6 @@ async function fetchTokenInfo(address) {
     fetchTokenInfo.cache = {};
   }
   if (!fetchTokenInfo.cache[address]) {
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.RPC_URL || 'http://127.0.0.1:8545'
-    );
     const contract = new ethers.Contract(
       address,
       [
@@ -76,9 +77,6 @@ async function fetchOracleInfo({ nodeId, OracleManagerProxy }) {
   }
   if (!fetchOracleInfo.cache[nodeId]) {
     const oracle = {};
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.RPC_URL || 'http://127.0.0.1:8545'
-    );
     const OracleContract = new ethers.Contract(
       OracleManagerProxy.address,
       OracleManagerProxy.abi,
@@ -280,9 +278,6 @@ async function extractSynths(deployments) {
         const spotFactory =
           deployments?.state?.['provision.spotFactory']?.artifacts?.imports?.spotFactory;
         if (spotFactory) {
-          const provider = new ethers.providers.JsonRpcProvider(
-            process.env.RPC_URL || 'http://127.0.0.1:8545'
-          );
           const SpotMarketProxy = new ethers.Contract(
             spotFactory.contracts.SpotMarketProxy.address,
             spotFactory.contracts.SpotMarketProxy.abi,
@@ -773,8 +768,11 @@ async function run() {
     )
   );
 
+  const network = await provider.getNetwork();
+  // some old deploys do not have chainId in cannon state
+  const chainId = parseInt(`${deployments.chainId || network.chainId}`);
   const meta = {
-    chainId: deployments.chainId,
+    chainId,
     name: deployments.def.name,
     preset: deployments.def.preset ?? 'main',
     version: deployments.def.version,
