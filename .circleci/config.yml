@@ -498,6 +498,8 @@ jobs:
             cp e2e/deployments/cannon.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/systemToken.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/pythFeeds.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/perpsMarkets.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/spotMarkets.json ~/synthetix-gitbook-v3/deployment-info/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr:
           working_directory: "~/synthetix-gitbook-v3"
@@ -626,6 +628,8 @@ jobs:
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/systemToken.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/pythFeeds.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/perpsMarkets.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/spotMarkets.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr:
           working_directory: "~/v3-contracts"
@@ -712,6 +716,8 @@ jobs:
             cp e2e/deployments/cannon.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/systemToken.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/pythFeeds.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/perpsMarkets.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/spotMarkets.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
 
       - github-pr-allow-empty:
           working_directory: "~/v3-contracts"
