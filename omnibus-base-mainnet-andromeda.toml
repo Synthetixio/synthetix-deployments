@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "61"
+version = "62"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -322,7 +322,7 @@ defaultValue = "60"
 defaultValue = "2"
 
 [setting.settlement_reward]
-defaultValue = "<%= parseEther('1') %>"
+defaultValue = "<%= parseEther('0.4') %>"
 
 [setting.pool_owner]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"

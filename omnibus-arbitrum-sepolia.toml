@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "39"
+version = "40"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -336,7 +336,7 @@ defaultValue = "60"
 defaultValue = "2"
 
 [setting.settlement_reward]
-defaultValue = "<%= parseEther('1') %>"
+defaultValue = "<%= parseEther('0.4') %>"
 
 [setting.settlement_minimum_usd_exchange_amount]
 defaultValue = "<%= parseEther('0.000001') %>"
