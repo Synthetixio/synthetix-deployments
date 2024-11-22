@@ -165,11 +165,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should swap 200 USDx -> sUSDe', async () => {
+  it('should swap 100 USDx -> sUSDe', async () => {
     await spotBuy({
       wallet,
       marketId: require('../../deployments/extras.json').synth_usde_market_id,
-      usdAmount: 200,
+      usdAmount: 100,
       minAmountReceived: 50,
     });
     assert.ok(
