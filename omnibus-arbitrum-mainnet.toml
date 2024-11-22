@@ -356,7 +356,6 @@ max_collateral_limit_usdc = "<%= parseEther(String(10_000_000)) %>"
 max_collateral_limit_weeth = "<%= parseEther(String(289)) %>"
 max_collateral_limit_weth = "<%= parseEther(String(5_400)) %>"
 max_collateral_limit_wsteth = "<%= parseEther(String(2_564)) %>"
-synth_usdc_max_market_collateral_amount = "<%= parseEther(String(10_000_000)) %>"
 
 #Token Addresses
 [var.token_addresses]
