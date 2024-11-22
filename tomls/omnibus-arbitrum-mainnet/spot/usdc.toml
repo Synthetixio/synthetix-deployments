@@ -31,7 +31,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= settings.usdc_address %>",
-    "<%= settings.synth_usdc_max_collateral_amount_amount %>",
+    "<%= settings.synth_usdc_max_collateral_amount %>",
 ]
 
 [invoke.SpotMarketProxy_setWrapper_usdc]
@@ -42,7 +42,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= settings.usdc_address %>",
-    "<%= settings.synth_usdc_max_collateral_amount_amount %>",
+    "<%= settings.synth_usdc_max_collateral_amount %>",
 ]
 
 [invoke.SpotMarketProxy_addSettlementStrategy_usdc]
