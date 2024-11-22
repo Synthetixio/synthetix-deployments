@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "41"
+version = "42"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 deployers = [
