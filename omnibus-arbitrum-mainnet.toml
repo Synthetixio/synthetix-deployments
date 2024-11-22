@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "41"
+version = "43"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 deployers = [
@@ -40,6 +40,7 @@ include = [
     # Perps Liquidation rewards
     "tomls/omnibus-arbitrum-mainnet/rewards/stbtc_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-mainnet/rewards/seth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-mainnet/rewards/susdc_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-mainnet/rewards/susde_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-mainnet/rewards/ssol_perps_liquidations_rewards.toml",
 
@@ -247,6 +248,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/sol.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usdc.toml",
 ]
 
 [setting.target_preset]
@@ -354,7 +356,7 @@ max_collateral_limit_usdc = "<%= parseEther(String(10_000_000)) %>"
 max_collateral_limit_weeth = "<%= parseEther(String(289)) %>"
 max_collateral_limit_weth = "<%= parseEther(String(5_400)) %>"
 max_collateral_limit_wsteth = "<%= parseEther(String(2_564)) %>"
-synth_usdc_max_market_collateral = "<%= parseEther(String(10_000_000)) %>"
+synth_usdc_max_market_collateral_amount = "<%= parseEther(String(10_000_000)) %>"
 
 #Token Addresses
 [var.token_addresses]
