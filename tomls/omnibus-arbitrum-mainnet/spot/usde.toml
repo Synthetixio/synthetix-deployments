@@ -35,6 +35,13 @@ args = [
     "<%= settings.synth_usde_max_collateral_amount %>",
 ]
 
+[invoke.SpotMarketProxy_setMarketSkewScale_USDe]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+func = "setMarketSkewScale"
+args = ["<%= extras.synth_usde_market_id %>", "<%= settings.synth_usde_skew_scale %>"]
+
 [invoke.SpotMarketProxy_setWrapper_USDe]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
