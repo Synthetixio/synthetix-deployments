@@ -191,6 +191,6 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       amount: 500,
     });
     assert.ok(synthBalance < 500);
-    assert.ok(await getCollateralBalance({ address, symbol: 'USDe' }) > 499);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDe' }), 500);
   });
 });
