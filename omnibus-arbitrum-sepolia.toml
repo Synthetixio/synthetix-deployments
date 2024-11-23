@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "41"
+version = "42"
 description = "Arbitrum deployment"
 preset = "main"
 include = [
@@ -39,6 +39,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/rewards/seth_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/ssol_perps_liquidations_rewards.toml",
     "tomls/omnibus-arbitrum-sepolia/rewards/susde_perps_liquidations_rewards.toml",
+    "tomls/omnibus-arbitrum-sepolia/rewards/susdc_perps_liquidations_rewards.toml",
 
     # Pyth oracles
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-aave.toml",
@@ -240,11 +241,12 @@ include = [
     #"tomls/omnibus-arbitrum-sepolia/perps/markets/cat.toml",
 
     # Margin Collateral (Synths)
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/eth.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usdc.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/btc.toml",
-    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usde.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/eth.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usde.toml",
 ]
 
 [setting.target_preset]
@@ -355,7 +357,6 @@ max_collateral_limit_weeth = "<%= parseEther(String(289)) %>"
 max_collateral_limit_weth = "<%= parseEther(String(5_400)) %>"
 max_collateral_limit_wsteth = "<%= parseEther(String(2_564)) %>"
 synth_dai_max_market_collateral = "<%= parseEther(String(0)) %>"
-synth_usdc_max_market_collateral = "<%= parseEther(String(10_000_000)) %>"
 
 [provision.dai_mock_collateral]
 source = "mintable-token:1.8"
