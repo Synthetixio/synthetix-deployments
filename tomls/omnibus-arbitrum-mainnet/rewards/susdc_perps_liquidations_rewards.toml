@@ -1,12 +1,12 @@
 [provision.RewardsDistributor_synth_usdc_liquidation_rewards]
 source = "synthetix-rewards-dist-ext:3.6.0"
-target = "synthetix-rewards-dist-ext:3.6.0@perps-synth-usde"
+target = "synthetix-rewards-dist-ext:3.6.0@perps-synth-usdc"
 options.salt = "<%= settings.salt %>"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= extras.spartan_council_pool_id %>"
 options.payoutToken = "<%= extras.synth_usdc_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Perps USDe Liquidation Rewards"
+options.name = "Perps USDC Liquidation Rewards"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_registerDistributor_synth_usdc_liquidations]
