@@ -1,6 +1,6 @@
 [var.USDe_spot_settings]
 synth_USDe_max_collateral_amount = "<%= parseEther(String(5_000_000)) %>"
-synth_usde_skew_scale = "<%= 1 %>"                                        #1 wei
+synth_USDe_skew_scale = "<%= 1 %>"                                        #1 wei
 
 [invoke.SpotMarketProxy_createSynth_USDe]
 target = ["spotFactory.SpotMarketProxy"]
@@ -27,9 +27,9 @@ args = [
 [invoke.SpotMarketProxy_setMarketSkewScale_USDe]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
-fromCall.args = ["<%= extras.synth_usde_market_id %>"]
+fromCall.args = ["<%= extras.synth_USDe_market_id %>"]
 func = "setMarketSkewScale"
-args = ["<%= extras.synth_usde_market_id %>", "<%= settings.synth_usde_skew_scale %>"]
+args = ["<%= extras.synth_USDe_market_id %>", "<%= settings.synth_USDe_skew_scale %>"]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_USDe]
 target = ["system.CoreProxy"]
