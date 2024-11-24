@@ -1,0 +1,106 @@
+[provision.RewardsDistributor_synth_usdc_liquidation_rewards]
+source = "synthetix-rewards-dist-ext:3.6.0"
+target = "synthetix-rewards-dist-ext:3.6.0@perps-synth-usdc"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= extras.spartan_council_pool_id %>"
+options.payoutToken = "<%= extras.synth_usdc_token_address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Perps USDC Liquidation Rewards"
+options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
+
+[invoke.PerpsMarketProxy_registerDistributor_synth_usdc_liquidations]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "registerDistributor"
+args = [
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+    "<%= extras.synth_usdc_market_id %>",
+    [
+        "<%= settings.arb_address %>",
+        "<%= settings.usdc_address %>",
+        "<%= settings.usde_address %>",
+        "<%= settings.susde_address %>",
+        "<%= settings.weth_address %>",
+        "<%= settings.weeth_address %>",
+        "<%= settings.wsteth_address %>",
+    ],
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_ARB_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.arb_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_USDC_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.usdc_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_USDe_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.usde_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_WETH_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.weth_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_wstETH_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.wsteth_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_weETH_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.weeth_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
+
+[invoke.CoreProxy_registerRewardsDistributor_synth_usdc_liquidation_rewards_for_SpartanCouncilPool_susde_lp]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.spartan_council_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= extras.spartan_council_pool_id %>",
+    "<%= settings.susde_address %>",
+    "<%= imports.RewardsDistributor_synth_usdc_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
+]
