@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "62"
+version = "63"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -71,8 +71,10 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bome.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-bonk.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-btc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-cat.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-comp.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-crv.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-degen.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-doge.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-dot.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-dydx.toml",
@@ -123,6 +125,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sats.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sei.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-shib.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-slerf.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-snx.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sol.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-strk.toml",
@@ -141,7 +144,6 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xrp.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-zro.toml",
-    #    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-cat.toml",
 
     #
     # Perps
@@ -181,8 +183,10 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/bome.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/bonk.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/btc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/cat.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/comp.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/crv.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/degen.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/doge.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/dot.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/dydx.toml",
@@ -233,6 +237,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/sats.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/sei.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/shib.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/slerf.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/snx.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/sol.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/strk.toml",
@@ -251,7 +256,6 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/xrp.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/zro.toml",
-    #"tomls/omnibus-base-mainnet-andromeda/perps/markets/cat.toml",
 
 ]
 
@@ -356,7 +360,6 @@ defaultValue = "<%= parseEther('1') %>"
 
 [var.pyth_feeds]
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
-#pyth_feed_id_cat = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018" #placeholder needs to be updated
 pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
 pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
 pyth_feed_id_algo = "0xfa17ceaf30d19ba51112fdcc750cc83454776f47fb0112e4af07f15f4bb1ebc0"
@@ -374,10 +377,12 @@ pyth_feed_id_bnb = "0x2f95862b045670cd22bee3114c39763a4a08beeb663b145d283c31d7d1
 pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c39052f7a"
 pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
 pyth_feed_id_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+pyth_feed_id_cat = "0xdf7b724fae4b9ecfd6081effb1ea3bb3b5c250c3641cf903b4d8fb10f4f452df"
 pyth_feed_id_cbbtc = "0x2817d7bfe5c64b8ea956e9a26f573ef64e72e4d7891f2d6af9bcc93f7aff9a97"
 pyth_feed_id_cbeth = "0x15ecddd26d49e1a8f1de9376ebebc03916ede873447c1255d2d5891b92ce5717"
 pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
 pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
+pyth_feed_id_degen = "0x9c93e4a22c56885af427ac4277437e756e7ec403fbc892f975d497383bb33560"
 pyth_feed_id_doge = "0xdcef50dd0a4cd2dcc17e45df1676dcb336a11a61c69df7a0299b0150c672d25c"
 pyth_feed_id_dot = "0xca3eed9b267293f6595901c734c7525ce8ef49adafe8284606ceb307afa2ca5b"
 pyth_feed_id_dydx = "0x6489800bb8974169adfe35937bf6736507097d13c190d760c557108c7e93a81b"
@@ -427,6 +432,7 @@ pyth_feed_id_safe = "0x7b3576858506a94fad3a9cc55e32934f0c3931150fe3a3c7b83558dba
 pyth_feed_id_sats = "0x40440d18fb5ad809e2825ce7dfc035cfa57135c13062a04addafe0c7f54425e0"
 pyth_feed_id_sei = "0x53614f1cb0c031d4af66c04cb9c756234adad0e1cee85303795091499a4084eb"
 pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd1504d4a"
+pyth_feed_id_slerf = "0x1a483c4a63876d286991ac0d6e090298db42e88c3826b6e0cff89daca498eed5"
 pyth_feed_id_snx = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
 pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
 pyth_feed_id_strk = "0x6a182399ff70ccf3e06024898942028204125a819e519a335ffa4579e66cd870"
