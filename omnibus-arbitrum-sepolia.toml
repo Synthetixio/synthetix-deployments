@@ -26,6 +26,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-eth.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-sol.toml",
     "tomls/omnibus-arbitrum-sepolia/collaterals/synth-usde.toml",
+    "tomls/omnibus-arbitrum-sepolia/collaterals/synth-usdc.toml",
 
     # LP Rewards
     "tomls/omnibus-arbitrum-sepolia/rewards/arb_rewards_for_usdc_lp.toml",
