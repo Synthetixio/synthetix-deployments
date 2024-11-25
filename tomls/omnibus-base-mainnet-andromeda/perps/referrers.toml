@@ -13,6 +13,18 @@ fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x3bD64247d879AF879e6f6e62F81430186391Bdb8", "<%= settings.referrerFee %>"]
 
+[invoke.setParafiAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x32A74B2cE1a0783A182f607D29207e571a1cDD4D", "<%= settings.referrerFee %>"]
+
+[invoke.setMassDotMoneyAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xf944069B489F1ebfF4C3C6a6014d58cBEf7C7009", "<%= settings.referrerFee %>"]
+
 [invoke.setInfinexAsReferrerOnPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
