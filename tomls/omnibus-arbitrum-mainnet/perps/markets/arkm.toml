@@ -13,7 +13,7 @@ arkm_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 arkm_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 arkm_perps_max_seconds_in_liquidation_window = "30"
 arkm_perps_minimum_position_margin = "<%= parseEther('15') %>"
-arkm_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+arkm_perps_locked_oi_ratio = "<%= parseEther('0.2') %>"
 arkm_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 arkm_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 
