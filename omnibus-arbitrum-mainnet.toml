@@ -30,6 +30,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/collaterals/synth-sol.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/synth-tbtc.toml",
     "tomls/omnibus-arbitrum-mainnet/collaterals/synth-usde.toml",
+    "tomls/omnibus-arbitrum-mainnet/collaterals/synth-usdc.toml",
 
     # LP Rewards
     "tomls/omnibus-arbitrum-mainnet/rewards/arb_rewards_for_arb_lp.toml",
