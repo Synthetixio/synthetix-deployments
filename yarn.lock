@@ -4559,7 +4559,7 @@ __metadata:
     prettier-plugin-toml: "npm:^2.0.1"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.21.48"
+    viem: "npm:^2.21.50"
   languageName: unknown
   linkType: soft
 
