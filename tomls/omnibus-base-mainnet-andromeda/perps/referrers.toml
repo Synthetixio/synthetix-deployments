@@ -13,7 +13,7 @@ fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x3bD64247d879AF879e6f6e62F81430186391Bdb8", "<%= settings.referrerFee %>"]
 
-[invoke.setParafiAsReferrerOnPerpsMarket]
+[invoke.setParifiAsReferrerOnPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"
