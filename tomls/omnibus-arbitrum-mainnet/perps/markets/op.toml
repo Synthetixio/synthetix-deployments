@@ -15,7 +15,7 @@ op_perps_max_seconds_in_liquidation_window = "30"
 op_perps_minimum_position_margin = "<%= parseEther('15') %>"
 op_perps_locked_oi_ratio = "<%= parseEther('0.20') %>"
 op_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
-op_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
+op_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 
 [invoke.createOpPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
