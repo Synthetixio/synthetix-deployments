@@ -17,6 +17,8 @@ target = "<%= settings.oracle_manager_package %>"
 options.salt = "<%= settings.salt %>-oracle"
 options.owner = "<%= settings.owner %>"
 
+depends = ["clone.oracle_manager"]
+
 [provision.system]
 source = "<%= settings.snx_package %>"
 target = "<%= settings.snx_package %>@<%= settings.target_preset %>"
