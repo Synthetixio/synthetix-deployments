@@ -1,0 +1,140 @@
+name = "synthetix-omnibus"
+version = "45"
+description = "Limit order dev deployment"
+preset = "limit"
+include = [
+    "tomls/core.toml",
+    "tomls/settings.toml",
+    "tomls/permissions.toml",
+    "tomls/permit-deniers.toml",
+    "tomls/pools/spartan-council.toml",
+    "tomls/markets/spot-factory.toml",
+    "tomls/markets/perps-highcap-factory.toml",
+    "tomls/markets/perps-lowcap-factory.toml",
+    "tomls/markets/common/bigcap-settings.toml",
+    "tomls/permit-all-perps-perpsHighcapSystem.toml",
+    "tomls/omnibus-base-sepolia-limit/perps/relayers.toml",
+    "tomls/omnibus-base-sepolia-limit/perps/global.toml",
+    "tomls/omnibus-base-sepolia-limit/perps/perps-keeper-cost.toml",
+    "tomls/omnibus-base-sepolia-limit/perps/feeCollector.toml",
+
+    # USDC
+    "tomls/omnibus-base-sepolia-limit/collaterals/sUSDC.toml",
+    "tomls/omnibus-base-sepolia-limit/spot/USDC.toml",
+
+    # ETH
+    "tomls/omnibus-base-sepolia-limit/perps/eth-invokes.toml",
+    "tomls/oracles/pyth-eth.toml",
+    "tomls/omnibus-base-sepolia-limit/perps/eth.toml",
+]
+
+[setting.commitmentPriceDelay]
+defaultValue = "2"
+
+[setting.bigCapSettlementDelay]
+defaultValue = "2"
+
+[setting.snx_package]
+defaultValue = "synthetix:3.3.18"
+
+[setting.perps_keeper_cost_package]
+defaultValue = "op-gas-price-oracle:3.4.0"
+
+[setting.spot_market_package]
+defaultValue = "synthetix-spot-market:3.3.15"
+
+[setting.perps_market_package]
+defaultValue = "synthetix-perps-market:3.4.2-dev.10bd97486"
+
+[setting.buyback_snx_package]
+defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
+
+[setting.salt]
+defaultValue = "limit"
+
+[setting.target_preset]
+defaultValue = "limit" # Preset assigned to provisioned packages
+
+[setting.pyth_price_verification_address]
+# https://docs.pyth.network/documentation/pythnet-price-feeds/evm
+defaultValue = "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729"
+
+[provision.pyth_erc7412_wrapper]
+source = "pyth-erc7412-wrapper:3.3.15"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.pythAddress = "<%= settings.pyth_price_verification_address %>"
+
+[setting.owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.deployer]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[setting.minimum_liquidity_ratio]
+defaultValue = "<%= parseEther('1.25') %>" # 125% min market collateralization
+
+[setting.account_timeout_withdraw]
+defaultValue = "86400" # 1 day
+
+[setting.sc_pool_id]
+defaultValue = "1"
+
+[setting.pool_owner]
+defaultValue = "0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"
+
+[invoke.setScPoolConfig]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "setPoolConfiguration"
+args = [
+    "<%= settings.sc_pool_id %>",
+    [
+        { marketId = "<%= imports.perpsFactory.extras.superMarketId %>", weightD18 = 1, maxDebtShareValueD18 = "<%= parseEther('1') %>" },
+    ],
+]
+
+[provision.spartan_council_pool_rewards]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= settings.sc_pool_id %>"
+options.collateralType = "<%= extras.synth_usdc_token_address %>"
+options.payoutToken = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
+options.payoutTokenDecimals = "18"
+options.name = "Spartan Council Pool Rewards"
+
+[invoke.register_spartan_council_pool_rewards]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.spartan_council_pool_rewards.contracts.RewardsDistributor.address %>",
+]
+
+[provision.sccp_313_spartan_council_pool_usdc_rewards]
+source = "synthetix-rewards-distributor:0.0.2"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
+options.poolId = "<%= settings.sc_pool_id %>"
+options.collateralType = "<%= extras.synth_usdc_token_address %>"
+options.payoutToken = "<%= imports.usdc_mock_collateral.contracts.MintableToken.address %>"
+options.payoutTokenDecimals = "6"
+options.name = "Spartan Council Pool USDC Rewards"
+
+[invoke.sccp_313_register_spartan_council_pool_usdc_rewards]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.sc_pool_id %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.sc_pool_id %>",
+    "<%= extras.synth_usdc_token_address %>",
+    "<%= imports.sccp_313_spartan_council_pool_usdc_rewards.contracts.RewardsDistributor.address %>",
+]
