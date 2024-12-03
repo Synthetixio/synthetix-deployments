@@ -261,13 +261,13 @@ defaultValue = "main"
 defaultValue = "snax"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.8.1"
+defaultValue = "synthetix:3.10.0"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.1"
+defaultValue = "oracle-manager:3.10.0"
 
 [setting.perps_keeper_cost_package]
-defaultValue = "arbitrum-gas-price-oracle:3.3.16"
+defaultValue = "arbitrum-gas-price-oracle:3.10.0"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.8.1"
@@ -288,7 +288,7 @@ defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={dat
 description = "Pyth settlement strategy config"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.15"
+source = "pyth-erc7412-wrapper:3.10.0"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
