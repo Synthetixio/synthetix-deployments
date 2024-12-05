@@ -320,7 +320,7 @@ args = [
 ]
 depends = ['provision.system', 'setting.account_timeout_withdraw']
 
-[setting.sc_pool_id]
+[setting.spartan_council_pool_id_setting]
 defaultValue = "1"
 
 [setting.commitment_price_delay]
