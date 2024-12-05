@@ -58,15 +58,15 @@
     "@usecannon/cli": "2.19.4",
     "debug": "^4.3.7",
     "ethers": "^5.7.2",
-    "hardhat": "^2.22.16",
-    "mocha": "^10.8.2",
+    "hardhat": "^2.22.17",
+    "mocha": "^11.0.1",
     "numbro": "^2.5.0",
     "pako": "^2.1.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.21.48"
+    "viem": "^2.21.53"
   },
   "resolutions": {
     "mocha": "^10",
