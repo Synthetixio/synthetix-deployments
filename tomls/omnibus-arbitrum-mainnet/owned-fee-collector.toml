@@ -1,0 +1,9 @@
+[provision.owned_fee_collector]
+source = "owned-fee-collector:3.10.0"
+targetPreset = "<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.owner = "<%= settings.pdao %>"
+options.fee_share_recipient = "0xebAC8Fc8752A267A36cE683A867000F69Fd0e73d"
+options.fee_share = "400000000000000000"
+options.fee_token = "<%= imports.system.contracts.USDProxy.address %>"
+depends = ['provision.system']

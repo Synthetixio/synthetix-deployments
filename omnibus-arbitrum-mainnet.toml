@@ -254,6 +254,9 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usde.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usdc.toml",
+
+    # Owned fee collector
+    "tomls/omnibus-arbitrum-mainnet/owned-fee-collector.toml"
 ]
 
 [setting.target_preset]
