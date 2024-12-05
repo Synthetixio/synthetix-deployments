@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "46"
+version = "47"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 deployers = [
@@ -48,6 +48,7 @@ include = [
     # Pyth oracles
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-aave.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-ada.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-aero.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-algo.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-apt.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-arb.toml",
@@ -64,6 +65,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-bonk.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-btc.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-cat.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-chillguy.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-comp.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-crv.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-degen.toml",
@@ -98,6 +100,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-mew.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-mkr.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-moodeng.toml",
+    "tomls/omnibus-arbitrum-mainnet/oracles/pyth-morpho.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-near.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-not.toml",
     "tomls/omnibus-arbitrum-mainnet/oracles/pyth-op.toml",
@@ -160,6 +163,7 @@ include = [
     # Perps Markets
     "tomls/omnibus-arbitrum-mainnet/perps/markets/aave.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/ada.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/aero.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/algo.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/apt.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/arb.toml",
@@ -176,6 +180,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/bonk.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/btc.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/cat.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/chillguy.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/comp.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/crv.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/degen.toml",
@@ -210,6 +215,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/mew.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/mkr.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/moodeng.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/markets/morpho.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/near.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/not.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/op.toml",
@@ -246,6 +252,7 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/xrp.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/yfi.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/zro.toml",
+
 
     # Margin Collateral (Synths)
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/btc.toml",
@@ -379,6 +386,7 @@ wsteth_address = "0x5979D7b546E38E414F7E9822514be443A4800529" # https://docs.lid
 description = "https://pyth.network/developers/price-feed-ids#pyth-evm-mainnet"
 pyth_feed_id_aave = "0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445"
 pyth_feed_id_ada = "0x2a01deaec9e51a579277b34b122399984d0bbf57e2458a7e42fecd2829867a0d"
+pyth_feed_id_aero = "0x9db37f4d5654aad3e37e2e14ffd8d53265fb3026d1d8f91146539eebaa2ef45f"
 pyth_feed_id_algo = "0xfa17ceaf30d19ba51112fdcc750cc83454776f47fb0112e4af07f15f4bb1ebc0"
 pyth_feed_id_apt = "0x03ae4db29ed4ae33d323568895aa00337e658e348b37509f5372ae51f0af00d5"
 pyth_feed_id_arb = "0x3fa4252848f9f0a1480be62745a4629d9eb1322aebab8a791e344b3b9c1adcf5"
@@ -395,6 +403,7 @@ pyth_feed_id_bome = "0x30e4780570973e438fdb3f1b7ad22618b2fc7333b65c7853a7ca144c3
 pyth_feed_id_bonk = "0x72b021217ca3fe68922a19aaf990109cb9d84e9ad004b4d2025ad6f529314419"
 pyth_feed_id_btc = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
 pyth_feed_id_cat = "0xdf7b724fae4b9ecfd6081effb1ea3bb3b5c250c3641cf903b4d8fb10f4f452df"
+pyth_feed_id_chillguy = "0xd98869edbb4a0d2803dc1054405bceb1ddc546bfc9a3d0e31bb0e0448e6181e1"
 pyth_feed_id_comp = "0x4a8e42861cabc5ecb50996f92e7cfa2bce3fd0a2423b0c44c9b423fb2bd25478"
 pyth_feed_id_crv = "0xa19d04ac696c7a6616d291c7e5d1377cc8be437c327b75adb5dc1bad745fcae8"
 pyth_feed_id_degen = "0x9c93e4a22c56885af427ac4277437e756e7ec403fbc892f975d497383bb33560"
@@ -429,6 +438,7 @@ pyth_feed_id_meme = "0xcd2cee36951a571e035db0dfad138e6ecdb06b517cc3373cd7db5d360
 pyth_feed_id_mew = "0x514aed52ca5294177f20187ae883cec4a018619772ddce41efcc36a6448f5d5d"
 pyth_feed_id_mkr = "0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378"
 pyth_feed_id_moodeng = "0xffff73128917a90950cd0473fd2551d7cd274fd5a6cc45641881bbcc6ee73417"
+pyth_feed_id_morpho = "0x5b2a4c542d4a74dd11784079ef337c0403685e3114ba0d9909b5c7a7e06fdc42"
 pyth_feed_id_near = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
 pyth_feed_id_not = "0x75ec6f04d4bded6afdc1440689be4402dd1e23d2ff2c21e081871eb2739ceb36"
 pyth_feed_id_op = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
