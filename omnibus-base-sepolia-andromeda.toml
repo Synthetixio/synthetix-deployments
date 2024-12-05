@@ -381,11 +381,20 @@ options.symbol = "wstETH"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
+[provision.snx_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@snx"
+options.name = "Fake SNX"
+options.symbol = "SNX"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
 [var.token_addresses]
 cbbtc_address = "<%= imports.cbbtc_mock_collateral.contracts.MintableToken.address %>"
 cbeth_address = "<%= imports.cbeth_mock_collateral.contracts.MintableToken.address %>"
-wsteth_address = "<%= imports.wsteth_mock_collateral.contracts.MintableToken.address %>"
+snx_address = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
 weth_address = "0x4200000000000000000000000000000000000006"
+wsteth_address = "<%= imports.wsteth_mock_collateral.contracts.MintableToken.address %>"
 
 [setting.pyth_feed_url]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
