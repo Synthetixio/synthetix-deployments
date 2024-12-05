@@ -253,7 +253,6 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/markets/yfi.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/markets/zro.toml",
 
-
     # Margin Collateral (Synths)
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/btc.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/eth.toml",

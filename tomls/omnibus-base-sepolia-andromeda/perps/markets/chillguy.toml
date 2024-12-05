@@ -79,13 +79,19 @@ args = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = ["<%= settings.chillguy_perps_market_id %>", "<%= settings.chillguy_perps_max_market_size %>"]
+args = [
+    "<%= settings.chillguy_perps_market_id %>",
+    "<%= settings.chillguy_perps_max_market_size %>",
+]
 
 [invoke.setPerpsChillguyMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = ["<%= settings.chillguy_perps_market_id %>", "<%= settings.chillguy_perps_max_market_value %>"]
+args = [
+    "<%= settings.chillguy_perps_market_id %>",
+    "<%= settings.chillguy_perps_max_market_value %>",
+]
 
 [invoke.setPerpsChillguyMaxLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -116,4 +122,7 @@ args = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = ["<%= settings.chillguy_perps_market_id %>", "<%= settings.chillguy_perps_locked_oi_ratio %>"]
+args = [
+    "<%= settings.chillguy_perps_market_id %>",
+    "<%= settings.chillguy_perps_locked_oi_ratio %>",
+]
