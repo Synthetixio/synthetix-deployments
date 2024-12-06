@@ -162,7 +162,6 @@ include = [
     # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/perps-keeper-cost.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
