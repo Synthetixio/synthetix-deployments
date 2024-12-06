@@ -1,3 +1,11 @@
+[provision.snx_mock_collateral]
+source = "mintable-token:1.8@permissionless-mint"
+target = "synthetix-mock-tokens@snx"
+options.salt = "<%= settings.salt %>"
+options.name = "Fake Wrapped SNX"
+options.symbol = "fwSNX"
+options.owner = "<%= settings.owner %>"
+
 [provision.spartan_council_pool_rewards]
 source = "synthetix-rewards-distributor:0.0.2"
 targetPreset = "<%= settings.target_preset %>"
