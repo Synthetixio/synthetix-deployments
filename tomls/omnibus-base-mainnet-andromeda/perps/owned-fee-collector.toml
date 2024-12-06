@@ -7,3 +7,10 @@ options.fee_share_recipient = "0xf2107A85d8b79CBd2c5b2Bb63CA73Fd068040b67"
 options.fee_share = "400000000000000000"
 options.fee_token = "<%= imports.system.contracts.USDProxy.address %>"
 depends = ['provision.system']
+
+[invoke.setFeeCollector]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFeeCollector"
+args = ["<%= imports.owned_fee_collector.contracts.OwnedFeeCollector.address %>"]
+depends = ['provision.system']

@@ -264,7 +264,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/zro.toml",
 
     # Owned fee collector
-    "tomls/omnibus-arbitrum-mainnet/owned-fee-collector.toml",
+    "tomls/omnibus-arbitrum-mainnet/perps/owned-fee-collector.toml",
 ]
 
 [setting.snx_package]
