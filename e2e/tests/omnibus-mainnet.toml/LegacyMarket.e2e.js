@@ -125,7 +125,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   // note: this test effectively has to run after the test above
   it('should allow conversion of sUSD tokens', async () => {
-    const walletAddress = '0x722f0a6F970F8B144F5e92aB3f3BeaFA280b282f'; // random whale
+    const walletAddress = '0xa41778C9b64937af21579074d54008FBd221C7D6'; // random whale
     const oldUsdBalance =
       parseFloat(ethers.utils.formatEther(await V2xUsd.balanceOf(walletAddress))) - 1;
     log({ oldUsdBalance, oldUsdBalance });
