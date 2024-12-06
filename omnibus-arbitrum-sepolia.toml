@@ -258,6 +258,9 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/sol.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/collaterals/usde.toml",
+
+    # Owned Fee Collector
+    "tomls/omnibus-arbitrum-sepolia/perps/owned-fee-collector.toml",
 ]
 
 [setting.target_preset]
