@@ -255,7 +255,7 @@ include = [
 defaultValue = "synthetix:3.10.0"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.10.0"
+defaultValue = "oracle-manager:3.11.0-stalefix"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.4.0"
