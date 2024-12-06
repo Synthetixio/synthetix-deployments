@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "65"
+version = "66"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -162,7 +162,6 @@ include = [
     # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/perps-keeper-cost.toml",
-    "tomls/omnibus-base-mainnet-andromeda/perps/feeCollector.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/referrers.toml",
     "tomls/markets/perps-highcap-factory.toml",
     "tomls/permit-all-perps-perpsHighcapSystem.toml",
@@ -263,6 +262,8 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/zro.toml",
 
+    # Owned fee collector
+    "tomls/omnibus-arbitrum-mainnet/perps/owned-fee-collector.toml",
 ]
 
 [setting.snx_package]
