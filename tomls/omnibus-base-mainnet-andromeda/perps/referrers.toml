@@ -30,3 +30,15 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x24f5A599a40730dc0475eCE8dD41C4D3A4Ba4Bf3", "<%= settings.referrerFee %>"]
+
+[invoke.setSynthetixAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xd25215758734dd3ade497ce04de1c35820964126", "<%= settings.referrerFee %>"]
+
+[invoke.setCyberDEXAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x829d7E022c2ACD05a875bCa4Bd11F56E003B727B", "<%= settings.referrerFee %>"]
