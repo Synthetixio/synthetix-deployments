@@ -12,5 +12,5 @@ depends = ['provision.system']
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFeeCollector"
-args = ["<%= imports.owned_fee_collector.contracts.OwnedFeeCollector.address %>"]
+args = ["<%= imports.owned_fee_collector.contracts.owned_fee_collector.address %>"]
 depends = ['provision.system']
