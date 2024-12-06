@@ -25,12 +25,6 @@ fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0xf944069B489F1ebfF4C3C6a6014d58cBEf7C7009", "<%= settings.referrerFee %>"]
 
-[invoke.setInfinexAsReferrerOnPerpsMarket]
-target = ["perpsFactory.PerpsMarketProxy"]
-fromCall.func = "owner"
-func = "updateReferrerShare"
-args = ["0x24f5A599a40730dc0475eCE8dD41C4D3A4Ba4Bf3", "<%= settings.referrerFee %>"]
-
 [invoke.setSynthetixAsReferrerOnPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
