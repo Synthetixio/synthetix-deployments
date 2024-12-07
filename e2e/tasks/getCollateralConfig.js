@@ -2,6 +2,8 @@
 
 const { getCollateralConfigurations } = require('./getCollateralConfigurations');
 
+const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
+
 async function getCollateralConfig(symbol) {
   const collateralConfigs = await getCollateralConfigurations();
   const config = collateralConfigs
@@ -11,6 +13,7 @@ async function getCollateralConfig(symbol) {
   if (!config) {
     throw new Error(`Collateral config for "${symbol}" does not exist`);
   }
+  log(config);
   return config;
 }
 
