@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
 async function getCollateralConfigurations() {
-  return require('../deployments/collateralTokens.json');
+  const systemToken = require('../deployments/systemToken.json');
+  systemToken.tokenAddress = systemToken.address;
+
+  return require('../deployments/collateralTokens.json').concat([systemToken]);
 }
 
 module.exports = {
