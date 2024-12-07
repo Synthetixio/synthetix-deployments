@@ -122,40 +122,40 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it(`should set USDC balance to 1_000`, async () => {
-    const { tokenAddress } = await getCollateralConfig('USDC');
+  it(`should set fUSDC balance to 1_000`, async () => {
+    const { tokenAddress } = await getCollateralConfig('fUSDC');
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'USDC' }),
+      await getCollateralBalance({ address, symbol: 'fUSDC' }),
       0,
-      'New wallet has 0 USDC balance'
+      'New wallet has 0 fUSDC balance'
     );
     await setMintableTokenBalance({
       privateKey,
       balance: 1_000,
       tokenAddress,
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 1_000);
   });
 
-  it('should approve USDC spending for SpotMarket', async () => {
+  it('should approve fUSDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'USDC',
+        symbol: 'fUSDC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed SpotMarket USDC spending'
+      'New wallet has not allowed SpotMarket fUSDC spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'USDC',
+      symbol: 'fUSDC',
       spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'USDC',
+        symbol: 'fUSDC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
@@ -165,20 +165,20 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should increase max collateral for the test to 1_000_000_000_000', async () => {
     await configureMaximumMarketCollateral({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      symbol: 'USDC',
+      symbol: 'fUSDC',
       targetAmount: String(1_000_000_000_000),
     });
     await setSpotWrapper({
       marketId: require('../../deployments/extras.json').synth_usdc_market_id,
-      symbol: 'USDC',
+      symbol: 'fUSDC',
       targetAmount: String(1_000_000_000_000),
     });
   });
 
-  it(`should wrap 1_000 USDC`, async () => {
+  it(`should wrap 1_000 fUSDC`, async () => {
     const balance = await wrapCollateral({
       wallet,
-      symbol: 'USDC',
+      symbol: 'fUSDC',
       synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: 1_000,
