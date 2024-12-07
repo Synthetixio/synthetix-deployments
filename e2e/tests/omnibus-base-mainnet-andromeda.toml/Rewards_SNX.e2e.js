@@ -26,25 +26,25 @@ const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsD
 const {
   getTokenRewardsDistributorRewardsAmount,
 } = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
-const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
-const { claimRewards } = require('../../tasks/claimRewards');
+const { getAvailablePoolRewards } = require('../../tasks/getAvailablePoolRewards');
+const { claimPoolRewards } = require('../../tasks/claimPoolRewards');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
 
-const {
-  address: distributorAddress,
-} = require('../../deployments/RewardsDistributor_1_sUSDC_SNX.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
-const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
+const rewardsDistributor = rewardsDistributors.find(
+  (rd) =>
+    rd.isRegistered && !rd.collateralType && rd.poolId === '1' && rd.name === 'SNX Pool Rewards'
+);
 log({ rewardsDistributor });
 
-const payoutToken = rewardsDistributor.payoutToken.address;
+const distributorAddress = rewardsDistributor.address;
+const payoutTokenAddress = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
-const collateralType = rewardsDistributor.collateralType.address;
 
-log({ distributorAddress, payoutToken, rewardManager, collateralType });
+log({ distributorAddress, payoutTokenAddress, rewardManager });
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -65,7 +65,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     initialBalance = await getTokenBalance({
       walletAddress: distributorAddress,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
     }).catch(console.error);
 
     log('Initial balance', { initialBalance });
@@ -87,16 +87,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
-    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
+    assert.equal(info.name, 'SNX Pool Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
-    assert.equal(info.collateralType, collateralType, 'collateralType');
+    assert.equal(info.collateralType, undefined, 'collateralType');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),
-      `${payoutToken}`.toLowerCase(),
+      `${payoutTokenAddress}`.toLowerCase(),
       'payoutToken'
     );
     assert.equal(info.precision, 10 ** 18, 'precision');
-    assert.equal(`${info.token}`.toLowerCase(), `${payoutToken}`.toLowerCase(), 'token');
+    assert.equal(`${info.token}`.toLowerCase(), `${payoutTokenAddress}`.toLowerCase(), 'token');
     assert.equal(info.rewardManager, rewardManager, 'rewardManager');
     assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
   });
@@ -259,20 +259,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await setTokenBalance({
       wallet,
       balance: 1_000,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
       friendlyWhale: '0xcc79bfa7a3212d94390c358e88afcd39294549ca',
     });
 
     await transferToken({
       privateKey,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
       targetWalletAddress: distributorAddress,
       amount: 1_000,
     });
 
     assert.equal(
       Math.floor(
-        await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken })
+        await getTokenBalance({
+          walletAddress: distributorAddress,
+          tokenAddress: payoutTokenAddress,
+        })
       ),
       Math.floor(initialBalance + 1_000),
       'Rewards Distributor has 1_000 extra SNX on its balance'
@@ -304,6 +307,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
 
+    // Fast forward a few blocks
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
+
     assert.equal(
       Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
       Math.round(initialRewardsAmount + 1_000),
@@ -311,35 +319,36 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it.skip('should claim SNX rewards', async () => {
+  it('should claim SNX rewards', async () => {
     const poolId = 1;
 
-    const availableRewards = await getAvailableRewards({
+    const config = getCollateralConfig('sUSDC');
+    const availableRewards = await getAvailablePoolRewards({
       accountId,
       poolId,
-      collateralType,
+      collateralType: config.tokenAddress,
       distributorAddress,
     });
 
     assert.ok(availableRewards > 0, 'should have some rewards to claim');
 
     assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: payoutToken }),
+      await getTokenBalance({ walletAddress: address, tokenAddress: payoutTokenAddress }),
       0,
       'Wallet has 0 SNX balance BEFORE claim'
     );
 
-    await claimRewards({
+    await claimPoolRewards({
       wallet,
       accountId,
       poolId,
-      collateralType,
+      collateralType: config.tokenAddress,
       distributorAddress,
     });
 
     const postClaimBalance = await getTokenBalance({
       walletAddress: address,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
     });
     assert.ok(postClaimBalance > 0, 'Wallet has some non-zero SNX balance AFTER claim');
 
