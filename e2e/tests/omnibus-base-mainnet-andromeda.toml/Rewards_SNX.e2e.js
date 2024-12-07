@@ -299,7 +299,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet: signer,
       distributorAddress,
       poolId,
-      collateralType,
+      collateralType: ethers.constants.AddressZero,
       amount,
       start,
       duration,
@@ -322,11 +322,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   it('should claim SNX rewards', async () => {
     const poolId = 1;
 
-    const config = getCollateralConfig('sUSDC');
+    const { tokenAddress } = await getCollateralConfig('sUSDC');
     const availableRewards = await getAvailablePoolRewards({
       accountId,
       poolId,
-      collateralType: config.tokenAddress,
+      collateralType: tokenAddress,
       distributorAddress,
     });
 
@@ -342,7 +342,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet,
       accountId,
       poolId,
-      collateralType: config.tokenAddress,
+      collateralType: tokenAddress,
       distributorAddress,
     });
 
