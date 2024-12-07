@@ -20,28 +20,31 @@ const { delegateCollateral } = require('../../tasks/delegateCollateral');
 const { syncTime } = require('../../tasks/syncTime');
 const { getTokenBalance } = require('../../tasks/getTokenBalance');
 const { transferToken } = require('../../tasks/transferToken');
-const { setPermissionlessTokenBalance } = require('../../tasks/setPermissionlessTokenBalance');
 const { distributeRewards } = require('../../tasks/distributeRewards');
 const { getPoolOwner } = require('../../tasks/getPoolOwner');
 const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsDistributorInfo');
 const {
   getTokenRewardsDistributorRewardsAmount,
 } = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
-const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
-const { claimRewards } = require('../../tasks/claimRewards');
-
+const { getAvailablePoolRewards } = require('../../tasks/getAvailablePoolRewards');
+const { claimPoolRewards } = require('../../tasks/claimPoolRewards');
+const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
-  address: distributorAddress,
-} = require('../../deployments/RewardsDistributor_1_sUSDC_fwSNX.json');
+  configureMaximumMarketCollateral,
+} = require('../../tasks/configureMaximumMarketCollateral');
+
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
-const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
+const rewardsDistributor = rewardsDistributors.find(
+  (rd) =>
+    rd.isRegistered && !rd.collateralType && rd.poolId === '1' && rd.name === 'SNX Pool Rewards'
+);
 log({ rewardsDistributor });
 
-const payoutToken = rewardsDistributor.payoutToken.address;
+const distributorAddress = rewardsDistributor.address;
+const payoutTokenAddress = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
-const collateralType = rewardsDistributor.collateralType.address;
 
-log({ distributorAddress, payoutToken, rewardManager, collateralType });
+log({ distributorAddress, payoutTokenAddress, rewardManager });
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -62,8 +65,9 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     initialBalance = await getTokenBalance({
       walletAddress: distributorAddress,
-      tokenAddress: payoutToken,
-    });
+      tokenAddress: payoutTokenAddress,
+    }).catch(console.error);
+
     log('Initial balance', { initialBalance });
 
     initialRewardsAmount = Math.round(
@@ -83,16 +87,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
-    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
+    assert.equal(info.name, 'SNX Pool Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
-    assert.equal(info.collateralType, collateralType, 'collateralType');
+    assert.equal(info.collateralType, undefined, 'collateralType');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),
-      `${payoutToken}`.toLowerCase(),
+      `${payoutTokenAddress}`.toLowerCase(),
       'payoutToken'
     );
     assert.equal(info.precision, 10 ** 18, 'precision');
-    assert.equal(`${info.token}`.toLowerCase(), `${payoutToken}`.toLowerCase(), 'token');
+    assert.equal(`${info.token}`.toLowerCase(), `${payoutTokenAddress}`.toLowerCase(), 'token');
     assert.equal(info.rewardManager, rewardManager, 'rewardManager');
     assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
   });
@@ -118,50 +122,63 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it(`should set fUSDC balance to 1_000`, async () => {
-    const { tokenAddress } = await getCollateralConfig('fUSDC');
+  it(`should set USDC balance to 1_000`, async () => {
+    const { tokenAddress } = await getCollateralConfig('USDC');
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fUSDC' }),
+      await getCollateralBalance({ address, symbol: 'USDC' }),
       0,
-      'New wallet has 0 fUSDC balance'
+      'New wallet has 0 USDC balance'
     );
     await setMintableTokenBalance({
       privateKey,
-      tokenAddress,
       balance: 1_000,
+      tokenAddress,
     });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fUSDC' }), 1_000);
+    assert.equal(await getCollateralBalance({ address, symbol: 'USDC' }), 1_000);
   });
 
-  it('should approve fUSDC spending for SpotMarket', async () => {
+  it('should approve USDC spending for SpotMarket', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fUSDC',
+        symbol: 'USDC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed SpotMarket fUSDC spending'
+      'New wallet has not allowed SpotMarket USDC spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fUSDC',
+      symbol: 'USDC',
       spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fUSDC',
+        symbol: 'USDC',
         spenderAddress: require('../../deployments/SpotMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it(`should wrap 1_000 fUSDC`, async () => {
+  it('should increase max collateral for the test to 1_000_000_000_000', async () => {
+    await configureMaximumMarketCollateral({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
+    await setSpotWrapper({
+      marketId: require('../../deployments/extras.json').synth_usdc_market_id,
+      symbol: 'USDC',
+      targetAmount: String(1_000_000_000_000),
+    });
+  });
+
+  it(`should wrap 1_000 USDC`, async () => {
     const balance = await wrapCollateral({
       wallet,
-      symbol: 'fUSDC',
+      symbol: 'USDC',
       synthAddress: require('../../deployments/extras.json').synth_usdc_token_address,
       synthMarketId: require('../../deployments/extras.json').synth_usdc_market_id,
       amount: 1_000,
@@ -237,31 +254,37 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should fund RewardDistributor with 1_000 fwSNX', async () => {
-    await setPermissionlessTokenBalance({ privateKey, tokenAddress: payoutToken, balance: 1_000 });
+  it('should fund RewardDistributor with 1_000 SNX', async () => {
+    await setMintableTokenBalance({
+      privateKey,
+      balance: 1_000,
+      tokenAddress: payoutTokenAddress,
+    });
 
     await transferToken({
       privateKey,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
       targetWalletAddress: distributorAddress,
       amount: 1_000,
     });
 
     assert.equal(
       Math.floor(
-        await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken })
+        await getTokenBalance({
+          walletAddress: distributorAddress,
+          tokenAddress: payoutTokenAddress,
+        })
       ),
       Math.floor(initialBalance + 1_000),
-      'Rewards Distributor has 1_000 extra fwSNX on its balance'
+      'Rewards Distributor has 1_000 extra SNX on its balance'
     );
   });
 
-  it('should distribute 1_000 fwSNX rewards', async () => {
-    await syncTime();
-
+  it('should distribute 1_000 SNX rewards', async () => {
     const poolId = 1;
     const poolOwner = await getPoolOwner({ poolId });
     log({ poolOwner });
+    await setEthBalance({ address: poolOwner, balance: 100 });
 
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);
@@ -274,13 +297,18 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       wallet: signer,
       distributorAddress,
       poolId,
-      collateralType,
+      collateralType: ethers.constants.AddressZero,
       amount,
       start,
       duration,
     });
 
     await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
+
+    // Fast forward a few blocks
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
+    await provider.send('evm_mine', []);
 
     assert.equal(
       Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
@@ -289,43 +317,38 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it.skip('should claim fwSNX rewards', async () => {
+  it('should claim SNX rewards', async () => {
     const poolId = 1;
 
-    // mine a few blocks
-    await provider.send('evm_mine', []);
-    await provider.send('evm_mine', []);
-    await provider.send('evm_mine', []);
-    await provider.send('evm_mine', []);
-
-    const availableRewards = await getAvailableRewards({
+    const { tokenAddress } = await getCollateralConfig('sUSDC');
+    const availableRewards = await getAvailablePoolRewards({
       accountId,
       poolId,
-      collateralType,
+      collateralType: tokenAddress,
       distributorAddress,
     });
 
     assert.ok(availableRewards > 0, 'should have some rewards to claim');
 
     assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: payoutToken }),
+      await getTokenBalance({ walletAddress: address, tokenAddress: payoutTokenAddress }),
       0,
-      'Wallet has 0 fwSNX balance BEFORE claim'
+      'Wallet has 0 SNX balance BEFORE claim'
     );
 
-    await claimRewards({
+    await claimPoolRewards({
       wallet,
       accountId,
       poolId,
-      collateralType,
+      collateralType: tokenAddress,
       distributorAddress,
     });
 
     const postClaimBalance = await getTokenBalance({
       walletAddress: address,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
     });
-    assert.ok(postClaimBalance > 0, 'Wallet has some non-zero fwSNX balance AFTER claim');
+    assert.ok(postClaimBalance > 0, 'Wallet has some non-zero SNX balance AFTER claim');
 
     assert.equal(
       Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),

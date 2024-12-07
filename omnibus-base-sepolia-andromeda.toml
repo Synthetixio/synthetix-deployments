@@ -7,7 +7,7 @@ include = [
     "tomls/markets/spot-factory.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
-    "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-base-sepolia-andromeda/pools/spartan-council.toml",
 
     # System collaterals
     "tomls/omnibus-base-sepolia-andromeda/collaterals/cbbtc.toml",
