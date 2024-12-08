@@ -32,6 +32,7 @@ const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
+const { wait } = require('../../wait');
 
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
 const rewardsDistributor = rewardsDistributors.find(
@@ -46,6 +47,11 @@ const rewardManager = rewardsDistributor.rewardManager;
 
 log({ distributorAddress, payoutTokenAddress, rewardManager });
 
+function round(val) {
+  const milli = `${Math.floor(val * 1000)}`;
+  return parseFloat(milli.slice(0, -3).concat('.').concat('12345678'.slice(-3)));
+}
+
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
   const provider = new ethers.providers.JsonRpcProvider(
@@ -57,7 +63,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   let snapshot;
   let initialBalance;
-  let initialRewardsAmount;
+  let initialDistributorRewardsAmount;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
@@ -70,10 +76,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     log('Initial balance', { initialBalance });
 
-    initialRewardsAmount = Math.round(
+    initialDistributorRewardsAmount = round(
       await getTokenRewardsDistributorRewardsAmount({ distributorAddress })
     );
-    log('Initial rewards amount', { initialRewardsAmount });
+    log('Initial rewards amount', { initialDistributorRewardsAmount });
   });
 
   after('Restore snapshot', async () => {
@@ -271,13 +277,13 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
 
     assert.equal(
-      Math.floor(
+      round(
         await getTokenBalance({
           walletAddress: distributorAddress,
           tokenAddress: payoutTokenAddress,
         })
       ),
-      Math.floor(initialBalance + 1_000),
+      round(initialBalance + 1_000),
       'Rewards Distributor has 1_000 extra SNX on its balance'
     );
   });
@@ -293,7 +299,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const amount = ethers.utils.parseUnits(`${1_000}`, 18); // the number must be in 18 decimals
     const start = Math.floor(Date.now() / 1_000);
-    const duration = 10;
+    const duration = 1;
 
     await distributeRewards({
       wallet: signer,
@@ -307,16 +313,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
 
-    // Fast forward a few blocks
-    await provider.send('evm_mine', []);
-    await provider.send('evm_mine', []);
-    await provider.send('evm_mine', []);
-
     assert.equal(
-      Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
-      Math.round(initialRewardsAmount + 1_000),
+      round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
+      round(initialDistributorRewardsAmount + 1_000),
       'should have 1_000 extra tokens in rewards'
     );
+  });
+
+  it('should wait for SNX rewards to be distributed', async () => {
+    await wait(2000);
+    await syncTime();
   });
 
   it('should claim SNX rewards', async () => {
@@ -338,6 +344,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       'Wallet has 0 SNX balance BEFORE claim'
     );
 
+    const preClaimDistributorRewardsAmount = round(
+      await getTokenRewardsDistributorRewardsAmount({ distributorAddress })
+    );
+    log({ preClaimDistributorRewardsAmount });
+
     await claimPoolRewards({
       wallet,
       accountId,
@@ -346,15 +357,32 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
       distributorAddress,
     });
 
-    const postClaimBalance = await getTokenBalance({
-      walletAddress: address,
-      tokenAddress: payoutTokenAddress,
-    });
+    const postClaimBalance = round(
+      await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: payoutTokenAddress,
+      })
+    );
+    log({ postClaimBalance });
     assert.ok(postClaimBalance > 0, 'Wallet has some non-zero SNX balance AFTER claim');
 
+    const postClaimDistributorRewardsAmount = round(
+      await getTokenRewardsDistributorRewardsAmount({ distributorAddress })
+    );
+    const expectedDistributorRewardsAmount = round(
+      preClaimDistributorRewardsAmount - postClaimBalance
+    );
+
+    log({
+      preClaimDistributorRewardsAmount,
+      postClaimBalance,
+      postClaimDistributorRewardsAmount,
+      expectedDistributorRewardsAmount,
+    });
+
     assert.equal(
-      Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
-      Math.round(initialRewardsAmount + 1_000 - postClaimBalance),
+      postClaimDistributorRewardsAmount,
+      expectedDistributorRewardsAmount,
       'should deduct claimed token amount from total distributor rewards amount'
     );
   });
