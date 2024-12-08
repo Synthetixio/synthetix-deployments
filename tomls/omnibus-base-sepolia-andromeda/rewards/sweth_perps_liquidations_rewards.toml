@@ -3,7 +3,7 @@ source = "synthetix-rewards-dist-ext:3.6.0"
 target = "synthetix-rewards-dist-ext:3.6.0@perps-sweth"
 options.salt = "<%= settings.salt %>-perps-sweth"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= settings.sc_pool_id %>"
+options.poolId = "<%= settings.spartan_council_pool_id_setting %>"
 options.payoutToken = "<%= extras.synth_weth_token_address %>"
 options.payoutTokenDecimals = "18"
 options.name = "Perps Lido Wrapped ETH Liquidation Rewards"
@@ -26,10 +26,10 @@ args = [
 [invoke.CoreProxy_registerRewardsDistributor_sweth_liquidation_rewards_for_SpartanCouncilPool_usdc_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
 func = "registerRewardsDistributor"
 args = [
-    "<%= settings.sc_pool_id %>",
+    "<%= settings.spartan_council_pool_id_setting %>",
     "<%= extras.synth_usdc_token_address %>",
     "<%= imports.RewardsDistributor_sweth_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]
@@ -37,10 +37,10 @@ args = [
 [invoke.CoreProxy_registerRewardsDistributor_sweth_liquidation_rewards_for_SpartanCouncilPool_stata_usdc_lp]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
 func = "registerRewardsDistributor"
 args = [
-    "<%= settings.sc_pool_id %>",
+    "<%= settings.spartan_council_pool_id_setting %>",
     "<%= settings.synth_stata_usdc_token_address %>",
     "<%= imports.RewardsDistributor_sweth_liquidation_rewards.contracts.RewardsDistributorExternal.address %>",
 ]

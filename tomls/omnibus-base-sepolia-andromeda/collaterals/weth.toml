@@ -22,10 +22,10 @@ depositingEnabled = false
 [invoke.CoreProxy_setPoolCollateralConfiguration_weth]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
 func = "setPoolCollateralConfiguration"
 args = [
-    "<%= settings.sc_pool_id %>",
+    "<%= settings.spartan_council_pool_id_setting %>",
     "<%= settings.weth_address %>",
     { collateralLimitD18 = "<%= settings.weth_max_collateral_limit %>", issuanceRatioD18 = 0 },
 ]

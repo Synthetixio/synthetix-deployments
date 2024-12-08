@@ -102,7 +102,7 @@ Example based on `omnibus-base-sepolia-andromeda.toml`. Make sure you have a val
 1. Run local Anvil node for the required network. Keep this running.
 
    ```sh
-   yarn cannon build omnibus-base-sepolia-andromeda.toml --port 8545 --keep-alive --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log
+   yarn cannon build omnibus-base-sepolia-andromeda.toml --anvil.port 8545 --keep-alive --dry-run --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://sepolia.base.org | tee ./e2e/cannon-build.log
    ```
 
    or

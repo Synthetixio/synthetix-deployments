@@ -36,7 +36,10 @@ function dedupedAbi(abi) {
   abi.forEach((line) => {
     const fragment = ethers.utils.Fragment.from(line);
     if (fragment) {
-      const minimal = fragment.format(ethers.utils.FormatTypes.minimal);
+      const minimal =
+        fragment.type === 'error'
+          ? fragment.format(ethers.utils.FormatTypes.sighash)
+          : fragment.format(ethers.utils.FormatTypes.minimal);
       if (!deduped.has(minimal)) {
         readableAbi.push(fragment.format(ethers.utils.FormatTypes.full));
         jsonAbi.push(JSON.parse(fragment.format(ethers.utils.FormatTypes.json)));

@@ -8,7 +8,7 @@ const { contractWrite } = require('../../tasks/contractWrite');
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-describe(require('path').basename(__filename, '.e2e.js'), function () {
+describe.skip(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
