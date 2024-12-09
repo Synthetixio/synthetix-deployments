@@ -279,7 +279,7 @@ defaultValue = "oracle-manager:3.8.1"
 defaultValue = "synthetix-spot-market:3.8.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.9.0"
+defaultValue = "synthetix-perps-market:3.11.0-orderbook"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
