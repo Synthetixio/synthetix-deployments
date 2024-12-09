@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "47"
+version = "48"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 deployers = [
@@ -260,6 +260,9 @@ include = [
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usd.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usde.toml",
     "tomls/omnibus-arbitrum-mainnet/perps/collaterals/usdc.toml",
+
+    # Owned fee collector
+    "tomls/omnibus-arbitrum-mainnet/perps/owned-fee-collector.toml",
 ]
 
 [setting.target_preset]

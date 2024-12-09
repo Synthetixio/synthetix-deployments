@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "63"
+version = "64"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 include = [
@@ -8,7 +8,6 @@ include = [
     "tomls/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
     "tomls/pools/spartan-council.toml",
-    "tomls/omnibus-base-sepolia-andromeda/perps/feeCollector.toml",
 
     # System collaterals
     "tomls/omnibus-base-sepolia-andromeda/collaterals/cbbtc.toml",
@@ -255,6 +254,8 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/wsteth.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/weth.toml",
 
+    # Owned Fee Collector
+    "tomls/omnibus-base-sepolia-andromeda/perps/owned-fee-collector.toml",
 ]
 
 [setting.snx_package]
