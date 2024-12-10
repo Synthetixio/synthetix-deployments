@@ -292,7 +292,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.10.0"
+source = "pyth-erc7412-wrapper:3.10.1"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"

@@ -295,7 +295,7 @@ defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={dat
 description = "Pyth settlement strategy config"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.10.0"
+source = "pyth-erc7412-wrapper:3.10.1"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
