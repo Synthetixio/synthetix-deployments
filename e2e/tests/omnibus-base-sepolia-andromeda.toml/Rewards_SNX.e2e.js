@@ -282,7 +282,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
           tokenAddress: payoutTokenAddress,
         })
       ),
-      initialDistributorBalance + 1_000,
+      round(initialDistributorBalance + 1_000),
       'Rewards Distributor has 1_000 extra SNX on its balance'
     );
   });
@@ -320,7 +320,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     assert.equal(
       round(await getTokenRewardsDistributorRewardedAmount({ distributorAddress })),
-      initialDistributorRewardedAmount + 1_000,
+      round(initialDistributorRewardedAmount + 1_000),
       'should have 1_000 extra tokens in rewards'
     );
 
