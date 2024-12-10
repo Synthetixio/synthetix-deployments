@@ -1,21 +1,21 @@
-[provision.spartan_council_pool_rewards]
-source = "synthetix-rewards-distributor:0.0.2"
-targetPreset = "<%= settings.target_preset %>"
-options.salt = "<%= settings.salt %>"
+[provision.RewardsDistributor_snx_rewards_for_sc_pool]
+source = "synthetix-rewards-distributor:3.9.1"
+target = "synthetix-rewards-distributor:3.9.1@pool-snx"
+options.salt = "<%= settings.salt %>-pool-snx"
 options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
-options.poolId = "<%= settings.sc_pool_id %>"
-options.collateralType = "<%= extras.synth_usdc_token_address %>"
-options.payoutToken = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
+options.poolId = "<%= settings.spartan_council_pool_id_setting %>"
+options.payoutToken = "<%= settings.snx_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Spartan Council Pool Rewards"
+options.name = "SNX Pool Rewards"
 
-[invoke.register_spartan_council_pool_rewards]
+[invoke.CoreProxy_registerRewardsDistributor_snx_rewards_for_sc_pool]
 target = ["system.CoreProxy"]
 fromCall.func = "getPoolOwner"
-fromCall.args = ["<%= settings.sc_pool_id %>"]
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
 func = "registerRewardsDistributor"
 args = [
-    "<%= settings.sc_pool_id %>",
-    "<%= extras.synth_usdc_token_address %>",
-    "<%= imports.spartan_council_pool_rewards.contracts.RewardsDistributor.address %>",
+    "<%= settings.spartan_council_pool_id_setting %>",
+    # Pool level distributor for all LPs
+    "<%= AddressZero %>",
+    "<%= imports.RewardsDistributor_snx_rewards_for_sc_pool.contracts.RewardsDistributor.address %>",
 ]

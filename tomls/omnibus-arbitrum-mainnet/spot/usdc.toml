@@ -1,12 +1,11 @@
+[var.USDC_spot_settings]
+synth_usdc_max_collateral_amount = "<%= parseEther(String(10_000_000)) %>"
+
 [invoke.SpotMarketProxy_createSynth_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "createSynth"
-args = [
-    "Synthetic USD Coin",
-    "sUSDC",
-    "<%= settings.owner %>",
-] # should have been `settings.deployer`! # NOTE is it too late to change this?
+args = ["Synthetic USD Coin", "sUSDC", "<%= settings.owner %>"]
 extra.synth_usdc_market_id.event = "SynthRegistered"
 extra.synth_usdc_market_id.arg = 0
 extra.synth_usdc_token_address.event = "SynthRegistered"
@@ -32,7 +31,7 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= settings.usdc_address %>",
-    "<%= settings.synth_usdc_max_market_collateral %>",
+    "<%= settings.synth_usdc_max_collateral_amount %>",
 ]
 
 [invoke.SpotMarketProxy_setWrapper_usdc]
@@ -43,7 +42,7 @@ func = "setWrapper"
 args = [
     "<%= extras.synth_usdc_market_id %>",
     "<%= settings.usdc_address %>",
-    "<%= settings.synth_usdc_max_market_collateral %>",
+    "<%= settings.synth_usdc_max_collateral_amount %>",
 ]
 
 [invoke.SpotMarketProxy_addSettlementStrategy_usdc]

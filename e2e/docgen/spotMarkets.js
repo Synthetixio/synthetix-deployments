@@ -1,7 +1,7 @@
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 const { addrHtmlLink } = require('./lib/addrLink');
 const { prettyMd, prettyHtml } = require('./lib/pretty');
-const { readableBigWei, readableNumber, rawValue } = require('./lib/numbers');
+const { readableBigWei, readableWei, readableNumber, rawValue } = require('./lib/numbers');
 
 async function spotMarkets() {
   const { name, version, preset, chainId } = require('../deployments/meta.json');
@@ -50,7 +50,7 @@ async function spotMarkets() {
     table.push(`
       <tr>
         <td>atomicFixedFee</td>
-        <td>${readableBigWei(market.atomicFixedFee)}</td>
+        <td>${readableWei(market.atomicFixedFee)}</td>
         <td>${rawValue(market.atomicFixedFee)}</td>
       </tr>
     `);
@@ -64,7 +64,7 @@ async function spotMarkets() {
     table.push(`
       <tr>
         <td>collateralLeverage</td>
-        <td>${readableBigWei(market.collateralLeverage)}</td>
+        <td>${readableWei(market.collateralLeverage)}</td>
         <td>${rawValue(market.collateralLeverage)}</td>
       </tr>
     `);
@@ -216,35 +216,35 @@ async function spotMarkets() {
     table.push(`
       <tr>
         <td>atomicFixedFee</td>
-        <td>${readableBigWei(market.fees.atomicFixedFee)}</td>
+        <td>${readableWei(market.fees.atomicFixedFee)}</td>
         <td>${rawValue(market.fees.atomicFixedFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>asyncFixedFee</td>
-        <td>${readableBigWei(market.fees.asyncFixedFee)}</td>
+        <td>${readableWei(market.fees.asyncFixedFee)}</td>
         <td>${rawValue(market.fees.asyncFixedFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>wrapFee</td>
-        <td>${readableBigWei(market.fees.wrapFee)}</td>
+        <td>${readableWei(market.fees.wrapFee)}</td>
         <td>${rawValue(market.fees.wrapFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>unwrapFee</td>
-        <td>${readableBigWei(market.fees.unwrapFee)}</td>
+        <td>${readableWei(market.fees.unwrapFee)}</td>
         <td>${rawValue(market.fees.unwrapFee)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>marketUtilizationFees</td>
-        <td>${readableBigWei(market.fees.marketUtilizationFees)}</td>
+        <td>${readableWei(market.fees.marketUtilizationFees)}</td>
         <td>${rawValue(market.fees.marketUtilizationFees)}</td>
       </tr>
     `);
@@ -329,28 +329,28 @@ async function spotMarkets() {
     table.push(`
       <tr>
         <td>settlementReward</td>
-        <td>${readableBigWei(market.settlementStrategy?.settlementReward)}</td>
+        <td>${readableWei(market.settlementStrategy?.settlementReward)}</td>
         <td>${rawValue(market.settlementStrategy?.settlementReward)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>priceDeviationTolerance</td>
-        <td>${readableBigWei(market.settlementStrategy?.priceDeviationTolerance)}</td>
+        <td>${readableWei(market.settlementStrategy?.priceDeviationTolerance)}</td>
         <td>${rawValue(market.settlementStrategy?.priceDeviationTolerance)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>minimumUsdExchangeAmount</td>
-        <td>${readableBigWei(market.settlementStrategy?.minimumUsdExchangeAmount)}</td>
+        <td>${readableWei(market.settlementStrategy?.minimumUsdExchangeAmount)}</td>
         <td>${rawValue(market.settlementStrategy?.minimumUsdExchangeAmount)}</td>
       </tr>
     `);
     table.push(`
       <tr>
         <td>maxRoundingLoss</td>
-        <td>${readableBigWei(market.settlementStrategy?.maxRoundingLoss)}</td>
+        <td>${readableWei(market.settlementStrategy?.maxRoundingLoss)}</td>
         <td>${rawValue(market.settlementStrategy?.maxRoundingLoss)}</td>
       </tr>
     `);

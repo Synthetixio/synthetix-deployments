@@ -6,3 +6,27 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x1813505eDB82a5c0Fc39DDB13213aC530Eb5DB6e", "<%= settings.referrer_fee %>"]
+
+[invoke.PerpsMarketProxy_updateReferrerShare_Prf]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x32A74B2cE1a0783A182f607D29207e571a1cDD4D", "<%= settings.referrer_fee %>"]
+
+[invoke.PerpsMarketProxy_updateReferrerShare_MassDotMoney]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xf944069B489F1ebfF4C3C6a6014d58cBEf7C7009", "<%= settings.referrer_fee %>"]
+
+[invoke.PerpsMarketProxy_updateReferrerShare_Synthetix]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xd25215758734dd3ade497ce04de1c35820964126", "<%= settings.referrer_fee %>"]
+
+[invoke.PerpsMarketProxy_updateReferrerShare_CyberDEX]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0x829d7E022c2ACD05a875bCa4Bd11F56E003B727B", "<%= settings.referrer_fee %>"]
