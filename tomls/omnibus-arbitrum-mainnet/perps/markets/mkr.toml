@@ -13,7 +13,7 @@ mkr_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 mkr_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 mkr_perps_max_seconds_in_liquidation_window = "30"
 mkr_perps_minimum_position_margin = "<%= parseEther('15') %>"
-mkr_perps_locked_oi_ratio = "<%= parseEther('0.20') %>"
+mkr_perps_locked_oi_ratio = "<%= parseEther('0.10') %>"
 mkr_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 mkr_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 
