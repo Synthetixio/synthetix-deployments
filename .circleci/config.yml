@@ -50,7 +50,7 @@ commands:
           name: Run anvil on 127.0.0.1:<< parameters.port >>
           command: |
             anvil \
-              --anvil.port << parameters.port >> \
+              --port << parameters.port >> \
               --fork-url "$<< parameters.rpc-env >>"
           background: true
 
