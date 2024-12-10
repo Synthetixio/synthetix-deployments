@@ -273,7 +273,7 @@ jobs:
           command: |
             yarn cannon build << parameters.toml >> \
               --keep-alive \
-              --port 8545 \
+              --anvil.port 8545 \
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
@@ -372,7 +372,7 @@ jobs:
           command: |
             yarn cannon build << parameters.toml >> \
               --keep-alive \
-              --port 8545 \
+              --anvil.port 8545 \
               --dry-run \
               --chain-id << parameters.chain-id >> \
               --provider-url "$<< parameters.rpc-env >>" \
@@ -666,7 +666,7 @@ jobs:
           command: |
             yarn cannon build << parameters.toml >> \
               --keep-alive \
-              --port 8545 \
+              --anvil.port 8545 \
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \

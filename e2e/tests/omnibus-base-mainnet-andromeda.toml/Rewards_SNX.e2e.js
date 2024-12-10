@@ -24,27 +24,33 @@ const { distributeRewards } = require('../../tasks/distributeRewards');
 const { getPoolOwner } = require('../../tasks/getPoolOwner');
 const { getTokenRewardsDistributorInfo } = require('../../tasks/getTokenRewardsDistributorInfo');
 const {
-  getTokenRewardsDistributorRewardsAmount,
-} = require('../../tasks/getTokenRewardsDistributorRewardsAmount');
-const { getAvailableRewards } = require('../../tasks/getAvailableRewards');
-const { claimRewards } = require('../../tasks/claimRewards');
+  getTokenRewardsDistributorRewardedAmount,
+} = require('../../tasks/getTokenRewardsDistributorRewardedAmount');
+const { getAvailablePoolRewards } = require('../../tasks/getAvailablePoolRewards');
+const { claimPoolRewards } = require('../../tasks/claimPoolRewards');
 const { setSpotWrapper } = require('../../tasks/setSpotWrapper');
 const {
   configureMaximumMarketCollateral,
 } = require('../../tasks/configureMaximumMarketCollateral');
+const { wait } = require('../../wait');
 
-const {
-  address: distributorAddress,
-} = require('../../deployments/RewardsDistributor_1_sUSDC_SNX.json');
 const rewardsDistributors = require('../../deployments/rewardsDistributors.json');
-const rewardsDistributor = rewardsDistributors.find((rd) => rd.address === distributorAddress);
+const rewardsDistributor = rewardsDistributors.find(
+  (rd) =>
+    rd.isRegistered && !rd.collateralType && rd.poolId === '1' && rd.name === 'SNX Pool Rewards'
+);
 log({ rewardsDistributor });
 
-const payoutToken = rewardsDistributor.payoutToken.address;
+const distributorAddress = rewardsDistributor.address;
+const payoutTokenAddress = rewardsDistributor.payoutToken.address;
 const rewardManager = rewardsDistributor.rewardManager;
-const collateralType = rewardsDistributor.collateralType.address;
 
-log({ distributorAddress, payoutToken, rewardManager, collateralType });
+log({ distributorAddress, payoutTokenAddress, rewardManager });
+
+function round(val) {
+  const milli = `${Math.floor(val * 1000)}`;
+  return parseFloat(milli.slice(0, -3).concat('.').concat(milli.slice(-3)));
+}
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const accountId = parseInt(`1337${crypto.randomInt(1000)}`);
@@ -56,24 +62,23 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   const privateKey = wallet.privateKey;
 
   let snapshot;
-  let initialBalance;
-  let initialRewardsAmount;
+  let initialDistributorBalance;
+  let initialDistributorRewardedAmount;
 
   before('Create snapshot', async () => {
     snapshot = await provider.send('evm_snapshot', []);
     log('Create snapshot', { snapshot });
-
-    initialBalance = await getTokenBalance({
-      walletAddress: distributorAddress,
-      tokenAddress: payoutToken,
-    }).catch(console.error);
-
-    log('Initial balance', { initialBalance });
-
-    initialRewardsAmount = Math.round(
-      await getTokenRewardsDistributorRewardsAmount({ distributorAddress })
+    initialDistributorBalance = round(
+      await getTokenBalance({
+        walletAddress: distributorAddress,
+        tokenAddress: payoutTokenAddress,
+      })
     );
-    log('Initial rewards amount', { initialRewardsAmount });
+    log({ initialDistributorBalance });
+    initialDistributorRewardedAmount = round(
+      await getTokenRewardsDistributorRewardedAmount({ distributorAddress })
+    );
+    log({ initialDistributorRewardedAmount });
   });
 
   after('Restore snapshot', async () => {
@@ -87,16 +92,16 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
   it('should validate Rewards Distributor info', async () => {
     const info = await getTokenRewardsDistributorInfo({ distributorAddress });
-    assert.equal(info.name, 'Spartan Council Pool Rewards', 'name');
+    assert.equal(info.name, 'SNX Pool Rewards', 'name');
     assert.equal(info.poolId, 1, 'poolId');
-    assert.equal(info.collateralType, collateralType, 'collateralType');
+    assert.equal(info.collateralType, undefined, 'collateralType');
     assert.equal(
       `${info.payoutToken}`.toLowerCase(),
-      `${payoutToken}`.toLowerCase(),
+      `${payoutTokenAddress}`.toLowerCase(),
       'payoutToken'
     );
     assert.equal(info.precision, 10 ** 18, 'precision');
-    assert.equal(`${info.token}`.toLowerCase(), `${payoutToken}`.toLowerCase(), 'token');
+    assert.equal(`${info.token}`.toLowerCase(), `${payoutTokenAddress}`.toLowerCase(), 'token');
     assert.equal(info.rewardManager, rewardManager, 'rewardManager');
     assert.equal(info.shouldFailPayout, false, 'shouldFailPayout');
   });
@@ -256,25 +261,30 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should fund RewardDistributor with 1_000 SNX', async () => {
+    const tmpWallet = ethers.Wallet.createRandom().connect(provider);
+    await setEthBalance({ address: tmpWallet.address, balance: 100 });
     await setTokenBalance({
-      wallet,
+      wallet: tmpWallet,
       balance: 1_000,
-      tokenAddress: payoutToken,
+      tokenAddress: payoutTokenAddress,
       friendlyWhale: '0xcc79bfa7a3212d94390c358e88afcd39294549ca',
     });
 
     await transferToken({
-      privateKey,
-      tokenAddress: payoutToken,
+      privateKey: tmpWallet.privateKey,
+      tokenAddress: payoutTokenAddress,
       targetWalletAddress: distributorAddress,
       amount: 1_000,
     });
 
     assert.equal(
-      Math.floor(
-        await getTokenBalance({ walletAddress: distributorAddress, tokenAddress: payoutToken })
+      round(
+        await getTokenBalance({
+          walletAddress: distributorAddress,
+          tokenAddress: payoutTokenAddress,
+        })
       ),
-      Math.floor(initialBalance + 1_000),
+      round(initialDistributorBalance + 1_000),
       'Rewards Distributor has 1_000 extra SNX on its balance'
     );
   });
@@ -285,18 +295,24 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     log({ poolOwner });
     await setEthBalance({ address: poolOwner, balance: 100 });
 
+    const preDistributeBalance = round(
+      await getTokenBalance({ walletAddress: address, tokenAddress: payoutTokenAddress })
+    );
+    log({ preDistributeBalance });
+    assert.equal(preDistributeBalance, 0, 'Wallet has 0 SNX balance BEFORE distribution');
+
     await provider.send('anvil_impersonateAccount', [poolOwner]);
     const signer = provider.getSigner(poolOwner);
 
     const amount = ethers.utils.parseUnits(`${1_000}`, 18); // the number must be in 18 decimals
     const start = Math.floor(Date.now() / 1_000);
-    const duration = 10;
+    const duration = 1;
 
     await distributeRewards({
       wallet: signer,
       distributorAddress,
       poolId,
-      collateralType,
+      collateralType: ethers.constants.AddressZero,
       amount,
       start,
       duration,
@@ -305,48 +321,86 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     await provider.send('anvil_stopImpersonatingAccount', [poolOwner]);
 
     assert.equal(
-      Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
-      Math.round(initialRewardsAmount + 1_000),
+      round(await getTokenRewardsDistributorRewardedAmount({ distributorAddress })),
+      round(initialDistributorRewardedAmount + 1_000),
       'should have 1_000 extra tokens in rewards'
     );
+
+    const postDistributeBalance = round(
+      await getTokenBalance({ walletAddress: address, tokenAddress: payoutTokenAddress })
+    );
+    log({ postDistributeBalance });
+    assert.equal(postDistributeBalance, 0, 'Wallet has 0 SNX balance AFTER distribution');
   });
 
-  it.skip('should claim SNX rewards', async () => {
+  it('should wait for SNX rewards to be distributed', async () => {
+    await wait(2000);
+    await syncTime();
+  });
+
+  it('should claim SNX rewards', async () => {
     const poolId = 1;
 
-    const availableRewards = await getAvailableRewards({
+    const { tokenAddress } = await getCollateralConfig('sUSDC');
+    const availableRewards = await getAvailablePoolRewards({
       accountId,
       poolId,
-      collateralType,
+      collateralType: tokenAddress,
       distributorAddress,
     });
-
+    log({ availableRewards });
     assert.ok(availableRewards > 0, 'should have some rewards to claim');
 
-    assert.equal(
-      await getTokenBalance({ walletAddress: address, tokenAddress: payoutToken }),
-      0,
-      'Wallet has 0 SNX balance BEFORE claim'
+    const preClaimBalance = round(
+      await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: payoutTokenAddress,
+      })
     );
+    log({ preClaimBalance });
+    assert.equal(preClaimBalance, 0, 'Wallet has 0 SNX balance BEFORE claim');
 
-    await claimRewards({
+    const preClaimDistributorBalance = round(
+      await getTokenBalance({
+        walletAddress: distributorAddress,
+        tokenAddress: payoutTokenAddress,
+      })
+    );
+    log({ preClaimDistributorBalance });
+
+    await claimPoolRewards({
       wallet,
       accountId,
       poolId,
-      collateralType,
+      collateralType: tokenAddress,
       distributorAddress,
     });
 
-    const postClaimBalance = await getTokenBalance({
-      walletAddress: address,
-      tokenAddress: payoutToken,
-    });
+    const postClaimBalance = round(
+      await getTokenBalance({
+        walletAddress: address,
+        tokenAddress: payoutTokenAddress,
+      })
+    );
+    log({ postClaimBalance });
     assert.ok(postClaimBalance > 0, 'Wallet has some non-zero SNX balance AFTER claim');
 
-    assert.equal(
-      Math.round(await getTokenRewardsDistributorRewardsAmount({ distributorAddress })),
-      Math.round(initialRewardsAmount + 1_000 - postClaimBalance),
-      'should deduct claimed token amount from total distributor rewards amount'
+    const postClaimClaimDistributorBalance = round(
+      await getTokenBalance({
+        walletAddress: distributorAddress,
+        tokenAddress: payoutTokenAddress,
+      })
+    );
+    log({ postClaimClaimDistributorBalance });
+
+    log({
+      preClaimDistributorBalance,
+      postClaimBalance,
+      postClaimClaimDistributorBalance,
+    });
+    assert.ok(
+      postClaimClaimDistributorBalance < preClaimDistributorBalance,
+      'Distributor balance reduced AFTER claim'
     );
   });
 });

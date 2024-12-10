@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "66"
+version = "68"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -36,8 +36,6 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/spot/weth.toml",
 
     # Perps Liquidation rewards
-    "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
-    "tomls/omnibus-base-mainnet-andromeda/rewards/usdc_rewards_for_sc_pool.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/usdc_rewards_for_sc_pool.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/scbbtc_perps_liquidations_rewards.toml",
@@ -338,9 +336,6 @@ defaultValue = "<%= parseEther('0.4') %>"
 [setting.pool_owner]
 defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 
-[setting.usdc_address]
-defaultValue = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
-
 [setting.stataBasUSDC_address]
 defaultValue = "0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
@@ -348,9 +343,10 @@ description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13c
 [var.token_addresses]
 cbbtc_address = "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
 cbeth_address = "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22"
-wsteth_address = "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452"
-weth_address = "0x4200000000000000000000000000000000000006"
 snx_address = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
+usdc_address = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+weth_address = "0x4200000000000000000000000000000000000006"
+wsteth_address = "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452"
 
 [setting.pyth_feed_url]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
