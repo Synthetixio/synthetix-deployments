@@ -265,19 +265,19 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.8.1"
+defaultValue = "synthetix:3.10.1"
 
 [setting.perps_keeper_cost_package]
-defaultValue = "op-gas-price-oracle:3.4.0"
+defaultValue = "op-gas-price-oracle:3.10.0"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.1"
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.8.1"
+defaultValue = "synthetix-spot-market:3.10.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.9.0"
+defaultValue = "synthetix-perps-market:3.10.1"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.5" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
@@ -292,7 +292,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 defaultValue = "0x8250f4aF4B972684F7b336503E2D6dFeDeB1487a"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.3.15"
+source = "pyth-erc7412-wrapper:3.10.1"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
