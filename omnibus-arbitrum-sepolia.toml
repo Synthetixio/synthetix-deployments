@@ -2,6 +2,7 @@ name = "synthetix-omnibus"
 version = "48"
 description = "Arbitrum deployment"
 preset = "main"
+deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/omnibus-arbitrum-sepolia/core.toml",
     "tomls/markets/spot-factory.toml",
