@@ -95,10 +95,16 @@ args = ["<%= extras.synth_btc_market_id %>", "<%= parseEther('10') %>"]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
-args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_btc_market_id.toString()) %>", true]
+args = [
+    "<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_btc_market_id.toString()) %>",
+    true,
+]
 
 [invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
-args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_btc_market_id.toString()) %>", true]
+args = [
+    "<%= formatBytes32String('wrapperEnabled' + extras.synth_btc_market_id.toString()) %>",
+    true,
+]
