@@ -77,10 +77,16 @@ options.decimals = "6"
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
-args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_usdc_market_id) %>", true]
+args = [
+    "<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_usdc_market_id.toString()) %>",
+    true,
+]
 
 [invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
-args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_usdc_market_id) %>", true]
+args = [
+    "<%= formatBytes32String('wrapperEnabled' + extras.synth_usdc_market_id.toString()) %>",
+    true,
+]

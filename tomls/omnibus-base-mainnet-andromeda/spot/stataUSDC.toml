@@ -82,7 +82,7 @@ target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
 args = [
-    "<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_stata_usdc_market_id) %>",
+    "<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_stata_usdc_market_id..toString()) %>",
     true,
 ]
 
@@ -90,4 +90,7 @@ args = [
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
-args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_stata_usdc_market_id) %>", true]
+args = [
+    "<%= formatBytes32String('wrapperEnabled' + extras.synth_stata_usdc_market_id..toString()) %>",
+    true,
+]
