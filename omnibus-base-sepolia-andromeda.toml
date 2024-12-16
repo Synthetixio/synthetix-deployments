@@ -6,7 +6,7 @@ deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/omnibus-base-sepolia-andromeda/core.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/permissions.toml",
+    "tomls/omnibus-base-sepolia-andromeda/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
     "tomls/omnibus-base-sepolia-andromeda/pools/spartan-council.toml",
 

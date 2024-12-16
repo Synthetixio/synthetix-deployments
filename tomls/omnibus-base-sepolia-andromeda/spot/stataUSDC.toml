@@ -80,3 +80,15 @@ liquidationRatioD18 = "<%= settings.statausdc_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.statausdc_liquidation_reward  %>"
 minDelegationD18 = "<%= settings.statausdc_min_delegation %>"
 depositingEnabled = false
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_stata_usdc_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_stata_usdc_market_id) %>", true]

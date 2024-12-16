@@ -72,3 +72,15 @@ options.name = "Fake USD Coin"
 options.symbol = "fUSDC"
 options.owner = "<%= settings.owner %>"
 options.decimals = "6"
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_usdc_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_usdc_market_id) %>", true]
