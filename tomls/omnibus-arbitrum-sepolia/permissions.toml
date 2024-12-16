@@ -88,6 +88,12 @@ func = "addToFeatureFlagAllowlist"
 fromCall.func = "owner"
 args = ["<%= formatBytes32String('createSynth') %>", "<%= settings.deployer %>"]
 
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_spotMarketEnabled]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = ["<%= formatBytes32String('spotMarketEnabled') %>", true]
+
 [invoke.PerpsMarketProxy_addToFeatureFlagAllowlist_createMarket_deployer]
 target = ["perpsFactory.PerpsMarketProxy"]
 func = "addToFeatureFlagAllowlist"
