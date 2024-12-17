@@ -63,3 +63,21 @@ liquidationRatioD18 = "<%= parseEther('1.005') %>"
 liquidationRewardD18 = "<%= parseEther('1') %>"
 minDelegationD18 = "<%= parseEther('100') %>"
 depositingEnabled = false
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = [
+    "<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_usdc_market_id.toString()) %>",
+    true,
+]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_usdc]
+target = ["spotFactory.SpotMarketProxy"]
+func = "setFeatureFlagAllowAll"
+fromCall.func = "owner"
+args = [
+    "<%= formatBytes32String('wrapperEnabled' + extras.synth_usdc_market_id.toString()) %>",
+    true,
+]
