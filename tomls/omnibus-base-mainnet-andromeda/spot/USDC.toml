@@ -64,7 +64,7 @@ liquidationRewardD18 = "<%= parseEther('1') %>"
 minDelegationD18 = "<%= parseEther('100') %>"
 depositingEnabled = false
 
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled]
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
@@ -73,7 +73,7 @@ args = [
     true,
 ]
 
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_usdc]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"

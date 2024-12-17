@@ -90,7 +90,7 @@ fromCall.args = ["<%= extras.synth_sol_market_id %>"]
 func = "setCollateralLeverage"
 args = ["<%= extras.synth_sol_market_id %>", "<%= parseEther('10') %>"]
 
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled]
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_sol]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
@@ -99,7 +99,7 @@ args = [
     true,
 ]
 
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_sol]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"

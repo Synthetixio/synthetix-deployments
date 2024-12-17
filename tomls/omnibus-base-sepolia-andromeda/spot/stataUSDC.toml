@@ -81,7 +81,7 @@ liquidationRewardD18 = "<%= settings.statausdc_liquidation_reward  %>"
 minDelegationD18 = "<%= settings.statausdc_min_delegation %>"
 depositingEnabled = false
 
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled]
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_stataUSDC]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
@@ -90,7 +90,7 @@ args = [
     true,
 ]
 
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_stataUSDC]
 target = ["spotFactory.SpotMarketProxy"]
 func = "setFeatureFlagAllowAll"
 fromCall.func = "owner"
