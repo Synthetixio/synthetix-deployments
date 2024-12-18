@@ -5,6 +5,7 @@ const { ethers } = require('ethers');
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
 async function getTokenRewardsDistributorRewardsAmount({ distributorAddress }) {
+  log({ distributorAddress });
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.RPC_URL || 'http://127.0.0.1:8545'
   );
@@ -22,6 +23,7 @@ async function getTokenRewardsDistributorRewardsAmount({ distributorAddress }) {
     RewardsDistributor.rewardsAmount().catch(() => null),
     RewardsDistributor.rewardedAmount().catch(() => null),
   ]);
+  log({ payoutToken, rewardsAmount, rewardedAmount });
 
   const Token = new ethers.Contract(
     payoutToken,

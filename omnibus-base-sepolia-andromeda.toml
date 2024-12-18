@@ -1,13 +1,14 @@
 name = "synthetix-omnibus"
-version = "64"
+version = "67"
 description = "Andromeda dev deployment"
 preset = "andromeda"
+deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/omnibus-base-sepolia-andromeda/core.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
-    "tomls/pools/spartan-council.toml",
+    "tomls/omnibus-base-sepolia-andromeda/pools/spartan-council.toml",
 
     # System collaterals
     "tomls/omnibus-base-sepolia-andromeda/collaterals/cbbtc.toml",
@@ -118,6 +119,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-slerf.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-snx.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-sol.toml",
+    "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-soleth.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-strk.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-stx.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-sui.toml",
@@ -231,6 +233,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/slerf.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/snx.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/sol.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/markets/soleth.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/strk.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/stx.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/sui.toml",
@@ -259,16 +262,16 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.0"
+defaultValue = "synthetix:3.10.1"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.10.0"
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.10.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.8.1"
+defaultValue = "synthetix-spot-market:3.10.1"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.11.0-orderbook"
@@ -287,7 +290,7 @@ defaultValue = "andromeda" # Preset assigned to provisioned packages
 defaultValue = "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.10.0"
+source = "pyth-erc7412-wrapper:3.10.1"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
@@ -320,7 +323,7 @@ args = [
 ]
 depends = ['provision.system', 'setting.account_timeout_withdraw']
 
-[setting.sc_pool_id]
+[setting.spartan_council_pool_id_setting]
 defaultValue = "1"
 
 [setting.commitment_price_delay]
@@ -381,11 +384,20 @@ options.symbol = "wstETH"
 options.owner = "<%= settings.owner %>"
 options.decimals = "18"
 
+[provision.snx_mock_collateral]
+source = "mintable-token:1.8"
+target = "synthetix-mock-tokens:1.8@snx"
+options.name = "Fake SNX"
+options.symbol = "SNX"
+options.owner = "<%= settings.owner %>"
+options.decimals = "18"
+
 [var.token_addresses]
 cbbtc_address = "<%= imports.cbbtc_mock_collateral.contracts.MintableToken.address %>"
 cbeth_address = "<%= imports.cbeth_mock_collateral.contracts.MintableToken.address %>"
-wsteth_address = "<%= imports.wsteth_mock_collateral.contracts.MintableToken.address %>"
+snx_address = "<%= imports.snx_mock_collateral.contracts.MintableToken.address %>"
 weth_address = "0x4200000000000000000000000000000000000006"
+wsteth_address = "<%= imports.wsteth_mock_collateral.contracts.MintableToken.address %>"
 
 [setting.pyth_feed_url]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
@@ -471,6 +483,7 @@ pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd
 pyth_feed_id_slerf = "0x1a483c4a63876d286991ac0d6e090298db42e88c3826b6e0cff89daca498eed5"
 pyth_feed_id_snx = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
 pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+pyth_feed_id_soleth = "0xde87506dabfadbef89af2d5d796ebae80ddaea240fc7667aa808fce3629cd8fb"
 pyth_feed_id_strk = "0x6a182399ff70ccf3e06024898942028204125a819e519a335ffa4579e66cd870"
 pyth_feed_id_stx = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
 pyth_feed_id_sui = "0x23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744"

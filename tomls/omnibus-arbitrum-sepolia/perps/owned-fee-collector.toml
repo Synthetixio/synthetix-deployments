@@ -4,7 +4,7 @@ targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.owner = "<%= settings.owner %>"
 options.fee_share_recipient = "0xf2107A85d8b79CBd2c5b2Bb63CA73Fd068040b67"
-options.fee_share = "500000000000000000"
+options.fee_share = "250000000000000000"
 options.fee_token = "<%= imports.system.contracts.USDProxy.address %>"
 depends = ['provision.system']
 

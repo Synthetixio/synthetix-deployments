@@ -13,7 +13,7 @@ morpho_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 morpho_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 morpho_perps_max_seconds_in_liquidation_window = "30"
 morpho_perps_minimum_position_margin = "<%= parseEther('15') %>"
-morpho_perps_locked_oi_ratio = "<%= parseEther('0.20') %>"
+morpho_perps_locked_oi_ratio = "<%= parseEther('0.10') %>"
 morpho_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 morpho_perps_endorsed_liquidator = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 

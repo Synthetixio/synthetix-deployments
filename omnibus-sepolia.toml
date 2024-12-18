@@ -1,6 +1,7 @@
 name = "synthetix-omnibus"
 version = "9"
 description = "Includes the full synthetix system with configurations applied"
+deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/settings.toml",
     "tomls/ccip-testnet.toml",
