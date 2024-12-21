@@ -17,13 +17,13 @@ virtual_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
 virtual_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 virtual_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 
-[invoke.createVirtualPerpsMarket]
+[invoke.createPenguPerpsMarket]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
 args = ["<%= settings.virtual_perps_market_id %>", "Virtuals Protocol", "VIRTUAL"]
 
-[invoke.setPerpsPriceVirtual]
+[invoke.setPerpsPricePengu]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updatePriceData"
@@ -33,7 +33,7 @@ args = [
     "<%= settings.strict_staleness_tolerance %>",
 ]
 
-[invoke.addPerpsVirtualSettlementStrategy]
+[invoke.addPerpsPenguSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "addSettlementStrategy"
@@ -45,7 +45,7 @@ args = [
 ]
 extra.virtual_pyth_settlement_strategy.event = "SettlementStrategyAdded"
 extra.virtual_pyth_settlement_strategy.arg = 2
-[invoke.setPerpsVirtualSettlementStrategy]
+[invoke.setPerpsPenguSettlementStrategy]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setSettlementStrategy"
@@ -55,7 +55,7 @@ args = [
     { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_virtual %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
 ]
 
-[invoke.setPerpsVirtualFundingParameters]
+[invoke.setPerpsPenguFundingParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setFundingParameters"
@@ -65,7 +65,7 @@ args = [
     "<%= settings.virtual_perps_market_max_funding_velocity %>",
 ]
 
-[invoke.setPerpsVirtualOrderFees]
+[invoke.setPerpsPenguOrderFees]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setOrderFees"
@@ -75,19 +75,19 @@ args = [
     "<%= settings.virtual_perps_taker_fee_ratio %>",
 ]
 
-[invoke.setPerpsVirtualMaxMarketSize]
+[invoke.setPerpsPenguMaxMarketSize]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
 args = ["<%= settings.virtual_perps_market_id %>", "<%= settings.virtual_perps_max_market_size %>"]
 
-[invoke.setPerpsVirtualMaxMarketValue]
+[invoke.setPerpsPenguMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
 args = ["<%= settings.virtual_perps_market_id %>", "<%= settings.virtual_perps_max_market_value %>"]
 
-[invoke.setPerpsVirtualMaxLiquidationParameters]
+[invoke.setPerpsPenguMaxLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxLiquidationParameters"
@@ -99,7 +99,7 @@ args = [
     "<%= settings.virtual_perps_endorsed_liquidator %>",
 ]
 
-[invoke.setPerpsVirtualLiquidationParameters]
+[invoke.setPerpsPenguLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLiquidationParameters"
@@ -112,7 +112,7 @@ args = [
     "<%= settings.virtual_perps_minimum_position_margin %>",
 ]
 
-[invoke.setPerpsVirtualLockedOiRatio]
+[invoke.setPerpsPenguLockedOiRatio]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
