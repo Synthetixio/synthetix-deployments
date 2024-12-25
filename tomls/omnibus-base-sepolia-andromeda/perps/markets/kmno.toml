@@ -1,5 +1,5 @@
 [var.perps_kmno_market_settings]
-kmno_perps_market_id = "9700"
+kmno_perps_market_id = "9800"
 kmno_perps_market_skew_scale = "<%= parseEther(String(5_000_000)) %>"
 kmno_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 kmno_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
