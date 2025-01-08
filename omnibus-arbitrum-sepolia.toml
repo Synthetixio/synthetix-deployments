@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "48"
+version = "49"
 description = "Arbitrum deployment"
 preset = "main"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
