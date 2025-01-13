@@ -99,7 +99,7 @@ async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract 
     wallet
   );
 
-  const fee = feedIds.length * 4;
+  const fee = feedIds.length;
 
   const args = [
     //
