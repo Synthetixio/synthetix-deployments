@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "70"
+version = "71"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
@@ -142,6 +142,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-yfi.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-zro.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/stataUSDC-USDC.toml",
+    "tomls/omnibus-base-sepolia-andromeda/oracles/trump.toml",
 
     #
     # Perps
@@ -248,6 +249,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/tao.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/tia.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/ton.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/markets/trump.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/trx.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/uni.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/virtual.toml",
@@ -515,3 +517,4 @@ pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"
 pyth_feed_id_zro = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018"
+pyth_feed_id_trump = "0x879551021853eec7a7dc827578e8e69da7e4fa8148339aa0d3d5296405be4b1a"
