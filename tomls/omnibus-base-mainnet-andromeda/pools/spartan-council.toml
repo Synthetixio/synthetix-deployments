@@ -17,10 +17,3 @@ fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
 func = "setPoolName"
 args = ["<%= settings.spartan_council_pool_id_setting %>", "Spartan Council Pool"]
 depends = ["invoke.createScPool"]
-
-[invoke.setPreferredPool]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setPreferredPool"
-args = ["<%= settings.spartan_council_pool_id_setting %>"]
-depends = ["invoke.createScPool"]
