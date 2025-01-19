@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "73"
+version = "74"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -140,6 +140,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-tao.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-tia.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ton.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-trump.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-trx.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-uni.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-virtual.toml",
@@ -259,6 +260,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/tao.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/tia.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/ton.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/trump.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/trx.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/uni.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/virtual.toml",
@@ -463,6 +465,7 @@ pyth_feed_id_sushi = "0x26e4f737fde0263a9eea10ae63ac36dcedab2aaf629261a994e1eeb6
 pyth_feed_id_tao = "0x410f41de235f2db824e562ea7ab2d3d3d4ff048316c61d629c0b93f58584e1af"
 pyth_feed_id_tia = "0x09f7c1d7dfbb7df2b8fe3d3d87ee94a2259d212da4f30c1f0540d066dfa44723"
 pyth_feed_id_ton = "0x8963217838ab4cf5cadc172203c1f0b763fbaa45f346d8ee50ba994bbcac3026"
+pyth_feed_id_trump = "0x879551021853eec7a7dc827578e8e69da7e4fa8148339aa0d3d5296405be4b1a"
 pyth_feed_id_trx = "0x67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b"
 pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
 pyth_feed_id_virtual = "0x8132e3eb1dac3e56939a16ff83848d194345f6688bff97eb1c8bd462d558802b"
