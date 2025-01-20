@@ -56,6 +56,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@endo/env-options@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "@endo/env-options@npm:1.1.8"
+  checksum: 10/f7e84346599dd2bcb6365c314e9a8129c5ebbb457476de72ed896ea461d616c0b7e0dfc7733e20c0abb8400212fb5eafdae993bcfd4cbfe92acbb5c881a6ad0d
+  languageName: node
+  linkType: hard
+
 "@ethersproject/abi@npm:5.7.0, @ethersproject/abi@npm:^5.1.2, @ethersproject/abi@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/abi@npm:5.7.0"
@@ -1122,35 +1129,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.20.3":
-  version: 2.20.3
-  resolution: "@usecannon/builder@npm:2.20.3"
+"@usecannon/builder@npm:2.21.0":
+  version: 2.21.0
+  resolution: "@usecannon/builder@npm:2.21.0"
   dependencies:
     "@usecannon/router": "npm:^4.1.2"
     "@usecannon/web-solc": "npm:0.5.1"
+    acorn: "npm:^8.14.0"
     axios: "npm:^1.7.2"
     axios-retry: "npm:^4.4.2"
     buffer: "npm:^6.0.3"
     chalk: "npm:^4.1.2"
     debug: "npm:^4.3.6"
+    deep-freeze: "npm:^0.0.1"
     form-data: "npm:^4.0.0"
     fuse.js: "npm:^7.0.0"
     lodash: "npm:^4.17.21"
     pako: "npm:^2.1.0"
     promise-events: "npm:^0.2.4"
+    rfdc: "npm:^1.4.1"
+    ses: "npm:^1.10.0"
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.21.15"
     zod: "npm:^3.23.6"
-  checksum: 10/8f98166e699a499b5049afbe83a885160feba7b1ddfec1232d1c836848981722f9fd43fb019736440129a6b9c8174f29fd92d046ba042b12b62aa67d49b0c784
+  checksum: 10/24fb5bc43792bec3cc68f0770e043f9ac73003818ba7526812800c2d00787e7acac7e40326924d1f1cdcbc9110ebc192a555b7a6bb9be2caa65ff5dd889ebc72
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.20.3":
-  version: 2.20.3
-  resolution: "@usecannon/cli@npm:2.20.3"
+"@usecannon/cli@npm:2.21.0":
+  version: 2.21.0
+  resolution: "@usecannon/cli@npm:2.21.0"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.20.3"
+    "@usecannon/builder": "npm:2.21.0"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^12.1.0"
@@ -1169,7 +1180,7 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/633976b7edcf59b4ac18262ce9c357c1ec358f5d20233b828558ceed32bac717da6eb9956764adbe5d55679ad1e891d132c24007185bc577e2c4add5f8e74db3
+  checksum: 10/bad774b50cc7166ca4f1dfbf011eff9ace92b8014fa2441cc58bf4e2ed833e12a970c5ad83d9d68a306f5f821b020cfa144c47934f92fa04f2c9b3de49575fbe
   languageName: node
   linkType: hard
 
@@ -1211,6 +1222,15 @@ __metadata:
     zod:
       optional: true
   checksum: 10/d04d58f90405c29a3c68353508502d7e870feb27418a6281ba9a13e6aaee42c26b2c5f08f648f058b8eaffac32927194b33f396d2451d18afeccfb654c7285c2
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.14.0":
+  version: 8.14.0
+  resolution: "acorn@npm:8.14.0"
+  bin:
+    acorn: bin/acorn
+  checksum: 10/6df29c35556782ca9e632db461a7f97947772c6c1d5438a81f0c873a3da3a792487e83e404d1c6c25f70513e91aa18745f6eafb1fcc3a43ecd1920b21dd173d2
   languageName: node
   linkType: hard
 
@@ -1900,6 +1920,13 @@ __metadata:
   version: 4.0.0
   resolution: "decamelize@npm:4.0.0"
   checksum: 10/b7d09b82652c39eead4d6678bb578e3bebd848add894b76d0f6b395bc45b2d692fb88d977e7cfb93c4ed6c119b05a1347cef261174916c2e75c0a8ca57da1809
+  languageName: node
+  linkType: hard
+
+"deep-freeze@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "deep-freeze@npm:0.0.1"
+  checksum: 10/40a3cc1be9db9c09e23097ff51d7f842a950d4d55e9561cb77ded051de4381fe7d077be939cb9545013e0215e577dc3dbd21cba9972f7dad179a2d3c635d1a9b
   languageName: node
   linkType: hard
 
@@ -4125,6 +4152,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rfdc@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "rfdc@npm:1.4.1"
+  checksum: 10/2f3d11d3d8929b4bfeefc9acb03aae90f971401de0add5ae6c5e38fec14f0405e6a4aad8fdb76344bfdd20c5193110e3750cbbd28ba86d73729d222b6cf4a729
+  languageName: node
+  linkType: hard
+
 "ripemd160@npm:^2.0.0, ripemd160@npm:^2.0.1":
   version: 2.0.2
   resolution: "ripemd160@npm:2.0.2"
@@ -4212,6 +4246,15 @@ __metadata:
   dependencies:
     randombytes: "npm:^2.1.0"
   checksum: 10/445a420a6fa2eaee4b70cbd884d538e259ab278200a2ededd73253ada17d5d48e91fb1f4cd224a236ab62ea7ba0a70c6af29fc93b4f3d3078bf7da1c031fde58
+  languageName: node
+  linkType: hard
+
+"ses@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "ses@npm:1.10.0"
+  dependencies:
+    "@endo/env-options": "npm:^1.1.8"
+  checksum: 10/57073350cab333e3c4516e8ea09e1ddd2f81fdd954dc48798548d098550d1da8bb3266def0461a34a4e11c0a1027bde03e05f2ac5feb512ff3fc33dd327a9bb2
   languageName: node
   linkType: hard
 
@@ -4547,8 +4590,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.76.0"
-    "@usecannon/builder": "npm:2.20.3"
-    "@usecannon/cli": "npm:2.20.3"
+    "@usecannon/builder": "npm:2.21.0"
+    "@usecannon/cli": "npm:2.21.0"
     debug: "npm:^4.3.7"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.16"
