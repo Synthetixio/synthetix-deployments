@@ -1,0 +1,119 @@
+[var.perps_melania_market_settings]
+melania_perps_market_id = "10100"
+melania_perps_market_skew_scale = "<%= parseEther(String(750_000)) %>"
+melania_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+melania_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+melania_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+melania_perps_max_market_size = "<%= parseEther(String(1_000_000)) %>"
+melania_perps_max_market_value = "<%= parseEther(String(2_000_000)) %>"
+melania_perps_initial_margin_ratio = "<%= parseEther('1.811') %>"
+melania_perps_maintenance_margin_scalar = "<%= parseEther('0.408') %>"
+melania_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+melania_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+melania_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+melania_perps_max_seconds_in_liquidation_window = "30"
+melania_perps_minimum_position_margin = "<%= parseEther('15') %>"
+melania_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
+melania_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+melania_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createMelaniaPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.melania_perps_market_id %>", "Melania Meme", "MELANIA"]
+
+[invoke.setPerpsPriceMelania]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.melania_perps_market_id %>",
+    "<%= extras.melania_oracle_id %>",
+    "<%= settings.strict_staleness_tolerance %>",
+]
+
+[invoke.addPerpsMelaniaSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.melania_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.melania_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.melania_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsMelaniaSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.melania_perps_market_id %>",
+    "<%= extras.melania_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_melania %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsMelaniaFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.melania_perps_market_id %>",
+    "<%= settings.melania_perps_market_skew_scale %>",
+    "<%= settings.melania_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsMelaniaOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.melania_perps_market_id %>",
+    "<%= settings.melania_perps_maker_fee_ratio %>",
+    "<%= settings.melania_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsMelaniaMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.melania_perps_market_id %>", "<%= settings.melania_perps_max_market_size %>"]
+
+[invoke.setPerpsMelaniaMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.melania_perps_market_id %>", "<%= settings.melania_perps_max_market_value %>"]
+
+[invoke.setPerpsMelaniaMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.melania_perps_market_id %>",
+    "<%= settings.melania_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.melania_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.melania_perps_max_liquidation_pd %>",
+    "<%= settings.melania_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsMelaniaLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.melania_perps_market_id %>",
+    "<%= settings.melania_perps_initial_margin_ratio %>",
+    "<%= settings.melania_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.melania_perps_maintenance_margin_scalar %>",
+    "<%= settings.melania_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.melania_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsMelaniaLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.melania_perps_market_id %>", "<%= settings.melania_perps_locked_oi_ratio %>"]
