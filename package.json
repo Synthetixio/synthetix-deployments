@@ -69,7 +69,7 @@
     "viem": "^2.22.10"
   },
   "resolutions": {
-    "mocha": "^10",
+    "mocha": "^11",
     "viem": "^2"
   },
   "mocha": {
