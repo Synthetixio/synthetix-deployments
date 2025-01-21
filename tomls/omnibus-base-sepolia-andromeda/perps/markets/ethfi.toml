@@ -1,7 +1,7 @@
 [var.perps_ethfi_market_settings]
 ethfi_perps_market_id = "3000"
-ethfi_perps_market_skew_scale = "<%= parseEther(String(16_500_000)) %>"
-ethfi_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+ethfi_perps_market_skew_scale = "<%= parseEther(String(9_022_000)) %>"
+ethfi_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 ethfi_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 ethfi_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 ethfi_perps_max_market_size = "<%= parseEther(String(300_000)) %>"

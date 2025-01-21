@@ -1,7 +1,7 @@
 [var.perps_eth_market_settings]
 eth_perps_market_id = "100"
 eth_perps_market_skew_scale = "<%= parseEther(String(350_000)) %>"
-eth_perps_market_max_funding_velocity = "<%= parseEther('4') %>"
+eth_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 eth_perps_maker_fee_ratio = "<%= parseEther('0.000001') %>"
 eth_perps_taker_fee_ratio = "<%= parseEther('0.000500') %>"
 eth_perps_max_market_size = "<%= parseEther(String(30_700)) %>"
