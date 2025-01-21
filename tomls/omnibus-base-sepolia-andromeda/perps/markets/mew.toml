@@ -2,7 +2,7 @@
 mew_perps_market_id = "7500"
 mew_perps_market_skew_scale = "<%= parseEther(String(2_500_000_000)) %>"
 mew_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-mew_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
+mew_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 mew_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 mew_perps_max_market_size = "<%= parseEther(String(123_319_770)) %>"
 mew_perps_max_market_value = "<%= parseEther(String(1_000_000)) %>"

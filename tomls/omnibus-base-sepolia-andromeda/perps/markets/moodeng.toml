@@ -2,7 +2,7 @@
 moodeng_perps_market_id = "8700"
 moodeng_perps_market_skew_scale = "<%= parseEther(String(50_000_000)) %>"
 moodeng_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-moodeng_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
+moodeng_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 moodeng_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 moodeng_perps_max_market_size = "<%= parseEther(String(34_000_000)) %>"
 moodeng_perps_max_market_value = "<%= parseEther(String(3_000_000)) %>"

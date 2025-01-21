@@ -2,7 +2,7 @@
 popcat_perps_market_id = "8000"
 popcat_perps_market_skew_scale = "<%= parseEther(String(20_250_000)) %>"
 popcat_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-popcat_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
+popcat_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 popcat_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 popcat_perps_max_market_size = "<%= parseEther(String(711_490)) %>"
 popcat_perps_max_market_value = "<%= parseEther(String(1_000_000)) %>"

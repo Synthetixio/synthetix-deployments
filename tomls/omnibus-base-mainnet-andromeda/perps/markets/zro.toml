@@ -2,7 +2,7 @@
 zro_perps_market_id = "8400"
 zro_perps_market_skew_scale = "<%= parseEther(String(4_250_000)) %>"
 zro_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-zro_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
+zro_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 zro_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 zro_perps_max_market_size = "<%= parseEther(String(237_850)) %>"
 zro_perps_max_market_value = "<%= parseEther(String(1_000_000)) %>"
