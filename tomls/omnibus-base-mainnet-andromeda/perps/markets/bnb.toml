@@ -1,7 +1,7 @@
 [var.perps_bnb_market_settings]
 bnb_perps_market_id = "1800"
 bnb_perps_market_skew_scale = "<%= parseEther(String(375_000)) %>"
-bnb_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+bnb_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 bnb_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 bnb_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 bnb_perps_max_market_size = "<%= parseEther(String(7_000)) %>"

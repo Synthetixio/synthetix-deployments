@@ -1,7 +1,7 @@
 [var.perps_degen_market_settings]
 degen_perps_market_id = "9000"
 degen_perps_market_skew_scale = "<%= parseEther(String(100_000_000)) %>"
-degen_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+degen_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 degen_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 degen_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 degen_perps_max_market_size = "<%= parseEther(String(600_000_000)) %>"

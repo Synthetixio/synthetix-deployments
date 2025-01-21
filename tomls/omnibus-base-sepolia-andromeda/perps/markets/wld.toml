@@ -1,7 +1,7 @@
 [var.perps_wld_market_settings]
 wld_perps_market_id = "8300"
 wld_perps_market_skew_scale = "<%= parseEther(String(20_000_000)) %>"
-wld_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+wld_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 wld_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
 wld_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 wld_perps_max_market_size = "<%= parseEther(String(428_600)) %>"

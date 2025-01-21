@@ -1,7 +1,7 @@
 [var.perps_pnut_market_settings]
 pnut_perps_market_id = "8800"
 pnut_perps_market_skew_scale = "<%= parseEther(String(10_000_000)) %>"
-pnut_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+pnut_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 pnut_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
 pnut_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 pnut_perps_max_market_size = "<%= parseEther(String(4_000_000)) %>"

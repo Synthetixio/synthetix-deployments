@@ -1,7 +1,7 @@
 [var.perps_not_market_settings]
 not_perps_market_id = "7700"
 not_perps_market_skew_scale = "<%= parseEther(String(5_000_000_000)) %>"
-not_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+not_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 not_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
 not_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 not_perps_max_market_size = "<%= parseEther(String(118_077_700)) %>"

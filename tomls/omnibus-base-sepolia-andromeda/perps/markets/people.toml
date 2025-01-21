@@ -1,7 +1,7 @@
 [var.perps_people_market_settings]
 people_perps_market_id = "7800"
 people_perps_market_skew_scale = "<%= parseEther(String(500_000_000)) %>"
-people_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+people_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 people_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
 people_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 people_perps_max_market_size = "<%= parseEther(String(11_341_730)) %>"

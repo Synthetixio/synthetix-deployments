@@ -1,7 +1,7 @@
 [var.perps_chillguy_market_settings]
 chillguy_perps_market_id = "9300"
 chillguy_perps_market_skew_scale = "<%= parseEther(String(8_000_000)) %>"
-chillguy_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+chillguy_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 chillguy_perps_maker_fee_ratio = "<%= parseEther('0') %>"
 chillguy_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 chillguy_perps_max_market_size = "<%= parseEther(String(6_000_000)) %>"
