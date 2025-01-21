@@ -1,6 +1,6 @@
 [var.perps_crv_market_settings]
 crv_perps_market_id = "4300"
-crv_perps_market_skew_scale = "<%= parseEther(String(240_000_000)) %>"
+crv_perps_market_skew_scale = "<%= parseEther(String(36_240_800)) %>"
 crv_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 crv_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 crv_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

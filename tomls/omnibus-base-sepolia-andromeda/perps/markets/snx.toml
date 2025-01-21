@@ -1,6 +1,6 @@
 [var.perps_snx_market_settings]
 snx_perps_market_id = "300"
-snx_perps_market_skew_scale = "<%= parseEther(String(10_200_000)) %>"
+snx_perps_market_skew_scale = "<%= parseEther(String(3_627_800)) %>"
 snx_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 snx_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 snx_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

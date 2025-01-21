@@ -1,8 +1,8 @@
 [var.perps_slerf_market_settings]
 slerf_perps_market_id = "9100"
-slerf_perps_market_skew_scale = "<%= parseEther(String(5_000_000)) %>"
+slerf_perps_market_skew_scale = "<%= parseEther(String(23_843_900)) %>"
 slerf_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-slerf_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+slerf_perps_maker_fee_ratio = "<%= parseEther('0.0002') %>"
 slerf_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 slerf_perps_max_market_size = "<%= parseEther(String(15_000_000)) %>"
 slerf_perps_max_market_value = "<%= parseEther(String(500_000)) %>"

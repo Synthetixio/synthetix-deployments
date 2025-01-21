@@ -1,6 +1,6 @@
 [var.perps_stx_market_settings]
 stx_perps_market_id = "3100"
-stx_perps_market_skew_scale = "<%= parseEther(String(22_500_000)) %>"
+stx_perps_market_skew_scale = "<%= parseEther(String(15_022_400)) %>"
 stx_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 stx_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 stx_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
