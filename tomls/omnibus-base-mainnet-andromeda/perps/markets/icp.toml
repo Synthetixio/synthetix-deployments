@@ -1,6 +1,6 @@
 [var.perps_icp_market_settings]
 icp_perps_market_id = "5300"
-icp_perps_market_skew_scale = "<%= parseEther(String(3_000_000)) %>"
+icp_perps_market_skew_scale = "<%= parseEther(String(1_918_600)) %>"
 icp_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 icp_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 icp_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

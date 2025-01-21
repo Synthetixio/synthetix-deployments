@@ -1,6 +1,6 @@
 [var.perps_grt_market_settings]
 grt_perps_market_id = "5200"
-grt_perps_market_skew_scale = "<%= parseEther(String(112_500_000)) %>"
+grt_perps_market_skew_scale = "<%= parseEther(String(57_799_000	)) %>"
 grt_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 grt_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 grt_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

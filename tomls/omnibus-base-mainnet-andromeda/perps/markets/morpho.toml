@@ -1,8 +1,8 @@
 [var.perps_morpho_market_settings]
 morpho_perps_market_id = "9200"
-morpho_perps_market_skew_scale = "<%= parseEther(String(2_000_000)) %>"
+morpho_perps_market_skew_scale = "<%= parseEther(String(1_380_100)) %>"
 morpho_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-morpho_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+morpho_perps_maker_fee_ratio = "<%= parseEther('0.0002') %>"
 morpho_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 morpho_perps_max_market_size = "<%= parseEther(String(1_000_000)) %>"
 morpho_perps_max_market_value = "<%= parseEther(String(1_000_000)) %>"

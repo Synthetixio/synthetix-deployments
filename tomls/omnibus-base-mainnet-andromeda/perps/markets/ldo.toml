@@ -1,6 +1,6 @@
 [var.perps_ldo_market_settings]
 ldo_perps_market_id = "5700"
-ldo_perps_market_skew_scale = "<%= parseEther(String(21_000_000)) %>"
+ldo_perps_market_skew_scale = "<%= parseEther(String(9_370_600)) %>"
 ldo_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 ldo_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 ldo_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

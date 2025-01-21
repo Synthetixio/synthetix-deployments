@@ -1,8 +1,8 @@
 [var.perps_cat_market_settings]
 cat_perps_market_id = "8900"
-cat_perps_market_skew_scale = "<%= parseEther(String(100_000_000_000)) %>"
+cat_perps_market_skew_scale = "<%= parseEther(String(307_372_493_500)) %>"
 cat_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-cat_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+cat_perps_maker_fee_ratio = "<%= parseEther('0.0002') %>"
 cat_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 cat_perps_max_market_size = "<%= parseEther(String(50_000_000_000_000)) %>"
 cat_perps_max_market_value = "<%= parseEther(String(2_000_000)) %>"

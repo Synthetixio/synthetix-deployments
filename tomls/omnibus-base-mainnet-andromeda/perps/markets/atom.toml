@@ -1,6 +1,6 @@
 [var.perps_atom_market_settings]
 atom_perps_market_id = "3700"
-atom_perps_market_skew_scale = "<%= parseEther(String(11_250_000)) %>"
+atom_perps_market_skew_scale = "<%= parseEther(String(4_402_900)) %>"
 atom_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 atom_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 atom_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

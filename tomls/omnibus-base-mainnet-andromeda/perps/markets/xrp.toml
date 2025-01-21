@@ -1,6 +1,6 @@
 [var.perps_xrp_market_settings]
 xrp_perps_market_id = "7100"
-xrp_perps_market_skew_scale = "<%= parseEther(String(400_000_000)) %>"
+xrp_perps_market_skew_scale = "<%= parseEther(String(32_263_500)) %>"
 xrp_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 xrp_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 xrp_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

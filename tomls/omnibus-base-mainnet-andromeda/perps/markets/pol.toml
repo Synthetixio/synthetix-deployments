@@ -1,8 +1,8 @@
 [var.perps_pol_market_settings]
 pol_perps_market_id = "7900"
-pol_perps_market_skew_scale = "<%= parseEther(String(75_000_000)) %>"
+pol_perps_market_skew_scale = "<%= parseEther(String(44_472_400)) %>"
 pol_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
-pol_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+pol_perps_maker_fee_ratio = "<%= parseEther('0.0002') %>"
 pol_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 pol_perps_max_market_size = "<%= parseEther(String(7_500_000)) %>"
 pol_perps_max_market_value = "<%= parseEther(String(3_000_000)) %>"

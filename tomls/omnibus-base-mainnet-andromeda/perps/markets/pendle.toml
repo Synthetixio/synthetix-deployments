@@ -1,6 +1,6 @@
 [var.perps_pendle_market_settings]
 pendle_perps_market_id = "2000"
-pendle_perps_market_skew_scale = "<%= parseEther(String(6_000_000)) %>"
+pendle_perps_market_skew_scale = "<%= parseEther(String(2_475_800)) %>"
 pendle_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 pendle_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 pendle_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

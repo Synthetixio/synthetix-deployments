@@ -1,6 +1,6 @@
 [var.perps_bonk_market_settings]
 bonk_perps_market_id = "1400"
-bonk_perps_market_skew_scale = "<%= parseEther(String(1_600_000_000_000)) %>"
+bonk_perps_market_skew_scale = "<%= parseEther(String(802_983_764_800)) %>"
 bonk_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 bonk_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 bonk_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
