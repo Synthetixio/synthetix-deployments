@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "71"
+version = "72"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
@@ -95,6 +95,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-link.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-ltc.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-matic.toml",
+    "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-melania.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-meme.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-mew.toml",
     "tomls/omnibus-base-sepolia-andromeda/oracles/pyth-mkr.toml",
@@ -214,6 +215,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/link.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/ltc.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/matic.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/markets/melania.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/meme.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/mew.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/markets/mkr.toml",
@@ -469,6 +471,7 @@ pyth_feed_id_kmno = "0xb17e5bc5de742a8a378b54c9c75442b7d51e30ada63f28d9bd28d3c0e
 pyth_feed_id_ldo = "0xc63e2a7f37a04e5e614c07238bedb25dcc38927fba8fe890597a593c0b2fa4ad"
 pyth_feed_id_link = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
 pyth_feed_id_ltc = "0x6e3f3fa8253588df9326580180233eb791e03b443a3ba7a1d892e73874e19a54"
+pyth_feed_id_melania = "0x8fef7d52c7f4e3a6258d663f9d27e64a1b6fd95ab5f7d545dbf9a515353d0064"
 pyth_feed_id_meme = "0xcd2cee36951a571e035db0dfad138e6ecdb06b517cc3373cd7db5d3609b7927c"
 pyth_feed_id_mew = "0x514aed52ca5294177f20187ae883cec4a018619772ddce41efcc36a6448f5d5d"
 pyth_feed_id_mkr = "0x9375299e31c0deb9c6bc378e6329aab44cb48ec655552a70d4b9050346a30378"
