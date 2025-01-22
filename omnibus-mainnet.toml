@@ -114,7 +114,7 @@ defaultValue = "0x99f4176ee457afedffcb1839c7ab7a030a5e4a92"
 [setting.sc_pool_id]
 defaultValue = "1"
 
-[setting.treasury_pool_id]
+[setting.treasury_pool_id_setting]
 defaultValue = "8"
 
 [setting.pool_owner]
