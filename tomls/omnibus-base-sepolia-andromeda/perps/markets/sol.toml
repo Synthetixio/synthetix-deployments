@@ -1,6 +1,6 @@
 [var.perps_sol_market_settings]
 sol_perps_market_id = "400"
-sol_perps_market_skew_scale = "<%= parseEther(String(817_500)) %>"
+sol_perps_market_skew_scale = "<%= parseEther(String(1_386_000)) %>"
 sol_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 sol_perps_maker_fee_ratio = "<%= parseEther('0.00020') %>"
 sol_perps_taker_fee_ratio = "<%= parseEther('0.000800') %>"
@@ -21,7 +21,7 @@ sol_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.sol_perps_market_id %>", "Solana", "SOL"]
+args = ["<%= settings.sol_perps_market_id %>", "Sol", "SOL"]
 
 [invoke.setPerpsPriceSol]
 target = ["perpsFactory.PerpsMarketProxy"]

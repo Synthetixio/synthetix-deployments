@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "76"
+version = "77"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -42,6 +42,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/rewards/scbeth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/swsteth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/sweth_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/susdc_perps_liquidations_rewards.toml",
 
     # stataUSDC
     "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
@@ -126,6 +127,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-render.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-rndr.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-rune.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-s.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-safe.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sats.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-sei.toml",
@@ -163,6 +165,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/cbeth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/wsteth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/weth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/usdc.toml",
 
     # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
@@ -247,6 +250,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/render.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/rndr.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/rune.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/s.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/safe.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/sats.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/sei.toml",
@@ -415,7 +419,7 @@ pyth_feed_id_ethfi = "0xb27578a9654246cb0a2950842b92330e9ace141c52b63829cc72d5c4
 pyth_feed_id_fartcoin = "0x58cd29ef0e714c5affc44f269b2c1899a52da4169d7acc147b9da692e6953608"
 pyth_feed_id_fil = "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e"
 pyth_feed_id_flow = "0x2fb245b9a84554a0f15aa123cbb5f64cd263b59e9a87d80148cbffab50c69f30"
-pyth_feed_id_ftm = "0xf490b178d0c85683b7a0f2388b40af2e6f7c90cbe0f96b31f315f08d0e5a2d6d"      # replaced with Sonic feed as ftm is 1:1 redeemable to sonic
+pyth_feed_id_ftm = "0xf490b178d0c85683b7a0f2388b40af2e6f7c90cbe0f96b31f315f08d0e5a2d6d"       # replaced with Sonic feed as ftm is 1:1 redeemable to sonic
 pyth_feed_id_fxs = "0x735f591e4fed988cd38df74d8fcedecf2fe8d9111664e0fd500db9aa78b316b1"
 pyth_feed_id_gala = "0x0781209c28fda797616212b7f94d77af3a01f3e94a5d421760aef020cf2bcb51"
 pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
@@ -471,6 +475,7 @@ pyth_feed_id_ton = "0x8963217838ab4cf5cadc172203c1f0b763fbaa45f346d8ee50ba994bbc
 pyth_feed_id_trump = "0x879551021853eec7a7dc827578e8e69da7e4fa8148339aa0d3d5296405be4b1a"
 pyth_feed_id_trx = "0x67aed5a24fdad045475e7195c98a98aea119c763f272d4523f5bac93a4f33c2b"
 pyth_feed_id_uni = "0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501"
+pyth_feed_id_velodrome = "0xc73d35c2f42b4e6e452c01e2599e7f38b60337f566871ed1581bedd36796c80e"
 pyth_feed_id_virtual = "0x8132e3eb1dac3e56939a16ff83848d194345f6688bff97eb1c8bd462d558802b"
 pyth_feed_id_w = "0xeff7446475e218517566ea99e72a4abec2e1bd8498b43b7d8331e29dcb059389"
 pyth_feed_id_weth = "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace"
