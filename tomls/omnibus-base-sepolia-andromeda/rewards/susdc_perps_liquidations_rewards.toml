@@ -6,7 +6,7 @@ options.rewardManager = "<%= imports.system.contracts.CoreProxy.address %>"
 options.poolId = "<%= settings.spartan_council_pool_id_setting %>"
 options.payoutToken = "<%= extras.synth_susdc_token_address %>"
 options.payoutTokenDecimals = "18"
-options.name = "Perps Lido Wrapped Staked ETH Liquidation Rewards"
+options.name = "Perps USDC Liquidation Rewards"
 options.authorizedDistributor = "<%= imports.perpsFactory.contracts.PerpsMarketProxy.address %>"
 
 [invoke.PerpsMarketProxy_registerDistributor_synth_susdc_liquidations]
