@@ -836,6 +836,15 @@ async function run() {
     });
   }
 
+  const treasuryMarket =
+    deployments?.state?.['provision.treasury_market']?.artifacts?.imports?.treasury_market;
+  if (treasuryMarket) {
+    contracts.TreasuryMarketProxy = treasuryMarket.contracts.Proxy;
+    Object.assign(extras, {
+      treasury_market_id: treasuryMarket?.extras?.marketId,
+    });
+  }
+
   const trustedMulticallForwarder =
     system?.imports?.trusted_multicall_forwarder ??
     system?.imports?.oracle_manager?.imports?.trusted_multicall_forwarder;
