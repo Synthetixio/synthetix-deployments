@@ -1,6 +1,6 @@
 [var.perps_ordi_market_settings]
 ordi_perps_market_id = "1100"
-ordi_perps_market_skew_scale = "<%= parseEther(String(1_305_000)) %>"
+ordi_perps_market_skew_scale = "<%= parseEther(String(2_282_000)) %>"
 ordi_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 ordi_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 ordi_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

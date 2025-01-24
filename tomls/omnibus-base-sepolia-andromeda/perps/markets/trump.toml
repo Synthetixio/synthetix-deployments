@@ -1,6 +1,6 @@
 [var.perps_trump_market_settings]
 trump_perps_market_id = "10000"
-trump_perps_market_skew_scale = "<%= parseEther(String(750_000)) %>"
+trump_perps_market_skew_scale = "<%= parseEther(String(3_138_300)) %>"
 trump_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 trump_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 trump_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
