@@ -5,6 +5,8 @@ require('./inspect');
 const path = require('path');
 const fs = require('fs/promises');
 const { ethers } = require('ethers');
+const { generateSolidity } = require('abi-to-sol');
+const prettier = require('prettier');
 
 const fgReset = '\x1b[0m';
 const fgRed = '\x1b[31m';
@@ -27,6 +29,18 @@ if (!cannonState) {
     `Example: ${fgGreen}node e2e/generateDeployments ${fgCyan}/tmp/cannonState.json${fgReset}`
   );
   process.exit(1);
+}
+
+async function prettySol(sol) {
+  return await prettier.format(sol, {
+    parser: 'solidity-parse',
+    plugins: ['prettier-plugin-solidity'],
+    printWidth: 10_000,
+    tabWidth: 4,
+    useTabs: false,
+    singleQuote: false,
+    bracketSpacing: false,
+  });
 }
 
 function dedupedAbi(abi) {
@@ -752,6 +766,7 @@ async function run() {
   await fs.rm(`${__dirname}/deployments`, { recursive: true, force: true });
   await fs.mkdir(`${__dirname}/deployments`, { recursive: true });
   await fs.mkdir(`${__dirname}/deployments/abi`, { recursive: true });
+  await fs.mkdir(`${__dirname}/deployments/sol`, { recursive: true });
 
   log('Writing', `deployments/cannon.json`);
   await fs.writeFile(
@@ -957,6 +972,21 @@ async function run() {
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.json`,
       JSON.stringify(jsonAbi, null, 2)
+    );
+    log('Writing', `deployments/sol/I${name}.sol`);
+    await fs.writeFile(
+      `${__dirname}/deployments/sol/I${name}.sol`,
+      await prettySol(
+        generateSolidity({
+          abi: jsonAbi,
+          name: `I${name}`,
+          outputSource: false,
+          prettifyOutput: false,
+          solidityVersion: '^0.8.21',
+          license: 'MIT',
+          outputAttribution: false,
+        })
+      )
     );
     log('Writing', `deployments/abi/${name}.readable.json`);
     await fs.writeFile(
