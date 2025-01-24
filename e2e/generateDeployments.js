@@ -43,6 +43,20 @@ async function prettySol(sol) {
   });
 }
 
+async function sol(name, abi) {
+  return prettySol(
+    generateSolidity({
+      abi,
+      name: `I${name}`,
+      outputSource: false,
+      prettifyOutput: false,
+      solidityVersion: '^0.8.21',
+      license: 'MIT',
+      outputAttribution: false,
+    })
+  );
+}
+
 function dedupedAbi(abi) {
   const deduped = new Set();
   const readableAbi = [];
@@ -56,8 +70,8 @@ function dedupedAbi(abi) {
           : fragment.format(ethers.utils.FormatTypes.minimal);
       if (!deduped.has(minimal)) {
         readableAbi.push(fragment.format(ethers.utils.FormatTypes.full));
-        jsonAbi.push(JSON.parse(fragment.format(ethers.utils.FormatTypes.json)));
         deduped.add(minimal);
+        jsonAbi.push(line);
       }
     }
   });
@@ -311,19 +325,18 @@ async function extractSynths(deployments) {
             const synthToken = await fetchTokenInfo(address);
             spotMarkets[synthMarketId].synthToken = synthToken;
             Object.assign(synthTokens[synthMarketId], synthToken);
-
             const contractName = `SynthToken_${synthToken.symbol}`;
             if (contractName in contracts) {
               duplicates[contractName] =
                 contractName in duplicates ? duplicates[contractName] + 1 : 1;
               contracts[`${contractName}__${duplicates[contractName]}`] = {
                 address,
-                abi: require('./SynthTokenModule.json'),
+                abi: [],
               };
             } else {
               contracts[`${contractName}`] = {
                 address,
-                abi: require('./SynthTokenModule.json'),
+                abi: [],
               };
             }
           }
@@ -515,12 +528,12 @@ async function extractCollaterals(deployments) {
           duplicates[contractName] = contractName in duplicates ? duplicates[contractName] + 1 : 1;
           contracts[`${contractName}__${duplicates[contractName]}`] = {
             address,
-            abi: require('./ERC20.json'),
+            abi: [],
           };
         } else {
           contracts[`${contractName}`] = {
             address,
-            abi: require('./ERC20.json'),
+            abi: [],
           };
         }
 
@@ -768,6 +781,8 @@ async function run() {
   await fs.mkdir(`${__dirname}/deployments/abi`, { recursive: true });
   await fs.mkdir(`${__dirname}/deployments/sol`, { recursive: true });
 
+  log('Writing', `deployments/cannon1.json`);
+  await fs.writeFile(`${__dirname}/deployments/cannon1.json`, JSON.stringify(deployments, null, 2));
   log('Writing', `deployments/cannon.json`);
   await fs.writeFile(
     `${__dirname}/deployments/cannon.json`,
@@ -963,36 +978,25 @@ async function run() {
   for (const [name, { address, abi }] of Object.entries(contracts)) {
     const { readableAbi, jsonAbi } = dedupedAbi(abi);
 
-    log('Writing', `deployments/${name}.json`, { address });
-    await fs.writeFile(
-      `${__dirname}/deployments/${name}.json`,
-      JSON.stringify({ address, abi: readableAbi }, null, 2)
-    );
-    log('Writing', `deployments/abi/${name}.json`);
-    await fs.writeFile(
-      `${__dirname}/deployments/abi/${name}.json`,
-      JSON.stringify(jsonAbi, null, 2)
-    );
-    log('Writing', `deployments/sol/I${name}.sol`);
-    await fs.writeFile(
-      `${__dirname}/deployments/sol/I${name}.sol`,
-      await prettySol(
-        generateSolidity({
-          abi: jsonAbi,
-          name: `I${name}`,
-          outputSource: false,
-          prettifyOutput: false,
-          solidityVersion: '^0.8.21',
-          license: 'MIT',
-          outputAttribution: false,
-        })
-      )
-    );
-    log('Writing', `deployments/abi/${name}.readable.json`);
-    await fs.writeFile(
-      `${__dirname}/deployments/abi/${name}.readable.json`,
-      JSON.stringify(readableAbi, null, 2)
-    );
+    if (readableAbi.length > 0) {
+      log('Writing', `deployments/${name}.json`, { address });
+      await fs.writeFile(
+        `${__dirname}/deployments/${name}.json`,
+        JSON.stringify({ address, abi: readableAbi }, null, 2)
+      );
+      log('Writing', `deployments/abi/${name}.json`);
+      await fs.writeFile(
+        `${__dirname}/deployments/abi/${name}.json`,
+        JSON.stringify(jsonAbi, null, 2)
+      );
+      log('Writing', `deployments/sol/I${name}.sol`);
+      await fs.writeFile(`${__dirname}/deployments/sol/I${name}.sol`, await sol(name, jsonAbi));
+      log('Writing', `deployments/abi/${name}.readable.json`);
+      await fs.writeFile(
+        `${__dirname}/deployments/abi/${name}.readable.json`,
+        JSON.stringify(readableAbi, null, 2)
+      );
+    }
   }
 }
 
