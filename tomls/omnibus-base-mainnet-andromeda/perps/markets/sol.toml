@@ -1,6 +1,6 @@
 [var.perps_sol_market_settings]
 sol_perps_market_id = "400"
-sol_perps_market_skew_scale = "<%= parseEther(String(1_386_000)) %>"
+sol_perps_market_skew_scale = "<%= parseEther(String(817_500)) %>"
 sol_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 sol_perps_maker_fee_ratio = "<%= parseEther('0.00020') %>"
 sol_perps_taker_fee_ratio = "<%= parseEther('0.000800') %>"
