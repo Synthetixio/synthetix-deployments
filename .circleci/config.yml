@@ -619,6 +619,7 @@ jobs:
           command: |
             mkdir -p ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>
             cp e2e/deployments/abi/*.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
+            cp e2e/deployments/sol/*.sol ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/collateralTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/mintableTokens.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
             cp e2e/deployments/rewardsDistributors.json ~/v3-contracts/<< parameters.chain-id >>-<< parameters.preset >>/
