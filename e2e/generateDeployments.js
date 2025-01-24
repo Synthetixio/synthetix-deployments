@@ -43,6 +43,20 @@ async function prettySol(sol) {
   });
 }
 
+async function sol(name, abi) {
+  return prettySol(
+    generateSolidity({
+      abi,
+      name: `I${name}`,
+      outputSource: false,
+      prettifyOutput: false,
+      solidityVersion: '^0.8.21',
+      license: 'MIT',
+      outputAttribution: false,
+    })
+  );
+}
+
 function dedupedAbi(abi) {
   const deduped = new Set();
   const readableAbi = [];
@@ -56,8 +70,8 @@ function dedupedAbi(abi) {
           : fragment.format(ethers.utils.FormatTypes.minimal);
       if (!deduped.has(minimal)) {
         readableAbi.push(fragment.format(ethers.utils.FormatTypes.full));
-        jsonAbi.push(JSON.parse(fragment.format(ethers.utils.FormatTypes.json)));
         deduped.add(minimal);
+        jsonAbi.push(line);
       }
     }
   });
@@ -311,7 +325,6 @@ async function extractSynths(deployments) {
             const synthToken = await fetchTokenInfo(address);
             spotMarkets[synthMarketId].synthToken = synthToken;
             Object.assign(synthTokens[synthMarketId], synthToken);
-
             const contractName = `SynthToken_${synthToken.symbol}`;
             if (contractName in contracts) {
               duplicates[contractName] =
@@ -768,6 +781,8 @@ async function run() {
   await fs.mkdir(`${__dirname}/deployments/abi`, { recursive: true });
   await fs.mkdir(`${__dirname}/deployments/sol`, { recursive: true });
 
+  log('Writing', `deployments/cannon1.json`);
+  await fs.writeFile(`${__dirname}/deployments/cannon1.json`, JSON.stringify(deployments, null, 2));
   log('Writing', `deployments/cannon.json`);
   await fs.writeFile(
     `${__dirname}/deployments/cannon.json`,
@@ -974,20 +989,7 @@ async function run() {
       JSON.stringify(jsonAbi, null, 2)
     );
     log('Writing', `deployments/sol/I${name}.sol`);
-    await fs.writeFile(
-      `${__dirname}/deployments/sol/I${name}.sol`,
-      await prettySol(
-        generateSolidity({
-          abi: jsonAbi,
-          name: `I${name}`,
-          outputSource: false,
-          prettifyOutput: false,
-          solidityVersion: '^0.8.21',
-          license: 'MIT',
-          outputAttribution: false,
-        })
-      )
-    );
+    await fs.writeFile(`${__dirname}/deployments/sol/I${name}.sol`, await sol(name, jsonAbi));
     log('Writing', `deployments/abi/${name}.readable.json`);
     await fs.writeFile(
       `${__dirname}/deployments/abi/${name}.readable.json`,
