@@ -1,0 +1,128 @@
+[var.perps_velodrome_market_settings]
+velodrome_perps_market_id = "10200"
+velodrome_perps_market_skew_scale = "<%= parseEther(String(12_000_000)) %>"
+velodrome_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+velodrome_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
+velodrome_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
+velodrome_perps_max_market_size = "<%= parseEther(String(6_000_000)) %>"
+velodrome_perps_max_market_value = "<%= parseEther(String(300_000)) %>"
+velodrome_perps_initial_margin_ratio = "<%= parseEther('0.437') %>"
+velodrome_perps_maintenance_margin_scalar = "<%= parseEther('0.317') %>"
+velodrome_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+velodrome_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+velodrome_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+velodrome_perps_max_seconds_in_liquidation_window = "30"
+velodrome_perps_minimum_position_margin = "<%= parseEther('15') %>"
+velodrome_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
+velodrome_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+velodrome_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createVelodromePerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.velodrome_perps_market_id %>", "Velodrome Finance", "VELODROME"]
+
+[invoke.setPerpsPriceVelodrome]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= extras.velodrome_oracle_id %>",
+    "<%= settings.strict_staleness_tolerance %>",
+]
+
+[invoke.addPerpsVelodromeSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.velodrome_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.velodrome_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.velodrome_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsVelodromeSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= extras.velodrome_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_velodrome %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsVelodromeFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_market_skew_scale %>",
+    "<%= settings.velodrome_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsVelodromeOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_maker_fee_ratio %>",
+    "<%= settings.velodrome_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsVelodromeMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_max_market_size %>",
+]
+
+[invoke.setPerpsVelodromeMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_max_market_value %>",
+]
+
+[invoke.setPerpsVelodromeMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.velodrome_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.velodrome_perps_max_liquidation_pd %>",
+    "<%= settings.velodrome_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsVelodromeLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_initial_margin_ratio %>",
+    "<%= settings.velodrome_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.velodrome_perps_maintenance_margin_scalar %>",
+    "<%= settings.velodrome_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.velodrome_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsVelodromeLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = [
+    "<%= settings.velodrome_perps_market_id %>",
+    "<%= settings.velodrome_perps_locked_oi_ratio %>",
+]
