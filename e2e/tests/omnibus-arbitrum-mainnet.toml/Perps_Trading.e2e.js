@@ -183,7 +183,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
   });
 
-  it('should set tBTC balance to 10', async () => {
+  it('should set tBTC balance to 8', async () => {
     const { tokenAddress } = await getCollateralConfig('tBTC');
     assert.equal(
       await getCollateralBalance({ address: wallet.address, symbol: 'tBTC' }),
@@ -192,11 +192,11 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     await setTokenBalance({
       wallet,
-      balance: 10,
+      balance: 8,
       tokenAddress: extras.tbtc_address,
       friendlyWhale: '0xe9e6b9aAAfaf6816C3364345F6eF745CcFC8660a',
     });
-    assert.equal(await getCollateralBalance({ address: wallet.address, symbol: 'tBTC' }), 10);
+    assert.equal(await getCollateralBalance({ address: wallet.address, symbol: 'tBTC' }), 8);
   });
 
   it('should approve tBTC spending for SpotMarket', async () => {

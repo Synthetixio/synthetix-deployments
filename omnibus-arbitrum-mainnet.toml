@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "50"
+version = "51"
 description = "Includes the full synthetix system with configurations applied"
 preset = "main"
 deployers = [
@@ -423,7 +423,7 @@ pyth_feed_id_ethbtc = "0xc96458d393fe9deb7a7d63a0ac41e2898a67a7750dbd166673279e0
 pyth_feed_id_ethfi = "0xb27578a9654246cb0a2950842b92330e9ace141c52b63829cc72d5c45a5a595a"
 pyth_feed_id_fil = "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e"
 pyth_feed_id_flow = "0x2fb245b9a84554a0f15aa123cbb5f64cd263b59e9a87d80148cbffab50c69f30"
-pyth_feed_id_ftm = "0x5c6c0d2386e3352356c3ab84434fafb5ea067ac2678a38a338c4a69ddc4bdb0c"
+pyth_feed_id_ftm = "0xf490b178d0c85683b7a0f2388b40af2e6f7c90cbe0f96b31f315f08d0e5a2d6d"      # replaced with Sonic feed as ftm is 1:1 redeemable to sonic
 pyth_feed_id_fxs = "0x735f591e4fed988cd38df74d8fcedecf2fe8d9111664e0fd500db9aa78b316b1"
 pyth_feed_id_gala = "0x0781209c28fda797616212b7f94d77af3a01f3e94a5d421760aef020cf2bcb51"
 pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"

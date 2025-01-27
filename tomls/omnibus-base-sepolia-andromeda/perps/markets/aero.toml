@@ -1,8 +1,8 @@
 [var.perps_aero_market_settings]
 aero_perps_market_id = "9400"
-aero_perps_market_skew_scale = "<%= parseEther(String(500_000)) %>"
-aero_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
-aero_perps_maker_fee_ratio = "<%= parseEther('0') %>"
+aero_perps_market_skew_scale = "<%= parseEther(String(2_407_400)) %>"
+aero_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
+aero_perps_maker_fee_ratio = "<%= parseEther('0.0002') %>"
 aero_perps_taker_fee_ratio = "<%= parseEther('0.0010') %>"
 aero_perps_max_market_size = "<%= parseEther(String(1_000_000)) %>"
 aero_perps_max_market_value = "<%= parseEther(String(300_000)) %>"
