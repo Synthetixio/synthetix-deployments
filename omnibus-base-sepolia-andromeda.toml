@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "74"
+version = "75"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
@@ -287,7 +287,7 @@ defaultValue = "op-gas-price-oracle:3.10.0"
 defaultValue = "synthetix-spot-market:3.10.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.10.1"
+defaultValue = "synthetix-perps-market:3.11.1.orderbook"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.14" # Do not update! This package isn't upgradeable. A version change will deploy a new contract.
