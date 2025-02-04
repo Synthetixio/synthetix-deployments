@@ -1,6 +1,6 @@
 [var.perps_btc_market_settings]
 btc_perps_market_id = "200"
-btc_perps_market_skew_scale = "<%= parseEther(String(35_000)) %>"
+btc_perps_market_skew_scale = "<%= parseEther(String(12_500)) %>"
 btc_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 btc_perps_maker_fee_ratio = "<%= parseEther('0.000001') %>"
 btc_perps_taker_fee_ratio = "<%= parseEther('0.000500') %>"
