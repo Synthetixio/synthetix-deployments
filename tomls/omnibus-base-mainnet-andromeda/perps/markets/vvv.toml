@@ -79,19 +79,13 @@ args = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketSize"
-args = [
-    "<%= settings.vvv_perps_market_id %>",
-    "<%= settings.vvv_perps_max_market_size %>",
-]
+args = ["<%= settings.vvv_perps_market_id %>", "<%= settings.vvv_perps_max_market_size %>"]
 
 [invoke.setPerpsVvvMaxMarketValue]
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setMaxMarketValue"
-args = [
-    "<%= settings.vvv_perps_market_id %>",
-    "<%= settings.vvv_perps_max_market_value %>",
-]
+args = ["<%= settings.vvv_perps_market_id %>", "<%= settings.vvv_perps_max_market_value %>"]
 
 [invoke.setPerpsVvvMaxLiquidationParameters]
 target = ["perpsFactory.PerpsMarketProxy"]
@@ -122,7 +116,4 @@ args = [
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "setLockedOiRatio"
-args = [
-    "<%= settings.vvv_perps_market_id %>",
-    "<%= settings.vvv_perps_locked_oi_ratio %>",
-]
+args = ["<%= settings.vvv_perps_market_id %>", "<%= settings.vvv_perps_locked_oi_ratio %>"]
