@@ -1,0 +1,9 @@
+[provision.treasury_market]
+source = "<%= settings.treasury_market_package %>"
+targetPreset = "<%= settings.target_preset %>"
+
+options.v3_package = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.owner = "<%= settings.pdao %>"
+options.treasury_address = "<%= settings.treasury %>"
+options.pool_id = "<%= extras.treasury_pool_id %>"
+options.collateral_token = "<%= settings.snx_address %>"
