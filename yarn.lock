@@ -1178,9 +1178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.21.0":
-  version: 2.21.0
-  resolution: "@usecannon/builder@npm:2.21.0"
+"@usecannon/builder@npm:2.21.1":
+  version: 2.21.1
+  resolution: "@usecannon/builder@npm:2.21.1"
   dependencies:
     "@usecannon/router": "npm:^4.1.2"
     "@usecannon/web-solc": "npm:0.5.1"
@@ -1201,16 +1201,16 @@ __metadata:
     typestub-ipfs-only-hash: "npm:^4.0.0"
     viem: "npm:^2.21.15"
     zod: "npm:^3.23.6"
-  checksum: 10/24fb5bc43792bec3cc68f0770e043f9ac73003818ba7526812800c2d00787e7acac7e40326924d1f1cdcbc9110ebc192a555b7a6bb9be2caa65ff5dd889ebc72
+  checksum: 10/4f465859ef4ff62c016bee871c2d3eb4cabb360dab12af3d29986fba6f3e8b649661f29560fa30c356e8271526632c075a0e48e8a7289ac3ac2bca6b3210dc93
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.21.0":
-  version: 2.21.0
-  resolution: "@usecannon/cli@npm:2.21.0"
+"@usecannon/cli@npm:2.21.1":
+  version: 2.21.1
+  resolution: "@usecannon/cli@npm:2.21.1"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.21.0"
+    "@usecannon/builder": "npm:2.21.1"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^12.1.0"
@@ -1229,7 +1229,7 @@ __metadata:
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/bad774b50cc7166ca4f1dfbf011eff9ace92b8014fa2441cc58bf4e2ed833e12a970c5ad83d9d68a306f5f821b020cfa144c47934f92fa04f2c9b3de49575fbe
+  checksum: 10/7a633576224ac5db17bd5146c5f8d930a789376cbe0b96ed6d484259ae89fe8aff096f1a412cba12408bcce3e7b2431f01c591acd593a4ba3fd9a19bba1616d2
   languageName: node
   linkType: hard
 
@@ -4980,8 +4980,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
-    "@usecannon/builder": "npm:2.21.0"
-    "@usecannon/cli": "npm:2.21.0"
+    "@usecannon/builder": "npm:2.21.1"
+    "@usecannon/cli": "npm:2.21.1"
     abi-to-sol: "npm:^0.8.0"
     debug: "npm:^4.4.0"
     ethers: "npm:^5.7.2"
