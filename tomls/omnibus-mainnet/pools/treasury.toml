@@ -2,7 +2,7 @@
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "createPool"
-args = ["<%= settings.treasury_pool_id_setting %>", "<%= settings.pool_owner %>"]
+args = ["<%= settings.treasury_pool_id_setting %>", "<%= settings.pdao %>"]
 extra.treasury_pool_id.event = "PoolCreated"
 extra.treasury_pool_id.arg = 0
 depends = ["invoke.permitCreatePool"]
