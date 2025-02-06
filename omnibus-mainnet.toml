@@ -29,13 +29,17 @@ include = [
     "tomls/omnibus-mainnet/governance/councils-satellite.toml",
     "tomls/omnibus-mainnet/governance/wormhole.toml",
     "tomls/omnibus-mainnet/governance/snapshot-record.toml",
+
+    # Treasury Market
+    "tomls/omnibus-mainnet/pools/treasury.toml",
+    "tomls/omnibus-mainnet/treasury-market.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.8.0"
+defaultValue = "synthetix:3.10.3"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.0"
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
@@ -45,6 +49,9 @@ defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.legacy_market_package]
 defaultValue = "synthetix-legacy-market:3.8.0"
+
+[setting.treasury_market_package]
+defaultValue = "synthetix-treasury-market:3.10.3"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
@@ -101,8 +108,14 @@ defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
 [setting.pdao]
 defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 
+[setting.treasury]
+defaultValue = "0x99f4176ee457afedffcb1839c7ab7a030a5e4a92"
+
 [setting.sc_pool_id]
 defaultValue = "1"
+
+[setting.treasury_pool_id_setting]
+defaultValue = "8"
 
 [setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
