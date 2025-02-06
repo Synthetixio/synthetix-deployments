@@ -36,10 +36,10 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:0.0.0-dev.518ee191c"
+defaultValue = "synthetix:3.10.3"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.0"
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.15"
@@ -51,7 +51,7 @@ defaultValue = "synthetix-perps-market:3.3.19"
 defaultValue = "synthetix-legacy-market:3.8.0"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:0.0.0-dev.518ee191c"
+defaultValue = "synthetix-treasury-market:3.10.3"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
