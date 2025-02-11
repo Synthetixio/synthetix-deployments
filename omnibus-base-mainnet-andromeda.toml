@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "80"
+version = "81"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -43,6 +43,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/rewards/swsteth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/sweth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/susdc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/stata_usdc_perps_liquidations_rewards.toml",
 
     # stataUSDC
     "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
@@ -169,6 +170,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/wsteth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/weth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/usdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/stata-usdc.toml",
 
     # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
