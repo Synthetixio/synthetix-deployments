@@ -1,0 +1,27 @@
+[var.perps_collateral_synth_stata_usdc_settings]
+synth_stata_usdc_upper_limit_discount = "<%= parseEther('0') %>"
+synth_stata_usdc_lower_limit_discount = "<%= parseEther('0') %>"
+synth_stata_usdc_discount_scalar = "<%= parseEther('1') %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_synth_stata_usdc]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_stata_usdc_market_id %>",
+    "<%= settings.synthStataUsdcMaxMarketCollateral %>",
+    "<%= settings.synth_stata_usdc_upper_limit_discount %>",
+    "<%= settings.synth_stata_usdc_lower_limit_discount %>",
+    "<%= settings.synth_stata_usdc_discount_scalar %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_Perps_synth_stata_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_stata_usdc_token_address %>",
+    "<%= settings.synthStataUsdcMaxMarketCollateral %>",
+]
