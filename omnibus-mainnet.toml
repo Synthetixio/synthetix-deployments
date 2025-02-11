@@ -36,7 +36,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.3"
+defaultValue = "synthetix:0.0.0-dev.9b83e72c2"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
