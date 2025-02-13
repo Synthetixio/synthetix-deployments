@@ -19,8 +19,8 @@ fromCall.args = ["<%= extras.synth_wsteth_market_id %>"]
 func = "updatePriceData"
 args = [
     "<%= extras.synth_wsteth_market_id %>",
-    "<%= extras.wsteth_oracle_id %>",
-    "<%= extras.wsteth_oracle_id %>",
+    "<%= extras.wsteth_usd_r_oracle_id %>",
+    "<%= extras.wsteth_usd_r_oracle_id %>",
     "<%= settings.strict_staleness_tolerance %>",
 ]
 
