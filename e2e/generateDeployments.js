@@ -15,9 +15,11 @@ const fgCyan = '\x1b[36m';
 
 const log = require('debug')(`e2e:${require('path').basename(__filename, '.js')}`);
 
-const provider = new ethers.providers.JsonRpcProvider(
-  process.env.RPC_URL || 'http://127.0.0.1:8545'
-);
+const provider = new ethers.providers.JsonRpcProvider({
+  url: process.env.RPC_URL || 'http://127.0.0.1:8545',
+  timeout: 5 * 60 * 1000,
+  allowGzip: true,
+});
 
 const bn = (num) => ethers.BigNumber.from(num).toString();
 
