@@ -1,39 +1,105 @@
 # This registers a staleness node that looks to Pyth for a fresh enough price, or otherwise reverts with an ERC-7412 compatible error
 # Latest Pyth Price
-[invoke.registerPythSusdsOracleNode]
+################################################################
+# First step is registering the susds-usds redemption based feed
+################################################################
+
+[invoke.registerPythSusdsUsdsRrOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     5, # 5 = pyth aggregator type
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_susds, false]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_susds_usds_rr, false]) %>",
     [
     ],
 ]
-extra.susds_pyth_oracle_id.event = "NodeRegistered"
-extra.susds_pyth_oracle_id.arg = 0
+extra.susds_usds_rr_pyth_oracle_id.event = "NodeRegistered"
+extra.susds_usds_rr_pyth_oracle_id.arg = 0
+
 # Pyth Off-chain Lookup
-[invoke.registerLookupSusdsOracleNode]
+[invoke.registerLookupSusdsUsdsRrOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     9, # 9 = PythOffchainLookupNode
-    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_susds, settings.default_staleness_tolerance]) %>",
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_susds_usds_rr, settings.default_staleness_tolerance]) %>",
     [
     ],
 ]
-extra.susds_lookup_oracle_id.event = "NodeRegistered"
-extra.susds_lookup_oracle_id.arg = 0
+extra.susds_usds_rr_lookup_oracle_id.event = "NodeRegistered"
+extra.susds_usds_rr_lookup_oracle_id.arg = 0
+
 # Staleness Node
-[invoke.registerSusdsOracleNode]
+[invoke.registerSusdsUsdsRrOracleNode]
 target = ["system.oracle_manager.Proxy"]
 func = "registerNode"
 args = [
     7, # 7 = staleness circuit breaker
     "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
     [
-        "<%= extras.susds_pyth_oracle_id %>",
-        "<%= extras.susds_lookup_oracle_id %>",
+        "<%= extras.susds_usds_rr_pyth_oracle_id %>",
+        "<%= extras.susds_usds_rr_lookup_oracle_id %>",
     ],
+]
+extra.susds_usds_oracle_id.event = "NodeRegistered"
+extra.susds_usds_oracle_id.arg = 0
+
+################################################################
+# Second step is registering the usds-usd market price
+################################################################
+
+[invoke.registerPythUsdsUsdOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    5, # 5 = pyth aggregator type
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'bool'], [settings.pyth_price_verification_address, settings.pyth_feed_id_usds_usd, false]) %>",
+    [
+    ],
+]
+extra.usds_usd_pyth_oracle_id.event = "NodeRegistered"
+extra.usds_usd_pyth_oracle_id.arg = 0
+
+# Pyth Off-chain Lookup
+[invoke.registerLookupUsdsUsdOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    9, # 9 = PythOffchainLookupNode
+    "<%= defaultAbiCoder.encode(['address', 'bytes32', 'uint256'], [imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address, settings.pyth_feed_id_usds_usd, settings.default_staleness_tolerance]) %>",
+    [
+    ],
+]
+extra.usds_usd_lookup_oracle_id.event = "NodeRegistered"
+extra.usds_usd_lookup_oracle_id.arg = 0
+
+# Staleness Node
+[invoke.registerUsdsUsdOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.default_staleness_tolerance]) %>",
+    [
+        "<%= extras.usds_usd_pyth_oracle_id %>",
+        "<%= extras.usds_usd_lookup_oracle_id %>",
+    ],
+]
+extra.usds_usd_oracle_id.event = "NodeRegistered"
+extra.usds_usd_oracle_id.arg = 0
+
+# Third step combine susds/usds * usds/usd to get back the susds/usd redemption based price
+
+[invoke.registerSusdsNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 1 = reducer node
+    1,
+    # 1 parameters: 1 operation = 7 for mul decimal
+    "<%= defaultAbiCoder.encode(['uint256'], [7]) %>",
+    # 2 parent: 1 is the eth txn price node id, 2 is the eth oracle node id
+    ["<%= extras.susds_usds_oracle_id %>", "<%= extras.usds_usd_oracle_id %>"],
 ]
 extra.susds_oracle_id.event = "NodeRegistered"
 extra.susds_oracle_id.arg = 0

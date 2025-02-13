@@ -10,8 +10,8 @@ fromCall.func = "owner"
 func = "configureCollateral"  # "args" see below in the multiline block
 
 [[invoke.configure_susds_collateral.args]]
-tokenAddress = "<%= extras.synth_cbbtc_token_address %>"
-oracleNodeId = "<%= extras.cbbtc_oracle_id %>"
+tokenAddress = "<%= extras.synth_susds_token_address %>"
+oracleNodeId = "<%= extras.susds_oracle_id %>"
 issuanceRatioD18 = "<%= settings.susds_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.susds_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.susds_liquidation_reward %>"
