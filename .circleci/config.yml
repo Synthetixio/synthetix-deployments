@@ -279,7 +279,7 @@ jobs:
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
-              --provider-url "$<< parameters.rpc-env >>" \
+              --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -379,7 +379,7 @@ jobs:
               --anvil.memory-limit 6442450944 \
               --dry-run \
               --chain-id << parameters.chain-id >> \
-              --provider-url "$<< parameters.rpc-env >>" \
+              --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -677,7 +677,7 @@ jobs:
               --dry-run \
               --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
-              --provider-url "$<< parameters.rpc-env >>" \
+              --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
