@@ -1178,9 +1178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.21.1":
-  version: 2.21.1
-  resolution: "@usecannon/builder@npm:2.21.1"
+"@usecannon/builder@npm:2.21.3":
+  version: 2.21.3
+  resolution: "@usecannon/builder@npm:2.21.3"
   dependencies:
     "@usecannon/router": "npm:^4.1.2"
     "@usecannon/web-solc": "npm:0.5.1"
@@ -1199,18 +1199,18 @@ __metadata:
     rfdc: "npm:^1.4.1"
     ses: "npm:^1.10.0"
     typestub-ipfs-only-hash: "npm:^4.0.0"
-    viem: "npm:^2.21.15"
+    viem: "npm:^2.22.22"
     zod: "npm:^3.23.6"
-  checksum: 10/4f465859ef4ff62c016bee871c2d3eb4cabb360dab12af3d29986fba6f3e8b649661f29560fa30c356e8271526632c075a0e48e8a7289ac3ac2bca6b3210dc93
+  checksum: 10/95a4905194d9d3b09ff29feeef68a6e9e409765697a31fc42751c0064b967b0934c2529eddcd3eac85fe997d3b97423c1d6d46f1f765508355d994ea6cdf5a3a
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.21.1":
-  version: 2.21.1
-  resolution: "@usecannon/cli@npm:2.21.1"
+"@usecannon/cli@npm:2.21.3":
+  version: 2.21.3
+  resolution: "@usecannon/cli@npm:2.21.3"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.21.1"
+    "@usecannon/builder": "npm:2.21.3"
     abitype: "npm:^1.0.5"
     chalk: "npm:^4.1.2"
     commander: "npm:^12.1.0"
@@ -1224,12 +1224,12 @@ __metadata:
     table: "npm:^6.8.2"
     tildify: "npm:3.0.0"
     untildify: "npm:^4.0.0"
-    viem: "npm:^2.21.15"
+    viem: "npm:^2.22.22"
     znv: "npm:^0.4.0"
     zod: "npm:^3.23.8"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/7a633576224ac5db17bd5146c5f8d930a789376cbe0b96ed6d484259ae89fe8aff096f1a412cba12408bcce3e7b2431f01c591acd593a4ba3fd9a19bba1616d2
+  checksum: 10/e8b049dc39ceed4ea461e106355022e8c1ef2cefe7aafe841f742fc7464d55d80f092abe5fbb21af28403ceb59c89d5bb4e1eaf9638967c205d636a86333fc2b
   languageName: node
   linkType: hard
 
@@ -4980,8 +4980,8 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
-    "@usecannon/builder": "npm:2.21.1"
-    "@usecannon/cli": "npm:2.21.1"
+    "@usecannon/builder": "npm:2.21.3"
+    "@usecannon/cli": "npm:2.21.3"
     abi-to-sol: "npm:^0.8.0"
     debug: "npm:^4.4.0"
     ethers: "npm:^5.7.2"
