@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "79"
+version = "80"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
@@ -38,6 +38,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/rewards/swsteth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-sepolia-andromeda/rewards/sweth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-sepolia-andromeda/rewards/susdc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-sepolia-andromeda/rewards/stata_usdc_perps_liquidations_rewards.toml",
 
     # Pyth oracles
 
@@ -275,6 +276,7 @@ include = [
     "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/weth.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/usd.toml",
     "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/usdc.toml",
+    "tomls/omnibus-base-sepolia-andromeda/perps/collaterals/stata-usdc.toml",
 
     # Owned Fee Collector
     "tomls/omnibus-base-sepolia-andromeda/perps/owned-fee-collector.toml",
