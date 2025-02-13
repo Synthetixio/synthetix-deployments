@@ -20,8 +20,10 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/collaterals/cbeth.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/wsteth.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/weth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/susds.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-usdc.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-stata-usdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-susds.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-cbbtc.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-cbeth.toml",
     "tomls/omnibus-base-mainnet-andromeda/collaterals/synth-wsteth.toml",
@@ -34,6 +36,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/spot/cbeth.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/wsteth.toml",
     "tomls/omnibus-base-mainnet-andromeda/spot/weth.toml",
+    "tomls/omnibus-base-mainnet-andromeda/spot/susds.toml",
 
     # Perps Liquidation rewards
     "tomls/omnibus-base-mainnet-andromeda/rewards/snx_rewards_for_sc_pool.toml",
@@ -44,6 +47,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/rewards/sweth_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/susdc_perps_liquidations_rewards.toml",
     "tomls/omnibus-base-mainnet-andromeda/rewards/stata_usdc_perps_liquidations_rewards.toml",
+    "tomls/omnibus-base-mainnet-andromeda/rewards/susds_perps_liquidations_rewards.toml",
 
     # stataUSDC
     "tomls/omnibus-base-mainnet-andromeda/oracles/stataUSDC-USDC.toml",
@@ -158,6 +162,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xrp.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-zro.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-susds.toml",
 
     #
     # Perps
@@ -171,6 +176,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/weth.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/usdc.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/stata-usdc.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/collaterals/susds.toml",
 
     # Perps Settings
     "tomls/omnibus-base-mainnet-andromeda/perps/global.toml",
@@ -366,6 +372,7 @@ defaultValue = "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
 defaultValue = "0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 description = "https://basescan.org/token/0x4EA71A20e655794051D1eE8b6e4A3269B13ccaCc"
 
+
 [var.token_addresses]
 cbbtc_address = "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
 cbeth_address = "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22"
@@ -373,6 +380,7 @@ snx_address = "0x22e6966B799c4D5B13BE962E1D117b56327FDa66"
 usdc_address = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
 weth_address = "0x4200000000000000000000000000000000000006"
 wsteth_address = "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452"
+susds_address = "0x5875eEE11Cf8398102FdAd704C9E96607675467a"
 
 [setting.pyth_feed_url]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
@@ -496,3 +504,6 @@ pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"
 pyth_feed_id_zro = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018"
+pyth_feed_id_susds_usds_rr = "0x6968a8641208463d17ae3b9cfa0e4841a7aa7a5d54122b9f692b84fe9ce3409f"
+pyth_feed_id_susds = "0x77f0971af11cc8bac224917275c1bf55f2319ed5c654a1ca955c82fa2d297ea1"
+
