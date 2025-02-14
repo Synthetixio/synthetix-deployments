@@ -1,0 +1,27 @@
+[var.perps_collateral_synth_susds_settings]
+synth_susds_upper_limit_discount = "<%= parseEther('0.010') %>"
+synth_susds_lower_limit_discount = "<%= parseEther('0.0101') %>"
+synth_susds_discount_scalar = "<%= parseEther('1') %>"
+
+[invoke.PerpsMarketProxy_setCollateralConfiguration_synth_susds]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setCollateralConfiguration"
+args = [
+    "<%= extras.synth_susds_market_id %>",
+    "<%= settings.synth_susds_max_collateral_amount %>",
+    "<%= settings.synth_susds_upper_limit_discount %>",
+    "<%= settings.synth_susds_lower_limit_discount %>",
+    "<%= settings.synth_susds_discount_scalar %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_Perps_synth_susds]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+fromCall.args = []
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.perpsFactory.extras.superMarketId %>",
+    "<%= extras.synth_susds_token_address %>",
+    "<%= settings.synth_susds_max_collateral_amount %>",
+]
