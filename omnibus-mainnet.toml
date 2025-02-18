@@ -135,6 +135,9 @@ defaultValue = "0"
 [setting.synth_usde_max_market_collateral]
 defaultValue = "0"
 
+[setting.treasury_market_target_cratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
 # we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
@@ -155,6 +158,24 @@ target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseMigration"
 args = [true]
+
+[invoke.disableLiquidate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidate') %>", false]
+
+[invoke.disableLiquidateVault]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidateVault') %>", false]
+
+[invoke.setCRatio]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setTargetCRatio"
+args = ["<%= settings.treasury_market_target_cratio %>"]
 
 [var.governance]
 governance_package = "synthetix-governance:3.0.9"
