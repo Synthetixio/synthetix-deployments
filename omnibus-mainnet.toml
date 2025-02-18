@@ -135,6 +135,12 @@ defaultValue = "0"
 [setting.synth_usde_max_market_collateral]
 defaultValue = "0"
 
+[setting.treasury_market_target_cratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
+[setting.position_manager_address]
+defaultValue = "0x0ec41db062c246bf431d07d89e0411fe01fdfadc"
+
 # we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
@@ -155,6 +161,42 @@ target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseMigration"
 args = [true]
+
+[invoke.disableLiquidate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidate') %>", false]
+
+[invoke.disableLiquidateVault]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidateVault') %>", false]
+
+[invoke.setCRatio]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setTargetCRatio"
+args = ["<%= settings.treasury_market_target_cratio %>"]
+
+[invoke.setPositionManagerOverrideWithdrawTimeout]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.setPositionManagerOverrideMinDelegateTime]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
 
 [var.governance]
 governance_package = "synthetix-governance:3.0.9"
