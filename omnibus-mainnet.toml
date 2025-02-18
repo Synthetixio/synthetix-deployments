@@ -139,7 +139,7 @@ defaultValue = "0"
 defaultValue = "<%= parseEther('1.1') %>"
 
 [setting.position_manager_address]
-defaultValue = "0x1081a545A58bd68808DEda60fDFc39a10346FD33"
+defaultValue = "0x0ec41db062c246bf431d07d89e0411fe01fdfadc"
 
 # we want to enable the spot market wrapper for usde
 [import.usde]
@@ -186,7 +186,7 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001"
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
 
 [invoke.setPositionManagerOverrideMinDelegateTime]
@@ -195,7 +195,7 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001"
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
 
 [var.governance]
