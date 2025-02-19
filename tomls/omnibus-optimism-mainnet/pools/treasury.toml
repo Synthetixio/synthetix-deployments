@@ -1,0 +1,39 @@
+[invoke.createTreasuryPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "createPool"
+args = ["<%= settings.treasury_pool_id_setting %>", "<%= settings.pdao %>"]
+extra.treasury_pool_id.event = "PoolCreated"
+extra.treasury_pool_id.arg = 0
+depends = ["invoke.permitCreatePool"]
+
+[invoke.setTreasuryPoolName]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.treasury_pool_id %>"]
+func = "setPoolName"
+args = ["<%= extras.treasury_pool_id %>", "Treasury Pool"]
+
+[invoke.setTreasuryPoolCollateralDisabled]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.treasury_pool_id %>"]
+func = "setPoolCollateralDisabledByDefault"
+args = ["<%= extras.treasury_pool_id %>", true]
+
+[invoke.setTreasuryPoolSnxExclusiveDeposit]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= extras.treasury_pool_id %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= extras.treasury_pool_id %>",
+    "<%= settings.snx_address %>",
+    { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" },
+]
+
+[invoke.setPreferredPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setPreferredPool"
+args = ["<%= extras.treasury_pool_id %>"]

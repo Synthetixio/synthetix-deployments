@@ -1,0 +1,26 @@
+[setting.snx_package]
+
+[setting.owner]
+
+[setting.target_preset]
+defaultValue = "main"
+
+[setting.salt]
+defaultValue = "snax"
+
+[setting.bundleSalt]
+defaultValue = "snax"
+
+[clone.oracle_manager]
+source = "<%= settings.oracle_manager_package %>"
+target = "<%= settings.oracle_manager_package %>"
+options.salt = "<%= settings.salt %>-oracle"
+options.owner = "<%= settings.owner %>"
+
+[provision.system]
+source = "<%= settings.snx_package %>"
+target = "<%= settings.snx_package %>@<%= settings.target_preset %>"
+options.owner = "<%= settings.owner %>"
+options.salt = "<%= settings.salt %>"
+options.bundleSalt = "<%= settings.bundleSalt %>"
+options.oracle_manager_package = "<%= settings.oracle_manager_package %>"
