@@ -1,6 +1,6 @@
 [var.perps_snx_market_settings]
 snx_perps_market_id = "300"
-snx_perps_market_skew_scale = "<%= parseEther(String(3_627_800)) %>"
+snx_perps_market_skew_scale = "<%= parseEther(String(7_161_000)) %>"
 snx_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 snx_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 snx_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
@@ -21,7 +21,7 @@ snx_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "createMarket"
-args = ["<%= settings.snx_perps_market_id %>", "Synthetix", "SNX"]
+args = ["<%= settings.snx_perps_market_id %>", "Synthetix Network Token", "SNX"]
 
 [invoke.setPerpsPriceSnx]
 target = ["perpsFactory.PerpsMarketProxy"]

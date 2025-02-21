@@ -1,6 +1,6 @@
 [var.perps_near_market_settings]
 near_perps_market_id = "6100"
-near_perps_market_skew_scale = "<%= parseEther(String(6_973_600)) %>"
+near_perps_market_skew_scale = "<%= parseEther(String(12_491_000)) %>"
 near_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 near_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 near_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

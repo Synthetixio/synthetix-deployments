@@ -1,6 +1,6 @@
 [var.perps_fartcoin_market_settings]
 fartcoin_perps_market_id = "9900"
-fartcoin_perps_market_skew_scale = "<%= parseEther(String(8_710_600)) %>"
+fartcoin_perps_market_skew_scale = "<%= parseEther(String(30_980_000)) %>"
 fartcoin_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 fartcoin_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 fartcoin_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

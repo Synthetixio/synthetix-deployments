@@ -1,6 +1,6 @@
 [var.perps_ada_market_settings]
 ada_perps_market_id = "3400"
-ada_perps_market_skew_scale = "<%= parseEther(String(82_468_000)) %>"
+ada_perps_market_skew_scale = "<%= parseEther(String(221_196_000)) %>"
 ada_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 ada_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 ada_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

@@ -1,6 +1,6 @@
 [var.perps_algo_market_settings]
 algo_perps_market_id = "3500"
-algo_perps_market_skew_scale = "<%= parseEther(String(54_100_700)) %>"
+algo_perps_market_skew_scale = "<%= parseEther(String(86_271_000)) %>"
 algo_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 algo_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 algo_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
