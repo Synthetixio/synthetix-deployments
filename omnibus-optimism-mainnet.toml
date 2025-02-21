@@ -171,7 +171,7 @@ governance_initial_epoch_end_date = "1726504075"
 target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseMigration"
-args = [true]
+args = [false]
 
 [invoke.disableLiquidate]
 target = ["system.CoreProxy"]
