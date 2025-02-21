@@ -136,8 +136,7 @@ defaultValue = "15"
 defaultValue = "<%= parseEther('1.1') %>"
 
 [setting.position_manager_address]
-# TODO
-defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
+defaultValue = "0x693cd986b8b840607d3c7952f038bc22da636f48"
 
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
@@ -197,5 +196,14 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.setPositionManagerOverrideMinDelegateTime]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
     "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
