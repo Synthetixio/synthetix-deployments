@@ -139,7 +139,7 @@ defaultValue = "0"
 defaultValue = "<%= parseEther('1.1') %>"
 
 [setting.position_manager_address]
-defaultValue = "0x0ec41db062c246bf431d07d89e0411fe01fdfadc"
+defaultValue = "0x100c6c18381c9a7527762063047236356bbd0b8d"
 
 # we want to enable the spot market wrapper for usde
 [import.usde]
