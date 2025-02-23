@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "7"
+version = "8"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -8,13 +8,15 @@ deployers = [
 include = [
     "tomls/settings.toml",
     "tomls/ccip-mainnet.toml",
-    "tomls/core.toml",
+    "tomls/omnibus-optimism-mainnet/core.toml",
     "tomls/permissions.toml",
     "tomls/oracles/snx.toml",
     "tomls/omnibus-optimism-mainnet/collaterals/snx.toml",
     # eth collateral is not enabled/set up on v3
     #"tomls/oracles/eth.toml",
     #"tomls/collaterals/weth.toml",
+    "tomls/collaterals/snx.toml",
+    "tomls/markets/legacy.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
     "tomls/omnibus-optimism-mainnet/spot-factory.toml",
@@ -24,10 +26,17 @@ include = [
     "tomls/omnibus-optimism-mainnet/governance/councils-satellite.toml",
     "tomls/omnibus-optimism-mainnet/governance/wormhole.toml",
     "tomls/omnibus-optimism-mainnet/governance/snapshot-record.toml",
+
+    # Treasury Market
+    "tomls/omnibus-optimism-mainnet/pools/treasury.toml",
+    "tomls/omnibus-optimism-mainnet/treasury-market.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.6.0"
+defaultValue = "synthetix:3.10.4"
+
+[setting.oracle_manager_package]
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.6.0"
@@ -35,14 +44,23 @@ defaultValue = "synthetix-spot-market:3.6.0"
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.6.0"
 
+[setting.legacy_market_package]
+defaultValue = "synthetix-legacy-market:3.8.0"
+
+[setting.treasury_market_package]
+defaultValue = "synthetix-treasury-market:3.10.3"
+
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
 
 [setting.salt]
 defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
 
+[setting.bundleSalt]
+defaultValue = "snax"
+
 [setting.snx_address]
-defaultValue = "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
+defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxySynthetix.address %>"
 
 [setting.snx_aggregator_address]
 defaultValue = "0x2FCF37343e916eAEd1f1DdaaF84458a359b53877"
@@ -71,8 +89,17 @@ defaultValue = "86400"
 [setting.deployer]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
 
+[setting.pdao]
+defaultValue = "0x6cd3f878852769e04A723A5f66CA7DD4d9E38A6C"
+
+[setting.treasury]
+defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
+
 [setting.sc_pool_id]
 defaultValue = "1"
+
+[setting.treasury_pool_id_setting]
+defaultValue = "8"
 
 [setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
@@ -105,6 +132,12 @@ defaultValue = "60"
 [setting.ethSettlementDelay]
 defaultValue = "15"
 
+[setting.treasury_market_target_cratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
+[setting.position_manager_address]
+defaultValue = "0x693cd986b8b840607d3c7952f038bc22da636f48"
+
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
@@ -131,3 +164,46 @@ governance_initial_epoch_start_date = "1725035275"
 governance_initial_nomination_period_start_date = "1725072898"
 governance_initial_voting_period_start_date = "1725640075"
 governance_initial_epoch_end_date = "1726504075"
+
+# additional calls for legacy market/treasury market
+[invoke.pauseLMMigration]
+target = ["legacyMarket.Proxy"]
+fromCall.func = "owner"
+func = "setPauseMigration"
+args = [false]
+
+[invoke.disableLiquidate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidate') %>", false]
+
+[invoke.disableLiquidateVault]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidateVault') %>", false]
+
+[invoke.setCRatio]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setTargetCRatio"
+args = ["<%= settings.treasury_market_target_cratio %>"]
+
+[invoke.setPositionManagerOverrideWithdrawTimeout]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.setPositionManagerOverrideMinDelegateTime]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
