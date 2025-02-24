@@ -904,13 +904,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/pyth-evm-js@npm:^1.82.0":
-  version: 1.82.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.82.0"
+"@pythnetwork/pyth-evm-js@npm:^1.83.0":
+  version: 1.83.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:1.83.0"
   dependencies:
     "@pythnetwork/price-service-client": "npm:1.9.0"
     buffer: "npm:^6.0.3"
-  checksum: 10/fc17332b6fc8054fb79305771e7c85b22be432cb3bfe4f40d071f6e1d9f91f2c48f5898914cdca4b6070ec025dfa8c7b944e6adf66ff03349ee9e2b04dd375f9
+  checksum: 10/1898997c931bc889e6d2ffc930482ed29f6f8696634f24b30641f09e90d5a06dbcd78a729e77e7bed58cdb36c007bdfed48a846b149dd818564c877de460ee6d
   languageName: node
   linkType: hard
 
@@ -4229,14 +4229,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-toml@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "prettier-plugin-toml@npm:2.0.1"
+"prettier-plugin-toml@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "prettier-plugin-toml@npm:2.0.2"
   dependencies:
     "@taplo/lib": "npm:^0.4.0-alpha.2"
   peerDependencies:
     prettier: ^3.0.3
-  checksum: 10/cf6a6c4f386390d74924eaacff86d3ef97369749b986fe3b5229466e896ada9f6da4a4fef44059062ffebf6f9a25530d563cba73da2ba2aac0eee27b4fc8c279
+  checksum: 10/8e13d000bcb448bad62e409b1f191d9f7910f50313211b39385a67d7d9fd70defecadbb7cb44086cb5860cbeb607b89b0419b21ce3952fb3a47ef3a75fc06a8b
   languageName: node
   linkType: hard
 
@@ -4249,12 +4249,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "prettier@npm:3.4.2"
+"prettier@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "prettier@npm:3.5.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/a3e806fb0b635818964d472d35d27e21a4e17150c679047f5501e1f23bd4aa806adf660f0c0d35214a210d5d440da6896c2e86156da55f221a57938278dc326e
+  checksum: 10/ac7a157c8ec76459b13d81a03ff65d228015992cb926b676b0f1c83edd47e5db8ba257336b400be20942fc671816f1afde377cffe94d9e4368762a3d3acbffe5
   languageName: node
   linkType: hard
 
@@ -4979,7 +4979,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
+    "@pythnetwork/pyth-evm-js": "npm:^1.83.0"
     "@usecannon/builder": "npm:2.21.1"
     "@usecannon/cli": "npm:2.21.1"
     abi-to-sol: "npm:^0.8.0"
@@ -4989,12 +4989,12 @@ __metadata:
     mocha: "npm:^11.0.1"
     numbro: "npm:^2.5.0"
     pako: "npm:^2.1.0"
-    prettier: "npm:^3.4.2"
+    prettier: "npm:^3.5.2"
     prettier-plugin-solidity: "npm:^1.4.2"
-    prettier-plugin-toml: "npm:^2.0.1"
+    prettier-plugin-toml: "npm:^2.0.2"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.22.10"
+    viem: "npm:^2.23.5"
   languageName: unknown
   linkType: soft
 
