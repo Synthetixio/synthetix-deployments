@@ -1,6 +1,6 @@
 [var.perps_meme_market_settings]
 meme_perps_market_id = "6000"
-meme_perps_market_skew_scale = "<%= parseEther(String(1_300_000_000)) %>"
+meme_perps_market_skew_scale = "<%= parseEther(String(2_053_463_000)) %>"
 meme_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 meme_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 meme_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

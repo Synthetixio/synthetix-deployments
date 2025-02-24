@@ -1,6 +1,6 @@
 [var.perps_axs_market_settings]
 axs_perps_market_id = "3800"
-axs_perps_market_skew_scale = "<%= parseEther(String(2_218_700)) %>"
+axs_perps_market_skew_scale = "<%= parseEther(String(3_341_000)) %>"
 axs_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 axs_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 axs_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

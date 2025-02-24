@@ -1,6 +1,6 @@
 [var.perps_comp_market_settings]
 comp_perps_market_id = "4200"
-comp_perps_market_skew_scale = "<%= parseEther(String(78_300)) %>"
+comp_perps_market_skew_scale = "<%= parseEther(String(136_000)) %>"
 comp_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 comp_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 comp_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

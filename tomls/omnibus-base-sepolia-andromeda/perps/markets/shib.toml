@@ -1,6 +1,6 @@
 [var.perps_shib_market_settings]
 shib_perps_market_id = "6500"
-shib_perps_market_skew_scale = "<%= parseEther(String(2_572_944_297_100)) %>"
+shib_perps_market_skew_scale = "<%= parseEther(String(4_162_312_435_000)) %>"
 shib_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 shib_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 shib_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
