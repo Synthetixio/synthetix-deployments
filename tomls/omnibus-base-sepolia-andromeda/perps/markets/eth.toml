@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.eth_perps_market_id %>",
     "<%= extras.eth_oracle_id %>",
-    "<%= settings.strict_staleness_tolerance %>",
+    "<%= settings.default_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsEthSettlementStrategy]

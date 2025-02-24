@@ -1,6 +1,6 @@
 [var.perps_wif_market_settings]
 wif_perps_market_id = "500"
-wif_perps_market_skew_scale = "<%= parseEther(String(30_000_000)) %>"
+wif_perps_market_skew_scale = "<%= parseEther(String(54_873_000)) %>"
 wif_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 wif_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 wif_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
