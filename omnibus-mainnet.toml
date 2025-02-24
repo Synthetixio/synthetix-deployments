@@ -180,6 +180,12 @@ fromCall.func = "owner"
 func = "setTargetCRatio"
 args = ["<%= settings.treasury_market_target_cratio %>"]
 
+[invoke.setDebtDecayFunction]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setDebtDecayFunction"
+args = ["2", "31536000", "<%= parseEther('1') %>", "<%= parseEther('0.5') %>"]
+
 [invoke.setPositionManagerOverrideWithdrawTimeout]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
