@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_cbbtc_market_id %>",
     "<%= extras.cbbtc_oracle_id %>",
     "<%= extras.cbbtc_oracle_id %>",
-    "<%= settings.two_week_staleness_tolerance %>",
+    "<%= settings.one_day_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_cbbtc]

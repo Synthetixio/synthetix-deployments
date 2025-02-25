@@ -356,8 +356,8 @@ defaultValue = "3600"
 [setting.strict_staleness_tolerance]
 defaultValue = "60"
 
-[setting.two_week_staleness_tolerance]
-defaultValue = "1209600"
+[setting.one_day_staleness_tolerance]
+defaultValue = "86400"
 
 [setting.settlement_window_duration]
 defaultValue = "60"
