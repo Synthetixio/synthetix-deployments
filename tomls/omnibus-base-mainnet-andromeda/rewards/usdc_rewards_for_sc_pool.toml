@@ -19,3 +19,15 @@ args = [
     "<%= AddressZero %>",
     "<%= imports.RewardsDistributor_usdc_rewards_for_sc_pool.contracts.RewardsDistributor.address %>",
 ]
+
+[invoke.CoreProxy_registerRewardsDistributor_usdc_rewards_for_statausdc]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "registerRewardsDistributor"
+args = [
+    "<%= settings.spartan_council_pool_id_setting %>",
+    # Register as distributor for stataUSDC only
+    "<%= extras.synth_stata_usdc_token_address %>",
+    "<%= imports.RewardsDistributor_usdc_rewards_for_sc_pool.contracts.RewardsDistributor.address %>",
+]
