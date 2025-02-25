@@ -9,7 +9,7 @@ deployers = [
 include = [
     "tomls/omnibus-base-mainnet-andromeda/core.toml",
     "tomls/settings.toml",
-    "tomls/permissions.toml",
+    "tomls/omnibus-base-mainnet-andromeda/permissions.toml",
     "tomls/omnibus-base-mainnet-andromeda/permit-deniers.toml",
     "tomls/omnibus-base-mainnet-andromeda/pools/spartan-council.toml",
     "tomls/markets/spot-factory.toml",
