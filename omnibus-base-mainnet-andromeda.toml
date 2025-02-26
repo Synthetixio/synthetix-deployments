@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "83"
+version = "84"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -101,8 +101,10 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-imx.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-inj.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-io.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ip.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-jto.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-jup.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-kaito.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-kmno.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ldo.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-link.toml",
@@ -116,6 +118,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-morpho.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-near.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-not.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-om.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-op.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-ordi.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-pendle.toml",
@@ -228,8 +231,10 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/imx.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/inj.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/io.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/ip.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/jto.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/jup.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/kaito.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/kmno.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/ldo.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/link.toml",
@@ -243,6 +248,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/morpho.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/near.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/not.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/om.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/op.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/ordi.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/pendle.toml",
@@ -441,8 +447,10 @@ pyth_feed_id_icp = "0xc9907d786c5821547777780a1e4f89484f3417cb14dd244f2b0a34ea7a
 pyth_feed_id_imx = "0x941320a8989414874de5aa2fc340a75d5ed91fdff1613dd55f83844d52ea63a2"
 pyth_feed_id_inj = "0x7a5bc1d2b56ad029048cd63964b3ad2776eadf812edc1a43a31406cb54bff592"
 pyth_feed_id_io = "0x82595d1509b770fa52681e260af4dda9752b87316d7c048535d8ead3fa856eb1"
+pyth_feed_id_ip = "0xb620ba83044577029da7e4ded7a2abccf8e6afc2a0d4d26d89ccdd39ec109025"
 pyth_feed_id_jto = "0xb43660a5f790c69354b0729a5ef9d50d68f1df92107540210b9cccba1f947cc2"
 pyth_feed_id_jup = "0x0a0408d619e9380abad35060f9192039ed5042fa6f82301d0e48bb52be830996"
+pyth_feed_id_kaito = "0x7302dee641a08507c297a7b0c8b3efa74a48a3baa6c040acab1e5209692b7e59"
 pyth_feed_id_kmno = "0xb17e5bc5de742a8a378b54c9c75442b7d51e30ada63f28d9bd28d3c0e26511a0"
 pyth_feed_id_ldo = "0xc63e2a7f37a04e5e614c07238bedb25dcc38927fba8fe890597a593c0b2fa4ad"
 pyth_feed_id_link = "0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221"
@@ -455,6 +463,7 @@ pyth_feed_id_moodeng = "0xffff73128917a90950cd0473fd2551d7cd274fd5a6cc45641881bb
 pyth_feed_id_morpho = "0x5b2a4c542d4a74dd11784079ef337c0403685e3114ba0d9909b5c7a7e06fdc42"
 pyth_feed_id_near = "0xc415de8d2eba7db216527dff4b60e8f3a5311c740dadb233e13e12547e226750"
 pyth_feed_id_not = "0x75ec6f04d4bded6afdc1440689be4402dd1e23d2ff2c21e081871eb2739ceb36"
+pyth_feed_id_om = "0xef8382df144cd3289a754b07bfb51acbe5bbc47444c36f727169c06387469ac6"
 pyth_feed_id_op = "0x385f64d993f7b77d8182ed5003d97c60aa3361f3cecfe711544d2d59165e9bdf"
 pyth_feed_id_ordi = "0x193c739db502aadcef37c2589738b1e37bdb257d58cf1ab3c7ebc8e6df4e3ec0"
 pyth_feed_id_pendle = "0x9a4df90b25497f66b1afb012467e316e801ca3d839456db028892fe8c70c8016"
