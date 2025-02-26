@@ -90,3 +90,10 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_cbeth_market_id %>"]
 func = "setCollateralLeverage"
 args = ["<%= extras.synth_cbeth_market_id %>", "<%= parseEther('10') %>"]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_cbeth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbeth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_cbeth_market_id) %>", true]

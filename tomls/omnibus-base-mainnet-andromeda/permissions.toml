@@ -17,9 +17,3 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('atomicOrdersEnabled') %>", true]
-
-[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled]
-target = ["spotFactory.SpotMarketProxy"]
-fromCall.func = "owner"
-func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('wrapperEnabled') %>", true]
