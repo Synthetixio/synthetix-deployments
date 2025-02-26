@@ -61,6 +61,23 @@ args = [
     "<%= settings.synthStataUsdcMaxMarketCollateral %>",
 ]
 
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_statausdc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_stata_usdc_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_stata_usdc_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_stataUSDC]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_stata_usdc_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = [
+    "<%= formatBytes32String('atomicOrdersEnabled' + String(extras.synth_stata_usdc_market_id)) %>",
+    true,
+]
+
 # We allow stataUSDC as collateral with depositingEnabled = false so the spot market can deposit it, but it can't be LPed
 # Users deposit/delegate sStataUSDC
 [invoke.CoreProxy_configureCollateral_stataUSDC]
