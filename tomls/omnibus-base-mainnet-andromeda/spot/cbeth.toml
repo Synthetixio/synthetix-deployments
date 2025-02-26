@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_cbeth_market_id %>",
     "<%= extras.cbeth_oracle_id %>",
     "<%= extras.cbeth_oracle_id %>",
-    "<%= settings.strict_staleness_tolerance %>",
+    "<%= settings.one_day_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_cbeth]

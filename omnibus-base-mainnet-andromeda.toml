@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "82"
+version = "83"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -349,6 +349,9 @@ defaultValue = "3600"
 
 [setting.strict_staleness_tolerance]
 defaultValue = "60"
+
+[setting.one_day_staleness_tolerance]
+defaultValue = "86400"
 
 [setting.settlement_window_duration]
 defaultValue = "60"
