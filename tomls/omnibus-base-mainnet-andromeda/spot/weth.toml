@@ -103,4 +103,4 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_weth_market_id %>"]
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_weth_market_id) %>", false]
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_weth_market_id) %>", true]
