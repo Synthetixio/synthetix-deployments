@@ -65,7 +65,7 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_cbbtc_market_id) %>", true]
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_cbbtc_market_id) %>", false]
 
 # NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_cbbtc]
