@@ -53,6 +53,20 @@ args = [
     "<%= settings.synth_wsteth_max_collateral_amount %>",
 ]
 
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_wsteth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_wsteth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_wsteth_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_wsteth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_wsteth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_wsteth_market_id) %>", true]
+
 # NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_wsteth]
 target = ["spotFactory.SpotMarketProxy"]
