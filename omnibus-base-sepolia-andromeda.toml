@@ -6,7 +6,7 @@ deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/omnibus-base-sepolia-andromeda/core.toml",
     "tomls/markets/spot-factory.toml",
-    "tomls/permissions.toml",
+    "tomls/omnibus-base-sepolia-andromeda/permissions.toml",
     "tomls/omnibus-base-sepolia-andromeda/permit-deniers.toml",
     "tomls/omnibus-base-sepolia-andromeda/pools/spartan-council.toml",
 
@@ -292,7 +292,7 @@ defaultValue = "oracle-manager:3.10.1"
 defaultValue = "op-gas-price-oracle:3.10.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.10.1"
+defaultValue = "synthetix-spot-market:3.10.5"
 
 [setting.perps_market_package]
 defaultValue = "synthetix-perps-market:3.11.2-orderbook"

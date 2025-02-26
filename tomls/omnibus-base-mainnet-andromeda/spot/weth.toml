@@ -90,3 +90,17 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_weth_market_id %>"]
 func = "setCollateralLeverage"
 args = ["<%= extras.synth_weth_market_id %>", "<%= parseEther('10') %>"]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_weth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_weth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_weth_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_weth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_weth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_weth_market_id) %>", true]
