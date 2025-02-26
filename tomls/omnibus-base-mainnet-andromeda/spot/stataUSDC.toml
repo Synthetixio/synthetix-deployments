@@ -73,7 +73,10 @@ target = ["spotFactory.SpotMarketProxy"]
 fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_stata_usdc_market_id %>"]
 func = "setFeatureFlagAllowAll"
-args = ["<%= formatBytes32String('atomicOrdersEnabled' + String(extras.synth_stata_usdc_market_id)) %>", true]
+args = [
+    "<%= formatBytes32String('atomicOrdersEnabled' + String(extras.synth_stata_usdc_market_id)) %>",
+    true,
+]
 
 # We allow stataUSDC as collateral with depositingEnabled = false so the spot market can deposit it, but it can't be LPed
 # Users deposit/delegate sStataUSDC
