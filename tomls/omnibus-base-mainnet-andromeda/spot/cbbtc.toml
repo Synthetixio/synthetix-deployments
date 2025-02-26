@@ -97,3 +97,10 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_cbbtc_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_cbbtc_market_id) %>", true]
