@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "8"
+version = "9"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -81,7 +81,7 @@ defaultValue = "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593"
 defaultValue = "<%= parseEther('10') %>"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "<%= parseEther('2') %>"
+defaultValue = "1100000000000000000"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"
