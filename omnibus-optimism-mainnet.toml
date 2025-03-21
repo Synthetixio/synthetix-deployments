@@ -232,6 +232,15 @@ args = [
     "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
 
+[invoke.setPositionManagerOverrideMinDelegateTime_SC_Pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.sc_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
 [var.treasuryInfo]
 treasury_account_id = "10"
 treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"

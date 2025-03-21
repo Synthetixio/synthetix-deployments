@@ -221,6 +221,15 @@ args = [
     "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
 
+[invoke.setPositionManagerOverrideMinDelegateTime_SC_Pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.sc_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
 [var.governance]
 governance_package = "synthetix-governance:3.0.9"
 governance_satellite_package = "synthetix-governance-satellite:3.0.9"
