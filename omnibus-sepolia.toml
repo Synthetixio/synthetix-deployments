@@ -30,6 +30,9 @@ defaultValue = "snaxtest"
 [setting.snx_package]
 defaultValue = "synthetix:3.12.2"
 
+[setting.v2x_package]
+defaultValue = "synthetix:2.101.2"
+
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
 
@@ -37,7 +40,7 @@ defaultValue = "oracle-manager:3.10.1"
 defaultValue = "synthetix-spot-market:3.12.2"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.12.2"
+defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.susde_package]
 defaultValue = "fake-susde-token"
@@ -469,7 +472,6 @@ args = [
     "<%= settings.weth_address %>",
     "<%= settings.weth_rewards_distributor %>",
 ]
-
 
 [setting.snx_v4_onchain]
 defaultValue = "synthetix-v4-onchain:0.1.1"
