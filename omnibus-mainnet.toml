@@ -33,10 +33,11 @@ include = [
     # Treasury Market
     "tomls/omnibus-mainnet/pools/treasury.toml",
     "tomls/omnibus-mainnet/treasury-market.toml",
+    "tomls/omnibus-mainnet/liquidation-permissions.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.4"
+defaultValue = "synthetix:0.0.0-dev.d5c2110b"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
@@ -221,3 +222,7 @@ governance_initial_epoch_start_date = "1725035275"
 governance_initial_nomination_period_start_date = "1725072898"
 governance_initial_voting_period_start_date = "1725640075"
 governance_initial_epoch_end_date = "1726504075"
+
+[var.treasuryInfo]
+treasury_account_id = "1"
+treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"

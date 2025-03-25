@@ -1,0 +1,27 @@
+[var.treasuryInfo]
+treasury_account_id = ""
+treasury_liquidator_address = ""
+
+[invoke.disable_treasury_pool_liquidations]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = ["<%= keccak256(defaultAbiCoder.encode(['bytes32', 'uint256'], [formatBytes32String('disablePoolLiquidation'), formatBytes32String('8')])) %>", "<%= keccak256('1') %>"]
+
+[invoke.set_treasury_account]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = ["<%= formatBytes32String('treasuryAccountId') %>", "<%= defaultAbiCoder.encode(['uint256'], [settings.treasury_account_id]) %>"]
+
+[invoke.set_treasury_pool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = ["<%= formatBytes32String('treasuryPoolId') %>", "<%= defaultAbiCoder.encode(['uint256'], [settings.treasury_pool_id]) %>"]
+
+[invoke.allow_liquidate_to_treasury]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "addToFeatureFlagAllowlist"
+args = ["<%= formatBytes32String('liquidateToTreasury') %>", "<%= settings.treasury_liquidator_address %>"]
