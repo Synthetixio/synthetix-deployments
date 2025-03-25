@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "90"
+version = "91"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -299,7 +299,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.1"
+defaultValue = "synthetix:3.12.0"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.10.0"
@@ -511,3 +511,27 @@ pyth_feed_id_xmr = "0x46b8cc9347f04391764a0361e0b17c3ba394b001e7c304f7650f6376e3
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"
 pyth_feed_id_zro = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018"
+
+[setting.slp_vault_accountid]
+defaultValue = "170141183460469231731687303715884107773"
+
+[setting.slp_migration_address]
+defaultValue = "0xc0329ca9c8b61E8990d46Cd2a58D8EcD251E82Dc"
+
+[invoke.CoreProxy_setConfig_accountOverrideWithdrawTimeout_slp_vault]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'uint256'], [formatBytes32String('accountOverrideWithdrawTimeout'), settings.slp_vault_accountid])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.CoreProxy_setConfig_senderOverrideWithdrawTimeout_migration_address]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.slp_migration_address])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
