@@ -42,3 +42,9 @@ target = ["perpsFactory.PerpsMarketProxy"]
 fromCall.func = "owner"
 func = "updateReferrerShare"
 args = ["0x829d7E022c2ACD05a875bCa4Bd11F56E003B727B", "<%= settings.referrerFee %>"]
+
+[invoke.setEzbotAsReferrerOnPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updateReferrerShare"
+args = ["0xa09550489FF57fF4192cA14345ea3ED126B00492", "<%= settings.referrerFee %>"]
