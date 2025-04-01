@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "16"
+version = "17"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -33,10 +33,11 @@ include = [
     # Treasury Market
     "tomls/omnibus-mainnet/pools/treasury.toml",
     "tomls/omnibus-mainnet/treasury-market.toml",
+    "tomls/omnibus-mainnet/liquidation-permissions.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.4"
+defaultValue = "synthetix:3.12.0"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
@@ -48,10 +49,10 @@ defaultValue = "synthetix-spot-market:3.3.15"
 defaultValue = "synthetix-perps-market:3.3.19"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.8.0"
+defaultValue = "synthetix-legacy-market:3.12.0"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.10.3"
+defaultValue = "synthetix-treasury-market:3.12.0"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
@@ -221,3 +222,7 @@ governance_initial_epoch_start_date = "1725035275"
 governance_initial_nomination_period_start_date = "1725072898"
 governance_initial_voting_period_start_date = "1725640075"
 governance_initial_epoch_end_date = "1726504075"
+
+[var.treasuryInfo]
+treasury_account_id = "1"
+treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"
