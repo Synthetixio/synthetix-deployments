@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "3.3.5"
+version = "3.3.4"
 description = "Includes the full synthetix system with configurations applied"
 include = [
     "tomls/settings.toml",
@@ -21,7 +21,7 @@ defaultValue = "main"
 defaultValue = "0x3330363734343032330000000000000000000000000000000000000000000000"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.12.0"
+defaultValue = "synthetix:3.3.4"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.3.4"
@@ -70,9 +70,6 @@ defaultValue = "0x673aa85efd75080031d44fca061575d1da427a28"
 # TODO: Update when snxUSD pool availabe Base Mainnet
 defaultValue = "0x0000000000000000000000000000000000000000"
 
-[setting.slp_vault_accountid]
-defaultValue = "170141183460469231731687303715884107746"
-
 # ETH Synth Configuration
 [setting.synthEthAsyncFixedFee]
 defaultValue = "0.001"
@@ -118,12 +115,3 @@ args = [
     { collateralLimitD18 = "<%= MaxUint256 %>", issuanceRatioD18 = "<%= MaxUint256 %>" },
 ]
 depends = ["invoke.createScPool"]
-
-[invoke.CoreProxy_setConfig_accountOverrideWithdrawTimeout_slp_vault]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setConfig"
-args = [
-    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'uint256'], [formatBytes32String('accountOverrideWithdrawTimeout'), settings.slp_vault_accountid])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
-]
