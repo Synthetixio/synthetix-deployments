@@ -158,6 +158,9 @@ defaultValue = "<%= parseEther('1.1') %>"
 [setting.position_manager_address]
 defaultValue = "0x100c6c18381c9a7527762063047236356bbd0b8d"
 
+[setting.pool420_migrate_address]
+defaultValue = "0x8bfd24F68149E3d4e9635a6E26b0e43EEfd2C692"
+
 # we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
@@ -209,7 +212,7 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
+    "0x0000000000000000000000000000000000000000000000000000000000000000",
 ]
 
 [invoke.setPositionManagerOverrideMinDelegateTime]
@@ -218,7 +221,7 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
+    "0x0000000000000000000000000000000000000000000000000000000000000000",
 ]
 
 [invoke.setPositionManagerOverrideMinDelegateTime_SC_Pool]
@@ -227,6 +230,33 @@ fromCall.func = "owner"
 func = "setConfig"
 args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.sc_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000000",
+]
+
+[invoke.CoreProxy_setConfig_senderOverrideWithdrawTimeout_Pool420Migrate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.pool420_migrate_address])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.CoreProxy_setConfig_senderOverrideMinDelegateTime_Pool420Migrate_TreasuryPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.pool420_migrate_address, settings.treasury_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.CoreProxy_setConfig_senderOverrideMinDelegateTime_Pool420Migrate_SCPool]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.pool420_migrate_address, settings.sc_pool_id])) %>",
     "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
 
