@@ -217,5 +217,5 @@ args = [
 ]
 
 [var.treasuryInfo]
-treasury_account_id = "1"
+treasury_account_id = "10"
 treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"
