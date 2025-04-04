@@ -30,10 +30,12 @@ include = [
     # Treasury Market
     "tomls/omnibus-optimism-mainnet/pools/treasury.toml",
     "tomls/omnibus-optimism-mainnet/treasury-market.toml",
+
+    "tomls/omnibus-optimism-mainnet/liquidation-permissions.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.4"
+defaultValue = "synthetix:3.12.0"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
@@ -45,10 +47,10 @@ defaultValue = "synthetix-spot-market:3.6.0"
 defaultValue = "synthetix-perps-market:3.6.0"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.8.0"
+defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.10.3"
+defaultValue = "synthetix-treasury-market:3.12.0"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -213,3 +215,7 @@ args = [
     "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
     "0x0000000000000000000000000000000000000000000000000000000000000001",
 ]
+
+[var.treasuryInfo]
+treasury_account_id = "1"
+treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"
