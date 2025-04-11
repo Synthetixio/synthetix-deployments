@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "19"
+version = "18"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
