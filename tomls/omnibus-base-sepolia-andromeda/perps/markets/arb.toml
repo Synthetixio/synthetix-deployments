@@ -1,6 +1,6 @@
 [var.perps_arb_market_settings]
 arb_perps_market_id = "1600"
-arb_perps_market_skew_scale = "<%= parseEther(String(60_186_800)) %>"
+arb_perps_market_skew_scale = "<%= parseEther(String(120_373_600)) %>"
 arb_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 arb_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 arb_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

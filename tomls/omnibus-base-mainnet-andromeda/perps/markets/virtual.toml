@@ -1,6 +1,6 @@
 [var.perps_virtual_market_settings]
 virtual_perps_market_id = "9700"
-virtual_perps_market_skew_scale = "<%= parseEther(String(11_285_000)) %>"
+virtual_perps_market_skew_scale = "<%= parseEther(String(22_570_000)) %>"
 virtual_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 virtual_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 virtual_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
