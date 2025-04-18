@@ -224,5 +224,5 @@ governance_initial_voting_period_start_date = "1725640075"
 governance_initial_epoch_end_date = "1726504075"
 
 [var.treasuryInfo]
-treasury_account_id = "1"
+treasury_account_id = "10"
 treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"

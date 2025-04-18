@@ -1,6 +1,6 @@
 [var.perps_avax_market_settings]
 avax_perps_market_id = "900"
-avax_perps_market_skew_scale = "<%= parseEther(String(1_580_100)) %>"
+avax_perps_market_skew_scale = "<%= parseEther(String(3_160_200)) %>"
 avax_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 avax_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 avax_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
