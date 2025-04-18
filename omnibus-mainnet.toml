@@ -110,7 +110,7 @@ defaultValue = "0x1C8236B406911A376369e33D39189F1b4B39F27D"
 defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 
 [setting.treasury]
-defaultValue = "0x99f4176ee457afedffcb1839c7ab7a030a5e4a92"
+defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
 
 [setting.sc_pool_id]
 defaultValue = "1"
