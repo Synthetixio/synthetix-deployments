@@ -1,7 +1,7 @@
 [var.perps_btc_market_settings]
 btc_perps_market_id = "200"
-btc_perps_market_skew_scale = "<%= parseEther(String(35_000)) %>"
-btc_perps_market_max_funding_velocity = "<%= parseEther('4') %>"
+btc_perps_market_skew_scale = "<%= parseEther(String(12_500)) %>"
+btc_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
 btc_perps_maker_fee_ratio = "<%= parseEther('0.000001') %>"
 btc_perps_taker_fee_ratio = "<%= parseEther('0.000500') %>"
 btc_perps_max_market_size = "<%= parseEther(String(1_200)) %>"
@@ -13,7 +13,7 @@ btc_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 btc_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 btc_perps_max_seconds_in_liquidation_window = "30"
 btc_perps_minimum_position_margin = "<%= parseEther('15') %>"
-btc_perps_locked_oi_ratio = "<%= parseEther('0.25') %>"
+btc_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
 btc_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 btc_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 
@@ -30,7 +30,7 @@ func = "updatePriceData"
 args = [
     "<%= settings.btc_perps_market_id %>",
     "<%= extras.btc_oracle_id %>",
-    "<%= settings.strict_staleness_tolerance %>",
+    "<%= settings.default_staleness_tolerance %>",
 ]
 
 [invoke.addPerpsBtcSettlementStrategy]

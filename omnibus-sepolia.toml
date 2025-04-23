@@ -1,6 +1,7 @@
 name = "synthetix-omnibus"
-version = "9"
+version = "10"
 description = "Includes the full synthetix system with configurations applied"
+deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/settings.toml",
     "tomls/ccip-testnet.toml",
@@ -92,7 +93,7 @@ defaultValue = "50000000000000000000"
 defaultValue = "10000000000000000000"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "2000000000000000000"
+defaultValue = "1100000000000000000"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"

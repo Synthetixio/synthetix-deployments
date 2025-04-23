@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "15"
+version = "19"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -35,13 +35,18 @@ include = [
 
     # BFP Configuration
     "tomls/omnibus-mainnet/bfp.toml",
+    
+    # Treasury Market
+    "tomls/omnibus-mainnet/pools/treasury.toml",
+    "tomls/omnibus-mainnet/treasury-market.toml",
+    "tomls/omnibus-mainnet/liquidation-permissions.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.8.0"
+defaultValue = "synthetix:3.12.0"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.8.1"
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.spot_market_package]
 defaultValue = "synthetix-spot-market:3.8.1"
@@ -50,7 +55,10 @@ defaultValue = "synthetix-spot-market:3.8.1"
 defaultValue = "synthetix-perps-market:3.9.0"
 
 [setting.legacy_market_package]
-defaultValue = "synthetix-legacy-market:3.8.0"
+defaultValue = "synthetix-legacy-market:3.12.1"
+
+[setting.treasury_market_package]
+defaultValue = "synthetix-treasury-market:3.12.0"
 
 [setting.bfp_market_package]
 defaultValue = "synthetix-bfp-market:3.9.0"
@@ -122,7 +130,7 @@ defaultValue = "50000000000000000000"
 defaultValue = "100000000000000000000"
 
 [setting.minimum_liquidity_ratio]
-defaultValue = "1500000000000000000"
+defaultValue = "1100000000000000000"
 
 [setting.account_timeout_withdraw]
 defaultValue = "86400"
@@ -136,8 +144,14 @@ defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 [setting.keeper]
 defaultValue = "0x95A61Fa7454CA5f6A3CE01724e306Cd14a22D306"
 
+[setting.treasury]
+defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
+
 [setting.sc_pool_id]
 defaultValue = "1"
+
+[setting.treasury_pool_id_setting]
+defaultValue = "8"
 
 [setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
@@ -178,6 +192,12 @@ defaultValue = "0"
 [setting.synth_usde_max_market_collateral]
 defaultValue = "0"
 
+[setting.treasury_market_target_cratio]
+defaultValue = "<%= parseEther('1.1') %>"
+
+[setting.position_manager_address]
+defaultValue = "0x100c6c18381c9a7527762063047236356bbd0b8d"
+
 # we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
@@ -199,6 +219,48 @@ fromCall.func = "owner"
 func = "setPauseMigration"
 args = [true]
 
+[invoke.disableLiquidate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidate') %>", false]
+
+[invoke.disableLiquidateVault]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('liquidateVault') %>", false]
+
+[invoke.setCRatio]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setTargetCRatio"
+args = ["<%= settings.treasury_market_target_cratio %>"]
+
+[invoke.setDebtDecayFunction]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setDebtDecayFunction"
+args = ["1", "31536000", "<%= parseEther('1') %>", "<%= parseEther('0.5') %>"]
+
+[invoke.setPositionManagerOverrideWithdrawTimeout]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
+[invoke.setPositionManagerOverrideMinDelegateTime]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setConfig"
+args = [
+    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
+    "0x0000000000000000000000000000000000000000000000000000000000000001",
+]
+
 [var.governance]
 governance_package = "synthetix-governance:3.0.9"
 governance_satellite_package = "synthetix-governance-satellite:3.0.9"
@@ -216,3 +278,7 @@ governance_initial_epoch_start_date = "1725035275"
 governance_initial_nomination_period_start_date = "1725072898"
 governance_initial_voting_period_start_date = "1725640075"
 governance_initial_epoch_end_date = "1726504075"
+
+[var.treasuryInfo]
+treasury_account_id = "10"
+treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"

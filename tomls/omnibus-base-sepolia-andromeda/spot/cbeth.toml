@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_cbeth_market_id %>",
     "<%= extras.cbeth_oracle_id %>",
     "<%= extras.cbeth_oracle_id %>",
-    "<%= settings.strict_staleness_tolerance %>",
+    "<%= settings.one_day_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_cbeth]
@@ -90,3 +90,17 @@ fromCall.func = "getMarketOwner"
 fromCall.args = ["<%= extras.synth_cbeth_market_id %>"]
 func = "setCollateralLeverage"
 args = ["<%= extras.synth_cbeth_market_id %>", "<%= parseEther('10') %>"]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_cbeth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbeth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_cbeth_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_cbeth]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbeth_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_cbeth_market_id) %>", false]

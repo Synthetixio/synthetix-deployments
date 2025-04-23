@@ -1,7 +1,7 @@
 [var.perps_doge_market_settings]
 doge_perps_market_id = "800"
-doge_perps_market_skew_scale = "<%= parseEther(String(1_578_000_000)) %>"
-doge_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+doge_perps_market_skew_scale = "<%= parseEther(String(885_716_000)) %>"
+doge_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 doge_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 doge_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 doge_perps_max_market_size = "<%= parseEther(String(25_000_000)) %>"
@@ -13,7 +13,7 @@ doge_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 doge_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 doge_perps_max_seconds_in_liquidation_window = "30"
 doge_perps_minimum_position_margin = "<%= parseEther('15') %>"
-doge_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+doge_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
 doge_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 doge_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 

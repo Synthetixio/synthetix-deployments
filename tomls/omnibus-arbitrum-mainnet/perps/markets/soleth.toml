@@ -1,0 +1,119 @@
+[var.perps_soleth_market_settings]
+soleth_perps_market_id = "9500"
+soleth_perps_market_skew_scale = "<%= parseEther(String(4_500_000_000)) %>"
+soleth_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+soleth_perps_maker_fee_ratio = "<%= parseEther('0.000000') %>"
+soleth_perps_taker_fee_ratio = "<%= parseEther('0.00100') %>"
+soleth_perps_max_market_size = "<%= 0 %>"
+soleth_perps_max_market_value = "<%= 0 %>"
+soleth_perps_initial_margin_ratio = "<%= parseEther('5.5') %>"
+soleth_perps_maintenance_margin_scalar = "<%= parseEther('0.333') %>"
+soleth_perps_minimum_initial_margin_ratio = "<%= parseEther('0.05') %>"
+soleth_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
+soleth_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
+soleth_perps_max_seconds_in_liquidation_window = "30"
+soleth_perps_minimum_position_margin = "<%= parseEther('15') %>"
+soleth_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
+soleth_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
+soleth_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
+
+[invoke.createSolethPerpsMarket]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "createMarket"
+args = ["<%= settings.soleth_perps_market_id %>", "Solana Ethereum Ratio", "SOLETH"]
+
+[invoke.setPerpsPriceSoleth]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "updatePriceData"
+args = [
+    "<%= settings.soleth_perps_market_id %>",
+    "<%= extras.soleth_oracle_id %>",
+    "<%= settings.strict_staleness_tolerance %>",
+]
+
+[invoke.addPerpsSolethSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "addSettlementStrategy"
+args = [
+
+    "<%= settings.soleth_perps_market_id %>",
+
+    { strategyType = "0", settlementDelay = "0", settlementWindowDuration = "1", priceVerificationContract = "0x0000000000000000000000000000000000000000", feedId = "0x0000000000000000000000000000000000000000000000000000000000000000", settlementReward = "0", disabled = false, commitmentPriceDelay = "0" },
+]
+extra.soleth_pyth_settlement_strategy.event = "SettlementStrategyAdded"
+extra.soleth_pyth_settlement_strategy.arg = 2
+[invoke.setPerpsSolethSettlementStrategy]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setSettlementStrategy"
+args = [
+    "<%= settings.soleth_perps_market_id %>",
+    "<%= extras.soleth_pyth_settlement_strategy %>",
+    { strategyType = "0", settlementDelay = "<%= settings.settlement_delay %>", settlementWindowDuration = "<%= settings.settlement_window_duration %>", priceVerificationContract = "<%= imports.pyth_erc7412_wrapper.contracts.PythERC7412Wrapper.address %>", feedId = "<%= settings.pyth_feed_id_soleth %>", settlementReward = "<%= settings.settlement_reward %>", disabled = false, commitmentPriceDelay = "<%= settings.commitment_price_delay %>" },
+]
+
+[invoke.setPerpsSolethFundingParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setFundingParameters"
+args = [
+    "<%= settings.soleth_perps_market_id %>",
+    "<%= settings.soleth_perps_market_skew_scale %>",
+    "<%= settings.soleth_perps_market_max_funding_velocity %>",
+]
+
+[invoke.setPerpsSolethOrderFees]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setOrderFees"
+args = [
+    "<%= settings.soleth_perps_market_id %>",
+    "<%= settings.soleth_perps_maker_fee_ratio %>",
+    "<%= settings.soleth_perps_taker_fee_ratio %>",
+]
+
+[invoke.setPerpsSolethMaxMarketSize]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketSize"
+args = ["<%= settings.soleth_perps_market_id %>", "<%= settings.soleth_perps_max_market_size %>"]
+
+[invoke.setPerpsSolethMaxMarketValue]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxMarketValue"
+args = ["<%= settings.soleth_perps_market_id %>", "<%= settings.soleth_perps_max_market_value %>"]
+
+[invoke.setPerpsSolethMaxLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setMaxLiquidationParameters"
+args = [
+    "<%= settings.soleth_perps_market_id %>",
+    "<%= settings.soleth_perps_max_liquidation_limit_accumulation_multiplier %>",
+    "<%= settings.soleth_perps_max_seconds_in_liquidation_window %>",
+    "<%= settings.soleth_perps_max_liquidation_pd %>",
+    "<%= settings.soleth_perps_endorsed_liquidator %>",
+]
+
+[invoke.setPerpsSolethLiquidationParameters]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLiquidationParameters"
+args = [
+    "<%= settings.soleth_perps_market_id %>",
+    "<%= settings.soleth_perps_initial_margin_ratio %>",
+    "<%= settings.soleth_perps_minimum_initial_margin_ratio %>",
+    "<%= settings.soleth_perps_maintenance_margin_scalar %>",
+    "<%= settings.soleth_perps_flag_reward_ratio_d18 %>",
+    "<%= settings.soleth_perps_minimum_position_margin %>",
+]
+
+[invoke.setPerpsSolethLockedOiRatio]
+target = ["perpsFactory.PerpsMarketProxy"]
+fromCall.func = "owner"
+func = "setLockedOiRatio"
+args = ["<%= settings.soleth_perps_market_id %>", "<%= settings.soleth_perps_locked_oi_ratio %>"]

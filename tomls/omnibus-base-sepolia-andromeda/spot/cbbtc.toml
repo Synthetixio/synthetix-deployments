@@ -21,7 +21,7 @@ args = [
     "<%= extras.synth_cbbtc_market_id %>",
     "<%= extras.cbbtc_oracle_id %>",
     "<%= extras.cbbtc_oracle_id %>",
-    "<%= settings.strict_staleness_tolerance %>",
+    "<%= settings.one_day_staleness_tolerance %>",
 ]
 
 [invoke.CoreProxy_configureMaximumMarketCollateral_cbbtc]
@@ -52,6 +52,20 @@ args = [
     "<%= settings.cbbtc_address %>",
     "<%= settings.synth_cbbtc_max_collateral_amount %>",
 ]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_wrapperEnabled_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('wrapperEnabled' + extras.synth_cbbtc_market_id) %>", true]
+
+[invoke.SpotMarketProxy_setFeatureFlagAllowAll_atomicOrdersEnabled_cbbtc]
+target = ["spotFactory.SpotMarketProxy"]
+fromCall.func = "getMarketOwner"
+fromCall.args = ["<%= extras.synth_cbbtc_market_id %>"]
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('atomicOrdersEnabled' + extras.synth_cbbtc_market_id) %>", false]
 
 # NOTE set disabled = true to addSettlementStrategy call before initial mainnet deployment
 [invoke.SpotMarketProxy_addSettlementStrategy_cbbtc]

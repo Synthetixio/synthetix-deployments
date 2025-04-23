@@ -1,7 +1,7 @@
 [var.perps_imx_market_settings]
 imx_perps_market_id = "5400"
-imx_perps_market_skew_scale = "<%= parseEther(String(8_400_000)) %>"
-imx_perps_market_max_funding_velocity = "<%= parseEther('9') %>"
+imx_perps_market_skew_scale = "<%= parseEther(String(9_217_700)) %>"
+imx_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 imx_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 imx_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
 imx_perps_max_market_size = "<%= parseEther(String(508_750)) %>"
@@ -13,7 +13,7 @@ imx_perps_flag_reward_ratio_d18 = "<%= parseEther('0.0003') %>"
 imx_perps_max_liquidation_limit_accumulation_multiplier = "<%= parseEther('1.5') %>"
 imx_perps_max_seconds_in_liquidation_window = "30"
 imx_perps_minimum_position_margin = "<%= parseEther('15') %>"
-imx_perps_locked_oi_ratio = "<%= parseEther('0.5') %>"
+imx_perps_locked_oi_ratio = "<%= parseEther('0.1') %>"
 imx_perps_max_liquidation_pd = "<%= parseEther('0.0005') %>"
 imx_perps_endorsed_liquidator = "0x11233749514Ab8d00C0A5873DF7428b3db70030f"
 

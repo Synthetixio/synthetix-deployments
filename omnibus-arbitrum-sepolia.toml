@@ -1,7 +1,8 @@
 name = "synthetix-omnibus"
-version = "46"
+version = "49"
 description = "Arbitrum deployment"
 preset = "main"
+deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
     "tomls/omnibus-arbitrum-sepolia/core.toml",
     "tomls/markets/spot-factory.toml",
@@ -119,6 +120,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-slerf.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-snx.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/oracles/pyth-soleth.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-strk.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-stx.toml",
     "tomls/omnibus-arbitrum-sepolia/oracles/pyth-sui.toml",
@@ -234,6 +236,7 @@ include = [
     "tomls/omnibus-arbitrum-sepolia/perps/markets/slerf.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/snx.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/sol.toml",
+    "tomls/omnibus-arbitrum-sepolia/perps/markets/soleth.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/strk.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/stx.toml",
     "tomls/omnibus-arbitrum-sepolia/perps/markets/sui.toml",
@@ -270,19 +273,19 @@ defaultValue = "main"
 defaultValue = "snax"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.0"
+defaultValue = "synthetix:3.10.1"
 
 [setting.oracle_manager_package]
-defaultValue = "oracle-manager:3.10.0"
+defaultValue = "oracle-manager:3.10.1"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "arbitrum-gas-price-oracle:3.10.0"
 
 [setting.spot_market_package]
-defaultValue = "synthetix-spot-market:3.8.1"
+defaultValue = "synthetix-spot-market:3.10.1"
 
 [setting.perps_market_package]
-defaultValue = "synthetix-perps-market:3.9.0"
+defaultValue = "synthetix-perps-market:3.10.1"
 
 [setting.buyback_snx_package]
 defaultValue = "buyback-snx:3.3.15"
@@ -297,7 +300,7 @@ defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={dat
 description = "Pyth settlement strategy config"
 
 [provision.pyth_erc7412_wrapper]
-source = "pyth-erc7412-wrapper:3.10.0"
+source = "pyth-erc7412-wrapper:3.10.1"
 targetPreset = "<%= settings.target_preset %>"
 options.salt = "<%= settings.salt %>"
 options.pythAddress = "<%= settings.pyth_price_verification_address %>"
@@ -486,7 +489,7 @@ pyth_feed_id_ethbtc = "0xc96458d393fe9deb7a7d63a0ac41e2898a67a7750dbd166673279e0
 pyth_feed_id_ethfi = "0xb27578a9654246cb0a2950842b92330e9ace141c52b63829cc72d5c45a5a595a"
 pyth_feed_id_fil = "0x150ac9b959aee0051e4091f0ef5216d941f590e1c5e7f91cf7635b5c11628c0e"
 pyth_feed_id_flow = "0x2fb245b9a84554a0f15aa123cbb5f64cd263b59e9a87d80148cbffab50c69f30"
-pyth_feed_id_ftm = "0x5c6c0d2386e3352356c3ab84434fafb5ea067ac2678a38a338c4a69ddc4bdb0c"
+pyth_feed_id_ftm = "0xf490b178d0c85683b7a0f2388b40af2e6f7c90cbe0f96b31f315f08d0e5a2d6d"      # replaced with Sonic feed as ftm is 1:1 redeemable to sonic
 pyth_feed_id_fxs = "0x735f591e4fed988cd38df74d8fcedecf2fe8d9111664e0fd500db9aa78b316b1"
 pyth_feed_id_gala = "0x0781209c28fda797616212b7f94d77af3a01f3e94a5d421760aef020cf2bcb51"
 pyth_feed_id_gmx = "0xb962539d0fcb272a494d65ea56f94851c2bcf8823935da05bd628916e2e9edbf"
@@ -526,6 +529,7 @@ pyth_feed_id_shib = "0xf0d57deca57b3da2fe63a493f4c25925fdfd8edf834b20f93e1f84dbd
 pyth_feed_id_slerf = "0x1a483c4a63876d286991ac0d6e090298db42e88c3826b6e0cff89daca498eed5"
 pyth_feed_id_snx = "0x39d020f60982ed892abbcd4a06a276a9f9b7bfbce003204c110b6e488f502da3"
 pyth_feed_id_sol = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d"
+pyth_feed_id_soleth = "0xde87506dabfadbef89af2d5d796ebae80ddaea240fc7667aa808fce3629cd8fb"
 pyth_feed_id_strk = "0x6a182399ff70ccf3e06024898942028204125a819e519a335ffa4579e66cd870"
 pyth_feed_id_stx = "0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17"
 pyth_feed_id_sui = "0x23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744"
