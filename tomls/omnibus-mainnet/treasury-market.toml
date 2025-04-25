@@ -10,4 +10,4 @@ options.collateral_token = "<%= settings.snx_address %>"
 
 options.aux_token = "<%= settings.treasury_aux_token_address %>"
 options.aux_recipient = "<%= settings.treasury_aux_recipient %>"
-options.required_aux_token_ratio = "<%= settings.treasury_aux_percentage %>"
+options.required_aux_token_ratio = "<%= settings.treasury_aux_ratio %>"
