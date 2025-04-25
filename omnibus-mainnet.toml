@@ -124,7 +124,7 @@ defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxysUSD.address
 [setting.treasury_aux_recipient]
 defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
 
-[setting.treasury_aux_percentage]
+[setting.treasury_aux_ratio]
 defaultValue = "<%= parseEther('0.1') %>"
 
 [setting.pool_owner]
