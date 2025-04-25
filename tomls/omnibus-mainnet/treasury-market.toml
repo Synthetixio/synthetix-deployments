@@ -7,3 +7,7 @@ options.owner = "<%= settings.pdao %>"
 options.treasury_address = "<%= settings.treasury %>"
 options.pool_id = "<%= extras.treasury_pool_id %>"
 options.collateral_token = "<%= settings.snx_address %>"
+
+options.aux_token = "<%= settings.treasury_aux_token_address %>"
+options.aux_recipient = "<%= settings.treasury_aux_recipient %>"
+options.required_aux_token_ratio = "<%= settings.treasury_aux_ratio %>"
