@@ -52,7 +52,7 @@ defaultValue = "synthetix-perps-market:3.3.19"
 defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.12.0-420"
+defaultValue = "synthetix-treasury-market:3.12.1"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
