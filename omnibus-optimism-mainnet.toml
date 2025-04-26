@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "10"
+version = "11"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -50,7 +50,7 @@ defaultValue = "synthetix-perps-market:3.6.0"
 defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.12.0"
+defaultValue = "synthetix-treasury-market:3.12.2"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
@@ -102,6 +102,18 @@ defaultValue = "1"
 
 [setting.treasury_pool_id_setting]
 defaultValue = "8"
+
+[setting.treasury_aux_token_address]
+defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxysUSD.address %>"
+
+[setting.treasury_aux_recipient]
+defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
+
+[setting.treasury_aux_ratio]
+defaultValue = "<%= parseEther('0.1') %>"
+
+[setting.treasury_aux_reset_time]
+defaultValue = "<%= 365 * 24 * 60 * 60  %>"
 
 [setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
