@@ -840,6 +840,9 @@ async function run() {
     deployments?.state?.['provision.treasury_market']?.artifacts?.imports?.treasury_market;
   if (treasuryMarket) {
     contracts.TreasuryMarketProxy = treasuryMarket.contracts.Proxy;
+    if (treasuryMarket.contracts.Staking) {
+      contracts.TreasuryStakingRewards = treasuryMarket.contracts.Staking;
+    }
     Object.assign(extras, {
       treasury_market_id: treasuryMarket?.extras?.marketId,
     });
