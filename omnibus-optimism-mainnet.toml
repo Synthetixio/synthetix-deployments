@@ -50,7 +50,7 @@ defaultValue = "synthetix-perps-market:3.6.0"
 defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.12.1"
+defaultValue = "synthetix-treasury-market:3.12.2"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
