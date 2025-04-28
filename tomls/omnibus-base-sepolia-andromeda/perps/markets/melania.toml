@@ -1,6 +1,6 @@
 [var.perps_melania_market_settings]
 melania_perps_market_id = "10100"
-melania_perps_market_skew_scale = "<%= parseEther(String(5_806_000)) %>"
+melania_perps_market_skew_scale = "<%= parseEther(String(8_500_000)) %>"
 melania_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 melania_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 melania_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"

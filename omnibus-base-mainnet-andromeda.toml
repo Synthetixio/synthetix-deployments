@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "89"
+version = "90"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -158,6 +158,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-wif.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-wld.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xlm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xmr.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-xrp.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/oracles/pyth-zro.toml",
@@ -288,6 +289,7 @@ include = [
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/wif.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/wld.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/xlm.toml",
+    "tomls/omnibus-base-mainnet-andromeda/perps/markets/xmr.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/xrp.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/yfi.toml",
     "tomls/omnibus-base-mainnet-andromeda/perps/markets/zro.toml",
@@ -505,6 +507,7 @@ pyth_feed_id_wif = "0x4ca4beeca86f0d164160323817a4e42b10010a724c2217c6ee41b54cd4
 pyth_feed_id_wld = "0xd6835ad1f773de4a378115eb6824bd0c0e42d84d1c84d9750e853fb6b6c7794a"
 pyth_feed_id_wsteth = "0x6df640f3b8963d8f8358f791f352b8364513f6ab1cca5ed3f1f7b5448980e784"
 pyth_feed_id_xlm = "0xb7a8eba68a997cd0210c2e1e4ee811ad2d174b3611c22d9ebf16f4cb7e9ba850"
+pyth_feed_id_xmr = "0x46b8cc9347f04391764a0361e0b17c3ba394b001e7c304f7650f6376e37c321d"
 pyth_feed_id_xrp = "0xec5d399846a9209f3fe5881d70aae9268c94339ff9817e8d18ff19fa05eea1c8"
 pyth_feed_id_yfi = "0x425f4b198ab2504936886c1e93511bb6720fbcf2045a4f3c0723bb213846022f"
 pyth_feed_id_zro = "0x3bd860bea28bf982fa06bcf358118064bb114086cc03993bd76197eaab0b8018"
