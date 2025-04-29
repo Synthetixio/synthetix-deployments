@@ -1,6 +1,6 @@
 [var.perps_sats_market_settings]
 sats_perps_market_id = "8200"
-sats_perps_market_skew_scale = "<%= parseEther(String(158_703_939_009_000)) %>"
+sats_perps_market_skew_scale = "<%= parseEther(String(30_000_000_000_000)) %>"
 sats_perps_market_max_funding_velocity = "<%= parseEther('36') %>"
 sats_perps_maker_fee_ratio = "<%= parseEther('0.000200') %>"
 sats_perps_taker_fee_ratio = "<%= parseEther('0.001000') %>"
