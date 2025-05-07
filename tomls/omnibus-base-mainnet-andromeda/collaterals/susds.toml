@@ -1,0 +1,31 @@
+[var.susds_synth_config]
+susds_issuance_ratio = "<%= parseEther('10') %>"
+susds_liquidation_ratio = "<%= parseEther('1.5') %>"
+susds_liquidation_reward = "<%= parseEther('0.0001') %>"
+susds_min_delegation = "<%= parseEther('0.1') %>"
+susds_max_collateral_limit = "<%= parseEther(String(2_000_000)) %>"
+
+[invoke.CoreProxy_configureCollateral_susds]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_susds.args]]
+tokenAddress = "<%= settings.susds_address %>"
+oracleNodeId = "<%= extras.susds_oracle_id %>"
+issuanceRatioD18 = "<%= settings.susds_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.susds_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.susds_liquidation_reward %>"
+minDelegationD18 = "<%= settings.susds_min_delegation %>"
+depositingEnabled = false
+
+[invoke.CoreProxy_setPoolCollateralConfiguration_susds]
+target = ["system.CoreProxy"]
+fromCall.func = "getPoolOwner"
+fromCall.args = ["<%= settings.spartan_council_pool_id_setting %>"]
+func = "setPoolCollateralConfiguration"
+args = [
+    "<%= settings.spartan_council_pool_id_setting %>",
+    "<%= settings.susds_address %>",
+    { collateralLimitD18 = "<%= settings.susds_max_collateral_limit %>", issuanceRatioD18 = 0 },
+]
