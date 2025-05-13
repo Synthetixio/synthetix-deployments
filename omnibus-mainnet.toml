@@ -16,6 +16,7 @@ include = [
     #"tomls/collaterals/wsteth.toml",
     #"tomls/collaterals/susde.toml",
     "tomls/collaterals/snx.toml",
+    "tomls/omnibus-mainnet/collaterals/sssr.toml",
     "tomls/markets/legacy.toml",
     "tomls/markets/spot-factory.toml",
     "tomls/markets/spot/usde.toml",
