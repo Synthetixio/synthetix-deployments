@@ -1,0 +1,22 @@
+[clone.sssr]
+source = "mintable-token:2.0@main"
+target = "snx-simple-staking-reward@<%= settings.target_preset %>"
+options.salt = "<%= settings.salt %>"
+options.name = "SNX Simple Staking Rewards"
+options.symbol = "SSSR"
+options.owner = "<%= settings.pdao %>"
+options.decimals = "18"
+
+[invoke.CoreProxy_configureCollateral_sssr]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"  # "args" see below in the multiline block
+
+[[invoke.CoreProxy_configureCollateral_sssr.args]]
+tokenAddress = "<%= imports.sssr.contracts.Token.address %>"
+oracleNodeId = "<%= extras.snx_oracle_id %>"
+issuanceRatioD18 = "<%= MaxUint256 %>"
+liquidationRatioD18 = "<%= parseEther('1.01') %>"
+liquidationRewardD18 = "0"
+minDelegationD18 = "1"
+depositingEnabled = false

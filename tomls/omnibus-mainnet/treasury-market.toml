@@ -12,3 +12,22 @@ options.aux_token = "<%= settings.treasury_aux_token_address %>"
 options.aux_recipient = "<%= settings.treasury_aux_recipient %>"
 options.required_aux_token_ratio = "<%= settings.treasury_aux_ratio %>"
 options.aux_reset_time = "<%= settings.treasury_aux_reset_time %>"
+
+[var.sssr_rewards_configuration]
+sssr_rewards_configuration_token = "<%= imports.sssr.contracts.Token.address %>"
+sssr_rewards_configuration_power = "1"
+sssr_rewards_configuration_duration = "<%= 365 * 24 * 3600 %>"
+sssr_rewards_configuration_percent = "<%= parseEther('1') %>"
+sssr_rewards_configuration_valueRatioOracle = "<%= imports.system.extras.const_one_oracle_id %>"
+sssr_rewards_configuration_penaltyStart = "<%= parseEther('1') %>"
+sssr_rewards_configuration_penaltyEnd = "<%= parseEther('0.1') %>"
+
+[invoke.TreasuryMarketProxy_setDepositRewardConfigurations]
+target = ["treasury_market.Proxy"]
+fromCall.func = "owner"
+func = "setDepositRewardConfigurations"
+args = [
+    [
+        { token = "<%= settings.sssr_rewards_configuration_token %>", power = "<%= settings.sssr_rewards_configuration_power %>", duration = "<%= settings.sssr_rewards_configuration_duration %>", percent = "<%= settings.sssr_rewards_configuration_percent %>", valueRatioOracle = "<%= settings.sssr_rewards_configuration_valueRatioOracle %>", penaltyStart = "<%= settings.sssr_rewards_configuration_penaltyStart %>", penaltyEnd = "<%= settings.sssr_rewards_configuration_penaltyEnd %>" },
+    ],
+]
