@@ -84,6 +84,7 @@ const PYTH_ABI = [
   'function validTimePeriodSeconds() view returns (uint256)',
   'function version() pure returns (string)',
   'function wormhole() view returns (address)',
+  'function singleUpdateFeeInWei() view external returns (uint256)',
 ];
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
@@ -99,7 +100,8 @@ async function doPriceUpdateForPyth({ wallet, feedId, priceVerificationContract 
     wallet
   );
 
-  const fee = feedIds.length;
+  const singleFeeAmount = await PriceVerificationContract.singleUpdateFeeInWei();
+  const fee = feedIds.length * singleFeeAmount;
 
   const args = [
     //

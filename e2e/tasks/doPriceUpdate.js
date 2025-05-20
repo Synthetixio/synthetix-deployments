@@ -15,6 +15,7 @@ const ERC7412_ABI = [
   'error FeeRequired(uint feeAmount)',
   'function oracleId() view external returns (bytes32)',
   'function fulfillOracleQuery(bytes calldata signedOffchainData) payable external',
+  'function singleUpdateFeeInWei() view external returns (uint256)',
 ];
 const priceService = new EvmPriceServiceConnection(PYTH_MAINNET_ENDPOINT);
 
@@ -45,8 +46,10 @@ async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
     wallet
   );
 
+  const feeAmount = await PriceVerificationContract.singleUpdateFeeInWei();
+
   const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
-    value: ethers.BigNumber.from(1), // 1 wei,
+    value: ethers.BigNumber.from(feeAmount), 
   }).catch(parseError);
   await tx
     .wait()
