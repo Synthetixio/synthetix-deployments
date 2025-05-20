@@ -49,7 +49,7 @@ async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
   const feeAmount = await PriceVerificationContract.singleUpdateFeeInWei();
 
   const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
-    value: ethers.BigNumber.from(feeAmount), 
+    value: ethers.BigNumber.from(feeAmount),
   }).catch(parseError);
   await tx
     .wait()
