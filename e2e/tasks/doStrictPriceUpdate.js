@@ -13,7 +13,6 @@ const ERC7412_ABI = [
   'error FeeRequired(uint feeAmount)',
   'function oracleId() view external returns (bytes32)',
   'function fulfillOracleQuery(bytes calldata signedOffchainData) payable external',
-  'function singleUpdateFeeInWei() view external returns (uint256)',
 ];
 
 async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, commitmentTime }) {
@@ -39,13 +38,20 @@ async function doStrictPriceUpdate({ wallet, marketId, settlementStrategyId, com
     [UPDATE_TYPE, timestamp, [feedId], [offchainData]]
   );
 
+  const PythContract = new ethers.Contract(
+    require('../deployments/extras.json').pyth_price_verification_address ||
+      require('../deployments/extras.json').pythPriceVerificationAddress,
+    ['function singleUpdateFeeInWei() view external returns (uint256)'],
+    wallet
+  );
+  const singleFeeAmount = await PythContract.singleUpdateFeeInWei();
+
   const PriceVerificationContract = new ethers.Contract(
     priceVerificationContract,
     ERC7412_ABI,
     wallet
   );
 
-  const singleFeeAmount = await PriceVerificationContract.singleUpdateFeeInWei();
   const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
     value: ethers.BigNumber.from(singleFeeAmount), // 1 wei,
   }).catch(parseError);

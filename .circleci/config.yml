@@ -268,16 +268,16 @@ jobs:
       - yarn-install
 
       - run:
-          name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
+          name: "Build new package and keep RPC running"
           background: true
           command: |
             yarn cannon build << parameters.toml >> \
               --keep-alive \
               --anvil.port 8545 \
               --dry-run \
-              --upgrade-from << parameters.package >>@<< parameters.preset >> \
+              --impersonate-all \
               --chain-id << parameters.chain-id >> \
-              --provider-url "$<< parameters.rpc-env >>" \
+              --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -374,8 +374,9 @@ jobs:
               --keep-alive \
               --anvil.port 8545 \
               --dry-run \
+              --impersonate-all \
               --chain-id << parameters.chain-id >> \
-              --provider-url "$<< parameters.rpc-env >>" \
+              --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
@@ -662,16 +663,16 @@ jobs:
       - yarn-install
 
       - run:
-          name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >>"
+          name: "Build new package"
           background: true
           command: |
             yarn cannon build << parameters.toml >> \
               --keep-alive \
               --anvil.port 8545 \
               --dry-run \
-              --upgrade-from << parameters.package >>@<< parameters.preset >> \
+              --impersonate-all \
               --chain-id << parameters.chain-id >> \
-              --provider-url "$<< parameters.rpc-env >>" \
+              --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
       - wait-for-cannon-build
