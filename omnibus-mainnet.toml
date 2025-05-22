@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "22"
+version = "23"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -55,7 +55,7 @@ defaultValue = "synthetix-perps-market:3.3.19"
 defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.12.2"
+defaultValue = "synthetix-treasury-market:3.12.3"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
