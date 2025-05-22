@@ -1,0 +1,19 @@
+[var.snx_collateral_config]
+snx_issuance_ratio = "<%= parseEther('5') %>"
+snx_liquidation_ratio = "<%= parseEther('1.05') %>"
+snx_liquidation_reward = "<%= parseEther('1') %>"
+snx_min_delegation = "<%= parseEther('100') %>"
+
+[invoke.configureSnxCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+
+[[invoke.configureSnxCollateral.args]]
+tokenAddress = "<%= settings.snx_address %>"
+oracleNodeId = "<%= extras.snx_oracle_id %>"
+issuanceRatioD18 = "<%= settings.snx_issuance_ratio %>"
+liquidationRatioD18 = "<%= settings.snx_liquidation_ratio %>"
+liquidationRewardD18 = "<%= settings.snx_liquidation_reward %>"
+minDelegationD18 = "<%= settings.snx_min_delegation %>"
+depositingEnabled = true
