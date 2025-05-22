@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "12"
+version = "13"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -53,7 +53,7 @@ defaultValue = "synthetix-perps-market:3.6.0"
 defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.12.2"
+defaultValue = "synthetix-treasury-market:3.12.3"
 
 [setting.owner]
 defaultValue = "0x6E1613B5c68B4Cf2A58400D8019a97849A678139"
