@@ -46,10 +46,15 @@ async function doPriceUpdate({ wallet, marketId, settlementStrategyId }) {
     wallet
   );
 
-  const feeAmount = await PriceVerificationContract.singleUpdateFeeInWei();
-
+  const PythContract = new ethers.Contract(
+    require('../deployments/extras.json').pyth_price_verification_address ||
+      require('../deployments/extras.json').pythPriceVerificationAddress,
+    ['function singleUpdateFeeInWei() view external returns (uint256)'],
+    wallet
+  );
+  const singleFeeAmount = await PythContract.singleUpdateFeeInWei();
   const tx = await PriceVerificationContract.fulfillOracleQuery(offchainDataEncoded, {
-    value: ethers.BigNumber.from(feeAmount),
+    value: ethers.BigNumber.from(singleFeeAmount),
   }).catch(parseError);
   await tx
     .wait()
