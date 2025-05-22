@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "@pythnetwork/pyth-evm-js": "^1.82.0",
-    "@usecannon/builder": "2.22.0",
-    "@usecannon/cli": "2.22.0",
+    "@usecannon/builder": "2.23.0",
+    "@usecannon/cli": "2.23.0",
     "abi-to-sol": "^0.8.0",
     "debug": "^4.4.0",
     "ethers": "^5.7.2",
@@ -68,11 +68,11 @@
     "prettier-plugin-toml": "^2.0.1",
     "solc": "0.8.21",
     "supports-color": "^8.1.1",
-    "viem": "^2.22.10"
+    "viem": "^2.30.0"
   },
   "resolutions": {
     "mocha": "^11",
-    "viem": "^2"
+    "viem": "^2.30.0"
   },
   "mocha": {
     "timeout": "5m",
