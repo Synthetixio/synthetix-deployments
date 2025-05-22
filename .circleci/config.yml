@@ -268,7 +268,7 @@ jobs:
       - yarn-install
 
       - run:
-          name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >> and keep RPC running"
+          name: "Build new package and keep RPC running"
           background: true
           command: |
             yarn cannon build << parameters.toml >> \
@@ -276,7 +276,6 @@ jobs:
               --anvil.port 8545 \
               --dry-run \
               --impersonate-all \
-              --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
@@ -664,7 +663,7 @@ jobs:
       - yarn-install
 
       - run:
-          name: "Build new package upgrading from << parameters.package >>@<< parameters.preset >>"
+          name: "Build new package"
           background: true
           command: |
             yarn cannon build << parameters.toml >> \
@@ -672,7 +671,6 @@ jobs:
               --anvil.port 8545 \
               --dry-run \
               --impersonate-all \
-              --upgrade-from << parameters.package >>@<< parameters.preset >> \
               --chain-id << parameters.chain-id >> \
               --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
