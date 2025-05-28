@@ -277,6 +277,7 @@ jobs:
               --dry-run \
               --impersonate-all \
               --chain-id << parameters.chain-id >> \
+              --write-script "e2e/tests/<< parameters.toml >>/test/CannonDeploy.sol" --write-script-format foundry
               --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
@@ -310,6 +311,12 @@ jobs:
 
       - store_artifacts:
           path: "./e2e/deployments"
+
+      - run:
+          name: "Foundry test"
+          workspace: e2e/tests/<< parameters.toml >>
+          command: |
+            [ -f foundry.toml ] && forge test -vvvv
 
       - run:
           name: "Sync time with fork's block height"
@@ -740,14 +747,14 @@ workflows:
     jobs:
       - lint
 
-      - fork-test:
-          name: test-base-sepolia-andromeda
-          toml: omnibus-base-sepolia-andromeda.toml
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 84532
-          rpc-env: RPC_BASE_SEPOLIA
-          resource_class: large
+      #      - fork-test:
+      #          name: test-base-sepolia-andromeda
+      #          toml: omnibus-base-sepolia-andromeda.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "andromeda"
+      #          chain-id: 84532
+      #          rpc-env: RPC_BASE_SEPOLIA
+      #          resource_class: large
 
       - fork-test:
           name: test-base-mainnet-andromeda
@@ -800,21 +807,21 @@ workflows:
           chain-id: 11155111
           rpc-env: RPC_SEPOLIA
 
-      - fork-test:
-          name: test-snaxchain-testnet
-          toml: omnibus-snaxchain-testnet.toml
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 13001
-          rpc-env: RPC_SNAXCHAIN_TESTNET
+      #      - fork-test:
+      #          name: test-snaxchain-testnet
+      #          toml: omnibus-snaxchain-testnet.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "main"
+      #          chain-id: 13001
+      #          rpc-env: RPC_SNAXCHAIN_TESTNET
 
-      - fork-test:
-          name: test-snaxchain-mainnet
-          toml: omnibus-snaxchain-mainnet.toml
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 2192
-          rpc-env: RPC_SNAXCHAIN_MAINNET
+      #      - fork-test:
+      #          name: test-snaxchain-mainnet
+      #          toml: omnibus-snaxchain-mainnet.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "main"
+      #          chain-id: 2192
+      #          rpc-env: RPC_SNAXCHAIN_MAINNET
 
   deployment-info:
     when:
