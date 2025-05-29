@@ -2,11 +2,7 @@ pragma solidity ^0.8.21;
 
 import {Test} from "forge-std/Test.sol";
 import {CannonDeploy} from "./CannonDeploy.sol";
-import {
-    ICoreProxy,
-    PoolCollateralConfiguration,
-    CollateralConfiguration
-} from "deployments/sol/ICoreProxy.sol";
+import {ICoreProxy, PoolCollateralConfiguration, CollateralConfiguration} from "deployments/sol/ICoreProxy.sol";
 import {IAccountProxy} from "deployments/sol/IAccountProxy.sol";
 import {ITreasuryMarketProxy} from "deployments/sol/ITreasuryMarketProxy.sol";
 import {ITreasuryStakingProxy} from "deployments/sol/ITreasuryStakingProxy.sol";
@@ -37,8 +33,7 @@ contract CommonTest is Test {
 
     constructor() {
         string memory root = vm.projectRoot();
-        string memory metaPath =
-            string.concat(root, "/../../deployments/meta.json");
+        string memory metaPath = string.concat(root, "/../../deployments/meta.json");
         string memory metaJson = vm.readFile(metaPath);
 
         CoreProxy = ICoreProxy(vm.parseJsonAddress(metaJson, ".contracts.CoreProxy"));
@@ -50,8 +45,7 @@ contract CommonTest is Test {
         TreasuryMarketProxy = ITreasuryMarketProxy(vm.parseJsonAddress(metaJson, ".contracts.TreasuryMarketProxy"));
         vm.label(address(TreasuryMarketProxy), "TreasuryMarketProxy");
 
-        TreasuryStakingProxy =
-            ITreasuryStakingProxy(vm.parseJsonAddress(metaJson, ".contracts.TreasuryStakingProxy"));
+        TreasuryStakingProxy = ITreasuryStakingProxy(vm.parseJsonAddress(metaJson, ".contracts.TreasuryStakingProxy"));
         vm.label(address(TreasuryStakingProxy), "TreasuryStakingProxy");
 
         LegacyMarketProxy = ILegacyMarketProxy(vm.parseJsonAddress(metaJson, ".contracts.LegacyMarketProxy"));

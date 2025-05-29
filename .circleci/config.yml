@@ -277,7 +277,8 @@ jobs:
               --dry-run \
               --impersonate-all \
               --chain-id << parameters.chain-id >> \
-              --write-script "e2e/tests/<< parameters.toml >>/test/CannonDeploy.sol" --write-script-format foundry \
+              --write-script-format foundry \
+              --write-script "e2e/tests/<< parameters.toml >>/test/CannonDeploy.sol" \
               --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
