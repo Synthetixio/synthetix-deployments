@@ -1,0 +1,8 @@
+[profile.default]
+libs = ["../../../node_modules"]
+allow_paths = ["../../../node_modules"]
+fs_permissions = [
+    { access = "read", path = "./" },
+    { access = "read", path = "../../../node_modules" },
+    { access = "read", path = "../../deployments" },
+]

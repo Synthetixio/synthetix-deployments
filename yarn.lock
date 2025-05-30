@@ -1045,6 +1045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@synthetixio/core-contracts@npm:^3.12.0":
+  version: 3.12.3
+  resolution: "@synthetixio/core-contracts@npm:3.12.3"
+  checksum: 10/bb686461888dc0d2ae03056cd9ccd4edddd0b9104aab5b247cb69d07e6e76d53155f909f16c47e914bb2eeba25da3ce6f0e27235eadaaeb659a1bcb0f28ab0e1
+  languageName: node
+  linkType: hard
+
 "@taplo/core@npm:^0.1.0":
   version: 0.1.1
   resolution: "@taplo/core@npm:0.1.1"
@@ -2569,6 +2576,13 @@ __metadata:
     cross-spawn: "npm:^7.0.0"
     signal-exit: "npm:^4.0.1"
   checksum: 10/087edd44857d258c4f73ad84cb8df980826569656f2550c341b27adf5335354393eec24ea2fabd43a253233fb27cee177ebe46bd0b7ea129c77e87cb1e9936fb
+  languageName: node
+  linkType: hard
+
+"forge-std@github:foundry-rs/forge-std":
+  version: 1.9.7
+  resolution: "forge-std@https://github.com/foundry-rs/forge-std.git#commit=f46d8301cf732f4f83846565aa475628265e51e0"
+  checksum: 10/b3105fda71554d5b883cb18f315ed5d71fc0cc76f6158a0e6759f5775a2f2fa11809b29d00ca9319ca9d637dcc41d09c147fa2d81a8c0855140c0aff1eebb5d1
   languageName: node
   linkType: hard
 
@@ -5081,11 +5095,13 @@ __metadata:
   resolution: "synthetix-deployments@workspace:."
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
+    "@synthetixio/core-contracts": "npm:^3.12.0"
     "@usecannon/builder": "npm:2.23.0"
     "@usecannon/cli": "npm:2.23.0"
     abi-to-sol: "npm:^0.8.0"
     debug: "npm:^4.4.0"
     ethers: "npm:^5.7.2"
+    forge-std: "github:foundry-rs/forge-std"
     hardhat: "npm:^2.22.18"
     mocha: "npm:^11.0.1"
     numbro: "npm:^2.5.0"

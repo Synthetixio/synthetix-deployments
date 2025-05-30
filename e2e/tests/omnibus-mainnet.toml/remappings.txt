@@ -1,0 +1,3 @@
+@synthetixio/=../../../node_modules/@synthetixio/
+forge-std/=../../../node_modules/forge-std/src/
+deployments/=../../deployments/

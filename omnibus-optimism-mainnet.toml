@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "13"
+version = "14"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -113,10 +113,10 @@ defaultValue = "<%= imports.legacyMarket.imports.v2x.contracts.ProxysUSD.address
 defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
 
 [setting.treasury_aux_ratio]
-defaultValue = "<%= parseEther('0.1') %>"
+defaultValue = "<%= parseEther('0.2') %>"
 
 [setting.treasury_aux_reset_time]
-defaultValue = "<%= 1423685  %>"
+defaultValue = "<%= 7 * 24 * 3600  %>"
 
 [setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"

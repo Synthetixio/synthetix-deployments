@@ -20,3 +20,7 @@ e2e/cannon
 e2e/tmp
 /*.js
 docs/
+
+**/cache/
+**/out/
+**/CannonDeploy.sol
