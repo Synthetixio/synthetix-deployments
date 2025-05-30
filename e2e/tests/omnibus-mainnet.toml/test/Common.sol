@@ -31,7 +31,11 @@ contract CommonTest is Test {
 
     uint256 internal fork;
 
+    CannonDeploy internal deployer;
+
     constructor() {
+        deployer = new CannonDeploy();
+
         string memory root = vm.projectRoot();
         string memory metaPath = string.concat(root, "/../../deployments/meta.json");
         string memory metaJson = vm.readFile(metaPath);
@@ -60,9 +64,6 @@ contract CommonTest is Test {
 
         // Pyth bypass
         vm.etch(0x1234123412341234123412341234123412341234, "FORK");
-
-        CannonDeploy deployer = new CannonDeploy();
-        deployer.run();
 
         V2xResolver = IAddressResolver(LegacyMarketProxy.v2xResolver());
         vm.label(address(V2xResolver), "V2xResolver");
