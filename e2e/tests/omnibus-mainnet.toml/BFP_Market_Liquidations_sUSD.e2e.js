@@ -24,6 +24,10 @@ const { contractWrite } = require('../../tasks/contractWrite');
 const { commitBfpOrder } = require('../../tasks/commitBfpOrder');
 const { settleBfpOrder } = require('../../tasks/settleBfpOrder');
 const { getBfpPosition } = require('../../tasks/getBfpPosition');
+const { borrowUsd } = require('../../tasks/borrowUsd');
+const { setConfigUint } = require('../../tasks/setConfigUint');
+const { withdrawCollateral } = require('../../tasks/withdrawCollateral');
+const { wrapEth } = require('../../tasks/wrapEth');
 
 describe(require('path').basename(__filename, '.e2e.js'), function () {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -59,10 +63,10 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(wallet.address);
   });
 
-  it('should set ETH balance to 100', async () => {
+  it('should set ETH balance to 1100', async () => {
     assert.equal(await getEthBalance({ address }), 0, 'New wallet has 0 ETH balance');
-    await setEthBalance({ address, balance: 100 });
-    assert.equal(await getEthBalance({ address }), 100);
+    await setEthBalance({ address, balance: 1100 });
+    assert.equal(await getEthBalance({ address }), 1100);
   });
 
   it('should create user account', async () => {
@@ -75,74 +79,74 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.equal(await getAccountOwner({ accountId }), address);
   });
 
-  it('should set fWETH balance to 1_000', async () => {
+  it('should set WETH balance to 1_000', async () => {
     assert.equal(
-      await getCollateralBalance({ address, symbol: 'fWETH' }),
+      await getCollateralBalance({ address, symbol: 'WETH' }),
       0,
-      'New wallet has 0 fWETH balance'
+      'New wallet has 0 WETH balance'
     );
-    const { tokenAddress } = await getCollateralConfig('fWETH');
-    await setMintableTokenBalance({ privateKey, tokenAddress, balance: 1_000 });
-    assert.equal(await getCollateralBalance({ address, symbol: 'fWETH' }), 1_000);
+    const { tokenAddress } = await getCollateralConfig('WETH');
+    await wrapEth({ privateKey, amount: 1_000 });
+    assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 1_000);
   });
 
-  it('should approve fWETH spending for CoreProxy', async () => {
+  it('should approve WETH spending for CoreProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fWETH',
+        symbol: 'WETH',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       false,
-      'New wallet has not allowed CoreProxy fWETH spending'
+      'New wallet has not allowed CoreProxy WETH spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fWETH',
+      symbol: 'WETH',
       spenderAddress: require('../../deployments/CoreProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fWETH',
+        symbol: 'WETH',
         spenderAddress: require('../../deployments/CoreProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 500 fWETH into the system', async () => {
-    assert.equal(await getCollateralBalance({ address, symbol: 'fWETH' }), 1_000);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fWETH' }), {
+  it('should deposit 500 WETH into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 1_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'WETH' }), {
       totalDeposited: 0,
       totalAssigned: 0,
       totalLocked: 0,
     });
 
-    await depositCollateral({ privateKey, symbol: 'fWETH', accountId, amount: 500 });
+    await depositCollateral({ privateKey, symbol: 'WETH', accountId, amount: 500 });
 
-    assert.equal(await getCollateralBalance({ address, symbol: 'fWETH' }), 500);
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fWETH' }), {
+    assert.equal(await getCollateralBalance({ address, symbol: 'WETH' }), 500);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'WETH' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
   });
 
-  it('should delegate 500 fWETH into the Spartan Council pool', async () => {
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fWETH' }), {
+  it('should delegate 500 WETH into the Spartan Council pool', async () => {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'WETH' }), {
       totalDeposited: 500,
       totalAssigned: 0,
       totalLocked: 0,
     });
     await delegateCollateral({
       privateKey,
-      symbol: 'fWETH',
+      symbol: 'WETH',
       accountId,
       amount: 500,
       poolId: 1,
     });
-    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'fWETH' }), {
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'WETH' }), {
       totalDeposited: 500,
       totalAssigned: 500,
       totalLocked: 0,
@@ -189,32 +193,58 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     log({ accountId, permissions });
   });
 
-  it('should approve fWETH spending for BfpMarketProxy', async () => {
+  it('should approve WETH spending for BfpMarketProxy', async () => {
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fWETH',
+        symbol: 'WETH',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       false,
-      'New wallet has not allowed BfpMarketProxy fWETH spending'
+      'New wallet has not allowed BfpMarketProxy WETH spending'
     );
     await approveCollateral({
       privateKey,
-      symbol: 'fWETH',
+      symbol: 'WETH',
       spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
     });
     assert.equal(
       await isCollateralApproved({
         address,
-        symbol: 'fWETH',
+        symbol: 'WETH',
         spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
       }),
       true
     );
   });
 
-  it('should deposit 500 fWETH collateral into the bfp and mint 100_000 sUSD', async () => {
+  it('should approve sUSD spending for BfpMarketProxy', async () => {
+    // This is needed to pay back debt.
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSD',
+        spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
+      }),
+      false,
+      'New wallet has not allowed BfpMarketProxy sUSD spending'
+    );
+    await approveCollateral({
+      privateKey,
+      symbol: 'sUSD',
+      spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
+    });
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSD',
+        spenderAddress: require('../../deployments/BfpMarketProxy.json').address,
+      }),
+      true
+    );
+  });
+
+  it('should deposit 500 WETH collateral into the bfp and mint 100_000 sUSD', async () => {
     const collateralAddress = require('../../deployments/extras.json').weth_address;
 
     const oldDigest = await contractRead({
@@ -257,11 +287,101 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     );
     log({ newDepositedWeth });
 
+    await borrowUsd({ wallet, accountId, symbol: 'WETH', amount: 100_000, poolId: 1 });
+    await setConfigUint({ key: 'accountTimeoutWithdraw', value: 0 });
+
+    // Verify the new sUSD balance
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
+      totalDeposited: 100_000,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+
+    await withdrawCollateral({
+      privateKey,
+      accountId,
+      amount: 100_000,
+      symbol: 'sUSD',
+    });
+
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000);
+
     assert.equal(parseFloat(ethers.utils.formatEther(newDepositedWeth.available)), 500);
   });
 
-  it('should open a short with fWETH collateral', async () => {
-    const collateralAddress = require('../../deployments/extras.json').weth_address;
+  it('should approve sUSD spending for CoreProxy', async () => {
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSD',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
+      false,
+      'New wallet has not allowed CoreProxy sUSD spending'
+    );
+    await approveCollateral({
+      privateKey,
+      symbol: 'sUSD',
+      spenderAddress: require('../../deployments/CoreProxy.json').address,
+    });
+    assert.equal(
+      await isCollateralApproved({
+        address,
+        symbol: 'sUSD',
+        spenderAddress: require('../../deployments/CoreProxy.json').address,
+      }),
+      true
+    );
+  });
+
+  it('should deposit 50_000 sUSD into the system', async () => {
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 100_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
+      totalDeposited: 0,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+
+    await depositCollateral({ privateKey, symbol: 'sUSD', accountId, amount: 50_000 });
+
+    assert.equal(await getCollateralBalance({ address, symbol: 'sUSD' }), 50_000);
+    assert.deepEqual(await getAccountCollateral({ accountId, symbol: 'sUSD' }), {
+      totalDeposited: 50000,
+      totalAssigned: 0,
+      totalLocked: 0,
+    });
+  });
+
+  it('should deposit 25_000 sUSD collateral into the bfp', async () => {
+    const marketId = require('../../deployments/extras.json').eth_market_id;
+    const collateralAddress = require('../../deployments/systemToken.json').address;
+
+    const oldDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ oldDigest });
+
+    const oldDepositedsUSD = oldDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ oldDepositedsUSD });
+    log(collateralAddress);
+
+    assert.equal(
+      parseFloat(ethers.utils.formatEther(oldDepositedsUSD.available)),
+      0,
+      'New account has 0 deposited sUSD'
+    );
+
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'modifyCollateral',
+      args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(25_000))],
+    });
 
     const newDigest = await contractRead({
       wallet,
@@ -271,10 +391,36 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
     log({ newDigest });
 
-    const newDepositedWeth = newDigest.depositedCollaterals.find(
+    const newDepositedsUSD = newDigest.depositedCollaterals.find(
       (c) => c.collateralAddress === collateralAddress
     );
-    log({ newDepositedWeth });
+    log({ newDepositedsUSD });
+
+    assert.equal(parseFloat(ethers.utils.formatEther(newDepositedsUSD.available)), 25_000);
+  });
+
+  it('should open a short with sUSD collateral', async () => {
+    const collateralAddress = require('../../deployments/systemToken.json').address;
+
+    await contractWrite({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'modifyCollateral',
+      args: [accountId, marketId, collateralAddress, ethers.utils.parseEther(String(20_000))],
+    });
+
+    const newDigest = await contractRead({
+      wallet,
+      contract: 'BfpMarketProxy',
+      func: 'getAccountDigest',
+      args: [accountId, marketId],
+    });
+    log({ newDigest });
+
+    const newDepositedsUSD = newDigest.depositedCollaterals.find(
+      (c) => c.collateralAddress === collateralAddress
+    );
+    log({ newDepositedsUSD });
     const { now, blockTimestamp } = getTimes(provider);
     const buffer = 1; // 1s
     const diff = now - blockTimestamp;
@@ -291,7 +437,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
   });
 
   it('should settle the short position', async () => {
-    await wait(10_000); // waits for oracle price update
+    await wait(15_000); // waits for oracle price update
 
     const newPosition = await settleBfpOrder({ wallet, accountId, marketId });
     assert.equal(newPosition.positionSize, -0.01);
@@ -343,7 +489,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     });
   });
 
-  it('should flag an underwater fWETH backed position', async () => {
+  it('should flag an underwater sUSD backed position', async () => {
     const { events } = await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
@@ -367,7 +513,7 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
     assert.ok(eventEmitted);
   });
 
-  it('should liquidate an underwater fWETH backed position', async () => {
+  it('should liquidate an underwater sUSD backed position', async () => {
     await contractWrite({
       wallet,
       contract: 'BfpMarketProxy',
@@ -377,38 +523,5 @@ describe(require('path').basename(__filename, '.e2e.js'), function () {
 
     const currentPosition = await getBfpPosition({ accountId, marketId });
     assert.equal(currentPosition.positionSize, 0);
-  });
-
-  it('revert the minMarginUsd to the old value', async () => {
-    const owner = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'owner',
-    });
-
-    let marketConfiguration = await contractRead({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'getMarketConfigurationById',
-      args: [marketId],
-    });
-
-    const updatedMarketConfiguration = {
-      ...marketConfiguration,
-      minMarginUsd: oldMinMarginUsd,
-    };
-
-    await contractWrite({
-      wallet,
-      contract: 'BfpMarketProxy',
-      func: 'setMarketConfigurationById',
-      args: [
-        {
-          marketId,
-          ...updatedMarketConfiguration,
-        },
-      ],
-      impersonate: owner,
-    });
   });
 });
