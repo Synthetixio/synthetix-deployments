@@ -116,7 +116,8 @@ defaultValue = "0xFa1DF09D8d09D6E8FAB2a6C4712fEa02ce203e99"
 defaultValue = "<%= parseEther('0.2') %>"
 
 [setting.treasury_aux_reset_time]
-defaultValue = "<%= MaxUint256  %>"
+description = "1000 years time to reset, we never reset, pause only"
+defaultValue = "<%= 1000 * 365 * 24 * 3600  %>"
 
 [setting.pool_owner]
 defaultValue = "0x302d2451d9f47620374B54c521423Bf0403916A2"
