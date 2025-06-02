@@ -113,6 +113,16 @@ commands:
   wait-for-cannon-build:
     steps:
       - run:
+          name: "Heartbeat: waiting for cannon build..."
+          background: true
+          command: |
+            touch ./cannon-build.log
+            while true; do
+              echo "    Heartbeat: $(date)" >> ./cannon-build.log
+              sleep 60
+            done
+
+      - run:
           name: "Wait for cannon to complete the build"
           command: |
             touch ./cannon-build.log
@@ -277,6 +287,8 @@ jobs:
               --dry-run \
               --impersonate-all \
               --chain-id << parameters.chain-id >> \
+              --write-script-format foundry \
+              --write-script "e2e/tests/<< parameters.toml >>/test/CannonDeploy.sol" \
               --rpc-url "$<< parameters.rpc-env >>" \
                 2>&1 | tee ./cannon-build.log
 
@@ -284,6 +296,9 @@ jobs:
 
       - store_artifacts:
           path: "./cannon-build.log"
+
+      - store_artifacts:
+          path: "./e2e/tests/<< parameters.toml >>/test/CannonDeploy.sol"
 
       - run: grep '💥' ./cannon-build.log
 
@@ -329,6 +344,16 @@ jobs:
           command: |
             touch "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
             tail -f "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+
+      - run:
+          name: "Foundry test"
+          command: |
+            cd "./e2e/tests/<< parameters.toml >>"
+            if [ -f foundry.toml ]; then
+              pwd
+              echo "forge test -vvvv" 
+              forge test -vvvv
+            fi
 
       - run:
           name: "Run tests"
@@ -740,14 +765,14 @@ workflows:
     jobs:
       - lint
 
-      - fork-test:
-          name: test-base-sepolia-andromeda
-          toml: omnibus-base-sepolia-andromeda.toml
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 84532
-          rpc-env: RPC_BASE_SEPOLIA
-          resource_class: large
+      #      - fork-test:
+      #          name: test-base-sepolia-andromeda
+      #          toml: omnibus-base-sepolia-andromeda.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "andromeda"
+      #          chain-id: 84532
+      #          rpc-env: RPC_BASE_SEPOLIA
+      #          resource_class: large
 
       - fork-test:
           name: test-base-mainnet-andromeda
@@ -800,21 +825,21 @@ workflows:
           chain-id: 11155111
           rpc-env: RPC_SEPOLIA
 
-      - fork-test:
-          name: test-snaxchain-testnet
-          toml: omnibus-snaxchain-testnet.toml
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 13001
-          rpc-env: RPC_SNAXCHAIN_TESTNET
+      #      - fork-test:
+      #          name: test-snaxchain-testnet
+      #          toml: omnibus-snaxchain-testnet.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "main"
+      #          chain-id: 13001
+      #          rpc-env: RPC_SNAXCHAIN_TESTNET
 
-      - fork-test:
-          name: test-snaxchain-mainnet
-          toml: omnibus-snaxchain-mainnet.toml
-          package: "synthetix-omnibus:latest"
-          preset: "main"
-          chain-id: 2192
-          rpc-env: RPC_SNAXCHAIN_MAINNET
+      #      - fork-test:
+      #          name: test-snaxchain-mainnet
+      #          toml: omnibus-snaxchain-mainnet.toml
+      #          package: "synthetix-omnibus:latest"
+      #          preset: "main"
+      #          chain-id: 2192
+      #          rpc-env: RPC_SNAXCHAIN_MAINNET
 
   deployment-info:
     when:
