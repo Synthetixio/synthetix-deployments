@@ -113,6 +113,16 @@ commands:
   wait-for-cannon-build:
     steps:
       - run:
+          name: "Heartbeat: waiting for cannon build..."
+          background: true
+          command: |
+            touch ./cannon-build.log
+            while true; do
+              echo "    Heartbeat: $(date)" >> ./cannon-build.log
+              sleep 60
+            done
+
+      - run:
           name: "Wait for cannon to complete the build"
           command: |
             touch ./cannon-build.log
