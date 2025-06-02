@@ -316,13 +316,6 @@ jobs:
       - store_artifacts:
           path: "./e2e/deployments"
 
-      # TODO: fix later
-      #      - run:
-      #          name: "Foundry test"
-      #          workspace: e2e/tests/<< parameters.toml >>
-      #          command: |
-      #            [ -f foundry.toml ] && forge test -vvvv
-
       - run:
           name: "Sync time with fork's block height"
           command: node e2e/tasks/syncTime.js
@@ -341,6 +334,16 @@ jobs:
           command: |
             touch "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
             tail -f "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
+
+      - run:
+          name: "Foundry test"
+          command: |
+            cd "./e2e/tests/<< parameters.toml >>"
+            if [ -f foundry.toml ]; then
+              pwd
+              echo "forge test -vvvv" 
+              forge test -vvvv
+            fi
 
       - run:
           name: "Run tests"
