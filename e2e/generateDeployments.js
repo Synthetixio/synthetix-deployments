@@ -897,6 +897,12 @@ async function run() {
     );
   }
 
+  const snx_v4_onchain =
+    deployments?.state?.['provision.snx_v4_onchain']?.artifacts?.imports?.snx_v4_onchain;
+  if (snx_v4_onchain) {
+    contracts.V4PerpsMarketProxy = snx_v4_onchain.contracts.PerpsMarketProxy;
+  }
+
   const { items: mintableTokens, contracts: mintableTokenContracts } =
     await extractMintableTokens(deployments);
   log('Writing', `deployments/mintableTokens.json`);
