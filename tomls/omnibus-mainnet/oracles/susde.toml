@@ -1,0 +1,31 @@
+[setting.susde_aggregator_address]
+
+[setting.susde_chainlink_staleness_tolerance]
+
+[invoke.registerSusdeOracleManagerNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.susde_aggregator_address, 0, 8]) %>",
+    [
+    ],
+]
+extra.susde_oracle_id_raw.event = "NodeRegistered"
+extra.susde_oracle_id_raw.arg = 0
+depends = ['provision.system', 'setting.susde_aggregator_address']
+
+[invoke.registerSusdeWithStaleness]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.susde_chainlink_staleness_tolerance]) %>",
+    [
+        "<%= extras.susde_oracle_id_raw %>",
+    ],
+]
+extra.susde_oracle_id.event = "NodeRegistered"
+extra.susde_oracle_id.arg = 0
