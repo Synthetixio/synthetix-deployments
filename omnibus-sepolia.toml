@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "14"
+version = "15"
 description = "Includes the full synthetix system with configurations applied"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
@@ -474,7 +474,7 @@ args = [
 ]
 
 [setting.snx_v4_onchain]
-defaultValue = "synthetix-v4-onchain:0.1.6"
+defaultValue = "synthetix-v4-onchain:0.1.7"
 
 [provision.snx_v4_onchain]
 source = "<%= settings.snx_v4_onchain %>"
