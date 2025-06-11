@@ -27,12 +27,12 @@ contract Account_Test is CommonTest {
         uint256 usdcBalanceBefore = mockUSDC.balanceOf(ALICE);
         uint256 amountBefore = PerpsMarketProxy.getCollateralAmount(accountId, collateralId);
 
-        PerpsMarketProxy.depositCollateral(accountId, 1, 1000e6);
+        PerpsMarketProxy.depositCollateral(accountId, collateralId, 1000e6);
 
         uint256 amountAfter = PerpsMarketProxy.getCollateralAmount(accountId, collateralId);
         uint256 usdcBalanceAfter = mockUSDC.balanceOf(ALICE);
 
-        assertEq(amountAfter - amountBefore, 1000e6);
+        assertEq(amountAfter - amountBefore, 1000e18);
         assertEq(usdcBalanceBefore - usdcBalanceAfter, 1000e6);
     }
 }
