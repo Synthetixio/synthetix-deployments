@@ -484,16 +484,6 @@ targetPreset = "<%= settings.target_preset %>"
 options.owner = "<%= settings.owner %>"
 depends = ["provision.system", "setting.target_preset", "setting.owner", "setting.snx_v4_onchain"]
 
-[invoke.CoreProxy_configureMaximumMarketCollateral_usdc]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureMaximumMarketCollateral"
-args = [
-    "<%= snx_v4_onchain.superMarketId %>",
-    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
-    "<%= parseUnits(String(500_000_000), 6) %>",
-]
-
 [invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
@@ -507,3 +497,33 @@ liquidationRatioD18 = "<%= parseEther('1.05') %>"
 liquidationRewardD18 = 0
 minDelegationD18 = 0
 depositingEnabled = true
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= snx_v4_onchain.superMarketId %>",
+    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
+    "<%= parseUnits(String(500_000_000), 6) %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc_eth_market]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    100,
+    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
+    "<%= parseUnits(String(100_000_000), 6) %>",
+]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc_btc_market]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    200,
+    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
+    "<%= parseUnits(String(100_000_000), 6) %>",
+]
