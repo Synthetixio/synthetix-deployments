@@ -505,25 +505,5 @@ func = "configureMaximumMarketCollateral"
 args = [
     "<%= snx_v4_onchain.superMarketId %>",
     "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
-    "<%= parseUnits(String(500_000_000), 6) %>",
-]
-
-[invoke.CoreProxy_configureMaximumMarketCollateral_usdc_eth_market]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureMaximumMarketCollateral"
-args = [
-    100,
-    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
-    "<%= parseUnits(String(100_000_000), 6) %>",
-]
-
-[invoke.CoreProxy_configureMaximumMarketCollateral_usdc_btc_market]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "configureMaximumMarketCollateral"
-args = [
-    200,
-    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
-    "<%= parseUnits(String(100_000_000), 6) %>",
+    "<%= parseEther(String(500_000_000)) %>",
 ]
