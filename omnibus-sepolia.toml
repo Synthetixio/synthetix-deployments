@@ -503,7 +503,7 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureMaximumMarketCollateral"
 args = [
-    "<%= snx_v4_onchain.superMarketId %>",
+    "<%= imports.snx_v4_onchain.extras.superMarketId %>",
     "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
-    "<%= parseEther(String(500_000_000)) %>",
+    "<%= MaxUint256 %>",
 ]
