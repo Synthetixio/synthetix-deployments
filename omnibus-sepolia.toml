@@ -493,3 +493,11 @@ args = [
     "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
     "<%= parseUnits(String(500_000_000), 6) %>",
 ]
+
+[invoke.CoreProxy_configureCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+args = [
+    { tokenAddress = "<%= snx_v4_onchain.CollateralMockUSDC.address %>", oracleNodeId = "<%= extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= parseEther('10') %>", liquidationRatioD18 = "<%= parseEther('10') %>", liquidationRewardD18 = "0", minDelegationD18 = "0", depositingEnabled = true },
+]
