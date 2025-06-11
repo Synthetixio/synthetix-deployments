@@ -473,7 +473,6 @@ args = [
     "<%= settings.weth_rewards_distributor %>",
 ]
 
-
 # --- V4 Onchain setup --- #
 
 [setting.snx_v4_onchain]
@@ -484,3 +483,13 @@ source = "<%= settings.snx_v4_onchain %>"
 targetPreset = "<%= settings.target_preset %>"
 options.owner = "<%= settings.owner %>"
 depends = ["provision.system", "setting.target_preset", "setting.owner", "setting.snx_v4_onchain"]
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= snx_v4_onchain.superMarketId %>",
+    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
+    "<%= parseUnits(String(500_000_000), 6) %>",
+]

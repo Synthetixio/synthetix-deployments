@@ -2,17 +2,17 @@ pragma solidity ^0.8.21;
 
 import {Test} from "forge-std/Test.sol";
 import {CannonDeploy} from "./CannonDeploy.sol";
-import {ICoreProxy} from "deployments/sol/ICoreProxy.sol";
-import {IAccountProxy} from "deployments/sol/IAccountProxy.sol";
-import {IPerpsMarketProxy} from "deployments/sol/IPerpsMarketProxy.sol";
-import {CollateralMock} from "@synthetixio/main/contracts/mocks/CollateralMock.sol";
+import {ICoreProxy} from "e2e/deployments/sol/ICoreProxy.sol";
+import {IAccountProxy} from "e2e/deployments/sol/IAccountProxy.sol";
+import { IV4PerpsMarketProxy } from "e2e/deployments/sol/IV4PerpsMarketProxy.sol";
+import { CollateralMock } from "@synthetixio/main/contracts/mocks/CollateralMock.sol";
 
 contract CommonTest is Test {
     ICoreProxy internal CoreProxy;
     IAccountProxy internal AccountProxy;
-    IPerpsMarketProxy internal PerpsMarketProxy;
+    IV4PerpsMarketProxy internal PerpsMarketProxy;
     CollateralMock internal mockUSDC;
-
+    uint128 internal collateralId = 1;
     uint256 internal fork;
 
     constructor() {
@@ -27,10 +27,10 @@ contract CommonTest is Test {
         AccountProxy = IAccountProxy(vm.parseJsonAddress(metaJson, ".contracts.AccountProxy"));
         vm.label(address(AccountProxy), "AccountProxy");
 
-        PerpsMarketProxy = IPerpsMarketProxy(vm.parseJsonAddress(metaJson, ".contracts.PerpsMarketProxy"));
+        PerpsMarketProxy = IV4PerpsMarketProxy(vm.parseJsonAddress(metaJson, ".contracts.V4PerpsMarketProxy"));
         vm.label(address(PerpsMarketProxy), "PerpsMarketProxy");
 
-        mockUSDC = CollateralMock(vm.parseJsonAddress(metaJson, ".contracts.CollateralMockUSDC"));
+        mockUSDC = CollateralMock(PerpsMarketProxy.collateralToken());
         vm.label(address(mockUSDC), "CollateralMockUSDC");
     }
 
