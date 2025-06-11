@@ -29,9 +29,6 @@ contract CommonTest is Test {
 
         PerpsMarketProxy = IV4PerpsMarketProxy(vm.parseJsonAddress(metaJson, ".contracts.V4PerpsMarketProxy"));
         vm.label(address(PerpsMarketProxy), "PerpsMarketProxy");
-
-        mockUSDC = CollateralMock(PerpsMarketProxy.collateralToken());
-        vm.label(address(mockUSDC), "CollateralMockUSDC");
     }
 
     function setUp() public {
@@ -45,5 +42,8 @@ contract CommonTest is Test {
 
         CannonDeploy deployer = new CannonDeploy();
         deployer.run();
+    
+        mockUSDC = CollateralMock(PerpsMarketProxy.collateralToken());
+        vm.label(address(mockUSDC), "CollateralMockUSDC");
     }
 }
