@@ -476,7 +476,7 @@ args = [
 # --- V4 Onchain setup --- #
 
 [setting.snx_v4_onchain]
-defaultValue = "synthetix-v4-onchain:0.1.8"
+defaultValue = "synthetix-v4-onchain:0.1.9"
 
 [provision.snx_v4_onchain]
 source = "<%= settings.snx_v4_onchain %>"
