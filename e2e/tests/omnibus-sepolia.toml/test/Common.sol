@@ -2,9 +2,9 @@ pragma solidity ^0.8.21;
 
 import {Test} from "forge-std/Test.sol";
 import {CannonDeploy} from "./CannonDeploy.sol";
-import {ICoreProxy} from "e2e/deployments/sol/ICoreProxy.sol";
-import {IAccountProxy} from "e2e/deployments/sol/IAccountProxy.sol";
-import { IV4PerpsMarketProxy } from "e2e/deployments/sol/IV4PerpsMarketProxy.sol";
+import {ICoreProxy} from "deployments/sol/ICoreProxy.sol";
+import {IAccountProxy} from "deployments/sol/IAccountProxy.sol";
+import { IV4PerpsMarketProxy } from "deployments/sol/IV4PerpsMarketProxy.sol";
 import { CollateralMock } from "@synthetixio/main/contracts/mocks/CollateralMock.sol";
 
 contract CommonTest is Test {
