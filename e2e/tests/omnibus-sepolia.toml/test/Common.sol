@@ -4,10 +4,14 @@ import {Test} from "forge-std/Test.sol";
 import {CannonDeploy} from "./CannonDeploy.sol";
 import {ICoreProxy} from "deployments/sol/ICoreProxy.sol";
 import {IAccountProxy} from "deployments/sol/IAccountProxy.sol";
+import {IPerpsMarketProxy} from "deployments/sol/IPerpsMarketProxy.sol";
+import {CollateralMock} from "@synthetixio/main/contracts/mocks/CollateralMock.sol";
 
 contract CommonTest is Test {
     ICoreProxy internal CoreProxy;
     IAccountProxy internal AccountProxy;
+    IPerpsMarketProxy internal PerpsMarketProxy;
+    CollateralMock internal mockUSDC;
 
     uint256 internal fork;
 
@@ -22,6 +26,12 @@ contract CommonTest is Test {
 
         AccountProxy = IAccountProxy(vm.parseJsonAddress(metaJson, ".contracts.AccountProxy"));
         vm.label(address(AccountProxy), "AccountProxy");
+
+        PerpsMarketProxy = IPerpsMarketProxy(vm.parseJsonAddress(metaJson, ".contracts.PerpsMarketProxy"));
+        vm.label(address(PerpsMarketProxy), "PerpsMarketProxy");
+
+        mockUSDC = CollateralMock(vm.parseJsonAddress(metaJson, ".contracts.CollateralMockUSDC"));
+        vm.label(address(mockUSDC), "CollateralMockUSDC");
     }
 
     function setUp() public {
