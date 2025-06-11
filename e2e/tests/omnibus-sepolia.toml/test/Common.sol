@@ -5,7 +5,7 @@ import {CannonDeploy} from "./CannonDeploy.sol";
 import {ICoreProxy} from "deployments/sol/ICoreProxy.sol";
 import {IAccountProxy} from "deployments/sol/IAccountProxy.sol";
 import { IV4PerpsMarketProxy } from "deployments/sol/IV4PerpsMarketProxy.sol";
-import { CollateralMock } from "@synthetixio/main/contracts/mocks/CollateralMock.sol";
+import {MockERC20} from "forge-std/mocks/MockERC20.sol";
 
 contract CommonTest is Test {
     ICoreProxy internal CoreProxy;
@@ -43,7 +43,7 @@ contract CommonTest is Test {
         CannonDeploy deployer = new CannonDeploy();
         deployer.run();
     
-        mockUSDC = CollateralMock(PerpsMarketProxy.collateralToken());
+        mockUSDC = MockERC20(PerpsMarketProxy.collateralToken());
         vm.label(address(mockUSDC), "CollateralMockUSDC");
     }
 }
