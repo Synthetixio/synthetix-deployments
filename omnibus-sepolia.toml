@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "15"
+version = "16"
 description = "Includes the full synthetix system with configurations applied"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
 include = [
@@ -473,11 +473,37 @@ args = [
     "<%= settings.weth_rewards_distributor %>",
 ]
 
+# --- V4 Onchain setup --- #
+
 [setting.snx_v4_onchain]
-defaultValue = "synthetix-v4-onchain:0.1.7"
+defaultValue = "synthetix-v4-onchain:0.1.9"
 
 [provision.snx_v4_onchain]
 source = "<%= settings.snx_v4_onchain %>"
 targetPreset = "<%= settings.target_preset %>"
 options.owner = "<%= settings.owner %>"
 depends = ["provision.system", "setting.target_preset", "setting.owner", "setting.snx_v4_onchain"]
+
+[invoke.CoreProxy_configureCollateral_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureCollateral"
+
+[[invoke.CoreProxy_configureCollateral_usdc.args]]
+tokenAddress = "<%= snx_v4_onchain.CollateralMockUSDC.address %>"
+oracleNodeId = "<%= imports.system.settings.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('5') %>"
+liquidationRatioD18 = "<%= parseEther('1.05') %>"
+liquidationRewardD18 = 0
+minDelegationD18 = 0
+depositingEnabled = true
+
+[invoke.CoreProxy_configureMaximumMarketCollateral_usdc]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "configureMaximumMarketCollateral"
+args = [
+    "<%= imports.snx_v4_onchain.extras.superMarketId %>",
+    "<%= snx_v4_onchain.CollateralMockUSDC.address %>",
+    "<%= MaxUint256 %>",
+]

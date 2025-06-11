@@ -18,7 +18,7 @@
     "anvil:arbitrum": "anvil --chain-id 42161 --fork-url https://arbitrum-mainnet.infura.io/v3/$INFURA_API_KEY",
     "anvil:arbitrum-sepolia": "anvil --chain-id 421614 --fork-url https://arbitrum-sepolia.infura.io/v3/$INFURA_API_KEY",
     "start:mainnet": "cannon build omnibus-mainnet.toml --keep-alive --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 1 --provider-url https://mainnet.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
-    "start:sepolia": "cannon build omnibus-sepolia.toml --keep-alive --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 11155111 --provider-url https://sepolia.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
+    "start:sepolia": "cannon build omnibus-sepolia.toml --keep-alive --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 11155111 --provider-url https://sepolia.infura.io/v3/$INFURA_API_KEY --impersonate-all | tee ./e2e/cannon-build.log",
     "start:optimism": "cannon build omnibus-optimism-mainnet.toml --keep-alive --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@main --chain-id 10 --provider-url https://optimism-mainnet.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
     "start:base": "cannon build omnibus-base-mainnet-andromeda.toml --keep-alive --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 8453 --provider-url https://base-mainnet.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
     "start:base-sepolia": "cannon build omnibus-base-sepolia-andromeda.toml --keep-alive --dry-run --anvil.port 8545 --upgrade-from synthetix-omnibus:latest@andromeda --chain-id 84532 --provider-url https://base-sepolia.infura.io/v3/$INFURA_API_KEY | tee ./e2e/cannon-build.log",
@@ -55,6 +55,7 @@
   "devDependencies": {
     "@pythnetwork/pyth-evm-js": "^1.82.0",
     "@synthetixio/core-contracts": "^3.12.0",
+    "@synthetixio/main": "^3.12.3",
     "@usecannon/builder": "2.23.0",
     "@usecannon/cli": "2.23.0",
     "abi-to-sol": "^0.8.0",
