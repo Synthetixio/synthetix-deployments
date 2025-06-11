@@ -494,10 +494,16 @@ args = [
     "<%= parseUnits(String(500_000_000), 6) %>",
 ]
 
-[invoke.CoreProxy_configureCollateral]
+[invoke.CoreProxy_configureCollateral_usdc]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "configureCollateral"
-args = [
-    { tokenAddress = "<%= snx_v4_onchain.CollateralMockUSDC.address %>", oracleNodeId = "<%= extras.const_one_oracle_id %>", issuanceRatioD18 = "<%= parseEther('10') %>", liquidationRatioD18 = "<%= parseEther('10') %>", liquidationRewardD18 = "0", minDelegationD18 = "0", depositingEnabled = true },
-]
+
+[[invoke.CoreProxy_configureCollateral_usdc.args]]
+tokenAddress = "<%= snx_v4_onchain.CollateralMockUSDC.address %>"
+oracleNodeId = "<%= imports.system.settings.const_one_oracle_id %>"
+issuanceRatioD18 = "<%= parseEther('5') %>"
+liquidationRatioD18 = "<%= parseEther('1.05') %>"
+liquidationRewardD18 = 0
+minDelegationD18 = 0
+depositingEnabled = true
