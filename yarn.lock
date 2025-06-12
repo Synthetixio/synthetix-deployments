@@ -1052,13 +1052,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/main@npm:^3.12.3":
-  version: 3.12.3
-  resolution: "@synthetixio/main@npm:3.12.3"
-  checksum: 10/a76f2cafec80981f348e1da284be8ae5abc4c44d26d2afcc854002aa662cd285fc8d42fab1a505c319c668552ac12661e84d794907c53c6b8e8516a03903f551
-  languageName: node
-  linkType: hard
-
 "@taplo/core@npm:^0.1.0":
   version: 0.1.1
   resolution: "@taplo/core@npm:0.1.1"
@@ -5103,7 +5096,6 @@ __metadata:
   dependencies:
     "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
     "@synthetixio/core-contracts": "npm:^3.12.0"
-    "@synthetixio/main": "npm:^3.12.3"
     "@usecannon/builder": "npm:2.23.0"
     "@usecannon/cli": "npm:2.23.0"
     abi-to-sol: "npm:^0.8.0"
