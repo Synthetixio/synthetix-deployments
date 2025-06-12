@@ -5,13 +5,13 @@ import {CannonDeploy} from "./CannonDeploy.sol";
 import {ICoreProxy} from "deployments/sol/ICoreProxy.sol";
 import {IAccountProxy} from "deployments/sol/IAccountProxy.sol";
 import { IV4PerpsMarketProxy } from "deployments/sol/IV4PerpsMarketProxy.sol";
-import { CollateralMock } from "@synthetixio/main/contracts/mocks/CollateralMock.sol";
+import {IUSDProxy} from "deployments/sol/IUSDProxy.sol";
 
 contract CommonTest is Test {
     ICoreProxy internal CoreProxy;
     IAccountProxy internal AccountProxy;
     IV4PerpsMarketProxy internal PerpsMarketProxy;
-    CollateralMock internal mockUSDC;
+    IUSDProxy internal mockUSDC;
     uint128 internal collateralId = 1;
     uint256 internal fork;
 
@@ -43,7 +43,7 @@ contract CommonTest is Test {
         CannonDeploy deployer = new CannonDeploy();
         deployer.run();
     
-        mockUSDC = CollateralMock(PerpsMarketProxy.collateralToken());
+        mockUSDC = IUSDProxy(PerpsMarketProxy.collateralToken());
         vm.label(address(mockUSDC), "CollateralMockUSDC");
     }
 }
