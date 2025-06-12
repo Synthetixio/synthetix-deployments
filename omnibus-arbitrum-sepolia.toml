@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "50"
+version = "51"
 description = "Arbitrum deployment"
 preset = "main"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
@@ -273,7 +273,7 @@ defaultValue = "main"
 defaultValue = "snax"
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.1"
+defaultValue = "synthetix:3.13.0"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
