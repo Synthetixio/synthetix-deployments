@@ -765,24 +765,6 @@ workflows:
     jobs:
       - lint
 
-      #      - fork-test:
-      #          name: test-base-sepolia-andromeda
-      #          toml: omnibus-base-sepolia-andromeda.toml
-      #          package: "synthetix-omnibus:latest"
-      #          preset: "andromeda"
-      #          chain-id: 84532
-      #          rpc-env: RPC_BASE_SEPOLIA
-      #          resource_class: large
-
-      - fork-test:
-          name: test-base-mainnet-andromeda
-          toml: omnibus-base-mainnet-andromeda.toml
-          package: "synthetix-omnibus:latest"
-          preset: "andromeda"
-          chain-id: 8453
-          rpc-env: RPC_BASE_MAINNET
-          resource_class: large
-
       - fork-test:
           name: test-mainnet
           toml: omnibus-mainnet.toml
@@ -806,22 +788,6 @@ workflows:
           preset: "main"
           chain-id: 11155111
           rpc-env: RPC_SEPOLIA
-
-      #      - fork-test:
-      #          name: test-snaxchain-testnet
-      #          toml: omnibus-snaxchain-testnet.toml
-      #          package: "synthetix-omnibus:latest"
-      #          preset: "main"
-      #          chain-id: 13001
-      #          rpc-env: RPC_SNAXCHAIN_TESTNET
-
-      #      - fork-test:
-      #          name: test-snaxchain-mainnet
-      #          toml: omnibus-snaxchain-mainnet.toml
-      #          package: "synthetix-omnibus:latest"
-      #          preset: "main"
-      #          chain-id: 2192
-      #          rpc-env: RPC_SNAXCHAIN_MAINNET
 
   deployment-info:
     when:
