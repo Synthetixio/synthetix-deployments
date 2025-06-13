@@ -1,3 +1,4 @@
+const { describe, it, before, after } = require('node:test');
 const assert = require('assert');
 const { getLpPosition } = require('../../tasks/getLpPosition');
 const { getAccountCollateral } = require('../../tasks/getAccountCollateral');

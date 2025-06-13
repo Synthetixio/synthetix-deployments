@@ -363,7 +363,14 @@ jobs:
             GAS_REPORT: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
           command: |
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
-            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
+            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs node --test --test-reporter tap --test-reporter junit --test-reporter-destination=stdout --test-reporter-destination=/tmp/junit.xml"
+
+      - store_test_results:
+          path: "/tmp/junit.xml"
+
+      - store_artifacts:
+          path: "/tmp/junit.xml"
+          destination: "junit.xml"
 
       - store_artifacts:
           path: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
@@ -445,7 +452,14 @@ jobs:
             GAS_REPORT: "./gas-<< parameters.chain-id >>-<< parameters.preset >>.csv"
           command: |
             TEST_FILES=$(circleci tests glob 'e2e/tests/<< parameters.toml >>/*.e2e.js')
-            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs yarn mocha --no-bail --exit"
+            echo "$TEST_FILES" | circleci tests run --verbose --split-by=timings --command="xargs node --test --test-reporter tap --test-reporter junit --test-reporter-destination=stdout --test-reporter-destination=/tmp/junit.xml"
+
+      - store_test_results:
+          path: "/tmp/junit.xml"
+
+      - store_artifacts:
+          path: "/tmp/junit.xml"
+          destination: "junit.xml"
 
       - store_artifacts:
           path: "./debug-<< parameters.chain-id >>-<< parameters.preset >>.log"
