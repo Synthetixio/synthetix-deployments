@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "24"
+version = "25"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -21,6 +21,7 @@ include = [
     "tomls/markets/spot/usde.toml",
     "tomls/pools/spartan-council.toml",
     "tomls/permit-all-transferCrossChain.toml",
+    "tomls/omnibus-mainnet/overrides.toml",
 
     # Cannon Registry Mainnet Configuration
     "tomls/omnibus-mainnet/cannon-permissions.toml",
@@ -158,6 +159,9 @@ defaultValue = "<%= parseEther('1.1') %>"
 [setting.position_manager_address]
 defaultValue = "0x100c6c18381c9a7527762063047236356bbd0b8d"
 
+[setting.pool420_migrate_address]
+defaultValue = "0x8bfd24F68149E3d4e9635a6E26b0e43EEfd2C692"
+
 # we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
@@ -202,24 +206,6 @@ target = ["treasury_market.Proxy"]
 fromCall.func = "owner"
 func = "setDebtDecayFunction"
 args = ["1", "31536000", "<%= parseEther('1') %>", "<%= parseEther('0.5') %>"]
-
-[invoke.setPositionManagerOverrideWithdrawTimeout]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setConfig"
-args = [
-    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
-]
-
-[invoke.setPositionManagerOverrideMinDelegateTime]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setConfig"
-args = [
-    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
-]
 
 [var.governance]
 governance_package = "synthetix-governance:3.0.9"

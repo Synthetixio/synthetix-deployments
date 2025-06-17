@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "14"
+version = "15"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -21,6 +21,7 @@ include = [
     "tomls/permit-all-transferCrossChain.toml",
     "tomls/omnibus-optimism-mainnet/spot-factory.toml",
     "tomls/markets/spot/eth.toml",
+    "tomls/omnibus-optimism-mainnet/overrides.toml",
 
     # Governance
     "tomls/omnibus-optimism-mainnet/governance/councils-satellite.toml",
@@ -156,6 +157,9 @@ defaultValue = "<%= parseEther('1.1') %>"
 [setting.position_manager_address]
 defaultValue = "0x693cd986b8b840607d3c7952f038bc22da636f48"
 
+[setting.pool420_migrate_address]
+defaultValue = "0x2305f5f9EF3aBF0d6d02411ACa44F85113b247Af"
+
 # Pyth settlement strategy config
 [setting.pythFeedUrl]
 defaultValue = "https://api.synthetix.io/pyth-mainnet/api/get_vaa_ccip?data={data}"
@@ -213,24 +217,6 @@ target = ["treasury_market.Proxy"]
 fromCall.func = "owner"
 func = "setDebtDecayFunction"
 args = ["1", "31536000", "<%= parseEther('1') %>", "<%= parseEther('0.5') %>"]
-
-[invoke.setPositionManagerOverrideWithdrawTimeout]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setConfig"
-args = [
-    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address'], [formatBytes32String('senderOverrideWithdrawTimeout'), settings.position_manager_address])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
-]
-
-[invoke.setPositionManagerOverrideMinDelegateTime]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "setConfig"
-args = [
-    "<%= keccak256(defaultAbiCoder.encode(['bytes32', 'address', 'uint256'], [formatBytes32String('senderOverrideMinDelegateTime'), settings.position_manager_address, settings.treasury_pool_id])) %>",
-    "0x0000000000000000000000000000000000000000000000000000000000000001",
-]
 
 [var.treasuryInfo]
 treasury_account_id = "10"
