@@ -8,7 +8,7 @@ This is a GitOps repo for deployment of the [Synthetix](https://www.github.com/s
 Sometimes newer or older versions of cannon may produce incompatible state and as a result deployment state will be borked.
 Using exactly same cannon version as all the repo maintainers use is a requirement and not an recommendation.
 
-Run `yarn upgrade-interactive` and make sure that `@usecannon/cli` and `hardhat-cannon` are updated to the latest versions.
+Run `yarn upgrade-interactive` and make sure that `@usecannon/cli` and `@usecannon/builder` are updated to the latest versions.
 If not, make a separate PR with cannon update (even though cannon updates are automated, there is a delay up to a day for that to happen)
 
 After installing for the first time, run `yarn cannon setup` to configure a reliable IPFS URL for publishing packages and any other preferred settings,
