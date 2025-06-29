@@ -16,4 +16,4 @@ issuanceRatioD18 = "<%= settings.sstatausdc_issuance_ratio %>"
 liquidationRatioD18 = "<%= settings.sstatausdc_liquidation_ratio %>"
 liquidationRewardD18 = "<%= settings.sstatausdc_liquidation_reward %>"
 minDelegationD18 = "<%= settings.sstatausdc_min_delegation %>"
-depositingEnabled = false
+depositingEnabled = true
