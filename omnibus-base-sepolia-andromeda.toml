@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "93"
+version = "94"
 description = "Andromeda dev deployment"
 preset = "andromeda"
 deployers = ["0x48914229deDd5A9922f44441ffCCfC2Cb7856Ee9"]
@@ -291,7 +291,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.1"
+defaultValue = "synthetix:3.13.0"
 
 [setting.oracle_manager_package]
 defaultValue = "oracle-manager:3.10.1"
