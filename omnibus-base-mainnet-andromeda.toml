@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "94"
+version = "95"
 description = "Andromeda deployment"
 preset = "andromeda"
 deployers = [
@@ -299,7 +299,7 @@ include = [
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.10.1"
+defaultValue = "synthetix:3.13.0"
 
 [setting.perps_keeper_cost_package]
 defaultValue = "op-gas-price-oracle:3.10.0"
