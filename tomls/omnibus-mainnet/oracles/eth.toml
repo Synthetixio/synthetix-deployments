@@ -1,0 +1,29 @@
+[setting.eth_aggregator_address]
+
+[invoke.registerEthOracleNode]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    # 3 = chainlink aggregator type
+    3,
+    # 3 parameters are: address of the chainlink oracle
+    "<%= defaultAbiCoder.encode(['address', 'uint256', 'uint8'], [settings.eth_aggregator_address, 0, 8]) %>",
+    [
+    ],
+]
+extra.eth_oracle_id_raw.event = "NodeRegistered"
+extra.eth_oracle_id_raw.arg = 0
+depends = ['provision.system', 'setting.eth_aggregator_address']
+
+[invoke.registerEthhWithStaleness]
+target = ["system.oracle_manager.Proxy"]
+func = "registerNode"
+args = [
+    7, # 7 = staleness circuit breaker
+    "<%= defaultAbiCoder.encode(['uint256'], [settings.eth_chainlink_staleness_tolerance]) %>",
+    [
+        "<%= extras.eth_oracle_id_raw %>",
+    ],
+]
+extra.eth_oracle_id.event = "NodeRegistered"
+extra.eth_oracle_id.arg = 0
