@@ -47,12 +47,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.15.4":
+"@babel/runtime@npm:^7.0.0":
   version: 7.26.0
   resolution: "@babel/runtime@npm:7.26.0"
   dependencies:
     regenerator-runtime: "npm:^0.14.0"
   checksum: 10/9f4ea1c1d566c497c052d505587554e782e021e6ccd302c2ad7ae8291c8e16e3f19d4a7726fb64469e057779ea2081c28b7dbefec6d813a22f08a35712c0f699
+  languageName: node
+  linkType: hard
+
+"@bytecodealliance/preview2-shim@npm:0.17.2":
+  version: 0.17.2
+  resolution: "@bytecodealliance/preview2-shim@npm:0.17.2"
+  checksum: 10/24bf1698fcf8c1cd25089b46eccbdae2db5585ca1d69ec15e5ad5a095f19d710bb73071bb17ed1a4745bd2707cc68754d0c17ce13800cd1aa465cce3c6aaff88
   languageName: node
   linkType: hard
 
@@ -657,6 +664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nomicfoundation/slang@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@nomicfoundation/slang@npm:1.3.0"
+  dependencies:
+    "@bytecodealliance/preview2-shim": "npm:0.17.2"
+  checksum: 10/b62ca029d3b3bafc0ac2a4a0441c5828fb6a019307462b5d8bff580ee63d5996bfafac333c1e292b3043773593ad5e6f8cb146b70cd3636bfc104863a0b1dd7b
+  languageName: node
+  linkType: hard
+
 "@nomicfoundation/solidity-analyzer-darwin-arm64@npm:0.1.1":
   version: 0.1.1
   resolution: "@nomicfoundation/solidity-analyzer-darwin-arm64@npm:0.1.1"
@@ -868,35 +884,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pythnetwork/price-service-client@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@pythnetwork/price-service-client@npm:1.9.0"
+"@pythnetwork/hermes-client@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@pythnetwork/hermes-client@npm:2.1.0"
   dependencies:
-    "@pythnetwork/price-service-sdk": "npm:*"
-    "@types/ws": "npm:^8.5.3"
-    axios: "npm:^1.5.1"
-    axios-retry: "npm:^3.8.0"
-    isomorphic-ws: "npm:^4.0.1"
-    ts-log: "npm:^2.2.4"
-    ws: "npm:^8.6.0"
-  checksum: 10/1d8840175317676eaea7f396ca9c3e6d211342b3f5b8d58d98e1ab88cbf08df71f97a7592ae126036ea4d14f21827dd5e0f43b7683a15b645f58a6e20470b59f
+    "@zodios/core": "npm:^10.9.6"
+    eventsource: "npm:^3.0.5"
+    zod: "npm:^3.23.8"
+  checksum: 10/77ce8b83b9350b14d181d52dc743839d79599976ccd737f40be6cc79a03b1c8b5e7fbd4a0f874ac63bcfdf93439d8bea00cf07556753085607355eafb0df155d
   languageName: node
   linkType: hard
 
-"@pythnetwork/price-service-sdk@npm:*":
-  version: 1.4.1
-  resolution: "@pythnetwork/price-service-sdk@npm:1.4.1"
-  checksum: 10/ea962503056b8ad329450bfa627f43dc1ce51da32e9493dae64ede970352d9664d9036f59668c45910c51101d257e71a78fd6053a13cff09bf226e9ed634e6f2
-  languageName: node
-  linkType: hard
-
-"@pythnetwork/pyth-evm-js@npm:^1.82.0":
-  version: 1.82.0
-  resolution: "@pythnetwork/pyth-evm-js@npm:1.82.0"
+"@pythnetwork/pyth-evm-js@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@pythnetwork/pyth-evm-js@npm:2.0.0"
   dependencies:
-    "@pythnetwork/price-service-client": "npm:1.9.0"
-    buffer: "npm:^6.0.3"
-  checksum: 10/fc17332b6fc8054fb79305771e7c85b22be432cb3bfe4f40d071f6e1d9f91f2c48f5898914cdca4b6070ec025dfa8c7b944e6adf66ff03349ee9e2b04dd375f9
+    "@pythnetwork/hermes-client": "npm:2.1.0"
+    viem: "npm:^2.37.13"
+  checksum: 10/c08aadedcca8810475e810be60c3e5c75b6d872c42019187c4864a3d9c977aedd5fe400c9a7277923d24d1f3acbe20173fbd384db3029ca7850774a7bba9aa70
   languageName: node
   linkType: hard
 
@@ -1045,33 +1050,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@synthetixio/core-contracts@npm:^3.12.0":
-  version: 3.12.3
-  resolution: "@synthetixio/core-contracts@npm:3.12.3"
-  checksum: 10/bb686461888dc0d2ae03056cd9ccd4edddd0b9104aab5b247cb69d07e6e76d53155f909f16c47e914bb2eeba25da3ce6f0e27235eadaaeb659a1bcb0f28ab0e1
+"@solidity-parser/parser@npm:^0.20.2":
+  version: 0.20.2
+  resolution: "@solidity-parser/parser@npm:0.20.2"
+  checksum: 10/405009cd712cc410df60e45510ddd2ca615d208b152903be71cef4b9440720287ffd3792f88a92eb0de375c2ea66b442e84c843cb810612d6b6e45fd51a2b49b
   languageName: node
   linkType: hard
 
-"@synthetixio/main@npm:^3.12.3":
-  version: 3.12.3
-  resolution: "@synthetixio/main@npm:3.12.3"
-  checksum: 10/a76f2cafec80981f348e1da284be8ae5abc4c44d26d2afcc854002aa662cd285fc8d42fab1a505c319c668552ac12661e84d794907c53c6b8e8516a03903f551
+"@synthetixio/core-contracts@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "@synthetixio/core-contracts@npm:3.13.0"
+  checksum: 10/bf34fbdda581667b69a501dc1d2fd4d8200b13f6e0dac0511abb323e62037ec26dd1dacfb4bd781f109c701a8cae6386d3f5cb7085f14d24ebcaa7cc08ca3caf
   languageName: node
   linkType: hard
 
-"@taplo/core@npm:^0.1.0":
-  version: 0.1.1
-  resolution: "@taplo/core@npm:0.1.1"
-  checksum: 10/e4d5dd2a80c6bead07692d1b0e8f506b91b3474768aca7373d4dff94ad82f3d78e5401f46ca194343c63f474a69fc32cbb272570d506a995eab2214f88e66866
+"@synthetixio/main@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "@synthetixio/main@npm:3.13.0"
+  checksum: 10/ae491ab93c19efb841179acc8eaa6904702f51676837b3ae78e18f8098473329c56f8f5c0a2a86af3ef8510a38f795be63e6a48af55be82694795b26fa608e4f
   languageName: node
   linkType: hard
 
-"@taplo/lib@npm:^0.4.0-alpha.2":
-  version: 0.4.0-alpha.2
-  resolution: "@taplo/lib@npm:0.4.0-alpha.2"
+"@taplo/core@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@taplo/core@npm:0.2.0"
+  checksum: 10/5fd723a337600f3e1beaccc379c0dc6d3a7577edc5b9d2dcba31a525e7ef4b769d2c80bdd2376a9d9baa1e93d35089721aca5a989c265cdaa08bb6e0630a5701
+  languageName: node
+  linkType: hard
+
+"@taplo/lib@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@taplo/lib@npm:0.5.0"
   dependencies:
-    "@taplo/core": "npm:^0.1.0"
-  checksum: 10/926a31b2310f07172362f91f366617f9f94784f7fa1227c62e0753a034d885798bfcbd3cf73984148e42b6eda7c34fae235649f2cd71a84226caf17f1c35a73c
+    "@taplo/core": "npm:^0.2.0"
+  checksum: 10/b0125571ac97a8820035edae947b1091634b5746d8f8c00bedf3d689884ea9f7b47e07d7a1f20098012ca5743a9aba59b015ac63da7f7d8f35e8e6da48217161
   languageName: node
   linkType: hard
 
@@ -1169,15 +1181,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^8.5.3":
-  version: 8.5.10
-  resolution: "@types/ws@npm:8.5.10"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10/9b414dc5e0b6c6f1ea4b1635b3568c58707357f68076df9e7cd33194747b7d1716d5189c0dbdd68c8d2521b148e88184cf881bac7429eb0e5c989b001539ed31
-  languageName: node
-  linkType: hard
-
 "@usecannon/builder@npm:2.24.2":
   version: 2.24.2
   resolution: "@usecannon/builder@npm:2.24.2"
@@ -1249,6 +1252,16 @@ __metadata:
   version: 0.5.1
   resolution: "@usecannon/web-solc@npm:0.5.1"
   checksum: 10/598f1d5729d7674ec9bbf003b06224e0163c44914a852297cca5ae4eaff23e40f653ba215daec7270da4cd014eeda0e660446172d4efdd7156ffe6b250795074
+  languageName: node
+  linkType: hard
+
+"@zodios/core@npm:^10.9.6":
+  version: 10.9.6
+  resolution: "@zodios/core@npm:10.9.6"
+  peerDependencies:
+    axios: ^0.x || ^1.0.0
+    zod: ^3.x
+  checksum: 10/3f7dfda9a423e2300bde79b4e7cf9bed2fea4639f7a742f88b06b88ae7d7e0cdef05171ba21ff3cf016ec6569a2b866517fd1a78c5346477f679c381d2526afd
   languageName: node
   linkType: hard
 
@@ -1482,16 +1495,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios-retry@npm:^3.8.0":
-  version: 3.9.1
-  resolution: "axios-retry@npm:3.9.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.15.4"
-    is-retry-allowed: "npm:^2.2.0"
-  checksum: 10/9a28dd8aa4640c2af30789059a1a84549178b2a415bf765a35fe6bba9cd3d78b2ee2da07e448e823303c05f3a83bf98709f4aa64a43c0f6c2812e1665126b97e
-  languageName: node
-  linkType: hard
-
 "axios-retry@npm:^4.5.0":
   version: 4.5.0
   resolution: "axios-retry@npm:4.5.0"
@@ -1503,7 +1506,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.5.1, axios@npm:^1.8.4":
+"axios@npm:^1.8.4":
   version: 1.9.0
   resolution: "axios@npm:1.9.0"
   dependencies:
@@ -2085,6 +2088,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"debug@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "debug@npm:4.4.3"
+  dependencies:
+    ms: "npm:^2.1.3"
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 10/9ada3434ea2993800bd9a1e320bd4aa7af69659fb51cca685d390949434bc0a8873c21ed7c9b852af6f2455a55c6d050aa3937d52b3c69f796dab666f762acad
+  languageName: node
+  linkType: hard
+
 "decamelize-keys@npm:^1.1.0":
   version: 1.1.1
   resolution: "decamelize-keys@npm:1.1.1"
@@ -2472,6 +2487,22 @@ __metadata:
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: 10/a3d47e285e28d324d7180f1e493961a2bbb4cad6412090e4dec114f4db1f5b560c7696ee8e758f55e23913ede856e3689cd3aa9ae13c56b5d8314cd3b3ddd1be
+  languageName: node
+  linkType: hard
+
+"eventsource-parser@npm:^3.0.1":
+  version: 3.0.6
+  resolution: "eventsource-parser@npm:3.0.6"
+  checksum: 10/febf7058b9c2168ecbb33e92711a1646e06bd1568f60b6eb6a01a8bf9f8fcd29cc8320d57247059cacf657a296280159f21306d2e3ff33309a9552b2ef889387
+  languageName: node
+  linkType: hard
+
+"eventsource@npm:^3.0.5":
+  version: 3.0.7
+  resolution: "eventsource@npm:3.0.7"
+  dependencies:
+    eventsource-parser: "npm:^3.0.1"
+  checksum: 10/e034915bc97068d1d38617951afd798e6776d6a3a78e36a7569c235b177c7afc2625c9fe82656f7341ab72c7eeecb3fd507b7f88e9328f2448872ff9c4742bb6
   languageName: node
   linkType: hard
 
@@ -3296,15 +3327,6 @@ __metadata:
   version: 3.1.1
   resolution: "isexe@npm:3.1.1"
   checksum: 10/7fe1931ee4e88eb5aa524cd3ceb8c882537bc3a81b02e438b240e47012eef49c86904d0f0e593ea7c3a9996d18d0f1f3be8d3eaa92333977b0c3a9d353d5563e
-  languageName: node
-  linkType: hard
-
-"isomorphic-ws@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "isomorphic-ws@npm:4.0.1"
-  peerDependencies:
-    ws: "*"
-  checksum: 10/d7190eadefdc28bdb93d67b5f0c603385aaf87724fa2974abb382ac1ec9756ed2cfb27065cbe76122879c2d452e2982bc4314317f3d6c737ddda6c047328771a
   languageName: node
   linkType: hard
 
@@ -4339,7 +4361,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-solidity@npm:^1.0.0-dev.23, prettier-plugin-solidity@npm:^1.4.2":
+"prettier-plugin-solidity@npm:^1.0.0-dev.23":
   version: 1.4.2
   resolution: "prettier-plugin-solidity@npm:1.4.2"
   dependencies:
@@ -4351,14 +4373,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-toml@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "prettier-plugin-toml@npm:2.0.1"
+"prettier-plugin-solidity@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "prettier-plugin-solidity@npm:2.2.0"
   dependencies:
-    "@taplo/lib": "npm:^0.4.0-alpha.2"
+    "@nomicfoundation/slang": "npm:1.3.0"
+    "@solidity-parser/parser": "npm:^0.20.2"
+    semver: "npm:^7.7.3"
+  peerDependencies:
+    prettier: ">=3.0.0"
+  checksum: 10/5309b8854ab4966101fc5f82160b33d1f6c7a14f0d9904c1a2150aa094efd86f26ee84657857ca208a81a471d81b473243584d82bc16546ba459e0d4d817801e
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-toml@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "prettier-plugin-toml@npm:2.0.6"
+  dependencies:
+    "@taplo/lib": "npm:^0.5.0"
   peerDependencies:
     prettier: ^3.0.3
-  checksum: 10/cf6a6c4f386390d74924eaacff86d3ef97369749b986fe3b5229466e896ada9f6da4a4fef44059062ffebf6f9a25530d563cba73da2ba2aac0eee27b4fc8c279
+  checksum: 10/8c760655c99947005fdc185ffa3a8ff45fda6a76d7ff1e0abac44a42edecb14ac6b6d2f9f0b36c86e729468ae50741a5127d4f263a2a2efe4caae7d48afd0589
   languageName: node
   linkType: hard
 
@@ -4371,12 +4406,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "prettier@npm:3.4.2"
+"prettier@npm:^3.7.4":
+  version: 3.7.4
+  resolution: "prettier@npm:3.7.4"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10/a3e806fb0b635818964d472d35d27e21a4e17150c679047f5501e1f23bd4aa806adf660f0c0d35214a210d5d440da6896c2e86156da55f221a57938278dc326e
+  checksum: 10/b4d00ea13baed813cb777c444506632fb10faaef52dea526cacd03085f01f6db11fc969ccebedf05bf7d93c3960900994c6adf1b150e28a31afd5cfe7089b313
   languageName: node
   linkType: hard
 
@@ -4720,6 +4755,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10/4cfa1eb91ef3751e20fc52e47a935a0118d56d6f15a837ab814da0c150778ba2ca4f1a4d9068b33070ea4273629e615066664c2cfcd7c272caf7a8a0f6518b2c
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.7.3":
+  version: 7.7.3
+  resolution: "semver@npm:7.7.3"
+  bin:
+    semver: bin/semver.js
+  checksum: 10/8dbc3168e057a38fc322af909c7f5617483c50caddba135439ff09a754b20bdd6482a5123ff543dad4affa488ecf46ec5fb56d61312ad20bb140199b88dfaea9
   languageName: node
   linkType: hard
 
@@ -5101,25 +5145,25 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "synthetix-deployments@workspace:."
   dependencies:
-    "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
-    "@synthetixio/core-contracts": "npm:^3.12.0"
-    "@synthetixio/main": "npm:^3.12.3"
+    "@pythnetwork/pyth-evm-js": "npm:^2.0.0"
+    "@synthetixio/core-contracts": "npm:^3.13.0"
+    "@synthetixio/main": "npm:^3.13.0"
     "@usecannon/builder": "npm:2.24.2"
     "@usecannon/cli": "npm:2.24.2"
     abi-to-sol: "npm:^0.8.0"
-    debug: "npm:^4.4.0"
+    debug: "npm:^4.4.3"
     ethers: "npm:^5.7.2"
     forge-std: "github:foundry-rs/forge-std"
     hardhat: "npm:^2.22.18"
-    mocha: "npm:^11.0.1"
+    mocha: "npm:^11.7.5"
     numbro: "npm:^2.5.0"
     pako: "npm:^2.1.0"
-    prettier: "npm:^3.4.2"
-    prettier-plugin-solidity: "npm:^1.4.2"
-    prettier-plugin-toml: "npm:^2.0.1"
+    prettier: "npm:^3.7.4"
+    prettier-plugin-solidity: "npm:^2.2.0"
+    prettier-plugin-toml: "npm:^2.0.6"
     solc: "npm:0.8.21"
     supports-color: "npm:^8.1.1"
-    viem: "npm:^2.30.0"
+    viem: "npm:^2.43.1"
   languageName: unknown
   linkType: soft
 
@@ -5213,13 +5257,6 @@ __metadata:
   version: 3.0.1
   resolution: "trim-newlines@npm:3.0.1"
   checksum: 10/b530f3fadf78e570cf3c761fb74fef655beff6b0f84b29209bac6c9622db75ad1417f4a7b5d54c96605dcd72734ad44526fef9f396807b90839449eb543c6206
-  languageName: node
-  linkType: hard
-
-"ts-log@npm:^2.2.4":
-  version: 2.2.5
-  resolution: "ts-log@npm:2.2.5"
-  checksum: 10/b8fb444ae3b05ac8f709a1acee26dba014ed601e1fc36fa2bfcac5555032eb6c6ca9cd16b8da21832f1631785c3ad7de7177d8e7631c197a1aeca64f03a872a4
   languageName: node
   linkType: hard
 
@@ -5591,7 +5628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.18.1, ws@npm:^8.6.0":
+"ws@npm:8.18.1":
   version: 8.18.1
   resolution: "ws@npm:8.18.1"
   peerDependencies:
@@ -5715,6 +5752,13 @@ __metadata:
   peerDependencies:
     zod: ^3.13.2
   checksum: 10/ba0f47b03c8912581cba25adae60ac5437b8506e847a77996a11436d98353aac192cabe51280627ca52abc2fdf011c409ac79733e8187274d223f568ba277940
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.8":
+  version: 3.25.76
+  resolution: "zod@npm:3.25.76"
+  checksum: 10/f0c963ec40cd96858451d1690404d603d36507c1fc9682f2dae59ab38b578687d542708a7fdbf645f77926f78c9ed558f57c3d3aa226c285f798df0c4da16995
   languageName: node
   linkType: hard
 
