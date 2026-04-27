@@ -35,6 +35,9 @@ include = [
     "tomls/omnibus-mainnet/pools/treasury.toml",
     "tomls/omnibus-mainnet/treasury-market.toml",
     "tomls/omnibus-mainnet/liquidation-permissions.toml",
+
+    # Full protocol deprecation
+    "tomls/omnibus-mainnet/full-deprecation.toml",
 ]
 
 [setting.snx_package]

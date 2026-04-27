@@ -1,0 +1,103 @@
+# Full protocol deprecation: lock down every user-callable feature on
+# CoreProxy, pause LegacyMarket stablecoin conversion, and sweep all
+# SNX and snxUSD held by CoreProxy to the deprecation receiver.
+#
+# Existing invokes already cover:
+#   - deposit, delegateCollateral, liquidate, liquidateVault (CoreProxy)
+#   - LegacyMarket setPauseMigration(true)
+
+[setting.deprecation_receiver]
+defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
+
+# ---- CoreProxy feature flag disables ----
+
+[invoke.disableWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdraw') %>", false]
+
+[invoke.disableMintUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('mintUsd') %>", false]
+
+[invoke.disableBurnUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('burnUsd') %>", false]
+
+[invoke.disableMigrateDelegation]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('migrateDelegation') %>", false]
+
+[invoke.disableCreateAccount]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('createAccount') %>", false]
+
+[invoke.disableClaimRewards]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('claimRewards') %>", false]
+
+[invoke.disableTransferCrossChain]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('transferCrossChain') %>", false]
+
+[invoke.disableDepositMarketUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketUsd') %>", false]
+
+[invoke.disableWithdrawMarketUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketUsd') %>", false]
+
+[invoke.disableDepositMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketCollateral') %>", false]
+
+[invoke.disableWithdrawMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", false]
+
+# ---- LegacyMarket pauses (pauseMigration is set elsewhere) ----
+
+[invoke.pauseLMStablecoinConversion]
+target = ["legacyMarket.Proxy"]
+fromCall.func = "owner"
+func = "setPauseStablecoinConversion"
+args = [true]
+
+# ---- Sweep collateral held by CoreProxy via deprecateCollateral ----
+
+[invoke.deprecateCollateralSnx]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = ["<%= settings.snx_address %>", "<%= settings.deprecation_receiver %>"]
+
+[invoke.deprecateCollateralSnxUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = [
+    "<%= imports.system.contracts.USDProxy.address %>",
+    "<%= settings.deprecation_receiver %>",
+]

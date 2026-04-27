@@ -33,6 +33,9 @@ include = [
     "tomls/omnibus-optimism-mainnet/treasury-market.toml",
 
     "tomls/omnibus-optimism-mainnet/liquidation-permissions.toml",
+
+    # Full protocol deprecation
+    "tomls/omnibus-optimism-mainnet/full-deprecation.toml",
 ]
 
 [setting.snx_package]
@@ -192,7 +195,7 @@ governance_initial_epoch_end_date = "1726504075"
 target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseMigration"
-args = [false]
+args = [true]
 
 [invoke.disableLiquidate]
 target = ["system.CoreProxy"]
@@ -225,7 +228,7 @@ treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"
 # deprecation
 
 [invoke.setPausedStablecoinConversion]
-target = ["legacyMarket.Market"]
+target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseStablecoinConversion"
 args = ['true']

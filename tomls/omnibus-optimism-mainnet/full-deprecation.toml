@@ -1,0 +1,89 @@
+# Full protocol deprecation: lock down every remaining user-callable
+# feature on CoreProxy and sweep all configured collaterals to the
+# pdao receiver. The omnibus already covers:
+#   - deposit, delegateCollateral, withdrawMarketUsd, liquidate,
+#     liquidateVault (CoreProxy)
+#   - LegacyMarket setPauseStablecoinConversion(true)
+#   - LegacyMarket setPauseMigration(true)
+#   - deprecateCollateral(SNX, pdao)
+#
+# Configured collaterals on Optimism CoreProxy: SNX (above), WETH,
+# and snxUSD — both swept below.
+
+[invoke.disableWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdraw') %>", false]
+
+[invoke.disableMintUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('mintUsd') %>", false]
+
+[invoke.disableBurnUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('burnUsd') %>", false]
+
+[invoke.disableMigrateDelegation]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('migrateDelegation') %>", false]
+
+[invoke.disableCreateAccount]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('createAccount') %>", false]
+
+[invoke.disableClaimRewards]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('claimRewards') %>", false]
+
+[invoke.disableTransferCrossChain]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('transferCrossChain') %>", false]
+
+[invoke.disableDepositMarketUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketUsd') %>", false]
+
+[invoke.disableDepositMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketCollateral') %>", false]
+
+[invoke.disableWithdrawMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", false]
+
+# ---- Sweep remaining configured collaterals (SNX is handled by
+# ---- [invoke.deprecate] in omnibus-optimism-mainnet.toml) ----
+
+[invoke.deprecateCollateralWeth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = ["<%= settings.weth_address %>", "<%= settings.pdao %>"]
+
+[invoke.deprecateCollateralSnxUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = [
+    "<%= imports.system.contracts.USDProxy.address %>",
+    "<%= settings.pdao %>",
+]
