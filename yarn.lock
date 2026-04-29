@@ -1178,14 +1178,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usecannon/builder@npm:2.24.2":
-  version: 2.24.2
-  resolution: "@usecannon/builder@npm:2.24.2"
+"@usecannon/builder@npm:2.26.0":
+  version: 2.26.0
+  resolution: "@usecannon/builder@npm:2.26.0"
   dependencies:
     "@usecannon/router": "npm:^4.1.3"
     "@usecannon/web-solc": "npm:0.5.1"
     acorn: "npm:^8.14.1"
-    axios: "npm:^1.8.4"
+    axios: "npm:^1.9.0"
     axios-retry: "npm:^4.5.0"
     buffer: "npm:^6.0.3"
     chalk: "npm:^4.1.2"
@@ -1196,21 +1196,22 @@ __metadata:
     lodash: "npm:^4.17.21"
     pako: "npm:^2.1.0"
     promise-events: "npm:^0.2.4"
+    promise-retry: "npm:^2.0.1"
     rfdc: "npm:^1.4.1"
     ses: "npm:^1.12.0"
     typestub-ipfs-only-hash: "npm:^4.0.0"
-    viem: "npm:^2.25.0"
+    viem: "npm:^2.25.1"
     zod: "npm:^3.24.2"
-  checksum: 10/aa55a7658546a8447fa87d1bba682537bbc62913d3772bad85c537c1b7c3061e8f00633dd59394a081c297eab46d5c5621415a07b8a3209c7dd3308a54314c46
+  checksum: 10/f465143dd410e5fb19d9f9f9191dfcad7864424709a840fbfb075110d8328c15f1478c20c32e498082d271e3b6f3a08f554caf7558a3e2e5a0913058788a1b78
   languageName: node
   linkType: hard
 
-"@usecannon/cli@npm:2.24.2":
-  version: 2.24.2
-  resolution: "@usecannon/cli@npm:2.24.2"
+"@usecannon/cli@npm:2.26.0":
+  version: 2.26.0
+  resolution: "@usecannon/cli@npm:2.26.0"
   dependencies:
     "@iarna/toml": "npm:^3.0.0"
-    "@usecannon/builder": "npm:2.24.2"
+    "@usecannon/builder": "npm:2.26.0"
     abitype: "npm:^1.0.8"
     chalk: "npm:^4.1.2"
     commander: "npm:^12.1.0"
@@ -1219,17 +1220,18 @@ __metadata:
     fs-extra: "npm:^11.3.0"
     glob: "npm:^11.0.1"
     lodash: "npm:^4.17.21"
+    nanospinner: "npm:^1.2.2"
     prompts: "npm:^2.4.2"
     semver: "npm:^7.7.1"
     table: "npm:^6.9.0"
     tildify: "npm:3.0.0"
     untildify: "npm:^4.0.0"
-    viem: "npm:^2.25.0"
+    viem: "npm:^2.25.1"
     znv: "npm:^0.4.0"
     zod: "npm:^3.24.2"
   bin:
     cannon: bin/cannon.js
-  checksum: 10/436b2b94b0b4b29578b656bcc087de9ed8820426a15a2826c57b618391a10cfb0e00d30a7445bd57135777f64ebd6704585ed3e86c2870ebef945611cac90565
+  checksum: 10/d2b64f789d9c4c94f0f01e4ca8b87adb01ed972281014010a759dbf819aa17d2bbed7ec7f24d0c58084102d6fab316e6a3a93b67a9a174b57b2e9f5bcbd229a4
   languageName: node
   linkType: hard
 
@@ -1503,7 +1505,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.5.1, axios@npm:^1.8.4":
+"axios@npm:^1.5.1":
   version: 1.9.0
   resolution: "axios@npm:1.9.0"
   dependencies:
@@ -1511,6 +1513,17 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10/a2f90bba56820883879f32a237e2b9ff25c250365dcafd41cec41b3406a3df334a148f90010182dfdadb4b41dc59f6f0b3e8898ff41b666d1157b5f3f4523497
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.9.0":
+  version: 1.15.2
+  resolution: "axios@npm:1.15.2"
+  dependencies:
+    follow-redirects: "npm:^1.15.11"
+    form-data: "npm:^4.0.5"
+    proxy-from-env: "npm:^2.1.0"
+  checksum: 10/eebbd8cb777316d4252cd994a06ec9fb956ef519214a62dab6c5443ae8b753b5116e9a770502316789e6cdef1101e6aae53b6936d6a3791b2d66d75f4d7d2462
   languageName: node
   linkType: hard
 
@@ -2576,6 +2589,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.15.11":
+  version: 1.16.0
+  resolution: "follow-redirects@npm:1.16.0"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10/3fbe3d80b3b544c22705d837aa5d4a0d07a740d913534a2620b0a004c610af4148e3b58723536dd099aaa1c9d3a155964bde9665d6e5cb331460809a1fc572fd
+  languageName: node
+  linkType: hard
+
 "foreground-child@npm:^3.1.0":
   version: 3.1.1
   resolution: "foreground-child@npm:3.1.1"
@@ -2602,6 +2625,19 @@ __metadata:
     es-set-tostringtag: "npm:^2.1.0"
     mime-types: "npm:^2.1.12"
   checksum: 10/82c65b426af4a40090e517a1bc9057f76970b4c6043e37aa49859c447d88553e77d4cc5626395079a53d2b0889ba5f2a49f3900db3ad3f3f1bf76613532572fb
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "form-data@npm:4.0.5"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    es-set-tostringtag: "npm:^2.1.0"
+    hasown: "npm:^2.0.2"
+    mime-types: "npm:^2.1.12"
+  checksum: 10/52ecd6e927c8c4e215e68a7ad5e0f7c1031397439672fd9741654b4a94722c4182e74cc815b225dcb5be3f4180f36428f67c6dd39eaa98af0dcfdd26c00c19cd
   languageName: node
   linkType: hard
 
@@ -3975,6 +4011,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanospinner@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "nanospinner@npm:1.2.2"
+  dependencies:
+    picocolors: "npm:^1.1.1"
+  checksum: 10/40ed63364c95b58806a9989b16af8728fdb57d19a8bf05e643542a0c64b184df29435308a07a618af48817f22850dc1ef5827724c226047cab7e70bd22705a0e
+  languageName: node
+  linkType: hard
+
 "negotiator@npm:^0.6.3":
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
@@ -4318,7 +4363,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.1.0":
+"picocolors@npm:^1.1.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
   checksum: 10/e1cf46bf84886c79055fdfa9dcb3e4711ad259949e3565154b004b260cd356c5d54b31a1437ce9782624bf766272fe6b0154f5f0c744fb7af5d454d2b60db045
@@ -4442,6 +4487,13 @@ __metadata:
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: 10/f0bb4a87cfd18f77bc2fba23ae49c3b378fb35143af16cc478171c623eebe181678f09439707ad80081d340d1593cd54a33a0113f3ccb3f4bc9451488780ee23
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "proxy-from-env@npm:2.1.0"
+  checksum: 10/fbbaf4dab2a6231dc9e394903a5f66f20475e36b734335790b46feb9da07c37d6b32e2c02e3e2ea4d4b23774c53d8562e5b7cc73282cb43f4a597b7eacaee2ee
   languageName: node
   linkType: hard
 
@@ -5104,8 +5156,8 @@ __metadata:
     "@pythnetwork/pyth-evm-js": "npm:^1.82.0"
     "@synthetixio/core-contracts": "npm:^3.12.0"
     "@synthetixio/main": "npm:^3.12.3"
-    "@usecannon/builder": "npm:2.24.2"
-    "@usecannon/cli": "npm:2.24.2"
+    "@usecannon/builder": "npm:2.26.0"
+    "@usecannon/cli": "npm:2.26.0"
     abi-to-sol: "npm:^0.8.0"
     debug: "npm:^4.4.0"
     ethers: "npm:^5.7.2"
