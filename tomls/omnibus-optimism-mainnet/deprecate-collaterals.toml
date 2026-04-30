@@ -1,0 +1,27 @@
+# Step 2 of 2-step protocol deprecation: sweep every configured
+# collateral on CoreProxy to the pdao receiver. Step 1
+# (synthetix-v3-deprecation) disabled all user-facing entry points;
+# this PR moves the funds out.
+#
+# Configured collaterals on Optimism CoreProxy: SNX, WETH, snxUSD.
+
+[invoke.deprecateCollateralSnx]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = ["<%= settings.snx_address %>", "<%= settings.pdao %>"]
+
+[invoke.deprecateCollateralWeth]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = ["<%= settings.weth_address %>", "<%= settings.pdao %>"]
+
+[invoke.deprecateCollateralSnxUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "deprecateCollateral"
+args = [
+    "<%= imports.system.contracts.USDProxy.address %>",
+    "<%= settings.pdao %>",
+]
