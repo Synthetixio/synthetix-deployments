@@ -1,0 +1,69 @@
+# Step 1 of 2-step protocol deprecation: lock down every remaining
+# user-callable feature on CoreProxy. A separate follow-up PR adds the
+# deprecateCollateral sweeps for SNX, WETH, and snxUSD.
+#
+# The omnibus already covers (also part of this step):
+#   - deposit, delegateCollateral, withdrawMarketUsd, liquidate,
+#     liquidateVault (CoreProxy)
+#   - LegacyMarket setPauseStablecoinConversion(true)
+#   - LegacyMarket setPauseMigration(true)
+
+[invoke.disableWithdraw]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdraw') %>", false]
+
+[invoke.disableMintUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('mintUsd') %>", false]
+
+[invoke.disableBurnUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('burnUsd') %>", false]
+
+[invoke.disableMigrateDelegation]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('migrateDelegation') %>", false]
+
+[invoke.disableCreateAccount]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('createAccount') %>", false]
+
+[invoke.disableClaimRewards]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('claimRewards') %>", false]
+
+[invoke.disableTransferCrossChain]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('transferCrossChain') %>", false]
+
+[invoke.disableDepositMarketUsd]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketUsd') %>", false]
+
+[invoke.disableDepositMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('depositMarketCollateral') %>", false]
+
+[invoke.disableWithdrawMarketCollateral]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", false]

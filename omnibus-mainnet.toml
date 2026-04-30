@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "26"
+version = "27"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -35,10 +35,13 @@ include = [
     "tomls/omnibus-mainnet/pools/treasury.toml",
     "tomls/omnibus-mainnet/treasury-market.toml",
     "tomls/omnibus-mainnet/liquidation-permissions.toml",
+
+    # Full protocol deprecation
+    "tomls/omnibus-mainnet/full-deprecation.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.12.0"
+defaultValue = "synthetix:3.14.1"
 
 [setting.v2x_package]
 defaultValue = "synthetix:2.101.2"
@@ -56,7 +59,7 @@ defaultValue = "synthetix-perps-market:3.3.19"
 defaultValue = "synthetix-legacy-market:3.12.1"
 
 [setting.treasury_market_package]
-defaultValue = "synthetix-treasury-market:3.12.3"
+defaultValue = "synthetix-treasury-market:3.14.2"
 
 [setting.susde_package]
 defaultValue = 'susde-token'
@@ -162,6 +165,12 @@ defaultValue = "0x100c6c18381c9a7527762063047236356bbd0b8d"
 [setting.pool420_migrate_address]
 defaultValue = "0x8bfd24F68149E3d4e9635a6E26b0e43EEfd2C692"
 
+[setting.aggregator_issued_synths_address]
+defaultValue = "0xA1C62734a81e2C42357781322Aa4D430C0a50A08"
+
+[setting.aggregator_debt_ratio_address]
+defaultValue = "0x2305f5f9EF3aBF0d6d02411ACa44F85113b247Af"
+
 # we want to enable the spot market wrapper for usde
 [import.usde]
 source = "usde-token"
@@ -228,3 +237,48 @@ governance_initial_epoch_end_date = "1726504075"
 [var.treasuryInfo]
 treasury_account_id = "10"
 treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"
+
+
+#depends = ['provision.legacyMarket']
+
+[invoke.disableCoreDeposit]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('deposit') %>", false]
+
+#depends = ['provision.system']
+
+[invoke.disableCoreDelegate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('delegateCollateral') %>", false]
+
+[invoke.setMainnetOnlyDebt]
+target = ["legacyMarket.v2x.AddressResolver"]
+func = "importAddresses"
+fromCall.func = "owner"
+args = [
+    [
+        "<%= formatBytes32String('ext:AggregatorIssuedSynths') %>",
+        "<%= formatBytes32String('ext:AggregatorDebtRatio') %>",
+    ],
+    [
+        "<%= settings.aggregator_issued_synths_address %>",
+        "<%= settings.aggregator_debt_ratio_address %>",
+    ],
+]
+
+depends = [
+    'provision.legacyMarket',
+    'setting.aggregator_issued_synths_address',
+    'setting.aggregator_debt_ratio_address',
+]
+
+[invoke.refreshResolverCache]
+target = ["legacyMarket.v2x.Issuer", "legacyMarket.v2x.FeePool"]
+func = "rebuildCache"
+fromCall.func = "owner"
+
+depends = ["invoke.setMainnetOnlyDebt"]
