@@ -38,6 +38,7 @@ include = [
 
     # Full protocol deprecation
     "tomls/omnibus-mainnet/full-deprecation.toml",
+    "tomls/omnibus-mainnet/deprecate-collaterals.toml",
 ]
 
 [setting.snx_package]
