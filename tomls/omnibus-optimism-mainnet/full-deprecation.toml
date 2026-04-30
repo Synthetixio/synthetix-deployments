@@ -1,14 +1,12 @@
-# Full protocol deprecation: lock down every remaining user-callable
-# feature on CoreProxy and sweep all configured collaterals to the
-# pdao receiver. The omnibus already covers:
+# Step 1 of 2-step protocol deprecation: lock down every remaining
+# user-callable feature on CoreProxy. A separate follow-up PR adds the
+# deprecateCollateral sweeps for SNX, WETH, and snxUSD.
+#
+# The omnibus already covers (also part of this step):
 #   - deposit, delegateCollateral, withdrawMarketUsd, liquidate,
 #     liquidateVault (CoreProxy)
 #   - LegacyMarket setPauseStablecoinConversion(true)
 #   - LegacyMarket setPauseMigration(true)
-#   - deprecateCollateral(SNX, pdao)
-#
-# Configured collaterals on Optimism CoreProxy: SNX (above), WETH,
-# and snxUSD — both swept below.
 
 [invoke.disableWithdraw]
 target = ["system.CoreProxy"]
@@ -69,21 +67,3 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('withdrawMarketCollateral') %>", false]
-
-# ---- Sweep remaining configured collaterals (SNX is handled by
-# ---- [invoke.deprecate] in omnibus-optimism-mainnet.toml) ----
-
-[invoke.deprecateCollateralWeth]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "deprecateCollateral"
-args = ["<%= settings.weth_address %>", "<%= settings.pdao %>"]
-
-[invoke.deprecateCollateralSnxUsd]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "deprecateCollateral"
-args = [
-    "<%= imports.system.contracts.USDProxy.address %>",
-    "<%= settings.pdao %>",
-]

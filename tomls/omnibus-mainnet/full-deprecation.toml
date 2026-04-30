@@ -1,13 +1,11 @@
-# Full protocol deprecation: lock down every user-callable feature on
-# CoreProxy, pause LegacyMarket stablecoin conversion, and sweep all
-# SNX and snxUSD held by CoreProxy to the deprecation receiver.
+# Step 1 of 2-step protocol deprecation: lock down every user-callable
+# feature on CoreProxy and pause LegacyMarket stablecoin conversion.
+# A separate follow-up PR adds the deprecateCollateral sweeps that move
+# CoreProxy's collateral balances to the deprecation receiver.
 #
 # Existing invokes already cover:
 #   - deposit, delegateCollateral, liquidate, liquidateVault (CoreProxy)
 #   - LegacyMarket setPauseMigration(true)
-
-[setting.deprecation_receiver]
-defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
 
 # ---- CoreProxy feature flag disables ----
 
@@ -84,20 +82,3 @@ target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseStablecoinConversion"
 args = [true]
-
-# ---- Sweep collateral held by CoreProxy via deprecateCollateral ----
-
-[invoke.deprecateCollateralSnx]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "deprecateCollateral"
-args = ["<%= settings.snx_address %>", "<%= settings.deprecation_receiver %>"]
-
-[invoke.deprecateCollateralSnxUsd]
-target = ["system.CoreProxy"]
-fromCall.func = "owner"
-func = "deprecateCollateral"
-args = [
-    "<%= imports.system.contracts.USDProxy.address %>",
-    "<%= settings.deprecation_receiver %>",
-]

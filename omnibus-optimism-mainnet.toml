@@ -250,10 +250,3 @@ target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "setFeatureFlagAllowAll"
 args = ["<%= formatBytes32String('withdrawMarketUsd') %>", false]
-
-[invoke.deprecate]
-target = ["system.CoreProxy"]
-func = "deprecateCollateral"
-fromCall.func = "owner"
-args = ["<%= legacyMarket.v2x.ProxySynthetix.address %>", "<%= settings.pdao %>"]
-depends = ["provision.system", "provision.legacyMarket", "setting.pdao"]
