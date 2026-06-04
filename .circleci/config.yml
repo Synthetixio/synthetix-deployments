@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: "20.17.0"
+    default: "24.12.0"
 
 commands:
   yarn-install:

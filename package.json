@@ -84,5 +84,12 @@
     "async-only": true,
     "exit": true
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "yarn@4.16.0",
+  "engines": {
+    "node": ">=24",
+    "yarn": "4.16.0",
+    "npm": "0.0.0",
+    "pnpm": "0.0.0",
+    "bun": "0.0.0"
+  }
 }
