@@ -1,5 +1,5 @@
 # Step 2 of 2-step protocol deprecation: sweep every configured
-# collateral on CoreProxy to the deprecation receiver. Step 1
+# collateral on CoreProxy to the pdao receiver. Step 1
 # (synthetix-v3-deprecation) disabled all user-facing entry points;
 # this PR moves the funds out.
 #
@@ -9,14 +9,11 @@
 #
 # Configured collaterals on Ethereum CoreProxy: SNX and snxUSD.
 
-[setting.deprecation_receiver]
-defaultValue = "0xEb3107117FEAd7de89Cd14D463D340A2E6917769"
-
 [invoke.deprecateCollateralSnx]
 target = ["system.CoreProxy"]
 fromCall.func = "owner"
 func = "deprecateCollateral"
-args = ["<%= settings.snx_address %>", "<%= settings.deprecation_receiver %>"]
+args = ["<%= settings.snx_address %>", "<%= settings.pdao %>"]
 
 [invoke.deprecateCollateralSnxUsd]
 target = ["system.CoreProxy"]
@@ -24,5 +21,5 @@ fromCall.func = "owner"
 func = "deprecateCollateral"
 args = [
     "<%= imports.system.contracts.USDProxy.address %>",
-    "<%= settings.deprecation_receiver %>",
+    "<%= settings.pdao %>",
 ]
