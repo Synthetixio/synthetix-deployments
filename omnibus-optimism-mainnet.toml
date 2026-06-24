@@ -1,5 +1,5 @@
 name = "synthetix-omnibus"
-version = "16"
+version = "17"
 description = "Includes the full synthetix system with configurations applied"
 deployers = [
     "0x1C8236B406911A376369e33D39189F1b4B39F27D",
@@ -33,10 +33,13 @@ include = [
     "tomls/omnibus-optimism-mainnet/treasury-market.toml",
 
     "tomls/omnibus-optimism-mainnet/liquidation-permissions.toml",
+
+    # Full protocol deprecation
+    "tomls/omnibus-optimism-mainnet/full-deprecation.toml",
 ]
 
 [setting.snx_package]
-defaultValue = "synthetix:3.12.0"
+defaultValue = "synthetix:3.13.0"
 
 [setting.v2x_package]
 defaultValue = "synthetix:2.101.2"
@@ -192,7 +195,7 @@ governance_initial_epoch_end_date = "1726504075"
 target = ["legacyMarket.Proxy"]
 fromCall.func = "owner"
 func = "setPauseMigration"
-args = [false]
+args = [true]
 
 [invoke.disableLiquidate]
 target = ["system.CoreProxy"]
@@ -221,3 +224,29 @@ args = ["1", "31536000", "<%= parseEther('1') %>", "<%= parseEther('0.5') %>"]
 [var.treasuryInfo]
 treasury_account_id = "10"
 treasury_liquidator_address = "0x9DAffb42b60Bb14d8EE80b503AAfC312dCbAF552"
+
+# deprecation
+
+[invoke.setPausedStablecoinConversion]
+target = ["legacyMarket.Proxy"]
+fromCall.func = "owner"
+func = "setPauseStablecoinConversion"
+args = ['true']
+
+[invoke.disableCoreDeposit]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('deposit') %>", false]
+
+[invoke.disableCoreDelegate]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('delegateCollateral') %>", false]
+
+[invoke.disableMintMarket]
+target = ["system.CoreProxy"]
+fromCall.func = "owner"
+func = "setFeatureFlagAllowAll"
+args = ["<%= formatBytes32String('withdrawMarketUsd') %>", false]
