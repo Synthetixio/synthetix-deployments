@@ -3,18 +3,18 @@ version: 2.1
 parameters:
   node-version:
     type: string
-    default: "20.17.0"
+    default: "24.12.0"
 
 commands:
   yarn-install:
     steps:
       - run: yarn install --immutable
 
-  install-anvil:
+  install-foundry:
     steps:
       - restore_cache:
           keys:
-            - foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
+            - &foundry_cache foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}-{{ .Environment.HOME }}
 
       - run:
           name: "Install Foundry"
@@ -30,14 +30,14 @@ commands:
               anvil --version
             else
               curl -L https://foundry.paradigm.xyz | bash
-              foundryup
+              foundryup --install stable
+              anvil --version
             fi
 
       - save_cache:
-          key: foundry-{{ .Environment.FOUNDRY_CACHE_VERSION }}
+          key: *foundry_cache
           paths:
             - "~/.foundry"
-
   run-anvil:
     parameters:
       rpc-env:
@@ -274,7 +274,7 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
-      - install-anvil
+      - install-foundry
       - yarn-install
 
       - run:
@@ -388,7 +388,7 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
-      - install-anvil
+      - install-foundry
       - yarn-install
 
       - run:
@@ -470,7 +470,7 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
-      - install-anvil
+      - install-foundry
       - run-anvil:
           rpc-env: << parameters.rpc-env >>
       - yarn-install
@@ -612,7 +612,7 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
-      - install-anvil
+      - install-foundry
       - run-anvil:
           rpc-env: << parameters.rpc-env >>
       - yarn-install
@@ -684,7 +684,7 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=8192"
     steps:
       - checkout
-      - install-anvil
+      - install-foundry
       - yarn-install
 
       - run:
